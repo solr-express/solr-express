@@ -1,0 +1,35 @@
+﻿"response": {
+    "numFound": 7722,
+    "start": 0,
+    "maxScore": 1,
+    "docs": [
+      {
+        "id": "CIDADE-0",
+        "score": 1
+      }
+    ]
+  },
+  "facet_counts": {
+    "facet_queries": {
+      "FACET_QUERY1": 637
+    },
+    "facet_fields": {
+      "FACET_FIELD1": [
+        "A",840
+      ]
+    },
+    "facet_dates": {},
+    "facet_ranges": {
+      "FACET_RANGE1": {
+        "counts": [
+          "10",
+          98,
+          "60",
+          100
+        ],
+        "gap": 50,
+        "start": 10,
+        "end": 110
+      }
+    }
+  }
