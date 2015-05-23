@@ -71,11 +71,11 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var jArray = (JArray)jObject[this.ParameterName] ?? new JArray();
+            var facetObject = (JObject)jObject[this.ParameterName] ?? new JObject();
 
-            jArray.Add(this._value);
+            facetObject.Add(this._value);
 
-            jObject[this.ParameterName] = jArray;
+            jObject[this.ParameterName] = facetObject;
         }
     }
 }

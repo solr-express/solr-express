@@ -7,24 +7,21 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.QueryBuilder.Parameter.Solr5
 {
-    public class FacetQueryParameter<T> : IQueryParameter
-        where T : IDocument
+    public class FacetQueryParameter : IQueryParameter
     {
         private JProperty _value;
 
         /// <summary>
         /// Create a facet parameter
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public FacetQueryParameter(Expression<Func<T, object>> expression, string query, SolrFacetSortType? sortType, bool? sortAscending)
+        public FacetQueryParameter(string aliasName, string query, SolrFacetSortType? sortType = null, bool? sortAscending = true)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
             var array = new List<JProperty>();
-            array.Add(new JProperty("q", fieldName));
+            array.Add(new JProperty("q", query));
 
             if (sortType.HasValue && sortAscending.HasValue)
             {
@@ -34,7 +31,7 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            this._value = new JProperty(fieldName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            this._value = new JProperty(aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
         }
 
         /// <summary>
@@ -53,11 +50,11 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var jArray = (JArray)jObject[this.ParameterName] ?? new JArray();
+            var facetObject = (JObject)jObject[this.ParameterName] ?? new JObject();
 
-            jArray.Add(this._value);
+            facetObject.Add(this._value);
 
-            jObject[this.ParameterName] = jArray;
+            jObject[this.ParameterName] = facetObject;
         }
     }
 }

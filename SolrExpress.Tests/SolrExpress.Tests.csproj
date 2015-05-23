@@ -84,37 +84,37 @@
     <Content Include="Resources\ResultDataBuilder02.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable02.txt">
+    <Content Include="Resources\SolrQueryable002.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable03.txt">
+    <Content Include="Resources\SolrQueryable003.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable04.txt">
+    <Content Include="Resources\SolrQueryable004.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable05.txt">
+    <Content Include="Resources\SolrQueryable005.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable06.txt">
+    <Content Include="Resources\SolrQueryable006.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable07.txt">
+    <Content Include="Resources\SolrQueryable007.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable08.txt">
+    <Content Include="Resources\SolrQueryable008.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable09.txt">
+    <Content Include="Resources\SolrQueryable009.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable10.txt">
+    <Content Include="Resources\SolrQueryable010.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable11.txt">
+    <Content Include="Resources\SolrQueryable011.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable12.txt">
+    <Content Include="Resources\SolrQueryable012.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
