@@ -1,0 +1,12 @@
+﻿{
+  "facet": {
+    "X": {
+      "terms": {
+        "field": "X",
+        "sort": {
+          "count": "desc"
+        }
+      }
+    }
+  }
+}

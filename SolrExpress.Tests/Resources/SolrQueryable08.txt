@@ -1,0 +1,19 @@
+﻿{
+  "facet": {
+    "X": {
+      "range": {
+        "field": "X",
+        "start": "10",
+        "end": "20",
+        "gap": "1",
+        "other": [
+          "before",
+          "after"
+        ],
+        "sort": {
+          "index": "asc"
+        }
+      }
+    }
+  }
+}

@@ -23,20 +23,36 @@ namespace SolrExpress.Helper
         {
             var lambda = (LambdaExpression)expression;
 
-            if (lambda.Body.NodeType != ExpressionType.MemberAccess)
+            PropertyInfo propertyInfo;
+            MemberExpression memberExpression;
+
+            switch (lambda.Body.NodeType)
             {
-                throw new InvalidOperationException("Expression must be a MemberExpression");
+                case ExpressionType.Convert:
+                    var unaryExpression = (UnaryExpression)lambda.Body;
+
+                    memberExpression = (MemberExpression)unaryExpression.Operand;
+
+                    propertyInfo = memberExpression.Member as PropertyInfo;
+                    if (propertyInfo == null)
+                    {
+                        throw new InvalidOperationException("Expression must be a property reference.");
+                    }
+
+                    return propertyInfo.Name;
+                case ExpressionType.MemberAccess:
+                    memberExpression = (MemberExpression)lambda.Body;
+
+                    propertyInfo = memberExpression.Member as PropertyInfo;
+                    if (propertyInfo == null)
+                    {
+                        throw new InvalidOperationException("Expression must be a property reference.");
+                    }
+
+                    return propertyInfo.Name;
             }
 
-            var memberExpression = (MemberExpression)lambda.Body;
-
-            var propertyInfo = memberExpression.Member as PropertyInfo;
-            if (propertyInfo == null)
-            {
-                throw new InvalidOperationException("Expression must be a property reference.");
-            }
-
-            return propertyInfo.Name;
+            throw new InvalidOperationException("Unknown to resolve the expression");
         }
 
         #endregion Private methods

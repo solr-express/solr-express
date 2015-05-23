@@ -1,0 +1,12 @@
+﻿{
+  "facet": {
+    "X": {
+      "query": {
+        "q": "avg('Y')",
+        "sort": {
+          "count": "desc"
+        }
+      }
+    }
+  }
+}
