@@ -1,6 +1,3 @@
 ﻿{
-  "fields": [
-    "Id",
-    "Score"
-  ]
+  "query": "Id:ITEM01"
 }

@@ -18,7 +18,7 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType, bool? sortAscending)
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, bool? sortAscending = true)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
 
@@ -52,11 +52,11 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var jArray = (JArray)jObject[this.ParameterName] ?? new JArray();
+            var facetObject = (JObject)jObject[this.ParameterName] ?? new JObject();
 
-            jArray.Add(this._value);
+            facetObject.Add(this._value);
 
-            jObject[this.ParameterName] = jArray;
+            jObject[this.ParameterName] = facetObject;
         }
     }
 }

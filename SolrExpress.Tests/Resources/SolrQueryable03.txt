@@ -1,6 +1,6 @@
 ﻿{
-  "filter": [
-    "a:X",
-    "b:Y"
+  "fields": [
+    "Id",
+    "Score"
   ]
 }

@@ -1,12 +1,6 @@
 ﻿{
-  "facet": {
-    "X": {
-      "terms": {
-        "field": "X",
-        "sort": {
-          "index": "asc"
-        }
-      }
-    }
-  }
+  "filter": [
+    "Id:X",
+    "Score:Y"
+  ]
 }

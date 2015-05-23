@@ -4,7 +4,7 @@
       "query": {
         "q": "avg('Y')",
         "sort": {
-          "count": "desc"
+          "index": "asc"
         }
       }
     }

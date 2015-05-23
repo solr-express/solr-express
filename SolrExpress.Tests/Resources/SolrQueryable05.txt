@@ -1,11 +1,8 @@
 ﻿{
   "facet": {
-    "X": {
+    "Id": {
       "terms": {
-        "field": "X",
-        "sort": {
-          "count": "desc"
-        }
+        "field": "Id"
       }
     }
   }

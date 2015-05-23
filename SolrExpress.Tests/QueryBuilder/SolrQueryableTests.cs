@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Enumerator;
 using SolrExpress.Exception;
 using SolrExpress.QueryBuilder;
 using SolrExpress.QueryBuilder.Parameter.Solr5;
@@ -33,7 +34,7 @@ namespace SolrExpress.Tests.QueryBuilder
             mockParameter.Setup(q => q.ParameterName).Returns("mock");
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataresultDataBuilderMock.Object);
             queryable.Add(mockParameter.Object);
-            
+
             // Act / Assert
             queryable.Add(mockParameter.Object);
         }
@@ -47,7 +48,7 @@ namespace SolrExpress.Tests.QueryBuilder
         public void SolrQueryable002()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable01.txt");
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable02.txt");
             var jsonStr = File.ReadAllText(jsonFilePath);
             var providerMock = new Mock<IProvider>();
             var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
@@ -72,7 +73,7 @@ namespace SolrExpress.Tests.QueryBuilder
         public void SolrQueryable003()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable02.txt");
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable03.txt");
             var jsonStr = File.ReadAllText(jsonFilePath);
             var providerMock = new Mock<IProvider>();
             var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
@@ -84,86 +85,86 @@ namespace SolrExpress.Tests.QueryBuilder
             // Act
             queryable.GetJson();
             jsonExpression = queryable._expression;
-            
+
             // Assert
             Assert.AreEqual(jsonStr, jsonExpression);
         }
 
-        ///// <summary>
-        ///// Where   Using an instance of the class SolrQueryable
-        ///// When    Invoke the "Add" method with a instance of QueryParameter
-        ///// What    JsonQuery created with filter:["a:X", "b:Y"] argument
-        ///// </summary>
-        //[TestMethod]
-        //public void SolrQueryable004()
-        //{
-        //    // Arrange
-        //    var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable03.txt");
-        //    var jsonStr = File.ReadAllText(jsonFilePath);
-        //    var providerMock = new Mock<IProvider>();
-        //    var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
-        //    string jsonExpression;
-        //    var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
-        //    queryable.Add(new FilterParameter<TestDocument>(q => q.Id, "X"));
-        //    queryable.Add(new FilterParameter<TestDocument>(q => q.Score, "Y"));
+        /// <summary>
+        /// Where   Using an instance of the class SolrQueryable
+        /// When    Invoke the "Add" method with a instance of FilterParameter
+        /// What    JsonQuery created with filter:["Id:X", "Score:Y"] argument
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable004()
+        {
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable04.txt");
+            var jsonStr = File.ReadAllText(jsonFilePath);
+            var providerMock = new Mock<IProvider>();
+            var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
+            string jsonExpression;
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
+            queryable.Add(new FilterParameter<TestDocument>(q => q.Id, "X"));
+            queryable.Add(new FilterParameter<TestDocument>(q => q.Score, "Y"));
 
-        //    // Act
-        //    queryable.GetJson();
-        //    jsonExpression = queryable._expression;
+            // Act
+            queryable.GetJson();
+            jsonExpression = queryable._expression;
 
-        //    // Assert
-        //    Assert.AreEqual(jsonStr, jsonExpression);
-        //}
+            // Assert
+            Assert.AreEqual(jsonStr, jsonExpression);
+        }
 
-        ///// <summary>
-        ///// Where   Using an instance of the class SolrQueryable
-        ///// When    Invoke the "Add" method with a instance of QueryParameter
-        ///// What    JsonQuery created with facet={X:{type:terms,field:X}} argument
-        ///// </summary>
-        //[TestMethod]
-        //public void SolrQueryable005()
-        //{
-        //    // Arrange
-        //    var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable04.txt");
-        //    var jsonStr = File.ReadAllText(jsonFilePath);
-        //    var providerMock = new Mock<IProvider>();
-        //    var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
-        //    string jsonExpression;
-        //    var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
-        //    queryable.FacetField("X");
+        /// <summary>
+        /// Where   Using an instance of the class SolrQueryable
+        /// When    Invoke the "Add" method with a instance of QueryParameter
+        /// What    JsonQuery created with facet={Id:{type:terms,field:Id}} argument
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable005()
+        {
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable05.txt");
+            var jsonStr = File.ReadAllText(jsonFilePath);
+            var providerMock = new Mock<IProvider>();
+            var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
+            string jsonExpression;
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
+            queryable.Add(new FacetFieldParameter<TestDocument>(q => q.Id));
 
-        //    // Act
-        //    queryable.GetJson();
-        //    jsonExpression = queryable._expression;
+            // Act
+            queryable.GetJson();
+            jsonExpression = queryable._expression;
 
-        //    // Assert
-        //    Assert.AreEqual(jsonStr, jsonExpression);
-        //}
+            // Assert
+            Assert.AreEqual(jsonStr, jsonExpression);
+        }
 
-        ///// <summary>
-        ///// Where   Using an instance of the class SolrQueryable
-        ///// When    Invoke the "Add" method with a instance of QueryParameter
-        ///// What    JsonQuery created with facet={X:{type:terms,field:X,sort:{index:desc}}} argument
-        ///// </summary>
-        //[TestMethod]
-        //public void SolrQueryable006()
-        //{
-        //    // Arrange
-        //    var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable05.txt");
-        //    var jsonStr = File.ReadAllText(jsonFilePath);
-        //    var providerMock = new Mock<IProvider>();
-        //    var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
-        //    string jsonExpression;
-        //    var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
-        //    queryable.FacetField("X", SolrFacetSortType.Quantity, false);
+        /// <summary>
+        /// Where   Using an instance of the class SolrQueryable
+        /// When    Invoke the "Add" method with a instance of QueryParameter
+        /// What    JsonQuery created with facet={X:{type:terms,field:X,sort:{index:desc}}} argument
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable006()
+        {
+            // Arrange
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "SolrQueryable06.txt");
+            var jsonStr = File.ReadAllText(jsonFilePath);
+            var providerMock = new Mock<IProvider>();
+            var resultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
+            string jsonExpression;
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataBuilderMock.Object);
+            queryable.Add(new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.Quantity, false));
 
-        //    // Act
-        //    queryable.GetJson();
-        //    jsonExpression = queryable._expression;
+            // Act
+            queryable.GetJson();
+            jsonExpression = queryable._expression;
 
-        //    // Assert
-        //    Assert.AreEqual(jsonStr, jsonExpression);
-        //}
+            // Assert
+            Assert.AreEqual(jsonStr, jsonExpression);
+        }
 
         ///// <summary>
         ///// Where   Using an instance of the class SolrQueryable

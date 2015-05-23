@@ -1,10 +1,10 @@
 ﻿{
   "facet": {
-    "X": {
-      "query": {
-        "q": "avg('Y')",
+    "Id": {
+      "terms": {
+        "field": "Id",
         "sort": {
-          "index": "asc"
+          "count": "desc"
         }
       }
     }
