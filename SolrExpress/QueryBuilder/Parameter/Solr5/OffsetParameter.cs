@@ -1,16 +1,16 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SolrExpress.QueryBuilder.Parameter
+namespace SolrExpress.QueryBuilder.Parameter.Solr5
 {
-    public class LimitParameter : IQueryParameter
+    public class OffsetParameter : IQueryParameter
     {
         private int _value;
 
         /// <summary>
-        /// Create a limit parameter
+        /// Create a offset parameter
         /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public LimitParameter(int value)
+        /// <param name="value">Value of the parameter limit</param>
+        public OffsetParameter(int value)
         {
             this._value = value;
         }
@@ -23,10 +23,10 @@ namespace SolrExpress.QueryBuilder.Parameter
         /// <summary>
         /// Parameter name
         /// </summary>
-        public string ParameterName { get { return "limit"; } }
+        public string ParameterName { get { return "offset"; } }
 
         /// <summary>
-        /// Execute the creation of the parameter "limit"
+        /// Execute the creation of the parameter "offset"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)

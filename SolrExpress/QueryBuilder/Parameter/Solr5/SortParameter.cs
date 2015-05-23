@@ -3,7 +3,7 @@ using SolrExpress.Helper;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.QueryBuilder.Parameter
+namespace SolrExpress.QueryBuilder.Parameter.Solr5
 {
     public class SortParameter<T> : IQueryParameter
         where T : IDocument
