@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr5.Builder
 {
     /// <summary>
-    /// Result data builder
+    /// Documents data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
     public class DocsResultBuilder<TDocument> : IResultBuilder
@@ -19,7 +19,7 @@ namespace SolrExpress.Solr5.Builder
         {
             if ((jsonObject["response"] != null) && (jsonObject["response"]["docs"] != null))
             {
-                this.Documents = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
+                this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
 
                 return;
             }
@@ -30,6 +30,6 @@ namespace SolrExpress.Solr5.Builder
         /// <summary>
         /// Documents of the search
         /// </summary>
-        public List<TDocument> Documents { get; private set; }
+        public List<TDocument> Data { get; private set; }
     }
 }

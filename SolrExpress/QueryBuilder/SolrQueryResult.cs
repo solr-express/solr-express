@@ -23,10 +23,23 @@ namespace SolrExpress.QueryBuilder
         public T Get<T>()
             where T : IResultBuilder, new()
         {
-            var result = new T();
-            result.Execute(this._jsonObject);
-            
-            return result;
+            var builder = new T();
+            builder.Execute(this._jsonObject);
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Get a instance of the informed type with parsead json resulted from the search
+        /// </summary>
+        /// <typeparam name="T">Concrect class than implements the IResultBuilder interface</typeparam>
+        /// <returns>Instance of T ready to be used</returns>
+        public T Get<T>(T builder)
+            where T : IResultBuilder, new()
+        {
+            builder.Execute(this._jsonObject);
+
+            return builder;
         }
     }
 }

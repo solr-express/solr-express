@@ -61,6 +61,12 @@
     <Compile Include="QueryBuilder\IQueryParameter.cs" />
     <Compile Include="QueryBuilder\IResultBuilder.cs" />
     <Compile Include="QueryBuilder\SolrQueryResult.cs" />
+    <Compile Include="Solr5\Builder\FacetFieldResultBuilder.cs" />
+    <Compile Include="Solr5\Builder\FacetKeyValue.cs" />
+    <Compile Include="Solr5\Builder\FacetQueryResultBuilder.cs" />
+    <Compile Include="Solr5\Builder\FacetRange.cs" />
+    <Compile Include="Solr5\Builder\FacetRangeResultBuilder.cs" />
+    <Compile Include="Solr5\Builder\StatisticResultBuilder.cs" />
     <Compile Include="Solr5\Parameter\FacetFieldParameter.cs" />
     <Compile Include="Solr5\Parameter\FacetQueryParameter.cs" />
     <Compile Include="Solr5\Parameter\FacetRangeParameter.cs" />

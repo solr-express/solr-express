@@ -27,7 +27,7 @@ namespace SolrExpress.Tests.QueryBuilder
 
             // Act
             builder.Execute(jsonObject);
-            lst = builder.Documents;
+            lst = builder.Data;
 
             // Assert
             Assert.AreEqual(1, lst.Count);
