@@ -1,31 +1,26 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Exception;
-using SolrExpress.QueryBuilder;
 using SolrExpress.Solr5.Builder;
-using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace SolrExpress.Tests.QueryBuilder
 {
-    /// <summary>
-    /// Unit tests to ResultDataBuilder
-    /// </summary>
     [TestClass]
     public class ResultDataBuilderTests
     {
-        /// <summary>
-        /// Where   Using an instance of the class SimpleResultDataBuilder
-        /// When    Invoke the "Execute" method with a expected JSON object
-        /// What    Do the parse to a list of class than implements IDocument
-        /// </summary>
         [TestMethod]
-        public void SimpleResultDataBuilder001()
+        public void WhenExecuteTheParseToConcretClassesUsingAValidJson_ParseCorrect()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "QueryBuilder", "ResultDataBuilder01.txt");
-            var jsonStr = File.ReadAllText(jsonFilePath);
+            var jsonStr = @"
+            {
+              ""response"":{""numFound"":7722,""start"":0,""maxScore"":1.0,""docs"":[
+                  {
+                    ""id"":""ITEM01"",
+                    ""score"":1.5}]
+              }
+            }";
             var jsonObject = JObject.Parse(jsonStr);
             var builder = new ResultDataBuilder<TestDocument>();
             List<TestDocument> lst;
@@ -39,18 +34,19 @@ namespace SolrExpress.Tests.QueryBuilder
             Assert.AreEqual(1.5M, lst[0].Score);
         }
 
-        /// <summary>
-        /// Where   Using an instance of the class SimpleResultDataBuilder
-        /// When    Invoke the "Execute" method with a expected JSON object
-        /// What    Do the parse to a list of class than implements IDocument
-        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void SimpleResultDataBuilder002()
+        public void WhenExecuteTheParseToConcretClassesUsingAnInvalidJson_ThrowsException()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "QueryBuilder", "ResultDataBuilder02.txt");
-            var jsonStr = File.ReadAllText(jsonFilePath);
+            var jsonStr = @"
+            {
+              ""responseX"":{""numFound"":7722,""start"":0,""maxScore"":1.0,""docs"":[
+                  {
+                    ""id"":""ITEM01"",
+                    ""score"":1.5}]
+              }
+            }";
             var jsonObject = JObject.Parse(jsonStr);
             var builder = new ResultDataBuilder<TestDocument>();
 

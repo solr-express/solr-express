@@ -8,14 +8,9 @@ namespace SolrExpress.Tests.QueryBuilder
     [TestClass]
     public class SolrQueryableTests
     {
-        /// <summary>
-        /// Where   Using an instance of the class SolrQueryable
-        /// When    Invoke the "Add" method with a instance of TestParameter twice
-        /// What    Throws error
-        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(AllowMultipleInstanceOfParameterType))]
-        public void SolrQueryable001()
+        public void WhenAddAParamaterThenNotAllowMultipleInstanceForASecondTime_ThrowsException()
         {
             // Arrange
             var providerMock = new Mock<IProvider>();

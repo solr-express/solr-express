@@ -1,7 +1,0 @@
-﻿{
-  "response":{"numFound":7722,"start":0,"maxScore":1.0,"docs":[
-      {
-        "id":"ITEM01",
-        "score":1.5}]
-  }
-}
