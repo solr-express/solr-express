@@ -14,11 +14,10 @@ namespace SolrExpress.Tests.QueryBuilder
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var resultDataresultDataBuilderMock = new Mock<IResultDataBuilder<TestDocument>>();
             var mockParameter = new Mock<IQueryParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstance).Returns(false);
             mockParameter.Setup(q => q.ParameterName).Returns("mock");
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, resultDataresultDataBuilderMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
             queryable.Add(mockParameter.Object);
 
             // Act / Assert

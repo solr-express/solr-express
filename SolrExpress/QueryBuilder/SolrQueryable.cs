@@ -11,22 +11,6 @@ namespace SolrExpress.QueryBuilder
     public class SolrQueryable<TDocument>
         where TDocument : IDocument
     {
-        #region Constructor
-
-        /// <summary>
-        /// Constructor used to informed the SolrProvider to the instance
-        /// </summary>
-        /// <param name="provider">Provider used to resolve the expression</param>
-        public SolrQueryable(IProvider provider, IResultDataBuilder<TDocument> resultDataBuilder)
-        {
-            this._provider = provider;
-            this._resultDataBuilder = resultDataBuilder;
-        }
-
-        #endregion Constructor
-
-        #region Private atributes
-
         /// <summary>
         /// List of the parameters arranged in the queryable class
         /// </summary>
@@ -43,13 +27,13 @@ namespace SolrExpress.QueryBuilder
         private IProvider _provider;
 
         /// <summary>
-        /// Result data builder
+        /// Default constructor of the class
         /// </summary>
-        private IResultDataBuilder<TDocument> _resultDataBuilder;
-
-        #endregion Private atributes
-
-        #region Private methods
+        /// <param name="provider">Provider used to resolve the expression</param>
+        public SolrQueryable(IProvider provider)
+        {
+            this._provider = provider;
+        }
 
         /// <summary>
         /// Process the queryable class
@@ -68,10 +52,6 @@ namespace SolrExpress.QueryBuilder
 
             this._expression = jsonObj.ToString();
         }
-
-        #endregion Private methods
-
-        #region Public methods
 
         /// <summary>
         /// Add a parameter to the query
@@ -96,29 +76,18 @@ namespace SolrExpress.QueryBuilder
         }
 
         /// <summary>
-        /// Get JSON correspondent of the result of the expression generated
+        /// Execute the search in the solr with informed parameters
         /// </summary>
-        /// <returns>JSON string</returns>
-        public string GetJson()
+        /// <returns>Solr result</returns>
+        public SolrQueryResult Execute()
         {
             this.ProcessParameters();
 
-            return this._provider.Execute(this._expression);
-        }
-
-        /// <summary>
-        /// Get list of the documents correspondent of the result of the expression generated
-        /// </summary>
-        /// <returns>List of the documents</returns>
-        public List<TDocument> Execute()
-        {
-            var json = this.GetJson();
+            var json = this._provider.Execute(this._expression);
 
             var jsonObject = JObject.Parse(json);
 
-            return this._resultDataBuilder.Execute(jsonObject);
+            return new SolrQueryResult(jsonObject);
         }
-
-        #endregion Public methods
     }
 }

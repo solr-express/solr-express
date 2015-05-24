@@ -22,11 +22,12 @@ namespace SolrExpress.Tests.QueryBuilder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new ResultDataBuilder<TestDocument>();
+            var builder = new DocsResultBuilder<TestDocument>();
             List<TestDocument> lst;
 
             // Act
-            lst = builder.Execute(jsonObject);
+            builder.Execute(jsonObject);
+            lst = builder.Documents;
 
             // Assert
             Assert.AreEqual(1, lst.Count);
@@ -48,7 +49,7 @@ namespace SolrExpress.Tests.QueryBuilder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new ResultDataBuilder<TestDocument>();
+            var builder = new DocsResultBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
