@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Exception;
 using SolrExpress.QueryBuilder;
+using SolrExpress.Solr5.Builder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -23,7 +24,7 @@ namespace SolrExpress.Tests.QueryBuilder
         public void SimpleResultDataBuilder001()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ResultDataBuilder01.txt");
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "QueryBuilder", "ResultDataBuilder01.txt");
             var jsonStr = File.ReadAllText(jsonFilePath);
             var jsonObject = JObject.Parse(jsonStr);
             var builder = new ResultDataBuilder<TestDocument>();
@@ -48,7 +49,7 @@ namespace SolrExpress.Tests.QueryBuilder
         public void SimpleResultDataBuilder002()
         {
             // Arrange
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "ResultDataBuilder02.txt");
+            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "QueryBuilder", "ResultDataBuilder02.txt");
             var jsonStr = File.ReadAllText(jsonFilePath);
             var jsonObject = JObject.Parse(jsonStr);
             var builder = new ResultDataBuilder<TestDocument>();

@@ -1,25 +1,23 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Helper;
+using SolrExpress.QueryBuilder;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.QueryBuilder.Parameter.Solr5
+namespace SolrExpress.Solr5.Parameter
 {
-    public class SortParameter<T> : IQueryParameter
+    public class FieldsParameter<T> : IQueryParameter
         where T : IDocument
     {
         private string _value;
 
         /// <summary>
-        /// Create a sort parameter
+        /// Create a fields parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
+        public FieldsParameter(Expression<Func<T, object>> expression)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Concat(fieldName, " ", ascendent ? "asc" : "desc");
+            this._value = UtilHelper.GetPropertyNameFromExpression(expression);
         }
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace SolrExpress.QueryBuilder.Parameter.Solr5
         /// <summary>
         /// Parameter name
         /// </summary>
-        public string ParameterName { get { return "sort"; } }
+        public string ParameterName { get { return "fields"; } }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"

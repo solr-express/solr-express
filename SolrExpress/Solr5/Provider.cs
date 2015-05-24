@@ -1,8 +1,9 @@
 ﻿using RestSharp;
 using SolrExpress.Exception;
+using SolrExpress.QueryBuilder;
 using System.Net;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Solr5
 {
     /// <summary>
     /// SOLR access provider

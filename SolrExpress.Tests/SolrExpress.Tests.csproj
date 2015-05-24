@@ -65,6 +65,15 @@
   <ItemGroup>
     <Compile Include="QueryBuilder\ResultDataBuilderTests.cs" />
     <Compile Include="QueryBuilder\SolrQueryableTests.cs" />
+    <Compile Include="Solr5\Parameter\FacetFieldParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\FacetQueryParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\FacetRangeParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\FieldsParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\FilterParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\LimitParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\OffsetParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\QueryParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\SortParameterTests.cs" />
     <Compile Include="TestDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,46 +87,47 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ResultDataBuilder01.txt">
+    <Content Include="Resources\QueryBuilder\ResultDataBuilder01.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\ResultDataBuilder02.txt">
+    <Content Include="Resources\QueryBuilder\ResultDataBuilder02.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable002.txt">
+    <Content Include="Resources\Solr5\Parameter\QueryParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable003.txt">
+    <Content Include="Resources\Solr5\Parameter\FieldsParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable004.txt">
+    <Content Include="Resources\Solr5\Parameter\FilterParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable005.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetFieldParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable006.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetFieldParameter002.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable007.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetQueryParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable008.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetQueryParameter002.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable009.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetRangeParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable010.txt">
+    <Content Include="Resources\Solr5\Parameter\FacetRangeParameter002.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable011.txt">
+    <Content Include="Resources\Solr5\Parameter\OffsetParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\SolrQueryable012.txt">
+    <Content Include="Resources\Solr5\Parameter\LimitParameter001.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

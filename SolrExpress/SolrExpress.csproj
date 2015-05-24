@@ -60,27 +60,27 @@
     <Compile Include="QueryBuilder\IResultDataBuilder.cs" />
     <Compile Include="QueryBuilder\IProvider.cs" />
     <Compile Include="QueryBuilder\IQueryParameter.cs" />
-    <Compile Include="QueryBuilder\Parameter\Solr5\FacetFieldParameter.cs" />
-    <Compile Include="QueryBuilder\Parameter\Solr5\FacetQueryParameter.cs" />
-    <Compile Include="QueryBuilder\Parameter\Solr5\FacetRangeParameter.cs" />
-    <Compile Include="QueryBuilder\Parameter\Solr5\FieldsParameter.cs" />
-    <Compile Include="QueryBuilder\Parameter\Solr5\FilterParameter.cs">
+    <Compile Include="Solr5\Parameter\FacetFieldParameter.cs" />
+    <Compile Include="Solr5\Parameter\FacetQueryParameter.cs" />
+    <Compile Include="Solr5\Parameter\FacetRangeParameter.cs" />
+    <Compile Include="Solr5\Parameter\FieldsParameter.cs" />
+    <Compile Include="Solr5\Parameter\FilterParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Parameter\Solr5\LimitParameter.cs">
+    <Compile Include="Solr5\Parameter\LimitParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Parameter\Solr5\OffsetParameter.cs">
+    <Compile Include="Solr5\Parameter\OffsetParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Parameter\Solr5\QueryParameter.cs">
+    <Compile Include="Solr5\Parameter\QueryParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\Parameter\Solr5\SortParameter.cs">
+    <Compile Include="Solr5\Parameter\SortParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="QueryBuilder\ResultDataBuilder.cs" />
-    <Compile Include="QueryBuilder\Provider.cs" />
+    <Compile Include="Solr5\Builder\ResultDataBuilder.cs" />
+    <Compile Include="Solr5\Provider.cs" />
     <Compile Include="QueryBuilder\SolrQueryable.cs" />
   </ItemGroup>
   <ItemGroup />

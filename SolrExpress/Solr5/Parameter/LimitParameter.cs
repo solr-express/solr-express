@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.QueryBuilder;
 
-namespace SolrExpress.QueryBuilder.Parameter.Solr5
+namespace SolrExpress.Solr5.Parameter
 {
     public class LimitParameter : IQueryParameter
     {

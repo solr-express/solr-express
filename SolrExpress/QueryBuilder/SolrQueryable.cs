@@ -35,10 +35,7 @@ namespace SolrExpress.QueryBuilder
         /// <summary>
         /// Expression created basead in the commands triggereds
         /// </summary>
-        /// <remarks>
-        /// Is internal because the friendship with the assembly "SolrExpress.Tests"
-        /// </remarks>
-        internal string _expression;
+        private string _expression;
 
         /// <summary>
         /// Provider used to resolve the expression

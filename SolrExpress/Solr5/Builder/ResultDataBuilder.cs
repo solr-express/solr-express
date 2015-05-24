@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.QueryBuilder;
 using System.Collections.Generic;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Solr5.Builder
 {
     /// <summary>
     /// Result data builder

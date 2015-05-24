@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Enumerator;
 using SolrExpress.Helper;
+using SolrExpress.QueryBuilder;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace SolrExpress.QueryBuilder.Parameter.Solr5
+namespace SolrExpress.Solr5.Parameter
 {
     public class FacetFieldParameter<T> : IQueryParameter
         where T : IDocument

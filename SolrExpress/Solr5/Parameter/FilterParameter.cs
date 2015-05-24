@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Helper;
+using SolrExpress.QueryBuilder;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.QueryBuilder.Parameter.Solr5
+namespace SolrExpress.Solr5.Parameter
 {
     public class FilterParameter<T> : IQueryParameter
         where T : IDocument

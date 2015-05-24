@@ -2,16 +2,16 @@
   "facet": {
     "X": {
       "range": {
-        "field": "X",
+        "field": "Id",
+        "gap": "1",
         "start": "10",
         "end": "20",
-        "gap": "1",
         "other": [
           "before",
           "after"
         ],
         "sort": {
-          "index": "asc"
+          "count": "desc"
         }
       }
     }
