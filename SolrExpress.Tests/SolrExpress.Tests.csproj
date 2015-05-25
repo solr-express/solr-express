@@ -67,6 +67,7 @@
     <Compile Include="QueryBuilder\SolrQueryableTests.cs" />
     <Compile Include="Solr5\Builder\FacetFieldResultBuilderTests.cs" />
     <Compile Include="Solr5\Builder\FacetQueryResultBuilderTests.cs" />
+    <Compile Include="Solr5\Builder\FacetRangeResultBuilderTests.cs" />
     <Compile Include="Solr5\Parameter\FacetFieldParameterTests.cs" />
     <Compile Include="Solr5\Parameter\FacetQueryParameterTests.cs" />
     <Compile Include="Solr5\Parameter\FacetRangeParameterTests.cs" />

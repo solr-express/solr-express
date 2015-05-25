@@ -1,4 +1,5 @@
 ﻿
+using System;
 namespace SolrExpress.Solr5.Builder
 {
     /// <summary>
@@ -6,10 +7,6 @@ namespace SolrExpress.Solr5.Builder
     /// </summary>
     public class FacetRange
     {
-        /// <summary>
-        /// Key of the range of the facet
-        /// </summary>
-        string Key { get; set; }
     }
 
     /// <summary>
@@ -21,11 +18,11 @@ namespace SolrExpress.Solr5.Builder
         /// <summary>
         /// Minimum value of the facet
         /// </summary>
-        T MinimumValue { get; set; }
+        public T MinimumValue { get; set; }
 
         /// <summary>
         /// Maximum value of the facet
         /// </summary>
-        T MaximumValue { get; set; }
+        public T MaximumValue { get; set; }
     }
 }

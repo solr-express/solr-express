@@ -20,7 +20,7 @@ namespace SolrExpress.Solr5.Builder
             {
                 var list = jsonObject["facets"].Children().Where(q =>
                     q is JProperty &&
-                    q.Children().Count() == 1 &&
+                    q.Values().Count() == 1 &&
                     ((JProperty)q).Value is JObject &&
                     ((JObject)((JProperty)q).Value)["count"] != null);
 
