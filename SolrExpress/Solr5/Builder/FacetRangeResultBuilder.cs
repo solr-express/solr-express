@@ -12,6 +12,44 @@ namespace SolrExpress.Solr5.Builder
     public class FacetRangeResultBuilder : IResultBuilder
     {
         /// <summary>
+        /// Get a FacetRange instance basead in the informed JTokenType
+        /// </summary>
+        /// <param name="type">JTokenType used to return the instance</param>
+        /// <returns>A FacetRange instance</returns>
+        private FacetRange GetFacetRangeByType(JTokenType type)
+        {
+            switch (type)
+            {
+                case JTokenType.Float:
+                    return (FacetRange)new FacetRange<float>();
+                case JTokenType.Date:
+                    return (FacetRange)new FacetRange<DateTime>();
+                default:
+                    return (FacetRange)new FacetRange<int>();
+            }
+        }
+
+        private void ProcessGap<TFacetKey>(Dictionary<FacetRange, long> facetData, FacetRange facetBefore, FacetRange facetAfter)
+            where TFacetKey : struct, IComparable
+        {
+            dynamic first = facetData.First();
+            dynamic second = facetData.Skip(1).FirstOrDefault();
+            var last = facetData.Last();
+
+            // Do with dynamic because otherwise the error below occurring
+            // Operator '-' cannot be applied to operands of type 'TFacetKey?' and 'TFacetKey?'
+            var gap = second.Key.MinimumValue - first.Key.MinimumValue;
+
+            foreach (var range in facetData)
+            {
+                ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue + gap;
+            }
+
+            ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
+            ((FacetRange<TFacetKey>)facetAfter).MinimumValue = ((FacetRange<TFacetKey>)last.Key).MaximumValue;
+        }
+
+        /// <summary>
         /// Execute the parse of the JSON object in facet range list
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
@@ -38,72 +76,47 @@ namespace SolrExpress.Solr5.Builder
                         var facet = new FacetKeyValue<FacetRange>()
                         {
                             Name = ((JProperty)item).Name,
-                            Data = ((JProperty)(item)).Value["buckets"]
-                                .ToDictionary(
-                                    k =>
-                                    {
-                                        FacetRange result;
-
-                                        switch (jTokenType)
-                                        {
-                                            case JTokenType.Integer:
-                                                result = new FacetRange<int>()
-                                                {
-                                                    MinimumValue = k["val"].ToObject<int>()
-                                                };
-                                                break;
-                                            case JTokenType.Float:
-                                                result = new FacetRange<float>()
-                                                {
-                                                    MinimumValue = k["val"].ToObject<float>()
-                                                };
-                                                break;
-                                            case JTokenType.Date:
-                                                result = new FacetRange<DateTime>()
-                                                {
-                                                    MinimumValue = k["val"].ToObject<DateTime>()
-                                                };
-                                                break;
-                                            default:
-                                                result = new FacetRange<object>()
-                                                {
-                                                    MinimumValue = k["val"].ToObject<object>()
-                                                };
-                                                break;
-                                        }
-
-                                        return result;
-                                    },
-                                    v => v["count"].ToObject<long>())
+                            Data = new Dictionary<FacetRange, long>()
                         };
 
-                        FacetRange lowest;
-                        FacetRange higher;
+                        var facetData = ((JProperty)(item)).Value["buckets"]
+                            .ToDictionary(
+                                k =>
+                                {
+                                    var result = this.GetFacetRangeByType(jTokenType);
+
+                                    result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
+
+                                    return result;
+                                },
+                                v => v["count"].ToObject<long>());
+
+                        var before = this.GetFacetRangeByType(jTokenType);
+                        var after = this.GetFacetRangeByType(jTokenType);
 
                         switch (jTokenType)
                         {
-                            case JTokenType.Integer:
-                                lowest = new FacetRange<int>();
-                                higher = new FacetRange<int>();
-                                break;
                             case JTokenType.Float:
-                                lowest = new FacetRange<float>();
-                                higher = new FacetRange<float>();
+                                // TODO: Make unit test to this
+                                this.ProcessGap<float>(facetData, before, after);
                                 break;
                             case JTokenType.Date:
-                                lowest = new FacetRange<DateTime>();
-                                higher = new FacetRange<DateTime>();
+                                // TODO: Make unit test to this
+                                this.ProcessGap<DateTime>(facetData, before, after);
                                 break;
                             default:
-                                lowest = new FacetRange<object>();
-                                higher = new FacetRange<object>();
+                                this.ProcessGap<int>(facetData, before, after);
                                 break;
                         }
 
-                        facet.Data.Add(lowest, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
-                        facet.Data.Add(higher, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
+                        facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
 
-                        // TODO: Implement max value
+                        foreach (var facetDataItem in facetData)
+                        {
+                            facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
+                        }
+
+                        facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
 
                         this.Data.Add(facet);
                     }
