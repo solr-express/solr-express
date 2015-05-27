@@ -1,4 +1,4 @@
-﻿using SolrExpress.QueryBuilder;
+﻿using SolrExpress.Query;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.QueryBuilder;
+using SolrExpress.Query;
 using System.Collections.Generic;
 using System.Linq;
 

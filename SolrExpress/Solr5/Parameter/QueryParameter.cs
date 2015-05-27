@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Helper;
-using SolrExpress.QueryBuilder;
+using SolrExpress.Query;
 using System;
 using System.Linq.Expressions;
 

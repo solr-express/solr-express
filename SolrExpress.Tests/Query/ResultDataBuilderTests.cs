@@ -4,7 +4,7 @@ using SolrExpress.Exception;
 using SolrExpress.Solr5.Builder;
 using System.Collections.Generic;
 
-namespace SolrExpress.Tests.QueryBuilder
+namespace SolrExpress.Tests.Query
 {
     [TestClass]
     public class ResultDataBuilderTests

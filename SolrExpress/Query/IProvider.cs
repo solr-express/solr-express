@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.QueryBuilder
+﻿namespace SolrExpress.Query
 {
     /// <summary>
     /// Signatures of the SOLR access provider

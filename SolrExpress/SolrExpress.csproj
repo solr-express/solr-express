@@ -55,12 +55,14 @@
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
+    <Compile Include="Linq\SolrQueryableExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryBuilder\IDocument.cs" />
-    <Compile Include="QueryBuilder\IProvider.cs" />
-    <Compile Include="QueryBuilder\IQueryParameter.cs" />
-    <Compile Include="QueryBuilder\IResultBuilder.cs" />
-    <Compile Include="QueryBuilder\SolrQueryResult.cs" />
+    <Compile Include="Query\IDocument.cs" />
+    <Compile Include="Query\IProvider.cs" />
+    <Compile Include="Query\IQueryParameter.cs" />
+    <Compile Include="Query\IResultBuilder.cs" />
+    <Compile Include="Query\SolrQueryResult.cs" />
+    <Compile Include="Solr4\Provider.cs" />
     <Compile Include="Solr5\Builder\FacetFieldResultBuilder.cs" />
     <Compile Include="Solr5\Builder\FacetKeyValue.cs" />
     <Compile Include="Solr5\Builder\FacetQueryResultBuilder.cs" />
@@ -88,9 +90,12 @@
     </Compile>
     <Compile Include="Solr5\Builder\DocsResultBuilder.cs" />
     <Compile Include="Solr5\Provider.cs" />
-    <Compile Include="QueryBuilder\SolrQueryable.cs" />
+    <Compile Include="Query\SolrQueryable.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Solr4\Builder\" />
+    <Folder Include="Solr4\Parameter\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

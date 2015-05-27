@@ -1,9 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SolrExpress.Exception;
-using SolrExpress.QueryBuilder;
+using SolrExpress.Query;
 
-namespace SolrExpress.Tests.QueryBuilder
+namespace SolrExpress.Tests.Query
 {
     [TestClass]
     public class SolrQueryableTests

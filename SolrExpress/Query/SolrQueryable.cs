@@ -3,7 +3,7 @@ using SolrExpress.Exception;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Query
 {
     /// <summary>
     /// SOLR queryable
@@ -74,7 +74,7 @@ namespace SolrExpress.QueryBuilder
 
             return this;
         }
-
+        
         /// <summary>
         /// Execute the search in the solr with informed parameters
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Helper;
-using SolrExpress.QueryBuilder;
+using SolrExpress.Query;
 using System;
 using System.Linq.Expressions;
 
@@ -10,6 +10,11 @@ namespace SolrExpress.Solr5.Parameter
         where T : IDocument
     {
         private string _value;
+
+        public FieldsParameter()
+        {
+
+        }
 
         /// <summary>
         /// Create a fields parameter
@@ -41,6 +46,10 @@ namespace SolrExpress.Solr5.Parameter
             jArray.Add(this._value);
 
             jObject[this.ParameterName] = jArray;
+        }
+
+        public void Set(Expression<Func<T, object>> expression)
+        {
         }
     }
 }

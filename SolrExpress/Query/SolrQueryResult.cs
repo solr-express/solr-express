@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Query
 {
     public class SolrQueryResult
     {
@@ -13,20 +13,6 @@ namespace SolrExpress.QueryBuilder
         public SolrQueryResult(JObject jsonObject)
         {
             this._jsonObject = jsonObject;
-        }
-
-        /// <summary>
-        /// Get a instance of the informed type with parsead json resulted from the search
-        /// </summary>
-        /// <typeparam name="T">Concrect class than implements the IResultBuilder interface</typeparam>
-        /// <returns>Instance of T ready to be used</returns>
-        public T Get<T>()
-            where T : IResultBuilder, new()
-        {
-            var builder = new T();
-            builder.Execute(this._jsonObject);
-
-            return builder;
         }
 
         /// <summary>

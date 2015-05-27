@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Query
 {
     /// <summary>
     /// Base interface used to parse the SOLR results

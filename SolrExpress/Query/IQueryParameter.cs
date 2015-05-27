@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace SolrExpress.QueryBuilder
+namespace SolrExpress.Query
 {
     /// <summary>
     /// Signatures to use in solr query parameter

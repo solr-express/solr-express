@@ -3,7 +3,7 @@ using SolrExpress.Exception;
 using SolrExpress.Query;
 using System.Net;
 
-namespace SolrExpress.Solr5
+namespace SolrExpress.Solr4
 {
     /// <summary>
     /// SOLR access provider
@@ -40,10 +40,9 @@ namespace SolrExpress.Solr5
         {
             var client = new RestClient(this._solrHost);
 
-            var request = new RestRequest("query", Method.GET);
+            var request = new RestRequest(string.Concat("query?", expressionToRequest), Method.GET);
             request.AddParameter("omitHeader", "true");
             request.AddParameter("echoParams", "none");
-            request.AddParameter("json", expressionToRequest);
 
             var response = client.Execute(request);
 
