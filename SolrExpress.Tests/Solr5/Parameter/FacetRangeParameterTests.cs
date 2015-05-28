@@ -8,8 +8,13 @@ namespace SolrExpress.Tests.Solr5.Parameter
     [TestClass]
     public class FacetRangeParameterTests
     {
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" using the default arguments
+        /// What    Create a valid JSON
+        /// </summary>
         [TestMethod]
-        public void WhenExecuteWithDefaultArguments_CreateJson()
+        public void FacetRangeParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
@@ -41,8 +46,13 @@ namespace SolrExpress.Tests.Solr5.Parameter
             Assert.AreEqual(expected.ToString(), actual);
         }
 
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" using the sort type and direction parameters
+        /// What    Create a valid JSON
+        /// </summary>
         [TestMethod]
-        public void WhenExecuteWithSortTypeAndDirection_CreateJson()
+        public void FacetRangeParameter002()
         {
             // Arrange
             var expected = JObject.Parse(@"

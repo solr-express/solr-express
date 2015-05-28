@@ -7,8 +7,13 @@ namespace SolrExpress.Tests.Solr5.Builder
     [TestClass]
     public class FacetQueryResultBuilderTests
     {
+        /// <summary>
+        /// Where   Using a FacetQueryResultBuilder instance
+        /// When    Invoking the method "Execute" using a valid JSON
+        /// What    Parse to informed concret classes
+        /// </summary>
         [TestMethod]
-        public void WhenExecute_CreateAListWithFacetsParsedInConcretClasses()
+        public void FacetQueryResultBuilder001()
         {
             // Arrange
             var jObject = JObject.Parse(@"

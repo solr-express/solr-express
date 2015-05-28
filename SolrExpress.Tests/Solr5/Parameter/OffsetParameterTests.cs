@@ -7,8 +7,13 @@ namespace SolrExpress.Tests.Solr5.Parameter
     [TestClass]
     public class OffsetParameterTests
     {
+        /// <summary>
+        /// Where   Using a OffsetParameter instance
+        /// When    Invoking the method "Execute"
+        /// What    Create a valid JSON
+        /// </summary>
         [TestMethod]
-        public void WhenExecute_CreateJson()
+        public void OffsetParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"

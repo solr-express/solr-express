@@ -7,8 +7,13 @@ namespace SolrExpress.Tests.Solr5.Parameter
     [TestClass]
     public class QueryParameterTests
     {
+        /// <summary>
+        /// Where   Using a QueryParameter instance
+        /// When    Invoking the method "Execute"
+        /// What    Create a valid JSON
+        /// </summary>
         [TestMethod]
-        public void WhenExecute_CreateJson()
+        public void QueryParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"

@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Attribute\SolrFieldAtribute.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />
-    <Compile Include="Exception\AllowMultipleInstanceOfParameterType.cs" />
+    <Compile Include="Exception\AllowMultipleInstanceOfParameterTypeException.cs" />
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />

@@ -7,8 +7,13 @@ namespace SolrExpress.Tests.Solr5.Parameter
     [TestClass]
     public class FieldsParameterTests
     {
+        /// <summary>
+        /// Where   Using a FieldsParameter instance
+        /// When    Invoking the method "Execute" using 2 instances
+        /// What    Create a valid JSON
+        /// </summary>
         [TestMethod]
-        public void WhenExecuteWith2Instances_CreateJson()
+        public void FieldsParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
