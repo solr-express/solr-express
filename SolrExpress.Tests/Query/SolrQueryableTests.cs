@@ -8,20 +8,25 @@ namespace SolrExpress.Tests.Query
     [TestClass]
     public class SolrQueryableTests
     {
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Invoking the method "Parameter" using a concret class than implement IQueryParameter, configured to do not allow multiple instances
+        /// What    Throws AllowMultipleInstanceOfParameterTypeException
+        /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(AllowMultipleInstanceOfParameterType))]
-        public void WhenAddAParamaterThenNotAllowMultipleInstanceForASecondTime_ThrowsException()
+        [ExpectedException(typeof(AllowMultipleInstanceOfParameterTypeException))]
+        public void SolrQueryable001()
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IQueryParameter>();
-            mockParameter.Setup(q => q.AllowMultipleInstance).Returns(false);
+            mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
             mockParameter.Setup(q => q.ParameterName).Returns("mock");
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
-            queryable.Add(mockParameter.Object);
+            queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
-            queryable.Add(mockParameter.Object);
+            queryable.Parameter(mockParameter.Object);
         }
     }
 }

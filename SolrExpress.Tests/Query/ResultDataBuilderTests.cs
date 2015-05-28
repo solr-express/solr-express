@@ -9,8 +9,13 @@ namespace SolrExpress.Tests.Query
     [TestClass]
     public class ResultDataBuilderTests
     {
+        /// <summary>
+        /// Where   Using a ResultDataBuilder instance
+        /// When    Invoking the method "Execute" using a valid JSON
+        /// What    Parse to informed concret classes
+        /// </summary>
         [TestMethod]
-        public void WhenExecuteTheParseToConcretClassesUsingAValidJson_ParseCorrect()
+        public void ResultDataBuilder001()
         {
             // Arrange
             var jsonStr = @"
@@ -22,7 +27,7 @@ namespace SolrExpress.Tests.Query
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocsResultBuilder<TestDocument>();
+            var builder = new DocumentBuilder<TestDocument>();
             List<TestDocument> lst;
 
             // Act
@@ -35,9 +40,14 @@ namespace SolrExpress.Tests.Query
             Assert.AreEqual(1.5M, lst[0].Score);
         }
 
+        /// <summary>
+        /// Where   Using a ResultDataBuilder instance
+        /// When    Invoking the method "Execute" using a invvalid JSON
+        /// What    Throws UnexpectedJsonFormatException
+        /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void WhenExecuteTheParseToConcretClassesUsingAnInvalidJson_ThrowsException()
+        public void ResultDataBuilder002()
         {
             // Arrange
             var jsonStr = @"
@@ -49,7 +59,7 @@ namespace SolrExpress.Tests.Query
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocsResultBuilder<TestDocument>();
+            var builder = new DocumentBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
