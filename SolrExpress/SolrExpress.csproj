@@ -56,6 +56,7 @@
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
     <Compile Include="Linq\SolrQueryableExtension.cs" />
+    <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\IDocument.cs" />
     <Compile Include="Query\IProvider.cs" />
@@ -64,9 +65,9 @@
     <Compile Include="Query\SolrQueryResult.cs" />
     <Compile Include="Solr4\Provider.cs" />
     <Compile Include="Solr5\Builder\FacetFieldResultBuilder.cs" />
-    <Compile Include="Solr5\Builder\FacetKeyValue.cs" />
+    <Compile Include="Query\FacetKeyValue.cs" />
     <Compile Include="Solr5\Builder\FacetQueryResultBuilder.cs" />
-    <Compile Include="Solr5\Builder\FacetRange.cs" />
+    <Compile Include="Query\FacetRange.cs" />
     <Compile Include="Solr5\Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Solr5\Builder\StatisticResultBuilder.cs" />
     <Compile Include="Solr5\Parameter\FacetFieldParameter.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Solr5\Parameter\SortParameter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Solr5\Builder\DocsResultBuilder.cs" />
+    <Compile Include="Solr5\Builder\DocumentBuilder.cs" />
     <Compile Include="Solr5\Provider.cs" />
     <Compile Include="Query\SolrQueryable.cs" />
   </ItemGroup>

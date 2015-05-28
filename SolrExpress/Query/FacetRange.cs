@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Solr5.Builder
+namespace SolrExpress.Query
 {
     /// <summary>
     /// Represents a Facet Range without knowledgement of the type of the minumum and maximum values
@@ -50,7 +50,7 @@ namespace SolrExpress.Solr5.Builder
     /// Represents a Facet Range with knowledgement of the type of the minumum and maximum values
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class FacetRange<T> : FacetRange
+    public sealed class FacetRange<T> : FacetRange
         where T : struct, IComparable
     {
         /// <summary>

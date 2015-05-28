@@ -9,7 +9,7 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet range data builder
     /// </summary>
-    public class FacetRangeResultBuilder : IResultBuilder
+    public sealed class FacetRangeResultBuilder : IResultBuilder
     {
         /// <summary>
         /// Get a FacetRange instance basead in the informed JTokenType
@@ -21,11 +21,11 @@ namespace SolrExpress.Solr5.Builder
             switch (type)
             {
                 case JTokenType.Float:
-                    return (FacetRange)new FacetRange<float>();
+                    return new FacetRange<float>();
                 case JTokenType.Date:
-                    return (FacetRange)new FacetRange<DateTime>();
+                    return new FacetRange<DateTime>();
                 default:
-                    return (FacetRange)new FacetRange<int>();
+                    return new FacetRange<int>();
             }
         }
 
@@ -59,67 +59,72 @@ namespace SolrExpress.Solr5.Builder
             {
                 this.Data = new List<FacetKeyValue<FacetRange>>();
 
-                var list = jsonObject["facets"].Children().Where(q =>
-                    q is JProperty &&
-                    q.Values().Count() == 3 &&
-                    ((JProperty)q).Value is JObject &&
-                    ((JProperty)q).Value["after"] != null &&
-                    ((JProperty)q).Value["before"] != null &&
-                    ((JProperty)q).Value["buckets"] != null);
+                var list = jsonObject["facets"]
+                    .Children()
+                    .Where(q =>
+                        q is JProperty &&
+                        q.Values().Count() == 3 &&
+                        ((JProperty)q).Value is JObject &&
+                        ((JProperty)q).Value["after"] != null &&
+                        ((JProperty)q).Value["before"] != null &&
+                        ((JProperty)q).Value["buckets"] != null)
+                    .ToList();
 
-                if (list.Any())
+                if (!list.Any())
                 {
-                    foreach (var item in list)
+                    return;
+                }
+
+                foreach (var item in list)
+                {
+                    var jTokenType = ((JProperty)(item)).Value["buckets"][0]["val"].Type;
+
+                    var facet = new FacetKeyValue<FacetRange>()
                     {
-                        var jTokenType = ((JProperty)(item)).Value["buckets"][0]["val"].Type;
+                        Name = ((JProperty)item).Name,
+                        Data = new Dictionary<FacetRange, long>()
+                    };
 
-                        var facet = new FacetKeyValue<FacetRange>()
-                        {
-                            Name = ((JProperty)item).Name,
-                            Data = new Dictionary<FacetRange, long>()
-                        };
+                    var facetData = ((JProperty)(item)).Value["buckets"]
+                        .ToDictionary(
+                            k =>
+                            {
+                                var result = this.GetFacetRangeByType(jTokenType);
 
-                        var facetData = ((JProperty)(item)).Value["buckets"]
-                            .ToDictionary(
-                                k =>
-                                {
-                                    var result = this.GetFacetRangeByType(jTokenType);
+                                result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
 
-                                    result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
+                                return result;
+                            },
+                            v => v["count"].ToObject<long>());
 
-                                    return result;
-                                },
-                                v => v["count"].ToObject<long>());
+                    var before = this.GetFacetRangeByType(jTokenType);
+                    var after = this.GetFacetRangeByType(jTokenType);
 
-                        var before = this.GetFacetRangeByType(jTokenType);
-                        var after = this.GetFacetRangeByType(jTokenType);
-
-                        switch (jTokenType)
-                        {
-                            case JTokenType.Float:
-                                // TODO: Make unit test to this
-                                this.ProcessGap<float>(facetData, before, after);
-                                break;
-                            case JTokenType.Date:
-                                // TODO: Make unit test to this
-                                this.ProcessGap<DateTime>(facetData, before, after);
-                                break;
-                            default:
-                                this.ProcessGap<int>(facetData, before, after);
-                                break;
-                        }
-
-                        facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
-
-                        foreach (var facetDataItem in facetData)
-                        {
-                            facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
-                        }
-
-                        facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
-
-                        this.Data.Add(facet);
+                    switch (jTokenType)
+                    {
+                        case JTokenType.Float:
+                            // TODO: Make unit test to this
+                            this.ProcessGap<float>(facetData, before, after);
+                            break;
+                        case JTokenType.Date:
+                            // TODO: Make unit test to this
+                            this.ProcessGap<DateTime>(facetData, before, after);
+                            break;
+                        default:
+                            this.ProcessGap<int>(facetData, before, after);
+                            break;
                     }
+
+                    facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
+
+                    foreach (var facetDataItem in facetData)
+                    {
+                        facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
+                    }
+
+                    facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
+
+                    this.Data.Add(facet);
                 }
 
                 return;

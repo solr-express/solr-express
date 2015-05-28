@@ -1,16 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Enumerator;
-using SolrExpress.Helper;
 using SolrExpress.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public class FacetQueryParameter : IQueryParameter
+    public sealed class FacetQueryParameter : IQueryParameter
     {
-        private JProperty _value;
+        private readonly JProperty _value;
 
         /// <summary>
         /// Create a facet parameter
@@ -21,8 +18,10 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortAscending">Sort ascending the result of the facet</param>
         public FacetQueryParameter(string aliasName, string query, SolrFacetSortType? sortType = null, bool? sortAscending = true)
         {
-            var array = new List<JProperty>();
-            array.Add(new JProperty("q", query));
+            var array = new List<JProperty>
+            {
+                new JProperty("q", query)
+            };
 
             if (sortType.HasValue && sortAscending.HasValue)
             {
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstance { get { return true; } }
+        public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
         /// Parameter name

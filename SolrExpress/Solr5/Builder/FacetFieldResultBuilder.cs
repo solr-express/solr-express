@@ -8,7 +8,7 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet field data builder
     /// </summary>
-    public class FacetFieldResultBuilder : IResultBuilder
+    public sealed class FacetFieldResultBuilder : IResultBuilder
     {
         /// <summary>
         /// Execute the parse of the JSON object in facet field list
@@ -16,37 +16,38 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facets"] != null)
+            if (jsonObject["facets"] == null)
             {
-                this.Data = new List<FacetKeyValue<string>>();
+                throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+            }
 
-                var list = jsonObject["facets"].Children().Where(q =>
+            this.Data = new List<FacetKeyValue<string>>();
+
+            var list = jsonObject["facets"]
+                .Children()
+                .Where(q =>
                     q is JProperty &&
                     q.Values().Count() == 1 &&
                     ((JProperty)q).Value is JObject &&
-                    ((JProperty)q).Value["buckets"] != null);
+                    ((JProperty)q).Value["buckets"] != null)
+                .ToList();
 
-                if (list.Any())
-                {
-                    foreach (var item in list)
-                    {
-                        var facet = new FacetKeyValue<string>()
-                        {
-                            Name = ((JProperty)item).Name,
-                            Data = ((JProperty)(item)).Value["buckets"]
-                                .ToDictionary(
-                                    k => k["val"].ToObject<string>(),
-                                    v => v["count"].ToObject<long>())
-                        };
-
-                        this.Data.Add(facet);
-                    }
-                }
-
+            if (!list.Any())
+            {
                 return;
             }
 
-            throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+            var facets = list
+                .Select(item => new FacetKeyValue<string>()
+                {
+                    Name = ((JProperty)item).Name,
+                    Data = ((JProperty)(item)).Value["buckets"]
+                        .ToDictionary(
+                            k => k["val"].ToObject<string>(),
+                            v => v["count"].ToObject<long>())
+                });
+
+            this.Data.AddRange(facets);
         }
 
         public List<FacetKeyValue<string>> Data { get; set; }

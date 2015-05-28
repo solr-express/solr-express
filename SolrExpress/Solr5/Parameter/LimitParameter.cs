@@ -3,9 +3,9 @@ using SolrExpress.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public class LimitParameter : IQueryParameter
+    public sealed class LimitParameter : IQueryParameter
     {
-        private int _value;
+        private readonly int _value;
 
         /// <summary>
         /// Create a limit parameter
@@ -19,7 +19,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstance { get { return false; } }
+        public bool AllowMultipleInstances { get { return false; } }
 
         /// <summary>
         /// Parameter name

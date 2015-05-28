@@ -10,7 +10,7 @@ namespace SolrExpress.Query
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        bool AllowMultipleInstance { get; }
+        bool AllowMultipleInstances { get; }
 
         /// <summary>
         /// Parameter name

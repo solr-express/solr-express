@@ -10,26 +10,16 @@ namespace SolrExpress.Solr5
     /// </summary>
     public class Provider : IProvider
     {
-        #region Constructor
+        private readonly string _solrHost;
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="systemConfiguration">System configuration</param>
+        /// <param name="solrHost">Solr host address</param>
         public Provider(string solrHost)
         {
             this._solrHost = solrHost;
         }
-
-        #endregion Constructor
-
-        #region Private attributes
-
-        private string _solrHost;
-
-        #endregion Private attributes
-
-        #region Public methods
 
         /// <summary>
         /// Execute the informated uri and return the result of the request
@@ -54,7 +44,5 @@ namespace SolrExpress.Solr5
 
             return response.Content;
         }
-
-        #endregion Public methods
     }
 }

@@ -4,7 +4,7 @@ namespace SolrExpress.Query
 {
     public class SolrQueryResult
     {
-        private JObject _jsonObject;
+        private readonly JObject _jsonObject;
 
         /// <summary>
         /// Default constructor of the class
@@ -21,7 +21,7 @@ namespace SolrExpress.Query
         /// <typeparam name="T">Concrect class than implements the IResultBuilder interface</typeparam>
         /// <returns>Instance of T ready to be used</returns>
         public T Get<T>(T builder)
-            where T : IResultBuilder, new()
+            where T : IResultBuilder
         {
             builder.Execute(this._jsonObject);
 

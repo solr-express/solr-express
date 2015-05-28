@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public class FilterParameter<T> : IQueryParameter
+    public sealed class FilterParameter<T> : IQueryParameter
         where T : IDocument
     {
-        private string _value;
+        private readonly string _value;
 
         /// <summary>
         /// Create a filter parameter
@@ -28,7 +28,7 @@ namespace SolrExpress.Solr5.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public FilterParameter(Expression<Func<T, object>> expression, DateTime? from, DateTime? to)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
@@ -45,7 +45,7 @@ namespace SolrExpress.Solr5.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public FilterParameter(Expression<Func<T, object>> expression, int? from, int? to)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
@@ -62,7 +62,7 @@ namespace SolrExpress.Solr5.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public FilterParameter(Expression<Func<T, object>> expression, double? from, double? to)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
@@ -79,7 +79,7 @@ namespace SolrExpress.Solr5.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public FilterParameter(Expression<Func<T, object>> expression, decimal? from, decimal? to)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
@@ -94,7 +94,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstance { get { return true; } }
+        public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
         /// Parameter name

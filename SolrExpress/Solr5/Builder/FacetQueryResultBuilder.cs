@@ -8,7 +8,7 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet query data builder
     /// </summary>
-    public class FacetQueryResultBuilder : IResultBuilder
+    public sealed class FacetQueryResultBuilder : IResultBuilder
     {
         /// <summary>
         /// Execute the parse of the JSON object in facet query list
@@ -18,11 +18,14 @@ namespace SolrExpress.Solr5.Builder
         {
             if (jsonObject["facets"] != null)
             {
-                var list = jsonObject["facets"].Children().Where(q =>
-                    q is JProperty &&
-                    q.Values().Count() == 1 &&
-                    ((JProperty)q).Value is JObject &&
-                    ((JObject)((JProperty)q).Value)["count"] != null);
+                var list = jsonObject["facets"]
+                    .Children()
+                    .Where(q =>
+                        q is JProperty &&
+                        q.Values().Count() == 1 &&
+                        ((JProperty)q).Value is JObject &&
+                        ((JObject)((JProperty)q).Value)["count"] != null)
+                    .ToList();
 
                 if (list.Any())
                 {

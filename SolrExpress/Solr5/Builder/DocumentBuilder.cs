@@ -8,7 +8,7 @@ namespace SolrExpress.Solr5.Builder
     /// Documents data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
-    public class DocsResultBuilder<TDocument> : IResultBuilder
+    public sealed class DocumentBuilder<TDocument> : IResultBuilder
         where TDocument : IDocument
     {
         /// <summary>
@@ -17,14 +17,12 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if ((jsonObject["response"] != null) && (jsonObject["response"]["docs"] != null))
+            if ((jsonObject["response"] == null) || (jsonObject["response"]["docs"] == null))
             {
-                this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
-
-                return;
+                throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+            this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
         }
 
         /// <summary>

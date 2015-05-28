@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public class FieldsParameter<T> : IQueryParameter
+    public sealed class FieldsParameter<T> : IQueryParameter
         where T : IDocument
     {
-        private string _value;
+        private readonly string _value;
 
         public FieldsParameter()
         {
@@ -28,7 +28,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstance { get { return true; } }
+        public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
         /// Parameter name

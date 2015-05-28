@@ -14,17 +14,17 @@ namespace SolrExpress.Query
         /// <summary>
         /// List of the parameters arranged in the queryable class
         /// </summary>
-        private SortedDictionary<string, List<IQueryParameter>> _parameterGroups = new SortedDictionary<string, List<IQueryParameter>>();
+        private readonly SortedDictionary<string, List<IQueryParameter>> _parameterGroups = new SortedDictionary<string, List<IQueryParameter>>();
+
+        /// <summary>
+        /// Provider used to resolve the expression
+        /// </summary>
+        private readonly IProvider _provider;
 
         /// <summary>
         /// Expression created basead in the commands triggereds
         /// </summary>
         private string _expression;
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        private IProvider _provider;
 
         /// <summary>
         /// Default constructor of the class
@@ -58,16 +58,16 @@ namespace SolrExpress.Query
         /// </summary>
         /// <param name="parameter">The parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Add(IQueryParameter parameter)
+        public SolrQueryable<TDocument> Parameter(IQueryParameter parameter)
         {
             if (!this._parameterGroups.ContainsKey(parameter.ParameterName))
             {
                 this._parameterGroups.Add(parameter.ParameterName, new List<IQueryParameter>());
             }
 
-            if (this._parameterGroups[parameter.ParameterName].Any() && !parameter.AllowMultipleInstance)
+            if (this._parameterGroups[parameter.ParameterName].Any() && !parameter.AllowMultipleInstances)
             {
-                throw new AllowMultipleInstanceOfParameterType(parameter.ParameterName);
+                throw new AllowMultipleInstanceOfParameterTypeException(parameter.ParameterName);
             }
 
             this._parameterGroups[parameter.ParameterName].Add(parameter);

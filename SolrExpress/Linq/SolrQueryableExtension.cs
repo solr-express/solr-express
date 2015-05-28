@@ -20,7 +20,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> FacetField<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, bool? sortAscending = true)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FacetFieldParameter<TDocument>(expression, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetFieldParameter<TDocument>(expression, sortType, sortAscending));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, string query, SolrFacetSortType? sortType = null, bool? sortAscending = true)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FacetQueryParameter(aliasName, query, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetQueryParameter(aliasName, query, sortType, sortAscending));
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, bool? sortAscending = null)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FacetRangeParameter<TDocument>(expression, aliasName, gap, start, end, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetRangeParameter<TDocument>(expression, aliasName, gap, start, end, sortType, sortAscending));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Fields<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FieldsParameter<TDocument>(expression));
+            return solrQueryable.Parameter(new Solr5.Parameter.FieldsParameter<TDocument>(expression));
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FilterParameter<TDocument>(expression, value));
+            return solrQueryable.Parameter(new Solr5.Parameter.FilterParameter<TDocument>(expression, value));
         }
 
         /// <summary>
@@ -83,11 +83,11 @@ namespace SolrExpress.Linq
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, DateTime? from, DateTime? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
+            return solrQueryable.Parameter(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
         }
 
         /// <summary>
@@ -96,11 +96,11 @@ namespace SolrExpress.Linq
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, int? from, int? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
+            return solrQueryable.Parameter(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
         }
 
         /// <summary>
@@ -109,11 +109,11 @@ namespace SolrExpress.Linq
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, double? from, double? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
+            return solrQueryable.Parameter(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
         }
 
         /// <summary>
@@ -122,11 +122,11 @@ namespace SolrExpress.Linq
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
-        /// <param name="from">From value in a range filter</param>
+        /// <param name="to">To value in a range filter</param>
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, decimal? from, decimal? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
+            return solrQueryable.Parameter(new Solr5.Parameter.FilterParameter<TDocument>(expression, from, to));
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Limit<TDocument>(this SolrQueryable<TDocument> solrQueryable, int value)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.LimitParameter(value));
+            return solrQueryable.Parameter(new Solr5.Parameter.LimitParameter(value));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Offset<TDocument>(this SolrQueryable<TDocument> solrQueryable, int value)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.OffsetParameter(value));
+            return solrQueryable.Parameter(new Solr5.Parameter.OffsetParameter(value));
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.QueryParameter<TDocument>(value));
+            return solrQueryable.Parameter(new Solr5.Parameter.QueryParameter<TDocument>(value));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.QueryParameter<TDocument>(value));
+            return solrQueryable.Parameter(new Solr5.Parameter.QueryParameter<TDocument>(value));
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Sort<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, bool ascendent)
             where TDocument : IDocument
         {
-            return solrQueryable.Add(new Solr5.Parameter.SortParameter<TDocument>(expression, ascendent));
+            return solrQueryable.Parameter(new Solr5.Parameter.SortParameter<TDocument>(expression, ascendent));
         }
     }
 }

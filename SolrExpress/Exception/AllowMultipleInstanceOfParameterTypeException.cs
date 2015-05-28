@@ -1,8 +1,8 @@
 ﻿namespace SolrExpress.Exception
 {
-    public class AllowMultipleInstanceOfParameterType : System.Exception
+    public class AllowMultipleInstanceOfParameterTypeException : System.Exception
     {
-        public AllowMultipleInstanceOfParameterType(string parameterName) :
+        public AllowMultipleInstanceOfParameterTypeException(string parameterName) :
             base(string.Concat("Parameter \"", parameterName, "\" is not allowed because another instance of the same type was add"))
         {
         }

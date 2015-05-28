@@ -8,10 +8,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public class FacetRangeParameter<T> : IQueryParameter
+    public sealed class FacetRangeParameter<T> : IQueryParameter
       where T : IDocument
     {
-        private JProperty _value;
+        private readonly JProperty _value;
 
         /// <summary>
         /// Create a facet parameter
@@ -27,8 +27,10 @@ namespace SolrExpress.Solr5.Parameter
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
 
-            var array = new List<JProperty>();
-            array.Add(new JProperty("field", fieldName));
+            var array = new List<JProperty>
+            {
+                new JProperty("field", fieldName)
+            };
 
             if (!string.IsNullOrWhiteSpace(gap))
             {
@@ -59,7 +61,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstance { get { return true; } }
+        public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
         /// Parameter name
