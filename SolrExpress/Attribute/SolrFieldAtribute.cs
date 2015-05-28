@@ -5,14 +5,12 @@ namespace SolrExpress.Attribute
     /// <summary>
     /// Attribute used to indicate field configurations
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class SolrFieldAtribute : System.Attribute
     {
-        public SolrFieldAtribute(string label, bool index, bool stored)
+        public SolrFieldAtribute(string label)
         {
-            this.Index = index;
             this.Label = label;
-            this.Stored = stored;
         }
 
         public string Label { get; set; }

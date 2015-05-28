@@ -63,6 +63,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Helper\UtilHelperTests.cs" />
     <Compile Include="Query\ResultDataBuilderTests.cs" />
     <Compile Include="Query\SolrQueryableTests.cs" />
     <Compile Include="Solr5\Builder\FacetFieldResultBuilderTests.cs" />

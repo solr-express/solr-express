@@ -1,7 +1,9 @@
 ﻿using SolrExpress.Query;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using SolrExpress.Attribute;
 
 namespace SolrExpress.Helper
 {
@@ -10,7 +12,16 @@ namespace SolrExpress.Helper
     /// </summary>
     internal static class UtilHelper
     {
-        #region Private methods
+        /// <summary>
+        /// Returns the SolrFieldAtribute associete with the informed property
+        /// </summary>
+        /// <param name="propertyInfo">Property information to find the attribute</param>
+        /// <returns>SolrFieldAtribute associete with the informed property, otherwise null</returns>
+        private static SolrFieldAtribute GetSolrFieldAtributeFrompropertyInfo(PropertyInfo propertyInfo)
+        {
+            var attrs = propertyInfo.GetCustomAttributes(true);
+            return (SolrFieldAtribute)attrs.FirstOrDefault(q => q is SolrFieldAtribute);
+        }
 
         /// <summary>
         /// Returns the property name of the indicated expression
@@ -25,6 +36,7 @@ namespace SolrExpress.Helper
 
             PropertyInfo propertyInfo;
             MemberExpression memberExpression;
+            SolrFieldAtribute solrFieldAtribute;
 
             switch (lambda.Body.NodeType)
             {
@@ -39,7 +51,9 @@ namespace SolrExpress.Helper
                         throw new InvalidOperationException("Expression must be a property reference.");
                     }
 
-                    return propertyInfo.Name;
+                    solrFieldAtribute = UtilHelper.GetSolrFieldAtributeFrompropertyInfo(propertyInfo);
+
+                    return solrFieldAtribute == null ? propertyInfo.Name : solrFieldAtribute.Label;
                 case ExpressionType.MemberAccess:
                     memberExpression = (MemberExpression)lambda.Body;
 
@@ -49,12 +63,12 @@ namespace SolrExpress.Helper
                         throw new InvalidOperationException("Expression must be a property reference.");
                     }
 
-                    return propertyInfo.Name;
+                    solrFieldAtribute = UtilHelper.GetSolrFieldAtributeFrompropertyInfo(propertyInfo);
+
+                    return solrFieldAtribute == null ? propertyInfo.Name : solrFieldAtribute.Label;
             }
 
             throw new InvalidOperationException("Unknown to resolve the expression");
         }
-
-        #endregion Private methods
     }
 }
