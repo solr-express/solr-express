@@ -22,8 +22,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, bool? sortAscending = null)
+        public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
 
@@ -47,10 +46,12 @@ namespace SolrExpress.Solr5.Parameter
 
             array.Add(new JProperty("other", new JArray("before", "after")));
 
-            if (sortType.HasValue && sortAscending.HasValue)
+            if (sortType.HasValue)
             {
-                var typeName = sortType.Value == SolrFacetSortType.Name ? "index" : "count";
-                var sortName = sortAscending.Value ? "asc" : "desc";
+                string typeName;
+                string sortName;
+
+                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }

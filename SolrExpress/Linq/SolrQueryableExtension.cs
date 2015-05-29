@@ -16,11 +16,10 @@ namespace SolrExpress.Linq
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetField<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, bool? sortAscending = true)
+        public static SolrQueryable<TDocument> FacetField<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new Solr5.Parameter.FacetFieldParameter<TDocument>(expression, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetFieldParameter<TDocument>(expression, sortType));
         }
 
         /// <summary>
@@ -30,11 +29,10 @@ namespace SolrExpress.Linq
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, string query, SolrFacetSortType? sortType = null, bool? sortAscending = true)
+        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, string query, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new Solr5.Parameter.FacetQueryParameter(aliasName, query, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetQueryParameter(aliasName, query, sortType));
         }
 
         /// <summary>
@@ -47,11 +45,10 @@ namespace SolrExpress.Linq
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, bool? sortAscending = null)
+        public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new Solr5.Parameter.FacetRangeParameter<TDocument>(expression, aliasName, gap, start, end, sortType, sortAscending));
+            return solrQueryable.Parameter(new Solr5.Parameter.FacetRangeParameter<TDocument>(expression, aliasName, gap, start, end, sortType));
         }
 
         /// <summary>

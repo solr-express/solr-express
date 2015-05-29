@@ -18,8 +18,7 @@ namespace SolrExpress.Solr5.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, bool? sortAscending = true)
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
         {
             var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
 
@@ -28,10 +27,12 @@ namespace SolrExpress.Solr5.Parameter
                 new JProperty("field", fieldName)
             };
 
-            if (sortType.HasValue && sortAscending.HasValue)
+            if (sortType.HasValue)
             {
-                var typeName = sortType.Value == SolrFacetSortType.Name ? "index" : "count";
-                var sortName = sortAscending.Value ? "asc" : "desc";
+                string typeName;
+                string sortName;
+
+                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }

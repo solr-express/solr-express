@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using SolrExpress.Attribute;
+using SolrExpress.Enumerator;
 
 namespace SolrExpress.Helper
 {
@@ -69,6 +70,38 @@ namespace SolrExpress.Helper
             }
 
             throw new InvalidOperationException("Unknown to resolve the expression");
+        }
+
+        /// <summary>
+        /// Get the sort type and direction
+        /// </summary>
+        /// <param name="solrFacetSortType">Type used in match</param>
+        /// <param name="typeName">Type name</param>
+        /// <param name="sortName">Sort direction</param>
+        internal static void GetSolrFacetSort(SolrFacetSortType solrFacetSortType, out string typeName, out string sortName)
+        {
+            switch (solrFacetSortType)
+            {
+                case SolrFacetSortType.NameAsc:
+                    typeName = "index";
+                    sortName = "asc";
+                    break;
+                case SolrFacetSortType.NameDesc:
+                    typeName = "index";
+                    sortName = "desc";
+                    break;
+                case SolrFacetSortType.QuantityAsc:
+                    typeName = "count";
+                    sortName = "asc";
+                    break;
+                case SolrFacetSortType.QuantityDesc:
+                    typeName = "count";
+                    sortName = "desc";
+                    break;
+                default:
+                    throw new ArgumentException("sortType");
+                    break;
+            }
         }
     }
 }

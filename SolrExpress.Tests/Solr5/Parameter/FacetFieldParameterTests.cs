@@ -63,7 +63,7 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.Quantity, false);
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.QuantityDesc);
 
             // Act
             parameter.Execute(jObject);

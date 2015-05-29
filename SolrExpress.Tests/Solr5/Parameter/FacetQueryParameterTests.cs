@@ -63,7 +63,7 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", "avg('Y')", SolrFacetSortType.Quantity, false);
+            var parameter = new FacetQueryParameter("X", "avg('Y')", SolrFacetSortType.QuantityDesc);
 
             // Act
             parameter.Execute(jObject);

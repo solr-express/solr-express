@@ -2,6 +2,8 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Enumerator;
 using SolrExpress.Query;
+using System;
+using SolrExpress.Helper;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -15,18 +17,19 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="sortAscending">Sort ascending the result of the facet</param>
-        public FacetQueryParameter(string aliasName, string query, SolrFacetSortType? sortType = null, bool? sortAscending = true)
+        public FacetQueryParameter(string aliasName, string query, SolrFacetSortType? sortType = null)
         {
             var array = new List<JProperty>
             {
                 new JProperty("q", query)
             };
 
-            if (sortType.HasValue && sortAscending.HasValue)
+            if (sortType.HasValue)
             {
-                var typeName = sortType.Value == SolrFacetSortType.Name ? "index" : "count";
-                var sortName = sortAscending.Value ? "asc" : "desc";
+                string typeName;
+                string sortName;
+
+                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
