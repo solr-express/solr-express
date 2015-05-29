@@ -82,6 +82,7 @@
     <Compile Include="Solr5\Parameter\LimitParameter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Solr5\Parameter\MinimumShouldMatchParameter.cs" />
     <Compile Include="Solr5\Parameter\OffsetParameter.cs">
       <SubType>Code</SubType>
     </Compile>
