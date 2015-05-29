@@ -84,10 +84,8 @@ namespace SolrExpress.Query
             this.ProcessParameters();
 
             var json = this._provider.Execute(this._expression);
-
-            var jsonObject = JObject.Parse(json);
-
-            return new SolrQueryResult(jsonObject);
+            
+            return new SolrQueryResult(json);
         }
     }
 }

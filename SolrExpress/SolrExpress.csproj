@@ -58,6 +58,8 @@
     <Compile Include="Linq\SolrQueryableExtension.cs" />
     <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\IConvertJsonObject.cs" />
+    <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Query\IDocument.cs" />
     <Compile Include="Query\IProvider.cs" />
     <Compile Include="Query\IQueryParameter.cs" />
