@@ -83,6 +83,7 @@
     <Compile Include="Solr5\Parameter\OffsetParameter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Solr5\Parameter\QueryFieldParamater.cs" />
     <Compile Include="Solr5\Parameter\QueryParameter.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -76,6 +76,7 @@
     <Compile Include="Solr5\Parameter\FilterParameterTests.cs" />
     <Compile Include="Solr5\Parameter\LimitParameterTests.cs" />
     <Compile Include="Solr5\Parameter\OffsetParameterTests.cs" />
+    <Compile Include="Solr5\Parameter\QueryFieldParamaterTests.cs" />
     <Compile Include="Solr5\Parameter\QueryParameterTests.cs" />
     <Compile Include="Solr5\Parameter\SortParameterTests.cs" />
     <Compile Include="TestDocument.cs" />
