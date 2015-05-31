@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Exception;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace SolrExpress.Query
