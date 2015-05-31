@@ -31,21 +31,16 @@ namespace SolrExpress.Solr5.Parameter
         public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
-        /// Parameter name
-        /// </summary>
-        public string ParameterName { get { return "fields"; } }
-
-        /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var jArray = (JArray)jObject[this.ParameterName] ?? new JArray();
+            var jArray = (JArray)jObject["fields"] ?? new JArray();
 
             jArray.Add(this._value);
 
-            jObject[this.ParameterName] = jArray;
+            jObject["fields"] = jArray;
         }
 
         public void Set(Expression<Func<T, object>> expression)

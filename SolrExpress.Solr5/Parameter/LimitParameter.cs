@@ -22,17 +22,12 @@ namespace SolrExpress.Solr5.Parameter
         public bool AllowMultipleInstances { get { return false; } }
 
         /// <summary>
-        /// Parameter name
-        /// </summary>
-        public string ParameterName { get { return "limit"; } }
-
-        /// <summary>
         /// Execute the creation of the parameter "limit"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            jObject[this.ParameterName] = new JValue(_value);
+            jObject["limit"] = new JValue(_value);
         }
     }
 }

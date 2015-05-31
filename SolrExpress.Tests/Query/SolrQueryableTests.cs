@@ -21,7 +21,6 @@ namespace SolrExpress.Tests.Query
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IQueryParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            mockParameter.Setup(q => q.ParameterName).Returns("mock");
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
             queryable.Parameter(mockParameter.Object);
 

@@ -22,21 +22,16 @@ namespace SolrExpress.Solr5.Parameter
         public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
-        /// Parameter name
-        /// </summary>
-        public string ParameterName { get { return "params"; } }
-
-        /// <summary>
         /// Execute the creation of the parameter "query field"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var facetObject = (JObject)jObject[this.ParameterName] ?? new JObject();
+            var facetObject = (JObject)jObject["params"] ?? new JObject();
 
             facetObject.Add(this._value);
 
-            jObject[this.ParameterName] = facetObject;
+            jObject["params"] = facetObject;
         }
     }
 }

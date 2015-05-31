@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Exception;
+using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace SolrExpress.Query
@@ -14,7 +16,7 @@ namespace SolrExpress.Query
         /// <summary>
         /// List of the parameters arranged in the queryable class
         /// </summary>
-        private readonly SortedDictionary<string, List<IQueryParameter>> _parameterGroups = new SortedDictionary<string, List<IQueryParameter>>();
+        private readonly List<IQueryParameter> _parameters = new List<IQueryParameter>();
 
         /// <summary>
         /// Provider used to resolve the expression
@@ -42,12 +44,9 @@ namespace SolrExpress.Query
         {
             var jsonObj = new JObject();
 
-            foreach (var parameterGroup in this._parameterGroups)
+            foreach (var item in this._parameters.OrderBy(q => q.GetType().ToString()))
             {
-                foreach (var parameter in parameterGroup.Value)
-                {
-                    parameter.Execute(jsonObj);
-                }
+                item.Execute(jsonObj);
             }
 
             this._expression = jsonObj.ToString();
@@ -60,21 +59,16 @@ namespace SolrExpress.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> Parameter(IQueryParameter parameter)
         {
-            if (!this._parameterGroups.ContainsKey(parameter.ParameterName))
+            if (this._parameters.Any(q => q.GetType().Equals(parameter.GetType())) && !parameter.AllowMultipleInstances)
             {
-                this._parameterGroups.Add(parameter.ParameterName, new List<IQueryParameter>());
+                throw new AllowMultipleInstanceOfParameterTypeException(parameter.ToString());
             }
 
-            if (this._parameterGroups[parameter.ParameterName].Any() && !parameter.AllowMultipleInstances)
-            {
-                throw new AllowMultipleInstanceOfParameterTypeException(parameter.ParameterName);
-            }
-
-            this._parameterGroups[parameter.ParameterName].Add(parameter);
+            this._parameters.Add(parameter);
 
             return this;
         }
-        
+
         /// <summary>
         /// Execute the search in the solr with informed parameters
         /// </summary>
@@ -84,7 +78,7 @@ namespace SolrExpress.Query
             this.ProcessParameters();
 
             var json = this._provider.Execute(this._expression);
-            
+
             return new SolrQueryResult(json);
         }
     }
