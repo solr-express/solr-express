@@ -1,31 +1,37 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.Tests;
 
 namespace SolrExpress.Tests.Solr5.Parameter
 {
     [TestClass]
-    public class QueryParameterTests
+    public class FieldsParameterTests
     {
         /// <summary>
-        /// Where   Using a QueryParameter instance
-        /// When    Invoking the method "Execute"
+        /// Where   Using a FieldsParameter instance
+        /// When    Invoking the method "Execute" using 2 instances
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void QueryParameter001()
+        public void FieldsParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""query"": ""Id:ITEM01""
+              ""fields"": [
+                ""Id"",
+                ""Score""
+              ]
             }");
             string actual;
             var jObject = new JObject();
-            var paramer = new QueryParameter<TestDocument>(q => q.Id, "ITEM01");
-            
+            var parameter1 = new FieldsParameter<TestDocument>(q => q.Id);
+            var parameter2 = new FieldsParameter<TestDocument>(q => q.Score);
+
             // Act
-            paramer.Execute(jObject);
+            parameter1.Execute(jObject);
+            parameter2.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

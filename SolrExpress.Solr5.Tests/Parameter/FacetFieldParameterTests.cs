@@ -2,41 +2,35 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Enumerator;
 using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.Tests;
 
 namespace SolrExpress.Tests.Solr5.Parameter
 {
     [TestClass]
-    public class FacetRangeParameterTests
+    public class FacetFieldParameterTests
     {
         /// <summary>
-        /// Where   Using a FacetRangeParameter instance
+        /// Where   Using a FacetFieldParameter instance
         /// When    Invoking the method "Execute" using the default arguments
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void FacetRangeParameter001()
+        public void FacetFieldParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
               ""facet"": {
-                ""X"": {
-                  ""range"": {
-                    ""field"": ""Id"",
-                    ""gap"": ""1"",
-                    ""start"": ""10"",
-                    ""end"": ""20"",
-                    ""other"": [
-                      ""before"",
-                      ""after""
-                    ]
+                ""Id"": {
+                  ""terms"": {
+                    ""field"": ""Id""
                   }
                 }
               }
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20");
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id);
 
             // Act
             parameter.Execute(jObject);
@@ -47,27 +41,20 @@ namespace SolrExpress.Tests.Solr5.Parameter
         }
 
         /// <summary>
-        /// Where   Using a FacetRangeParameter instance
+        /// Where   Using a FacetFieldParameter instance
         /// When    Invoking the method "Execute" using the sort type and direction parameters
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void FacetRangeParameter002()
+        public void FacetFieldParameter002()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
               ""facet"": {
-                ""X"": {
-                  ""range"": {
+                ""Id"": {
+                  ""terms"": {
                     ""field"": ""Id"",
-                    ""gap"": ""1"",
-                    ""start"": ""10"",
-                    ""end"": ""20"",
-                    ""other"": [
-                      ""before"",
-                      ""after""
-                    ],
                     ""sort"": {
                       ""count"": ""desc""
                     }
@@ -77,7 +64,7 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.QuantityDesc);
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.QuantityDesc);
 
             // Act
             parameter.Execute(jObject);

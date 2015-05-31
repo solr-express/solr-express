@@ -2,20 +2,21 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Exception;
 using SolrExpress.Solr5.Builder;
+using SolrExpress.Solr5.Tests;
 using System.Collections.Generic;
 
 namespace SolrExpress.Tests.Query
 {
     [TestClass]
-    public class ResultDataBuilderTests
+    public class DocumentBuilderTests
     {
         /// <summary>
-        /// Where   Using a ResultDataBuilder instance
+        /// Where   Using a DocumentBuilder instance
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void ResultDataBuilder001()
+        public void DocumentBuilder001()
         {
             // Arrange
             var jsonStr = @"
@@ -41,13 +42,13 @@ namespace SolrExpress.Tests.Query
         }
 
         /// <summary>
-        /// Where   Using a ResultDataBuilder instance
+        /// Where   Using a DocumentBuilder instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void ResultDataBuilder002()
+        public void DocumentBuilder002()
         {
             // Arrange
             var jsonStr = @"
