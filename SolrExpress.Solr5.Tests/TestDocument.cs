@@ -7,5 +7,7 @@ namespace SolrExpress.Solr5.Tests
         public string Id { get; set; }
 
         public decimal Score { get; set; }
+
+        public GeoCoordinate Spatial { get; set; }
     }
 }

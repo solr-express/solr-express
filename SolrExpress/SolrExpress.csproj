@@ -52,6 +52,7 @@
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\GeoCoordinate.cs" />
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Query\IDocument.cs" />
