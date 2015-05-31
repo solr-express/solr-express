@@ -27,11 +27,11 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var facetObject = (JObject)jObject["params"] ?? new JObject();
+            var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            facetObject.Add(this._value);
+            jObj.Add(this._value);
 
-            jObject["params"] = facetObject;
+            jObject["params"] = jObj;
         }
     }
 }

@@ -2,6 +2,7 @@
 using SolrExpress.Helper;
 using SolrExpress.Query;
 using System;
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -36,8 +37,8 @@ namespace SolrExpress.Solr5.Parameter
             this._value = string.Format(
                 "{0}:[{1} TO {2}]",
                 fieldName,
-                from == null ? from.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'") : "*",
-                to == null ? to.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'") : "*");
+                from != null ? from.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*",
+                to != null ? to.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*");
         }
 
         /// <summary>
@@ -53,8 +54,8 @@ namespace SolrExpress.Solr5.Parameter
             this._value = string.Format(
                 "{0}:[{1} TO {2}]",
                 fieldName,
-                from == null ? from.Value.ToString("0") : "*",
-                to == null ? to.Value.ToString("0") : "*");
+                from != null ? from.Value.ToString("0", CultureInfo.InvariantCulture) : "*",
+                to != null ? to.Value.ToString("0", CultureInfo.InvariantCulture) : "*");
         }
 
         /// <summary>
@@ -70,8 +71,8 @@ namespace SolrExpress.Solr5.Parameter
             this._value = string.Format(
                 "{0}:[{1} TO {2}]",
                 fieldName,
-                from == null ? from.Value.ToString("0.#") : "*",
-                to == null ? to.Value.ToString("0.#") : "*");
+                from != null ? from.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*",
+                to != null ? to.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*");
         }
 
         /// <summary>
@@ -87,8 +88,8 @@ namespace SolrExpress.Solr5.Parameter
             this._value = string.Format(
                 "{0}:[{1} TO {2}]",
                 fieldName,
-                from == null ? from.Value.ToString("0.#") : "*",
-                to == null ? to.Value.ToString("0.#") : "*");
+                from != null ? from.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*",
+                to != null ? to.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*");
         }
 
         /// <summary>
