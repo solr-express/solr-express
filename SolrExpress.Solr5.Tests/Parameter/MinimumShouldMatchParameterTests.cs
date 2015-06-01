@@ -24,10 +24,10 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var paramer = new MinimumShouldMatchParameter("75%");
+            var parameter = new MinimumShouldMatchParameter("75%");
 
             // Act
-            paramer.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

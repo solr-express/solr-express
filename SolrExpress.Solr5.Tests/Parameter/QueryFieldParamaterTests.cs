@@ -24,10 +24,10 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var paramer = new QueryFieldParamater("id^10 score~2^20");
+            var parameter = new QueryFieldParamater("id^10 score~2^20");
 
             // Act
-            paramer.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

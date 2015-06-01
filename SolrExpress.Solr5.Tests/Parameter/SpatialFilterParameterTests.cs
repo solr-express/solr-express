@@ -26,10 +26,10 @@ namespace SolrExpress.Solr5.Tests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new SpatialFilterParameter<TestDocument>(q => q.Spatial, new GeoCoordinate(-1.1, -2.2), new GeoCoordinate(5.5, 6.6));
+            var parameter = new SpatialFilterParameter<TestDocument>(new SolrExpression<TestDocument>(q => q.Spatial, new GeoCoordinate(-1.1, -2.2), new GeoCoordinate(5.5, 6.6)));
 
             // Act
-            parameter1.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

@@ -22,10 +22,10 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var paramer = new LimitParameter(10);
+            var parameter = new LimitParameter(10);
 
             // Act
-            paramer.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

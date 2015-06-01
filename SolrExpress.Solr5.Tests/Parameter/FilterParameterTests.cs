@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Query;
 using SolrExpress.Solr5.Parameter;
 using SolrExpress.Solr5.Tests;
 
@@ -26,8 +27,8 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter<TestDocument>(q => q.Id, "X");
-            var parameter2 = new FilterParameter<TestDocument>(q => q.Score, "Y");
+            var parameter1 = new FilterParameter<TestDocument>(new SolrExpression<TestDocument>(q => q.Id, "X"));
+            var parameter2 = new FilterParameter<TestDocument>(new SolrExpression<TestDocument>(q => q.Score, "Y"));
 
             // Act
             parameter1.Execute(jObject);

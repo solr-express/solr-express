@@ -1,95 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Helper;
 using SolrExpress.Query;
-using System;
-using System.Globalization;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
     public sealed class FilterParameter<T> : IQueryParameter
         where T : IDocument
     {
-        private readonly string _value;
+        private readonly SolrExpression _expression;
 
         /// <summary>
         /// Create a filter parameter
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="expression">Expression used to create the SOLR query</param>
         /// <param name="value">Value of the filter</param>
-        public FilterParameter(Expression<Func<T, object>> expression, string value)
+        public FilterParameter(SolrExpression<T> expression)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Concat(fieldName, ":", value);
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public FilterParameter(Expression<Func<T, object>> expression, DateTime? from, DateTime? to)
-        {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Format(
-                "{0}:[{1} TO {2}]",
-                fieldName,
-                from != null ? from.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*",
-                to != null ? to.Value.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*");
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public FilterParameter(Expression<Func<T, object>> expression, int? from, int? to)
-        {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Format(
-                "{0}:[{1} TO {2}]",
-                fieldName,
-                from != null ? from.Value.ToString("0", CultureInfo.InvariantCulture) : "*",
-                to != null ? to.Value.ToString("0", CultureInfo.InvariantCulture) : "*");
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public FilterParameter(Expression<Func<T, object>> expression, double? from, double? to)
-        {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Format(
-                "{0}:[{1} TO {2}]",
-                fieldName,
-                from != null ? from.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*",
-                to != null ? to.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*");
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public FilterParameter(Expression<Func<T, object>> expression, decimal? from, decimal? to)
-        {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            this._value = string.Format(
-                "{0}:[{1} TO {2}]",
-                fieldName,
-                from != null ? from.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*",
-                to != null ? to.Value.ToString("0.#", CultureInfo.InvariantCulture) : "*");
+            this._expression = expression;
         }
 
         /// <summary>
@@ -105,7 +31,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(this._value);
+            jArray.Add(this._expression.Resolve());
 
             jObject["filter"] = jArray;
         }

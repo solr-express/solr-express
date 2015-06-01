@@ -72,7 +72,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(expression, value));
+            var solrExpression = new SolrExpression<TDocument>(expression, value);
+            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -85,7 +86,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, DateTime? from, DateTime? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(expression, from, to));
+            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
+            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -98,7 +100,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, int? from, int? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(expression, from, to));
+            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
+            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -111,7 +114,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, double? from, double? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(expression, from, to));
+            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
+            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -124,7 +128,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, decimal? from, decimal? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(expression, from, to));
+            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
+            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -137,7 +142,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> SpatialFilter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, GeoCoordinate? from, GeoCoordinate? to)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new SpatialFilterParameter<TDocument>(expression, from, to));
+            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
+            return solrQueryable.Parameter(new SpatialFilterParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -170,7 +176,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new QueryParameter<TDocument>(value));
+            var solrExpression = new SolrExpression(value);
+            return solrQueryable.Parameter(new QueryParameter<TDocument>(solrExpression));
         }
 
         /// <summary>
@@ -182,7 +189,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new QueryParameter<TDocument>(value));
+            var solrExpression = new SolrExpression<TDocument>(expression, value);
+            return solrQueryable.Parameter(new QueryParameter<TDocument>(solrExpression));
         }
 
         /// <summary>

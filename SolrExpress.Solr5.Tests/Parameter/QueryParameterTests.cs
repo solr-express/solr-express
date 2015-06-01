@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Query;
 using SolrExpress.Solr5.Parameter;
 using SolrExpress.Solr5.Tests;
 
@@ -23,10 +24,10 @@ namespace SolrExpress.Tests.Solr5.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var paramer = new QueryParameter<TestDocument>(q => q.Id, "ITEM01");
-            
+            var parameter = new QueryParameter<TestDocument>(new SolrExpression<TestDocument>(q => q.Id, "ITEM01"));
+
             // Act
-            paramer.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

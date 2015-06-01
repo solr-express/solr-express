@@ -1,33 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Helper;
 using SolrExpress.Query;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
     public sealed class SpatialFilterParameter<T> : IQueryParameter
             where T : IDocument
     {
-        private readonly JProperty _value;
+        private readonly SolrExpression _expression;
 
         /// <summary>
         /// Create a spatial filter parameter
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public SpatialFilterParameter(Expression<Func<T, object>> expression, GeoCoordinate? from, GeoCoordinate? to)
+        /// <param name="expression">Expression used to create the SOLR query</param>
+        /// <param name="value">Value of the filter</param>
+        public SpatialFilterParameter(SolrExpression<T> expression)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
-
-            var query = string.Format(
-                "{0}:[{1} TO {2}]",
-                fieldName,
-                from != null ? from.Value.ToString() : "*",
-                to != null ? to.Value.ToString() : "*");
-
-            this._value = new JProperty("fq", query);
+            this._expression = expression;
         }
 
         /// <summary>
@@ -43,7 +31,9 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            jObj.Add(this._value);
+            var jProperty = new JProperty("fq", this._expression.Resolve());
+
+            jObj.Add(jProperty);
 
             jObject["params"] = jObj;
         }
