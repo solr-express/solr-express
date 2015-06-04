@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class SortParameter<T> : IQueryParameter
+    public sealed class SortParameter<T> : IParameter
         where T : IDocument
     {
         private readonly string _value;

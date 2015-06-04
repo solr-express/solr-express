@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class OffsetParameter : IQueryParameter
+    public sealed class OffsetParameter : IParameter
     {
         private readonly int _value;
 

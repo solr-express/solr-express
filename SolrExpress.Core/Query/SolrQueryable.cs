@@ -14,7 +14,7 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// List of the parameters arranged in the queryable class
         /// </summary>
-        private readonly List<IQueryParameter> _parameters = new List<IQueryParameter>();
+        private readonly List<IParameter> _parameters = new List<IParameter>();
 
         /// <summary>
         /// Provider used to resolve the expression
@@ -55,7 +55,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="parameter">The parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Parameter(IQueryParameter parameter)
+        public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
             if (this._parameters.Any(q => q.GetType().Equals(parameter.GetType())) && !parameter.AllowMultipleInstances)
             {

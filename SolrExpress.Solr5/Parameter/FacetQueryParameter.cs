@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetQueryParameter : IQueryParameter
+    public sealed class FacetQueryParameter : IParameter
     {
         private readonly JProperty _value;
 

@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class QueryFieldParamater : IQueryParameter
+    public sealed class QueryFieldParamater : IParameter
     {
         private readonly JProperty _value;
 

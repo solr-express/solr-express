@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FilterParameter<T> : IQueryParameter
+    public sealed class FilterParameter<T> : IParameter
         where T : IDocument
     {
         private readonly SolrExpression _expression;

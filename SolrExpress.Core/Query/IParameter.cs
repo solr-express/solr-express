@@ -3,9 +3,9 @@
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Signatures to use in solr query parameter
+    /// Signatures to use in solr parameter
     /// </summary>
-    public interface IQueryParameter
+    public interface IParameter
     {
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
