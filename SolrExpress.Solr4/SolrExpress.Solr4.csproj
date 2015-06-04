@@ -52,17 +52,17 @@
     <Compile Include="Provider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SolrExpress\SolrExpress.csproj">
-      <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
-      <Name>SolrExpress</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Builder\" />
     <Folder Include="Parameter\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
+      <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
+      <Name>SolrExpress.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

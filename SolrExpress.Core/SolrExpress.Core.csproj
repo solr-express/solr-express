@@ -7,8 +7,8 @@
     <ProjectGuid>{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SolrExpress</RootNamespace>
-    <AssemblyName>SolrExpress</AssemblyName>
+    <RootNamespace>SolrExpress.Core</RootNamespace>
+    <AssemblyName>SolrExpress.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Query;
+using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {

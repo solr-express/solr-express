@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Attribute
+namespace SolrExpress.Core.Attribute
 {
     /// <summary>
     /// Attribute used to indicate field configurations

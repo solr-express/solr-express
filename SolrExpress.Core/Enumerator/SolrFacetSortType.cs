@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Enumerator
+﻿namespace SolrExpress.Core.Enumerator
 {
     /// <summary>
     /// Sort's type of the facet result

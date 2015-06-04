@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Exception;
+using SolrExpress.Core.Exception;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Query
+namespace SolrExpress.Core.Query
 {
     /// <summary>
     /// SOLR queryable

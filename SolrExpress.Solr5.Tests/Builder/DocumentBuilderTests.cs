@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Exception;
+using SolrExpress.Core.Exception;
 using SolrExpress.Solr5.Builder;
 using SolrExpress.Solr5.Tests;
 using System.Collections.Generic;

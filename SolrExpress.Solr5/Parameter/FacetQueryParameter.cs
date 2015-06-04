@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-using SolrExpress.Enumerator;
-using SolrExpress.Query;
-using System;
-using SolrExpress.Helper;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Parameter
 {

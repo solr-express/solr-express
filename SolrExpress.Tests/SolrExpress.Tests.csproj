@@ -68,12 +68,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SolrExpress\SolrExpress.csproj">
+    <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
       <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
-      <Name>SolrExpress</Name>
+      <Name>SolrExpress.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Query;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Query;
 using System;
 
 namespace SolrExpress.Solr5.Builder
@@ -27,7 +28,7 @@ namespace SolrExpress.Solr5.Builder
                 return;
             }
 
-            throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+            throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
         /// <summary>

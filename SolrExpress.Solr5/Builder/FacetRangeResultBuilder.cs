@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Query;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,7 +131,7 @@ namespace SolrExpress.Solr5.Builder
                 return;
             }
 
-            throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+            throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
         public List<FacetKeyValue<FacetRange>> Data { get; set; }

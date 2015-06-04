@@ -79,13 +79,13 @@
     <Compile Include="TestDocument.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
+      <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
+      <Name>SolrExpress.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SolrExpress.Solr5\SolrExpress.Solr5.csproj">
       <Project>{3b679214-5e64-44ce-9188-d692f2371709}</Project>
       <Name>SolrExpress.Solr5</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SolrExpress\SolrExpress.csproj">
-      <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
-      <Name>SolrExpress</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

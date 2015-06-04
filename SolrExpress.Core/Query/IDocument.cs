@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Query
+﻿namespace SolrExpress.Core.Query
 {
     /// <summary>
     /// Signatures to use in all SOLR documents

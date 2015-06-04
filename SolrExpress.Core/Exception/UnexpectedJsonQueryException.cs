@@ -1,8 +1,8 @@
 ﻿using System.Text;
 
-namespace SolrExpress.Exception
+namespace SolrExpress.Core.Exception
 {
-    public class UnexpectedJsonFormatException : System.Exception
+    public class UnexpectedJsonQueryException : System.Exception
     {
         /// <summary>
         /// Get the exception message
@@ -12,7 +12,7 @@ namespace SolrExpress.Exception
         private static string GetExceptionMessage(string json)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("The informed JSON string is unexpected in the use of the parse");
+            sb.AppendLine("The informed JSON string is unexpected in the use of the query");
             sb.AppendLine("The informed JSON string was:");
             sb.AppendLine(json);
 
@@ -23,8 +23,8 @@ namespace SolrExpress.Exception
         /// Default constructor of the class
         /// </summary>
         /// <param name="json">Unexpected JSON string</param>
-        public UnexpectedJsonFormatException(string json)
-            : base(UnexpectedJsonFormatException.GetExceptionMessage(json))
+        public UnexpectedJsonQueryException(string json)
+            : base(UnexpectedJsonQueryException.GetExceptionMessage(json))
         {
         }
     }

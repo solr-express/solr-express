@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Query;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Builder
@@ -19,7 +20,7 @@ namespace SolrExpress.Solr5.Builder
         {
             if ((jsonObject["response"] == null) || (jsonObject["response"]["docs"] == null))
             {
-                throw new Exception.UnexpectedJsonFormatException(jsonObject.ToString());
+                throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
             this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();

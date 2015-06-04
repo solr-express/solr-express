@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress", "SolrExpress\SolrExpress.csproj", "{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Tests", "SolrExpress.Tests\SolrExpress.Tests.csproj", "{C0A6C5A5-9DEF-407B-A0E8-23E3ADFCDAB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D817D389-3C0C-4ED5-BA42-2467299B64D3}"
@@ -22,16 +20,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5.Tests", "SolrExpress.Solr5.Tests\SolrExpress.Solr5.Tests.csproj", "{F4D28571-2DCC-401D-A2BD-43D828D91594}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Core", "SolrExpress.Core\SolrExpress.Core.csproj", "{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C0A6C5A5-9DEF-407B-A0E8-23E3ADFCDAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0A6C5A5-9DEF-407B-A0E8-23E3ADFCDAB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0A6C5A5-9DEF-407B-A0E8-23E3ADFCDAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -52,6 +48,10 @@ Global
 		{F4D28571-2DCC-401D-A2BD-43D828D91594}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4D28571-2DCC-401D-A2BD-43D828D91594}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4D28571-2DCC-401D-A2BD-43D828D91594}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BE2CF22-C52A-4518-B3C6-C7C6A25E63A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

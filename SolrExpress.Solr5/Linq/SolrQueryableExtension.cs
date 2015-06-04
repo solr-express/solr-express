@@ -1,5 +1,5 @@
-﻿using SolrExpress.Enumerator;
-using SolrExpress.Query;
+﻿using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
 using System;
 using System.Linq.Expressions;

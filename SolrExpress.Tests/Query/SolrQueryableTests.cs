@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SolrExpress.Exception;
-using SolrExpress.Query;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Query;
 
 namespace SolrExpress.Tests.Query
 {

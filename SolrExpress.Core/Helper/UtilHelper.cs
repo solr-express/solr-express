@@ -1,12 +1,12 @@
-﻿using SolrExpress.Query;
+﻿using SolrExpress.Core.Attribute;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Query;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using SolrExpress.Attribute;
-using SolrExpress.Enumerator;
 
-namespace SolrExpress.Helper
+namespace SolrExpress.Core.Helper
 {
     /// <summary>
     /// Helper class use in the SOLR Query core

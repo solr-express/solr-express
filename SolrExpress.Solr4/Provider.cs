@@ -1,6 +1,6 @@
 ﻿using RestSharp;
-using SolrExpress.Exception;
-using SolrExpress.Query;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Query;
 using System.Net;
 
 namespace SolrExpress.Solr4

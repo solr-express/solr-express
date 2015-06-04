@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace SolrExpress.Query
+namespace SolrExpress.Core.Query
 {
     public struct GeoCoordinate
     {

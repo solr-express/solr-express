@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using SolrExpress.Attribute;
-using SolrExpress.Helper;
-using SolrExpress.Query;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SolrExpress.Core.Attribute;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
+using System;
 
 namespace SolrExpress.Tests.Helper
 {

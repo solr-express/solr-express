@@ -1,10 +1,10 @@
-﻿using SolrExpress.Helper;
+﻿using SolrExpress.Core.Helper;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
 
 //TODO: Create unit tests.... a lot of...
-namespace SolrExpress.Query
+namespace SolrExpress.Core.Query
 {
     public class SolrExpression
     {

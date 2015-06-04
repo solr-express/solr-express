@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Exception
+﻿namespace SolrExpress.Core.Exception
 {
     public class AllowMultipleInstanceOfParameterTypeException : System.Exception
     {

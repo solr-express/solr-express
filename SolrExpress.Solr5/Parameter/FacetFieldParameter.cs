@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Enumerator;
-using SolrExpress.Helper;
-using SolrExpress.Query;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
