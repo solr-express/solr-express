@@ -5,8 +5,6 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.ParameterValue
 {
-    //TODO: Create unit tests
-
     /// <summary>
     /// Single value parameter
     /// </summary>
