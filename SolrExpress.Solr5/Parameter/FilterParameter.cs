@@ -3,19 +3,17 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FilterParameter<T> : IParameter
-        where T : IDocument
+    public sealed class FilterParameter : IParameter
     {
-        private readonly SolrExpression _expression;
+        private readonly IQueryParameterValue _value;
 
         /// <summary>
         /// Create a filter parameter
         /// </summary>
-        /// <param name="expression">Expression used to create the SOLR query</param>
-        /// <param name="value">Value of the filter</param>
-        public FilterParameter(SolrExpression<T> expression)
+        /// <param name="value">Parameter value used to create the query</param>
+        public FilterParameter(IQueryParameterValue value)
         {
-            this._expression = expression;
+            this._value = value;
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(this._expression.Resolve());
+            jArray.Add(this._value.Execute());
 
             jObject["filter"] = jArray;
         }

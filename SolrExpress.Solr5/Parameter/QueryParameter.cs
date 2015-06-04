@@ -3,29 +3,19 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class QueryParameter<T> : IParameter
-        where T : IDocument
+    public sealed class QueryParameter : IParameter
     {
-        private readonly SolrExpression _expression;
+        private readonly IQueryParameterValue _value;
 
         /// <summary>
         /// Create a query parameter
         /// </summary>
-        /// <param name="expression">Expression used to create the SOLR query</param>
-        public QueryParameter(SolrExpression expression)
+        /// <param name="value">Parameter value used to create the query</param>
+        public QueryParameter(IQueryParameterValue value)
         {
-            this._expression = expression;
+            this._value = value;
         }
-
-        /// <summary>
-        /// Create a query parameter
-        /// </summary>
-        /// <param name="expression">Expression used to create the SOLR query</param>
-        public QueryParameter(SolrExpression<T> expression)
-        {
-            this._expression = expression;
-        }
-
+        
         /// <summary>
         /// True to indicate multiple instance of the parameter, otherwise false
         /// </summary>
@@ -37,7 +27,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            jObject["query"] = new JValue(this._expression.Resolve());
+            jObject["query"] = new JValue(this._value.Execute());
         }
     }
 }

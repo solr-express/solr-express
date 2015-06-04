@@ -3,19 +3,17 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class SpatialFilterParameter<T> : IParameter
-            where T : IDocument
+    public sealed class SpatialFilterParameter : IParameter
     {
-        private readonly SolrExpression _expression;
+        private readonly IQueryParameterValue _value;
 
         /// <summary>
         /// Create a spatial filter parameter
         /// </summary>
-        /// <param name="expression">Expression used to create the SOLR query</param>
-        /// <param name="value">Value of the filter</param>
-        public SpatialFilterParameter(SolrExpression<T> expression)
+        /// <param name="value">Parameter value used to create the query</param>
+        public SpatialFilterParameter(IQueryParameterValue value)
         {
-            this._expression = expression;
+            this._value = value;
         }
 
         /// <summary>
@@ -31,7 +29,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            var jProperty = new JProperty("fq", this._expression.Resolve());
+            var jProperty = new JProperty("fq", this._value.Execute());
 
             jObj.Add(jProperty);
 

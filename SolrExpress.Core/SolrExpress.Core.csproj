@@ -60,7 +60,6 @@
     <Compile Include="Query\IParameter.cs" />
     <Compile Include="Query\IQueryParameterValue.cs" />
     <Compile Include="Query\IResultBuilder.cs" />
-    <Compile Include="Query\SolrExpression.cs" />
     <Compile Include="Query\SolrQueryResult.cs" />
     <Compile Include="Query\FacetKeyValue.cs" />
     <Compile Include="Query\FacetRange.cs" />

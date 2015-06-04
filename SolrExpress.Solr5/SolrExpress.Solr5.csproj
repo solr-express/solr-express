@@ -55,6 +55,9 @@
     <Compile Include="Builder\StatisticResultBuilder.cs" />
     <Compile Include="Linq\SolrQueryableExtension.cs" />
     <Compile Include="Linq\SolrQueryResultExtension.cs" />
+    <Compile Include="ParameterValue\FreeValue.cs" />
+    <Compile Include="ParameterValue\RangeValue.cs" />
+    <Compile Include="ParameterValue\SingleValue.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs" />
     <Compile Include="Parameter\FacetQueryParameter.cs" />
     <Compile Include="Parameter\FacetRangeParameter.cs" />

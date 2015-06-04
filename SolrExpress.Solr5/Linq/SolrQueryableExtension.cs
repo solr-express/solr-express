@@ -1,6 +1,7 @@
 ﻿using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.ParameterValue;
 using System;
 using System.Linq.Expressions;
 
@@ -72,8 +73,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            var solrExpression = new SolrExpression<TDocument>(expression, value);
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
+            var paramaterValue = new SingleValue<TDocument>(expression, value);
+            return solrQueryable.Parameter(new FilterParameter(paramaterValue));
         }
 
         /// <summary>
@@ -83,53 +84,12 @@ namespace SolrExpress.Linq
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, DateTime? from, DateTime? to)
+        public static SolrQueryable<TDocument> Filter<TDocument, TValue>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, TValue? from, TValue? to)
             where TDocument : IDocument
+            where TValue : struct
         {
-            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, int? from, int? to)
-            where TDocument : IDocument
-        {
-            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, double? from, double? to)
-            where TDocument : IDocument
-        {
-            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, decimal? from, decimal? to)
-            where TDocument : IDocument
-        {
-            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
-            return solrQueryable.Parameter(new FilterParameter<TDocument>(solrExpression));
+            var value = new RangeValue<TDocument, TValue>(expression, from, to);
+            return solrQueryable.Parameter(new FilterParameter(value));
         }
 
         /// <summary>
@@ -142,8 +102,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> SpatialFilter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, GeoCoordinate? from, GeoCoordinate? to)
             where TDocument : IDocument
         {
-            var solrExpression = new SolrExpression<TDocument>(expression, from, to);
-            return solrQueryable.Parameter(new SpatialFilterParameter<TDocument>(solrExpression));
+            var value = new RangeValue<TDocument, GeoCoordinate>(expression, from, to);
+            return solrQueryable.Parameter(new SpatialFilterParameter(value));
         }
 
         /// <summary>
@@ -176,8 +136,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, string value)
             where TDocument : IDocument
         {
-            var solrExpression = new SolrExpression(value);
-            return solrQueryable.Parameter(new QueryParameter<TDocument>(solrExpression));
+            var freeValue = new FreeValue(value);
+            return solrQueryable.Parameter(new QueryParameter(freeValue));
         }
 
         /// <summary>
@@ -189,8 +149,8 @@ namespace SolrExpress.Linq
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            var solrExpression = new SolrExpression<TDocument>(expression, value);
-            return solrQueryable.Parameter(new QueryParameter<TDocument>(solrExpression));
+            var paramaterValue = new SingleValue<TDocument>(expression, value);
+            return solrQueryable.Parameter(new QueryParameter(paramaterValue));
         }
 
         /// <summary>
