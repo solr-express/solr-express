@@ -76,7 +76,7 @@
     <Compile Include="Parameter\QueryFieldParamaterTests.cs" />
     <Compile Include="Parameter\QueryParameterTests.cs" />
     <Compile Include="Parameter\SortParameterTests.cs" />
-    <Compile Include="Parameter\SpatialFilterParameterTests.cs" />
+    <Compile Include="Parameter\SpatialArbitraryFilterParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDocument.cs" />
   </ItemGroup>

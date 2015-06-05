@@ -103,7 +103,7 @@ namespace SolrExpress.Linq
             where TDocument : IDocument
         {
             var value = new RangeValue<TDocument, GeoCoordinate>(expression, from, to);
-            return solrQueryable.Parameter(new SpatialFilterParameter(value));
+            return solrQueryable.Parameter(new SpatialArbitraryFilterParameter(value));
         }
 
         /// <summary>

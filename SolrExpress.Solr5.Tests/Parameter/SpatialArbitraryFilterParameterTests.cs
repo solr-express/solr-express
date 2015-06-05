@@ -7,15 +7,15 @@ using SolrExpress.Solr5.ParameterValue;
 namespace SolrExpress.Solr5.Tests.Parameter
 {
     [TestClass]
-    public class SpatialSpatialFilterParameterTests
+    public class SpatialArbitraryFilterParameterTests
     {
         /// <summary>
-        /// Where   Using a SpatialFilterParameter instance
+        /// Where   Using a SpatialArbitraryFilterParameter instance
         /// When    Invoking the method "Execute" using arbitrary rectangle annotation
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void SpatialFilterParameter001()
+        public void SpatialArbitraryFilterParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
@@ -26,7 +26,7 @@ namespace SolrExpress.Solr5.Tests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter(new RangeValue<TestDocument, GeoCoordinate>(q => q.Spatial, new GeoCoordinate(-1.1, -2.2), new GeoCoordinate(5.5, 6.6)));
+            var parameter = new SpatialArbitraryFilterParameter(new RangeValue<TestDocument, GeoCoordinate>(q => q.Spatial, new GeoCoordinate(-1.1, -2.2), new GeoCoordinate(5.5, 6.6)));
 
             // Act
             parameter.Execute(jObject);
