@@ -359,7 +359,7 @@ namespace SolrExpress.Solr5.Tests.ParameterValue
             // Arrange
             var expected = "Id:[* TO -10.5,10.5]";
             string actual;
-            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, null, new GeoCoordinate(-10.5D, 10.5D));
+            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, null, new GeoCoordinate(-10.5M, 10.5M));
 
             // Act
             actual = parameter.Execute();
@@ -379,7 +379,7 @@ namespace SolrExpress.Solr5.Tests.ParameterValue
             // Arrange
             var expected = "Id:[-1.5,1.5 TO -10.5,10.5]";
             string actual;
-            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5D, 1.5D), new GeoCoordinate(-10.5D, 10.5D));
+            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), new GeoCoordinate(-10.5M, 10.5M));
 
             // Act
             actual = parameter.Execute();
@@ -399,7 +399,7 @@ namespace SolrExpress.Solr5.Tests.ParameterValue
             // Arrange
             var expected = "Id:[-1.5,1.5 TO *]";
             string actual;
-            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5D, 1.5D), null);
+            var parameter = new RangeValue<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), null);
 
             // Act
             actual = parameter.Execute();

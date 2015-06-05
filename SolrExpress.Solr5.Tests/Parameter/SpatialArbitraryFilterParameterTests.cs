@@ -26,7 +26,7 @@ namespace SolrExpress.Solr5.Tests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialArbitraryFilterParameter(new RangeValue<TestDocument, GeoCoordinate>(q => q.Spatial, new GeoCoordinate(-1.1, -2.2), new GeoCoordinate(5.5, 6.6)));
+            var parameter = new SpatialArbitraryFilterParameter(new RangeValue<TestDocument, GeoCoordinate>(q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), new GeoCoordinate(5.5M, 6.6M)));
 
             // Act
             parameter.Execute(jObject);
