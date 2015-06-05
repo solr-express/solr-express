@@ -16,7 +16,7 @@ namespace SolrExpress.Solr5.ParameterValue
         /// </summary>
         /// <param name="conditionType">Condition type</param>
         /// <param name="values">Value array of the filter</param>
-        public MultiValue(SolrQueryParameterConditionType conditionType, params IQueryParameterValue[] values)
+        public MultiValue(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
             var condition = string.Concat(" ", conditionType.ToString().ToUpper(), " ");
 
