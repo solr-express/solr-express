@@ -56,6 +56,8 @@
     <Compile Include="Linq\SolrQueryableExtension.cs" />
     <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="ParameterValue\FreeValue.cs" />
+    <Compile Include="ParameterValue\MultiValue.cs" />
+    <Compile Include="ParameterValue\NegativeValue.cs" />
     <Compile Include="ParameterValue\RangeValue.cs" />
     <Compile Include="ParameterValue\SingleValue.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs" />

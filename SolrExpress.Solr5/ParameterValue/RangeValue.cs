@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.ParameterValue
         where TDocument : IDocument
         where TValue : struct
     {
-        private string _value;
+        private readonly string _value;
 
         /// <summary>
         /// Create a range solr parameter value
