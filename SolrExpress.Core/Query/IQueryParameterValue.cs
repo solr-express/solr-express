@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Signatures to use in solr query parameter value
+    /// Signature to use in solr query parameter value
     /// </summary>
     public interface IQueryParameterValue
     {

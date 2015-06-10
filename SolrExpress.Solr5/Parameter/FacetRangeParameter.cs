@@ -60,7 +60,7 @@ namespace SolrExpress.Solr5.Parameter
         }
 
         /// <summary>
-        /// True to indicate multiple instance of the parameter, otherwise false
+        /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get { return true; } }
 

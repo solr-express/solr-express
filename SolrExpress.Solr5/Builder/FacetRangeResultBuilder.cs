@@ -39,6 +39,7 @@ namespace SolrExpress.Solr5.Builder
 
             // Do with dynamic because otherwise the error below occurring
             // Operator '-' cannot be applied to operands of type 'TFacetKey?' and 'TFacetKey?'
+            // TODO: Is this behavior expected? Why is this exception being throwed?
             var gap = second.Key.MinimumValue - first.Key.MinimumValue;
 
             foreach (var range in facetData)

@@ -6,14 +6,14 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr5.Builder
 {
     /// <summary>
-    /// Documents data builder
+    /// Document data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
     public sealed class DocumentBuilder<TDocument> : IResultBuilder
         where TDocument : IDocument
     {
         /// <summary>
-        /// Execute the parse of the JSON object in the list of informed document
+        /// Execute the JSON object parse in the list of informed document
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)

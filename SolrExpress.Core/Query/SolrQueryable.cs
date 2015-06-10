@@ -22,7 +22,7 @@ namespace SolrExpress.Core.Query
         private readonly IProvider _provider;
 
         /// <summary>
-        /// Expression created basead in the commands triggereds
+        /// Expression created based in the commands triggereds
         /// </summary>
         private string _expression;
 

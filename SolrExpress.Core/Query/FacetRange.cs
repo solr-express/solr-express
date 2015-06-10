@@ -3,7 +3,7 @@
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Represents a Facet Range without knowledgement of the type of the minumum and maximum values
+    /// Represents a Facet Range without knowledge of the type of the minumum and maximum values
     /// </summary>
     public abstract class FacetRange
     {
@@ -47,7 +47,7 @@ namespace SolrExpress.Core.Query
     }
 
     /// <summary>
-    /// Represents a Facet Range with knowledgement of the type of the minumum and maximum values
+    /// Represents a Facet Range with knowledge of the type of the minumum and maximum values
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public sealed class FacetRange<T> : FacetRange

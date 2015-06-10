@@ -6,12 +6,12 @@ using System;
 namespace SolrExpress.Solr5.Builder
 {
     /// <summary>
-    /// Statistics data builder
+    /// Statistic data builder
     /// </summary>
     public sealed class StatisticResultBuilder : IResultBuilder
     {
         /// <summary>
-        /// Execute the parse of the JSON object in statics
+        /// Execute the parse of the JSON object in statistic
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)

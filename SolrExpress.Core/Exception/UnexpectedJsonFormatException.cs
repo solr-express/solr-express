@@ -12,8 +12,8 @@ namespace SolrExpress.Core.Exception
         private static string GetExceptionMessage(string json)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("The informed JSON string is unexpected in the use of the parse");
-            sb.AppendLine("The informed JSON string was:");
+            sb.AppendLine("The parameter was not found in the source json");
+            sb.AppendLine("The parameter was:");
             sb.AppendLine(json);
 
             return sb.ToString();

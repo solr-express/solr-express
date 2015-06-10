@@ -3,7 +3,7 @@
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Represents a facet values
+    /// Represents a facet value
     /// </summary>
     /// <typeparam name="TKey">Value of the facet</typeparam>
     public sealed class FacetKeyValue<TKey>
@@ -14,7 +14,7 @@ namespace SolrExpress.Core.Query
         public string Name { get; set; }
 
         /// <summary>
-        /// List of data of the facet
+        /// Data list of the facet
         /// </summary>
         public Dictionary<TKey, long> Data { get; set; }
     }

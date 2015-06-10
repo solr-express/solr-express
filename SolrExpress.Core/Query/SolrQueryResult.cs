@@ -17,9 +17,9 @@ namespace SolrExpress.Core.Query
         }
 
         /// <summary>
-        /// Get a instance of the informed type with parsead json resulted from the search
+        /// Get a instance of the informed type with parsed json resulted from the search
         /// </summary>
-        /// <typeparam name="T">Concrect class than implements the IResultBuilder interface</typeparam>
+        /// <typeparam name="T">Concrete class that implements the IResultBuilder interface</typeparam>
         /// <returns>Instance of T ready to be used</returns>
         public T Get<T>(T builder)
             where T : IResultBuilder

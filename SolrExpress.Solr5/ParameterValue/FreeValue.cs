@@ -22,7 +22,7 @@ namespace SolrExpress.Solr5.ParameterValue
         }
 
         /// <summary>
-        /// Execute parameter value generator
+        /// Execute the parameter value generator
         /// </summary>
         /// <returns>Result of the value generator</returns>
         public string Execute()

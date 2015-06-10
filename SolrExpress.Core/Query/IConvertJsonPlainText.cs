@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Base interface used to parse the SOLR results, when a json string is necessary
+    /// Base interface used to parse the SOLR results when a json string is necessary
     /// </summary>
     public interface IConvertJsonPlainText
     {

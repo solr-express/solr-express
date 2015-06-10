@@ -3,7 +3,7 @@
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Base interface used to parse the SOLR results, when a json object is necessary
+    /// Base interface used to parse the SOLR results when a json object is necessary
     /// </summary>
     public interface IConvertJsonObject
     {

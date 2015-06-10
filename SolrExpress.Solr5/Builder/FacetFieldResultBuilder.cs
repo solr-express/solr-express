@@ -12,7 +12,7 @@ namespace SolrExpress.Solr5.Builder
     public sealed class FacetFieldResultBuilder : IResultBuilder
     {
         /// <summary>
-        /// Execute the parse of the JSON object in facet field list
+        /// Execute the JSON object parse in facet field list
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)

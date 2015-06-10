@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Query
         bool AllowMultipleInstances { get; }
 
         /// <summary>
-        /// Execute the creation of the parameter
+        /// Create the parameter
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         void Execute(JObject jObject);

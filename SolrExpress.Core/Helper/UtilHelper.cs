@@ -14,10 +14,10 @@ namespace SolrExpress.Core.Helper
     internal static class UtilHelper
     {
         /// <summary>
-        /// Returns the SolrFieldAtribute associete with the informed property
+        /// Returns the SolrFieldAtribute associated with the informed property
         /// </summary>
         /// <param name="propertyInfo">Property information to find the attribute</param>
-        /// <returns>SolrFieldAtribute associete with the informed property, otherwise null</returns>
+        /// <returns>SolrFieldAtribute associated4 with the informed property, otherwise null</returns>
         private static SolrFieldAtribute GetSolrFieldAtributeFrompropertyInfo(PropertyInfo propertyInfo)
         {
             var attrs = propertyInfo.GetCustomAttributes(true);
