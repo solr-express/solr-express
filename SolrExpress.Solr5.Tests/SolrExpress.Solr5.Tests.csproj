@@ -73,7 +73,7 @@
     <Compile Include="Parameter\LimitParameterTests.cs" />
     <Compile Include="Parameter\MinimumShouldMatchParameterTests.cs" />
     <Compile Include="Parameter\OffsetParameterTests.cs" />
-    <Compile Include="Parameter\QueryFieldParamaterTests.cs" />
+    <Compile Include="Parameter\QueryFieldParameterTests.cs" />
     <Compile Include="Parameter\QueryParameterTests.cs" />
     <Compile Include="Parameter\SortParameterTests.cs" />
     <Compile Include="Parameter\SpatialArbitraryFilterParameterTests.cs" />

@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\SolrFieldAtribute.cs" />
+    <Compile Include="Attribute\SolrFieldAttribute.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />
     <Compile Include="Enumerator\SolrQueryConditionType.cs" />
     <Compile Include="Enumerator\SolrSpatialFunctionType.cs" />

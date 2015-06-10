@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class QueryFieldParamater : IParameter
+    public sealed class QueryFieldParameter : IParameter
     {
         private readonly JProperty _value;
 
@@ -11,7 +11,7 @@ namespace SolrExpress.Solr5.Parameter
         /// Create a query field parameter
         /// </summary>
         /// <param name="query">Query used to make the query field</param>
-        public QueryFieldParamater(string query)
+        public QueryFieldParameter(string query)
         {
             this._value = new JProperty("qf", query);
         }

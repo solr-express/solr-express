@@ -68,7 +68,7 @@
     <Compile Include="Parameter\LimitParameter.cs" />
     <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
     <Compile Include="Parameter\OffsetParameter.cs" />
-    <Compile Include="Parameter\QueryFieldParamater.cs" />
+    <Compile Include="Parameter\QueryFieldParameter.cs" />
     <Compile Include="Parameter\QueryParameter.cs" />
     <Compile Include="Parameter\SortParameter.cs" />
     <Compile Include="Parameter\SpatialArbitraryFilterParameter.cs" />

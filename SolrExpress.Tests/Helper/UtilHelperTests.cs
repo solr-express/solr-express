@@ -33,22 +33,22 @@ namespace SolrExpress.Tests.Helper
 
             public bool? PropertyBoolNullable { get; set; }
 
-            [SolrFieldAtribute("PropString")]
+            [SolrFieldAttribute("PropString")]
             public string PropertyStringWithAttr { get; set; }
 
-            [SolrFieldAtribute("PropInt")]
+            [SolrFieldAttribute("PropInt")]
             public int PropertyIntWithAttr { get; set; }
 
-            [SolrFieldAtribute("PropLong")]
+            [SolrFieldAttribute("PropLong")]
             public long PropertyLongWithAttr { get; set; }
 
-            [SolrFieldAtribute("PropDateTime")]
+            [SolrFieldAttribute("PropDateTime")]
             public DateTime PropertyDateTimeWithAttr { get; set; }
 
-            [SolrFieldAtribute("PropDateTimeOffset")]
+            [SolrFieldAttribute("PropDateTimeOffset")]
             public DateTimeOffset PropertyDateTimeOffsetWithAttr { get; set; }
 
-            [SolrFieldAtribute("PropBool")]
+            [SolrFieldAttribute("PropBool")]
             public bool PropertyBoolWithAttr { get; set; }
         }
 
@@ -252,8 +252,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper012()
@@ -270,8 +270,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper013()
@@ -288,8 +288,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper014()
@@ -306,8 +306,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper015()
@@ -324,8 +324,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper016()
@@ -342,8 +342,8 @@ namespace SolrExpress.Tests.Helper
 
         /// <summary>
         /// Where   Using UtilHelper class
-        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property with SolrFieldAtribute
-        /// What    Return the name of the SolrFieldAtribute associeted with the property
+        /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property with SolrFieldAttribute
+        /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [TestMethod]
         public void UtilHelper017()

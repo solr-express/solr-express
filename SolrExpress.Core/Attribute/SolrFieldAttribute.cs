@@ -6,9 +6,9 @@ namespace SolrExpress.Core.Attribute
     /// Attribute used to indicate field configurations
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class SolrFieldAtribute : System.Attribute
+    public class SolrFieldAttribute : System.Attribute
     {
-        public SolrFieldAtribute(string label)
+        public SolrFieldAttribute(string label)
         {
             this.Label = label;
         }
