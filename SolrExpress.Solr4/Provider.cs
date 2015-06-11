@@ -32,7 +32,6 @@ namespace SolrExpress.Solr4
 
             var request = new RestRequest(string.Concat("query?", expressionToRequest), Method.GET);
             request.AddParameter("omitHeader", "true");
-            request.AddParameter("echoParams", "none");
 
             var response = client.Execute(request);
 
