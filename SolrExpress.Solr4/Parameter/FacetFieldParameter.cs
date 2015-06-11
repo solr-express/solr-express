@@ -1,14 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Enumerator;
+﻿using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetFieldParameter<T> : IParameter
+    public sealed class FacetFieldParameter<T> : IParameter<StringBuilder>
         where T : IDocument
     {
         private readonly Expression<Func<T, object>> _expression;
@@ -23,25 +22,6 @@ namespace SolrExpress.Solr4.Parameter
         {
             this._expression = expression;
             this._sortType = sortType;
-
-
-
-            var array = new List<JProperty>
-            {
-                new JProperty("field", fieldName)
-            };
-
-            if (sortType.HasValue)
-            {
-                string typeName;
-                string sortName;
-
-                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
-
-                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            }
-
-            this._value = new JProperty(fieldName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
 
         /// <summary>
@@ -50,26 +30,30 @@ namespace SolrExpress.Solr4.Parameter
         public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
-        /// Execute the creation of the parameter "sort"
+        /// Execute the creation of the parameter "facet.field"
         /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        /// <param name="container">Container to parameters to request to SOLR</param>
+        public void Execute(StringBuilder container)
         {
-                       var facetObject = (JObject)jObject["facet"] ?? new JObject();
-
-            facetObject.Add(this._value);
-
-            jObject["facet"] = facetObject;
+            // TODO: Do better! Don't use "ToString" method to verify values, find a better way to do this
+            if (!container.ToString().Contains("facet=true"))
+            {
+                container.Append("facet=true&");
+            }
 
             var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
-            jObject["facet.field"]=new JProperty("facet.field",true);
 
+            container.AppendFormat("facet.field={0}&", fieldName);
 
-            var facetObject = (JProperty)jObject["facet"] ?? new JProperty("facet",);
+            if (this._sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
 
-            facetObject.Add(this._value);
+                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
 
-            jObject["facet"] = facetObject;
+                container.AppendFormat("f.{0}.facet.sort={1} {2}", fieldName, typeName, sortName);
+            }
         }
     }
 }

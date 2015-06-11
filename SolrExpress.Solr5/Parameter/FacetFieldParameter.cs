@@ -46,7 +46,7 @@ namespace SolrExpress.Solr5.Parameter
         public bool AllowMultipleInstances { get { return true; } }
 
         /// <summary>
-        /// Execute the creation of the parameter "sort"
+        /// Execute the creation of the parameter "facet.field"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
