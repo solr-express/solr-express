@@ -1,4 +1,6 @@
-﻿namespace SolrExpress.Core.Query
+﻿using System.Collections.Generic;
+
+namespace SolrExpress.Core.Query
 {
     /// <summary>
     /// Signatures of the SOLR access provider
@@ -8,8 +10,8 @@
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <param name="expressionToRequest">Expression created basead in the commands provided</param>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <returns>Result of the request</returns>
-        string Execute(string expressionToRequest);
+        string Execute(List<IParameter> parameters);
     }
 }

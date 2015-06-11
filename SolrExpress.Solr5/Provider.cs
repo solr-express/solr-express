@@ -1,12 +1,15 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json.Linq;
+using RestSharp;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace SolrExpress.Solr5
 {
     /// <summary>
-    /// SOLR access provider
+    /// SOLR 5.x access provider
     /// </summary>
     public class Provider : IProvider
     {
@@ -22,18 +25,35 @@ namespace SolrExpress.Solr5
         }
 
         /// <summary>
-        /// Execute the informated uri and return the result of the request
+        /// Process the queryable class
         /// </summary>
-        /// <param name="expressionToRequest">Expression created basead in the commands triggereds</param>
-        /// <returns>Result of the request</returns>
-        public string Execute(string expressionToRequest)
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
+        /// <returns>JSON string</returns>
+        private string ProcessParameters(List<IParameter> parameters)
+        {
+            var jsonObj = new JObject();
+
+            foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
+            {
+                ((IParameter<JObject>)item).Execute(jsonObj);
+            }
+
+            return jsonObj.ToString();
+        }
+
+        /// <summary>
+        /// Process the json
+        /// </summary>
+        /// <param name="json">Json string used by SOLR JSON Api</param>
+        /// <returns>Response from SOLR</returns>
+        private string ProcessExpression(string json)
         {
             var client = new RestClient(this._solrHost);
 
             var request = new RestRequest("query", Method.GET);
             request.AddParameter("omitHeader", "true");
             request.AddParameter("echoParams", "none");
-            request.AddParameter("json", expressionToRequest);
+            request.AddParameter("json", json);
 
             var response = client.Execute(request);
 
@@ -43,6 +63,18 @@ namespace SolrExpress.Solr5
             }
 
             return response.Content;
+        }
+
+        /// <summary>
+        /// Execute the informated uri and return the result of the request
+        /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
+        /// <returns>Result of the request</returns>
+        public string Execute(List<IParameter> parameters)
+        {
+            var expressionToRequest = this.ProcessParameters(parameters);
+
+            return this.ProcessExpression(expressionToRequest);
         }
     }
 }

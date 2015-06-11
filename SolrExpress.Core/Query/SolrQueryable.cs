@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Exception;
+﻿using SolrExpress.Core.Exception;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,11 +21,6 @@ namespace SolrExpress.Core.Query
         private readonly IProvider _provider;
 
         /// <summary>
-        /// Expression created based in the commands triggereds
-        /// </summary>
-        private string _expression;
-
-        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="provider">Provider used to resolve the expression</param>
@@ -34,22 +28,7 @@ namespace SolrExpress.Core.Query
         {
             this._provider = provider;
         }
-
-        /// <summary>
-        /// Process the queryable class
-        /// </summary>
-        private void ProcessParameters()
-        {
-            var jsonObj = new JObject();
-
-            foreach (var item in this._parameters.OrderBy(q => q.GetType().ToString()))
-            {
-                item.Execute(jsonObj);
-            }
-
-            this._expression = jsonObj.ToString();
-        }
-
+        
         /// <summary>
         /// Add a parameter to the query
         /// </summary>
@@ -73,9 +52,7 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public SolrQueryResult Execute()
         {
-            this.ProcessParameters();
-
-            var json = this._provider.Execute(this._expression);
+            var json = this._provider.Execute(this._parameters);
 
             return new SolrQueryResult(json);
         }

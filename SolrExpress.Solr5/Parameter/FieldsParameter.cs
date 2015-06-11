@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FieldsParameter<T> : IParameter
+    public sealed class FieldsParameter<T> : IParameter<JObject>
         where T : IDocument
     {
         private readonly string _value;

@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class LimitParameter : IParameter
+    public sealed class LimitParameter : IParameter<JObject>
     {
         private readonly int _value;
 

@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class SpatialArbitraryFilterParameter : IParameter
+    public sealed class SpatialArbitraryFilterParameter : IParameter<JObject>
     {
         private readonly IQueryParameterValue _value;
 

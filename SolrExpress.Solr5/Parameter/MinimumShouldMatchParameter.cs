@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class MinimumShouldMatchParameter: IParameter
+    public sealed class MinimumShouldMatchParameter : IParameter<JObject>
     {
         private readonly JProperty _value;
 

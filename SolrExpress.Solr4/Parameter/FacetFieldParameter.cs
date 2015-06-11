@@ -6,12 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Solr5.Parameter
+namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetFieldParameter<T> : IParameter<JObject>
+    public sealed class FacetFieldParameter<T> : IParameter
         where T : IDocument
     {
-        private readonly JProperty _value;
+        private readonly Expression<Func<T, object>> _expression;
+        private readonly SolrFacetSortType? _sortType;
 
         /// <summary>
         /// Create a facet parameter
@@ -20,7 +21,10 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            this._expression = expression;
+            this._sortType = sortType;
+
+
 
             var array = new List<JProperty>
             {
@@ -51,7 +55,17 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var facetObject = (JObject)jObject["facet"] ?? new JObject();
+                       var facetObject = (JObject)jObject["facet"] ?? new JObject();
+
+            facetObject.Add(this._value);
+
+            jObject["facet"] = facetObject;
+
+            var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
+            jObject["facet.field"]=new JProperty("facet.field",true);
+
+
+            var facetObject = (JProperty)jObject["facet"] ?? new JProperty("facet",);
 
             facetObject.Add(this._value);
 

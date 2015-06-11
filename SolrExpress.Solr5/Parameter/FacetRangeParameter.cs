@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetRangeParameter<T> : IParameter
+    public sealed class FacetRangeParameter<T> : IParameter<JObject>
       where T : IDocument
     {
         private readonly JProperty _value;

@@ -8,7 +8,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : IParameter
+    public sealed class SpatialFilterParameter<TDocument> : IParameter<JObject>
         where TDocument : IDocument
     {
         private readonly SolrSpatialFunctionType _functionType;

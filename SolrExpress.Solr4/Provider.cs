@@ -1,12 +1,15 @@
 ﻿using RestSharp;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace SolrExpress.Solr4
 {
     /// <summary>
-    /// SOLR access provider
+    /// SOLR 4.9x access provider
     /// </summary>
     public class Provider : IProvider
     {
@@ -22,15 +25,32 @@ namespace SolrExpress.Solr4
         }
 
         /// <summary>
-        /// Execute the informated uri and return the result of the request
+        /// Process the queryable class
         /// </summary>
-        /// <param name="expressionToRequest">Expression created basead in the commands triggereds</param>
-        /// <returns>Result of the request</returns>
-        public string Execute(string expressionToRequest)
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
+        /// <returns>JSON string</returns>
+        private string ProcessParameters(List<IParameter> parameters)
+        {
+            var sb = new StringBuilder();
+
+            foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
+            {
+                ((IParameter<StringBuilder>)item).Execute(sb);
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Process the json
+        /// </summary>
+        /// <param name="queryString">Query string used by SOLR request</param>
+        /// <returns>Response from SOLR</returns>
+        private string ProcessExpression(string queryString)
         {
             var client = new RestClient(this._solrHost);
 
-            var request = new RestRequest(string.Concat("query?", expressionToRequest), Method.GET);
+            var request = new RestRequest(string.Concat("query?", queryString), Method.GET);
             request.AddParameter("omitHeader", "true");
 
             var response = client.Execute(request);
@@ -41,6 +61,18 @@ namespace SolrExpress.Solr4
             }
 
             return response.Content;
+        }
+
+        /// <summary>
+        /// Execute the informated uri and return the result of the request
+        /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
+        /// <returns>Result of the request</returns>
+        public string Execute(List<IParameter> parameters)
+        {
+            var expressionToRequest = this.ProcessParameters(parameters);
+
+            return this.ProcessExpression(expressionToRequest);
         }
     }
 }
