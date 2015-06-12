@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Parameter\FieldListParameter.cs" />
     <Compile Include="Parameter\FilterQueryParameter.cs" />
+    <Compile Include="Parameter\QueryParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
   </ItemGroup>
