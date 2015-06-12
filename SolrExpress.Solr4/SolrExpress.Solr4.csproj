@@ -51,6 +51,7 @@
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Parameter\FieldListParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
   </ItemGroup>
