@@ -14,7 +14,6 @@ namespace SolrExpress.Solr5.ParameterValue
         /// <summary>
         /// Create a free solr parameter value
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="value">Value of the filter</param>
         public FreeValue(string value)
         {
