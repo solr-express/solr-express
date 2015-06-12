@@ -6,23 +6,23 @@
     public enum SolrFacetSortType
     {
         /// <summary>
-        /// Sort by name, ascending
+        /// Sort by index, ascending
         /// </summary>
         IndexAsc,
 
         /// <summary>
-        /// Sort by name, descending
+        /// Sort by index, descending
         /// </summary>
         IndexDesc,
 
         /// <summary>
-        /// Sort by quantity, ascending
+        /// Sort by count, ascending
         /// </summary>
-        QuantityAsc,
+        CountAsc,
 
         /// <summary>
-        /// Sort by quantity, descending
+        /// Sort by count, descending
         /// </summary>
-        QuantityDesc
+        CountDesc
     }
 }
