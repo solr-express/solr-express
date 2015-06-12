@@ -48,7 +48,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual(3, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.field=Id", container[1]);
-            Assert.AreEqual("f.Id.facet.sort=count desc", container[2]);
+            Assert.AreEqual("f.Id.facet.sort=count", container[2]);
         }
     }
 }
