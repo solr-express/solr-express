@@ -8,12 +8,12 @@
         /// <summary>
         /// Sort by name, ascending
         /// </summary>
-        NameAsc,
+        IndexAsc,
 
         /// <summary>
         /// Sort by name, descending
         /// </summary>
-        NameDesc,
+        IndexDesc,
 
         /// <summary>
         /// Sort by quantity, ascending

@@ -82,11 +82,11 @@ namespace SolrExpress.Core.Helper
         {
             switch (solrFacetSortType)
             {
-                case SolrFacetSortType.NameAsc:
+                case SolrFacetSortType.IndexAsc:
                     typeName = "index";
                     sortName = "asc";
                     break;
-                case SolrFacetSortType.NameDesc:
+                case SolrFacetSortType.IndexDesc:
                     typeName = "index";
                     sortName = "desc";
                     break;
