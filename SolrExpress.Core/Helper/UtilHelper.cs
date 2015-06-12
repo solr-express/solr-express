@@ -90,11 +90,11 @@ namespace SolrExpress.Core.Helper
                     typeName = "index";
                     sortName = "desc";
                     break;
-                case SolrFacetSortType.QuantityAsc:
+                case SolrFacetSortType.CountAsc:
                     typeName = "count";
                     sortName = "asc";
                     break;
-                case SolrFacetSortType.QuantityDesc:
+                case SolrFacetSortType.CountDesc:
                     typeName = "count";
                     sortName = "desc";
                     break;

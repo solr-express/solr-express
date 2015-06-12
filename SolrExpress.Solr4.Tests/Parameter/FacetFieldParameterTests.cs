@@ -39,7 +39,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.QuantityDesc);
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(container);
