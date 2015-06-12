@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Parameter\FacetFieldParameterTests.cs" />
     <Compile Include="Parameter\FieldListParameterTests.cs" />
+    <Compile Include="Parameter\FilterQueryParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDocument.cs" />
   </ItemGroup>
