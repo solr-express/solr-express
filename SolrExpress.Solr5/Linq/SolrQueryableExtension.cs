@@ -31,7 +31,7 @@ namespace SolrExpress.Solr5.Linq
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, string query, SolrFacetSortType? sortType = null)
+        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
             return solrQueryable.Parameter(new FacetQueryParameter(aliasName, query, sortType));

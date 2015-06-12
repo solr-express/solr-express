@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
 
 namespace SolrExpress.Solr5.Tests.Parameter
@@ -29,7 +30,7 @@ namespace SolrExpress.Solr5.Tests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", "avg('Y')");
+            var parameter = new FacetQueryParameter("X", new FreeValue("avg('Y')"));
 
             // Act
             parameter.Execute(jObject);
@@ -63,7 +64,7 @@ namespace SolrExpress.Solr5.Tests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", "avg('Y')", SolrFacetSortType.CountDesc);
+            var parameter = new FacetQueryParameter("X", new FreeValue("avg('Y')"), SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);

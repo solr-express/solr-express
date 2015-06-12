@@ -8,7 +8,9 @@ namespace SolrExpress.Solr5.Parameter
 {
     public sealed class FacetQueryParameter : IParameter<JObject>
     {
-        private readonly JProperty _value;
+        private readonly string _aliasName;
+        private readonly IQueryParameterValue _query;
+        private readonly SolrFacetSortType? _sortType;
 
         /// <summary>
         /// Create a facet parameter
@@ -16,24 +18,11 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetQueryParameter(string aliasName, string query, SolrFacetSortType? sortType = null)
+        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
         {
-            var array = new List<JProperty>
-            {
-                new JProperty("q", query)
-            };
-
-            if (sortType.HasValue)
-            {
-                string typeName;
-                string sortName;
-
-                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
-
-                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            }
-
-            this._value = new JProperty(aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            this._aliasName = aliasName;
+            this._query = query;
+            this._sortType = sortType;
         }
 
         /// <summary>
@@ -49,7 +38,24 @@ namespace SolrExpress.Solr5.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            facetObject.Add(this._value);
+            var array = new List<JProperty>
+            {
+                new JProperty("q", this._query.Execute())
+            };
+
+            if (this._sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
+
+                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+
+            facetObject.Add(jProperty);
 
             jObject["facet"] = facetObject;
         }
