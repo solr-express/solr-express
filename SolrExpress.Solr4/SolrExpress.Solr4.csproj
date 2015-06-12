@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\DocumentBuilder.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -65,9 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Builder\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
