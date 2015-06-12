@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
         /// When    Invoking the method "Execute" using geofilt function
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void SpatialFilterParameter001()
@@ -34,7 +34,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
         /// When    Invoking the method "Execute" using bbox function
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void SpatialFilterParameter002()
