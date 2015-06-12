@@ -100,7 +100,6 @@ namespace SolrExpress.Core.Helper
                     break;
                 default:
                     throw new ArgumentException("sortType");
-                    break;
             }
         }
     }

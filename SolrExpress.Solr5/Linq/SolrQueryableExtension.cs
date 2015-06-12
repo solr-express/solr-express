@@ -91,21 +91,7 @@ namespace SolrExpress.Solr5.Linq
             var value = new RangeValue<TDocument, TValue>(expression, from, to);
             return solrQueryable.Parameter(new FilterParameter(value));
         }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> SpatialFilter<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, GeoCoordinate? from, GeoCoordinate? to)
-            where TDocument : IDocument
-        {
-            var value = new RangeValue<TDocument, GeoCoordinate>(expression, from, to);
-            return solrQueryable.Parameter(new SpatialArbitraryFilterParameter(value));
-        }
-
+        
         /// <summary>
         /// Create a limit parameter
         /// </summary>
