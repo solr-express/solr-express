@@ -8,21 +8,21 @@ namespace SolrExpress.Solr5.Tests.Parameter
     public class SortParameterTests
     {
         /// <summary>
-        /// Where   Using a LimitParameter instance
+        /// Where   Using a SortParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void LimitParameter001()
+        public void SortParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""limit"": 10
+              ""sort"": [""Id asc""]
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new LimitParameter(10);
+            var parameter = new SortParameter<TestDocument>(q => q.Id, true);
 
             // Act
             parameter.Execute(jObject);
