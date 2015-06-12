@@ -11,11 +11,6 @@ namespace SolrExpress.Solr5.Parameter
     {
         private readonly string _value;
 
-        public FieldsParameter()
-        {
-
-        }
-
         /// <summary>
         /// Create a fields parameter
         /// </summary>
@@ -41,10 +36,6 @@ namespace SolrExpress.Solr5.Parameter
             jArray.Add(this._value);
 
             jObject["fields"] = jArray;
-        }
-
-        public void Set(Expression<Func<T, object>> expression)
-        {
         }
     }
 }
