@@ -31,14 +31,14 @@ namespace SolrExpress.Solr4
         /// <returns>JSON string</returns>
         private string ProcessParameters(List<IParameter> parameters)
         {
-            var sb = new StringBuilder();
+            var list = new List<string>();
 
             foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
             {
-                ((IParameter<StringBuilder>)item).Execute(sb);
+                ((IParameter<List<string>>)item).Execute(list);
             }
 
-            return sb.ToString();
+            return string.Join("&", list);
         }
 
         /// <summary>

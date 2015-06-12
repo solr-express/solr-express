@@ -2,12 +2,12 @@
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetFieldParameter<T> : IParameter<StringBuilder>
+    public sealed class FacetFieldParameter<T> : IParameter<List<string>>
         where T : IDocument
     {
         private readonly Expression<Func<T, object>> _expression;
@@ -33,17 +33,16 @@ namespace SolrExpress.Solr4.Parameter
         /// Execute the creation of the parameter "facet.field"
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(StringBuilder container)
+        public void Execute(List<string> container)
         {
-            // TODO: Do better! Don't use "ToString" method to verify values, find a better way to do this
-            if (!container.ToString().Contains("facet=true"))
+            if (!container.Contains("facet=true"))
             {
-                container.Append("facet=true&");
+                container.Add("facet=true");
             }
 
             var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
 
-            container.AppendFormat("facet.field={0}&", fieldName);
+            container.Add(string.Format("facet.field={0}", fieldName));
 
             if (this._sortType.HasValue)
             {
@@ -52,7 +51,7 @@ namespace SolrExpress.Solr4.Parameter
 
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
 
-                container.AppendFormat("f.{0}.facet.sort={1} {2}", fieldName, typeName, sortName);
+                container.Add(string.Format("f.{0}.facet.sort={1} {2}", fieldName, typeName, sortName));
             }
         }
     }
