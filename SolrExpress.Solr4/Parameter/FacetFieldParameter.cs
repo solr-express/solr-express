@@ -1,9 +1,9 @@
-﻿using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -47,11 +47,12 @@ namespace SolrExpress.Solr4.Parameter
             if (this._sortType.HasValue)
             {
                 string typeName;
-                string sortName;
+                string dummy;
 
-                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+                // TODO: In SOLR 4, we can't choise between ascending or descending sort. Make a choise here, throws a exception case the SolrFacetSortType equals *Descending or not throws???
+                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add(string.Format("f.{0}.facet.sort={1} {2}", fieldName, typeName, sortName));
+                container.Add(string.Format("f.{0}.facet.sort={1}", fieldName, typeName));
             }
         }
     }
