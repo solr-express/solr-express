@@ -51,6 +51,7 @@
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Parameter\FacetQueryParameter.cs" />
     <Compile Include="Parameter\FacetRangeParameter.cs" />
     <Compile Include="Parameter\FieldListParameter.cs" />
     <Compile Include="Parameter\FilterQueryParameter.cs" />

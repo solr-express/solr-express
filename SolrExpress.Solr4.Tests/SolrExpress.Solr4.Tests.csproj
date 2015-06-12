@@ -60,6 +60,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Parameter\FacetFieldParameterTests.cs" />
+    <Compile Include="Parameter\FacetQueryParameterTests.cs" />
     <Compile Include="Parameter\FacetRangeParameterTests.cs" />
     <Compile Include="Parameter\FieldListParameterTests.cs" />
     <Compile Include="Parameter\FilterQueryParameterTests.cs" />
