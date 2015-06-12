@@ -1,11 +1,11 @@
-﻿using SolrExpress.Core.Enumerator;
+﻿using System;
+using System.Linq.Expressions;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
-using System;
-using System.Linq.Expressions;
-using SolrExpress.Core.ParameterValue;
 
-namespace SolrExpress.Linq
+namespace SolrExpress.Solr5.Linq
 {
     /// <summary>
     /// SOLR queryable extensions methods used to create facilities in the use of the classes

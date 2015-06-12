@@ -1,8 +1,8 @@
-﻿using SolrExpress.Core.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SolrExpress.Core.Query;
 
-namespace SolrExpress.Linq
+namespace SolrExpress.Solr5.Linq
 {
     /// <summary>
     /// SOLR query result extensions methods used to create facilities in the use of the classes

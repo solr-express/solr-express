@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Exception;
 using SolrExpress.Solr5.Builder;
-using SolrExpress.Solr5.Tests;
-using System.Collections.Generic;
 
-namespace SolrExpress.Tests.Query
+namespace SolrExpress.Solr5.Tests.Builder
 {
     [TestClass]
     public class DocumentBuilderTests

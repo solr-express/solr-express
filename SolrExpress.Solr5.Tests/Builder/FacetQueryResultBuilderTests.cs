@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Builder;
 
-namespace SolrExpress.Tests.Solr5.Builder
+namespace SolrExpress.Solr5.Tests.Builder
 {
     [TestClass]
     public class FacetQueryResultBuilderTests
