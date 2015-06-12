@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SolrExpress.Core.Query;
-using System;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
+using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.Tests.ParameterValue
+namespace SolrExpress.Tests.ParameterValue
 {
     [TestClass]
     public class RangeValueTests

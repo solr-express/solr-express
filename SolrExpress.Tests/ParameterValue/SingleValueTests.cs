@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
 
-namespace SolrExpress.Solr5.Tests.ParameterValue
+namespace SolrExpress.Tests.ParameterValue
 {
     [TestClass]
     public class SingleValueTests

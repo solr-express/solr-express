@@ -63,8 +63,6 @@
     <Compile Include="Builder\FacetFieldResultBuilderTests.cs" />
     <Compile Include="Builder\FacetQueryResultBuilderTests.cs" />
     <Compile Include="Builder\FacetRangeResultBuilderTests.cs" />
-    <Compile Include="ParameterValue\RangeValueTests.cs" />
-    <Compile Include="ParameterValue\SingleValueTests.cs" />
     <Compile Include="Parameter\FacetFieldParameterTests.cs" />
     <Compile Include="Parameter\FacetQueryParameterTests.cs" />
     <Compile Include="Parameter\FacetRangeParameterTests.cs" />
