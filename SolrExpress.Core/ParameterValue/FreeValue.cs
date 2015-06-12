@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.ParameterValue
+namespace SolrExpress.Core.ParameterValue
 {
     //TODO: Create unit tests
 

@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.ParameterValue
+namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Result negative form (NOT) value parameter

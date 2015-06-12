@@ -1,9 +1,9 @@
 ﻿using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
-using SolrExpress.Solr5.ParameterValue;
 using System;
 using System.Linq.Expressions;
+using SolrExpress.Core.ParameterValue;
 
 namespace SolrExpress.Linq
 {

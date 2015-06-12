@@ -2,7 +2,7 @@
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.ParameterValue
+namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Multi value parameter

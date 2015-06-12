@@ -53,6 +53,11 @@
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
+    <Compile Include="ParameterValue\FreeValue.cs" />
+    <Compile Include="ParameterValue\MultiValue.cs" />
+    <Compile Include="ParameterValue\NegativeValue.cs" />
+    <Compile Include="ParameterValue\RangeValue.cs" />
+    <Compile Include="ParameterValue\SingleValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\GeoCoordinate.cs" />
     <Compile Include="Query\IConvertJsonObject.cs" />

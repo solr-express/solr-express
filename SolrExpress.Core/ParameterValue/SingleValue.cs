@@ -1,9 +1,9 @@
-﻿using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.ParameterValue
+namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Single value parameter
