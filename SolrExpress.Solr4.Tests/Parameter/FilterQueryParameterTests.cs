@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a FilterParameter instance
         /// When    Invoking the method "Execute" using 2 instances
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void FilterParameter001()

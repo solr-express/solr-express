@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a FacetRangeParameter instance
         /// When    Invoking the method "Execute" using the default arguments
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void FacetRangeParameter001()
@@ -37,7 +37,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a FacetRangeParameter instance
         /// When    Invoking the method "Execute" using the sort type and direction parameters
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void FacetRangeParameter002()

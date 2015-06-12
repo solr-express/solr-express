@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
         /// <summary>
         /// Where   Using a QueryParameter instance
         /// When    Invoking the method "Execute"
-        /// What    Create a valid JSON
+        /// What    Create a valid string
         /// </summary>
         [TestMethod]
         public void QueryParameter001()
