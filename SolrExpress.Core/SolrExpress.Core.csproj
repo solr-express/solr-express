@@ -52,7 +52,10 @@
     <Compile Include="Exception\AllowMultipleInstanceOfParameterTypeException.cs" />
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
+    <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
+    <Compile Include="Json\CustomContractResolver.cs" />
+    <Compile Include="Json\GeoCoordinateConverter.cs" />
     <Compile Include="ParameterValue\FreeValue.cs" />
     <Compile Include="ParameterValue\MultiValue.cs" />
     <Compile Include="ParameterValue\NegativeValue.cs" />

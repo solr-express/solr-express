@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Json;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
@@ -9,7 +11,7 @@ namespace SolrExpress.Solr5.Builder
     /// Document data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
-    public sealed class DocumentBuilder<TDocument> : IResultBuilder
+    public sealed class DocumentBuilder<TDocument> : IResultBuilder, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
@@ -23,7 +25,13 @@ namespace SolrExpress.Solr5.Builder
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
+            var jsonSerializer = JsonSerializer.Create();
+            // TODO: Create unit test
+            jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+            // TODO: Create unit test
+            jsonSerializer.ContractResolver = new CustomContractResolver();
+
+            this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>(jsonSerializer);
         }
 
         /// <summary>

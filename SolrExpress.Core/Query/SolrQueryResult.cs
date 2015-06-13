@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Exception;
 
 namespace SolrExpress.Core.Query
 {
@@ -33,9 +34,13 @@ namespace SolrExpress.Core.Query
 
                 ((IConvertJsonObject)builder).Execute(this._jsonObject);
             }
-            else
+            else if (builder is IConvertJsonPlainText)
             {
                 ((IConvertJsonPlainText)builder).Execute(this._jsonPlainText);
+            }
+            else
+            {
+                throw new UnknownResolveResultBuilderException(builder.GetType().Name);
             }
 
             return builder;
