@@ -18,7 +18,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
             this._value = string.Concat(fieldName, " ", ascendent ? "asc" : "desc");
         }

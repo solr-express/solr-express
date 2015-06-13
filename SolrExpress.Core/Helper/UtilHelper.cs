@@ -18,7 +18,7 @@ namespace SolrExpress.Core.Helper
         /// </summary>
         /// <param name="propertyInfo">Property information to find the attribute</param>
         /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        private static SolrFieldAttribute GetSolrFieldAttributeFrompropertyInfo(PropertyInfo propertyInfo)
+        private static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
         {
             var attrs = propertyInfo.GetCustomAttributes(true);
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
@@ -30,14 +30,13 @@ namespace SolrExpress.Core.Helper
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static string GetPropertyNameFromExpression<T>(Expression<Func<T, object>> expression)
+        private static PropertyInfo GetPropertyInfoFromExpression<T>(Expression<Func<T, object>> expression)
             where T : IDocument
         {
             var lambda = (LambdaExpression)expression;
 
             PropertyInfo propertyInfo;
             MemberExpression memberExpression;
-            SolrFieldAttribute solrFieldAttribute;
 
             switch (lambda.Body.NodeType)
             {
@@ -52,9 +51,7 @@ namespace SolrExpress.Core.Helper
                         throw new InvalidOperationException("Expression must be a property reference.");
                     }
 
-                    solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFrompropertyInfo(propertyInfo);
-
-                    return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Label;
+                    return propertyInfo;
                 case ExpressionType.MemberAccess:
                     memberExpression = (MemberExpression)lambda.Body;
 
@@ -64,12 +61,37 @@ namespace SolrExpress.Core.Helper
                         throw new InvalidOperationException("Expression must be a property reference.");
                     }
 
-                    solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFrompropertyInfo(propertyInfo);
-
-                    return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Label;
+                    return propertyInfo;
             }
 
             throw new InvalidOperationException("Unknown to resolve the expression");
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static string GetFieldNameFromExpression<T>(Expression<Func<T, object>> expression)
+            where T : IDocument
+        {
+            var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
+            
+            return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Label;
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static string GetPropertyNameFromExpression<T>(Expression<Func<T, object>> expression)
+            where T : IDocument
+        {
+            return UtilHelper.GetPropertyInfoFromExpression(expression).Name;
         }
 
         /// <summary>

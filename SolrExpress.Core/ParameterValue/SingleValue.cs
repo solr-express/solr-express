@@ -20,7 +20,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public SingleValue(Expression<Func<TDocument, object>> expression, string value)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
             this._value = string.Concat(fieldName, ":", value);
         }

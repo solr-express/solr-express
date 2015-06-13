@@ -51,7 +51,6 @@ namespace SolrExpress.Solr5
             var client = new RestClient(this._solrHost);
 
             var request = new RestRequest("query", Method.GET);
-            request.AddParameter("omitHeader", "true");
             request.AddParameter("echoParams", "none");
             request.AddParameter("json", json);
 

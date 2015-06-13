@@ -40,7 +40,7 @@ namespace SolrExpress.Solr4.Parameter
                 container.Add("facet=true");
             }
 
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
             container.Add(string.Format("facet.field={0}", fieldName));
 

@@ -64,7 +64,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyString);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyString);
 
             // Assert
             Assert.AreEqual("PropertyString", name);
@@ -82,7 +82,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyInt);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyInt);
 
             // Assert
             Assert.AreEqual("PropertyInt", name);
@@ -100,7 +100,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyLong);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyLong);
 
             // Assert
             Assert.AreEqual("PropertyLong", name);
@@ -118,7 +118,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTime);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTime);
 
             // Assert
             Assert.AreEqual("PropertyDateTime", name);
@@ -136,7 +136,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTimeOffset);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffset);
 
             // Assert
             Assert.AreEqual("PropertyDateTimeOffset", name);
@@ -154,7 +154,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyBool);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyBool);
 
             // Assert
             Assert.AreEqual("PropertyBool", name);
@@ -172,7 +172,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyIntNullable);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyIntNullable);
 
             // Assert
             Assert.AreEqual("PropertyIntNullable", name);
@@ -190,7 +190,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyLongNullable);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyLongNullable);
 
             // Assert
             Assert.AreEqual("PropertyLongNullable", name);
@@ -208,7 +208,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTimeNullable);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeNullable);
 
             // Assert
             Assert.AreEqual("PropertyDateTimeNullable", name);
@@ -226,7 +226,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTimeOffsetNullable);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetNullable);
 
             // Assert
             Assert.AreEqual("PropertyDateTimeOffsetNullable", name);
@@ -244,7 +244,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyBoolNullable);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyBoolNullable);
 
             // Assert
             Assert.AreEqual("PropertyBoolNullable", name);
@@ -262,7 +262,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyStringWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyStringWithAttr);
 
             // Assert
             Assert.AreEqual("PropString", name);
@@ -280,7 +280,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyIntWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyIntWithAttr);
 
             // Assert
             Assert.AreEqual("PropInt", name);
@@ -298,7 +298,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyLongWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyLongWithAttr);
 
             // Assert
             Assert.AreEqual("PropLong", name);
@@ -316,7 +316,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTimeWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeWithAttr);
 
             // Assert
             Assert.AreEqual("PropDateTime", name);
@@ -334,7 +334,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyDateTimeOffsetWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetWithAttr);
 
             // Assert
             Assert.AreEqual("PropDateTimeOffset", name);
@@ -352,7 +352,7 @@ namespace SolrExpress.Tests.Helper
             string name;
 
             // Act
-            name = UtilHelper.GetPropertyNameFromExpression<Document>(q => q.PropertyBoolWithAttr);
+            name = UtilHelper.GetFieldNameFromExpression<Document>(q => q.PropertyBoolWithAttr);
 
             // Assert
             Assert.AreEqual("PropBool", name);

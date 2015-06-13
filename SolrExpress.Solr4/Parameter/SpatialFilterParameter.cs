@@ -42,7 +42,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
             var formule = string.Format("{{!{0} sfield={1}}}", this._functionType.ToString().ToLower(), fieldName);
 

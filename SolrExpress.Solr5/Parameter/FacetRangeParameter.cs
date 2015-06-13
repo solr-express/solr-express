@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
             var array = new List<JProperty>
             {

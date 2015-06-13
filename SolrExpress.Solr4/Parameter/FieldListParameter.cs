@@ -32,7 +32,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(this._expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
             var fieldList = container.FirstOrDefault(q => q.StartsWith("fl="));
 

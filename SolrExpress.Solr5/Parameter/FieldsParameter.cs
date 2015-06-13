@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expression">Expression used to find the property name</param>
         public FieldsParameter(Expression<Func<T, object>> expression)
         {
-            this._value = UtilHelper.GetPropertyNameFromExpression(expression);
+            this._value = UtilHelper.GetFieldNameFromExpression(expression);
         }
 
         /// <summary>

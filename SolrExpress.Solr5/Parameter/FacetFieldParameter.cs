@@ -20,7 +20,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
+            var aliasName = UtilHelper.GetPropertyNameFromExpression(expression);
 
             var array = new List<JProperty>
             {
@@ -37,7 +38,7 @@ namespace SolrExpress.Solr5.Parameter
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            this._value = new JProperty(fieldName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            this._value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
 
         /// <summary>

@@ -21,9 +21,9 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
-        public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from, TValue? to)
+        public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
-            var fieldName = UtilHelper.GetPropertyNameFromExpression(expression);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
             if (typeof(TValue) == typeof(int))
             {
