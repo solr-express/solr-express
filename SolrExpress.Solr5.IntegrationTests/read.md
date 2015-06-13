@@ -1,4 +1,4 @@
-﻿Steps to make this tests work:
+﻿## Steps to make this tests work:
 1 - Access http://archive.apache.org/dist/lucene/solr/5.1.0/
 2 - Download the solr-5.1.0.zip file
 3 - Unzip the file in C:\Temp (or other folder of your preference)

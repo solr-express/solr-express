@@ -55,7 +55,7 @@
     <Compile Include="TechProductDocument.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="IntegrationTests.txt" />
+    <None Include="read.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
