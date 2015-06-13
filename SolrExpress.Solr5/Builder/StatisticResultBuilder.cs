@@ -8,7 +8,7 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Statistic data builder
     /// </summary>
-    public sealed class StatisticResultBuilder : IResultBuilder
+    public sealed class StatisticResultBuilder : IResultBuilder, IConvertJsonObject
     {
         /// <summary>
         /// Execute the parse of the JSON object in statistic

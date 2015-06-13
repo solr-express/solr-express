@@ -9,7 +9,7 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet field data builder
     /// </summary>
-    public sealed class FacetFieldResultBuilder : IResultBuilder
+    public sealed class FacetFieldResultBuilder : IResultBuilder, IConvertJsonObject
     {
         /// <summary>
         /// Execute the JSON object parse in facet field list
