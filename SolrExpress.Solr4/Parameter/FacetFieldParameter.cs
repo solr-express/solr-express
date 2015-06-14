@@ -40,9 +40,10 @@ namespace SolrExpress.Solr4.Parameter
                 container.Add("facet=true");
             }
 
+            var aliasName = UtilHelper.GetPropertyNameFromExpression(this._expression);
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Format("facet.field={0}", fieldName));
+            container.Add(string.Format("facet.field={{!ex=dt key={0}}}{1}", aliasName, fieldName));
 
             if (this._sortType.HasValue)
             {
@@ -52,7 +53,7 @@ namespace SolrExpress.Solr4.Parameter
                 // TODO: In SOLR 4, we can't choise between ascending or descending sort. Make a choise here, throws a exception case the SolrFacetSortType equals *Descending or not throws???
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add(string.Format("f.{0}.facet.sort={1}", fieldName, typeName));
+                container.Add(string.Format("f.{0}.facet.sort={1}", aliasName, typeName));
             }
         }
     }

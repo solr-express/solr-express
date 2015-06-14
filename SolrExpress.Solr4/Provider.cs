@@ -50,7 +50,6 @@ namespace SolrExpress.Solr4
             var client = new RestClient(this._solrHost);
 
             var request = new RestRequest(string.Concat("query?", queryString), Method.GET);
-            request.AddParameter("omitHeader", "true");
             request.AddParameter("echoParams", "none");
 
             var response = client.Execute(request);

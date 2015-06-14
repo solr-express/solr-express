@@ -9,7 +9,7 @@ namespace SolrExpress.Solr4.Builder
     /// Document data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
-    public sealed class DocumentBuilder<TDocument> : IResultBuilder
+    public sealed class DocumentBuilder<TDocument> : IResultBuilder, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
