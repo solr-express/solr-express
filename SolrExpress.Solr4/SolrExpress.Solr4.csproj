@@ -55,6 +55,8 @@
     </Compile>
     <Compile Include="Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Builder\StatisticResultBuilder.cs" />
+    <Compile Include="Linq\SolrQueryableExtension.cs" />
+    <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
