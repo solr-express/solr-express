@@ -27,11 +27,11 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual(7, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.range={!ex=dt key=X}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.gap=1", container[2]);
-            Assert.AreEqual("f.Id.facet.start=10", container[3]);
-            Assert.AreEqual("f.Id.facet.end=20", container[4]);
-            Assert.AreEqual("f.Id.facet.other=before", container[5]);
-            Assert.AreEqual("f.Id.facet.other=after", container[6]);
+            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
+            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
+            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
+            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
+            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
         }
 
         /// <summary>
@@ -53,12 +53,12 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual(8, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.range={!ex=dt key=X}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.gap=1", container[2]);
-            Assert.AreEqual("f.Id.facet.start=10", container[3]);
-            Assert.AreEqual("f.Id.facet.end=20", container[4]);
-            Assert.AreEqual("f.Id.facet.other=before", container[5]);
-            Assert.AreEqual("f.Id.facet.other=after", container[6]);
-            Assert.AreEqual("f.Id.facet.sort=count", container[7]);
+            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
+            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
+            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
+            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
+            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
+            Assert.AreEqual("f.Id.facet.range.sort=count", container[7]);
         }
     }
 }

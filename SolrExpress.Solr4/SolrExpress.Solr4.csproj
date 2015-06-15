@@ -53,6 +53,7 @@
     <Compile Include="Builder\FacetQueryResultBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Builder\StatisticResultBuilder.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>

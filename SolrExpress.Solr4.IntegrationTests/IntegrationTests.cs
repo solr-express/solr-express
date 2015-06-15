@@ -130,32 +130,32 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.AreEqual(15, data["Facet2"]);
         }
 
-        ///// <summary>
-        ///// Where   Creating a SOLR context, using parameter "Query" and "Facet.Range" (twice)
-        ///// When    Invoking the method "Execute"
-        ///// What    Create a communication between software and SOLR
-        ///// </summary>
-        //[TestMethod]
-        //public void IntegrationTest006()
-        //{
-        //    // Arrange
-        //    var provider = new Provider("http://localhost:8983/solr/collection1");
-        //    var solrQuery = new SolrQueryable<TechProductDocument>(provider);
-        //    SolrQueryResult result;
-        //    List<FacetKeyValue<FacetRange>> data;
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and "Facet.Range" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest006()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            SolrQueryResult result;
+            List<FacetKeyValue<FacetRange>> data;
 
-        //    // Act
-        //    solrQuery.Parameter(new QueryParameter(new QueryAll()));
-        //    solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Popularity, "Facet1", "1", "1", "10"));
-        //    solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Price, "Facet2", "10", "10", "1000"));
-        //    result = solrQuery.Execute();
-        //    data = result.Get(new FacetRangeResultBuilder()).Data;
+            // Act
+            solrQuery.Parameter(new QueryParameter(new QueryAll()));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Popularity, "Facet1", "1", "1", "10"));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Price, "Facet2", "10", "10", "1000"));
+            result = solrQuery.Execute();
+            data = result.Get(new FacetRangeResultBuilder()).Data;
 
-        //    // Assert
-        //    Assert.AreEqual(2, data.Count);
-        //    Assert.AreEqual("Facet1", data[0].Name);
-        //    Assert.AreEqual("Facet2", data[1].Name);
-        //}
+            // Assert
+            Assert.AreEqual(2, data.Count);
+            Assert.AreEqual("Facet1", data[0].Name);
+            Assert.AreEqual("Facet2", data[1].Name);
+        }
 
         /// <summary>
         /// Where   Creating a SOLR context, using parameter "Query" and result Statistic

@@ -58,19 +58,19 @@ namespace SolrExpress.Solr4.Parameter
 
             if (!string.IsNullOrWhiteSpace(this._gap))
             {
-                container.Add(string.Format("f.{0}.facet.gap={1}", fieldName, this._gap));
+                container.Add(string.Format("f.{0}.facet.range.gap={1}", fieldName, this._gap));
             }
             if (!string.IsNullOrWhiteSpace(this._start))
             {
-                container.Add(string.Format("f.{0}.facet.start={1}", fieldName, this._start));
+                container.Add(string.Format("f.{0}.facet.range.start={1}", fieldName, this._start));
             }
             if (!string.IsNullOrWhiteSpace(this._end))
             {
-                container.Add(string.Format("f.{0}.facet.end={1}", fieldName, this._end));
+                container.Add(string.Format("f.{0}.facet.range.end={1}", fieldName, this._end));
             }
 
-            container.Add(string.Format("f.{0}.facet.other=before", fieldName));
-            container.Add(string.Format("f.{0}.facet.other=after", fieldName));
+            container.Add(string.Format("f.{0}.facet.range.other=before", fieldName));
+            container.Add(string.Format("f.{0}.facet.range.other=after", fieldName));
 
             if (this._sortType.HasValue)
             {
@@ -80,7 +80,7 @@ namespace SolrExpress.Solr4.Parameter
                 // TODO: In SOLR 4, we can't choise between ascending or descending sort. Make a choise here, throws a exception case the SolrFacetSortType equals *Descending or not throws???
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add(string.Format("f.{0}.facet.sort={1}", fieldName, typeName));
+                container.Add(string.Format("f.{0}.facet.range.sort={1}", fieldName, typeName));
             }
         }
     }
