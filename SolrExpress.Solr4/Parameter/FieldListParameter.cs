@@ -7,7 +7,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FieldListParameter<T> : IParameter<List<string>>
+    public sealed class FieldListParameter<T> : IParameter<List<string>>, IValidation
         where T : IDocument
     {
         private readonly Expression<Func<T, object>> _expression;
@@ -48,6 +48,25 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             container.Add(fieldList);
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            //TODO: Unit test
+            if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"stored=true\" to be used in field list";
+            }
         }
     }
 }

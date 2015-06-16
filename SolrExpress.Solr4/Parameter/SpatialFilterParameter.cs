@@ -8,7 +8,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : IParameter<List<string>>
+    public sealed class SpatialFilterParameter<TDocument> : IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
         private readonly SolrSpatialFunctionType _functionType;
@@ -49,6 +49,25 @@ namespace SolrExpress.Solr4.Parameter
             container.Add(string.Concat("fq=", formule));
             container.Add(string.Concat("pt=", this._centerPoint.ToString()));
             container.Add(string.Concat("d=", this._distance.ToString("0.#", CultureInfo.InvariantCulture)));
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            //TODO: Unit test
+            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"indexed=true\" to be used in a query";
+            }
         }
     }
 }

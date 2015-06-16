@@ -8,15 +8,29 @@ namespace SolrExpress.Core.Attribute
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class SolrFieldAttribute : System.Attribute
     {
-        public SolrFieldAttribute(string label)
+        public SolrFieldAttribute(string name)
         {
-            this.Label = label;
+            this.Name = name;
         }
 
-        public string Label { get; set; }
+        /// <summary>
+        /// Name of the field in the SOLR Schema
+        /// </summary>
+        public string Name { get; set; }
 
-        public bool Index { get; set; }
+        /// <summary>
+        /// If true, the value of the field can be used in queries to retrieve matching documents
+        /// </summary>
+        public bool Indexed { get; set; }
 
+        /// <summary>
+        /// If true, the actual value of the field can be retrieved by queries
+        /// </summary>
         public bool Stored { get; set; }
+
+        /// <summary>
+        /// If true, omits the norms associated with this field
+        /// </summary>
+        public bool OmitNorms { get; set; }
     }
 }

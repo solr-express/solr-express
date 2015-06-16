@@ -14,17 +14,6 @@ namespace SolrExpress.Core.Helper
     internal static class UtilHelper
     {
         /// <summary>
-        /// Returns the SolrFieldAttribute associated with the informed property
-        /// </summary>
-        /// <param name="propertyInfo">Property information to find the attribute</param>
-        /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        private static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
-        {
-            var attrs = propertyInfo.GetCustomAttributes(true);
-            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
-        }
-
-        /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
         /// <typeparam name="T">Type of the document used in the query</typeparam>
@@ -68,6 +57,20 @@ namespace SolrExpress.Core.Helper
         }
 
         /// <summary>
+        /// Returns the SolrFieldAttribute associated with the informed property
+        /// </summary>
+        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
+        public static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<T>(Expression<Func<T, object>> expression)
+            where T : IDocument
+        {
+            var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
+            var attrs = propertyInfo.GetCustomAttributes(true);
+            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
+        }
+
+        /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
         /// <typeparam name="T">Type of the document used in the query</typeparam>
@@ -77,9 +80,9 @@ namespace SolrExpress.Core.Helper
             where T : IDocument
         {
             var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
             
-            return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Label;
+            return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Name;
         }
 
         /// <summary>

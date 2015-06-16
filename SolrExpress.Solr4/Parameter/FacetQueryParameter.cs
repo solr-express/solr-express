@@ -5,7 +5,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetQueryParameter : IParameter<List<string>>
+    public sealed class FacetQueryParameter : IParameter<List<string>>, IValidation
     {
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;
@@ -43,7 +43,7 @@ namespace SolrExpress.Solr4.Parameter
             var query = this._query.Execute();
 
             container.Add(string.Format("facet.query={{!ex=dt key={0}}}{1}", this._aliasName, query));
-            
+
             if (this._sortType.HasValue)
             {
                 string typeName;
@@ -53,6 +53,24 @@ namespace SolrExpress.Solr4.Parameter
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
                 container.Add(string.Format("f.{0}.facet.sort={1}", this._aliasName, typeName));
+            }
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+            //TODO: Unit test
+            var queryValidation = this._query as IValidation;
+
+            if (queryValidation != null)
+            {
+                queryValidation.Validate(out isValid, out errorMessage);
             }
         }
     }

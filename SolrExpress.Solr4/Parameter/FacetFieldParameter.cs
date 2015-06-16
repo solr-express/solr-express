@@ -7,7 +7,7 @@ using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetFieldParameter<T> : IParameter<List<string>>
+    public sealed class FacetFieldParameter<T> : IParameter<List<string>>, IValidation
         where T : IDocument
     {
         private readonly Expression<Func<T, object>> _expression;
@@ -54,6 +54,25 @@ namespace SolrExpress.Solr4.Parameter
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
                 container.Add(string.Format("f.{0}.facet.sort={1}", aliasName, typeName));
+            }
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            //TODO: Unit test
+            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"indexed=true\" to be used in a facet";
             }
         }
     }

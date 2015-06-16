@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\SolrFieldAttribute.cs" />
+    <Compile Include="Entity\SolrQueryConfiguration.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />
     <Compile Include="Enumerator\SolrQueryConditionType.cs" />
     <Compile Include="Enumerator\SolrSpatialFunctionType.cs" />
     <Compile Include="Exception\AllowMultipleInstanceOfParameterTypeException.cs" />
+    <Compile Include="Exception\InvalidParameterTypeException.cs" />
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Query\IDocument.cs" />
+    <Compile Include="Query\IValidation.cs" />
     <Compile Include="Query\IProvider.cs" />
     <Compile Include="Query\IParameter.cs" />
     <Compile Include="Query\IQueryParameterValue.cs" />

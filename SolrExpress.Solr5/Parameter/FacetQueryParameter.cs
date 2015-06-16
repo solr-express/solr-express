@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetQueryParameter : IParameter<JObject>
+    public sealed class FacetQueryParameter : IParameter<JObject>, IValidation
     {
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;
@@ -58,6 +58,24 @@ namespace SolrExpress.Solr5.Parameter
             facetObject.Add(jProperty);
 
             jObject["facet"] = facetObject;
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+            //TODO: Unit test
+            var queryValidation = this._query as IValidation;
+
+            if (queryValidation != null)
+            {
+                queryValidation.Validate(out isValid, out errorMessage);
+            }
         }
     }
 }

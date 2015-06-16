@@ -15,7 +15,7 @@ namespace SolrExpress.Core.Json
 
             if (solrFieldAttribute != null)
             {
-                property.PropertyName = solrFieldAttribute.Label;
+                property.PropertyName = solrFieldAttribute.Name;
             }
 
             return property;

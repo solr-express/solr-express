@@ -6,10 +6,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FieldsParameter<T> : IParameter<JObject>
+    public sealed class FieldsParameter<T> : IParameter<JObject>, IValidation
         where T : IDocument
     {
-        private readonly string _value;
+        private readonly Expression<Func<T, object>> _expression;
 
         /// <summary>
         /// Create a fields parameter
@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expression">Expression used to find the property name</param>
         public FieldsParameter(Expression<Func<T, object>> expression)
         {
-            this._value = UtilHelper.GetFieldNameFromExpression(expression);
+            this._expression = expression;
         }
 
         /// <summary>
@@ -33,9 +33,30 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["fields"] ?? new JArray();
 
-            jArray.Add(this._value);
+            var value = UtilHelper.GetFieldNameFromExpression(this._expression);
+
+            jArray.Add(value);
 
             jObject["fields"] = jArray;
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            //TODO: Unit test
+            if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"stored=true\" to be used in field list";
+            }
         }
     }
 }

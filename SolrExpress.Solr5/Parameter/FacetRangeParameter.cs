@@ -8,10 +8,11 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetRangeParameter<T> : IParameter<JObject>
+    public sealed class FacetRangeParameter<T> : IParameter<JObject>, IValidation
       where T : IDocument
     {
         private readonly JProperty _value;
+        private readonly Expression<Func<T, object>> _expression;
 
         /// <summary>
         /// Create a facet parameter
@@ -24,6 +25,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
+            this._expression = expression;
+
             var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
             var array = new List<JProperty>
@@ -75,6 +78,25 @@ namespace SolrExpress.Solr5.Parameter
             facetObject.Add(this._value);
 
             jObject["facet"] = facetObject;
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+            //TODO: Unit test
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+
+            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"indexed=true\" to be used in a facet";
+            }
         }
     }
 }

@@ -9,11 +9,13 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Single value parameter
     /// </summary>
-    public sealed class RangeValue<TDocument, TValue> : IQueryParameterValue
+    public sealed class RangeValue<TDocument, TValue> : IQueryParameterValue, IValidation
         where TDocument : IDocument
         where TValue : struct
     {
-        private readonly string _value;
+        private readonly Expression<Func<TDocument, object>> _expression;
+        private readonly TValue? _from;
+        private readonly TValue? _to;
 
         /// <summary>
         /// Create a range solr parameter value
@@ -23,48 +25,9 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="to">To value in a range filter</param>
         public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
-
-            if (typeof(TValue) == typeof(int))
-            {
-                this._value = string.Format(
-                    "{0}:[{1} TO {2}]",
-                    fieldName,
-                    from != null ? Convert.ToInt32(from.Value).ToString("0", CultureInfo.InvariantCulture) : "*",
-                    to != null ? Convert.ToInt32(to.Value).ToString("0", CultureInfo.InvariantCulture) : "*");
-            }
-            else if (typeof(TValue) == typeof(double))
-            {
-                this._value = string.Format(
-                    "{0}:[{1} TO {2}]",
-                    fieldName,
-                    from != null ? Convert.ToDouble(from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*",
-                    to != null ? Convert.ToDouble(to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*");
-            }
-            else if (typeof(TValue) == typeof(decimal))
-            {
-                this._value = string.Format(
-                    "{0}:[{1} TO {2}]",
-                    fieldName,
-                    from != null ? Convert.ToDecimal(from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*",
-                    to != null ? Convert.ToDecimal(to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*");
-            }
-            else if (typeof(TValue) == typeof(DateTime))
-            {
-                this._value = string.Format(
-                    "{0}:[{1} TO {2}]",
-                    fieldName,
-                    from != null ? Convert.ToDateTime(from.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*",
-                    to != null ? Convert.ToDateTime(to.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*");
-            }
-            else
-            {
-                this._value = string.Format(
-                    "{0}:[{1} TO {2}]",
-                    fieldName,
-                    from != null ? from.Value.ToString() : "*",
-                    to != null ? to.Value.ToString() : "*");
-            }
+            this._expression = expression;
+            this._from = from;
+            this._to = to;
         }
 
         /// <summary>
@@ -73,7 +36,68 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result of the value generator</returns>
         public string Execute()
         {
-            return _value;
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+
+            if (typeof(TValue) == typeof(int))
+            {
+                return string.Format(
+                    "{0}:[{1} TO {2}]",
+                    fieldName,
+                    this._from != null ? Convert.ToInt32(this._from.Value).ToString("0", CultureInfo.InvariantCulture) : "*",
+                    this._to != null ? Convert.ToInt32(this._to.Value).ToString("0", CultureInfo.InvariantCulture) : "*");
+            }
+
+            if (typeof(TValue) == typeof(double))
+            {
+                return string.Format(
+                    "{0}:[{1} TO {2}]",
+                    fieldName,
+                    this._from != null ? Convert.ToDouble(this._from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*",
+                    this._to != null ? Convert.ToDouble(this._to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*");
+            }
+
+            if (typeof(TValue) == typeof(decimal))
+            {
+                return string.Format(
+                    "{0}:[{1} TO {2}]",
+                    fieldName,
+                    this._from != null ? Convert.ToDecimal(this._from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*",
+                    this._to != null ? Convert.ToDecimal(this._to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*");
+            }
+
+            if (typeof(TValue) == typeof(DateTime))
+            {
+                return string.Format(
+                    "{0}:[{1} TO {2}]",
+                    fieldName,
+                    this._from != null ? Convert.ToDateTime(this._from.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*",
+                    this._to != null ? Convert.ToDateTime(this._to.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*");
+            }
+
+            return string.Format(
+                "{0}:[{1} TO {2}]",
+                fieldName,
+                this._from != null ? this._from.Value.ToString() : "*",
+                this._to != null ? this._to.Value.ToString() : "*");
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            //TODO: Unit test
+            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            {
+                isValid = false;
+                errorMessage = "A field must be \"indexed=true\" to be used in a query";
+            }
         }
     }
 }

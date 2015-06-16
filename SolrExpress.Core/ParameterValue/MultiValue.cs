@@ -7,9 +7,10 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Multi value parameter
     /// </summary>
-    public sealed class MultiValue : IQueryParameterValue
+    public sealed class MultiValue : IQueryParameterValue, IValidation
     {
-        private readonly string _value;
+        private readonly SolrQueryConditionType _conditionType;
+        private readonly IQueryParameterValue[] _values;
 
         /// <summary>
         /// Create a multi solr parameter value
@@ -18,9 +19,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="values">Value array of the filter</param>
         public MultiValue(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
-            var condition = string.Concat(" ", conditionType.ToString().ToUpper(), " ");
-
-            this._value = string.Join(condition, values.Select(q => q.Execute()));
+            this._values = values;
+            this._conditionType = conditionType;
         }
 
         /// <summary>
@@ -29,7 +29,33 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result of the value generator</returns>
         public string Execute()
         {
-            return _value;
+            return string.Join(this._conditionType.ToString(), this._values.Select(q => q.Execute()));
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            foreach (var queryParameterValue in this._values)
+            {
+                var queryValidation = queryParameterValue as IValidation;
+
+                if (queryValidation != null)
+                {
+                    queryValidation.Validate(out isValid, out errorMessage);
+
+                    if (!isValid)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
 }
