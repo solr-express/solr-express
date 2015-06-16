@@ -52,5 +52,45 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual("pt=-1.1,-2.2", container[1]);
             Assert.AreEqual("d=5.5", container[2]);
         }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
+        /// What    Returns valid=false
+        /// </summary>
+        [TestMethod]
+        public void SpatialFilterParameter003()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(SolrSpatialFunctionType.Geofilt, q => q.NotIndexed, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsFalse(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
+        /// What    Returns valid=true
+        /// </summary>
+        [TestMethod]
+        public void SpatialFilterParameter004()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(SolrSpatialFunctionType.Geofilt, q => q.Indexed, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsTrue(actual);
+        }
     }
 }

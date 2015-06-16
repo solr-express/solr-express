@@ -28,5 +28,45 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual(1, container.Count);
             Assert.AreEqual("fl=Id,Score", container[0]);
         }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
+        /// What    Returns valid=false
+        /// </summary>
+        [TestMethod]
+        public void FieldsParameter002()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(q => q.NotStored);
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsFalse(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
+        /// What    Returns valid=true
+        /// </summary>
+        [TestMethod]
+        public void FieldsParameter003()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(q => q.Stored);
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsTrue(actual);
+        }
     }
 }

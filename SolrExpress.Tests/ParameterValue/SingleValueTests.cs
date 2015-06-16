@@ -25,5 +25,45 @@ namespace SolrExpress.Tests.ParameterValue
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// Where   Using a SingleValue instance
+        /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
+        /// What    Returns valid=false
+        /// </summary>
+        [TestMethod]
+        public void SingleValue002()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new SingleValue<TestDocumentWithAttribute>(q => q.NotIndexed, "xpto");
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsFalse(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a SingleValue instance
+        /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
+        /// What    Returns valid=true
+        /// </summary>
+        [TestMethod]
+        public void SingleValue003()
+        {
+            // Arrange
+            bool actual;
+            string dummy;
+            var parameter = new SingleValue<TestDocumentWithAttribute>(q => q.Indexed, "xpto");
+
+            // Act
+            parameter.Validate(out actual, out dummy);
+
+            // Assert
+            Assert.IsTrue(actual);
+        }
     }
 }
