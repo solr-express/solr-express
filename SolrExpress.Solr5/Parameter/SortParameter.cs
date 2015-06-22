@@ -9,7 +9,8 @@ namespace SolrExpress.Solr5.Parameter
     public sealed class SortParameter<T> : IParameter<JObject>
         where T : IDocument
     {
-        private readonly string _value;
+        private readonly Expression<Func<T, object>> _expression;
+        private readonly bool _ascendent;
 
         /// <summary>
         /// Create a sort parameter
@@ -18,9 +19,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
-
-            this._value = string.Concat(fieldName, " ", ascendent ? "asc" : "desc");
+            this._expression = expression;
+            this._ascendent = ascendent;
         }
 
         /// <summary>
@@ -36,7 +36,11 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["sort"] ?? new JArray();
 
-            jArray.Add(this._value);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+
+            var value = string.Concat(fieldName, " ", this._ascendent ? "asc" : "desc");
+
+            jArray.Add(value);
 
             jObject["sort"] = jArray;
         }

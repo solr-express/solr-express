@@ -11,8 +11,12 @@ namespace SolrExpress.Solr5.Parameter
     public sealed class FacetRangeParameter<T> : IParameter<JObject>, IValidation
       where T : IDocument
     {
-        private readonly JProperty _value;
         private readonly Expression<Func<T, object>> _expression;
+        private readonly string _aliasName;
+        private readonly string _gap;
+        private readonly string _start;
+        private readonly string _end;
+        private readonly SolrFacetSortType? _sortType;
 
         /// <summary>
         /// Create a facet parameter
@@ -26,40 +30,11 @@ namespace SolrExpress.Solr5.Parameter
         public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
             this._expression = expression;
-
-            var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
-
-            var array = new List<JProperty>
-            {
-                new JProperty("field", fieldName)
-            };
-
-            if (!string.IsNullOrWhiteSpace(gap))
-            {
-                array.Add(new JProperty("gap", gap));
-            }
-            if (!string.IsNullOrWhiteSpace(start))
-            {
-                array.Add(new JProperty("start", start));
-            }
-            if (!string.IsNullOrWhiteSpace(end))
-            {
-                array.Add(new JProperty("end", end));
-            }
-
-            array.Add(new JProperty("other", new JArray("before", "after")));
-
-            if (sortType.HasValue)
-            {
-                string typeName;
-                string sortName;
-
-                UtilHelper.GetSolrFacetSort(sortType.Value, out typeName, out sortName);
-
-                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            }
-
-            this._value = new JProperty(aliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
+            this._aliasName = aliasName;
+            this._gap = gap;
+            this._start = start;
+            this._end = end;
+            this._sortType = sortType;
         }
 
         /// <summary>
@@ -75,7 +50,41 @@ namespace SolrExpress.Solr5.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            facetObject.Add(this._value);
+            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+
+            var array = new List<JProperty>
+            {
+                new JProperty("field", fieldName)
+            };
+
+            if (!string.IsNullOrWhiteSpace(this._gap))
+            {
+                array.Add(new JProperty("gap", this._gap));
+            }
+            if (!string.IsNullOrWhiteSpace(this._start))
+            {
+                array.Add(new JProperty("start", this._start));
+            }
+            if (!string.IsNullOrWhiteSpace(this._end))
+            {
+                array.Add(new JProperty("end", this._end));
+            }
+
+            array.Add(new JProperty("other", new JArray("before", "after")));
+
+            if (this._sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
+
+                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            var value = new JProperty(this._aliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
+
+            facetObject.Add(value);
 
             jObject["facet"] = facetObject;
         }
