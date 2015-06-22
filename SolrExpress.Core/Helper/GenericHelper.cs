@@ -13,10 +13,18 @@ namespace SolrExpress.Core.Helper
         /// </summary>
         internal static T Addition<T>(T value1, T value2)
         {
-            var left = Expression.Parameter(typeof(T), "left");
-            var right = Expression.Parameter(typeof(T), "right");
+            return GenericHelper.Addition<T, T>(value1, value2);
+        }
 
-            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Add(left, right), left, right).Compile();
+        /// <summary>
+        /// Evaluates binary subtract (-) for the given type
+        /// </summary>
+        internal static TResult Addition<TParameter, TResult>(TParameter value1, TParameter value2)
+        {
+            var left = Expression.Parameter(typeof(TParameter), "left");
+            var right = Expression.Parameter(typeof(TParameter), "right");
+
+            var exp = Expression.Lambda<Func<TParameter, TParameter, TResult>>(Expression.Add(left, right), left, right).Compile();
 
             return exp(value1, value2);
         }
@@ -26,10 +34,18 @@ namespace SolrExpress.Core.Helper
         /// </summary>
         internal static T Subtract<T>(T value1, T value2)
         {
-            var left = Expression.Parameter(typeof(T), "left");
-            var right = Expression.Parameter(typeof(T), "right");
+            return GenericHelper.Subtract<T, T>(value1, value2);
+        }
 
-            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Subtract(left, right), left, right).Compile();
+        /// <summary>
+        /// Evaluates binary subtract (-) for the given type
+        /// </summary>
+        internal static TResult Subtract<TParameter, TResult>(TParameter value1, TParameter value2)
+        {
+            var left = Expression.Parameter(typeof(TParameter), "left");
+            var right = Expression.Parameter(typeof(TParameter), "right");
+
+            var exp = Expression.Lambda<Func<TParameter, TParameter, TResult>>(Expression.Subtract(left, right), left, right).Compile();
 
             return exp(value1, value2);
         }

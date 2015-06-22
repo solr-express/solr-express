@@ -23,6 +23,7 @@ namespace SolrExpress.Core.Tests.Query
             var mockParameter = new Mock<IParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
             queryable.Parameter(mockParameter.Object);
