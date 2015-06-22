@@ -13,10 +13,10 @@ namespace SolrExpress.Core.Helper
         /// </summary>
         internal static T Addition<T>(T value1, T value2)
         {
-            ParameterExpression lhs = Expression.Parameter(typeof(T), "lhs");
-            ParameterExpression rhs = Expression.Parameter(typeof(T), "rhs");
+            var left = Expression.Parameter(typeof(T), "left");
+            var right = Expression.Parameter(typeof(T), "right");
 
-            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Add(lhs, rhs), lhs, rhs).Compile();
+            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Add(left, right), left, right).Compile();
 
             return exp(value1, value2);
         }
@@ -26,10 +26,10 @@ namespace SolrExpress.Core.Helper
         /// </summary>
         internal static T Subtract<T>(T value1, T value2)
         {
-            ParameterExpression lhs = Expression.Parameter(typeof(T), "lhs");
-            ParameterExpression rhs = Expression.Parameter(typeof(T), "rhs");
+            var left = Expression.Parameter(typeof(T), "left");
+            var right = Expression.Parameter(typeof(T), "right");
 
-            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Subtract(lhs, rhs), lhs, rhs).Compile();
+            var exp = Expression.Lambda<Func<T, T, T>>(Expression.Subtract(left, right), left, right).Compile();
 
             return exp(value1, value2);
         }
