@@ -65,7 +65,7 @@ namespace SolrExpress.Solr4.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            //TODO: Unit test
+            
             var queryValidation = this._query as IValidation;
 
             if (queryValidation != null)

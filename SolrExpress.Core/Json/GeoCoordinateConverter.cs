@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using SolrExpress.Core.Query;
-using System;
+﻿using System;
+using System.Globalization;
+using Newtonsoft.Json;
 using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Core.Json
@@ -21,8 +21,8 @@ namespace SolrExpress.Core.Json
         {
             var args = ((string)reader.Value).Split(',');
 
-            var latitude = Convert.ToDecimal(args[0]);
-            var longitude = Convert.ToDecimal(args[1]);
+            var latitude = Convert.ToDecimal(args[0], CultureInfo.InvariantCulture);
+            var longitude = Convert.ToDecimal(args[1], CultureInfo.InvariantCulture);
 
             return new GeoCoordinate(latitude, longitude);
         }

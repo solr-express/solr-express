@@ -2,8 +2,6 @@
 
 namespace SolrExpress.Core.ParameterValue
 {
-    //TODO: Create unit tests
-
     /// <summary>
     /// Free value parameter
     /// </summary>

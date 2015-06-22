@@ -98,7 +98,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            //TODO: Unit test
+            
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)

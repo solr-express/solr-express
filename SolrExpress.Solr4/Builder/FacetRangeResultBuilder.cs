@@ -79,13 +79,13 @@ namespace SolrExpress.Solr4.Builder
 
                 var array = (JArray)((JProperty)item).Value["counts"];
 
-                var jTokenType = array[1].Type;
+                var jTokenType = array[0].Type;
 
-                for (int i = 0; i < array.Count; i += 2)
+                for (var i = 0; i < array.Count; i += 2)
                 {
                     var result = this.GetFacetRangeByType(jTokenType);
 
-                    result.SetMinimumValue(array[i + 1].ToObject(result.GetKeyType()));
+                    result.SetMinimumValue(array[i].ToObject(result.GetKeyType()));
 
                     facetData.Add(result, array[i + 1].ToObject<long>());
                 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Json;
 using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Builder
@@ -23,7 +25,11 @@ namespace SolrExpress.Solr4.Builder
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>();
+            var jsonSerializer = JsonSerializer.Create();
+            jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+            jsonSerializer.ContractResolver = new CustomContractResolver();
+
+            this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>(jsonSerializer);
         }
 
         /// <summary>

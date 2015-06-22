@@ -60,6 +60,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Helper\UtilHelperTests.cs" />
+    <Compile Include="ParameterValue\FreeValueTests.cs" />
+    <Compile Include="ParameterValue\QueryAllTests.cs" />
     <Compile Include="ParameterValue\RangeValueTests.cs" />
     <Compile Include="ParameterValue\SingleValueTests.cs" />
     <Compile Include="Query\SolrQueryableTests.cs" />

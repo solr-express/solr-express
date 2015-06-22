@@ -26,9 +26,7 @@ namespace SolrExpress.Solr5.Builder
             }
 
             var jsonSerializer = JsonSerializer.Create();
-            // TODO: Create unit test
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
-            // TODO: Create unit test
             jsonSerializer.ContractResolver = new CustomContractResolver();
 
             this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>(jsonSerializer);

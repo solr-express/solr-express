@@ -9,7 +9,7 @@ namespace SolrExpress.Solr4.Tests.Builder
     {
         /// <summary>
         /// Where   Using a FacetRangeResultBuilder instance
-        /// When    Invoking the method "Execute" using a valid JSON
+        /// When    Invoking the method "Execute" using a valid JSON (with integer values)
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
@@ -47,6 +47,42 @@ namespace SolrExpress.Solr4.Tests.Builder
             Assert.AreEqual(1, parameter.Data.Count);
             Assert.AreEqual("facetRange", parameter.Data[0].Name);
             Assert.AreEqual(11, parameter.Data[0].Data.Count);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeResultBuilder instance
+        /// When    Invoking the method "Execute" using a valid JSON (with date time values)
+        /// What    Parse to informed concret classes
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeResultBuilder002()
+        {
+            // Arrange
+            var jObject = JObject.Parse(@"
+            {
+                  ""facet_counts"":{
+                    ""facet_ranges"":{
+                      ""facetRange"":{
+                        ""counts"":[
+                            ""2014-06-22T20:33:00.741Z"",10,
+                            ""2014-06-28T20:33:00.741Z"",0,
+                            ""2014-07-04T20:33:00.741Z"",10],
+                        ""gap"":""+6DAYS"",
+                        ""start"":""2014-06-22T20:33:00.741Z"",
+                        ""end"":""2015-06-23T20:33:00.741Z"",
+                        ""before"":3,
+                        ""after"":9}}}
+            }");
+            
+            var parameter = new FacetRangeResultBuilder();
+
+            // Act
+            parameter.Execute(jObject);
+
+            // Assert
+            Assert.AreEqual(1, parameter.Data.Count);
+            Assert.AreEqual("facetRange", parameter.Data[0].Name);
+            Assert.AreEqual(5, parameter.Data[0].Data.Count);
         }
     }
 }

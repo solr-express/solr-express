@@ -54,7 +54,6 @@ namespace SolrExpress.Core.Query
 
             var parameterValidation = parameter as IValidation;
 
-            //TODO: Unit test to _configuration.FailFast
             if (this._configuration.FailFast && parameterValidation != null)
             {
                 bool isValid;
