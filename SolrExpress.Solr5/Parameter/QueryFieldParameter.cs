@@ -5,7 +5,7 @@ namespace SolrExpress.Solr5.Parameter
 {
     public sealed class QueryFieldParameter : IParameter<JObject>
     {
-        private readonly JProperty _value;
+        private readonly string _query;
 
         /// <summary>
         /// Create a query field parameter
@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="query">Query used to make the query field</param>
         public QueryFieldParameter(string query)
         {
-            this._value = new JProperty("qf", query);
+            this._query = query;
         }
 
         /// <summary>
@@ -28,8 +28,9 @@ namespace SolrExpress.Solr5.Parameter
         public void Execute(JObject jObject)
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
+            var jProperty = new JProperty("qf", this._query);
 
-            jObj.Add(this._value);
+            jObj.Add(jProperty);
 
             jObject["params"] = jObj;
         }

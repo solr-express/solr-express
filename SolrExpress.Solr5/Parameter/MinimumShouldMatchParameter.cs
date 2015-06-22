@@ -5,7 +5,7 @@ namespace SolrExpress.Solr5.Parameter
 {
     public sealed class MinimumShouldMatchParameter : IParameter<JObject>
     {
-        private readonly JProperty _value;
+        private readonly string _expression;
 
         /// <summary>
         /// Create a minimun should parameter parameter
@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expression">Expression used to make the mm parameter</param>
         public MinimumShouldMatchParameter(string expression)
         {
-            this._value = new JProperty("mm", expression);
+            this._expression = expression;
         }
 
         /// <summary>
@@ -28,8 +28,9 @@ namespace SolrExpress.Solr5.Parameter
         public void Execute(JObject jObject)
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
+            var jProperty = new JProperty("mm", this._expression);
 
-            jObj.Add(this._value);
+            jObj.Add(jProperty);
 
             jObject["params"] = jObj;
         }
