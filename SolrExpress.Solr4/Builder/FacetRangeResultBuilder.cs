@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SolrExpress.Core.Entity;
+using SolrExpress.Core.Helper;
 
 namespace SolrExpress.Solr4.Builder
 {
@@ -34,18 +35,15 @@ namespace SolrExpress.Solr4.Builder
         private void ProcessGap<TFacetKey>(Dictionary<FacetRange, long> facetData, FacetRange facetBefore, FacetRange facetAfter)
             where TFacetKey : struct, IComparable
         {
-            dynamic first = facetData.First();
-            dynamic second = facetData.Skip(1).FirstOrDefault();
+            var first = facetData.First();
+            var second = facetData.Skip(1).FirstOrDefault();
             var last = facetData.Last();
 
-            // Do with dynamic because otherwise the error below occurring
-            // Operator '-' cannot be applied to operands of type 'TFacetKey?' and 'TFacetKey?'
-            // TODO: Is this behavior expected? Why is this exception being throwed?
-            var gap = second.Key.MinimumValue - first.Key.MinimumValue;
+            var gap = GenericHelper.Subtract(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
 
             foreach (var range in facetData)
             {
-                ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue + gap;
+                ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, gap);
             }
 
             ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;

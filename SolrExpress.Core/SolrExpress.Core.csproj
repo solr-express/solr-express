@@ -55,6 +55,7 @@
     <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
+    <Compile Include="Helper\GenericHelper.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
     <Compile Include="Json\CustomContractResolver.cs" />
     <Compile Include="Json\GeoCoordinateConverter.cs" />
