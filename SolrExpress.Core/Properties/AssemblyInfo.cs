@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("SolrExpress.Solr4")]
 [assembly: InternalsVisibleTo("SolrExpress.Solr5")]
-[assembly: InternalsVisibleTo("SolrExpress.Tests")]
+[assembly: InternalsVisibleTo("SolrExpress.Core.Tests")]

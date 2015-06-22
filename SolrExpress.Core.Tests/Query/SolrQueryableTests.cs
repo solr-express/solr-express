@@ -3,7 +3,7 @@ using Moq;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
 
-namespace SolrExpress.Tests.Query
+namespace SolrExpress.Core.Tests.Query
 {
     [TestClass]
     public class SolrQueryableTests

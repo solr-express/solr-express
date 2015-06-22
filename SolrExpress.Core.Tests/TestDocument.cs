@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Core.Query;
 
-namespace SolrExpress.Tests
+namespace SolrExpress.Core.Tests
 {
     public class TestDocument : IDocument
     {

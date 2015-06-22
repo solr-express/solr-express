@@ -1,10 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Attribute;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
-using System;
 
-namespace SolrExpress.Tests.Helper
+namespace SolrExpress.Core.Tests.Helper
 {
     [TestClass]
     public class UtilHelperTests
@@ -33,22 +33,22 @@ namespace SolrExpress.Tests.Helper
 
             public bool? PropertyBoolNullable { get; set; }
 
-            [SolrFieldAttribute("PropString")]
+            [SolrField("PropString")]
             public string PropertyStringWithAttr { get; set; }
 
-            [SolrFieldAttribute("PropInt")]
+            [SolrField("PropInt")]
             public int PropertyIntWithAttr { get; set; }
 
-            [SolrFieldAttribute("PropLong")]
+            [SolrField("PropLong")]
             public long PropertyLongWithAttr { get; set; }
 
-            [SolrFieldAttribute("PropDateTime")]
+            [SolrField("PropDateTime")]
             public DateTime PropertyDateTimeWithAttr { get; set; }
 
-            [SolrFieldAttribute("PropDateTimeOffset")]
+            [SolrField("PropDateTimeOffset")]
             public DateTimeOffset PropertyDateTimeOffsetWithAttr { get; set; }
 
-            [SolrFieldAttribute("PropBool")]
+            [SolrField("PropBool")]
             public bool PropertyBoolWithAttr { get; set; }
         }
 
