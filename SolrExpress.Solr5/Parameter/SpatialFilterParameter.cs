@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq.Expressions;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;

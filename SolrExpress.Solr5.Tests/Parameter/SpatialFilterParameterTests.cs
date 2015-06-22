@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;

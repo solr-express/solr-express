@@ -65,7 +65,7 @@
     <Compile Include="ParameterValue\RangeValue.cs" />
     <Compile Include="ParameterValue\SingleValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\GeoCoordinate.cs" />
+    <Compile Include="Entity\GeoCoordinate.cs" />
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Query\IDocument.cs" />
@@ -75,8 +75,8 @@
     <Compile Include="Query\IQueryParameterValue.cs" />
     <Compile Include="Query\IResultBuilder.cs" />
     <Compile Include="Query\SolrQueryResult.cs" />
-    <Compile Include="Query\FacetKeyValue.cs" />
-    <Compile Include="Query\FacetRange.cs" />
+    <Compile Include="Entity\FacetKeyValue.cs" />
+    <Compile Include="Entity\FacetRange.cs" />
     <Compile Include="Query\SolrQueryable.cs" />
   </ItemGroup>
   <ItemGroup />

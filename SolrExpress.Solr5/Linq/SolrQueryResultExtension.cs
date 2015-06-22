@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Linq

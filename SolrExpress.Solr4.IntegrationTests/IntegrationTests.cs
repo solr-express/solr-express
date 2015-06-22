@@ -4,6 +4,7 @@ using SolrExpress.Core.Query;
 using SolrExpress.Solr4.Builder;
 using SolrExpress.Solr4.Parameter;
 using System.Collections.Generic;
+using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Solr4.IntegrationTests
 {

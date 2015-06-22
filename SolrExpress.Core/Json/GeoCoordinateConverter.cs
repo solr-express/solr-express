@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Core.Query;
 using System;
+using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Core.Json
 {

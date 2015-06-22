@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr4.Parameter;

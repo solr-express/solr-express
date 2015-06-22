@@ -1,6 +1,7 @@
 ﻿using SolrExpress.Core.Attribute;
 using SolrExpress.Core.Query;
 using System;
+using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Solr5.IntegrationTests
 {
