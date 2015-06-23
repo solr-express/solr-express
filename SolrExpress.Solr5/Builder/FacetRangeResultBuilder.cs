@@ -39,11 +39,25 @@ namespace SolrExpress.Solr5.Builder
             var second = facetData.Skip(1).FirstOrDefault();
             var last = facetData.Last();
 
-            var gap = GenericHelper.Subtract(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
+            object gap;
 
-            foreach (var range in facetData)
+            if (typeof(TFacetKey) == typeof(DateTime))
             {
-                ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, gap);
+                gap = GenericHelper.Subtract<TFacetKey?, TimeSpan?>(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
+
+                foreach (var range in facetData)
+                {
+                    ((FacetRange<DateTime>)range.Key).MaximumValue = ((FacetRange<DateTime>)range.Key).MinimumValue.Value.Add((TimeSpan)gap);
+                }
+            }
+            else
+            {
+                gap = GenericHelper.Subtract(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
+
+                foreach (var range in facetData)
+                {
+                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, (TFacetKey?)gap);
+                }
             }
 
             ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
@@ -104,11 +118,9 @@ namespace SolrExpress.Solr5.Builder
                     switch (jTokenType)
                     {
                         case JTokenType.Float:
-                            // TODO: Make unit test to this
                             this.ProcessGap<float>(facetData, before, after);
                             break;
                         case JTokenType.Date:
-                            // TODO: Make unit test to this
                             this.ProcessGap<DateTime>(facetData, before, after);
                             break;
                         default:
