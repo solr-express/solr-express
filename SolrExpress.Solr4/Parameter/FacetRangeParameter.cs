@@ -82,6 +82,8 @@ namespace SolrExpress.Solr4.Parameter
 
                 container.Add(string.Format("f.{0}.facet.range.sort={1}", fieldName, typeName));
             }
+
+            container.Add(string.Format("f.{0}.facet.mincount=1", fieldName));
         }
 
         /// <summary>

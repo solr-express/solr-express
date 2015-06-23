@@ -24,7 +24,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(7, container.Count);
+            Assert.AreEqual(8, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.range={!ex=dt key=X}Id", container[1]);
             Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
@@ -32,6 +32,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
             Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
             Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[7]);
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(8, container.Count);
+            Assert.AreEqual(9, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.range={!ex=dt key=X}Id", container[1]);
             Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
@@ -59,6 +60,7 @@ namespace SolrExpress.Solr4.Tests.Parameter
             Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
             Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
             Assert.AreEqual("f.Id.facet.range.sort=count", container[7]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[8]);
         }
     }
 }

@@ -24,9 +24,10 @@ namespace SolrExpress.Solr4.Tests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(2, container.Count);
+            Assert.AreEqual(3, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.field={!ex=dt key=Id}Id", container[1]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
         }
 
         /// <summary>
@@ -45,10 +46,11 @@ namespace SolrExpress.Solr4.Tests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(3, container.Count);
+            Assert.AreEqual(4, container.Count);
             Assert.AreEqual("facet=true", container[0]);
             Assert.AreEqual("facet.field={!ex=dt key=Id}Id", container[1]);
             Assert.AreEqual("f.Id.facet.sort=count", container[2]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[3]);
         }
     }
 }

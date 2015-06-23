@@ -55,6 +55,8 @@ namespace SolrExpress.Solr4.Parameter
 
                 container.Add(string.Format("f.{0}.facet.sort={1}", aliasName, typeName));
             }
+            
+            container.Add(string.Format("f.{0}.facet.mincount=1", aliasName));
         }
 
         /// <summary>
