@@ -114,7 +114,7 @@ namespace SolrExpress.Solr4.Tests.Builder
                           ""70.0"",1,
                           ""80.0"",0,
                           ""90.0"",1],
-                        ""gap"":10.0,
+                        ""gap"":10.5,
                         ""start"":10.0,
                         ""end"":100.0,
                         ""before"":3,
