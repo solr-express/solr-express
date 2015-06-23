@@ -125,7 +125,6 @@ namespace SolrExpress.Solr4.Builder
                 switch (jTokenType)
                 {
                     case JTokenType.Float:
-                        // TODO: Make unit test to this
                         this.ProcessGap<float>(facetData, before, after);
                         break;
                     case JTokenType.Date:
