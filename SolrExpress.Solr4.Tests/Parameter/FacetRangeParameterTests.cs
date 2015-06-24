@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Solr4.Parameter;
 
-namespace SolrExpress.Solr4.Tests.Parameter
+namespace SolrExpress.Solr4.UnitTests.Parameter
 {
     [TestClass]
     public class FacetRangeParameterTests

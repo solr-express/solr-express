@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4", "SolrEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5", "SolrExpress.Solr5\SolrExpress.Solr5.csproj", "{3B679214-5E64-44CE-9188-D692F2371709}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4.Tests", "SolrExpress.Solr4.Tests\SolrExpress.Solr4.Tests.csproj", "{9B7A0323-0529-4729-B563-AC1D60013C68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4.UnitTests", "SolrExpress.Solr4.Tests\SolrExpress.Solr4.UnitTests.csproj", "{9B7A0323-0529-4729-B563-AC1D60013C68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5.Tests", "SolrExpress.Solr5.Tests\SolrExpress.Solr5.Tests.csproj", "{F4D28571-2DCC-401D-A2BD-43D828D91594}"
 EndProject

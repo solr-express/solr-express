@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core.Attribute;
 using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr4.Tests
+namespace SolrExpress.Solr4.UnitTests
 {
     public class TestDocumentWithAttribute : IDocument
     {
