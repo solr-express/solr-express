@@ -2,29 +2,27 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
-    public class MinimumShouldMatchParameterTests
+    public class LimitParameterTests
     {
         /// <summary>
-        /// Where   Using a MinimumShouldMatchParameter instance
+        /// Where   Using a LimitParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void MinimumShouldMatchParameter001()
+        public void LimitParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-              params:{
-                mm:""75%""
-              }
+              ""offset"": 10
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new MinimumShouldMatchParameter("75%");
+            var parameter = new OffsetParameter(10);
 
             // Act
             parameter.Execute(jObject);

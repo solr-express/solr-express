@@ -1,28 +1,29 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
-    public class SortParameterTests
+    public class QueryParameterTests
     {
         /// <summary>
-        /// Where   Using a SortParameter instance
+        /// Where   Using a QueryParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void SortParameter001()
+        public void QueryParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""sort"": [""Id asc""]
+              ""query"": ""Id:ITEM01""
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SortParameter<TestDocument>(q => q.Id, true);
+            var parameter = new QueryParameter(new SingleValue<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
             parameter.Execute(jObject);

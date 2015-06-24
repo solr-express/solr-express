@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
     public class FieldsParameterTests

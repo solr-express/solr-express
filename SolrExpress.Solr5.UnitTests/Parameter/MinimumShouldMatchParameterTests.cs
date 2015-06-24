@@ -2,29 +2,29 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
-    public class QueryFieldParameterTests
+    public class MinimumShouldMatchParameterTests
     {
         /// <summary>
-        /// Where   Using a QueryFieldParameter instance
+        /// Where   Using a MinimumShouldMatchParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void QueryFieldParameter001()
+        public void MinimumShouldMatchParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
               params:{
-                qf:""id^10 score~2^20""
+                mm:""75%""
               }
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new QueryFieldParameter("id^10 score~2^20");
+            var parameter = new MinimumShouldMatchParameter("75%");
 
             // Act
             parameter.Execute(jObject);

@@ -2,18 +2,18 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
-    public class LimitParameterTests
+    public class OffsetParameterTests
     {
         /// <summary>
-        /// Where   Using a LimitParameter instance
+        /// Where   Using a OffsetParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void LimitParameter001()
+        public void OffsetParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"

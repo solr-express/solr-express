@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Exception;
 using SolrExpress.Solr5.Builder;
 
-namespace SolrExpress.Solr5.Tests.Builder
+namespace SolrExpress.Solr5.UnitTests.Builder
 {
     [TestClass]
     public class DocumentBuilderTests

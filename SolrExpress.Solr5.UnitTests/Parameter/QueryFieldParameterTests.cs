@@ -2,27 +2,29 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 
-namespace SolrExpress.Solr5.Tests.Parameter
+namespace SolrExpress.Solr5.UnitTests.Parameter
 {
     [TestClass]
-    public class OffsetParameterTests
+    public class QueryFieldParameterTests
     {
         /// <summary>
-        /// Where   Using a OffsetParameter instance
+        /// Where   Using a QueryFieldParameter instance
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [TestMethod]
-        public void OffsetParameter001()
+        public void QueryFieldParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""offset"": 10
+              params:{
+                qf:""id^10 score~2^20""
+              }
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new OffsetParameter(10);
+            var parameter = new QueryFieldParameter("id^10 score~2^20");
 
             // Act
             parameter.Execute(jObject);

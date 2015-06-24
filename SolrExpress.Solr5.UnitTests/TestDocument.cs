@@ -2,7 +2,7 @@
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Query;
 
-namespace SolrExpress.Solr5.Tests
+namespace SolrExpress.Solr5.UnitTests
 {
     public class TestDocument : IDocument
     {
