@@ -12,9 +12,9 @@ namespace SolrExpress.Core.Query
         where TDocument : IDocument
     {
         /// <summary>
-        /// List of the parameters arranged in the queryable class
+        /// Configurations about SolrQueriable behavior
         /// </summary>
-        private readonly List<IParameter> _parameters = new List<IParameter>();
+        private readonly SolrQueryConfiguration _configuration;
 
         /// <summary>
         /// Provider used to resolve the expression
@@ -22,9 +22,19 @@ namespace SolrExpress.Core.Query
         private readonly IProvider _provider;
 
         /// <summary>
-        /// Configurations about SolrQueriable behavior
+        /// List of the parameters arranged in the queryable class
         /// </summary>
-        private readonly SolrQueryConfiguration _configuration;
+        private readonly List<IParameter> _parameters = new List<IParameter>();
+
+        /// <summary>
+        /// List of the query interceptors arranged in the queryable class
+        /// </summary>
+        private readonly List<IQueryInterceptor> _queryInterceptors = new List<IQueryInterceptor>();
+
+        /// <summary>
+        /// List of the result interceptors arranged in the queryable class
+        /// </summary>
+        private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
 
         /// <summary>
         /// Default constructor of the class
@@ -78,7 +88,13 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public SolrQueryResult Execute()
         {
-            var json = this._provider.Execute(this._parameters);
+            var query = this._provider.GetQuery(this._parameters);
+
+            this._queryInterceptors.ForEach(q => q.Execute(query));
+
+            var json = this._provider.Execute(query);
+
+            this._resultInterceptors.ForEach(q => q.Execute(json));
 
             return new SolrQueryResult(json);
         }

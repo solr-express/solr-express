@@ -70,6 +70,8 @@
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Query\IDocument.cs" />
+    <Compile Include="Query\IQueryInterceptor.cs" />
+    <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
     <Compile Include="Query\IProvider.cs" />
     <Compile Include="Query\IParameter.cs" />

@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using RestSharp;
+﻿using RestSharp;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace SolrExpress.Solr4
 {
@@ -24,11 +25,11 @@ namespace SolrExpress.Solr4
         }
 
         /// <summary>
-        /// Process the queryable class
+        /// Execute the parameters and return the formed solr query
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <returns>JSON string</returns>
-        private string ProcessParameters(List<IParameter> parameters)
+        /// <returns>Solr query</returns>
+        public string GetQuery(List<IParameter> parameters)
         {
             var list = new List<string>();
 
@@ -37,19 +38,19 @@ namespace SolrExpress.Solr4
                 ((IParameter<List<string>>)item).Execute(list);
             }
 
-            return string.Join("&", list);
+            return string.Concat("query?", string.Join("&", list));
         }
 
         /// <summary>
-        /// Process the json
+        /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <param name="queryString">Query string used by SOLR request</param>
-        /// <returns>Response from SOLR</returns>
-        private string ProcessExpression(string queryString)
+        /// <param name="uri">Solr query uri</param>
+        /// <returns>Result of the request</returns>
+        public string Execute(string query)
         {
             var client = new RestClient(this._solrHost);
 
-            var request = new RestRequest(string.Concat("query?", queryString), Method.GET);
+            var request = new RestRequest(query, Method.GET);
             request.AddParameter("echoParams", "none");
 
             var response = client.Execute(request);
@@ -60,18 +61,6 @@ namespace SolrExpress.Solr4
             }
 
             return response.Content;
-        }
-
-        /// <summary>
-        /// Execute the informated uri and return the result of the request
-        /// </summary>
-        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <returns>Result of the request</returns>
-        public string Execute(List<IParameter> parameters)
-        {
-            var expressionToRequest = this.ProcessParameters(parameters);
-
-            return this.ProcessExpression(expressionToRequest);
         }
     }
 }

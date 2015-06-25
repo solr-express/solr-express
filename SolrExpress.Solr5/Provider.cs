@@ -25,11 +25,11 @@ namespace SolrExpress.Solr5
         }
 
         /// <summary>
-        /// Process the queryable class
+        /// Execute the parameters and return the formed solr query
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <returns>JSON string</returns>
-        private string ProcessParameters(List<IParameter> parameters)
+        /// <returns>Solr query</returns>
+        public string GetQuery(List<IParameter> parameters)
         {
             var jsonObj = new JObject();
 
@@ -42,17 +42,17 @@ namespace SolrExpress.Solr5
         }
 
         /// <summary>
-        /// Process the json
+        /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <param name="json">Json string used by SOLR JSON Api</param>
-        /// <returns>Response from SOLR</returns>
-        private string ProcessExpression(string json)
+        /// <param name="query">Solr query uri</param>
+        /// <returns>Result of the request</returns>
+        public string Execute(string query)
         {
             var client = new RestClient(this._solrHost);
 
             var request = new RestRequest("query", Method.GET);
             request.AddParameter("echoParams", "none");
-            request.AddParameter("json", json);
+            request.AddParameter("json", query);
 
             var response = client.Execute(request);
 
@@ -62,18 +62,6 @@ namespace SolrExpress.Solr5
             }
 
             return response.Content;
-        }
-
-        /// <summary>
-        /// Execute the informated uri and return the result of the request
-        /// </summary>
-        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <returns>Result of the request</returns>
-        public string Execute(List<IParameter> parameters)
-        {
-            var expressionToRequest = this.ProcessParameters(parameters);
-
-            return this.ProcessExpression(expressionToRequest);
         }
     }
 }
