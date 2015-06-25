@@ -83,6 +83,30 @@ namespace SolrExpress.Core.Query
         }
 
         /// <summary>
+        /// Add a query interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptor">The query interceptor to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
+        {
+            this._queryInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a result interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptor">The result interceptor to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
+        {
+            this._resultInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
         /// Execute the search in the solr with informed parameters
         /// </summary>
         /// <returns>Solr result</returns>
