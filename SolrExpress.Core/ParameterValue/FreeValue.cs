@@ -21,7 +21,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <summary>
         /// Execute the parameter value generator
         /// </summary>
-        /// <returns>Result of the value generator</returns>
+        /// <returns>Result generated value</returns>
         public string Execute()
         {
             return _value;

@@ -90,11 +90,11 @@ namespace SolrExpress.Core.Query
         {
             var query = this._provider.GetQuery(this._parameters);
 
-            this._queryInterceptors.ForEach(q => q.Execute(query));
+            this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
             var json = this._provider.Execute(query);
 
-            this._resultInterceptors.ForEach(q => q.Execute(json));
+            this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
             return new SolrQueryResult(json);
         }

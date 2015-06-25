@@ -26,7 +26,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <summary>
         /// Execute parameter value generator
         /// </summary>
-        /// <returns>Result of the value generator</returns>
+        /// <returns>Result generated value</returns>
         public string Execute()
         {
             return string.Join(this._conditionType.ToString(), this._values.Select(q => q.Execute()));

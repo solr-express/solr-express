@@ -2,6 +2,6 @@
 {
     public interface IResultInterceptor
     {
-        void Execute(string json);
+        void Execute(ref string json);
     }
 }

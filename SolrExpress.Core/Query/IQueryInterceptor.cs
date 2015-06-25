@@ -2,6 +2,6 @@
 {
     public interface IQueryInterceptor
     {
-        void Execute(string query);
+        void Execute(ref string query);
     }
 }
