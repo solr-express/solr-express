@@ -21,7 +21,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
 
             // Act / Assert
             solrQuery.Execute();
@@ -37,7 +38,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             List<TechProductDocument> data;
 
@@ -61,7 +63,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             List<TechProductDocument> data;
             
@@ -87,7 +90,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             List<FacetKeyValue<string>> data;
 
@@ -114,7 +118,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             Dictionary<string, long> data;
 
@@ -141,7 +146,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             List<FacetKeyValue<FacetRange>> data;
 
@@ -168,7 +174,8 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider);
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
             SolrQueryResult result;
             StatisticResultBuilder data;
 
