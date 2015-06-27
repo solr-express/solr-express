@@ -95,13 +95,32 @@ namespace SolrExpress.Solr4.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            
+
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
                 errorMessage = "A field must be \"indexed=true\" to be used in a facet";
+            }
+            else
+            {
+                var propertyType = UtilHelper.GetPropertyTypeFromExpression(this._expression);
+
+                switch (propertyType.ToString())
+                {
+                    case "System.Int32":
+                    case "System.Int64":
+                    case "System.Single":
+                    case "System.Double":
+                    case "System.Decimal":
+                    case "System.DateTime":
+                        break;
+                    default:
+                        isValid = false;
+                        errorMessage = "A field must be numeric or DateTime to be used in a facet range";
+                        break;
+                }
             }
         }
     }

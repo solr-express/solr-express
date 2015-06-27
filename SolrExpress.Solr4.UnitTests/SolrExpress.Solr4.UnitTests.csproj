@@ -78,6 +78,7 @@
     <Compile Include="Parameter\SpatialFilterParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDocument.cs" />
+    <Compile Include="TestDocumentWithAnyPropertyTypes.cs" />
     <Compile Include="TestDocumentWithAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

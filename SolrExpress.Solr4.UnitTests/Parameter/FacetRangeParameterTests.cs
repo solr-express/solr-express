@@ -62,5 +62,152 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             Assert.AreEqual("f.Id.facet.range.sort=count", container[7]);
             Assert.AreEqual("f.Id.facet.mincount=1", container[8]);
         }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type integer and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter003()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropInteger, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type long and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter004()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropLong, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type float and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter005()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropFloat, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type double and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter006()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDouble, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type decimal and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter007()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDecimal, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type DateTime and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter008()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDateTime, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsTrue(isValid);
+            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Validate" using a field type string and with fail fast actived
+        /// What    Is valid should be true
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter009()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropString, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.IsFalse(isValid);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
+        }
     }
 }
