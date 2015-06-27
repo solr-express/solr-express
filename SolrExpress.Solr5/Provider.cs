@@ -52,6 +52,7 @@ namespace SolrExpress.Solr5
 
             var request = new RestRequest("query", Method.GET);
             request.AddParameter("echoParams", "none");
+            request.AddParameter("wt", "json");
             request.AddParameter("json", query);
 
             var response = client.Execute(request);

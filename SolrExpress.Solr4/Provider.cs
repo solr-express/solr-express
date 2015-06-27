@@ -52,6 +52,7 @@ namespace SolrExpress.Solr4
 
             var request = new RestRequest(query, Method.GET);
             request.AddParameter("echoParams", "none");
+            request.AddParameter("wt", "json");
 
             var response = client.Execute(request);
 
