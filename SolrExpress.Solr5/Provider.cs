@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using RestSharp;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 
 namespace SolrExpress.Solr5
 {
@@ -48,21 +49,38 @@ namespace SolrExpress.Solr5
         /// <returns>Result of the request</returns>
         public string Execute(string query)
         {
-            var client = new RestClient(this._solrHost);
+            var baseUrl = string.Concat(this._solrHost, "/query?echoParams=none&wt=json");
 
-            var request = new RestRequest("query", Method.GET);
-            request.AddParameter("echoParams", "none");
-            request.AddParameter("wt", "json");
-            request.AddParameter("json", query);
+            var encoding = new UTF8Encoding();
+            var bytes = encoding.GetBytes(query);
 
-            var response = client.Execute(request);
+            var request = WebRequest.Create(baseUrl);
+            request.Method = "GET-X";
+            request.ContentType = "application/json";
+            request.ContentLength = bytes.Length;
+
+            var stream = request.GetRequestStream();
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Close();
+
+            var response = (HttpWebResponse)request.GetResponse();
+
+            string content;
+
+            using (var dataStream = response.GetResponseStream())
+            {
+                using (var reader = new StreamReader(dataStream))
+                {
+                    content = reader.ReadToEnd();
+                }
+            }
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                throw new UnexpectedJsonQueryException(response.Content);
+                throw new UnexpectedJsonQueryException(content);
             }
 
-            return response.Content;
+            return content;
         }
     }
 }
