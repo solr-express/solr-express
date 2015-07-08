@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using SolrExpress.Core.Enumerator;
+﻿using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -50,12 +51,16 @@ namespace SolrExpress.Solr4.Parameter
                 string typeName;
                 string dummy;
 
-                // TODO: In SOLR 4, we can't choise between ascending or descending sort. Make a choise here, throws a exception case the SolrFacetSortType equals *Descending or not throws???
+                if (this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc)
+                {
+                    throw new UnsupportedSortTypeException();
+                }
+
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
                 container.Add(string.Format("f.{0}.facet.sort={1}", aliasName, typeName));
             }
-            
+
             container.Add(string.Format("f.{0}.facet.mincount=1", aliasName));
         }
 
@@ -70,7 +75,7 @@ namespace SolrExpress.Solr4.Parameter
             errorMessage = string.Empty;
 
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
-            
+
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Solr4.Parameter;
+using SolrExpress.Core.Exception;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -45,7 +46,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -208,6 +209,40 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Assert
             Assert.IsFalse(isValid);
             Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParamete instance
+        /// When    Invoking the method "Execute" using the sort count desc
+        /// What    Throws UnsupportedSortTypeException exception
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        public void FacetRangeParamete010()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+
+            // Act / Assert
+            parameter.Execute(container);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParamete instance
+        /// When    Invoking the method "Execute" using the sort index desc
+        /// What    Throws UnsupportedSortTypeException exception
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        public void FacetRangeParamete011()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.IndexDesc);
+
+            // Act / Assert
+            parameter.Execute(container);
         }
     }
 }

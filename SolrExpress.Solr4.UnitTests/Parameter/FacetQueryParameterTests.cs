@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Exception;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -41,7 +42,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter("X", new FreeValue("avg('Y')"), SolrFacetSortType.CountDesc);
+            var parameter = new FacetQueryParameter("X", new FreeValue("avg('Y')"), SolrFacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -54,5 +55,38 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             Assert.AreEqual("f.X.facet.mincount=1", container[3]);
         }
 
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Invoking the method "Execute" using the sort count desc
+        /// What    Throws UnsupportedSortTypeException exception
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        public void FacetQueryParameter003()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetQueryParameter("X", new QueryAll(), SolrFacetSortType.CountDesc);
+
+            // Act / Assert
+            parameter.Execute(container);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Invoking the method "Execute" using the sort index desc
+        /// What    Throws UnsupportedSortTypeException exception
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        public void FacetQueryParameter004()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetQueryParameter("X", new QueryAll(), SolrFacetSortType.IndexDesc);
+
+            // Act / Assert
+            parameter.Execute(container);
+        }
     }
 }
