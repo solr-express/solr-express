@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>SolrExpress.Solr4</id>
+        <version>0.8.0.0</version>
+        <authors>Diego Luiz Brum</authors>
+        <projectUrl>https://github.com/solr-express/solr-express</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A simple and lightweight query .NET library for Solr 4.x</description>
+        <dependencies>
+            <dependency id="Newtonsoft.Json" version="6.0.8" />
+        </dependencies>
+    </metadata>
+    <files />
+</package>

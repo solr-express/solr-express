@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SolrExpress.Solr5")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A simple and lightweight query .NET library for Solr 5.x")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://github.com/solr-express/solr-express")]
 [assembly: AssemblyProduct("SolrExpress.Solr5")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
