@@ -12,7 +12,7 @@ namespace SolrExpress.Solr5.Builder
     public sealed class FacetQueryResultBuilder : IResultBuilder, IConvertJsonObject
     {
         /// <summary>
-        /// Execute the parse of the JSON object in facet query list
+        /// Execute the parse of the facet query list in the JSON object
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)

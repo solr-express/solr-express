@@ -15,7 +15,7 @@ namespace SolrExpress.Solr5.Builder
     public sealed class FacetRangeResultBuilder : IResultBuilder, IConvertJsonObject
     {
         /// <summary>
-        /// Get a FacetRange instance basead in the informed JTokenType
+        /// Get a FacetRange instance based in the informed JTokenType
         /// </summary>
         /// <param name="type">JTokenType used to return the instance</param>
         /// <returns>A FacetRange instance</returns>

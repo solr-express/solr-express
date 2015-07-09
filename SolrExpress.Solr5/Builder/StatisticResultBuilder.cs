@@ -11,7 +11,7 @@ namespace SolrExpress.Solr5.Builder
     public sealed class StatisticResultBuilder : IResultBuilder, IConvertJsonObject
     {
         /// <summary>
-        /// Execute the parse of the JSON object in statistic
+        /// Execute the statistic parse of the json
         /// </summary>
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)

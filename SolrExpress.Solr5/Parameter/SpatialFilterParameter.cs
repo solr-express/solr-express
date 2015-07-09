@@ -45,11 +45,12 @@ namespace SolrExpress.Solr5.Parameter
         {
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            var formule = string.Format("{{!{0} sfield={1}}}", this._functionType.ToString().ToLower(), fieldName);
+            //Sugestão do resharper: wtf?? var form = $"{{!{this._functionType.ToString().ToLower()} sfield={fieldName}}}";
+            var form = string.Format("{{!{0} sfield={1}}}", this._functionType.ToString().ToLower(), fieldName);
 
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            jObj.Add(new JProperty("fq", formule));
+            jObj.Add(new JProperty("fq", form));
             jObj.Add(new JProperty("pt", this._centerPoint.ToString()));
             jObj.Add(new JProperty("d", this._distance.ToString("0.#", CultureInfo.InvariantCulture)));
 
