@@ -1,61 +1,82 @@
-This is a draft doc version
+**** IN CONSTRUCTION ****
 
-# solr-express
+# Solr Express
 
 A simple and lightweight query .NET library for Solr
 
-## SolrExpress.Core
-Main library with main logic
+## Available at NuGet
+If you want use [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1)
 
-## SolrExpress.Solr4
-Solr 4 query implementation
+```powershell
+Install-Package SolrExpress.Solr5
+```
 
-## SolrExpress.Solr5
-Solr 5 query implementation
+If you want use [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0)
 
-## Basic use
+```powershell
+Install-Package SolrExpress.Solr4
+```
+
+## Compatibility
+
+.Net Framework 4.5 or higher
+
+## Packages
+
+### SolrExpress.Core
+Core library with main logic and generic implementations
+
+### SolrExpress.Solr4
+Solr 4 implementation, full compatibility with the [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0) version.
+
+Implementation using default query handler and mechanism provided by request parameters.
+
+### SolrExpress.Solr5
+Solr 5 implementation, full compatibility with the [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1) version.
+
+Implementation using default query handler and mechanism provided by JSON Request API.
+
+## Features
+
+### 1. Parameters
+
+### 2. Queries
+
+### 3. Builders
+
+### 4. Fluent API
+
+## Examples
+
+### Basic use
+
+Step to step to use the framework:
+
 * Create a class and implement the IDocument interface
 
 ```csharp
     public class MyDocument : IDocument
-    {
-        [SolrField("id", Indexed = true, Stored = false, OmitNorms = false)]
-        public string Id { get; set; }
-
-        public decimal Score { get; set; }
-    }
 ```
 
-> You can add SolrFieldAttribute attribute to better property name control and to use Fail Fast feature
-
-* Create a instance of SolrQueryable class (use a Factory or isolate this in a context). Set the Provider instance.
+* Create a instance of SolrQueryable class. Set the Provider instance.
 
 ```csharp
-    public class MyContext
-    {
-        public MyContext()
-        {
-            var myProvider = new Provider("http://localhost:8983/solr/mycollection");
+    var myProvider = new Provider("http://localhost:8983/solr/mycollection");
 
-            this.MyDocuments = new SolrQueryable<MyDocument>(myProvider);
-        }
-
-        public SolrQueryable<MyDocument> MyDocuments { get; private set; }
-    }
+    var myDocuments = new SolrQueryable<MyDocument>(myProvider);
 ```
 
 * Use parameters
 
 ```csharp
-var ctx = new MyContext();
-// This will be create a query like http://localhost:8983/solr/mycollection/query?q=*:*
-ctx.MyDocuments.Parameter(new QueryParameter(new QueryAll()));
+// This will create a query like http://localhost:8983/solr/mycollection/query?q=*:*
+myDocuments.Parameter(new QueryParameter(new QueryAll()));
 ```
 
 * Execute the query
 
 ```csharp
-var queryResult = ctx.MyDocuments.Execute();
+var queryResult = myDocuments.Execute();
 ```
 
 * And get results
@@ -65,3 +86,9 @@ var documents = queryResult.Get(new DocumentBuilder<MyDocument>()).Data;
 ```
 
 Tan dam!! Done!
+
+All surces of this example is available [here](http://github.com/solr-express/solr-express/Examples/BaseUse)
+
+### Full example
+
+A fully implemented example is available [here](http://github.com/solr-express/solr-express/Examples/SearchUI)
