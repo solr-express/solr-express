@@ -87,8 +87,12 @@ var documents = queryResult.Get(new DocumentBuilder<MyDocument>()).Data;
 
 Tan dam!! Done!
 
-All surces of this example is available [here](http://github.com/solr-express/solr-express/Examples/BaseUse)
+All sorces of this example is available [here](http://github.com/solr-express/solr-express/Examples/BaseUse)
 
 ### Full example
 
 A fully implemented example is available [here](http://github.com/solr-express/solr-express/Examples/SearchUI)
+
+## License
+
+This software is licensed in [MIT License (MIT)](https://github.com/solr-express/solr-express/blob/master/LICENSE)
