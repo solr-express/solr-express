@@ -20,7 +20,6 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            //Sugestão do resharper: if (jsonObject["response"]?["docs"] == null)  bacana, não?
             if ((jsonObject["response"] == null) || (jsonObject["response"]["docs"] == null))
             {
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());

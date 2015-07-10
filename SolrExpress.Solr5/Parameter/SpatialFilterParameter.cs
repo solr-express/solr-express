@@ -45,7 +45,6 @@ namespace SolrExpress.Solr5.Parameter
         {
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            //Sugestão do resharper: wtf?? var form = $"{{!{this._functionType.ToString().ToLower()} sfield={fieldName}}}";
             var form = string.Format("{{!{0} sfield={1}}}", this._functionType.ToString().ToLower(), fieldName);
 
             var jObj = (JObject)jObject["params"] ?? new JObject();
