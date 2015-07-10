@@ -64,7 +64,7 @@ Allows use of SolrFieldAttribute attribute and control "from-to" field name betw
 TODO: Example
 
 ### 6. Fail fast
-Allows throws exceptions in some cases and make unit tests more easy to be created.
+Allows throws exceptions in some cases and make unit tests easier to be created.
 
 TODO: How desactive
 TODO: Example
