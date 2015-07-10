@@ -41,15 +41,50 @@ Implementation using default query handler and mechanism provided by JSON Reques
 ### 1. Parameters
 Allows send parameters to Sorl in a controlled and buildable way.
 
+#### 1.1. FacetFieldParameter
+
 TODO: Possibles parameters
+
+Create a facet of field type using the informed field name and sort type
+
+```csharp
+myDocuments.Parameter(FacetFieldParameter<TestDocument>(q => q.Id));
+//Optionally, set sort type
+myDocuments.Parameter(FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc));
+```
+
+#### 1.2. FacetQueryParameter
+#### 1.3. FacetRangeParameter
+#### 1.4. FieldsParameter
+#### 1.5. FilterParameter
+#### 1.6. LimitParameter
+#### 1.7. MinimumShouldMatchParameter
+#### 1.8. OffsetParameter
+#### 1.9. QueryFieldParameter
+#### 1.10. QueryParameter
+#### 1.11. SortParameter
+#### 1.12. SpatialFilterParameter
 
 ### 2. Queries
 
 TODO: Comment about
 
+#### 2.1. FreeValue
+#### 2.2. MultiValue
+#### 2.3. NegativeValue
+#### 2.4. QueryAll
+#### 2.5. RangeValue
+#### 2.6. SingleValue
+
 ### 3. Builders
 
 TODO: Comment about
+
+#### 3.l. DocumentBuilder
+#### 3.2. FacetFieldResultBuilder
+#### 3.3. FacetQueryResultBuilder
+#### 3.4. FacetRangeResultBuilder
+#### 3.5. StatisticResultBuilder
 
 ### 4. Fluent API
 Allows use of fluent API to make the life easier and a beautiful code.
