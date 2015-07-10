@@ -2,16 +2,16 @@
 
 # Solr Express
 
-A simple and lightweight query .NET library for Solr
+A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
 ## Available at NuGet
-If you want use [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1)
+If you want to use [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1)
 
 ```powershell
 Install-Package SolrExpress.Solr5
 ```
 
-If you want use [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0)
+If you want to use [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0)
 
 ```powershell
 Install-Package SolrExpress.Solr4
@@ -39,12 +39,35 @@ Implementation using default query handler and mechanism provided by JSON Reques
 ## Features
 
 ### 1. Parameters
+Allows send parameters to Sorl in a controlled and buildable way.
+
+TODO: Possibles parameters
 
 ### 2. Queries
 
+TODO: Comment about
+
 ### 3. Builders
 
+TODO: Comment about
+
 ### 4. Fluent API
+Allows use of fluent API to make the life easier and a beautiful code.
+
+TODO: Source without fluent API
+
+TODO: Source with fluent API
+
+### 5. Friendly field name
+Allows use of SolrFieldAttribute attribute and control "from-to" field name between Solr document and POCO class.
+
+TODO: Example
+
+### 6. Fail fast
+Allows throws exceptions in some cases and make unit tests more easy to be created.
+
+TODO: How desactive
+TODO: Example
 
 ## Examples
 
