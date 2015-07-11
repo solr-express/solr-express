@@ -30,7 +30,7 @@ Install-Package SolrExpress.Solr4
 	6. [Fail Fast](https://github.com/solr-express/solr-express#6-fail-fast)
 2. [Examples](https://github.com/solr-express/solr-express#examples)
 	1. [Basic use](https://github.com/solr-express/solr-express#basic-use)
-	2. [SearchUI](https://github.com/solr-express/solr-express#searchuI)
+	2. [SearchUI](https://github.com/solr-express/solr-express#searchui)
 3. [License](https://github.com/solr-express/solr-express#license)
 
 ## Compatibility
@@ -62,7 +62,7 @@ Allows send parameters to Sorl in a controlled and buildable way.
 Create a facet field type parameter using the informed field name and sort type
 
 ```csharp
-new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc);
+new FacetFieldParameter<MyDocument>(q => q.Id, SolrFacetSortType.CountDesc);
 ```
 
 #### 1.2. FacetQueryParameter
@@ -78,7 +78,7 @@ new FacetQueryParameter("Alias", new QueryAll(), SolrFacetSortType.CountDesc);
 Create a facet range type parameter using the informed field name, query class and sort type
 
 ```csharp
-new FacetRangeParameter<TestDocument>("X", q => q.Price, "1", "10", "20", SolrFacetSortType.CountDesc);
+new FacetRangeParameter<MyDocument>("X", q => q.Price, "1", "10", "20", SolrFacetSortType.CountDesc);
 ```
 
 #### 1.4. FieldsParameter
@@ -88,14 +88,14 @@ Create a fields parameter (field list in Solr 4) using the informed field list
 * One by one
 
 ```csharp
-new FieldListParameter<TestDocument>(q => q.Id);
-new FieldListParameter<TestDocument>(q => q.Score);
+new FieldListParameter<MyDocument>(q => q.Id);
+new FieldListParameter<MyDocument>(q => q.Score);
 ```
 
 * All in the same moment
 
 ```csharp
-new FieldListParameter<TestDocument>(q => q.Id, q => q.Score);
+new FieldListParameter<MyDocument>(q => q.Id, q => q.Score);
 ```
 
 #### 1.5. FilterParameter
@@ -103,7 +103,7 @@ new FieldListParameter<TestDocument>(q => q.Id, q => q.Score);
 Create a fields parameter (filter query in Solr 4) using the informed query class
 
 ```csharp
-new FilterParameter(new SingleValue<TestDocument>(q => q.Id, "XPTO"));
+new FilterParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 ```
 
 #### 1.6. LimitParameter
@@ -143,7 +143,7 @@ new QueryFieldParameter("Id^10 Name^5~2");
 Create a query parameter using the informed query class
 
 ```csharp
-new QueryParameter(new SingleValue<TestDocument>(q => q.Id, "XPTO"));
+new QueryParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 ```
 
 #### 1.11. SortParameter
@@ -160,22 +160,77 @@ Create a spatial filter parameter using the informed spatial function, expressio
 
 ```csharp
 // Using Geofilt function
-new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Geofilt, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+new SpatialFilterParameter<MyDocument>(SolrSpatialFunctionType.Geofilt, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 
 // Using Bbox function
-new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Bbox, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+new SpatialFilterParameter<MyDocument>(SolrSpatialFunctionType.Bbox, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 ```
 
 ### 2. Queries
 
-TODO: Comment about
+Allows create simple or complex queries in a controlled, buildable and testable way.
 
-#### 2.1. FreeValue
-#### 2.2. MultiValue
-#### 2.3. NegativeValue
-#### 2.4. QueryAll
-#### 2.5. RangeValue
-#### 2.6. SingleValue
+#### 2.1. QueryAll
+
+Create a query to return all documents.
+
+```csharp
+// Create a query like "*:*"
+new QueryAll();
+```
+
+#### 2.2. FreeValue
+
+Create a free value query, this is weakest query class, because allows everything what you want.
+
+Use very carefully.
+
+```csharp
+new FreeValue("Id:10");
+```
+
+#### 2.3. RangeValue
+
+Create a range query.
+
+```csharp
+// Create a query like "Price:[1.5 TO 10.5]"
+new RangeValue<MyDocument, decimal>(q => q.Price, 1.5M, 10.5M)
+```
+
+#### 2.4. SingleValue
+
+Create a single value query, this is the easier way to create queries.
+
+```csharp
+// Create a query like City:"New York"
+new SingleValue<MyDocument>(q => q.City, "New York");
+```
+
+#### 2.5. MultiValue
+
+Create a container to complex queries using AND or OR operators.
+
+```csharp
+// Create a query like Price:[1.5 TO 10.5] AND City:"New York"
+new MultiValue(SolrQueryConditionType.And, new RangeValue<MyDocument, decimal>(q => q.Price, 1.5M, 10.5M), new SingleValue<MyDocument>(q => q.City, "New York"));
+```
+
+```csharp
+// Create a query like (Price:[1.5 TO 10.5] AND City:"New York") OR Id:"XPTO"
+new MultiValue(SolrQueryConditionType.Or,
+	new MultiValue(SolrQueryConditionType.And, new RangeValue<MyDocument, decimal>(q => q.Price, 1.5M, 10.5M), new SingleValue<MyDocument>(q => q.City, "New York")),
+	new SingleValue<MyDocument>(q => q.Id, "XPTO"));
+```
+
+#### 2.6. NegativeValue
+
+Create a container to negate the queries.
+
+```csharp
+// Create a query like -(Id:"Xpto")
+new NegativeValue(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
+```
 
 ### 3. Builders
 
