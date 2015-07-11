@@ -17,6 +17,22 @@ If you want to use [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0
 Install-Package SolrExpress.Solr4
 ```
 
+## Index
+
+1. [Compatibility](https://github.com/solr-express/solr-express#compatibility)
+2. [Packages](https://github.com/solr-express/solr-express#packages)
+3. [Features](https://github.com/solr-express/solr-express#features)
+	1. [Parameters](https://github.com/solr-express/solr-express#1-parameters)
+	2. [Queries](https://github.com/solr-express/solr-express#2-queries)
+	3. [Builders](https://github.com/solr-express/solr-express#3-builders)
+	4. [Fluent API](https://github.com/solr-express/solr-express#4-fluent-api)
+	5. [Friendly Field Name](https://github.com/solr-express/solr-express#5-friendly-field-name)
+	6. [Fail Fast](https://github.com/solr-express/solr-express#6-fail-fast)
+2. [Examples](https://github.com/solr-express/solr-express#examples)
+	1. [Basic use](https://github.com/solr-express/solr-express#basic-use)
+	2. [SearchUI](https://github.com/solr-express/solr-express#searchuI)
+3. [License](https://github.com/solr-express/solr-express#license)
+
 ## Compatibility
 
 .Net Framework 4.5 or higher
@@ -232,7 +248,7 @@ Tan dam!! Done!
 
 All sorces of this example is available [here](http://github.com/solr-express/solr-express/Examples/BaseUse)
 
-### Full example
+### SearchUI
 
 A fully implemented example is available [here](http://github.com/solr-express/solr-express/Examples/SearchUI)
 
