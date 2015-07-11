@@ -5,15 +5,15 @@ namespace SolrExpress.Solr4.Parameter
 {
     public sealed class QueryFieldParameter : IParameter<List<string>>
     {
-        private readonly string _query;
+        private readonly string _expression;
 
         /// <summary>
         /// Create a query field parameter
         /// </summary>
-        /// <param name="query">Query used to make the query field</param>
-        public QueryFieldParameter(string query)
+        /// <param name="expression">Query used to make the query field</param>
+        public QueryFieldParameter(string expression)
         {
-            this._query = query;
+            this._expression = expression;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add(string.Concat("qf=", this._query));
+            container.Add(string.Concat("qf=", this._expression));
         }
     }
 }

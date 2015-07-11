@@ -43,27 +43,112 @@ Allows send parameters to Sorl in a controlled and buildable way.
 
 #### 1.1. FacetFieldParameter
 
-TODO: Possibles parameters
-
-Create a facet of field type using the informed field name and sort type
+Create a facet field type parameter using the informed field name and sort type
 
 ```csharp
-myDocuments.Parameter(FacetFieldParameter<TestDocument>(q => q.Id));
-//Optionally, set sort type
-myDocuments.Parameter(FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc));
+new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc);
 ```
 
 #### 1.2. FacetQueryParameter
+
+Create a facet query type parameter using the informed field alias, query class and sort type
+
+```csharp
+new FacetQueryParameter("Alias", new QueryAll(), SolrFacetSortType.CountDesc);
+```
+
 #### 1.3. FacetRangeParameter
+
+Create a facet range type parameter using the informed field name, query class and sort type
+
+```csharp
+new FacetRangeParameter<TestDocument>("X", q => q.Price, "1", "10", "20", SolrFacetSortType.CountDesc);
+```
+
 #### 1.4. FieldsParameter
+
+Create a fields parameter (field list in Solr 4) using the informed field list
+
+* One by one
+
+```csharp
+new FieldListParameter<TestDocument>(q => q.Id);
+new FieldListParameter<TestDocument>(q => q.Score);
+```
+
+* All in the same moment
+
+```csharp
+new FieldListParameter<TestDocument>(q => q.Id, q => q.Score);
+```
+
 #### 1.5. FilterParameter
+
+Create a fields parameter (filter query in Solr 4) using the informed query class
+
+```csharp
+new FilterParameter(new SingleValue<TestDocument>(q => q.Id, "XPTO"));
+```
+
 #### 1.6. LimitParameter
+
+Create a limit parameter (rows in Solr 4) using the informed number
+
+```csharp
+new LimitParameter(50);
+```
+
 #### 1.7. MinimumShouldMatchParameter
+
+Create a minimum should match parameter using the informed expression
+
+```csharp
+new MinimumShouldMatchParameter("75%");
+```
+
 #### 1.8. OffsetParameter
+
+Create a offset parameter (start in Solr 4) using the informed number
+
+```csharp
+new OffsetParameter(50);
+```
+
 #### 1.9. QueryFieldParameter
+
+Create a query field parameter using the informed expression
+
+```csharp
+new QueryFieldParameter("Id^10 Name^5~2");
+```
+
 #### 1.10. QueryParameter
+
+Create a query parameter using the informed query class
+
+```csharp
+new QueryParameter(new SingleValue<TestDocument>(q => q.Id, "XPTO"));
+```
+
 #### 1.11. SortParameter
+
+Create a sort parameter using the informed expression and ascending type
+
+```csharp
+new SortParameter(q => q.Id, true);
+```
+
 #### 1.12. SpatialFilterParameter
+
+Create a spatial filter parameter using the informed spatial function, expression, geo coordinate of origin and distance from origin point
+
+```csharp
+// Using Geofilt function
+new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Geofilt, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+
+// Using Bbox function
+new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Bbox, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+```
 
 ### 2. Queries
 
@@ -101,7 +186,7 @@ TODO: Example
 ### 6. Fail fast
 Allows throws exceptions in some cases and make unit tests easier to be created.
 
-TODO: How desactive
+TODO: How inactive
 TODO: Example
 
 ## Examples
