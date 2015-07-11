@@ -21,16 +21,16 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// Create a facet parameter
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetRangeParameter(Expression<Func<T, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
+        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
-            this._expression = expression;
             this._aliasName = aliasName;
+            this._expression = expression;
             this._gap = gap;
             this._start = start;
             this._end = end;

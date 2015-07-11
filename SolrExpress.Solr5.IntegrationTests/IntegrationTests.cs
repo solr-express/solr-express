@@ -153,8 +153,8 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Popularity, "Facet1", "1", "1", "10"));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>(q => q.Price, "Facet2", "10", "10", "1000"));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>("Facet1", q => q.Popularity, "1", "1", "10"));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>("Facet2", q => q.Price, "10", "10", "1000"));
             result = solrQuery.Execute();
             data = result.Get(new FacetRangeResultBuilder()).Data;
 

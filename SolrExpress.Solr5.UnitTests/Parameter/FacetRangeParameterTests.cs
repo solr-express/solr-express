@@ -36,7 +36,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20");
+            var parameter = new FacetRangeParameter<TestDocument>("X", q => q.Id, "1", "10", "20");
 
             // Act
             parameter.Execute(jObject);
@@ -77,7 +77,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>(q => q.Id, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocument>("X", q => q.Id, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);
@@ -98,7 +98,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropInteger, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropInteger, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -119,7 +119,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropLong, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropLong, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -140,7 +140,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropFloat, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropFloat, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -161,7 +161,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDouble, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropDouble, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -182,7 +182,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDecimal, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropDecimal, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -203,7 +203,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropDateTime, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropDateTime, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -224,7 +224,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(q => q.PropString, "X", "1", "10", "20", SolrFacetSortType.CountDesc);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>("X", q => q.PropString, "1", "10", "20", SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);

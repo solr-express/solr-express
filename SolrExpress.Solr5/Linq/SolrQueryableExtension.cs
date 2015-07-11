@@ -41,16 +41,16 @@ namespace SolrExpress.Solr5.Linq
         /// Create a facet range parameter
         /// </summary>
         /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression, string aliasName, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
+        public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> solrQueryable, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FacetRangeParameter<TDocument>(expression, aliasName, gap, start, end, sortType));
+            return solrQueryable.Parameter(new FacetRangeParameter<TDocument>(aliasName, expression, gap, start, end, sortType));
         }
 
         /// <summary>
