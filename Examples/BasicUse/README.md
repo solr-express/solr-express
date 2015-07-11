@@ -20,13 +20,18 @@ Step by step to use the framework
 	}
 ```
 
-*Notes:*
+**Notes:**
+
 1. This class represents a document in Solr collection.
+
 2. To be easy to identitify this, I call this class with the same name of the Solr collection (techproducts) 
 	but you can choose any name what you want
+
 3. The framework uses NewtonSoftware to parse json result from Solr because this, you can change the case of the properties
+
 4. In the cases what the name is not good to you, and you want a name more cool or a name than represents your bussiness logic,
 	you can use SolrFieldAttribute to indicates this name
+
 5. If you want use fail fast feature (activated by default), you need pass some information about field properties to the SolrFieldAttribute.
 	The properties indexed, stored, omitNorms will be validate and throws exceptions depending of the use of the fields
 
@@ -45,8 +50,10 @@ Step by step to use the framework
         public SolrQueryable<TechProduct> TechProducts { get; private set; }
     }
 ```
-*Notes:*
+**Notes:**
+
 1. I use a context to isolate the SolrQueryable creation, but you can use a factory to do this
+
 2. To example purposes, I set collection address in hard code but, don't do this in real life.
 	Put the information in a config file or some other place
 

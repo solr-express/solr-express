@@ -236,7 +236,7 @@ new NegativeValue(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 
 TODO: Comment about
 
-#### 3.l. DocumentBuilder
+#### 3.1. DocumentBuilder
 #### 3.2. FacetFieldResultBuilder
 #### 3.3. FacetQueryResultBuilder
 #### 3.4. FacetRangeResultBuilder
@@ -301,7 +301,7 @@ var documents = queryResult.Get(new DocumentBuilder<MyDocument>()).Data;
 
 Tan dam!! Done!
 
-All sorces of this example is available [here](http://github.com/solr-express/solr-express/Examples/BaseUse)
+All sorces of this example is available [here](https://github.com/solr-express/solr-express/tree/master/Examples/BasicUse)
 
 ### SearchUI
 
