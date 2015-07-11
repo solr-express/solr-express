@@ -57,11 +57,11 @@ namespace SolrExpress.Solr4.Linq
         /// Create a fields parameter
         /// </summary>
         /// <param name="solrQueryable">The solr query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        public static SolrQueryable<TDocument> FieldList<TDocument>(this SolrQueryable<TDocument> solrQueryable, Expression<Func<TDocument, object>> expression)
+        /// <param name="expressions">Expression used to find the property name</param>
+        public static SolrQueryable<TDocument> FieldList<TDocument>(this SolrQueryable<TDocument> solrQueryable, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            return solrQueryable.Parameter(new FieldListParameter<TDocument>(expression));
+            return solrQueryable.Parameter(new FieldListParameter<TDocument>(expressions));
         }
 
         /// <summary>

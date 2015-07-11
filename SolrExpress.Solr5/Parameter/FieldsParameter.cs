@@ -9,15 +9,15 @@ namespace SolrExpress.Solr5.Parameter
     public sealed class FieldsParameter<T> : IParameter<JObject>, IValidation
         where T : IDocument
     {
-        private readonly Expression<Func<T, object>> _expression;
+        private readonly Expression<Func<T, object>>[] _expressions;
 
         /// <summary>
         /// Create a fields parameter
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        public FieldsParameter(Expression<Func<T, object>> expression)
+        /// <param name="expressions">Expression used to find the property name</param>
+        public FieldsParameter(params Expression<Func<T, object>>[] expressions)
         {
-            this._expression = expression;
+            this._expressions = expressions;
         }
 
         /// <summary>
@@ -33,9 +33,12 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["fields"] ?? new JArray();
 
-            var value = UtilHelper.GetFieldNameFromExpression(this._expression);
+            foreach (var expression in this._expressions)
+            {
+                var value = UtilHelper.GetFieldNameFromExpression(expression);
 
-            jArray.Add(value);
+                jArray.Add(value);
+            }
 
             jObject["fields"] = jArray;
         }
@@ -50,12 +53,17 @@ namespace SolrExpress.Solr5.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
-            
-            if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
+            foreach (var expression in this._expressions)
             {
-                isValid = false;
-                errorMessage = "A field must be \"stored=true\" to be used in field list";
+                var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
+
+                if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
+                {
+                    isValid = false;
+                    errorMessage = "A field must be \"stored=true\" to be used in field list";
+
+                    break;
+                }
             }
         }
     }
