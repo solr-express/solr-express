@@ -253,6 +253,7 @@ To do this, follow the steps:
 To exemplify this, see the code below without and with the fluent api.
 
 ```csharp
+	// Source without fluent API
 	using (var ctx = new SolrContext())
 	{
 		List<TechProduct> documents;
@@ -266,9 +267,9 @@ To exemplify this, see the code below without and with the fluent api.
 		documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
 	}
 ```
->Source without fluent API
 
 ```csharp
+	// Source with fluent API
 	using (var ctx = new SolrContext())
 	{
 		List<TechProduct> documents;
@@ -282,7 +283,6 @@ To exemplify this, see the code below without and with the fluent api.
 		result.Document<TechProduct>(out documents);
 	}
 ```
->Source with fluent API
 
 ### 5. Friendly field name
 Allows use of SolrFieldAttribute attribute and control "from-to" field name between Solr document and POCO class.
@@ -290,7 +290,7 @@ Allows use of SolrFieldAttribute attribute and control "from-to" field name betw
 ```csharp
 	public class MyDocument : IDocument
 	{
-		[SolrFieldAttribute("A_Field_With_Other_Name_Hosted_In_Solr_Document")]
+		[SolrFieldAttribute("Field_With_A_Name_Hosted_In_Solr_Document")]
         public GeoCoordinate StoredAt { get; set; }
 	}
 ```
