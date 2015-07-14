@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Entity;
+using SolrExpress.Core.Query;
 using SolrExpress.Solr5;
 using System;
 

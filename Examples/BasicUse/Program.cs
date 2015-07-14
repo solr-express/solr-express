@@ -2,7 +2,9 @@
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Builder;
 using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace BasicUse
 {
@@ -12,12 +14,15 @@ namespace BasicUse
         {
             using (var ctx = new SolrContext())
             {
-                ctx.TechProducts.Parameter(new QueryParameter(new QueryAll()));
-                ctx.TechProducts.Parameter(new LimitParameter(3));
+                List<TechProduct> documents;
+
+                ctx.TechProducts
+                    .Parameter(new QueryParameter(new QueryAll()))
+                    .Parameter(new LimitParameter(3));
 
                 var result = ctx.TechProducts.Execute();
 
-                var documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
+                documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
 
                 foreach (var document in documents)
                 {
@@ -27,7 +32,7 @@ namespace BasicUse
                     Console.WriteLine(new string('-', 50));
                 }
             }
-
+            
             Console.Read();
         }
     }
