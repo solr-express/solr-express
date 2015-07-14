@@ -91,7 +91,7 @@ namespace SolrExpress.Solr5.Linq
             var value = new RangeValue<TDocument, TValue>(expression, from, to);
             return solrQueryable.Parameter(new FilterParameter(value));
         }
-        
+
         /// <summary>
         /// Create a limit parameter
         /// </summary>
@@ -112,6 +112,17 @@ namespace SolrExpress.Solr5.Linq
             where TDocument : IDocument
         {
             return solrQueryable.Parameter(new OffsetParameter(value));
+        }
+
+        /// <summary>
+        /// Create a query parameter
+        /// </summary>
+        /// <param name="solrQueryable">The solr query</param>
+        /// <param name="value">Parameter to include in the query</param>
+        public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, IQueryParameterValue value)
+            where TDocument : IDocument
+        {
+            return solrQueryable.Parameter(new QueryParameter(value));
         }
 
         /// <summary>

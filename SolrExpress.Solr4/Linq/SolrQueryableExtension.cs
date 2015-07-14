@@ -119,6 +119,17 @@ namespace SolrExpress.Solr4.Linq
         /// </summary>
         /// <param name="solrQueryable">The solr query</param>
         /// <param name="value">Parameter to include in the query</param>
+        public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, IQueryParameterValue value)
+            where TDocument : IDocument
+        {
+            return solrQueryable.Parameter(new QueryParameter(value));
+        }
+
+        /// <summary>
+        /// Create a query parameter
+        /// </summary>
+        /// <param name="solrQueryable">The solr query</param>
+        /// <param name="value">Parameter to include in the query</param>
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> solrQueryable, string value)
             where TDocument : IDocument
         {
