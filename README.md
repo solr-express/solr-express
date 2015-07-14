@@ -245,20 +245,85 @@ TODO: Comment about
 ### 4. Fluent API
 Allows use of fluent API to make the life easier and a beautiful code.
 
-TODO: Source without fluent API
+To do this, follow the steps:
 
-TODO: Source with fluent API
+* Use the namespace SolrExpress.Solr<Version>.Linq (where <version> is the Solr version of your choice)
+* Use the extensions methods
+
+To exemplify this, see the code below without and with the fluent api.
+
+```csharp
+	using (var ctx = new SolrContext())
+	{
+		List<TechProduct> documents;
+
+		ctx.TechProducts
+			.Parameter(new QueryParameter(new QueryAll()))
+			.Parameter(new LimitParameter(3));
+
+		var result = ctx.TechProducts.Execute();
+
+		documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
+	}
+```
+>Source without fluent API
+
+```csharp
+	using (var ctx = new SolrContext())
+	{
+		List<TechProduct> documents;
+
+		ctx.TechProducts
+			.Query(new QueryAll())
+			.Limit(3);
+
+		var result = ctx.TechProducts.Execute();
+
+		result.Document<TechProduct>(out documents);
+	}
+```
+>Source with fluent API
 
 ### 5. Friendly field name
 Allows use of SolrFieldAttribute attribute and control "from-to" field name between Solr document and POCO class.
 
-TODO: Example
+```csharp
+	public class MyDocument : IDocument
+	{
+		[SolrFieldAttribute("A_Field_With_Other_Name_Hosted_In_Solr_Document")]
+        public GeoCoordinate StoredAt { get; set; }
+	}
+```
 
 ### 6. Fail fast
 Allows throws exceptions in some cases and make unit tests easier to be created.
 
-TODO: How inactive
-TODO: Example
+To do this, use the SolrFieldAttribute attribute in properties of the POCO than represents the Solr document.
+
+```csharp
+	public class MyDocument : IDocument
+	{
+		[SolrFieldAttribute("StoredAt", Indexed = true, Stored = true, OmitNorms = true)]
+        public GeoCoordinate StoredAt { get; set; }
+	}
+```
+
+Each property of the attribute is validate in different moments. For example, indexed=false throws exception if the referenced property was used in FieldsParameter.
+
+To all use cases, see [official wiki](http://wiki.apache.org/solr/FieldOptionsByUseCase)
+
+To deactivate the fail fast feature (not recommended), when created the SolrQueryable, pass a configuration object in the constructor like the below code:
+
+```csharp
+	var provider = new Provider("http://localhost:8983/solr/techproducts");
+
+	var config = new SolrQueryConfiguration
+	{
+		FailFast = false
+	};
+
+	this.TechProducts = new SolrQueryable<TechProduct>(provider, config);
+```
 
 ## Examples
 
