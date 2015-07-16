@@ -1,5 +1,3 @@
-**** IN CONSTRUCTION ****
-
 # Solr Express
 
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
@@ -234,20 +232,54 @@ new NegativeValue(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 
 ### 3. Builders
 
-TODO: Comment about
+Allows parse Sorl result in a controlled and buildable way.
 
 #### 3.1. DocumentBuilder
+
+Parse the "documents" part of the Solr result in a list of MyDocument class.
+
+```csharp
+new DocumentBuilder<MyDocument>();
+```
+
 #### 3.2. FacetFieldResultBuilder
+
+Parse the "facet.field" part of the Solr result in a list of FacetKeyValue class.
+
+```csharp
+new FacetFieldResultBuilder();
+```
+
 #### 3.3. FacetQueryResultBuilder
+
+Parse the "facet.query" part of the Solr result in a instance of Dictionary<string, long>.
+
+```csharp
+new FacetQueryResultBuilder();
+```
+
 #### 3.4. FacetRangeResultBuilder
+
+Parse the "facet.range" part of the Solr result in a instance of List<FacetKeyValue<FacetRange>>.
+
+```csharp
+new FacetQueryResultBuilder();
+```
+
 #### 3.5. StatisticResultBuilder
+
+Parse the "statistic" part of the Solr result in a several properties with Solr statistics.
+
+```csharp
+new StatisticResultBuilder();
+```
 
 ### 4. Fluent API
 Allows use of fluent API to make the life easier and a beautiful code.
 
 To do this, follow the steps:
 
-* Use the namespace SolrExpress.Solr<Version>.Linq (where <version> is the Solr version of your choice)
+* Use the namespace SolrExpress.Solr{Version}.Linq (where {version} is the Solr version of your choice)
 * Use the extensions methods
 
 To exemplify this, see the code below without and with the fluent api.
