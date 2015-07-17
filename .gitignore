@@ -191,11 +191,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.dll
-Examples/packages/Newtonsoft.Json.6.0.8/lib/net20/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/net35/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/net40/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/net45/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/netcore45/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/portable-net40+sl5+wp80+win8+wpa81/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/lib/portable-net45+wp80+win8+wpa81+aspnetcore50/Newtonsoft.Json.xml
-Examples/packages/Newtonsoft.Json.6.0.8/tools/install.ps1
+Examples/packages/*

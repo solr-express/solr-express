@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5", "..\Sol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicUse", "BasicUse\BasicUse.csproj", "{A72F968D-EAE0-4DCA-BC4A-141587063D05}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchUI", "SearchUI\SearchUI.csproj", "{B583D0B9-E2F3-4682-9009-E4DDB887DD15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A72F968D-EAE0-4DCA-BC4A-141587063D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A72F968D-EAE0-4DCA-BC4A-141587063D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A72F968D-EAE0-4DCA-BC4A-141587063D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B583D0B9-E2F3-4682-9009-E4DDB887DD15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B583D0B9-E2F3-4682-9009-E4DDB887DD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B583D0B9-E2F3-4682-9009-E4DDB887DD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B583D0B9-E2F3-4682-9009-E4DDB887DD15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
