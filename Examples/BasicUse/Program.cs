@@ -2,7 +2,6 @@
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Builder;
 using SolrExpress.Solr5.Parameter;
-using SolrExpress.Solr5.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -23,7 +22,7 @@ namespace BasicUse
                 var result = ctx.TechProducts.Execute();
 
                 documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
-
+                
                 foreach (var document in documents)
                 {
                     var json = JsonConvert.SerializeObject(document, Formatting.Indented);
