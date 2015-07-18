@@ -36,14 +36,12 @@
                 console.log(data);
 
                 ctrl.result = data;
-
-                ctrl.request.page = 1;
             });
         };
-
+        
         ctrl.pageRange = function () {
             var range = [];
-            for (var i = ctrl.request.page; i <= ctrl.result.statistic.pageCount; i++) {
+            for (var i = 1; i <= ctrl.result.statistic.pageCount; i++) {
                 range.push(i);
             }
             
@@ -60,6 +58,19 @@
 
         ctrl.canNavigateToNextPage = function () {
             return ctrl.request.page < ctrl.result.statistic.pageCount > 1;
+        }
+
+        ctrl.query = function () {
+            ctrl.request.page = 1;
+
+            ctrl.search();
+        }
+
+        ctrl.navigate = function (goTo)
+        {
+            ctrl.request.page = goTo;
+
+            ctrl.search();
         }
 
         ctrl.search();

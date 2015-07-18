@@ -34,7 +34,7 @@ namespace SearchUI.Controllers
         }
 
         [HttpGet()]
-        public IHttpActionResult Get(string keyWord)
+        public IHttpActionResult Get(int page, string keyWord)
         {
             using (var ctx = new SolrContext())
             {
@@ -52,6 +52,7 @@ namespace SearchUI.Controllers
                     .Parameter(new QueryFieldParameter("name^13~3 manu^8~2 id^5"))
                     .Query(keyWord ?? "*.*")
                     .Limit(itemsPerPage)
+                    .Offset(page)
                     .FacetField(q => q.Manufacturer)
                     .FacetField(q => q.InStock)
                     .FacetRange("Price", q => q.Price, "10", "10", "100")

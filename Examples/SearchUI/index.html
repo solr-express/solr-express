@@ -20,7 +20,7 @@
     <div class="container" ng-controller="SearchController as ctrl">
         <div class=" row">
             <div class="col-md-3">
-                <input type="text" class="form-control" placeholder="Search..." x-ng-model="ctrl.request.keyWord" x-ng-change="ctrl.search()">
+                <input type="text" class="form-control" placeholder="Search..." x-ng-model="ctrl.request.keyWord" x-ng-change="ctrl.query()">
                 <div x-ng-repeat="(key,value) in ctrl.result.facets.query">
                     <h5 class="sub-header">{{key}} ({{value}})</h5>
                 </div>
@@ -74,18 +74,18 @@
                 <div class="panel-footer text-center" ng-visible="ctrl.canNavigate()">
                     <nav>
                         <ul class="pagination">
-                            <li ng-class="{disabled: ctrl.canNavigateToPreviousPage()}">
-                                <a href="#" aria-label="Previous">
+                            <li x-ng-class="{disabled: ctrl.canNavigateToPreviousPage()}">
+                                <a href="" x-ng-click="ctrl.navigate(ctrl.request.page-1)" aria-label="Previous">
                                     <span aria-hidden="true">
                                         &laquo;
                                     </span>
                                 </a>
                             </li>
                             <li x-ng-repeat="i in ctrl.pageRange()" ng-class="{active: ctrl.request.page==i}">
-                                <a href="#">{{i}}</a>
+                                <a href="" x-ng-click="ctrl.navigate(i)">{{i}}</a>
                             </li>
-                            <li ng-class="{disabled: ctrl.canNavigateToNextPage()}">
-                                <a href="#" aria-label="Next">
+                            <li x-ng-class="{disabled: ctrl.canNavigateToNextPage()}">
+                                <a href="" x-ng-click="ctrl.navigate(ctrl.request.page+1)" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
