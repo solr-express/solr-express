@@ -28,6 +28,24 @@ namespace SolrExpress.Core.Entity
         }
 
         /// <summary>
+        /// Get the value to the property MinimumValue without strong type
+        /// </summary>
+        /// <returns>Value to the property MinimumValue without strong type</returns>
+        public object GetMinimumValue()
+        {
+            return this.InternalMinimumValue;
+        }
+
+        /// <summary>
+        /// Get the value to the property MaximumValue without strong type
+        /// </summary>
+        /// <returns>Value to the property MaximumValue without strong type</returns>
+        public object GetMaximumValue()
+        {
+            return this.InternalMaximumValue;
+        }
+
+        /// <summary>
         /// Set the value to the property MinimumValue without strong type
         /// </summary>
         /// <param name="value">Value to set</param>
