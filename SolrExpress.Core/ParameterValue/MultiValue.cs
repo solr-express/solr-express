@@ -29,7 +29,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            return string.Join(this._conditionType.ToString(), this._values.Select(q => q.Execute()));
+            return string.Join(this._conditionType.ToString().ToUpper(), this._values.Select(q => q.Execute()));
         }
 
         /// <summary>

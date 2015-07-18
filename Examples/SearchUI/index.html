@@ -2,82 +2,100 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Solr-Express Search UI</title>
-    <link rel="stylesheet" href="Content/material.css">
-    <link rel="stylesheet" href="Content/custom.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="Content/css/bootstrap.css">
+    <link rel="stylesheet" href="Content/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="Content/css/custom.css">
 </head>
-<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
-            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            </div>
-            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-                <h3>Solr-Express Search UI</h3>
-            </div>
-            <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-            </div>
-        </header>
-        <main class="mdl-layout__content">
-            <div class="mdl-layout__tab-panel is-active" id="overview">
-                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                    <div class="mdl-card mdl-cell mdl-cell--12-col">
-                        <div class="mdl-card__supporting-text">
-                            <h4>Facet fields</h4>
-                            List all facet field of the current collection and allows use each facet like filter
-                        </div>
-                        <div class="mdl-card__actions">
-                            <a href="#" class="mdl-button">Facet field list</a>
-                        </div>
-                    </div>
-                </section>
-                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                    <div class="mdl-card mdl-cell mdl-cell--12-col">
-                        <div class="mdl-card__supporting-text">
-                            <h4>Facet query</h4>
-                            List all facet query of the current collection and allows use each facet like filter
-                        </div>
-                        <div class="mdl-card__actions">
-                            <a href="#" class="mdl-button">Facet query list</a>
-                        </div>
-                    </div>
-                </section>
-                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                    <div class="mdl-card mdl-cell mdl-cell--12-col">
-                        <div class="mdl-card__supporting-text">
-                            <h4>Facet range</h4>
-                            List all facet range of the current collection and allows use each facet like filter
-                        </div>
-                        <div class="mdl-card__actions">
-                            <a href="#" class="mdl-button">Facet range list</a>
-                        </div>
-                    </div>
-                </section>
-                <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                    <div class="mdl-card mdl-cell mdl-cell--12-col">
-                        <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
-                            <h4 class="mdl-cell mdl-cell--12-col">Details</h4>
-                            <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                <h5>Lorem ipsum dolor sit amet</h5>
-                                Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation nostrud quis <a href="#">proident minim</a>.
-                            </div>
-                            <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                <h5>Lorem ipsum dolor sit amet</h5>
-                                Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation nostrud quis <a href="#">proident minim</a>.
-                            </div>
-                            <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                <h5>Lorem ipsum dolor sit amet</h5>
-                                Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Duis nulla tempor do aute et eiusmod velit exercitation nostrud quis <a href="#">proident minim</a>.
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <section class="section--footer mdl-color--white mdl-grid">
-                </section>
-            </div>
-        </main>
+<body ng-app="searchApp">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Hello, world!</h1>
+            <p>
+                This is an example to show the potential of SolrExpress framework.
+                <br />
+                Try search something using the "search input" and filter results using the facets values.
+            </p>
+        </div>
     </div>
+    <div class="container" ng-controller="SearchController as ctrl">
+        <div class=" row">
+            <div class="col-md-3">
+                <input type="text" class="form-control" placeholder="Search..." x-ng-model="ctrl.request.keyWord" x-ng-change="ctrl.search()">
+                <h5 class="sub-header">Facet #1</h5>
+                <ul class="nav nav-sidebar">
+                    <li><a href="#">Item#1</a></li>
+                    <li><a href="#">Item#2</a></li>
+                    <li><a href="#">Item#3</a></li>
+                </ul>
+                <h5 class="sub-header">Facet #2</h5>
+                <ul class="nav nav-sidebar">
+                    <li><a href="#">Item#1</a></li>
+                    <li><a href="#">Item#2</a></li>
+                    <li><a href="#">Item#3</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <table class="table table-condensed table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Manufacturer</th>
+                                <th>Price</th>
+                                <th>Popularity</th>
+                                <th>InStock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="document in ctrl.result.documents">
+                                <th scope="row">{{document.Id}}</th>
+                                <td>{{document.Name}}</td>
+                                <td>{{document.Manufacturer}}</td>
+                                <td>{{document.Price}}</td>
+                                <td>{{document.Popularity}}</td>
+                                <td>
+                                    <input type="checkbox" disabled="disabled" ng-model="document.InStock">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="panel-footer text-center">
+                        <nav>
+                            <ul class="pagination">
+                                <li>
+                                    <a href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li>
+                                    <a href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>
+                Designed and built with happiness to make the life easier :)
+                <br />
+                <a href="https://github.com/solr-express/solr-express">GitHub</a>
+            </p>
+        </div>
+    </footer>
 
-    <script src="Scripts/material.js"></script>
-  
+    <script src="Scripts/angular.js"></script>
+    <script src="Scripts/app.js"></script>
 </body>
 </html>
