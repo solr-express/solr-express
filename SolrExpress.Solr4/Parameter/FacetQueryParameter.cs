@@ -2,7 +2,9 @@
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -20,6 +22,9 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(aliasName));
+            Contract.Requires<ArgumentNullException>(query != null);
+
             this._aliasName = aliasName;
             this._query = query;
             this._sortType = sortType;
@@ -72,7 +77,7 @@ namespace SolrExpress.Solr4.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            
+
             var queryValidation = this._query as IValidation;
 
             if (queryValidation != null)

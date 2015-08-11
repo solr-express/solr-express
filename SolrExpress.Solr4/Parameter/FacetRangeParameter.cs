@@ -4,6 +4,7 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -29,6 +30,9 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(aliasName));
+            Contract.Requires<ArgumentNullException>(expression != null);
+
             this._aliasName = aliasName;
             this._expression = expression;
             this._gap = gap;

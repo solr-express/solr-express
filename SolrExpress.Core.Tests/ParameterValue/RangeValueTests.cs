@@ -407,5 +407,18 @@ namespace SolrExpress.Core.Tests.ParameterValue
             // Assert
             Assert.AreEqual(expected, actual);
         }
+
+        /// <summary>
+        /// Where   Using a RangeValue instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void RangeValue021()
+        {
+            // Arrange / Act / Assert
+            new RangeValue<TestDocument, int>(null);
+        }
     }
 }

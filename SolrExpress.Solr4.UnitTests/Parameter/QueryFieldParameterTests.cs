@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Solr4.Parameter;
+using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -25,6 +26,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Assert
             Assert.AreEqual(1, container.Count);
             Assert.AreEqual("qf=id^10 score~2^20", container[0]);
+        }
+
+        /// <summary>
+        /// Where   Using a QueryFieldParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void QueryFieldParameter002()
+        {
+            // Arrange / Act / Assert
+            new QueryFieldParameter(null);
         }
     }
 }

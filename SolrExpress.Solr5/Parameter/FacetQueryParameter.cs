@@ -2,7 +2,9 @@
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -20,6 +22,9 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(aliasName));
+            Contract.Requires<ArgumentNullException>(query != null);
+
             this._aliasName = aliasName;
             this._query = query;
             this._sortType = sortType;

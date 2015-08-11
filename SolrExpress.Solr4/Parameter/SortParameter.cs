@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -20,6 +21,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
         {
+            Contract.Requires<ArgumentNullException>(expression != null);
+
             this._expression = expression;
             this._ascendent = ascendent;
         }

@@ -2,6 +2,7 @@
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
+using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -17,6 +18,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expressions">Expression used to find the property name</param>
         public FieldsParameter(params Expression<Func<T, object>>[] expressions)
         {
+            Contract.Requires<ArgumentNullException>(expressions != null);
+
             this._expressions = expressions;
         }
 

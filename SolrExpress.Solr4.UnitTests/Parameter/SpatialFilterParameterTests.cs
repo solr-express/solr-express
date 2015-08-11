@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Solr4.Parameter;
+using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -91,6 +92,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
 
             // Assert
             Assert.IsTrue(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SpatialFilterParameter005()
+        {
+            // Arrange / Act / Assert
+            new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Bbox, null, new GeoCoordinate(), 10);
         }
     }
 }

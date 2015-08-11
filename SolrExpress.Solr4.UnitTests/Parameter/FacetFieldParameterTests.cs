@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Enumerator;
-using SolrExpress.Solr4.Parameter;
 using SolrExpress.Core.Exception;
+using SolrExpress.Solr4.Parameter;
+using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -86,6 +87,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
 
             // Act / Assert
             parameter.Execute(container);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetFieldParameter005()
+        {
+            // Arrange / Act / Assert
+            new FacetFieldParameter<TestDocument>(null);
         }
     }
 }

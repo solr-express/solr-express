@@ -1,8 +1,9 @@
-﻿using System;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
+using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq.Expressions;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
 
 namespace SolrExpress.Core.ParameterValue
 {
@@ -25,6 +26,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="to">To value in a range filter</param>
         public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
+            Contract.Requires<ArgumentNullException>(expression != null);
+
             this._expression = expression;
             this._from = from;
             this._to = to;

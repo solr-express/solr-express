@@ -3,6 +3,7 @@ using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
+using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
@@ -87,6 +88,32 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
 
             // Act / Assert
             parameter.Execute(container);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Create the instance with null in alias name
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetQueryParameter005()
+        {
+            // Arrange / Act / Assert
+            new FacetQueryParameter(null, new FreeValue("x"));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Create the instance with null in expression
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetQueryParameter006()
+        {
+            // Arrange / Act / Assert
+            new FacetQueryParameter("x", null);
         }
     }
 }

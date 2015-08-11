@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Solr4.Parameter;
+using System;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -107,6 +108,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
 
             // Assert
             Assert.IsFalse(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FieldListParameter006()
+        {
+            // Arrange / Act / Assert
+            new FieldListParameter<TestDocument>(null);
         }
     }
 }

@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
+using System;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -74,5 +75,30 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             Assert.AreEqual(expected.ToString(), actual);
         }
 
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Create the instance with null in alias name
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetQueryParameter003()
+        {
+            // Arrange / Act / Assert
+            new FacetQueryParameter(null, new FreeValue("x"));
+        }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Create the instance with null in expression
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetQueryParameter004()
+        {
+            // Arrange / Act / Assert
+            new FacetQueryParameter("x", null);
+        }
     }
 }

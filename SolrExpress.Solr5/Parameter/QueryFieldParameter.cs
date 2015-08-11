@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query;
+using System;
+using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -13,6 +15,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="query">Query used to make the query field</param>
         public QueryFieldParameter(string query)
         {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(query));
+
             this._query = query;
         }
 

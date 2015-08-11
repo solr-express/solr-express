@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SolrExpress.Core.Entity;
+﻿using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace SolrExpress.Core.Query
 {
@@ -43,6 +45,8 @@ namespace SolrExpress.Core.Query
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
         public SolrQueryable(IProvider provider, SolrQueryConfiguration configuration = null)
         {
+            Contract.Requires<ArgumentNullException>(provider != null);
+
             this._provider = provider;
             this._configuration = configuration ?? new SolrQueryConfiguration
             {
@@ -57,6 +61,8 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
+            Contract.Requires<ArgumentNullException>(parameter != null);
+
             if (this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances)
             {
                 throw new AllowMultipleInstanceOfParameterTypeException(parameter.ToString());
@@ -89,6 +95,8 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
+            Contract.Requires<ArgumentNullException>(interceptor != null);
+
             this._queryInterceptors.Add(interceptor);
 
             return this;
@@ -101,6 +109,8 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
+            Contract.Requires<ArgumentNullException>(interceptor != null);
+
             this._resultInterceptors.Add(interceptor);
 
             return this;

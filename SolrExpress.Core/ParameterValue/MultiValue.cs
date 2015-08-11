@@ -1,6 +1,8 @@
-﻿using System.Linq;
-using SolrExpress.Core.Enumerator;
+﻿using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
+using System;
+using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace SolrExpress.Core.ParameterValue
 {
@@ -19,6 +21,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="values">Value array of the filter</param>
         public MultiValue(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
+            Contract.Requires<ArgumentNullException>(values != null);
+
             this._values = values;
             this._conditionType = conditionType;
         }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
+using System;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -123,6 +124,19 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
 
             // Assert
             Assert.IsFalse(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FieldListParameter006()
+        {
+            // Arrange / Act / Assert
+            new FieldsParameter<TestDocument>(null);
         }
     }
 }

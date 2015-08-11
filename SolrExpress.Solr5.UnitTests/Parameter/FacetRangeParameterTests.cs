@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Solr5.Parameter;
+using System;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -232,6 +233,33 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Assert
             Assert.IsFalse(isValid);
             Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
+        }
+
+
+        /// <summary>
+        /// Where   Using a FacetRangeParamete instance
+        /// When    Create the instance with null in alias name
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetRangeParameter010()
+        {
+            // Arrange / Act / Assert
+            new FacetRangeParameter<TestDocument>(null, q => q.Id);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParamete instance
+        /// When    Create the instance with null in alias name
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FacetRangeParameter011()
+        {
+            // Arrange / Act / Assert
+            new FacetRangeParameter<TestDocument>("x", null);
         }
     }
 }

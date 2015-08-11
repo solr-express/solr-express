@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
+using System;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -31,6 +32,19 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
 
             // Assert
             Assert.AreEqual(expected.ToString(), actual);
+        }
+
+        /// <summary>
+        /// Where   Using a QueryParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void QueryParameter002()
+        {
+            // Arrange / Act / Assert
+            new QueryParameter(null);
         }
     }
 }

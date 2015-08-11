@@ -1,7 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
-using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
+using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Core.ParameterValue
 {
@@ -21,6 +22,9 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public SingleValue(Expression<Func<TDocument, object>> expression, string value)
         {
+            Contract.Requires<ArgumentNullException>(expression != null);
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(value));
+
             this._expression = expression;
             this._value = value;
         }

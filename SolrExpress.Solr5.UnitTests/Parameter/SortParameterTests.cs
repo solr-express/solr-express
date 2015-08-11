@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
+using System;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -30,6 +31,19 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
 
             // Assert
             Assert.AreEqual(expected.ToString(), actual);
+        }
+
+        /// <summary>
+        /// Where   Using a SortParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SortParameter002()
+        {
+            // Arrange / Act / Assert
+            new SortParameter<TestDocument>(null, true);
         }
     }
 }

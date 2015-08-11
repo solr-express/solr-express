@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
+using System;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -9,12 +10,12 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
     public class FilterQueryParameterTests
     {
         /// <summary>
-        /// Where   Using a FilterParameter instance
+        /// Where   Using a FilterQueryParameter instance
         /// When    Invoking the method "Execute" using 2 instances
         /// What    Create a valid string
         /// </summary>
         [TestMethod]
-        public void FilterParameter001()
+        public void FilterQueryParameter001()
         {
             // Arrange
             var container = new List<string>();
@@ -29,6 +30,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             Assert.AreEqual(2, container.Count);
             Assert.AreEqual("fq=Id:X", container[0]);
             Assert.AreEqual("fq=Score:Y", container[1]);
+        }
+
+        /// <summary>
+        /// Where   Using a FilterQueryParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void FilterQueryParameter002()
+        {
+            // Arrange / Act / Assert
+            new FilterQueryParameter(null);
         }
     }
 }

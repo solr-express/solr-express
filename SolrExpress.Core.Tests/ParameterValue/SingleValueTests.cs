@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
+using System;
 
 namespace SolrExpress.Core.Tests.ParameterValue
 {
@@ -64,6 +65,32 @@ namespace SolrExpress.Core.Tests.ParameterValue
 
             // Assert
             Assert.IsTrue(actual);
+        }
+
+        /// <summary>
+        /// Where   Using a SingleValue instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SingleValue004()
+        {
+            // Arrange / Act / Assert
+            new SingleValue<TestDocument>(null, "x");
+        }
+
+        /// <summary>
+        /// Where   Using a SingleValue instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SingleValue005()
+        {
+            // Arrange / Act / Assert
+            new SingleValue<TestDocument>(q => q.Id, null);
         }
     }
 }

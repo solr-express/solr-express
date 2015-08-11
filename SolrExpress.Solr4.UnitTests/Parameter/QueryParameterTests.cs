@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
+using System;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -26,6 +27,19 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Assert
             Assert.AreEqual(1, container.Count);
             Assert.AreEqual("q=Id:ITEM01", container[0]);
+        }
+
+        /// <summary>
+        /// Where   Using a QueryParameter instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void QueryParameter002()
+        {
+            // Arrange / Act / Assert
+            new QueryParameter(null);
         }
     }
 }

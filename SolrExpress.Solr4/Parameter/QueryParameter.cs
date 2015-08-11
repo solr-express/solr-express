@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Query;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -13,6 +15,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="value">Parameter value used to create the query</param>
         public QueryParameter(IQueryParameterValue value)
         {
+            Contract.Requires<ArgumentNullException>(value != null);
+
             this._value = value;
         }
 

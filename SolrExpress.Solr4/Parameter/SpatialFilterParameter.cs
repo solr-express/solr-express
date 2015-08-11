@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq.Expressions;
-using SolrExpress.Core.Entity;
+﻿using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Globalization;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -26,6 +27,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="distance">Distance from the center point</param>
         public SpatialFilterParameter(SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance)
         {
+            Contract.Requires<ArgumentNullException>(expression != null);
+
             this._functionType = functionType;
             this._expression = expression;
             this._centerPoint = centerPoint;
