@@ -56,6 +56,7 @@
     <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
     <Compile Include="Exception\UnsupportedSortTypeException.cs" />
     <Compile Include="Helper\GenericHelper.cs" />
+    <Compile Include="Helper\ThrowHelper.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
     <Compile Include="Json\CustomContractResolver.cs" />
     <Compile Include="Json\GeoCoordinateConverter.cs" />

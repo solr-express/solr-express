@@ -22,7 +22,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
         {
-            Contract.Requires<ArgumentNullException>(expression != null);
+            ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._sortType = sortType;

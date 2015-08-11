@@ -21,7 +21,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
         {
-            Contract.Requires<ArgumentNullException>(expression != null);
+            ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._ascendent = ascendent;

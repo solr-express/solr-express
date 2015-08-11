@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 namespace SolrExpress.Core.Helper
 {
     /// <summary>
-    /// Helper class use to process arithmetic operations
+    /// Helper class use to process arithmetic operations with generics
     /// </summary>
     internal static class GenericHelper
     {

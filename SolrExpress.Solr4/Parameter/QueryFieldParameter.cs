@@ -1,7 +1,7 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -15,7 +15,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="expression">Query used to make the query field</param>
         public QueryFieldParameter(string expression)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(expression));
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
 
             this._expression = expression;
         }

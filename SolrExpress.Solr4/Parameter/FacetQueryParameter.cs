@@ -22,8 +22,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(aliasName));
-            Contract.Requires<ArgumentNullException>(query != null);
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
+            ThrowHelper<ArgumentNullException>.If(query == null);
 
             this._aliasName = aliasName;
             this._query = query;

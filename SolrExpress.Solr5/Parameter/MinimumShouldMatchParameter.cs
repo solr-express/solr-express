@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -13,6 +15,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expression">Expression used to make the mm parameter</param>
         public MinimumShouldMatchParameter(string expression)
         {
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
+
             this._expression = expression;
         }
 

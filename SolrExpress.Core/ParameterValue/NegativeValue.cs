@@ -1,6 +1,6 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 using System;
-using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Core.ParameterValue
 {
@@ -17,7 +17,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="parameterValue">Paramater value used to created negative form</param>
         public NegativeValue(IQueryParameterValue parameterValue)
         {
-            Contract.Requires<ArgumentNullException>(parameterValue != null);
+            ThrowHelper<ArgumentNullException>.If(parameterValue == null);
 
             this._value = parameterValue;
         }

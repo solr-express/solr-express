@@ -19,7 +19,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="expressions">Expression used to find the property name</param>
         public FieldListParameter(params Expression<Func<T, object>>[] expressions)
         {
-            Contract.Requires<ArgumentNullException>(expressions != null);
+            ThrowHelper<ArgumentNullException>.If(expressions == null);
 
             this._expressions = expressions;
         }

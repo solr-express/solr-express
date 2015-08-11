@@ -22,8 +22,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public SingleValue(Expression<Func<TDocument, object>> expression, string value)
         {
-            Contract.Requires<ArgumentNullException>(expression != null);
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(value));
+            ThrowHelper<ArgumentNullException>.If(expression == null);
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));
 
             this._expression = expression;
             this._value = value;

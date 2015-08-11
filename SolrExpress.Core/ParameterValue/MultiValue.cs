@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Diagnostics.Contracts;
@@ -21,7 +22,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="values">Value array of the filter</param>
         public MultiValue(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
-            Contract.Requires<ArgumentNullException>(values != null);
+            ThrowHelper<ArgumentNullException>.If(values == null);
+            ThrowHelper<ArgumentException>.If(values.Length <= 1);
 
             this._values = values;
             this._conditionType = conditionType;

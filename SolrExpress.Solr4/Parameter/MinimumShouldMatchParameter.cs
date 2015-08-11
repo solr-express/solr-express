@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
-using System.Diagnostics.Contracts;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -15,7 +15,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="expression">Expression used to make the mm parameter</param>
         public MinimumShouldMatchParameter(string expression)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(expression));
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
 
             this._expression = expression;
         }

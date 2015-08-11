@@ -1,6 +1,6 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
 using System;
-using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Core.ParameterValue
 {
@@ -17,7 +17,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public FreeValue(string value)
         {
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrWhiteSpace(value));
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));
 
             this._value = value;
         }

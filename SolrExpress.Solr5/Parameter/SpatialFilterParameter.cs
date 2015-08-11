@@ -26,6 +26,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="distance">Distance from the center point</param>
         public SpatialFilterParameter(SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance)
         {
+            ThrowHelper<ArgumentNullException>.If(expression == null);
+
             this._functionType = functionType;
             this._expression = expression;
             this._centerPoint = centerPoint;
@@ -67,7 +69,7 @@ namespace SolrExpress.Solr5.Parameter
             errorMessage = string.Empty;
 
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
-            
+
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;

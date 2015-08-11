@@ -26,7 +26,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="to">To value in a range filter</param>
         public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
-            Contract.Requires<ArgumentNullException>(expression != null);
+            ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._from = from;

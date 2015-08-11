@@ -18,7 +18,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="expressions">Expression used to find the property name</param>
         public FieldsParameter(params Expression<Func<T, object>>[] expressions)
         {
-            Contract.Requires<ArgumentNullException>(expressions != null);
+            ThrowHelper<ArgumentNullException>.If(expressions == null);
 
             this._expressions = expressions;
         }
