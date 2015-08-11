@@ -1,6 +1,5 @@
 ﻿using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,20 +56,27 @@ namespace SolrExpress.Solr4
 
             string content;
 
-            using (var dataStream = response.GetResponseStream())
+            try
             {
-                using (var reader = new StreamReader(dataStream))
+                using (var dataStream = response.GetResponseStream())
                 {
-                    content = reader.ReadToEnd();
+                    using (var reader = new StreamReader(dataStream))
+                    {
+                        content = reader.ReadToEnd();
+                    }
                 }
-            }
 
-            if (response.StatusCode != HttpStatusCode.OK)
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new UnexpectedJsonQueryException(content);
+                }
+
+                return content;
+            }
+            catch (System.Exception e)
             {
-                throw new UnexpectedJsonQueryException(content);
+                throw new UnexpectedJsonQueryException(e.Message);
             }
-
-            return content;
         }
     }
 }
