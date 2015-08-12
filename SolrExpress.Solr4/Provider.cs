@@ -47,7 +47,7 @@ namespace SolrExpress.Solr4
         /// <returns>Result of the request</returns>
         public string Execute(string query)
         {
-            var baseUrl = string.Concat(this._solrHost, "/", query, "&echoParams=none&wt=json");
+            var baseUrl = string.Concat(this._solrHost, "/", query, "&echoParams=none&wt=json&indent=off");
 
             var request = WebRequest.Create(baseUrl);
             request.Method = "GET";

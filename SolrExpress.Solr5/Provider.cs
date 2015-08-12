@@ -49,7 +49,7 @@ namespace SolrExpress.Solr5
         /// <returns>Result of the request</returns>
         public string Execute(string query)
         {
-            var baseUrl = string.Concat(this._solrHost, "/query?echoParams=none&wt=json");
+            var baseUrl = string.Concat(this._solrHost, "/query?echoParams=none&wt=json&indent=off");
 
             var encoding = new UTF8Encoding();
             var bytes = encoding.GetBytes(query);
