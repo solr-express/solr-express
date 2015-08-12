@@ -7,17 +7,17 @@ namespace SolrExpress.Solr5.Parameter
 {
     public sealed class QueryFieldParameter : IParameter<JObject>
     {
-        private readonly string _query;
+        private readonly string _expression;
 
         /// <summary>
         /// Create a query field parameter
         /// </summary>
-        /// <param name="query">Query used to make the query field</param>
-        public QueryFieldParameter(string query)
+        /// <param name="expression">Query used to make the query field</param>
+        public QueryFieldParameter(string expression)
         {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(query));
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
 
-            this._query = query;
+            this._expression = expression;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace SolrExpress.Solr5.Parameter
         public void Execute(JObject jObject)
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
-            var jProperty = new JProperty("qf", this._query);
+            var jProperty = new JProperty("qf", this._expression);
 
             jObj.Add(jProperty);
 
