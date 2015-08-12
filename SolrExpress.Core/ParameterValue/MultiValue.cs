@@ -35,7 +35,13 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            return string.Join(this._conditionType.ToString().ToUpper(), this._values.Select(q => q.Execute()));
+            var expression = string.Join(
+                " {1} ",
+                this._values.Select(q => string.Concat("{0}", q.Execute(), "{0}")));
+
+            expression = string.Format(expression, "\"", this._conditionType.ToString().ToUpper());
+
+            return string.Concat("(", expression, ")");
         }
 
         /// <summary>
