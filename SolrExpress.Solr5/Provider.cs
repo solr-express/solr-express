@@ -63,12 +63,12 @@ namespace SolrExpress.Solr5
             stream.Write(bytes, 0, bytes.Length);
             stream.Close();
 
-            var response = (HttpWebResponse)request.GetResponse();
-
-            string content;
-
             try
             {
+                var response = (HttpWebResponse)request.GetResponse();
+
+                string content;
+
                 using (var dataStream = response.GetResponseStream())
                 {
                     using (var reader = new StreamReader(dataStream))

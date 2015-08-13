@@ -4,7 +4,6 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -14,18 +13,20 @@ namespace SolrExpress.Solr5.Parameter
     {
         private readonly Expression<Func<T, object>> _expression;
         private readonly SolrFacetSortType? _sortType;
+        private readonly int? _limit;
 
         /// <summary>
         /// Create a facet parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._sortType = sortType;
+            this._limit = limit;
         }
 
         /// <summary>
@@ -59,6 +60,11 @@ namespace SolrExpress.Solr5.Parameter
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
+            if (this._limit.HasValue)
+            {
+                array.Add(new JProperty("limit", this._limit));
+            }
+
             var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
 
             facetObject.Add(value);
@@ -75,7 +81,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            
+
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)

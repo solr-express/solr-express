@@ -14,18 +14,21 @@ namespace SolrExpress.Solr4.Parameter
     {
         private readonly Expression<Func<T, object>> _expression;
         private readonly SolrFacetSortType? _sortType;
+        private readonly int? _limit;
 
         /// <summary>
         /// Create a facet parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null)
+        /// <param name="limit">Limit of itens in facet's result</param>
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._sortType = sortType;
+            this._limit = limit;
         }
 
         /// <summary>
@@ -65,6 +68,11 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             container.Add(string.Format("f.{0}.facet.mincount=1", aliasName));
+
+            if (this._limit.HasValue)
+            {
+                container.Add(string.Format("f.{0}.facet.limit={1}", fieldName, this._limit.Value));
+            }
         }
 
         /// <summary>

@@ -52,12 +52,12 @@ namespace SolrExpress.Solr4
             var request = WebRequest.Create(baseUrl);
             request.Method = "GET";
 
-            var response = (HttpWebResponse)request.GetResponse();
-
-            string content;
-
             try
             {
+                var response = (HttpWebResponse)request.GetResponse();
+
+                string content;
+
                 using (var dataStream = response.GetResponseStream())
                 {
                     using (var reader = new StreamReader(dataStream))

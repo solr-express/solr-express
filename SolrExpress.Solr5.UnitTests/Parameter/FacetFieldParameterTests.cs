@@ -86,5 +86,37 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange / Act / Assert
             new FacetFieldParameter<TestDocument>(null);
         }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Execute" using the limit parameter
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetFieldParameter004()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""facet"": {
+                ""Id"": {
+                  ""terms"": {
+                    ""field"": ""Id"",
+                    ""limit"": 10
+                  }
+                }
+              }
+            }");
+            string actual;
+            var jObject = new JObject();
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, limit: 10);
+
+            // Act
+            parameter.Execute(jObject);
+            actual = jObject.ToString();
+
+            // Assert
+            Assert.AreEqual(expected.ToString(), actual);
+        }
     }
 }

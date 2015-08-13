@@ -161,5 +161,16 @@ namespace SolrExpress.Solr5.Linq
         {
             return solrQueryable.Parameter(new SortParameter<TDocument>(expression, ascendent));
         }
+
+        /// <summary>
+        /// Create a facet limit parameter
+        /// </summary>
+        /// <param name="solrQueryable">The solr query</param>
+        /// <param name="value">Parameter to include in the query</param>
+        public static SolrQueryable<TDocument> FacetLimit<TDocument>(this SolrQueryable<TDocument> solrQueryable, int value)
+            where TDocument : IDocument
+        {
+            return solrQueryable.Parameter(new FacetLimitParameter(value));
+        }
     }
 }

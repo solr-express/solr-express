@@ -188,5 +188,32 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.AreEqual(32, data.DocumentCount);
             Assert.IsFalse(data.IsEmpty);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Facet.Field"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest008()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new SolrQueryConfiguration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, config);
+            SolrQueryResult result;
+            List<FacetKeyValue<string>> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter(new QueryAll()));
+            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>(q => q.ManufacturerId, limit: 1));
+            result = solrQuery.Execute();
+            data = result.Get(new FacetFieldResultBuilder()).Data;
+
+            // Assert
+            Assert.AreEqual(1, data.Count);
+            Assert.AreEqual("ManufacturerId", data[0].Name);
+            Assert.AreEqual(1, data[0].Data.Count);
+        }
     }
 }

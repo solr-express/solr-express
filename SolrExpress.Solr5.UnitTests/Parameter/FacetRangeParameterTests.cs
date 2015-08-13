@@ -235,7 +235,6 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
         }
 
-
         /// <summary>
         /// Where   Using a FacetRangeParamete instance
         /// When    Create the instance with null in alias name

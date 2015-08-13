@@ -4,7 +4,6 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -57,7 +56,7 @@ namespace SolrExpress.Solr5.Parameter
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
-
+            
             var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
 
             facetObject.Add(jProperty);

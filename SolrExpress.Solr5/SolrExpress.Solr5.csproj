@@ -52,6 +52,7 @@
     <Compile Include="Linq\SolrQueryableExtension.cs" />
     <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs" />
+    <Compile Include="Parameter\FacetLimitParameter.cs" />
     <Compile Include="Parameter\FacetQueryParameter.cs" />
     <Compile Include="Parameter\FacetRangeParameter.cs" />
     <Compile Include="Parameter\FieldsParameter.cs" />
