@@ -59,7 +59,7 @@ namespace SolrExpress.Solr4.Parameter
 
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Format("facet.range={{!ex=dt key={0}}}{1}", this._aliasName, fieldName));
+            container.Add(string.Format("facet.range={{!key={0}}}{1}", this._aliasName, fieldName));
 
             if (!string.IsNullOrWhiteSpace(this._gap))
             {

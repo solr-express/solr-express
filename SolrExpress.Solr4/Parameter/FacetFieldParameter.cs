@@ -50,7 +50,7 @@ namespace SolrExpress.Solr4.Parameter
             var aliasName = UtilHelper.GetPropertyNameFromExpression(this._expression);
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Format("facet.field={{!ex=dt key={0}}}{1}", aliasName, fieldName));
+            container.Add(string.Format("facet.field={{!key={0}}}{1}", aliasName, fieldName));
 
             if (this._sortType.HasValue)
             {

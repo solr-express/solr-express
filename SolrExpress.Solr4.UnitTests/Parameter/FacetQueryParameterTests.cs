@@ -29,7 +29,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Assert
             Assert.AreEqual(3, container.Count);
             Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.query={!ex=dt key=X}avg('Y')", container[1]);
+            Assert.AreEqual("facet.query={!key=X}avg('Y')", container[1]);
             Assert.AreEqual("f.X.facet.mincount=1", container[2]);
         }
 
@@ -51,7 +51,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Assert
             Assert.AreEqual(4, container.Count);
             Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.query={!ex=dt key=X}avg('Y')", container[1]);
+            Assert.AreEqual("facet.query={!key=X}avg('Y')", container[1]);
             Assert.AreEqual("f.X.facet.sort=count", container[2]);
             Assert.AreEqual("f.X.facet.mincount=1", container[3]);
         }

@@ -48,7 +48,7 @@ namespace SolrExpress.Solr4.Parameter
 
             var query = this._query.Execute();
 
-            container.Add(string.Format("facet.query={{!ex=dt key={0}}}{1}", this._aliasName, query));
+            container.Add(string.Format("facet.query={{!key={0}}}{1}", this._aliasName, query));
 
             if (this._sortType.HasValue)
             {
