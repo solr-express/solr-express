@@ -4,7 +4,6 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -18,6 +17,7 @@ namespace SolrExpress.Solr4.Parameter
         private readonly string _start;
         private readonly string _end;
         private readonly SolrFacetSortType? _sortType;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
@@ -28,7 +28,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
             ThrowHelper<ArgumentNullException>.If(expression == null);
@@ -39,6 +40,7 @@ namespace SolrExpress.Solr4.Parameter
             this._start = start;
             this._end = end;
             this._sortType = sortType;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace SolrExpress.Solr4.Parameter
 
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Format("facet.range={{!key={0}}}{1}", this._aliasName, fieldName));
+            container.Add(string.Concat("facet.range=", UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, fieldName, this._excludes)));
 
             if (!string.IsNullOrWhiteSpace(this._gap))
             {

@@ -118,5 +118,36 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Assert
             Assert.AreEqual(expected.ToString(), actual);
         }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetFieldParameter005()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""facet"": {
+                ""Id"": {
+                  ""terms"": {
+                    ""field"": ""{!ex=tag1,tag2}Id""
+                  }
+                }
+              }
+            }");
+            string actual;
+            var jObject = new JObject();
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(jObject);
+            actual = jObject.ToString();
+
+            // Assert
+            Assert.AreEqual(expected.ToString(), actual);
+        }
     }
 }

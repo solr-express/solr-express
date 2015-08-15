@@ -17,6 +17,7 @@ namespace SolrExpress.Solr5.Parameter
         private readonly string _start;
         private readonly string _end;
         private readonly SolrFacetSortType? _sortType;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
@@ -27,7 +28,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
             ThrowHelper<ArgumentNullException>.If(expression == null);
@@ -38,6 +40,7 @@ namespace SolrExpress.Solr5.Parameter
             this._start = start;
             this._end = end;
             this._sortType = sortType;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -57,7 +60,7 @@ namespace SolrExpress.Solr5.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", fieldName)
+                new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
             };
 
             if (!string.IsNullOrWhiteSpace(this._gap))

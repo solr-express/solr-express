@@ -4,7 +4,6 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -15,6 +14,7 @@ namespace SolrExpress.Solr4.Parameter
         private readonly Expression<Func<T, object>> _expression;
         private readonly SolrFacetSortType? _sortType;
         private readonly int? _limit;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
@@ -22,13 +22,15 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="limit">Limit of itens in facet's result</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._sortType = sortType;
             this._limit = limit;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace SolrExpress.Solr4.Parameter
             var aliasName = UtilHelper.GetPropertyNameFromExpression(this._expression);
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Format("facet.field={{!key={0}}}{1}", aliasName, fieldName));
+            container.Add(string.Concat("facet.field=", UtilHelper.GetSolrFacetWithExcludesSolr4(aliasName, fieldName, this._excludes)));
 
             if (this._sortType.HasValue)
             {

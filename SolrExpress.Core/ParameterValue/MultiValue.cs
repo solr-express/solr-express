@@ -2,7 +2,6 @@
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace SolrExpress.Core.ParameterValue

@@ -4,7 +4,7 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
@@ -13,6 +13,7 @@ namespace SolrExpress.Solr4.Parameter
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;
         private readonly SolrFacetSortType? _sortType;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
@@ -20,7 +21,8 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
             ThrowHelper<ArgumentNullException>.If(query == null);
@@ -28,6 +30,7 @@ namespace SolrExpress.Solr4.Parameter
             this._aliasName = aliasName;
             this._query = query;
             this._sortType = sortType;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace SolrExpress.Solr4.Parameter
 
             var query = this._query.Execute();
 
-            container.Add(string.Format("facet.query={{!key={0}}}{1}", this._aliasName, query));
+            container.Add(string.Concat("facet.query=", UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, query, this._excludes)));
 
             if (this._sortType.HasValue)
             {

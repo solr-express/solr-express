@@ -115,5 +115,27 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange / Act / Assert
             new FacetQueryParameter("x", null);
         }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetQueryParameter007()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetQueryParameter("X", new FreeValue("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(container);
+
+            // Assert
+            Assert.AreEqual(3, container.Count);
+            Assert.AreEqual("facet=true", container[0]);
+            Assert.AreEqual("facet.query={!ex=tag1,tag2 key=X}avg('Y')", container[1]);
+            Assert.AreEqual("f.X.facet.mincount=1", container[2]);
+        }
     }
 }

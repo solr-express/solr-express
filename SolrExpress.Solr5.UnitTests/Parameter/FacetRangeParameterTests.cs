@@ -260,5 +260,40 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange / Act / Assert
             new FacetRangeParameter<TestDocument>("x", null);
         }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter012()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""facet"": {
+                ""X"": {
+                  ""range"": {
+                    ""field"": ""{!ex=tag1,tag2}Id"",
+                    ""gap"": ""1"",
+                    ""start"": ""10"",
+                    ""end"": ""20"",
+                    ""other"": [
+                      ""before"",
+                      ""after""
+                    ]
+                  }
+                }
+              }
+            }");
+            string actual;
+            var jObject = new JObject();
+            var parameter = new FacetRangeParameter<TestDocument>("X", q => q.Id, "1", "10", "20", excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(jObject);
+            actual = jObject.ToString();
+        }
     }
 }

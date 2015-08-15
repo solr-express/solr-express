@@ -62,7 +62,7 @@ namespace SolrExpress.Core.Helper
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        public static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<T>(Expression<Func<T, object>> expression)
+        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<T>(Expression<Func<T, object>> expression)
             where T : IDocument
         {
             var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
@@ -81,7 +81,7 @@ namespace SolrExpress.Core.Helper
         {
             var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
-            
+
             return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Name;
         }
 
@@ -103,7 +103,7 @@ namespace SolrExpress.Core.Helper
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static Type  GetPropertyTypeFromExpression<T>(Expression<Func<T, object>> expression)
+        internal static Type GetPropertyTypeFromExpression<T>(Expression<Func<T, object>> expression)
             where T : IDocument
         {
             return UtilHelper.GetPropertyInfoFromExpression(expression).PropertyType;
@@ -138,6 +138,62 @@ namespace SolrExpress.Core.Helper
                 default:
                     throw new ArgumentException("sortType");
             }
+        }
+
+        /// <summary>
+        /// Get the field with excludes
+        /// </summary>
+        /// <param name="aliasName">Alias name</param>
+        /// <param name="fieldName">Field name</param>
+        /// <param name="sortName">List of excludes</param>
+        internal static string GetSolrFacetWithExcludesSolr4(string aliasName, string fieldName, string[] excludes)
+        {
+            if (excludes != null && excludes.Length > 0)
+            {
+                return string.Format(
+                    "{{!ex={0} key={1}}}{2}",
+                    string.Join(",", excludes),
+                    aliasName,
+                    fieldName);
+            }
+
+            return string.Format("{{!key={0}}}{1}", aliasName, fieldName);
+        }
+
+        /// <summary>
+        /// Get the field with excludes
+        /// </summary>
+        /// <param name="fieldName">Field name</param>
+        /// <param name="sortName">List of excludes</param>
+        internal static string GetSolrFacetWithExcludesSolr5(string fieldName, string[] excludes)
+        {
+            if (excludes != null && excludes.Length > 0)
+            {
+                return string.Format(
+                    "{{!ex={0}}}{1}",
+                    string.Join(",", excludes),
+                    fieldName);
+            }
+
+            return fieldName;
+        }
+
+        /// <summary>
+        /// Get the filter with tag
+        /// </summary>
+        /// <param name="tagName">Tag name</param>
+        /// <param name="fieldName">Field name</param>
+        internal static string GetSolrFilterWithTag(string aliasName, string query)
+        {
+            if (!string.IsNullOrWhiteSpace(aliasName))
+            {
+                return string.Format(
+                    "{{!tag={0}}}{1}",
+                    aliasName,
+                    query);
+            }
+
+            return query;
         }
     }
 }

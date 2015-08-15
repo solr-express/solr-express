@@ -14,19 +14,22 @@ namespace SolrExpress.Solr5.Parameter
         private readonly Expression<Func<T, object>> _expression;
         private readonly SolrFacetSortType? _sortType;
         private readonly int? _limit;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 
             this._expression = expression;
             this._sortType = sortType;
             this._limit = limit;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -47,7 +50,7 @@ namespace SolrExpress.Solr5.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", fieldName)
+                new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
             };
 
             if (_sortType.HasValue)

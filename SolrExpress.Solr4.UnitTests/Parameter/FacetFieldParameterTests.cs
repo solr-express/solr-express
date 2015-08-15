@@ -124,5 +124,27 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
             Assert.AreEqual("f.Id.facet.limit=10", container[3]);
         }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetFieldParameter007()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(container);
+
+            // Assert
+            Assert.AreEqual(3, container.Count);
+            Assert.AreEqual("facet=true", container[0]);
+            Assert.AreEqual("facet.field={!ex=tag1,tag2 key=Id}Id", container[1]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
+        }
     }
 }

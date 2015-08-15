@@ -51,5 +51,32 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange / Act / Assert
             new FilterParameter(null);
         }
+
+        /// <summary>
+        /// Where   Using a FilterParameter instance
+        /// When    Invoking the method "Execute" using tag name
+        /// What    Create a valid JSON
+        /// </summary>
+        [TestMethod]
+        public void FilterParameter003()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""filter"": [
+                ""{!tag=tag1}Id:X""
+              ]
+            }");
+            string actual;
+            var jObject = new JObject();
+            var parameter1 = new FilterParameter(new SingleValue<TestDocument>(q => q.Id, "X"), "tag1");
+
+            // Act
+            parameter1.Execute(jObject);
+            actual = jObject.ToString();
+
+            // Assert
+            Assert.AreEqual(expected.ToString(), actual);
+        }
     }
 }

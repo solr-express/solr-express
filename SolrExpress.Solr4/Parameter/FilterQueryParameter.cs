@@ -8,16 +8,19 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FilterQueryParameter : IParameter<List<string>>
     {
         private readonly IQueryParameterValue _value;
+        private readonly string _tagName;
 
         /// <summary>
         /// Create a filter parameter
         /// </summary>
         /// <param name="value">Parameter value used to create the query</param>
-        public FilterQueryParameter(IQueryParameterValue value)
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public FilterQueryParameter(IQueryParameterValue value, string tagName = null)
         {
             ThrowHelper<ArgumentNullException>.If(value == null);
 
             this._value = value;
+            this._tagName = tagName;
         }
 
         /// <summary>
@@ -31,7 +34,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add(string.Concat("fq=", this._value.Execute()));
+            container.Add(string.Concat("fq=", UtilHelper.GetSolrFilterWithTag(this._tagName, this._value.Execute())));
         }
     }
 }

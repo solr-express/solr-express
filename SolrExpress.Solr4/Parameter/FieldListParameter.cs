@@ -1,10 +1,9 @@
-﻿using System;
+﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Query;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System.Diagnostics.Contracts;
 
 namespace SolrExpress.Solr4.Parameter
 {

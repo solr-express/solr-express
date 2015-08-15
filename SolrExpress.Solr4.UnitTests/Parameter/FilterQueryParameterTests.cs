@@ -44,5 +44,25 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange / Act / Assert
             new FilterQueryParameter(null);
         }
+
+        /// <summary>
+        /// Where   Using a FilterQueryParameter instance
+        /// When    Invoking the method "Execute" using tag name
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FilterQueryParameter003()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter1 = new FilterQueryParameter(new SingleValue<TestDocument>(q => q.Id, "X"), "tag1");
+
+            // Act
+            parameter1.Execute(container);
+
+            // Assert
+            Assert.AreEqual(1, container.Count);
+            Assert.AreEqual("fq={!tag=tag1}Id:X", container[0]);
+        }
     }
 }

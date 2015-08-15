@@ -8,16 +8,19 @@ namespace SolrExpress.Solr5.Parameter
     public sealed class FilterParameter : IParameter<JObject>
     {
         private readonly IQueryParameterValue _value;
+        private readonly string _tagName;
 
         /// <summary>
         /// Create a filter parameter
         /// </summary>
         /// <param name="value">Parameter value used to create the query</param>
-        public FilterParameter(IQueryParameterValue value)
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public FilterParameter(IQueryParameterValue value, string tagName = null)
         {
             ThrowHelper<ArgumentNullException>.If(value == null);
 
             this._value = value;
+            this._tagName = tagName;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(this._value.Execute());
+            jArray.Add(UtilHelper.GetSolrFilterWithTag(this._tagName, this._value.Execute()));
 
             jObject["filter"] = jArray;
         }

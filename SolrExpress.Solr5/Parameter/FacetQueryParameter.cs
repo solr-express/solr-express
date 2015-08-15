@@ -4,6 +4,7 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -12,6 +13,7 @@ namespace SolrExpress.Solr5.Parameter
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;
         private readonly SolrFacetSortType? _sortType;
+        private readonly string[] _excludes;
 
         /// <summary>
         /// Create a facet parameter
@@ -19,7 +21,8 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
             ThrowHelper<ArgumentNullException>.If(query == null);
@@ -27,6 +30,7 @@ namespace SolrExpress.Solr5.Parameter
             this._aliasName = aliasName;
             this._query = query;
             this._sortType = sortType;
+            this._excludes = excludes;
         }
 
         /// <summary>
@@ -44,7 +48,7 @@ namespace SolrExpress.Solr5.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("q", this._query.Execute())
+                new JProperty("q", UtilHelper.GetSolrFacetWithExcludesSolr5(this._query.Execute(), this._excludes))
             };
 
             if (this._sortType.HasValue)
@@ -56,7 +60,7 @@ namespace SolrExpress.Solr5.Parameter
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
-            
+
             var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
 
             facetObject.Add(jProperty);
@@ -73,7 +77,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             isValid = true;
             errorMessage = string.Empty;
-            
+
             var queryValidation = this._query as IValidation;
 
             if (queryValidation != null)

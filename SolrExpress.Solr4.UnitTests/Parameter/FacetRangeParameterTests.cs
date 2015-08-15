@@ -272,5 +272,32 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange / Act / Assert
             new FacetRangeParameter<TestDocument>("x", null);
         }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+        /// What    Create a valid string
+        /// </summary>
+        [TestMethod]
+        public void FacetRangeParameter014()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetRangeParameter<TestDocument>("X", q => q.Id, "1", "10", "20", excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(container);
+
+            // Assert
+            Assert.AreEqual(8, container.Count);
+            Assert.AreEqual("facet=true", container[0]);
+            Assert.AreEqual("facet.range={!ex=tag1,tag2 key=X}Id", container[1]);
+            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
+            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
+            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
+            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
+            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
+            Assert.AreEqual("f.Id.facet.mincount=1", container[7]);
+        }
     }
 }
