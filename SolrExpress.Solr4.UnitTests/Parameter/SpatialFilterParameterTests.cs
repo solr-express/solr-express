@@ -26,10 +26,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(3, container.Count);
-            Assert.AreEqual("fq={!geofilt sfield=Spatial}", container[0]);
-            Assert.AreEqual("pt=-1.1,-2.2", container[1]);
-            Assert.AreEqual("d=5.5", container[2]);
+            Assert.AreEqual(1, container.Count);
+            Assert.AreEqual("fq={!geofilt sfield=Spatial pt=-1.1,-2.2 d=5.5}", container[0]);
         }
 
         /// <summary>
@@ -48,10 +46,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(3, container.Count);
-            Assert.AreEqual("fq={!bbox sfield=Spatial}", container[0]);
-            Assert.AreEqual("pt=-1.1,-2.2", container[1]);
-            Assert.AreEqual("d=5.5", container[2]);
+            Assert.AreEqual(1, container.Count);
+            Assert.AreEqual("fq={!bbox sfield=Spatial pt=-1.1,-2.2 d=5.5}", container[0]);
         }
 
         /// <summary>

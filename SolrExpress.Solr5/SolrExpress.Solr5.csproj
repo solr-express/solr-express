@@ -55,6 +55,7 @@
     <Compile Include="Parameter\FacetLimitParameter.cs" />
     <Compile Include="Parameter\FacetQueryParameter.cs" />
     <Compile Include="Parameter\FacetRangeParameter.cs" />
+    <Compile Include="Parameter\FacetSpatialParameter.cs" />
     <Compile Include="Parameter\FieldsParameter.cs" />
     <Compile Include="Parameter\FilterParameter.cs" />
     <Compile Include="Parameter\LimitParameter.cs" />

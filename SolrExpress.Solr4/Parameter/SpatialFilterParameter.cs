@@ -47,11 +47,13 @@ namespace SolrExpress.Solr4.Parameter
         {
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            var formule = string.Format("{{!{0} sfield={1}}}", this._functionType.ToString().ToLower(), fieldName);
+            var formule = UtilHelper.GetSolrSpatialFormule(
+                this._functionType,
+                fieldName,
+                this._centerPoint,
+                this._distance);
 
             container.Add(string.Concat("fq=", formule));
-            container.Add(string.Concat("pt=", this._centerPoint.ToString()));
-            container.Add(string.Concat("d=", this._distance.ToString("0.#", CultureInfo.InvariantCulture)));
         }
 
         /// <summary>

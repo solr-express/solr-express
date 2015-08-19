@@ -22,9 +22,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             var expected = JObject.Parse(@"
             {
               params:{
-                fq:""{!geofilt sfield=Spatial}"",
-                pt:""-1.1,-2.2"",
-                d:""5.5""
+                fq:""{!geofilt sfield=Spatial pt=-1.1,-2.2 d=5.5}"",
               }
             }");
             string actual;
@@ -51,9 +49,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             var expected = JObject.Parse(@"
             {
               params:{
-                fq:""{!bbox sfield=Spatial}"",
-                pt:""-1.1,-2.2"",
-                d:""5.5""
+                fq:""{!bbox sfield=Spatial pt=-1.1,-2.2 d=5.5}""
               }
             }");
             string actual;
