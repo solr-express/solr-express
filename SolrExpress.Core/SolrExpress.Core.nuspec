@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
-    <metadata>
-        <id>SolrExpress.Core</id>
-        <version>0.8.1.0</version>
-        <authors>Diego Luiz Brum</authors>
-        <projectUrl>https://github.com/solr-express/solr-express</projectUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Core library for a simple and lightweight query .NET library for Solr</description>
-        <dependencies>
-            <dependency id="Newtonsoft.Json" version="6.0.8" />
-        </dependencies>
-    </metadata>
-    <files />
+  <metadata>
+    <id>SolrExpress.Core</id>
+    <version>1.0.0.1</version>
+    <authors>Diego Luiz Brum</authors>
+    <projectUrl>https://github.com/solr-express/solr-express</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Core library for a simple and lightweight query .NET library for Solr</description>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="6.0.8" />
+    </dependencies>
+  </metadata>
+  <files />
 </package>
