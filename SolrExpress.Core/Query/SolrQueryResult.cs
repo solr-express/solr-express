@@ -27,10 +27,7 @@ namespace SolrExpress.Core.Query
         {
             if (builder is IConvertJsonObject)
             {
-                if (this._jsonObject == null)
-                {
-                    this._jsonObject = JObject.Parse(this._jsonPlainText);
-                }
+                this._jsonObject = this._jsonObject ?? JObject.Parse(this._jsonPlainText);
 
                 ((IConvertJsonObject)builder).Execute(this._jsonObject);
             }

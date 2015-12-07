@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
 
 namespace SolrExpress.Solr5.Builder
 {

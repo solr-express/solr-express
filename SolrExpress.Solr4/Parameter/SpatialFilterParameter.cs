@@ -4,7 +4,6 @@ using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -37,7 +36,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return false; } }
+        public bool AllowMultipleInstances { get; } = false;
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -53,7 +52,7 @@ namespace SolrExpress.Solr4.Parameter
                 this._centerPoint,
                 this._distance);
 
-            container.Add(string.Concat("fq=", formule));
+            container.Add($"fq={formule}");
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace SolrExpress.Solr4.Parameter
             errorMessage = string.Empty;
 
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
-            
+
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;

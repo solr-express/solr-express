@@ -38,7 +38,7 @@ namespace SolrExpress.Core.ParameterValue
                 string.Concat(" ", this._conditionType.ToString().ToUpper(), " "),
                 this._values.Select(q => q.Execute()));
 
-            return string.Concat("(", expression, ")");
+            return $"({expression})";
         }
 
         /// <summary>

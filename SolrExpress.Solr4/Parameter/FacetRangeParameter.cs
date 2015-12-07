@@ -46,7 +46,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return true; } }
+        public bool AllowMultipleInstances { get; } = true;
 
         /// <summary>
         /// Execute the creation of the parameter "facet.range"
@@ -61,23 +61,23 @@ namespace SolrExpress.Solr4.Parameter
 
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Concat("facet.range=", UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, fieldName, this._excludes)));
+            container.Add($"facet.range={UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, fieldName, this._excludes)}");
 
             if (!string.IsNullOrWhiteSpace(this._gap))
             {
-                container.Add(string.Format("f.{0}.facet.range.gap={1}", fieldName, this._gap));
+                container.Add($"f.{fieldName}.facet.range.gap={this._gap}");
             }
             if (!string.IsNullOrWhiteSpace(this._start))
             {
-                container.Add(string.Format("f.{0}.facet.range.start={1}", fieldName, this._start));
+                container.Add($"f.{fieldName}.facet.range.start={this._start}");
             }
             if (!string.IsNullOrWhiteSpace(this._end))
             {
-                container.Add(string.Format("f.{0}.facet.range.end={1}", fieldName, this._end));
+                container.Add($"f.{fieldName}.facet.range.end={this._end}");
             }
 
-            container.Add(string.Format("f.{0}.facet.range.other=before", fieldName));
-            container.Add(string.Format("f.{0}.facet.range.other=after", fieldName));
+            container.Add($"f.{0}.facet.range.other=before{fieldName}");
+            container.Add($"f.{0}.facet.range.other=after{fieldName}");
 
             if (this._sortType.HasValue)
             {
@@ -91,10 +91,10 @@ namespace SolrExpress.Solr4.Parameter
 
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add(string.Format("f.{0}.facet.range.sort={1}", fieldName, typeName));
+                container.Add($"f.{fieldName}.facet.range.sort={typeName}");
             }
 
-            container.Add(string.Format("f.{0}.facet.mincount=1", fieldName));
+            container.Add($"f.{fieldName}.facet.mincount=1");
         }
 
         /// <summary>

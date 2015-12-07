@@ -20,7 +20,7 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if ((jsonObject["response"] == null) || (jsonObject["response"]["docs"] == null))
+            if (jsonObject["response"]?["docs"] == null)
             {
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }

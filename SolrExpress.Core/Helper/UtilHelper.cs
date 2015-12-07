@@ -1,12 +1,12 @@
 ﻿using SolrExpress.Core.Attribute;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Query;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using SolrExpress.Core.Entity;
-using System.Globalization;
 
 namespace SolrExpress.Core.Helper
 {

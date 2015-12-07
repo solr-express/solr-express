@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
 
 namespace SolrExpress.Solr4.Builder
 {
@@ -98,20 +98,20 @@ namespace SolrExpress.Solr4.Builder
             catch (Exception)
             {
             }
-            
+
             // Assuming than gap is DateTime type
             var gapNumber = this.GetNumber(gap);
 
             var keys = new Dictionary<string, DateTime>()
             {
-                {"MILISECOND",  DateTime.MinValue.AddMilliseconds(1)},
-                {"SECOND",      DateTime.MinValue.AddSeconds(1)},
-                {"MINUTE",      DateTime.MinValue.AddMinutes(1)},
-                {"HOUR",        DateTime.MinValue.AddHours(1)},
-                {"DAY",         DateTime.MinValue.AddDays(1)},
-                {"WEAK",        DateTime.MinValue.AddDays(7)},
-                {"MONTH",       DateTime.MinValue.AddMonths(1)},
-                {"YEAR",        DateTime.MinValue.AddYears(1)},
+                ["MILISECOND"] = DateTime.MinValue.AddMilliseconds(1),
+                ["SECOND"] = DateTime.MinValue.AddSeconds(1),
+                ["MINUTE"] = DateTime.MinValue.AddMinutes(1),
+                ["HOUR"] = DateTime.MinValue.AddHours(1),
+                ["DAY"] = DateTime.MinValue.AddDays(1),
+                ["WEAK"] = DateTime.MinValue.AddDays(7),
+                ["MONTH"] = DateTime.MinValue.AddMonths(1),
+                ["YEAR"] = DateTime.MinValue.AddYears(1),
             };
 
             var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
@@ -125,7 +125,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facet_counts"] == null || jsonObject["facet_counts"]["facet_ranges"] == null)
+            if (jsonObject["facet_counts"]?["facet_ranges"] == null)
             {
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }

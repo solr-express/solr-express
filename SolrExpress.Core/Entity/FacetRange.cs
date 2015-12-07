@@ -21,29 +21,19 @@ namespace SolrExpress.Core.Entity
         /// Get the type of the generic member
         /// </summary>
         /// <returns>Type of the generic member</returns>
-        public Type GetKeyType()
-        {
-            //return typeof(T);
-            return this.GetType().GenericTypeArguments[0];
-        }
+        public Type GetKeyType() => this.GetType().GenericTypeArguments[0];
 
         /// <summary>
         /// Get the value to the property MinimumValue without strong type
         /// </summary>
         /// <returns>Value to the property MinimumValue without strong type</returns>
-        public object GetMinimumValue()
-        {
-            return this.InternalMinimumValue;
-        }
+        public object GetMinimumValue() => this.InternalMinimumValue;
 
         /// <summary>
         /// Get the value to the property MaximumValue without strong type
         /// </summary>
         /// <returns>Value to the property MaximumValue without strong type</returns>
-        public object GetMaximumValue()
-        {
-            return this.InternalMaximumValue;
-        }
+        public object GetMaximumValue() => this.InternalMaximumValue;
 
         /// <summary>
         /// Set the value to the property MinimumValue without strong type

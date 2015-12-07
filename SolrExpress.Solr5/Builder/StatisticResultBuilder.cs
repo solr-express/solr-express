@@ -17,8 +17,7 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if ((jsonObject["response"] != null) && (jsonObject["response"]["numFound"] != null) &&
-                (jsonObject["responseHeader"] != null) && (jsonObject["responseHeader"]["QTime"] != null))
+            if (jsonObject["response"]?["numFound"] != null && jsonObject["responseHeader"]?["QTime"] != null)
             {
                 var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
                 var documentCount = jsonObject["response"]["numFound"].ToObject<long>();

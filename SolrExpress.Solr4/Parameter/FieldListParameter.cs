@@ -26,7 +26,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return true; } }
+        public bool AllowMultipleInstances { get; } = true;
 
         /// <summary>
         /// Execute the creation of the parameter "fl"
@@ -44,11 +44,11 @@ namespace SolrExpress.Solr4.Parameter
                 {
                     container.Remove(fieldList);
 
-                    fieldList = string.Concat(fieldList, ",", fieldName);
+                    fieldList = $"{fieldList},{fieldName}";
                 }
                 else
                 {
-                    fieldList = string.Concat("fl=", fieldName);
+                    fieldList = $"fl={fieldName}";
                 }
 
                 container.Add(fieldList);

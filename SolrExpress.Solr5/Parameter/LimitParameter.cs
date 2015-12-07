@@ -19,7 +19,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiples instance of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return false; } }
+        public bool AllowMultipleInstances { get; } = false;
 
         /// <summary>
         /// Execute the creation of the parameter "limit"

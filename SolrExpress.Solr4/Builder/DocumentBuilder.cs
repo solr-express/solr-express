@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Json;
 using SolrExpress.Core.Query;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Builder
 {
@@ -20,7 +20,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if ((jsonObject["response"] == null) || (jsonObject["response"]["docs"] == null))
+            if (jsonObject["response"]?["docs"] == null)
             {
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }

@@ -11,9 +11,6 @@ namespace SolrExpress.Core.ParameterValue
         /// Execute the parameter value generator
         /// </summary>
         /// <returns>Result generated value</returns>
-        public string Execute()
-        {
-            return "*:*";
-        }
+        public string Execute() => "*:*";
     }
 }

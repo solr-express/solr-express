@@ -29,7 +29,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return true; } }
+        public bool AllowMultipleInstances { get; } = true;
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -39,7 +39,7 @@ namespace SolrExpress.Solr4.Parameter
         {
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            var value = string.Concat(fieldName, " ", this._ascendent ? "asc" : "desc");
+            var value = $"{fieldName} {(this._ascendent ? "asc" : "desc")}";
 
             var sort = container.FirstOrDefault(q => q.StartsWith("sort="));
 
@@ -47,11 +47,11 @@ namespace SolrExpress.Solr4.Parameter
             {
                 container.Remove(sort);
 
-                sort = string.Concat(",", sort, value);
+                sort = $",{sort}{value}";
             }
             else
             {
-                sort = string.Concat("sort=", value);
+                sort = $"sort={value}";
             }
 
             container.Add(sort);

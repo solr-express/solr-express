@@ -1,11 +1,10 @@
-﻿using System;
-using System.Globalization;
-using System.Linq.Expressions;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
+using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
@@ -37,7 +36,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return false; } }
+        public bool AllowMultipleInstances { get; } = false;
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -53,7 +52,7 @@ namespace SolrExpress.Solr5.Parameter
                 fieldName,
                 this._centerPoint,
                 this._distance);
-            
+
             jObj.Add(new JProperty("fq", formule));
 
             jObject["params"] = jObj;

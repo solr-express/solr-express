@@ -37,7 +37,7 @@ namespace SolrExpress.Solr4
                 ((IParameter<List<string>>)item).Execute(list);
             }
 
-            return string.Concat("query?", string.Join("&", list));
+            return $"query?{string.Join("&", list)}";
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace SolrExpress.Solr4
         /// <returns>Result of the request</returns>
         public string Execute(string query)
         {
-            var baseUrl = string.Concat(this._solrHost, "/", query, "&echoParams=none&wt=json&indent=off");
+            var baseUrl = $"{this._solrHost}/{query}&echoParams=none&wt=json&indent=off";
 
             var request = WebRequest.Create(baseUrl);
             request.Method = "GET";

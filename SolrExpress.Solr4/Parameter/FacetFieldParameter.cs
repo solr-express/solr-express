@@ -36,7 +36,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
-        public bool AllowMultipleInstances { get { return true; } }
+        public bool AllowMultipleInstances { get; } = true;
 
         /// <summary>
         /// Execute the creation of the parameter "facet.field"
@@ -52,7 +52,7 @@ namespace SolrExpress.Solr4.Parameter
             var aliasName = UtilHelper.GetPropertyNameFromExpression(this._expression);
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            container.Add(string.Concat("facet.field=", UtilHelper.GetSolrFacetWithExcludesSolr4(aliasName, fieldName, this._excludes)));
+            container.Add($"facet.field={UtilHelper.GetSolrFacetWithExcludesSolr4(aliasName, fieldName, this._excludes)}");
 
             if (this._sortType.HasValue)
             {
@@ -66,14 +66,14 @@ namespace SolrExpress.Solr4.Parameter
 
                 UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add(string.Format("f.{0}.facet.sort={1}", aliasName, typeName));
+                container.Add($"f.{aliasName}.facet.sort={typeName}");
             }
 
-            container.Add(string.Format("f.{0}.facet.mincount=1", aliasName));
+            container.Add($"f.{aliasName}.facet.mincount=1");
 
             if (this._limit.HasValue)
             {
-                container.Add(string.Format("f.{0}.facet.limit={1}", fieldName, this._limit.Value));
+                container.Add($"f.{fieldName}.facet.limit={this._limit.Value}");
             }
         }
 

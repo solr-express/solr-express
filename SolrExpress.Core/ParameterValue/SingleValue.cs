@@ -13,7 +13,7 @@ namespace SolrExpress.Core.ParameterValue
     {
         private readonly Expression<Func<TDocument, object>> _expression;
         private readonly string _value;
-        
+
         /// <summary>
         /// Create a single solr parameter value
         /// </summary>
@@ -36,7 +36,7 @@ namespace SolrExpress.Core.ParameterValue
         {
             var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
 
-            return string.Concat(fieldName, ":", this._value);
+            return $"{fieldName}:{this._value}";
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace SolrExpress.Core.ParameterValue
             errorMessage = string.Empty;
 
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
-            
+
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;

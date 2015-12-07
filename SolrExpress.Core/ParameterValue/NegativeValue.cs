@@ -26,9 +26,6 @@ namespace SolrExpress.Core.ParameterValue
         /// Execute parameter value generator
         /// </summary>
         /// <returns>Result generated value</returns>
-        public string Execute()
-        {
-            return string.Concat("-", _value.Execute());
-        }
+        public string Execute() => $"-{_value.Execute()}";
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Globalization;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SolrExpress.Core.Entity;
+using System;
+using System.Globalization;
 
 namespace SolrExpress.Core.Json
 {

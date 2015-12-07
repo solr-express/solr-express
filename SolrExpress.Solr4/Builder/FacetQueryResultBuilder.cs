@@ -17,7 +17,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facet_counts"] == null || jsonObject["facet_counts"]["facet_queries"] == null)
+            if (jsonObject["facet_counts"]?["facet_queries"] == null)
             {
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
