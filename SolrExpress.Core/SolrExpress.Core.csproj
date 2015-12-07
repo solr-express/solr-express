@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Attribute\SolrFieldAttribute.cs" />
     <Compile Include="Entity\SolrQueryConfiguration.cs" />
+    <Compile Include="Entity\Statistic.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />
     <Compile Include="Enumerator\SolrQueryConditionType.cs" />
     <Compile Include="Enumerator\SolrSpatialFunctionType.cs" />

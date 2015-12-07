@@ -63,15 +63,11 @@ namespace SolrExpress.Solr4.Linq
         /// Returns statistics about the search
         /// </summary>
         /// <param name="solrQueryResult">The solr query</param>
-        /// <param name="isEmpty">True if search result return empty result, false otherwise</param>
-        /// <param name="documentCount">Total quantity of documents in the result</param>
-        /// <param name="timeToExecution">Time to SOLR process the requested search</param>
-        public static SolrQueryResult Statistic(this SolrQueryResult solrQueryResult, out bool isEmpty, out long documentCount, out TimeSpan timeToExecution)
+        /// <param name="statistic">Statics about search execution</param>
+        public static SolrQueryResult Statistic(this SolrQueryResult solrQueryResult, out Statistic statistic)
         {
             var builder = solrQueryResult.Get(new Solr4.Builder.StatisticResultBuilder());
-            isEmpty = builder.IsEmpty;
-            documentCount = builder.DocumentCount;
-            timeToExecution = builder.TimeToExecution;
+            statistic = builder.Data;
 
             return solrQueryResult;
         }

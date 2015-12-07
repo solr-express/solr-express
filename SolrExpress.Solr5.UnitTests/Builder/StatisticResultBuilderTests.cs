@@ -33,9 +33,9 @@ namespace SolrExpress.Solr5.UnitTests.Builder
 
             // Act
             builder.Execute(jsonObject);
-            isEmpty = builder.IsEmpty;
-            documentCount = builder.DocumentCount;
-            timeToExecution = builder.TimeToExecution;
+            isEmpty = builder.Data.IsEmpty;
+            documentCount = builder.Data.DocumentCount;
+            timeToExecution = builder.Data.ElapsedTime;
 
             // Assert
             Assert.AreEqual(false, isEmpty);

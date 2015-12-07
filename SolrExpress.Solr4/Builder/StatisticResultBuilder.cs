@@ -1,7 +1,8 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
+using System;
 
 namespace SolrExpress.Solr4.Builder
 {
@@ -19,11 +20,15 @@ namespace SolrExpress.Solr4.Builder
             if ((jsonObject["response"] != null) && (jsonObject["response"]["numFound"] != null) &&
                 (jsonObject["responseHeader"] != null) && (jsonObject["responseHeader"]["QTime"] != null))
             {
-                this.DocumentCount = jsonObject["response"]["numFound"].ToObject<long>();
-                this.IsEmpty = this.DocumentCount.Equals(0);
-
+                var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
                 var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
-                this.TimeToExecution = new TimeSpan(0, 0, 0, 0, qTime);
+
+                this.Data = new Statistic
+                {
+                    DocumentCount = documentCount,
+                    IsEmpty = documentCount.Equals(0),
+                    ElapsedTime = new TimeSpan(0, 0, 0, 0, qTime)
+                };
 
                 return;
             }
@@ -31,19 +36,6 @@ namespace SolrExpress.Solr4.Builder
             throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
-        /// <summary>
-        /// True if search result return empty result, false otherwise
-        /// </summary>
-        public bool IsEmpty { get; private set; }
-
-        /// <summary>
-        /// Total quantity of documents in the result
-        /// </summary>
-        public long DocumentCount { get; private set; }
-
-        /// <summary>
-        /// Time to SOLR process the requested search
-        /// </summary>
-        public TimeSpan TimeToExecution { get; private set; }
+        public Statistic Data { get; set; }
     }
 }

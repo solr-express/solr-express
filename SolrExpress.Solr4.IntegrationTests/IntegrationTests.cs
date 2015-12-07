@@ -185,8 +185,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new StatisticResultBuilder());
 
             // Assert
-            Assert.AreEqual(32, data.DocumentCount);
-            Assert.IsFalse(data.IsEmpty);
+            Assert.AreEqual(32, data.Data.DocumentCount);
+            Assert.IsFalse(data.Data.IsEmpty);
         }
 
         /// <summary>
