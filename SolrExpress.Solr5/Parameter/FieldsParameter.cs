@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Parameter;
@@ -64,7 +65,7 @@ namespace SolrExpress.Solr5.Parameter
                 if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
                 {
                     isValid = false;
-                    errorMessage = "A field must be \"stored=true\" to be used in field list";
+                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFields;
 
                     break;
                 }

@@ -1,7 +1,6 @@
 ﻿using SolrExpress.Core.Attribute;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Query;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -138,7 +137,7 @@ namespace SolrExpress.Core.Helper
                     sortName = "desc";
                     break;
                 default:
-                    throw new ArgumentException("sortType");
+                    throw new ArgumentException(nameof(solrFacetSortType));
             }
         }
 

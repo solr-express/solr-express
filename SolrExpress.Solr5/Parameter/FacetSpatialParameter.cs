@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
@@ -102,7 +103,7 @@ namespace SolrExpress.Solr5.Parameter
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = "A field must be \"indexed=true\" to be used in a query";
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacet;
             }
         }
     }

@@ -99,7 +99,7 @@ namespace SolrExpress.Core.ParameterValue
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = "A field must be \"indexed=true\" to be used in a query";
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQuery;
             }
         }
     }

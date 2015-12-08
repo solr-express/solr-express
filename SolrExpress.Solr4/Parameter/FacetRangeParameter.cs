@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Entity;
+﻿using SolrExpress.Core;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
@@ -114,7 +115,7 @@ namespace SolrExpress.Solr4.Parameter
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = "A field must be \"indexed=true\" to be used in a facet";
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacet;
             }
             else
             {
@@ -131,7 +132,8 @@ namespace SolrExpress.Solr4.Parameter
                         break;
                     default:
                         isValid = false;
-                        errorMessage = "A field must be numeric or DateTime to be used in a facet range";
+
+                        errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRange;
                         break;
                 }
             }
