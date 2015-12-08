@@ -1,4 +1,6 @@
-﻿using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Entity;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
@@ -7,16 +9,16 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FieldListParameter<T> : IParameter<List<string>>, IValidation
-        where T : IDocument
+    public sealed class FieldListParameter<TDocument> : IFieldsParameter, IParameter<List<string>>, IValidation
+        where TDocument : IDocument
     {
-        private readonly Expression<Func<T, object>>[] _expressions;
+        private readonly Expression<Func<TDocument, object>>[] _expressions;
 
         /// <summary>
         /// Create a fields parameter
         /// </summary>
         /// <param name="expressions">Expression used to find the property name</param>
-        public FieldListParameter(params Expression<Func<T, object>>[] expressions)
+        public FieldListParameter(params Expression<Func<TDocument, object>>[] expressions)
         {
             ThrowHelper<ArgumentNullException>.If(expressions == null);
 

@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Entity;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System;
 using System.Globalization;

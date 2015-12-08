@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.Attribute;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+using System;
 
 namespace SolrExpress.Core.Tests.Helper
 {

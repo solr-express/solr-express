@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetQueryParameter : IParameter<JObject>, IValidation
+    public sealed class FacetQueryParameter : IFacetQueryParameter, IParameter<JObject>, IValidation
     {
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;

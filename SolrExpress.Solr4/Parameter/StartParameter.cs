@@ -1,9 +1,10 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Parameter;
+using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class StartParameter : IParameter<List<string>>
+    public sealed class StartParameter : IOffsetParameter, IParameter<List<string>>
     {
         private readonly int _value;
 

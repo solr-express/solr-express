@@ -33,7 +33,7 @@ Install-Package SolrExpress.Solr4
 
 ## Compatibility
 
-.Net Framework 4.5 or higher
+.Net Framework 4.6 or higher
 
 ## Packages
 
@@ -276,12 +276,6 @@ new StatisticResultBuilder();
 
 ### 4. Fluent API
 Allows use of fluent API to make the life easier and a beautiful code.
-
-To do this, follow the steps:
-
-* Use the namespace SolrExpress.Solr{Version}.Linq (where {version} is the Solr version of your choice)
-* Use the extensions methods
-
 To exemplify this, see the code below without and with the fluent api.
 
 ```csharp

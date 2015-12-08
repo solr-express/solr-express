@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetFieldParameter<T> : IParameter<JObject>, IValidation
-        where T : IDocument
+    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter, IParameter<JObject>, IValidation
+        where TDocument : IDocument
     {
-        private readonly Expression<Func<T, object>> _expression;
+        private readonly Expression<Func<TDocument, object>> _expression;
         private readonly SolrFacetSortType? _sortType;
         private readonly int? _limit;
         private readonly string[] _excludes;
@@ -20,9 +22,10 @@ namespace SolrExpress.Solr5.Parameter
         /// Create a facet parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="sortType">Sort type of facet's result</param>
+        /// <param name="limit">Limit of facet's result</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetFieldParameter(Expression<Func<T, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
+        public FacetFieldParameter(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 

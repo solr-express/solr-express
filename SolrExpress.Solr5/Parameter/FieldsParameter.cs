@@ -1,21 +1,23 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FieldsParameter<T> : IParameter<JObject>, IValidation
-        where T : IDocument
+    public sealed class FieldsParameter<TDocument> : IFieldsParameter, IParameter<JObject>, IValidation
+        where TDocument : IDocument
     {
-        private readonly Expression<Func<T, object>>[] _expressions;
+        private readonly Expression<Func<TDocument, object>>[] _expressions;
 
         /// <summary>
         /// Create a fields parameter
         /// </summary>
         /// <param name="expressions">Expression used to find the property name</param>
-        public FieldsParameter(params Expression<Func<T, object>>[] expressions)
+        public FieldsParameter(params Expression<Func<TDocument, object>>[] expressions)
         {
             ThrowHelper<ArgumentNullException>.If(expressions == null);
 

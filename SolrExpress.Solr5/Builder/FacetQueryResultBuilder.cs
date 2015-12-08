@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Builder;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
@@ -9,7 +11,8 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet query data builder
     /// </summary>
-    public sealed class FacetQueryResultBuilder : IResultBuilder, IConvertJsonObject
+    public sealed class FacetQueryResultBuilder<TDocument> : IFacetQueryResultBuilder<TDocument>, IConvertJsonObject
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the parse of the facet query list in the JSON object
@@ -45,6 +48,9 @@ namespace SolrExpress.Solr5.Builder
             throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
+        /// <summary>
+        /// Facet data
+        /// </summary>
         public Dictionary<string, long> Data { get; set; }
     }
 }

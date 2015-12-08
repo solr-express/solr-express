@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Builder;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Json;
 using SolrExpress.Core.Query;
@@ -11,7 +13,7 @@ namespace SolrExpress.Solr4.Builder
     /// Document data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
-    public sealed class DocumentBuilder<TDocument> : IResultBuilder, IConvertJsonObject
+    public sealed class DocumentBuilder<TDocument> : IDocumentBuilder<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>

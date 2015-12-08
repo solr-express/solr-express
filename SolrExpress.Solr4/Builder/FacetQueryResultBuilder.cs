@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Builder;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
@@ -9,7 +11,8 @@ namespace SolrExpress.Solr4.Builder
     /// <summary>
     /// Facet query data builder
     /// </summary>
-    public sealed class FacetQueryResultBuilder : IResultBuilder, IConvertJsonObject
+    public sealed class FacetQueryResultBuilder<TDocument> : IFacetQueryResultBuilder<TDocument>, IConvertJsonObject
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the parse of the JSON object in facet query list

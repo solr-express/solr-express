@@ -34,7 +34,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
                 }
             }");
 
-            var parameter = new FacetFieldResultBuilder();
+            var parameter = new FacetFieldResultBuilder<TestDocument>();
 
             // Act
             parameter.Execute(jObject);

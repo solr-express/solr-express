@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetLimitParameter : IParameter<JObject>
+    public sealed class FacetLimitParameter : IFacetLimitParameter, IParameter<JObject>
     {
         private readonly int _value;
 

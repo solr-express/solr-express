@@ -21,8 +21,8 @@ namespace SolrExpress.Core.Helper
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        private static PropertyInfo GetPropertyInfoFromExpression<T>(Expression<Func<T, object>> expression)
-            where T : IDocument
+        private static PropertyInfo GetPropertyInfoFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
         {
             var lambda = (LambdaExpression)expression;
 
@@ -64,8 +64,8 @@ namespace SolrExpress.Core.Helper
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<T>(Expression<Func<T, object>> expression)
-            where T : IDocument
+        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
         {
             var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
             var attrs = propertyInfo.GetCustomAttributes(true);
@@ -75,11 +75,11 @@ namespace SolrExpress.Core.Helper
         /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
-        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static string GetFieldNameFromExpression<T>(Expression<Func<T, object>> expression)
-            where T : IDocument
+        internal static string GetFieldNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
         {
             var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
             var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
@@ -90,11 +90,11 @@ namespace SolrExpress.Core.Helper
         /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
-        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static string GetPropertyNameFromExpression<T>(Expression<Func<T, object>> expression)
-            where T : IDocument
+        internal static string GetPropertyNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
         {
             return UtilHelper.GetPropertyInfoFromExpression(expression).Name;
         }
@@ -102,11 +102,11 @@ namespace SolrExpress.Core.Helper
         /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
-        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static Type GetPropertyTypeFromExpression<T>(Expression<Func<T, object>> expression)
-            where T : IDocument
+        internal static Type GetPropertyTypeFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
         {
             return UtilHelper.GetPropertyInfoFromExpression(expression).PropertyType;
         }

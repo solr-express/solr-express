@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
@@ -12,7 +13,8 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Facet range data builder
     /// </summary>
-    public sealed class FacetRangeResultBuilder : IResultBuilder, IConvertJsonObject
+    public sealed class FacetRangeResultBuilder<TDocument> : IFacetRangeResultBuilder<TDocument>, IConvertJsonObject
+        where TDocument : IDocument
     {
         /// <summary>
         /// Get a FacetRange instance based in the informed JTokenType
@@ -146,6 +148,9 @@ namespace SolrExpress.Solr5.Builder
             throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
+        /// <summary>
+        /// Facet data
+        /// </summary>
         public List<FacetKeyValue<FacetRange>> Data { get; set; }
     }
 }

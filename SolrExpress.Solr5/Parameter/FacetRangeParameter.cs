@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetRangeParameter<T> : IParameter<JObject>, IValidation
-      where T : IDocument
+    public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter, IParameter<JObject>, IValidation
+      where TDocument : IDocument
     {
-        private readonly Expression<Func<T, object>> _expression;
+        private readonly Expression<Func<TDocument, object>> _expression;
         private readonly string _aliasName;
         private readonly string _gap;
         private readonly string _start;
@@ -29,7 +31,7 @@ namespace SolrExpress.Solr5.Parameter
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetRangeParameter(string aliasName, Expression<Func<T, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, params string[] excludes)
+        public FacetRangeParameter(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, params string[] excludes)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
             ThrowHelper<ArgumentNullException>.If(expression == null);

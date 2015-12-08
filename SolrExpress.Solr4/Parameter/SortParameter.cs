@@ -1,4 +1,6 @@
-﻿using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Entity;
+using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
@@ -7,10 +9,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class SortParameter<T> : IParameter<List<string>>
-        where T : IDocument
+    public sealed class SortParameter<TDocument> : ISortParameter, IParameter<List<string>>
+        where TDocument : IDocument
     {
-        private readonly Expression<Func<T, object>> _expression;
+        private readonly Expression<Func<TDocument, object>> _expression;
         private readonly bool _ascendent;
 
         /// <summary>
@@ -18,7 +20,7 @@ namespace SolrExpress.Solr4.Parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public SortParameter(Expression<Func<T, object>> expression, bool ascendent)
+        public SortParameter(Expression<Func<TDocument, object>> expression, bool ascendent)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 

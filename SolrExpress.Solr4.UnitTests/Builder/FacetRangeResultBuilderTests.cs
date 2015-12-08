@@ -41,7 +41,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder();
+            var parameter = new FacetRangeResultBuilder<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
@@ -78,7 +78,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder();
+            var parameter = new FacetRangeResultBuilder<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
@@ -121,7 +121,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder();
+            var parameter = new FacetRangeResultBuilder<TestDocument>();
 
             // Act
             parameter.Execute(jObject);

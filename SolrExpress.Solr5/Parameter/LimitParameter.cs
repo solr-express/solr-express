@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class LimitParameter : IParameter<JObject>
+    public sealed class LimitParameter : ILimitParameter, IParameter<JObject>
     {
         private readonly int _value;
 

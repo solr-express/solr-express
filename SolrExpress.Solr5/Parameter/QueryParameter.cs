@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class QueryParameter : IParameter<JObject>
+    public sealed class QueryParameter : IQueryParameter, IParameter<JObject>
     {
         private readonly IQueryParameterValue _value;
 

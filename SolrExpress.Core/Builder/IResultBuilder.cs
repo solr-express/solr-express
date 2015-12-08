@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Query
+﻿namespace SolrExpress.Core.Builder
 {
     /// <summary>
     /// Base interface used to parse the SOLR results

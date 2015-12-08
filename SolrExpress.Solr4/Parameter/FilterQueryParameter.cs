@@ -1,11 +1,12 @@
 ﻿using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FilterQueryParameter : IParameter<List<string>>
+    public sealed class FilterQueryParameter : IFilterParameter, IParameter<List<string>>
     {
         private readonly IQueryParameterValue _value;
         private readonly string _tagName;

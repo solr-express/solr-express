@@ -1,9 +1,10 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Parameter;
+using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetLimitParameter : IParameter<List<string>>
+    public sealed class FacetLimitParameter : IFacetLimitParameter, IParameter<List<string>>
     {
         private readonly int _value;
 

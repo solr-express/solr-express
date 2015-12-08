@@ -1,4 +1,4 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Core.Tests
 {

@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class OffsetParameter : IParameter<JObject>
+    public sealed class OffsetParameter : IOffsetParameter, IParameter<JObject>
     {
         private readonly int _value;
 

@@ -1,13 +1,14 @@
 ﻿using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetQueryParameter : IParameter<List<string>>, IValidation
+    public sealed class FacetQueryParameter : IFacetQueryParameter, IParameter<List<string>>, IValidation
     {
         private readonly string _aliasName;
         private readonly IQueryParameterValue _query;

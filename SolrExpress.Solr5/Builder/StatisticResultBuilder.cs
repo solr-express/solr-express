@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Query;
@@ -9,7 +10,8 @@ namespace SolrExpress.Solr5.Builder
     /// <summary>
     /// Statistic data builder
     /// </summary>
-    public sealed class StatisticResultBuilder : IResultBuilder, IConvertJsonObject
+    public sealed class StatisticResultBuilder<TDocument> : IStatisticResultBuilder<TDocument>, IConvertJsonObject
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the statistic parse of the json
@@ -35,6 +37,9 @@ namespace SolrExpress.Solr5.Builder
             throw new UnexpectedJsonFormatException(jsonObject.ToString());
         }
 
+        /// <summary>
+        /// Facet data
+        /// </summary>
         public Statistic Data { get; set; }
     }
 }

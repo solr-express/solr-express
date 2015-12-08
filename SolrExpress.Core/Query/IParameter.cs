@@ -14,12 +14,12 @@
     /// <summary>
     /// Signatures to use in solr parameter
     /// </summary>
-    public interface IParameter<T> : IParameter
+    public interface IParameter<TObject> : IParameter
     {
         /// <summary>
         /// Create the parameter
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
-        void Execute(T container);
+        void Execute(TObject container);
     }
 }

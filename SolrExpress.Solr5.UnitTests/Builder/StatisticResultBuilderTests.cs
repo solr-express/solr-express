@@ -26,7 +26,8 @@ namespace SolrExpress.Solr5.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder();
+            var builder = new StatisticResultBuilder<TestDocument>();
+            
             bool isEmpty;
             long documentCount;
             TimeSpan timeToExecution;
@@ -61,7 +62,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder();
+            var builder = new StatisticResultBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
@@ -84,7 +85,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
                 ""QTime"":10}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder();
+            var builder = new StatisticResultBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
@@ -105,7 +106,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder();
+            var builder = new StatisticResultBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
@@ -122,7 +123,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
         {
             // Arrange
             var jsonObject = new JObject();
-            var builder = new StatisticResultBuilder();
+            var builder = new StatisticResultBuilder<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);

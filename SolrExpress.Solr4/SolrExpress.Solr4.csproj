@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\BuilderFactory.cs" />
     <Compile Include="Builder\DocumentBuilder.cs" />
     <Compile Include="Builder\FacetFieldResultBuilder.cs" />
     <Compile Include="Builder\FacetQueryResultBuilder.cs">
@@ -54,8 +55,6 @@
     </Compile>
     <Compile Include="Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Builder\StatisticResultBuilder.cs" />
-    <Compile Include="Linq\SolrQueryableExtension.cs" />
-    <Compile Include="Linq\SolrQueryResultExtension.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -66,6 +65,7 @@
     <Compile Include="Parameter\FieldListParameter.cs" />
     <Compile Include="Parameter\FilterQueryParameter.cs" />
     <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
+    <Compile Include="Parameter\ParameterFactory.cs" />
     <Compile Include="Parameter\QueryFieldParameter.cs" />
     <Compile Include="Parameter\QueryParameter.cs" />
     <Compile Include="Parameter\RowsParameter.cs" />

@@ -25,8 +25,8 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                     ""VALUE002"",20]}}
             }");
 
-            var parameter = new FacetFieldResultBuilder();
-
+            var parameter = new FacetFieldResultBuilder<TestDocument>();
+            
             // Act
             parameter.Execute(jObject);
 

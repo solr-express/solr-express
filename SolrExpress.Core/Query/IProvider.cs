@@ -3,7 +3,7 @@
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// Signatures of the SOLR access provider
+    /// Signatures of SOLR access provider
     /// </summary>
     public interface IProvider
     {

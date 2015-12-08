@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute\SolrFieldAttribute.cs" />
+    <Compile Include="Builder\IBuilderFactory.cs" />
+    <Compile Include="Builder\IDocumentBuilder.cs" />
+    <Compile Include="Builder\IFacetFieldResultBuilder.cs" />
+    <Compile Include="Builder\IFacetQueryResultBuilder.cs" />
+    <Compile Include="Builder\IFacetRangeResultBuilder.cs" />
+    <Compile Include="Builder\IStatisticResultBuilder.cs" />
     <Compile Include="Entity\SolrQueryConfiguration.cs" />
     <Compile Include="Entity\Statistic.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />
@@ -70,18 +76,31 @@
     <Compile Include="ParameterValue\QueryAll.cs" />
     <Compile Include="ParameterValue\RangeValue.cs" />
     <Compile Include="ParameterValue\SingleValue.cs" />
+    <Compile Include="Parameter\IParameterFactory.cs" />
+    <Compile Include="Parameter\IFacetFieldParameter.cs" />
+    <Compile Include="Parameter\IFacetLimitParameter.cs" />
+    <Compile Include="Parameter\IFacetQueryParameter.cs" />
+    <Compile Include="Parameter\IFacetRangeParameter.cs" />
+    <Compile Include="Parameter\IFieldsParameter.cs" />
+    <Compile Include="Parameter\IFilterParameter.cs" />
+    <Compile Include="Parameter\ILimitParameter.cs" />
+    <Compile Include="Parameter\IOffsetParameter.cs" />
+    <Compile Include="Parameter\IQueryParameter.cs" />
+    <Compile Include="Parameter\ISortParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\GeoCoordinate.cs" />
+    <Compile Include="Query\BaseSolrQueryable.cs" />
+    <Compile Include="Query\BaseSolrQueryResult.cs" />
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
-    <Compile Include="Query\IDocument.cs" />
+    <Compile Include="Entity\IDocument.cs" />
     <Compile Include="Query\IQueryInterceptor.cs" />
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
     <Compile Include="Query\IProvider.cs" />
     <Compile Include="Query\IParameter.cs" />
     <Compile Include="Query\IQueryParameterValue.cs" />
-    <Compile Include="Query\IResultBuilder.cs" />
+    <Compile Include="Builder\IResultBuilder.cs" />
     <Compile Include="Query\SolrQueryResult.cs" />
     <Compile Include="Entity\FacetKeyValue.cs" />
     <Compile Include="Entity\FacetRange.cs" />

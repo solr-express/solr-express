@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 
@@ -23,7 +25,7 @@ namespace SolrExpress.Core.Tests.Query
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
             queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
@@ -44,7 +46,7 @@ namespace SolrExpress.Core.Tests.Query
             var mockParameter = mockValidate.As<IParameter>();
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
 
             var isValid = false;
             string errorMessage;
@@ -72,7 +74,7 @@ namespace SolrExpress.Core.Tests.Query
             };
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, solrQueryConfiguration);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
 
             bool isValid;
             string errorMessage;
@@ -94,7 +96,7 @@ namespace SolrExpress.Core.Tests.Query
         public void SolrQueryable004()
         {
             // Arrange / Act / Assert
-            new SolrQueryable<TestDocument>(null);
+            new SolrQueryable<TestDocument>(null, null, null);
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
 
             // Act / Assert
             queryable.Parameter(null);
@@ -125,7 +127,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
 
             // Act / Assert
             queryable.QueryInterceptor(null);
@@ -142,7 +144,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
 
             // Act / Assert
             queryable.ResultInterceptor(null);
