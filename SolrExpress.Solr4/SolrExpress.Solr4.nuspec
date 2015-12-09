@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>SolrExpress.Solr4</id>
-    <version>1.0.0.1</version>
+    <version>1.1.0.0</version>
     <authors>Diego Luiz Brum</authors>
     <projectUrl>https://github.com/solr-express/solr-express</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,6 +10,7 @@
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.8" />
       <dependency id="SolrExpress.Core" version="1.0.0.1" />
+      <dependency id="Microsoft.Net.Compilers" version="1.1.1" />
     </dependencies>
   </metadata>
   <files />
