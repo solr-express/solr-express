@@ -37,6 +37,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseSigned|AnyCPU'">
+    <OutputPath>bin\ReleaseSigned\</OutputPath>
+    <DefineConstants>TRACE;STRONGNAME</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
@@ -60,6 +69,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="read.md" />
+    <None Include="SolrExpress.Solr4.IntegrationTests.publickey" />
+    <None Include="SolrExpress.Solr4.IntegrationTests.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
