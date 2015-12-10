@@ -33,6 +33,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>SolrExpress.Solr5.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseSigned|AnyCPU'">
+    <OutputPath>bin\ReleaseSigned\</OutputPath>
+    <DefineConstants>TRACE;STRONGNAME</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -73,7 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="SolrExpress.Solr5.Signed.nuspec" />
     <None Include="SolrExpress.Solr5.nuspec" />
+    <None Include="SolrExpress.Solr5.publickey" />
+    <None Include="SolrExpress.Solr5.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
@@ -88,11 +106,14 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
+    <Exec Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.nuspec -OutputDirectory ..\">
+    </Exec>
   </Target>
-  -->
+  <Target Name="AfterBuild" Condition=" '$(Configuration)' != 'Debug' ">
+	<Exec Condition=" '$(Configuration)' == 'Release' " Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.nuspec -OutputDirectory ..\"></Exec>
+	<Exec Condition=" '$(Configuration)' == 'ReleaseSigned' " Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.Signed.nuspec -OutputDirectory ..\"></Exec>
+  </Target>
 </Project>
