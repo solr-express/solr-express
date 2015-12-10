@@ -2,16 +2,19 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>SolrExpress.Solr5</id>
-    <version>1.1.0.0</version>
+    <version>1.1.0.1</version>
     <authors>Diego Luiz Brum</authors>
     <projectUrl>https://github.com/solr-express/solr-express</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A simple and lightweight query .NET library for Solr 5.x</description>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.8" />
-      <dependency id="SolrExpress.Core" version="1.0.0.1" />
+      <dependency id="SolrExpress.Core" version="1.1.0.1" />
       <dependency id="Microsoft.Net.Compilers" version="1.1.1" />
     </dependencies>
   </metadata>
-  <files />
+  <files>
+    <file src="bin\ReleaseSigned\SolrExpress.Solr5.dll" target="lib\net4" />
+    <file src="bin\ReleaseSigned\SolrExpress.Solr5.pdb" target="lib\net4" />
+  </files>
 </package>
