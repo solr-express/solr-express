@@ -9,10 +9,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SolrExpress.Solr5</RootNamespace>
-    <AssemblyName>SolrExpress.Solr5</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+	<AssemblyName>SolrExpress.Solr5</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -88,8 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SolrExpress.Solr5.Signed.nuspec" />
-    <None Include="SolrExpress.Solr5.nuspec" />
+    <None Include="SolrExpress.Solr5.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="SolrExpress.Solr5.publickey" />
     <None Include="SolrExpress.Solr5.snk" />
   </ItemGroup>
@@ -105,15 +106,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props'))" />
-  </Target>
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild" Condition=" '$(Configuration)' == 'Release' ">
-    <Exec Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.nuspec -OutputDirectory ..\">
-    </Exec>
-  </Target>
-  <Target Name="AfterBuild" Condition=" '$(Configuration)' != 'Debug' ">
-	<Exec Condition=" '$(Configuration)' == 'Release' " Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.nuspec -OutputDirectory ..\"></Exec>
-	<Exec Condition=" '$(Configuration)' == 'ReleaseSigned' " Command="..\.nuget\nuget.exe pack SolrExpress.Solr5.Signed.nuspec -OutputDirectory ..\"></Exec>
   </Target>
 </Project>
