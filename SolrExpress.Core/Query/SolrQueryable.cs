@@ -1,9 +1,13 @@
 ﻿using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Query
@@ -11,9 +15,44 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR queryable with fluent API
     /// </summary>
-    public class SolrQueryable<TDocument> : BaseSolrQueryable<TDocument>
+    public class SolrQueryable<TDocument>
         where TDocument : IDocument
     {
+        /// <summary>
+        /// Configurations about SolrQueriable behavior
+        /// </summary>
+        private readonly SolrQueryConfiguration _configuration;
+
+        /// <summary>
+        /// Provider used to resolve the expression
+        /// </summary>
+        private readonly IProvider _provider;
+
+        /// <summary>
+        /// List of the parameters arranged in the queryable class
+        /// </summary>
+        private readonly List<IParameter> _parameters = new List<IParameter>();
+
+        /// <summary>
+        /// List of the query interceptors arranged in the queryable class
+        /// </summary>
+        private readonly List<IQueryInterceptor> _queryInterceptors = new List<IQueryInterceptor>();
+
+        /// <summary>
+        /// List of the result interceptors arranged in the queryable class
+        /// </summary>
+        private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
+
+        /// <summary>
+        /// Factory used to resolve builder creation in Linq facilities
+        /// </summary>
+        protected readonly IBuilderFactory<TDocument> _builderFactory;
+
+        /// <summary>
+        /// Factory used to resolve parameter creation in Linq facilities
+        /// </summary>
+        protected readonly IParameterFactory<TDocument> _paramaterFactory;
+
         /// <summary>
         /// Default constructor of the class
         /// </summary>
@@ -22,8 +61,97 @@ namespace SolrExpress.Core.Query
         /// <param name="builderFactory">Factory used to resolve builder creation in Linq facilities</param>
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
         public SolrQueryable(IProvider provider, IParameterFactory<TDocument> paramaterFactory, IBuilderFactory<TDocument> builderFactory, SolrQueryConfiguration configuration = null)
-            : base(provider, paramaterFactory, builderFactory, configuration)
         {
+            ThrowHelper<ArgumentNullException>.If(provider == null);
+            ThrowHelper<ArgumentNullException>.If(paramaterFactory == null);
+            ThrowHelper<ArgumentNullException>.If(builderFactory == null);
+
+            this._provider = provider;
+            this._paramaterFactory = paramaterFactory;
+            this._builderFactory = builderFactory;
+            this._configuration = configuration ?? new SolrQueryConfiguration
+            {
+                FailFast = true
+            };
+        }
+
+        /// <summary>
+        /// Add a parameter to the query
+        /// </summary>
+        /// <param name="parameter">The parameter to add in the query</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> Parameter(IParameter parameter)
+        {
+            ThrowHelper<ArgumentNullException>.If(parameter == null);
+
+            if (this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances)
+            {
+                throw new AllowMultipleInstanceOfParameterTypeException(parameter.ToString());
+            }
+
+            var parameterValidation = parameter as IValidation;
+
+            if (this._configuration.FailFast && parameterValidation != null)
+            {
+                bool isValid;
+                string errorMessage;
+
+                parameterValidation.Validate(out isValid, out errorMessage);
+
+                if (!isValid)
+                {
+                    throw new InvalidParameterTypeException(parameterValidation.ToString(), errorMessage);
+                }
+            }
+
+            this._parameters.Add(parameter);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a query interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptor">The query interceptor to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
+        {
+            ThrowHelper<ArgumentNullException>.If(interceptor == null);
+
+            this._queryInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a result interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptor">The result interceptor to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
+        {
+            ThrowHelper<ArgumentNullException>.If(interceptor == null);
+
+            this._resultInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Execute the search in the solr with informed parameters
+        /// </summary>
+        /// <returns>Solr result</returns>
+        public SolrQueryResult<TDocument> Execute()
+        {
+            var query = this._provider.GetQuery(this._parameters);
+
+            this._queryInterceptors.ForEach(q => q.Execute(ref query));
+
+            var json = this._provider.Execute(query);
+
+            this._resultInterceptors.ForEach(q => q.Execute(ref json));
+
+            return new SolrQueryResult<TDocument>(this._builderFactory, json);
         }
 
         /// <summary>
@@ -33,7 +161,7 @@ namespace SolrExpress.Core.Query
         /// <param name="sortType">Sort type of the result of the facet</param>
         public SolrQueryable<TDocument> FacetField(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFacetFieldParameter(expression, sortType));
+            return this.Parameter(this._paramaterFactory.GetFacetFieldParameter(expression, sortType));
         }
 
         /// <summary>
@@ -44,7 +172,7 @@ namespace SolrExpress.Core.Query
         /// <param name="sortType">Sort type of the result of the facet</param>
         public SolrQueryable<TDocument> FacetQuery(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFacetQueryParameter(aliasName, query, sortType));
+            return this.Parameter(this._paramaterFactory.GetFacetQueryParameter(aliasName, query, sortType));
         }
 
         /// <summary>
@@ -58,7 +186,7 @@ namespace SolrExpress.Core.Query
         /// <param name="sortType">Sort type of the result of the facet</param>
         public SolrQueryable<TDocument> FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFacetRangeParameter(aliasName, expression, gap, start, end, sortType));
+            return this.Parameter(this._paramaterFactory.GetFacetRangeParameter(aliasName, expression, gap, start, end, sortType));
         }
 
         /// <summary>
@@ -67,7 +195,7 @@ namespace SolrExpress.Core.Query
         /// <param name="expressions">Expression used to find the property name</param>
         public SolrQueryable<TDocument> Fields(params Expression<Func<TDocument, object>>[] expressions)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFieldsParameter(expressions));
+            return this.Parameter(this._paramaterFactory.GetFieldsParameter(expressions));
         }
 
         /// <summary>
@@ -78,7 +206,7 @@ namespace SolrExpress.Core.Query
         public SolrQueryable<TDocument> Filter(Expression<Func<TDocument, object>> expression, string value)
         {
             var paramaterValue = new SingleValue<TDocument>(expression, value);
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFilterParameter(paramaterValue));
+            return this.Parameter(this._paramaterFactory.GetFilterParameter(paramaterValue));
         }
 
         /// <summary>
@@ -91,7 +219,7 @@ namespace SolrExpress.Core.Query
                         where TValue : struct
         {
             var value = new RangeValue<TDocument, TValue>(expression, from, to);
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFilterParameter(value));
+            return this.Parameter(this._paramaterFactory.GetFilterParameter(value));
         }
 
         /// <summary>
@@ -100,7 +228,7 @@ namespace SolrExpress.Core.Query
         /// <param name="value">Parameter to include in the query</param>
         public SolrQueryable<TDocument> Limit(int value)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetLimitParameter(value));
+            return this.Parameter(this._paramaterFactory.GetLimitParameter(value));
         }
 
         /// <summary>
@@ -109,7 +237,7 @@ namespace SolrExpress.Core.Query
         /// <param name="value">Parameter to include in the query</param>
         public SolrQueryable<TDocument> Offset(int value)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetOffsetParameter(value));
+            return this.Parameter(this._paramaterFactory.GetOffsetParameter(value));
         }
 
         /// <summary>
@@ -118,7 +246,7 @@ namespace SolrExpress.Core.Query
         /// <param name="value">Parameter to include in the query</param>
         public SolrQueryable<TDocument> Query(IQueryParameterValue value)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetQueryParameter(value));
+            return this.Parameter(this._paramaterFactory.GetQueryParameter(value));
         }
 
         /// <summary>
@@ -128,7 +256,7 @@ namespace SolrExpress.Core.Query
         public SolrQueryable<TDocument> Query(string value)
         {
             var freeValue = new FreeValue(value);
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetQueryParameter(freeValue));
+            return this.Parameter(this._paramaterFactory.GetQueryParameter(freeValue));
         }
 
         /// <summary>
@@ -139,7 +267,7 @@ namespace SolrExpress.Core.Query
         public SolrQueryable<TDocument> Query(Expression<Func<TDocument, object>> expression, string value)
         {
             var paramaterValue = new SingleValue<TDocument>(expression, value);
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetQueryParameter(paramaterValue));
+            return this.Parameter(this._paramaterFactory.GetQueryParameter(paramaterValue));
         }
 
         /// <summary>
@@ -149,7 +277,7 @@ namespace SolrExpress.Core.Query
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public SolrQueryable<TDocument> Sort(Expression<Func<TDocument, object>> expression, bool ascendent)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetSortParameter(expression, ascendent));
+            return this.Parameter(this._paramaterFactory.GetSortParameter(expression, ascendent));
         }
 
         /// <summary>
@@ -158,7 +286,7 @@ namespace SolrExpress.Core.Query
         /// <param name="value">Parameter to include in the query</param>
         public SolrQueryable<TDocument> FacetLimit(int value)
         {
-            return (SolrQueryable<TDocument>)this.Parameter(this._paramaterFactory.GetFacetLimitParameter(value));
+            return this.Parameter(this._paramaterFactory.GetFacetLimitParameter(value));
         }
     }
 }

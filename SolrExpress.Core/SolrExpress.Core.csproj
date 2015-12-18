@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-	<AssemblyName>SolrExpress.Core</AssemblyName>
+    <AssemblyName>SolrExpress.Core</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -104,8 +104,6 @@
     <Compile Include="Parameter\ISortParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entity\GeoCoordinate.cs" />
-    <Compile Include="Query\BaseSolrQueryable.cs" />
-    <Compile Include="Query\BaseSolrQueryResult.cs" />
     <Compile Include="Query\IConvertJsonObject.cs" />
     <Compile Include="Query\IConvertJsonPlainText.cs" />
     <Compile Include="Entity\IDocument.cs" />
@@ -143,8 +141,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SolrExpress.Core.nuspec" />
-    <None Include="SolrExpress.Core.Signed.nuspec" />
     <None Include="SolrExpress.Core.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
