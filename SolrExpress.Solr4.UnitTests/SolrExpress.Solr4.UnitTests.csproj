@@ -108,6 +108,7 @@
     <None Include="SolrExpress.Solr4.UnitTests.publickey" />
     <None Include="SolrExpress.Solr4.UnitTests.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -69,6 +69,7 @@
     <Compile Include="Builder\IFacetQueryResultBuilder.cs" />
     <Compile Include="Builder\IFacetRangeResultBuilder.cs" />
     <Compile Include="Builder\IStatisticResultBuilder.cs" />
+    <Compile Include="Constant\RequestHandler.cs" />
     <Compile Include="Entity\SolrQueryConfiguration.cs" />
     <Compile Include="Entity\Statistic.cs" />
     <Compile Include="Enumerator\SolrFacetSortType.cs" />

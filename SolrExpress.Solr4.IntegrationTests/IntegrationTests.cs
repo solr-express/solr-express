@@ -1,10 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SolrExpress.Core.Entity;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
 using SolrExpress.Solr4.Builder;
 using SolrExpress.Solr4.Parameter;
+using SolrExpress.Solr4.Query;
 using System.Collections.Generic;
-using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Solr4.IntegrationTests
 {

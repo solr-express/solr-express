@@ -17,8 +17,12 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <param name="query">Solr query uri</param>
+        /// <summary>
+        /// Execute the informated uri and return the result of the request
+        /// </summary>
+        /// <param name="handler">Handler name used in solr request</param>
+        /// <param name="query">Solr query</param>
         /// <returns>Result of the request</returns>
-        string Execute(string query);
+        string Execute(string handler, string query);
     }
 }

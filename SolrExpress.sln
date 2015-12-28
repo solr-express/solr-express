@@ -3,11 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D817D389-3C0C-4ED5-BA42-2467299B64D3}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\nuget.exe = .nuget\nuget.exe
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4", "SolrExpress.Solr4\SolrExpress.Solr4.csproj", "{1E999F4C-B17C-4106-9BA4-C7AC0E00C0CD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5", "SolrExpress.Solr5\SolrExpress.Solr5.csproj", "{3B679214-5E64-44CE-9188-D692F2371709}"

@@ -149,5 +149,32 @@ namespace SolrExpress.Core.Tests.Query
             // Act / Assert
             queryable.ResultInterceptor(null);
         }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance configured with Handler name
+        /// When    Creating SolrQueryable object
+        /// What    Change provider instance property "Handler" with informad name
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable008()
+        {
+            // Arrange
+            string handlerName = "HANDLER-NAME";
+            var solrQueryConfiguration = new SolrQueryConfiguration
+            {
+                Handler = handlerName
+            };
+
+            var providerMock = new Mock<IProvider>();
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
+
+            providerMock.Setup(q => q.Execute(It.IsAny<string>(), It.IsAny<string>())).Returns(".");
+
+            // Act
+            queryable.Execute();
+
+            // Assert
+            providerMock.Verify(q => q.Execute(It.Is<string>(s => s.Equals(handlerName)), It.IsAny<string>()), Times.Once);
+        }
     }
 }

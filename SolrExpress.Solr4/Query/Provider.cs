@@ -1,16 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Exception;
+﻿using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 
-namespace SolrExpress.Solr5
+namespace SolrExpress.Solr4.Query
 {
     /// <summary>
-    /// SOLR 5.x access provider
+    /// SOLR 4.9x access provider
     /// </summary>
     public class Provider : IProvider
     {
@@ -32,36 +31,28 @@ namespace SolrExpress.Solr5
         /// <returns>Solr query</returns>
         public string GetQuery(List<IParameter> parameters)
         {
-            var jsonObj = new JObject();
+            var list = new List<string>();
 
             foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
             {
-                ((IParameter<JObject>)item).Execute(jsonObj);
+                ((IParameter<List<string>>)item).Execute(list);
             }
 
-            return jsonObj.ToString();
+            return string.Join("&", list);
         }
 
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <param name="query">Solr query uri</param>
+        /// <param name="handler">Handler name used in solr request</param>
+        /// <param name="query">Solr query</param>
         /// <returns>Result of the request</returns>
-        public string Execute(string query)
+        public string Execute(string handler, string query)
         {
-            var baseUrl = $"{this._solrHost}/query?echoParams=none&wt=json&indent=off";
-
-            var encoding = new UTF8Encoding();
-            var bytes = encoding.GetBytes(query);
+            var baseUrl = $"{this._solrHost}/{handler}?{query}&echoParams=none&wt=json&indent=off";
 
             var request = WebRequest.Create(baseUrl);
-            request.Method = "GET-X";
-            request.ContentType = "application/json";
-            request.ContentLength = bytes.Length;
-
-            var stream = request.GetRequestStream();
-            stream.Write(bytes, 0, bytes.Length);
-            stream.Close();
+            request.Method = "GET";
 
             try
             {
@@ -77,10 +68,7 @@ namespace SolrExpress.Solr5
                     }
                 }
 
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    throw new UnexpectedJsonQueryException(content);
-                }
+                ThrowHelper<UnexpectedJsonQueryException>.If(response.StatusCode != HttpStatusCode.OK, content);
 
                 return content;
             }

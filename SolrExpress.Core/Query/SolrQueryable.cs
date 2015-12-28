@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core.Builder;
+using SolrExpress.Core.Constant;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
@@ -63,13 +64,15 @@ namespace SolrExpress.Core.Query
             ThrowHelper<ArgumentNullException>.If(paramaterFactory == null);
             ThrowHelper<ArgumentNullException>.If(builderFactory == null);
 
+            this._configuration = configuration ?? new SolrQueryConfiguration
+            {
+                FailFast = true,
+                Handler = RequestHandler.QUERY
+            };
+
             this._provider = provider;
             this.ParamaterFactory = paramaterFactory;
             this._builderFactory = builderFactory;
-            this._configuration = configuration ?? new SolrQueryConfiguration
-            {
-                FailFast = true
-            };
         }
 
         /// <summary>
@@ -137,7 +140,7 @@ namespace SolrExpress.Core.Query
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
-            var json = this._provider.Execute(query);
+            var json = this._provider.Execute(this._configuration.Handler, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
