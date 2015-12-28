@@ -71,7 +71,7 @@ namespace SolrExpress.Solr4.Parameter
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQuery;
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using SolrExpress.Core.Helper;
+using System;
+using System.Globalization;
 
 namespace SolrExpress.Core.Entity
 {
@@ -11,6 +13,9 @@ namespace SolrExpress.Core.Entity
         /// <param name="longitude">The longitude of the location</param>
         public GeoCoordinate(decimal latitude, decimal longitude)
         {
+            ThrowHelper<ArgumentOutOfRangeException>.If(latitude < -90 || latitude > 90, Resource.InvalidLatitudeException);
+            ThrowHelper<ArgumentOutOfRangeException>.If(longitude < -180 || longitude > 180, Resource.InvalidLongitudeException);
+
             this.Latitude = latitude;
             this.Longitude = longitude;
         }
@@ -18,12 +23,12 @@ namespace SolrExpress.Core.Entity
         /// <summary>
         /// The latitude of the location. May range from -90.0 to 90.0.
         /// </summary>
-        public decimal Latitude;
+        public decimal Latitude { get; set; }
 
         /// <summary>
         /// The longitude of the location. May range from -180.0 to 180.0.
         /// </summary>
-        public decimal Longitude;
+        public decimal Longitude { get; set; }
 
         /// <summary>
         /// Returns a string that represents the current coordinate

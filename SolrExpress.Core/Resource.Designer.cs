@@ -72,36 +72,54 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to A field must be \&quot;indexed=true\&quot; to be used in a facet.
         /// </summary>
-        internal static string FieldMustBeIndexedTrueToBeUsedInAFacet {
+        internal static string FieldMustBeIndexedTrueToBeUsedInAFacetException {
             get {
-                return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAFacet", resourceCulture);
+                return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAFacetException", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to A field must be \&quot;indexed=true\&quot; to be used in a query.
         /// </summary>
-        internal static string FieldMustBeIndexedTrueToBeUsedInAQuery {
+        internal static string FieldMustBeIndexedTrueToBeUsedInAQueryException {
             get {
-                return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAQuery", resourceCulture);
+                return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAQueryException", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to A field must be numeric or DateTime to be used in a facet range.
         /// </summary>
-        internal static string FieldMustBeNumericOrDateTimeToBeUsedInFacetRange {
+        internal static string FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException {
             get {
-                return ResourceManager.GetString("FieldMustBeNumericOrDateTimeToBeUsedInFacetRange", resourceCulture);
+                return ResourceManager.GetString("FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to A field must be \&quot;stored=true\&quot; to be used in field list.
         /// </summary>
-        internal static string FieldMustBeStoredTrueToBeUsedInFields {
+        internal static string FieldMustBeStoredTrueToBeUsedInFieldsException {
             get {
-                return ResourceManager.GetString("FieldMustBeStoredTrueToBeUsedInFields", resourceCulture);
+                return ResourceManager.GetString("FieldMustBeStoredTrueToBeUsedInFieldsException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latitude most be inside range from -90.0 to 90.0.
+        /// </summary>
+        internal static string InvalidLatitudeException {
+            get {
+                return ResourceManager.GetString("InvalidLatitudeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Longitude most be inside range from -180.0 to 180.0.
+        /// </summary>
+        internal static string InvalidLongitudeException {
+            get {
+                return ResourceManager.GetString("InvalidLongitudeException", resourceCulture);
             }
         }
         

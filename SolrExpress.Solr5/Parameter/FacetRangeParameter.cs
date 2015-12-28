@@ -113,7 +113,7 @@ namespace SolrExpress.Solr5.Parameter
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacet;
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
             }
             else
             {
@@ -130,7 +130,7 @@ namespace SolrExpress.Solr5.Parameter
                         break;
                     default:
                         isValid = false;
-                        errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRange;
+                        errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException;
                         break;
                 }
             }

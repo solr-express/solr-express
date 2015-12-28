@@ -1,14 +1,11 @@
 ﻿using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Exception;
 using SolrExpress.Core.Helper;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.ParameterValue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Query
 {
@@ -51,7 +48,7 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Factory used to resolve parameter creation in Linq facilities
         /// </summary>
-        protected readonly IParameterFactory<TDocument> _paramaterFactory;
+        protected internal IParameterFactory<TDocument> ParamaterFactory { get; private set; }
 
         /// <summary>
         /// Default constructor of the class
@@ -67,7 +64,7 @@ namespace SolrExpress.Core.Query
             ThrowHelper<ArgumentNullException>.If(builderFactory == null);
 
             this._provider = provider;
-            this._paramaterFactory = paramaterFactory;
+            this.ParamaterFactory = paramaterFactory;
             this._builderFactory = builderFactory;
             this._configuration = configuration ?? new SolrQueryConfiguration
             {
@@ -83,11 +80,7 @@ namespace SolrExpress.Core.Query
         public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
             ThrowHelper<ArgumentNullException>.If(parameter == null);
-
-            if (this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances)
-            {
-                throw new AllowMultipleInstanceOfParameterTypeException(parameter.ToString());
-            }
+            ThrowHelper<AllowMultipleInstanceOfParameterTypeException>.If(this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances, parameter.ToString());
 
             var parameterValidation = parameter as IValidation;
 
@@ -98,10 +91,7 @@ namespace SolrExpress.Core.Query
 
                 parameterValidation.Validate(out isValid, out errorMessage);
 
-                if (!isValid)
-                {
-                    throw new InvalidParameterTypeException(parameterValidation.ToString(), errorMessage);
-                }
+                ThrowHelper<InvalidParameterTypeException>.If(!isValid, new[] { parameterValidation.ToString(), errorMessage });
             }
 
             this._parameters.Add(parameter);
@@ -152,141 +142,6 @@ namespace SolrExpress.Core.Query
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
             return new SolrQueryResult<TDocument>(this._builderFactory, json);
-        }
-
-        /// <summary>
-        /// Create a facet field parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        public SolrQueryable<TDocument> FacetField(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null)
-        {
-            return this.Parameter(this._paramaterFactory.GetFacetFieldParameter(expression, sortType));
-        }
-
-        /// <summary>
-        /// Create a facet query parameter
-        /// </summary>
-        /// <param name="aliasName">Name of the alias added in the query</param>
-        /// <param name="query">Query used to make the facet</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        public SolrQueryable<TDocument> FacetQuery(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
-        {
-            return this.Parameter(this._paramaterFactory.GetFacetQueryParameter(aliasName, query, sortType));
-        }
-
-        /// <summary>
-        /// Create a facet range parameter
-        /// </summary>
-        /// <param name="aliasName">Name of the alias added in the query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="gap">Size of each range bucket to make the facet</param>
-        /// <param name="start">Lower bound to make the facet</param>
-        /// <param name="end">Upper bound to make the facet</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        public SolrQueryable<TDocument> FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
-        {
-            return this.Parameter(this._paramaterFactory.GetFacetRangeParameter(aliasName, expression, gap, start, end, sortType));
-        }
-
-        /// <summary>
-        /// Create a fields parameter
-        /// </summary>
-        /// <param name="expressions">Expression used to find the property name</param>
-        public SolrQueryable<TDocument> Fields(params Expression<Func<TDocument, object>>[] expressions)
-        {
-            return this.Parameter(this._paramaterFactory.GetFieldsParameter(expressions));
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="value">Value of the filter</param>
-        public SolrQueryable<TDocument> Filter(Expression<Func<TDocument, object>> expression, string value)
-        {
-            var paramaterValue = new SingleValue<TDocument>(expression, value);
-            return this.Parameter(this._paramaterFactory.GetFilterParameter(paramaterValue));
-        }
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="from">From value in a range filter</param>
-        /// <param name="to">To value in a range filter</param>
-        public SolrQueryable<TDocument> Filter<TValue>(Expression<Func<TDocument, object>> expression, TValue? from, TValue? to)
-                        where TValue : struct
-        {
-            var value = new RangeValue<TDocument, TValue>(expression, from, to);
-            return this.Parameter(this._paramaterFactory.GetFilterParameter(value));
-        }
-
-        /// <summary>
-        /// Create a limit parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public SolrQueryable<TDocument> Limit(int value)
-        {
-            return this.Parameter(this._paramaterFactory.GetLimitParameter(value));
-        }
-
-        /// <summary>
-        /// Create a offset parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public SolrQueryable<TDocument> Offset(int value)
-        {
-            return this.Parameter(this._paramaterFactory.GetOffsetParameter(value));
-        }
-
-        /// <summary>
-        /// Create a query parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public SolrQueryable<TDocument> Query(IQueryParameterValue value)
-        {
-            return this.Parameter(this._paramaterFactory.GetQueryParameter(value));
-        }
-
-        /// <summary>
-        /// Create a query parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public SolrQueryable<TDocument> Query(string value)
-        {
-            var freeValue = new FreeValue(value);
-            return this.Parameter(this._paramaterFactory.GetQueryParameter(freeValue));
-        }
-
-        /// <summary>
-        /// Create a query parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="value">Value of the query</param>
-        public SolrQueryable<TDocument> Query(Expression<Func<TDocument, object>> expression, string value)
-        {
-            var paramaterValue = new SingleValue<TDocument>(expression, value);
-            return this.Parameter(this._paramaterFactory.GetQueryParameter(paramaterValue));
-        }
-
-        /// <summary>
-        /// Create a sort parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public SolrQueryable<TDocument> Sort(Expression<Func<TDocument, object>> expression, bool ascendent)
-        {
-            return this.Parameter(this._paramaterFactory.GetSortParameter(expression, ascendent));
-        }
-
-        /// <summary>
-        /// Create a facet limit parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public SolrQueryable<TDocument> FacetLimit(int value)
-        {
-            return this.Parameter(this._paramaterFactory.GetFacetLimitParameter(value));
         }
     }
 }

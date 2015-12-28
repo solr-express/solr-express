@@ -80,6 +80,8 @@
     <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
     <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
     <Compile Include="Exception\UnsupportedSortTypeException.cs" />
+    <Compile Include="Extension\SolrQueryableExtension.cs" />
+    <Compile Include="Extension\SolrQueryResultExtension.cs" />
     <Compile Include="Helper\GenericHelper.cs" />
     <Compile Include="Helper\ThrowHelper.cs" />
     <Compile Include="Helper\UtilHelper.cs" />
@@ -143,6 +145,7 @@
     <None Include="packages.config" />
     <None Include="SolrExpress.Core.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

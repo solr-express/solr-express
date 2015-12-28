@@ -65,7 +65,7 @@ namespace SolrExpress.Solr5.Parameter
                 if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
                 {
                     isValid = false;
-                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFields;
+                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFieldsException;
 
                     break;
                 }

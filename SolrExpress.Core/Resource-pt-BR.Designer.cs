@@ -106,6 +106,24 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A latitude deve estar entre -90.0 e 90.0.
+        /// </summary>
+        internal static string InvalidLatitudeException {
+            get {
+                return ResourceManager.GetString("InvalidLatitudeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A longitude deve estar entre -18.0 e 180.0.
+        /// </summary>
+        internal static string InvalidLongitudeException {
+            get {
+                return ResourceManager.GetString("InvalidLongitudeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parâmetro \&quot;{0}\&quot; lançou a exceção:\r\n\&quot;{1}\&quot;.
         /// </summary>
         internal static string InvalidParameterTypeException {

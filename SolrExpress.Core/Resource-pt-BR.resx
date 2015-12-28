@@ -132,6 +132,12 @@
   <data name="FieldMustBeStoredTrueToBeUsedInFields" xml:space="preserve">
     <value>Um campo deve ser \"stored=true\" para ser usado em fields</value>
   </data>
+  <data name="InvalidLatitudeException" xml:space="preserve">
+    <value>A latitude deve estar entre -90.0 e 90.0</value>
+  </data>
+  <data name="InvalidLongitudeException" xml:space="preserve">
+    <value>A longitude deve estar entre -18.0 e 180.0</value>
+  </data>
   <data name="InvalidParameterTypeException" xml:space="preserve">
     <value>Parâmetro \"{0}\" lançou a exceção:\r\n\"{1}\"</value>
   </data>

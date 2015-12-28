@@ -104,7 +104,7 @@ namespace SolrExpress.Solr4.Parameter
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacet;
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
             }
         }
     }

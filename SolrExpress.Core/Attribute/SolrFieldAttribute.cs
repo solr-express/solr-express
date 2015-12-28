@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SolrExpress.Core.Helper;
+using System;
 
 namespace SolrExpress.Core.Attribute
 {
@@ -10,6 +11,8 @@ namespace SolrExpress.Core.Attribute
     {
         public SolrFieldAttribute(string name)
         {
+            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(name));
+
             this.Name = name;
         }
 
