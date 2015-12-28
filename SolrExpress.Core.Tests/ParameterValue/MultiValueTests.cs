@@ -34,7 +34,7 @@ namespace SolrExpress.Core.Tests.ParameterValue
         public void MultiValue002()
         {
             // Arrange
-            var parameter = new MultiValue(SolrQueryConditionType.And, new FreeValue("X"));
+            var parameter = new MultiValue(SolrQueryConditionType.And, new AnyValue("X"));
 
             // Act / Assert
             parameter.Execute();
@@ -51,7 +51,7 @@ namespace SolrExpress.Core.Tests.ParameterValue
             // Arrange
             var expected = "(value 1 AND value 2)";
             string actual;
-            var parameter = new MultiValue(SolrQueryConditionType.And, new FreeValue("value 1"), new FreeValue("value 2"));
+            var parameter = new MultiValue(SolrQueryConditionType.And, new AnyValue("value 1"), new AnyValue("value 2"));
 
             // Act
             actual = parameter.Execute();
@@ -71,7 +71,7 @@ namespace SolrExpress.Core.Tests.ParameterValue
             // Arrange
             var expected = "(value 1 OR value 2)";
             string actual;
-            var parameter = new MultiValue(SolrQueryConditionType.Or, new FreeValue("value 1"), new FreeValue("value 2"));
+            var parameter = new MultiValue(SolrQueryConditionType.Or, new AnyValue("value 1"), new AnyValue("value 2"));
 
             // Act
             actual = parameter.Execute();

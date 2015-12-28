@@ -3,9 +3,9 @@
 namespace SolrExpress.Core.Parameter
 {
     /// <summary>
-    /// Signatures to use infacet field parameter
+    /// Signatures to use any parameter
     /// </summary>
-    public interface IFacetFieldParameter : IParameter
+    public interface IAnyParameter : IParameter
     {
     }
 }

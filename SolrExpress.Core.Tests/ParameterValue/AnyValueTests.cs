@@ -5,20 +5,20 @@ using System;
 namespace SolrExpress.Core.Tests.ParameterValue
 {
     [TestClass]
-    public class FreeValueTests
+    public class AnyValueTests
     {
         /// <summary>
-        /// Where   Using a FreeValue instance
+        /// Where   Using a AnyValue instance
         /// When    Create the instance with a value
         /// What    Get the informed value
         /// </summary>
         [TestMethod]
-        public void FreeValue001()
+        public void AnyValue001()
         {
             // Arrange
             var expected = "tst";
             string actual;
-            var parameter = new FreeValue("tst");
+            var parameter = new AnyValue("tst");
 
             // Act
             actual = parameter.Execute();
@@ -28,16 +28,16 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a FreeValue instance
+        /// Where   Using a AnyValue instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void FreeValue002()
+        public void AnyValue002()
         {
             // Arrange
-            var parameter = new FreeValue(null);
+            var parameter = new AnyValue(null);
 
             // Act / Assert
             parameter.Execute();

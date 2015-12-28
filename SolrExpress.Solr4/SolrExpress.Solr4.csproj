@@ -70,6 +70,7 @@
     </Compile>
     <Compile Include="Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Builder\StatisticResultBuilder.cs" />
+    <Compile Include="Parameter\AnyParameter.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>

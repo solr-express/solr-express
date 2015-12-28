@@ -88,12 +88,13 @@
     <Compile Include="Helper\UtilHelper.cs" />
     <Compile Include="Json\CustomContractResolver.cs" />
     <Compile Include="Json\GeoCoordinateConverter.cs" />
-    <Compile Include="ParameterValue\FreeValue.cs" />
+    <Compile Include="ParameterValue\AnyValue.cs" />
     <Compile Include="ParameterValue\MultiValue.cs" />
     <Compile Include="ParameterValue\NegativeValue.cs" />
     <Compile Include="ParameterValue\QueryAll.cs" />
     <Compile Include="ParameterValue\RangeValue.cs" />
     <Compile Include="ParameterValue\SingleValue.cs" />
+    <Compile Include="Parameter\IAnyParameter.cs" />
     <Compile Include="Parameter\IParameterFactory.cs" />
     <Compile Include="Parameter\IFacetFieldParameter.cs" />
     <Compile Include="Parameter\IFacetLimitParameter.cs" />

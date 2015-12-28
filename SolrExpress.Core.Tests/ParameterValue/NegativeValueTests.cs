@@ -18,7 +18,7 @@ namespace SolrExpress.Core.Tests.ParameterValue
             // Arrange
             var expected = "-tst";
             string actual;
-            var parameter = new NegativeValue(new FreeValue("tst"));
+            var parameter = new NegativeValue(new AnyValue("tst"));
 
             // Act
             actual = parameter.Execute();

@@ -7,7 +7,7 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Free value parameter
     /// </summary>
-    public sealed class FreeValue : IQueryParameterValue
+    public sealed class AnyValue : IQueryParameterValue
     {
         private readonly string _value;
 
@@ -15,7 +15,7 @@ namespace SolrExpress.Core.ParameterValue
         /// Create a free solr parameter value
         /// </summary>
         /// <param name="value">Value of the filter</param>
-        public FreeValue(string value)
+        public AnyValue(string value)
         {
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));
 

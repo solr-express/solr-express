@@ -68,6 +68,7 @@
     <Compile Include="Builder\FacetQueryResultBuilder.cs" />
     <Compile Include="Builder\FacetRangeResultBuilder.cs" />
     <Compile Include="Builder\StatisticResultBuilder.cs" />
+    <Compile Include="Parameter\AnyParameter.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs" />
     <Compile Include="Parameter\FacetLimitParameter.cs" />
     <Compile Include="Parameter\FacetQueryParameter.cs" />

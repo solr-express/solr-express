@@ -121,7 +121,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> queryable, string value)
             where TDocument : IDocument
         {
-            var freeValue = new FreeValue(value);
+            var freeValue = new AnyValue(value);
             return queryable.Parameter(queryable.ParamaterFactory.GetQueryParameter(freeValue));
         }
 
