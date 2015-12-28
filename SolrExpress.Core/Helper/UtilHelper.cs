@@ -36,25 +36,21 @@ namespace SolrExpress.Core.Helper
                     memberExpression = (MemberExpression)unaryExpression.Operand;
 
                     propertyInfo = memberExpression.Member as PropertyInfo;
-                    if (propertyInfo == null)
-                    {
-                        throw new InvalidOperationException("Expression must be a property reference.");
-                    }
 
+                    ThrowHelper<InvalidOperationException>.If(propertyInfo == null, Resource.ExpressionMustBePropertyException);
+                    
                     return propertyInfo;
                 case ExpressionType.MemberAccess:
                     memberExpression = (MemberExpression)lambda.Body;
 
                     propertyInfo = memberExpression.Member as PropertyInfo;
-                    if (propertyInfo == null)
-                    {
-                        throw new InvalidOperationException("Expression must be a property reference.");
-                    }
+
+                    ThrowHelper<InvalidOperationException>.If(propertyInfo == null, Resource.ExpressionMustBePropertyException);
 
                     return propertyInfo;
             }
-
-            throw new InvalidOperationException("Unknown to resolve the expression");
+            
+            throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
         }
 
         /// <summary>

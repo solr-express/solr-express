@@ -2,6 +2,7 @@
 using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facet_counts"]?["facet_queries"] == null)
-            {
-                throw new UnexpectedJsonFormatException(jsonObject.ToString());
-            }
+            ThrowHelper<UnexpectedJsonFormatException>.If(jsonObject["facet_counts"]?["facet_queries"] == null, jsonObject.ToString());
 
             var list = jsonObject["facet_counts"]["facet_queries"]
                 .Children()

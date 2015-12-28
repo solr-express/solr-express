@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Builder;
 using SolrExpress.Core.Entity;
 using SolrExpress.Core.Exception;
+using SolrExpress.Core.Helper;
 using SolrExpress.Core.Json;
 using SolrExpress.Core.Query;
 using System.Collections.Generic;
@@ -22,10 +23,7 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["response"]?["docs"] == null)
-            {
-                throw new UnexpectedJsonFormatException(jsonObject.ToString());
-            }
+            ThrowHelper<UnexpectedJsonFormatException>.If(jsonObject["response"]?["docs"] == null, jsonObject.ToString());
 
             var jsonSerializer = JsonSerializer.Create();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());

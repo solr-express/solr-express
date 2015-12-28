@@ -15,7 +15,7 @@ namespace SolrExpress.Core.Helper
         /// <param name="message">Message in the excpetion (optional)</param>
         public static void If(bool condition, string message = null)
         {
-            If(condition, new[] { message });
+            If(condition, string.IsNullOrWhiteSpace(message) ? null : new[] { message });
         }
 
         /// <summary>

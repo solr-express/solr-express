@@ -120,6 +120,9 @@
   <data name="AllowMultipleInstanceOfParameterTypeException" xml:space="preserve">
     <value>Parâmetro \"{0}\" não pode ser adicionado por já existir uma outra instância com o mesmo tipo</value>
   </data>
+  <data name="ExpressionMustBePropertyException" xml:space="preserve">
+    <value>Expressão deve referenciar uma propriedade</value>
+  </data>
   <data name="FieldMustBeIndexedTrueToBeUsedInAFacet" xml:space="preserve">
     <value>Um campo deve ser \"indexed=true\" para ser usado em facet</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="UnknownResolveResultBuilderException" xml:space="preserve">
     <value>Não foi possível efetuar a conversão por causa que o builder \"{0}\" não implementa IConvertJsonObject ou IConvertJsonPlainText</value>
+  </data>
+  <data name="UnknownToResolveExpressionException" xml:space="preserve">
+    <value>Não existe resolução para a expressão</value>
   </data>
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Ordenação do tipo descendente é um aspecto não suportado no Solr 4</value>

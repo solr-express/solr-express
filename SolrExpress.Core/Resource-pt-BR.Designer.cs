@@ -70,6 +70,15 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expressão deve referenciar uma propriedade.
+        /// </summary>
+        internal static string ExpressionMustBePropertyException {
+            get {
+                return ResourceManager.GetString("ExpressionMustBePropertyException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Um campo deve ser \&quot;indexed=true\&quot; para ser usado em facet.
         /// </summary>
         internal static string FieldMustBeIndexedTrueToBeUsedInAFacet {
@@ -147,6 +156,15 @@ namespace SolrExpress.Core {
         internal static string UnknownResolveResultBuilderException {
             get {
                 return ResourceManager.GetString("UnknownResolveResultBuilderException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não existe resolução para a expressão.
+        /// </summary>
+        internal static string UnknownToResolveExpressionException {
+            get {
+                return ResourceManager.GetString("UnknownToResolveExpressionException", resourceCulture);
             }
         }
         
