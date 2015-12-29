@@ -4,7 +4,6 @@ using SolrExpress.Core.Entity;
 using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.ParameterValue;
-using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
 using System;
 using System.Collections.Generic;
