@@ -193,3 +193,4 @@ ModelManifest.xml
 *.dll
 Examples/packages/*
 Examples/.vs/*
+.nuget/*
