@@ -147,52 +147,5 @@ namespace SolrExpress.Solr5.UnitTests.Builder
             Assert.AreEqual(4, parameter.Data[0].Data.Count);
             Assert.IsInstanceOfType(parameter.Data[0].Data.First().Key, typeof(FacetRange<float>));
         }
-
-        /// <summary>
-        /// Where   Using a FacetRangeResultBuilder instance
-        /// When    Invoking the method "Execute" using a valid JSON (with float values, but... the first one is a float without decimal point)
-        /// What    Parse to informed concret classes
-        /// </summary>
-        [TestMethod]
-        public void FacetRangeResultBuilder004()
-        {
-            // Arrange
-            var jObject = JObject.Parse(@"
-            {
-                ""facets"": {
-                    ""count"": 100,
-                    ""facetRange"": {
-                          ""buckets"": [
-                            {
-                              ""val"": 100,
-                              ""count"": 10
-                            },
-                            {
-                              ""val"": 200.5,
-                              ""count"": 20
-                            }
-                          ],
-                          ""before"": {
-                            ""count"": 30
-                          },
-                          ""after"": {
-                            ""count"": 40
-                          }
-                        }
-                }
-            }");
-
-            var parameter = new FacetRangeResultBuilder<TestDocument>();
-
-            // Act
-            parameter.Execute(jObject);
-
-            // Assert
-            Assert.Inconclusive("Needs resolve some issues in SOLR 5");
-            //Assert.AreEqual(1, parameter.Data.Count);
-            //Assert.AreEqual("facetRange", parameter.Data[0].Name);
-            //Assert.AreEqual(4, parameter.Data[0].Data.Count);
-            //Assert.IsInstanceOfType(parameter.Data[0].Data.First().Key, typeof(FacetRange<float>));
-        }
     }
 }
