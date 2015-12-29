@@ -73,8 +73,8 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FilterParameter(new SingleValue<TechProductDocument>(q => q.InStock, "true")));
-            solrQuery.Parameter(new FilterParameter(new SingleValue<TechProductDocument>(q => q.ManufacturerId, "corsair")));
+            solrQuery.Parameter(new FilterParameter(new Single<TechProductDocument>(q => q.InStock, "true")));
+            solrQuery.Parameter(new FilterParameter(new Single<TechProductDocument>(q => q.ManufacturerId, "corsair")));
             result = solrQuery.Execute();
             data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
 
@@ -128,8 +128,8 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetQueryParameter("Facet1", new RangeValue<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
-            solrQuery.Parameter(new FacetQueryParameter("Facet2", new RangeValue<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
+            solrQuery.Parameter(new FacetQueryParameter("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
+            solrQuery.Parameter(new FacetQueryParameter("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
             result = solrQuery.Execute();
             data = result.Get(new FacetQueryResultBuilder<TechProductDocument>()).Data;
 
@@ -263,7 +263,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             List<TechProductDocument> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new MultiValue(SolrQueryConditionType.Or, new SingleValue<TechProductDocument>(c => c.Id, "S*"), new SingleValue<TechProductDocument>(c => c.Id, "*TEST"))));
+            solrQuery.Parameter(new QueryParameter(new Multi(SolrQueryConditionType.Or, new Single<TechProductDocument>(c => c.Id, "S*"), new Single<TechProductDocument>(c => c.Id, "*TEST"))));
             result = solrQuery.Execute();
             data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
 

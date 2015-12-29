@@ -21,7 +21,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"));
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"));
 
             // Act
             parameter.Execute(container);
@@ -43,7 +43,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"), SolrFacetSortType.CountAsc);
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), SolrFacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -100,7 +100,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void FacetQueryParameter005()
         {
             // Arrange / Act / Assert
-            new FacetQueryParameter(null, new AnyValue("x"));
+            new FacetQueryParameter(null, new Any("x"));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(container);

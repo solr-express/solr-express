@@ -19,7 +19,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new QueryParameter(new SingleValue<TestDocument>(q => q.Id, "ITEM01"));
+            var parameter = new QueryParameter(new Single<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
             parameter.Execute(container);

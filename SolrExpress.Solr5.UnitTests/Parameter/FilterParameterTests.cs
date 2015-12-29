@@ -27,8 +27,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter(new SingleValue<TestDocument>(q => q.Id, "X"));
-            var parameter2 = new FilterParameter(new SingleValue<TestDocument>(q => q.Score, "Y"));
+            var parameter1 = new FilterParameter(new Single<TestDocument>(q => q.Id, "X"));
+            var parameter2 = new FilterParameter(new Single<TestDocument>(q => q.Score, "Y"));
 
             // Act
             parameter1.Execute(jObject);
@@ -69,7 +69,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter(new SingleValue<TestDocument>(q => q.Id, "X"), "tag1");
+            var parameter1 = new FilterParameter(new Single<TestDocument>(q => q.Id, "X"), "tag1");
 
             // Act
             parameter1.Execute(jObject);

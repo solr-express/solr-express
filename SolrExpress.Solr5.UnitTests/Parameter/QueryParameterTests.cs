@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new QueryParameter(new SingleValue<TestDocument>(q => q.Id, "ITEM01"));
+            var parameter = new QueryParameter(new Single<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
             parameter.Execute(jObject);

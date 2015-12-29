@@ -19,8 +19,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FilterQueryParameter(new SingleValue<TestDocument>(q => q.Id, "X"));
-            var parameter2 = new FilterQueryParameter(new SingleValue<TestDocument>(q => q.Score, "Y"));
+            var parameter1 = new FilterQueryParameter(new Single<TestDocument>(q => q.Id, "X"));
+            var parameter2 = new FilterQueryParameter(new Single<TestDocument>(q => q.Score, "Y"));
 
             // Act
             parameter1.Execute(container);
@@ -55,7 +55,7 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FilterQueryParameter(new SingleValue<TestDocument>(q => q.Id, "X"), "tag1");
+            var parameter1 = new FilterQueryParameter(new Single<TestDocument>(q => q.Id, "X"), "tag1");
 
             // Act
             parameter1.Execute(container);

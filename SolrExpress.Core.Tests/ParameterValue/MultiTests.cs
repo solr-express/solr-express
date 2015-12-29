@@ -6,52 +6,52 @@ using System;
 namespace SolrExpress.Core.Tests.ParameterValue
 {
     [TestClass]
-    public class MultiValueTests
+    public class MultiTests
     {
         /// <summary>
-        /// Where   Using a MultiValue instance
+        /// Where   Using a Multi instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void MultiValue001()
+        public void Multi001()
         {
             // Arrange
-            var parameter = new MultiValue(SolrQueryConditionType.And, null);
+            var parameter = new Multi(SolrQueryConditionType.And, null);
 
             // Act / Assert
             parameter.Execute();
         }
 
         /// <summary>
-        /// Where   Using a MultiValue instance
+        /// Where   Using a Multi instance
         /// When    Create the instance with 1 query parameter
         /// What    Throws ArgumentException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void MultiValue002()
+        public void Multi002()
         {
             // Arrange
-            var parameter = new MultiValue(SolrQueryConditionType.And, new AnyValue("X"));
+            var parameter = new Multi(SolrQueryConditionType.And, new Any("X"));
 
             // Act / Assert
             parameter.Execute();
         }
 
         /// <summary>
-        /// Where   Using a MultiValue instance
+        /// Where   Using a Multi instance
         /// When    Create the instance with AND condition and 2 query parameters
         /// What    Throws ArgumentException
         /// </summary>
         [TestMethod]
-        public void MultiValue003()
+        public void Multi003()
         {
             // Arrange
             var expected = "(value 1 AND value 2)";
             string actual;
-            var parameter = new MultiValue(SolrQueryConditionType.And, new AnyValue("value 1"), new AnyValue("value 2"));
+            var parameter = new Multi(SolrQueryConditionType.And, new Any("value 1"), new Any("value 2"));
 
             // Act
             actual = parameter.Execute();
@@ -61,17 +61,17 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a MultiValue instance
+        /// Where   Using a Multi instance
         /// When    Create the instance with OR condition and 2 query parameters
         /// What    Throws ArgumentException
         /// </summary>
         [TestMethod]
-        public void MultiValue004()
+        public void Multi004()
         {
             // Arrange
             var expected = "(value 1 OR value 2)";
             string actual;
-            var parameter = new MultiValue(SolrQueryConditionType.Or, new AnyValue("value 1"), new AnyValue("value 2"));
+            var parameter = new Multi(SolrQueryConditionType.Or, new Any("value 1"), new Any("value 2"));
 
             // Act
             actual = parameter.Execute();

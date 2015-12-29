@@ -9,7 +9,7 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Single value parameter
     /// </summary>
-    public sealed class SingleValue<TDocument> : IQueryParameterValue, IValidation
+    public sealed class Single<TDocument> : IQueryParameterValue, IValidation
         where TDocument : IDocument
     {
         private readonly Expression<Func<TDocument, object>> _expression;
@@ -20,7 +20,7 @@ namespace SolrExpress.Core.ParameterValue
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="value">Value of the filter</param>
-        public SingleValue(Expression<Func<TDocument, object>> expression, string value)
+        public Single(Expression<Func<TDocument, object>> expression, string value)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
             ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));

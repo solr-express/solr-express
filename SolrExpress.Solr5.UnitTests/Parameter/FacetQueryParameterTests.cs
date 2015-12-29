@@ -31,7 +31,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"));
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"));
 
             // Act
             parameter.Execute(jObject);
@@ -65,7 +65,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"), SolrFacetSortType.CountDesc);
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);
@@ -85,7 +85,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FacetQueryParameter003()
         {
             // Arrange / Act / Assert
-            new FacetQueryParameter(null, new AnyValue("x"));
+            new FacetQueryParameter(null, new Any("x"));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new AnyValue("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(jObject);

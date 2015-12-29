@@ -5,20 +5,20 @@ using System;
 namespace SolrExpress.Core.Tests.ParameterValue
 {
     [TestClass]
-    public class SingleValueTests
+    public class SingleTests
     {
         /// <summary>
-        /// Where   Using a SingleValue instance
+        /// Where   Using a Single instance
         /// When    Create the instance with a string value
         /// What    Create a valid string
         /// </summary>
         [TestMethod]
-        public void SingleValue001()
+        public void Single001()
         {
             // Arrange
             var expected = "Id:xpto";
             string actual;
-            var parameter = new SingleValue<TestDocument>(q => q.Id, "xpto");
+            var parameter = new Single<TestDocument>(q => q.Id, "xpto");
 
             // Act
             actual = parameter.Execute();
@@ -28,17 +28,17 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a SingleValue instance
+        /// Where   Using a Single instance
         /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
         /// What    Returns valid=false
         /// </summary>
         [TestMethod]
-        public void SingleValue002()
+        public void Single002()
         {
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new SingleValue<TestDocumentWithAttribute>(q => q.NotIndexed, "xpto");
+            var parameter = new Single<TestDocumentWithAttribute>(q => q.NotIndexed, "xpto");
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -48,17 +48,17 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a SingleValue instance
+        /// Where   Using a Single instance
         /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
         /// What    Returns valid=true
         /// </summary>
         [TestMethod]
-        public void SingleValue003()
+        public void Single003()
         {
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new SingleValue<TestDocumentWithAttribute>(q => q.Indexed, "xpto");
+            var parameter = new Single<TestDocumentWithAttribute>(q => q.Indexed, "xpto");
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -68,29 +68,29 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a SingleValue instance
+        /// Where   Using a Single instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void SingleValue004()
+        public void Single004()
         {
             // Arrange / Act / Assert
-            new SingleValue<TestDocument>(null, "x");
+            new Single<TestDocument>(null, "x");
         }
 
         /// <summary>
-        /// Where   Using a SingleValue instance
+        /// Where   Using a Single instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void SingleValue005()
+        public void Single005()
         {
             // Arrange / Act / Assert
-            new SingleValue<TestDocument>(q => q.Id, null);
+            new Single<TestDocument>(q => q.Id, null);
         }
     }
 }

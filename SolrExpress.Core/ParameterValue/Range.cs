@@ -10,7 +10,7 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Single value parameter
     /// </summary>
-    public sealed class RangeValue<TDocument, TValue> : IQueryParameterValue, IValidation
+    public sealed class Range<TDocument, TValue> : IQueryParameterValue, IValidation
         where TDocument : IDocument
         where TValue : struct
     {
@@ -24,7 +24,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
-        public RangeValue(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
+        public Range(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
             ThrowHelper<ArgumentNullException>.If(expression == null);
 

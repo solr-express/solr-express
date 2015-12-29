@@ -66,7 +66,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            var paramaterValue = new SingleValue<TDocument>(expression, value);
+            var paramaterValue = new Single<TDocument>(expression, value);
             return queryable.Parameter(queryable.ParamaterFactory.GetFilterParameter(paramaterValue));
         }
 
@@ -80,7 +80,7 @@ namespace SolrExpress.Core.Extension
             where TDocument : IDocument
             where TValue : struct
         {
-            var value = new RangeValue<TDocument, TValue>(expression, from, to);
+            var value = new Range<TDocument, TValue>(expression, from, to);
             return queryable.Parameter(queryable.ParamaterFactory.GetFilterParameter(value));
         }
 
@@ -121,7 +121,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> queryable, string value)
             where TDocument : IDocument
         {
-            var freeValue = new AnyValue(value);
+            var freeValue = new Any(value);
             return queryable.Parameter(queryable.ParamaterFactory.GetQueryParameter(freeValue));
         }
 
@@ -133,7 +133,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            var paramaterValue = new SingleValue<TDocument>(expression, value);
+            var paramaterValue = new Single<TDocument>(expression, value);
             return queryable.Parameter(queryable.ParamaterFactory.GetQueryParameter(paramaterValue));
         }
 

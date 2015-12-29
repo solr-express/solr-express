@@ -7,7 +7,7 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Result negative form (NOT) value parameter
     /// </summary>
-    public sealed class NegativeValue : IQueryParameterValue
+    public sealed class Negate : IQueryParameterValue
     {
         private readonly IQueryParameterValue _value;
 
@@ -15,7 +15,7 @@ namespace SolrExpress.Core.ParameterValue
         /// Create a negative form (NOT) from informed parameter value
         /// </summary>
         /// <param name="parameterValue">Paramater value used to created negative form</param>
-        public NegativeValue(IQueryParameterValue parameterValue)
+        public Negate(IQueryParameterValue parameterValue)
         {
             ThrowHelper<ArgumentNullException>.If(parameterValue == null);
 

@@ -5,20 +5,20 @@ using System;
 namespace SolrExpress.Core.Tests.ParameterValue
 {
     [TestClass]
-    public class AnyValueTests
+    public class NegateTests
     {
         /// <summary>
-        /// Where   Using a AnyValue instance
+        /// Where   Using a Negate instance
         /// When    Create the instance with a value
         /// What    Get the informed value
         /// </summary>
         [TestMethod]
-        public void AnyValue001()
+        public void Negate001()
         {
             // Arrange
-            var expected = "tst";
+            var expected = "-tst";
             string actual;
-            var parameter = new AnyValue("tst");
+            var parameter = new Negate(new Any("tst"));
 
             // Act
             actual = parameter.Execute();
@@ -28,16 +28,16 @@ namespace SolrExpress.Core.Tests.ParameterValue
         }
 
         /// <summary>
-        /// Where   Using a AnyValue instance
+        /// Where   Using a Negate instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void AnyValue002()
+        public void Negate002()
         {
             // Arrange
-            var parameter = new AnyValue(null);
+            var parameter = new Negate(null);
 
             // Act / Assert
             parameter.Execute();

@@ -9,7 +9,7 @@ namespace SolrExpress.Core.ParameterValue
     /// <summary>
     /// Multi value parameter
     /// </summary>
-    public sealed class MultiValue : IQueryParameterValue, IValidation
+    public sealed class Multi : IQueryParameterValue, IValidation
     {
         private readonly SolrQueryConditionType _conditionType;
         private readonly IQueryParameterValue[] _values;
@@ -19,7 +19,7 @@ namespace SolrExpress.Core.ParameterValue
         /// </summary>
         /// <param name="conditionType">Condition type</param>
         /// <param name="values">Value array of the filter</param>
-        public MultiValue(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
+        public Multi(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
             ThrowHelper<ArgumentNullException>.If(values == null);
             ThrowHelper<ArgumentException>.If(values.Length <= 1);
