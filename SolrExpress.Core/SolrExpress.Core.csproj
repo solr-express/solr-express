@@ -94,6 +94,7 @@
     <Compile Include="ParameterValue\QueryAll.cs" />
     <Compile Include="ParameterValue\Range.cs" />
     <Compile Include="ParameterValue\Single.cs" />
+    <Compile Include="ParameterValue\Spatial.cs" />
     <Compile Include="Parameter\IAnyParameter.cs" />
     <Compile Include="Parameter\IParameterFactory.cs" />
     <Compile Include="Parameter\IFacetFieldParameter.cs" />
