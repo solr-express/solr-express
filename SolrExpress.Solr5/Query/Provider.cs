@@ -16,7 +16,7 @@ namespace SolrExpress.Solr5.Query
     public class Provider : IProvider
     {
         private readonly string _solrHost;
-        
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -33,14 +33,19 @@ namespace SolrExpress.Solr5.Query
         /// <returns>Solr query</returns>
         public string GetQuery(List<IParameter> parameters)
         {
-            var jsonObj = new JObject();
-
-            foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
+            if (parameters.Any())
             {
-                ((IParameter<JObject>)item).Execute(jsonObj);
+                var jsonObj = new JObject();
+
+                foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
+                {
+                    ((IParameter<JObject>)item).Execute(jsonObj);
+                }
+
+                return jsonObj.ToString();
             }
 
-            return jsonObj.ToString();
+            return string.Empty;
         }
 
         /// <summary>
