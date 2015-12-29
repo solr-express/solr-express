@@ -1,8 +1,10 @@
 ﻿using SearchUI.Context;
 using SearchUI.Models;
 using SolrExpress.Core.Entity;
+using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Extension;
 using SolrExpress.Core.ParameterValue;
-using SolrExpress.Solr5.Linq;
+using SolrExpress.Core.Query;
 using SolrExpress.Solr5.Parameter;
 using System;
 using System.Collections.Generic;
@@ -42,15 +44,14 @@ namespace SearchUI.Controllers
                 List<FacetKeyValue<string>> facetFieldList;
                 Dictionary<string, long> facetQueryList;
                 List<FacetKeyValue<FacetRange>> facetRangeList;
-                bool isEmpty;
-                long documentCount;
-                TimeSpan timeToExecution;
+                Statistic statistics;
 
-                const int itemsPerPage = 5;
+                const int itemsPerPage = 10;
 
-                ctx.TechProducts
+                ctx
+                    .TechProducts
                     .Parameter(new QueryFieldParameter("name^13~3 manu^8~2 id^5"))
-                    .Query(keyWord ?? "*.*")
+                    .Query(keyWord ?? "*")
                     .Limit(itemsPerPage)
                     .Offset(page)
                     .FacetField(q => q.Manufacturer)
@@ -58,10 +59,13 @@ namespace SearchUI.Controllers
                     .FacetRange("Price", q => q.Price, "10", "10", "100")
                     .FacetRange("Popularity", q => q.Popularity, "1", "1", "10")
                     .FacetRange("ManufacturedateIn", q => q.ManufacturedateIn, "+1MONTH", "NOW-10YEARS", "NOW")
-                    .FacetQuery("StoreIn1000km", new FreeValue("{!geofilt sfield=store pt=35.0752,-97.032 d=1000}"))
+                    // Using fluent and SpatialParameterValue
+                    .FacetQuery("StoreIn1000km", new Spatial<TechProduct>(SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M))
+                    // OR not using fluent and FacetSpatialParameter
+                    //.Parameter(new FacetSpatialParameter<TechProduct>("StoreIn1000km", SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M))
                     .Execute()
                     .Document(out documents)
-                    .Statistic(out isEmpty, out documentCount, out timeToExecution)
+                    .Statistic(out statistics)
                     .FacetField(out facetFieldList)
                     .FacetQuery(out facetQueryList)
                     .FacetRange(out facetRangeList);
@@ -77,9 +81,9 @@ namespace SearchUI.Controllers
                     },
                     statistic = new
                     {
-                        timeToExecution,
-                        documentCount,
-                        pageCount = Math.Ceiling((decimal)documentCount / itemsPerPage)
+                        statistics.ElapsedTime,
+                        statistics.DocumentCount,
+                        pageCount = Math.Ceiling((decimal)statistics.DocumentCount / itemsPerPage)
                     }
                 };
 

@@ -3,16 +3,21 @@
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
 ## Available at NuGet
-If you want to use [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1)
 
-```powershell
-Install-Package SolrExpress.Solr5
-```
+If you want to use [Solr 4.9+](http://archive.apache.org/dist/lucene/solr/4.9.0).
 
-If you want to use [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0)
+Just install SolrExpress.Solr4 package using below command.
 
 ```powershell
 Install-Package SolrExpress.Solr4
+```
+
+If you want to use [Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
+
+Just install SolrExpress.Solr5 package using below command.
+
+```powershell
+Install-Package SolrExpress.Solr5
 ```
 
 ## Index
@@ -33,7 +38,7 @@ Install-Package SolrExpress.Solr4
 
 ## Compatibility
 
-.Net Framework 4.6 or higher
+.Net Framework 4.5 or higher
 
 ## Packages
 
@@ -41,12 +46,12 @@ Install-Package SolrExpress.Solr4
 Core library with main logic and generic implementations
 
 ### SolrExpress.Solr4
-Solr 4 implementation, full compatibility with the [Solr 4.9 +](http://archive.apache.org/dist/lucene/solr/4.9.0) version.
+Solr 4 implementation, full compatibility with the [Solr 4.9+](http://archive.apache.org/dist/lucene/solr/4.9.0).
 
 Implementation using default query handler and mechanism provided by request parameters.
 
 ### SolrExpress.Solr5
-Solr 5 implementation, full compatibility with the [Solr 5.2 +](http://archive.apache.org/dist/lucene/solr/5.2.1) version.
+Solr 5 implementation, full compatibility with the [Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
 
 Implementation using default query handler and mechanism provided by JSON Request API.
 
@@ -57,7 +62,7 @@ Allows send parameters to Sorl in a controlled and buildable way.
 
 #### 1.1. FacetFieldParameter
 
-Create a facet field type parameter using the informed field name and sort type
+Create a facet field type parameter using the informed field name and sort type.
 
 ```csharp
 new FacetFieldParameter<MyDocument>(q => q.Id, SolrFacetSortType.CountDesc);
@@ -65,7 +70,7 @@ new FacetFieldParameter<MyDocument>(q => q.Id, SolrFacetSortType.CountDesc);
 
 #### 1.2. FacetQueryParameter
 
-Create a facet query type parameter using the informed field alias, query class and sort type
+Create a facet query type parameter using the informed field alias, query class and sort type.
 
 ```csharp
 new FacetQueryParameter("Alias", new QueryAll(), SolrFacetSortType.CountDesc);
@@ -73,7 +78,7 @@ new FacetQueryParameter("Alias", new QueryAll(), SolrFacetSortType.CountDesc);
 
 #### 1.3. FacetRangeParameter
 
-Create a facet range type parameter using the informed field name, query class and sort type
+Create a facet range type parameter using the informed field name, query class and sort type.
 
 ```csharp
 new FacetRangeParameter<MyDocument>("X", q => q.Price, "1", "10", "20", SolrFacetSortType.CountDesc);
@@ -81,7 +86,7 @@ new FacetRangeParameter<MyDocument>("X", q => q.Price, "1", "10", "20", SolrFace
 
 #### 1.4. FieldsParameter
 
-Create a fields parameter (field list in Solr 4) using the informed field list
+Create a fields parameter (field list in Solr 4) using the informed field list.
 
 * One by one
 
@@ -98,7 +103,7 @@ new FieldListParameter<MyDocument>(q => q.Id, q => q.Score);
 
 #### 1.5. FilterParameter
 
-Create a fields parameter (filter query in Solr 4) using the informed query class
+Create a fields parameter (filter query in Solr 4) using the informed query class.
 
 ```csharp
 new FilterParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
@@ -106,7 +111,7 @@ new FilterParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 
 #### 1.6. LimitParameter
 
-Create a limit parameter (rows in Solr 4) using the informed number
+Create a limit parameter (rows in Solr 4) using the informed number.
 
 ```csharp
 new LimitParameter(50);
@@ -114,7 +119,7 @@ new LimitParameter(50);
 
 #### 1.7. MinimumShouldMatchParameter
 
-Create a minimum should match parameter using the informed expression
+Create a minimum should match parameter using the informed expression.
 
 ```csharp
 new MinimumShouldMatchParameter("75%");
@@ -122,7 +127,7 @@ new MinimumShouldMatchParameter("75%");
 
 #### 1.8. OffsetParameter
 
-Create a offset parameter (start in Solr 4) using the informed number
+Create a offset parameter (start in Solr 4) using the informed number.
 
 ```csharp
 new OffsetParameter(50);
@@ -130,7 +135,7 @@ new OffsetParameter(50);
 
 #### 1.9. QueryFieldParameter
 
-Create a query field parameter using the informed expression
+Create a query field parameter using the informed expression.
 
 ```csharp
 new QueryFieldParameter("Id^10 Name^5~2");
@@ -138,7 +143,7 @@ new QueryFieldParameter("Id^10 Name^5~2");
 
 #### 1.10. QueryParameter
 
-Create a query parameter using the informed query class
+Create a query parameter using the informed query class.
 
 ```csharp
 new QueryParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
@@ -146,7 +151,7 @@ new QueryParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 
 #### 1.11. SortParameter
 
-Create a sort parameter using the informed expression and ascending type
+Create a sort parameter using the informed expression and ascending type.
 
 ```csharp
 new SortParameter(q => q.Id, true);
@@ -154,7 +159,7 @@ new SortParameter(q => q.Id, true);
 
 #### 1.12. SpatialFilterParameter
 
-Create a spatial filter parameter using the informed spatial function, expression, geo coordinate of origin and distance from origin point
+Create a spatial filter parameter using the informed spatial function, expression, geo coordinate of origin and distance from origin point.
 
 ```csharp
 // Using Geofilt function

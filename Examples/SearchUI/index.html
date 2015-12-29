@@ -51,6 +51,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Manufacturer</th>
                             <th>Price</th>
@@ -60,7 +61,8 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="document in ctrl.result.documents">
-                            <th scope="row">{{document.Id}}</th>
+                            <th scope="row">{{$index + 1}}</th>
+                            <td>{{document.Id}}</td>
                             <td>{{document.Name}}</td>
                             <td>{{document.Manufacturer}}</td>
                             <td>{{document.Price}}</td>

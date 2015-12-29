@@ -72,8 +72,8 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Act
             solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FilterQueryParameter(new SingleValue<TechProductDocument>(q => q.InStock, "true")));
-            solrQuery.Parameter(new FilterQueryParameter(new SingleValue<TechProductDocument>(q => q.ManufacturerId, "corsair")));
+            solrQuery.Parameter(new FilterQueryParameter(new Single<TechProductDocument>(q => q.InStock, "true")));
+            solrQuery.Parameter(new FilterQueryParameter(new Single<TechProductDocument>(q => q.ManufacturerId, "corsair")));
             result = solrQuery.Execute();
             data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
 
@@ -127,8 +127,8 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Act
             solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetQueryParameter("Facet1", new RangeValue<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
-            solrQuery.Parameter(new FacetQueryParameter("Facet2", new RangeValue<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
+            solrQuery.Parameter(new FacetQueryParameter("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
+            solrQuery.Parameter(new FacetQueryParameter("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
             result = solrQuery.Execute();
             data = result.Get(new FacetQueryResultBuilder<TechProductDocument>()).Data;
 
