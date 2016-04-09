@@ -401,7 +401,7 @@ All sorces of this example is available [here](https://github.com/solr-express/s
 
 ### SearchUI
 
-A fully implemented example is available [here](https://github.com/solr-express/solr-express/tree/master/Examples/SearchUI)
+A fully implemented example is available [here](https://github.com/solr-express/solr-express/blob/master/Samples/SearchUI/)
 
 ## License
 
