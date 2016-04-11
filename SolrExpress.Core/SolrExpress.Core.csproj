@@ -68,7 +68,7 @@
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
     <Compile Include="SolrFieldAttribute.cs" />
-    <Compile Include="ThrowHelper.cs" />
+    <Compile Include="ThrowExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
