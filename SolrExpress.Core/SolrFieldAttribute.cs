@@ -1,17 +1,16 @@
-﻿using SolrExpress.Core.Helper;
-using System;
+﻿using System;
 
-namespace SolrExpress.Core.Attribute
+namespace SolrExpress.Core
 {
     /// <summary>
     /// Attribute used to indicate field configurations
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public class SolrFieldAttribute : System.Attribute
+    public class SolrFieldAttribute : Attribute
     {
         public SolrFieldAttribute(string name)
         {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(name));
+            name.ThrowIfIsNullOrWhiteSpace();
 
             this.Name = name;
         }

@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace SolrExpress.Core.Helper
+namespace SolrExpress.Core
 {
     /// <summary>
     /// Helper class use to process validations and throws exceptions
     /// </summary>
     public static class ThrowHelper<TException>
-        where TException : System.Exception
+        where TException : Exception
     {
         /// <summary>
         /// Throws exception if the condition is true
@@ -28,6 +28,25 @@ namespace SolrExpress.Core.Helper
             if (condition)
             {
                 throw (TException)Activator.CreateInstance(typeof(TException), args);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Helper class use to process validations and throws exceptions
+    /// </summary>
+    public static class ThrowExtension
+    {
+        /// <summary>
+        /// Throws ArgumentNullException if specified string is null, empty, or consists only of white-space characters
+        /// </summary>
+        /// <param name="value">Value to check</param>
+        public static void ThrowIfIsNullOrWhiteSpace(this string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentNullException();
             }
         }
     }

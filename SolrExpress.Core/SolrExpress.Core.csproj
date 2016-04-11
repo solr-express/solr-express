@@ -54,67 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\SolrFieldAttribute.cs" />
-    <Compile Include="Builder\IBuilderFactory.cs" />
-    <Compile Include="Builder\IDocumentBuilder.cs" />
-    <Compile Include="Builder\IFacetFieldResultBuilder.cs" />
-    <Compile Include="Builder\IFacetQueryResultBuilder.cs" />
-    <Compile Include="Builder\IFacetRangeResultBuilder.cs" />
-    <Compile Include="Builder\IStatisticResultBuilder.cs" />
-    <Compile Include="Constant\RequestHandler.cs" />
-    <Compile Include="Entity\SolrQueryConfiguration.cs" />
-    <Compile Include="Entity\Statistic.cs" />
-    <Compile Include="Enumerator\SolrFacetSortType.cs" />
-    <Compile Include="Enumerator\SolrQueryConditionType.cs" />
-    <Compile Include="Enumerator\SolrSpatialFunctionType.cs" />
-    <Compile Include="Exception\AllowMultipleInstanceOfParameterTypeException.cs" />
-    <Compile Include="Exception\InvalidParameterTypeException.cs" />
-    <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
-    <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
-    <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
-    <Compile Include="Exception\UnsupportedSortTypeException.cs" />
-    <Compile Include="Extension\SolrQueryableExtension.cs" />
-    <Compile Include="Extension\SolrQueryResultExtension.cs" />
-    <Compile Include="Helper\GenericHelper.cs" />
-    <Compile Include="Helper\ThrowHelper.cs" />
-    <Compile Include="Helper\UtilHelper.cs" />
-    <Compile Include="Json\CustomContractResolver.cs" />
-    <Compile Include="Json\GeoCoordinateConverter.cs" />
-    <Compile Include="ParameterValue\Any.cs" />
-    <Compile Include="ParameterValue\Multi.cs" />
-    <Compile Include="ParameterValue\Negate.cs" />
-    <Compile Include="ParameterValue\QueryAll.cs" />
-    <Compile Include="ParameterValue\Range.cs" />
-    <Compile Include="ParameterValue\Single.cs" />
-    <Compile Include="ParameterValue\Spatial.cs" />
-    <Compile Include="Parameter\IAnyParameter.cs" />
-    <Compile Include="Parameter\IParameterFactory.cs" />
-    <Compile Include="Parameter\IFacetFieldParameter.cs" />
-    <Compile Include="Parameter\IFacetLimitParameter.cs" />
-    <Compile Include="Parameter\IFacetQueryParameter.cs" />
-    <Compile Include="Parameter\IFacetRangeParameter.cs" />
-    <Compile Include="Parameter\IFieldsParameter.cs" />
-    <Compile Include="Parameter\IFilterParameter.cs" />
-    <Compile Include="Parameter\ILimitParameter.cs" />
-    <Compile Include="Parameter\IOffsetParameter.cs" />
-    <Compile Include="Parameter\IQueryParameter.cs" />
-    <Compile Include="Parameter\ISortParameter.cs" />
+    <Compile Include="IDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entity\GeoCoordinate.cs" />
-    <Compile Include="Query\IConvertJsonObject.cs" />
-    <Compile Include="Query\IConvertJsonPlainText.cs" />
-    <Compile Include="Entity\IDocument.cs" />
-    <Compile Include="Query\IQueryInterceptor.cs" />
-    <Compile Include="Query\IResultInterceptor.cs" />
-    <Compile Include="Query\IValidation.cs" />
-    <Compile Include="Query\IProvider.cs" />
-    <Compile Include="Query\IParameter.cs" />
-    <Compile Include="Query\IQueryParameterValue.cs" />
-    <Compile Include="Builder\IResultBuilder.cs" />
-    <Compile Include="Query\SolrQueryResult.cs" />
-    <Compile Include="Entity\FacetKeyValue.cs" />
-    <Compile Include="Entity\FacetRange.cs" />
-    <Compile Include="Query\SolrQueryable.cs" />
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="Resource-pt-BR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +67,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SolrFieldAttribute.cs" />
+    <Compile Include="ThrowHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
