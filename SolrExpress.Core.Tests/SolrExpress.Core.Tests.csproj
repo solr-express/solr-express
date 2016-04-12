@@ -77,7 +77,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Helper\UtilHelperTests.cs" />
+    <Compile Include="Extension\Internal\ExpressionIDocumentExtensionTests.cs" />
+    <Compile Include="Extension\Internal\SolrSpatialFunctionTypeExtensionTests.cs" />
     <Compile Include="ParameterValue\AnyTests.cs" />
     <Compile Include="ParameterValue\MultiTests.cs" />
     <Compile Include="ParameterValue\NegateTests.cs" />

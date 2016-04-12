@@ -1,7 +1,6 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SolrExpress.Core.Entity;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
+using System;
 
 namespace SolrExpress.Core.Tests.ParameterValue
 {

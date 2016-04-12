@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
+using SolrExpress.Core.Factory;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SolrExpress.Core.Enumerator;
 using SolrExpress.Core.ParameterValue;
 using System;
 
