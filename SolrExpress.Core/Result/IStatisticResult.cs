@@ -1,6 +1,6 @@
 ﻿namespace SolrExpress.Core.Result
 {
-    public interface IStatisticResultBuilder<TDocument> : IResultBuilder
+    public interface IStatisticResult<TDocument> : IResult
         where TDocument : IDocument
     {
         /// <summary>

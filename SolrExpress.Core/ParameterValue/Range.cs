@@ -39,7 +39,7 @@ namespace SolrExpress.Core.ParameterValue
         public string Execute()
         {
             var fieldName = this._expression.GetFieldNameFromExpression();
-
+            
             if (typeof(TValue) == typeof(int))
             {
                 return string.Format(

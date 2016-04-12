@@ -5,5 +5,9 @@
     /// </summary>
     public interface IOffsetParameter : IParameter
     {
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        int Value { get; set; }
     }
 }

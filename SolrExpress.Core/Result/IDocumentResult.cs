@@ -2,12 +2,12 @@
 
 namespace SolrExpress.Core.Result
 {
-    public interface IFacetFieldResultBuilder<TDocument> : IResultBuilder
+    public interface IDocumentResult<TDocument> : IResult
         where TDocument : IDocument
     {
         /// <summary>
-        /// Facet data
+        /// Documents of the search
         /// </summary>
-        List<FacetKeyValue<string>> Data { get; }
+        List<TDocument> Data { get; }
     }
 }

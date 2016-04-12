@@ -37,7 +37,7 @@ namespace SolrExpress.Core.Query
         /// <typeparam name="T">Concrete class that implements the IResultBuilder interface</typeparam>
         /// <returns>Instance of T ready to be used</returns>
         public T Get<T>(T builder)
-            where T : IResultBuilder
+            where T : IResult
         {
             if (builder is IConvertJsonObject)
             {
