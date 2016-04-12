@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Factory;
-using SolrExpress.Core.Parameter;
+﻿using SolrExpress.Core.Parameter;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,12 +13,7 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Configurations about SolrQueriable behavior
         /// </summary>
-        private readonly SolrQueryConfiguration _configuration;
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        private readonly IProvider _provider;
+        private readonly SolrExpressConfiguration _configuration;
 
         /// <summary>
         /// List of the parameters arranged in the queryable class
@@ -37,33 +31,30 @@ namespace SolrExpress.Core.Query
         private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
 
         /// <summary>
-        /// Factory used to resolve builder creation in Linq facilities
+        /// Provider used to resolve the expression
         /// </summary>
-        public IBuilderFactory<TDocument> BuilderFactory { get; private set; }
+        public IProvider Provider { get; private set; }
 
         /// <summary>
-        /// Factory used to resolve parameter creation in Linq facilities
+        /// Resolver used to resolve classes dependency
         /// </summary>
-        public IParameterFactory<TDocument> ParamaterFactory { get; private set; }
-
+        public IResolver Resolver { get; private set; }
+        
         /// <summary>
         /// Default constructor of the class
         /// </summary>
-        /// <param name="provider">Provider used to resolve the expression</param>
-        /// <param name="paramaterFactory">Factory used to resolve parameter creation in Linq facilities</param>
-        /// <param name="builderFactory">Factory used to resolve builder creation in Linq facilities</param>
+        /// <param name="provider">Provider used to resolve expression</param>
+        /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public SolrQueryable(IProvider provider, IParameterFactory<TDocument> paramaterFactory, IBuilderFactory<TDocument> builderFactory, SolrQueryConfiguration configuration = null)
+        public SolrQueryable(IProvider provider, IResolver resolver, SolrExpressConfiguration configuration = null)
         {
             Checker.IsNull(provider);
-            Checker.IsNull(paramaterFactory);
-            Checker.IsNull(builderFactory);
+            Checker.IsNull(resolver);
 
-            this._configuration = configuration ?? new SolrQueryConfiguration();
+            this._configuration = configuration ?? new SolrExpressConfiguration();
 
-            this._provider = provider;
-            this.ParamaterFactory = paramaterFactory;
-            this.BuilderFactory = builderFactory;
+            this.Provider = provider;
+            this.Resolver = resolver;
         }
 
         /// <summary>
@@ -75,7 +66,7 @@ namespace SolrExpress.Core.Query
         {
             Checker.IsNull(parameter);
             var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
-            Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter);
+            Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter.ToString());
 
             var parameterValidation = parameter as IValidation;
 
@@ -86,7 +77,7 @@ namespace SolrExpress.Core.Query
 
                 parameterValidation.Validate(out isValid, out errorMessage);
 
-                Checker.IsTrue<InvalidParameterTypeException>(!isValid, parameterValidation, errorMessage);
+                Checker.IsTrue<InvalidParameterTypeException>(!isValid, parameterValidation.ToString(), errorMessage);
             }
 
             this._parameters.Add(parameter);
@@ -120,23 +111,6 @@ namespace SolrExpress.Core.Query
             this._resultInterceptors.Add(interceptor);
 
             return this;
-        }
-
-        /// <summary>
-        /// Execute the search in the solr with informed parameters
-        /// </summary>
-        /// <returns>Solr result</returns>
-        public SolrQueryResult<TDocument> Execute()
-        {
-            var query = this._provider.GetQuery(this._parameters);
-
-            this._queryInterceptors.ForEach(q => q.Execute(ref query));
-
-            var json = this._provider.Execute(this._configuration.Handler, query);
-
-            this._resultInterceptors.ForEach(q => q.Execute(ref json));
-
-            return new SolrQueryResult<TDocument>(this.BuilderFactory, json);
         }
     }
 }

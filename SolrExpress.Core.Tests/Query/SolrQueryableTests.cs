@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SolrExpress.Core.Factory;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
@@ -23,7 +22,7 @@ namespace SolrExpress.Core.Tests.Query
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object);
             queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
@@ -44,7 +43,7 @@ namespace SolrExpress.Core.Tests.Query
             var mockParameter = mockValidate.As<IParameter>();
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object);
 
             var isValid = false;
             string errorMessage;
@@ -66,13 +65,13 @@ namespace SolrExpress.Core.Tests.Query
             // Arrange
             var mockValidate = new Mock<IValidation>();
             var mockParameter = mockValidate.As<IParameter>();
-            var solrQueryConfiguration = new SolrQueryConfiguration
+            var solrQueryConfiguration = new SolrExpressConfiguration
             {
                 FailFast = false
             };
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
 
             bool isValid;
             string errorMessage;
@@ -108,7 +107,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object);
 
             // Act / Assert
             queryable.Parameter(null);
@@ -125,7 +124,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object);
 
             // Act / Assert
             queryable.QueryInterceptor(null);
@@ -142,37 +141,10 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object);
 
             // Act / Assert
             queryable.ResultInterceptor(null);
-        }
-
-        /// <summary>
-        /// Where   Using a SolrQueryable instance configured with Handler name
-        /// When    Creating SolrQueryable object
-        /// What    Change provider instance property "Handler" with informad name
-        /// </summary>
-        [TestMethod]
-        public void SolrQueryable008()
-        {
-            // Arrange
-            string handlerName = "HANDLER-NAME";
-            var solrQueryConfiguration = new SolrQueryConfiguration
-            {
-                Handler = handlerName
-            };
-
-            var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
-
-            providerMock.Setup(q => q.Execute(It.IsAny<string>(), It.IsAny<string>())).Returns(".");
-
-            // Act
-            queryable.Execute();
-
-            // Assert
-            providerMock.Verify(q => q.Execute(It.Is<string>(s => s.Equals(handlerName)), It.IsAny<string>()), Times.Once);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <AssemblyName>SolrExpress.Core</AssemblyName>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(DefineConstants)' == 'STRONGNAME' ">
     <AssemblyName>SolrExpress.Core.Signed</AssemblyName>
@@ -41,8 +43,8 @@
     <AssemblyOriginatorKeyFile>SolrExpress.Core.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -57,13 +59,10 @@
     <Compile Include="CustomContractResolver.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
     <Compile Include="Extension\Internal\SolrSpatialFunctionTypeExtension.cs" />
-    <Compile Include="Extension\SolrQueryableExtension.cs" />
-    <Compile Include="Extension\SolrQueryResultExtension.cs" />
-    <Compile Include="Factory\IBuilderFactory.cs" />
-    <Compile Include="Factory\IParameterFactory.cs" />
     <Compile Include="GeoCoordinate.cs" />
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
+    <Compile Include="IResolver.cs" />
     <Compile Include="ParameterValue\Any.cs" />
     <Compile Include="ParameterValue\Multi.cs" />
     <Compile Include="ParameterValue\Negate.cs" />
@@ -89,7 +88,7 @@
     <Compile Include="Parameter\SolrFacetSortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
-    <Compile Include="Query\IProvider.cs" />
+    <Compile Include="IProvider.cs" />
     <Compile Include="Query\IQueryInterceptor.cs" />
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
@@ -121,7 +120,7 @@
     <Compile Include="Result\Statistic.cs" />
     <Compile Include="SolrFieldAttribute.cs" />
     <Compile Include="Checker.cs" />
-    <Compile Include="SolrQueryConfiguration.cs" />
+    <Compile Include="SolrExpressConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
@@ -140,4 +139,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
 </Project>

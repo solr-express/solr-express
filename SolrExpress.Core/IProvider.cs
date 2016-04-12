@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core.Parameter;
 using System.Collections.Generic;
 
-namespace SolrExpress.Core.Query
+namespace SolrExpress.Core
 {
     /// <summary>
     /// Signatures of SOLR access provider

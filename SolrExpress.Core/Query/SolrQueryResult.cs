@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Factory;
 using SolrExpress.Core.Result;
 
 namespace SolrExpress.Core.Query
@@ -14,21 +13,21 @@ namespace SolrExpress.Core.Query
         private JObject _jsonObject;
 
         /// <summary>
-        /// Factory used to resolve builder creation in Linq facilities
+        /// Resolver used to resolve classes dependency
         /// </summary>
-        protected internal IBuilderFactory<TDocument> BuilderFactory { get; private set; }
+        public IResolver Resolver { get; private set; }
 
         /// <summary>
         /// Default constructor of the class
         /// </summary>
-        /// <param name="builderFactory">Factory used to resolve builder creation in Linq facilities</param>
+        /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="json">Result of the SOLR</param>
-        public SolrQueryResult(IBuilderFactory<TDocument> builderFactory, string json)
+        public SolrQueryResult(IResolver resolver, string json)
         {
-            Checker.IsNull(builderFactory);
+            Checker.IsNull(resolver);
             Checker.IsNullOrWhiteSpace(json);
 
-            this.BuilderFactory = builderFactory;
+            this.Resolver = resolver;
             this._jsonPlainText = json;
         }
 
