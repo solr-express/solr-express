@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Core.Entity
+namespace SolrExpress.Core.Result
 {
     /// <summary>
     /// Represents a Facet Range without knowledge of the type of the minumum and maximum values

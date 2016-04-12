@@ -1,8 +1,4 @@
-﻿using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
-
-namespace SolrExpress.Core.ParameterValue
+﻿namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Free value parameter
@@ -17,7 +13,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public Any(string value)
         {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));
+            Checker.IsNullOrWhiteSpace(value);
 
             this._value = value;
         }

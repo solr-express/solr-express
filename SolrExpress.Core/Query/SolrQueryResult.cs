@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using System;
+using SolrExpress.Core.Factory;
+using SolrExpress.Core.Result;
 
 namespace SolrExpress.Core.Query
 {
@@ -28,8 +25,8 @@ namespace SolrExpress.Core.Query
         /// <param name="json">Result of the SOLR</param>
         public SolrQueryResult(IBuilderFactory<TDocument> builderFactory, string json)
         {
-            ThrowHelper<ArgumentNullException>.If(builderFactory == null);
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(json));
+            Checker.IsNull(builderFactory);
+            Checker.IsNullOrWhiteSpace(json);
 
             this.BuilderFactory = builderFactory;
             this._jsonPlainText = json;

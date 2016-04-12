@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Query;
-
-namespace SolrExpress.Core.Parameter
+﻿namespace SolrExpress.Core.Parameter
 {
     /// <summary>
     /// Signatures to use in filter parameter

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Core.Entity
+namespace SolrExpress.Core.Result
 {
     public sealed class Statistic
     {

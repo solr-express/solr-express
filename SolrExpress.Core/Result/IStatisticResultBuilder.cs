@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Entity;
-
-namespace SolrExpress.Core.Builder
+﻿namespace SolrExpress.Core.Result
 {
     public interface IStatisticResultBuilder<TDocument> : IResultBuilder
         where TDocument : IDocument

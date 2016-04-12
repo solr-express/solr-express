@@ -1,7 +1,4 @@
-﻿using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
+﻿using SolrExpress.Core.Query;
 using System.Linq;
 
 namespace SolrExpress.Core.ParameterValue
@@ -21,8 +18,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="values">Value array of the filter</param>
         public Multi(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
-            ThrowHelper<ArgumentNullException>.If(values == null);
-            ThrowHelper<ArgumentException>.If(values.Length <= 1);
+            Checker.IsNull(values);
+            Checker.IsLowerThan(values.Length, 2);
 
             this._values = values;
             this._conditionType = conditionType;

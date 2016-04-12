@@ -1,8 +1,4 @@
-﻿using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
-
-namespace SolrExpress.Core.ParameterValue
+﻿namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Result negative form (NOT) value parameter
@@ -17,7 +13,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="parameterValue">Paramater value used to created negative form</param>
         public Negate(IQueryParameterValue parameterValue)
         {
-            ThrowHelper<ArgumentNullException>.If(parameterValue == null);
+            Checker.IsNull(parameterValue);
 
             this._value = parameterValue;
         }

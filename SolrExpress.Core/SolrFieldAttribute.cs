@@ -10,7 +10,7 @@ namespace SolrExpress.Core
     {
         public SolrFieldAttribute(string name)
         {
-            name.ThrowIfIsNullOrWhiteSpace();
+            Checker.IsNullOrWhiteSpace(name);
 
             this.Name = name;
         }

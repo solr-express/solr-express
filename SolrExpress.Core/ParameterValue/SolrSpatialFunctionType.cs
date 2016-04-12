@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Enumerator
+﻿namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Types of functions used in spatial thingys

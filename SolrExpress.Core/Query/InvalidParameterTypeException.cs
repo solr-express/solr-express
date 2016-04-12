@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Exception
+﻿namespace SolrExpress.Core.Query
 {
     public sealed class InvalidParameterTypeException : System.Exception
     {

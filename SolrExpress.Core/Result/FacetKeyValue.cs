@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SolrExpress.Core.Entity
+namespace SolrExpress.Core.Result
 {
     /// <summary>
     /// Represents a facet value

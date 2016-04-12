@@ -1,6 +1,6 @@
-﻿using SolrExpress.Core.Entity;
+﻿using SolrExpress.Core.Result;
 
-namespace SolrExpress.Core.Builder
+namespace SolrExpress.Core.Factory
 {
     /// <summary>
     /// Signatures of SOLR builders factory 

@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
-using SolrExpress.Core.Entity;
 using System;
 using System.Globalization;
 
-namespace SolrExpress.Core.Json
+namespace SolrExpress.Core
 {
     internal class GeoCoordinateConverter : JsonConverter
     {

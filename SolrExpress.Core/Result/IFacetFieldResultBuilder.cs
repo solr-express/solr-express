@@ -1,7 +1,6 @@
-﻿using SolrExpress.Core.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SolrExpress.Core.Builder
+namespace SolrExpress.Core.Result
 {
     public interface IFacetFieldResultBuilder<TDocument> : IResultBuilder
         where TDocument : IDocument

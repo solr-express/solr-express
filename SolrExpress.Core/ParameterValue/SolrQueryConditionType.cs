@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Enumerator
+﻿namespace SolrExpress.Core.ParameterValue
 {
     public enum SolrQueryConditionType
     {

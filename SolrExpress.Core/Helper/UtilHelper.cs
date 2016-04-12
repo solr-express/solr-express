@@ -14,74 +14,10 @@ namespace SolrExpress.Core.Helper
     /// </summary>
     internal static class UtilHelper
     {
-        /// <summary>
-        /// Returns the property name of the indicated expression
-        /// </summary>
-        /// <typeparam name="T">Type of the document used in the query</typeparam>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <returns>Property name indicated in the expression</returns>
-        private static PropertyInfo GetPropertyInfoFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
-            where TDocument : IDocument
-        {
-            var lambda = (LambdaExpression)expression;
+        
 
-            PropertyInfo propertyInfo;
-            MemberExpression memberExpression;
-
-            switch (lambda.Body.NodeType)
-            {
-                case ExpressionType.Convert:
-                    var unaryExpression = (UnaryExpression)lambda.Body;
-
-                    memberExpression = (MemberExpression)unaryExpression.Operand;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    ThrowHelper<InvalidOperationException>.If(propertyInfo == null, Resource.ExpressionMustBePropertyException);
-                    
-                    return propertyInfo;
-                case ExpressionType.MemberAccess:
-                    memberExpression = (MemberExpression)lambda.Body;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    ThrowHelper<InvalidOperationException>.If(propertyInfo == null, Resource.ExpressionMustBePropertyException);
-
-                    return propertyInfo;
-            }
-            
-            throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
-        }
-
-        /// <summary>
-        /// Returns the SolrFieldAttribute associated with the informed property
-        /// </summary>
-        /// <typeparam name="T">Type of the document used in the query</typeparam>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<TDocument>(Expression<Func<TDocument, object>> expression)
-            where TDocument : IDocument
-        {
-            var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
-            var attrs = propertyInfo.GetCustomAttributes(true);
-            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
-        }
-
-        /// <summary>
-        /// Returns the property name of the indicated expression
-        /// </summary>
-        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <returns>Property name indicated in the expression</returns>
-        internal static string GetFieldNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
-            where TDocument : IDocument
-        {
-            var propertyInfo = UtilHelper.GetPropertyInfoFromExpression(expression);
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
-
-            return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Name;
-        }
-
+        
+        
         /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
@@ -193,22 +129,6 @@ namespace SolrExpress.Core.Helper
             return query;
         }
 
-        /// <summary>
-        /// Get spatial formule
-        /// </summary>
-        /// <param name="functionType">Spatial function to use</param>
-        /// <param name="fieldName">Field name</param>
-        /// <param name="centerPoint">Center point information</param>
-        /// <param name="distance">Distance</param>
-        /// <returns></returns>
-        internal static string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
-        {
-            return string.Format(
-                "{{!{0} sfield={1} pt={2} d={3}}}",
-                functionType.ToString().ToLower(),
-                fieldName,
-                centerPoint.ToString(),
-                distance.ToString("0.#", CultureInfo.InvariantCulture));
-        }
+
     }
 }

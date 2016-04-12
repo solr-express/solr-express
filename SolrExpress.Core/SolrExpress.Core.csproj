@@ -54,8 +54,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomContractResolver.cs" />
+    <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
+    <Compile Include="Extension\Internal\SolrSpatialFunctionTypeExtension.cs" />
+    <Compile Include="Extension\SolrQueryableExtension.cs" />
+    <Compile Include="Extension\SolrQueryResultExtension.cs" />
+    <Compile Include="Factory\IBuilderFactory.cs" />
+    <Compile Include="Factory\IParameterFactory.cs" />
+    <Compile Include="GeoCoordinate.cs" />
+    <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
+    <Compile Include="ParameterValue\Any.cs" />
+    <Compile Include="ParameterValue\Multi.cs" />
+    <Compile Include="ParameterValue\Negate.cs" />
+    <Compile Include="ParameterValue\QueryAll.cs" />
+    <Compile Include="ParameterValue\Range.cs" />
+    <Compile Include="ParameterValue\Single.cs" />
+    <Compile Include="ParameterValue\SolrQueryConditionType.cs" />
+    <Compile Include="ParameterValue\SolrSpatialFunctionType.cs" />
+    <Compile Include="ParameterValue\Spatial.cs" />
+    <Compile Include="Parameter\IAnyParameter.cs" />
+    <Compile Include="Parameter\IFacetFieldParameter.cs" />
+    <Compile Include="Parameter\IFacetLimitParameter.cs" />
+    <Compile Include="Parameter\IFacetQueryParameter.cs" />
+    <Compile Include="Parameter\IFacetRangeParameter.cs" />
+    <Compile Include="Parameter\IFieldsParameter.cs" />
+    <Compile Include="Parameter\IFilterParameter.cs" />
+    <Compile Include="Parameter\ILimitParameter.cs" />
+    <Compile Include="Parameter\IOffsetParameter.cs" />
+    <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\IQueryParameter.cs" />
+    <Compile Include="ParameterValue\IQueryParameterValue.cs" />
+    <Compile Include="Parameter\ISortParameter.cs" />
+    <Compile Include="Parameter\SolrFacetSortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
+    <Compile Include="Query\IProvider.cs" />
+    <Compile Include="Query\IQueryInterceptor.cs" />
+    <Compile Include="Query\IResultInterceptor.cs" />
+    <Compile Include="Query\IValidation.cs" />
+    <Compile Include="Query\SolrQueryable.cs" />
+    <Compile Include="Query\SolrQueryResult.cs" />
+    <Compile Include="Query\UnknownResolveResultBuilderException.cs" />
     <Compile Include="RequestHandler.cs" />
     <Compile Include="Resource-pt-BR.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -67,8 +107,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Result\FacetKeyValue.cs" />
+    <Compile Include="Result\FacetRange.cs" />
+    <Compile Include="Result\IConvertJsonObject.cs" />
+    <Compile Include="Result\IConvertJsonPlainText.cs" />
+    <Compile Include="Result\IDocumentBuilder.cs" />
+    <Compile Include="Result\IFacetFieldResultBuilder.cs" />
+    <Compile Include="Result\IFacetQueryResultBuilder.cs" />
+    <Compile Include="Result\IFacetRangeResultBuilder.cs" />
+    <Compile Include="Query\InvalidParameterTypeException.cs" />
+    <Compile Include="Result\IResultBuilder.cs" />
+    <Compile Include="Result\IStatisticResultBuilder.cs" />
+    <Compile Include="Result\Statistic.cs" />
     <Compile Include="SolrFieldAttribute.cs" />
-    <Compile Include="ThrowExtension.cs" />
+    <Compile Include="Checker.cs" />
+    <Compile Include="SolrQueryConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">

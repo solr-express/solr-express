@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Query;
-
-namespace SolrExpress.Core.ParameterValue
+﻿namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Query all value parameter

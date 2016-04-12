@@ -1,7 +1,4 @@
-﻿using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Extension.Internal;
 using System;
 using System.Linq.Expressions;
 
@@ -27,7 +24,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="distance">Distance from the center point</param>
         public Spatial(SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance)
         {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
+            Checker.IsNull(expression);
 
             this._functionType = functionType;
             this._expression = expression;
@@ -41,10 +38,9 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
-            return UtilHelper.GetSolrSpatialFormule(
-                this._functionType,
+            return this._functionType.GetSolrSpatialFormule(
                 fieldName,
                 this._centerPoint,
                 this._distance);

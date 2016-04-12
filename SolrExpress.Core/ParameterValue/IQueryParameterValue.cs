@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Query
+﻿namespace SolrExpress.Core.ParameterValue
 {
     /// <summary>
     /// Signature to use in solr query parameter value

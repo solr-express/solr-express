@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using SolrExpress.Core.Attribute;
 using System.Reflection;
 
-namespace SolrExpress.Core.Json
+namespace SolrExpress.Core
 {
     public class CustomContractResolver : DefaultContractResolver
     {

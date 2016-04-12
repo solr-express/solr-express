@@ -1,10 +1,5 @@
-﻿using SolrExpress.Core.Builder;
-using SolrExpress.Core.Constant;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Factory;
 using SolrExpress.Core.Parameter;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,12 +39,12 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Factory used to resolve builder creation in Linq facilities
         /// </summary>
-        protected readonly IBuilderFactory<TDocument> _builderFactory;
+        public IBuilderFactory<TDocument> BuilderFactory { get; private set; }
 
         /// <summary>
         /// Factory used to resolve parameter creation in Linq facilities
         /// </summary>
-        protected internal IParameterFactory<TDocument> ParamaterFactory { get; private set; }
+        public IParameterFactory<TDocument> ParamaterFactory { get; private set; }
 
         /// <summary>
         /// Default constructor of the class
@@ -60,19 +55,15 @@ namespace SolrExpress.Core.Query
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
         public SolrQueryable(IProvider provider, IParameterFactory<TDocument> paramaterFactory, IBuilderFactory<TDocument> builderFactory, SolrQueryConfiguration configuration = null)
         {
-            ThrowHelper<ArgumentNullException>.If(provider == null);
-            ThrowHelper<ArgumentNullException>.If(paramaterFactory == null);
-            ThrowHelper<ArgumentNullException>.If(builderFactory == null);
+            Checker.IsNull(provider);
+            Checker.IsNull(paramaterFactory);
+            Checker.IsNull(builderFactory);
 
-            this._configuration = configuration ?? new SolrQueryConfiguration
-            {
-                FailFast = true,
-                Handler = RequestHandler.QUERY
-            };
+            this._configuration = configuration ?? new SolrQueryConfiguration();
 
             this._provider = provider;
             this.ParamaterFactory = paramaterFactory;
-            this._builderFactory = builderFactory;
+            this.BuilderFactory = builderFactory;
         }
 
         /// <summary>
@@ -82,8 +73,9 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
-            ThrowHelper<ArgumentNullException>.If(parameter == null);
-            ThrowHelper<AllowMultipleInstanceOfParameterTypeException>.If(this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances, parameter.ToString());
+            Checker.IsNull(parameter);
+            var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
+            Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter);
 
             var parameterValidation = parameter as IValidation;
 
@@ -94,7 +86,7 @@ namespace SolrExpress.Core.Query
 
                 parameterValidation.Validate(out isValid, out errorMessage);
 
-                ThrowHelper<InvalidParameterTypeException>.If(!isValid, new[] { parameterValidation.ToString(), errorMessage });
+                Checker.IsTrue<InvalidParameterTypeException>(!isValid, parameterValidation, errorMessage);
             }
 
             this._parameters.Add(parameter);
@@ -109,7 +101,7 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
-            ThrowHelper<ArgumentNullException>.If(interceptor == null);
+            Checker.IsNull(interceptor);
 
             this._queryInterceptors.Add(interceptor);
 
@@ -123,7 +115,7 @@ namespace SolrExpress.Core.Query
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
-            ThrowHelper<ArgumentNullException>.If(interceptor == null);
+            Checker.IsNull(interceptor);
 
             this._resultInterceptors.Add(interceptor);
 
@@ -144,7 +136,7 @@ namespace SolrExpress.Core.Query
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
-            return new SolrQueryResult<TDocument>(this._builderFactory, json);
+            return new SolrQueryResult<TDocument>(this.BuilderFactory, json);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
@@ -22,8 +21,8 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="value">Value of the filter</param>
         public Single(Expression<Func<TDocument, object>> expression, string value)
         {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(value));
+            Checker.IsNull(expression);
+            Checker.IsNullOrWhiteSpace(value);
 
             this._expression = expression;
             this._value = value;
@@ -35,7 +34,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             return $"{fieldName}:{this._value}";
         }
@@ -50,7 +49,7 @@ namespace SolrExpress.Core.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {

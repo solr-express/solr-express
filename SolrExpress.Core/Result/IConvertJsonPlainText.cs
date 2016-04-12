@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Query
+﻿namespace SolrExpress.Core.Result
 {
     /// <summary>
     /// Base interface used to parse the SOLR results when a json string is necessary

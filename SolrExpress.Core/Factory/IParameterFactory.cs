@@ -1,10 +1,9 @@
-﻿using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Parameter;
+using SolrExpress.Core.ParameterValue;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Core.Parameter
+namespace SolrExpress.Core.Factory
 {
     /// <summary>
     /// Signatures of SOLR common paramaters factory 

@@ -66,10 +66,6 @@
       <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
       <Name>SolrExpress.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolrExpress.Solr5\SolrExpress.Solr5.csproj">
-      <Project>{3b679214-5e64-44ce-9188-d692f2371709}</Project>
-      <Name>SolrExpress.Solr5</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

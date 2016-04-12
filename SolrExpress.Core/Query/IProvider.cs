@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SolrExpress.Core.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Core.Query
 {

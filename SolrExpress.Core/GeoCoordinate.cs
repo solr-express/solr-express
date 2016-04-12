@@ -1,8 +1,6 @@
-﻿using SolrExpress.Core.Helper;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
 
-namespace SolrExpress.Core.Entity
+namespace SolrExpress.Core
 {
     public struct GeoCoordinate
     {
@@ -13,8 +11,8 @@ namespace SolrExpress.Core.Entity
         /// <param name="longitude">The longitude of the location</param>
         public GeoCoordinate(decimal latitude, decimal longitude)
         {
-            ThrowHelper<ArgumentOutOfRangeException>.If(latitude < -90 || latitude > 90, Resource.InvalidLatitudeException);
-            ThrowHelper<ArgumentOutOfRangeException>.If(longitude < -180 || longitude > 180, Resource.InvalidLongitudeException);
+            Checker.IsOutOfRange(latitude, -90, 90, Resource.InvalidLatitudeException);
+            Checker.IsOutOfRange(longitude, -180, 180, Resource.InvalidLongitudeException);
 
             this.Latitude = latitude;
             this.Longitude = longitude;

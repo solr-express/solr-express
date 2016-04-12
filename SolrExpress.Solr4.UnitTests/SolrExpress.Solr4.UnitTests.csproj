@@ -88,10 +88,6 @@
       <Project>{5be2cf22-c52a-4518-b3c6-c7c6a25e63a5}</Project>
       <Name>SolrExpress.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SolrExpress.Solr4\SolrExpress.Solr4.csproj">
-      <Project>{1e999f4c-b17c-4106-9ba4-c7ac0e00c0cd}</Project>
-      <Name>SolrExpress.Solr4</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

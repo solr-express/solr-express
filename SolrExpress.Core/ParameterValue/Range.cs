@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Query;
 using System;
 using System.Globalization;
@@ -26,7 +25,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <param name="to">To value in a range filter</param>
         public Range(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null)
         {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
+            Checker.IsNull(expression);
 
             this._expression = expression;
             this._from = from;
@@ -39,7 +38,7 @@ namespace SolrExpress.Core.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             if (typeof(TValue) == typeof(int))
             {
@@ -94,7 +93,7 @@ namespace SolrExpress.Core.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
