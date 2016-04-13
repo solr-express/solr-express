@@ -1,13 +1,14 @@
-﻿using System;
+﻿using SolrExpress.Core.ParameterValue;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
 {
     /// <summary>
-    /// Signatures to use in facet range parameter
+    /// Signatures to use in facet spatial parameter
     /// </summary>
-    public interface IFacetRangeParameter<TDocument> : IParameter
+    public interface IFacetSpatialParameter<TDocument> : IParameter
         where TDocument : IDocument
     {
         /// <summary>
@@ -16,29 +17,29 @@ namespace SolrExpress.Core.Parameter
         string AliasName { get; set; }
 
         /// <summary>
-        /// Expression used to find the property name
+        /// Function used in the spatial filter
         /// </summary>
-        string End { get; set; }
+        SolrSpatialFunctionType FunctionType { get; set; }
 
         /// <summary>
-        /// Size of each range bucket to make the facet
+        /// Expression used to find the property name
         /// </summary>
         Expression<Func<TDocument, object>> Expression { get; set; }
 
         /// <summary>
-        /// Lower bound to make the facet
+        /// Center point to spatial filter
         /// </summary>
-        string Gap { get; set; }
+        GeoCoordinate CenterPoint { get; set; }
 
         /// <summary>
-        /// Upper bound to make the facet
+        /// Distance from the center point
         /// </summary>
-        SolrFacetSortType? SortType { get; set; }
+        decimal Distance { get; set; }
 
         /// <summary>
         /// Sort type of the result of the facet
         /// </summary>
-        string Start { get; set; }
+        SolrFacetSortType? SortType { get; set; }
 
         /// <summary>
         /// List of tags to exclude in facet calculation

@@ -79,6 +79,7 @@
     <Compile Include="Parameter\IFacetLimitParameter.cs" />
     <Compile Include="Parameter\IFacetQueryParameter.cs" />
     <Compile Include="Parameter\IFacetRangeParameter.cs" />
+    <Compile Include="Parameter\IFacetSpatialParameter.cs" />
     <Compile Include="Parameter\IFieldsParameter.cs" />
     <Compile Include="Parameter\IFilterParameter.cs" />
     <Compile Include="Parameter\ILimitParameter.cs" />
