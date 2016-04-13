@@ -1,19 +1,21 @@
-﻿using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core;
 using SolrExpress.Core.Parameter;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FacetQueryParameter : IFacetQueryParameter, IParameter<List<string>>, IValidation
+    public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IParameter<List<string>>, IValidation
+        where TDocument : IDocument
     {
-        private readonly string _aliasName;
-        private readonly IQueryParameterValue _query;
-        private readonly SolrFacetSortType? _sortType;
-        private readonly string[] _excludes;
+        /// <summary>
+        /// Create a facet parameter
+        /// </summary>
+        public FacetQueryParameter()
+        {
+        }
 
         /// <summary>
         /// Create a facet parameter
@@ -23,14 +25,12 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
+            : this()
         {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
-            ThrowHelper<ArgumentNullException>.If(query == null);
-
-            this._aliasName = aliasName;
-            this._query = query;
-            this._sortType = sortType;
-            this._excludes = excludes;
+            this.AliasName = aliasName;
+            this.Query = query;
+            this.SortType = sortType;
+            this.Excludes = excludes?.ToList();
         }
 
         /// <summary>
@@ -44,28 +44,33 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
+            Checker.IsNullOrWhiteSpace(this.AliasName);
+            Checker.IsNull(this.Query);
+
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var query = this._query.Execute();
+            var query = this.Query.Execute();
 
-            container.Add($"facet.query={UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, query, this._excludes)}");
+            //TODO
+            //container.Add($"facet.query={UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, query, this._excludes)}");
 
-            if (this._sortType.HasValue)
+            if (this.SortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                ThrowHelper<UnsupportedSortTypeException>.If(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == SolrFacetSortType.CountDesc || this.SortType.Value == SolrFacetSortType.IndexDesc);
 
-                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
+                //TODO
+                //UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
 
-                container.Add($"f.{this._aliasName}.facet.sort={typeName}");
+                //container.Add($"f.{this._aliasName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{this._aliasName}.facet.mincount=1");
+            container.Add($"f.{this.AliasName}.facet.mincount=1");
         }
 
         /// <summary>
@@ -75,15 +80,38 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="errorMessage">The error message, if applicable</param>
         public void Validate(out bool isValid, out string errorMessage)
         {
+            Checker.IsNullOrWhiteSpace(this.AliasName);
+            Checker.IsNull(this.Query);
+
             isValid = true;
             errorMessage = string.Empty;
 
-            var queryValidation = this._query as IValidation;
+            var queryValidation = this.Query as IValidation;
 
             if (queryValidation != null)
             {
                 queryValidation.Validate(out isValid, out errorMessage);
             }
         }
+
+        /// <summary>
+        /// Name of the alias added in the query
+        /// </summary>
+        public string AliasName { get; set; }
+
+        /// <summary>
+        /// Query used to make the facet
+        /// </summary>
+        public IQueryParameterValue Query { get; set; }
+
+        /// <summary>
+        /// Sort type of the result of the facet
+        /// </summary>
+        public SolrFacetSortType? SortType { get; set; }
+
+        /// <summary>
+        /// List of tags to exclude in facet calculation
+        /// </summary>
+        public List<string> Excludes { get; set; }
     }
 }

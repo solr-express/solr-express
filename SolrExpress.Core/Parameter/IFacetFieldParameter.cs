@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
@@ -18,5 +19,15 @@ namespace SolrExpress.Core.Parameter
         /// Sort type of the result of the facet
         /// </summary>
         SolrFacetSortType? SortType { get; set; }
+
+        /// <summary>
+        /// Limit of itens in facet's result
+        /// </summary>
+        int? Limit { get; set; }
+
+        /// <summary>
+        /// List of tags to exclude in facet calculation
+        /// </summary>
+        List<string> Excludes { get; set; }
     }
 }

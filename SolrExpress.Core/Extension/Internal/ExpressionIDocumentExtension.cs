@@ -77,5 +77,29 @@ namespace SolrExpress.Core.Extension.Internal
             var attrs = propertyInfo.GetCustomAttributes(true);
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
         }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static string GetPropertyNameFromExpression<TDocument>(this Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            return expression.GetPropertyInfoFromExpression().Name;
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static Type GetPropertyTypeFromExpression<TDocument>(this Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            return expression.GetPropertyInfoFromExpression().PropertyType;
+        }
     }
 }

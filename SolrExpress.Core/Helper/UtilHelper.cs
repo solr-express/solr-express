@@ -18,29 +18,8 @@ namespace SolrExpress.Core.Helper
 
         
         
-        /// <summary>
-        /// Returns the property name of the indicated expression
-        /// </summary>
-        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <returns>Property name indicated in the expression</returns>
-        internal static string GetPropertyNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
-            where TDocument : IDocument
-        {
-            return UtilHelper.GetPropertyInfoFromExpression(expression).Name;
-        }
 
-        /// <summary>
-        /// Returns the property name of the indicated expression
-        /// </summary>
-        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <returns>Property name indicated in the expression</returns>
-        internal static Type GetPropertyTypeFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
-            where TDocument : IDocument
-        {
-            return UtilHelper.GetPropertyInfoFromExpression(expression).PropertyType;
-        }
+
 
         /// <summary>
         /// Get the sort type and direction

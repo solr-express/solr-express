@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,7 +12,7 @@ namespace SolrExpress.Solr4.Builder
     /// <summary>
     /// Facet range data builder
     /// </summary>
-    public sealed class FacetRangeResultBuilder<TDocument> : IFacetRangeResultBuilder<TDocument>, IConvertJsonObject
+    public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
@@ -71,7 +68,8 @@ namespace SolrExpress.Solr4.Builder
             {
                 foreach (var range in facetData)
                 {
-                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, (TFacetKey?)gapValue);
+                    //TODO
+                    //((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, gapValue);
                 }
             }
 
@@ -127,7 +125,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            ThrowHelper<UnexpectedJsonFormatException>.If(jsonObject["facet_counts"]?["facet_ranges"] == null, jsonObject.ToString());
+            Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_ranges"] == null, jsonObject.ToString());
 
             var list = jsonObject["facet_counts"]["facet_ranges"]
                 .Children()

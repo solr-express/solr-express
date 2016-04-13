@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Result;
 using System;
 
 namespace SolrExpress.Solr4.Builder
@@ -10,7 +8,7 @@ namespace SolrExpress.Solr4.Builder
     /// <summary>
     /// Statistic data builder
     /// </summary>
-    public sealed class StatisticResultBuilder<TDocument> : IStatisticResultBuilder<TDocument>, IConvertJsonObject
+    public sealed class StatisticResult<TDocument> : IStatisticResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>

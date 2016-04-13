@@ -1,12 +1,14 @@
-﻿namespace SolrExpress.Core.Exception
+﻿using System;
+
+namespace SolrExpress.Core
 {
-    public class UnexpectedJsonFormatException : System.Exception
+    public class UnexpectedJsonQueryException : Exception
     {
         /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="json">Unexpected JSON string</param>
-        public UnexpectedJsonFormatException(string json)
+        public UnexpectedJsonQueryException(string json)
             : base(string.Format(Resource.UnexpectedJsonException, json))
         {
         }

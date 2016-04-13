@@ -56,34 +56,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Result\BuilderFactory.cs" />
-    <Compile Include="Result\DocumentBuilder.cs" />
-    <Compile Include="Result\FacetFieldResultBuilder.cs" />
-    <Compile Include="Result\FacetQueryResultBuilder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Result\FacetRangeResultBuilder.cs" />
-    <Compile Include="Result\StatisticResultBuilder.cs" />
     <Compile Include="Parameter\AnyParameter.cs" />
     <Compile Include="Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Parameter\FacetLimitParameter.cs" />
     <Compile Include="Parameter\FacetQueryParameter.cs" />
-    <Compile Include="Parameter\FacetRangeParameter.cs" />
-    <Compile Include="Parameter\FacetSpatialParameter.cs" />
-    <Compile Include="Parameter\FieldListParameter.cs" />
-    <Compile Include="Parameter\FilterQueryParameter.cs" />
-    <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
-    <Compile Include="Parameter\ParameterFactory.cs" />
-    <Compile Include="Parameter\QueryFieldParameter.cs" />
-    <Compile Include="Parameter\QueryParameter.cs" />
-    <Compile Include="Parameter\RowsParameter.cs" />
-    <Compile Include="Parameter\SortParameter.cs" />
-    <Compile Include="Parameter\SpatialFilterParameter.cs" />
-    <Compile Include="Parameter\StartParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\Provider.cs" />
+    <Compile Include="Result\DocumentResult.cs" />
+    <Compile Include="Resolver.cs" />
+    <Compile Include="Result\FacetFieldResult.cs" />
+    <Compile Include="Result\FacetQueryResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Result\FacetRangeResult.cs" />
+    <Compile Include="Result\StatisticResult.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

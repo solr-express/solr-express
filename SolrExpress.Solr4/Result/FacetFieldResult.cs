@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Result;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,7 +9,7 @@ namespace SolrExpress.Solr4.Builder
     /// <summary>
     /// Facet field data builder
     /// </summary>
-    public sealed class FacetFieldResultBuilder<TDocument> : IFacetFieldResultBuilder<TDocument>, IConvertJsonObject
+    public sealed class FacetFieldResult<TDocument> : IFacetFieldResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
@@ -21,7 +18,7 @@ namespace SolrExpress.Solr4.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            ThrowHelper<UnexpectedJsonFormatException>.If(jsonObject["facet_counts"]?["facet_fields"] == null, jsonObject.ToString());
+            Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_fields"] == null, jsonObject.ToString());
 
             this.Data = new List<FacetKeyValue<string>>();
 

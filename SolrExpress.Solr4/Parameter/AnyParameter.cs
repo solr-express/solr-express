@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
@@ -14,7 +13,17 @@ namespace SolrExpress.Solr4.Parameter
         /// </summary>
         /// <param name="name">Name of the parameter</param>
         /// <param name="value">Value of the parameter</param>
+        public AnyParameter()
+        {
+        }
+
+        /// <summary>
+        /// Create any parameter
+        /// </summary>
+        /// <param name="name">Name of the parameter</param>
+        /// <param name="value">Value of the parameter</param>
         public AnyParameter(string name, string value)
+            : this()
         {
             this._name = name;
             this._value = value;

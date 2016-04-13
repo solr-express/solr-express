@@ -123,6 +123,9 @@
     <Compile Include="SolrFieldAttribute.cs" />
     <Compile Include="Checker.cs" />
     <Compile Include="SolrExpressConfiguration.cs" />
+    <Compile Include="UnexpectedJsonFormatException.cs" />
+    <Compile Include="UnexpectedJsonQueryException.cs" />
+    <Compile Include="UnsupportedSortTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
