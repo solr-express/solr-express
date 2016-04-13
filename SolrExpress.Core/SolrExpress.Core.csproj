@@ -65,6 +65,7 @@
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
     <Compile Include="IResolver.cs" />
+    <Compile Include="ISettings.cs" />
     <Compile Include="ParameterValue\Any.cs" />
     <Compile Include="ParameterValue\Multi.cs" />
     <Compile Include="ParameterValue\Negate.cs" />
@@ -74,6 +75,13 @@
     <Compile Include="ParameterValue\SolrQueryConditionType.cs" />
     <Compile Include="ParameterValue\SolrSpatialFunctionType.cs" />
     <Compile Include="ParameterValue\Spatial.cs" />
+    <Compile Include="Parameter\FacetFieldSettings.cs" />
+    <Compile Include="Parameter\FacetLimitSettings.cs" />
+    <Compile Include="Parameter\FacetQuerySettings.cs" />
+    <Compile Include="Parameter\FacetRangeSettings.cs" />
+    <Compile Include="Parameter\FacetSpatialSettings.cs" />
+    <Compile Include="Parameter\FieldsSettings.cs" />
+    <Compile Include="Parameter\FilterSettings.cs" />
     <Compile Include="Parameter\IAnyParameter.cs" />
     <Compile Include="Parameter\IFacetFieldParameter.cs" />
     <Compile Include="Parameter\IFacetLimitParameter.cs" />
@@ -88,7 +96,11 @@
     <Compile Include="Parameter\IQueryParameter.cs" />
     <Compile Include="ParameterValue\IQueryParameterValue.cs" />
     <Compile Include="Parameter\ISortParameter.cs" />
+    <Compile Include="Parameter\LimitSettings.cs" />
+    <Compile Include="Parameter\OffsetSettings.cs" />
+    <Compile Include="Parameter\QuerySettings.cs" />
     <Compile Include="Parameter\SolrFacetSortType.cs" />
+    <Compile Include="Parameter\SortSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
     <Compile Include="IProvider.cs" />
