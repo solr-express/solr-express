@@ -36,25 +36,25 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <typeparam name="T">Concrete class that implements the IResultBuilder interface</typeparam>
         /// <returns>Instance of T ready to be used</returns>
-        public T Get<T>(T builder)
+        public T Get<T>(T result)
             where T : IResult
         {
-            if (builder is IConvertJsonObject)
+            if (result is IConvertJsonObject)
             {
                 this._jsonObject = this._jsonObject ?? JObject.Parse(this._jsonPlainText);
 
-                ((IConvertJsonObject)builder).Execute(this._jsonObject);
+                ((IConvertJsonObject)result).Execute(this._jsonObject);
             }
-            else if (builder is IConvertJsonPlainText)
+            else if (result is IConvertJsonPlainText)
             {
-                ((IConvertJsonPlainText)builder).Execute(this._jsonPlainText);
+                ((IConvertJsonPlainText)result).Execute(this._jsonPlainText);
             }
             else
             {
-                throw new UnknownResolveResultBuilderException(builder.GetType().Name);
+                throw new UnknownResolveResultBuilderException(result.GetType().Name);
             }
 
-            return builder;
+            return result;
         }
     }
 }

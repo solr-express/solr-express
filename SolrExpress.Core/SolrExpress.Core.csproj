@@ -60,6 +60,7 @@
     <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
     <Compile Include="Extension\Internal\SolrSpatialFunctionTypeExtension.cs" />
     <Compile Include="Extension\SolrQueryableExtension.cs" />
+    <Compile Include="Extension\SolrQueryResultExtension.cs" />
     <Compile Include="GeoCoordinate.cs" />
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
