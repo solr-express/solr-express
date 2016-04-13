@@ -1,20 +1,25 @@
 ﻿using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
     public sealed class StartParameter : IOffsetParameter, IParameter<List<string>>
     {
-        private readonly int _value;
+        /// <summary>
+        /// Create a limit parameter
+        /// </summary>
+        public StartParameter()
+        {
+        }
 
         /// <summary>
         /// Create a limit parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
         public StartParameter(int value)
+            : this()
         {
-            this._value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -28,7 +33,12 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add($"start={this._value}");
+            container.Add($"start={this.Value}");
         }
+
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        public int Value { get; set; }
     }
 }

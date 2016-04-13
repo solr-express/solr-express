@@ -1,20 +1,26 @@
 ﻿using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
     public sealed class RowsParameter : ILimitParameter, IParameter<List<string>>
     {
-        private readonly int _value;
+        /// <summary>
+        /// Create a offset parameter
+        /// </summary>
+        /// <param name="value">Value of the parameter limit</param>
+        public RowsParameter()
+        {
+        }
 
         /// <summary>
         /// Create a offset parameter
         /// </summary>
         /// <param name="value">Value of the parameter limit</param>
         public RowsParameter(int value)
+            : this()
         {
-            this._value = value;
+            this.Value = value;
         }
 
         /// <summary>
@@ -28,7 +34,12 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add($"rows={this._value}");
+            container.Add($"rows={this.Value}");
         }
+
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        public int Value { get; set; }
     }
 }
