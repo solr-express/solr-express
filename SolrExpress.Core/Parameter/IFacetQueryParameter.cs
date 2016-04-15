@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core.ParameterValue;
-using System.Collections.Generic;
 
 namespace SolrExpress.Core.Parameter
 {
@@ -16,6 +15,6 @@ namespace SolrExpress.Core.Parameter
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType, List<string> excludes);
+        IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType, params string[] excludes);
     }
 }

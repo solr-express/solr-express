@@ -5,22 +5,7 @@ namespace SolrExpress.Solr4.Parameter
 {
     public sealed class StartParameter : IOffsetParameter, IParameter<List<string>>
     {
-        /// <summary>
-        /// Create a limit parameter
-        /// </summary>
-        public StartParameter()
-        {
-        }
-
-        /// <summary>
-        /// Create a limit parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public StartParameter(int value)
-            : this()
-        {
-            this.Value = value;
-        }
+        private int _value { get; set; }
 
         /// <summary>
         /// True to indicate multiples instance of the parameter, otherwise false
@@ -33,12 +18,19 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add($"start={this.Value}");
+            container.Add($"start={this._value}");
         }
-
+        
         /// <summary>
-        /// Value of limit
+        /// Configure current instance
         /// </summary>
-        public int Value { get; set; }
+        /// <param name="value">Value of limit</param>
+        /// <returns></returns>
+        public IOffsetParameter Configure(int value)
+        {
+            this._value = value;
+
+            return this;
+        }
     }
 }

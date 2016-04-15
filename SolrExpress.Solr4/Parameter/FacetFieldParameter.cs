@@ -4,7 +4,6 @@ using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -12,28 +11,10 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        public FacetFieldParameter()
-        {
-        }
-
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="limit">Limit of itens in facet's result</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetFieldParameter(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
-            : this()
-        {
-            this.Expression = expression;
-            this.SortType = sortType;
-            this.Limit = limit;
-            this.Excludes = excludes?.ToList();
-        }
+        private Expression<Func<TDocument, object>> _expression;
+        private SolrFacetSortType? _sortType;
+        private int? _limit;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -46,25 +27,23 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            Checker.IsNull(this.Expression);
-
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var aliasName = this.Expression.GetPropertyNameFromExpression();
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var aliasName = this._expression.GetPropertyNameFromExpression();
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             //TODO
             //container.Add($"facet.field={UtilHelper.GetSolrFacetWithExcludesSolr4(aliasName, fieldName, this.Excludes)}");
 
-            if (this.SortType.HasValue)
+            if (this._sortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == SolrFacetSortType.CountDesc || this.SortType.Value == SolrFacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
                 //TODO
                 //UtilHelper.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
@@ -74,9 +53,9 @@ namespace SolrExpress.Solr4.Parameter
 
             container.Add($"f.{aliasName}.facet.mincount=1");
 
-            if (this.Limit.HasValue)
+            if (this._limit.HasValue)
             {
-                container.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
+                container.Add($"f.{fieldName}.facet.limit={this._limit.Value}");
             }
         }
 
@@ -87,12 +66,10 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="errorMessage">The error message, if applicable</param>
         public void Validate(out bool isValid, out string errorMessage)
         {
-            Checker.IsNull(this.Expression);
-
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
@@ -102,23 +79,22 @@ namespace SolrExpress.Solr4.Parameter
         }
 
         /// <summary>
-        /// Expression used to find the property name
+        /// Configure current instance
         /// </summary>
-        public Expression<Func<TDocument, object>> Expression { get; set; }
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="limit">Limit of itens in facet's result</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
+        {
+            Checker.IsNull(this._expression);
 
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        public SolrFacetSortType? SortType { get; set; }
+            this._expression = expression;
+            this._sortType = sortType;
+            this._limit = limit;
+            this._excludes = excludes;
 
-        /// <summary>
-        /// Limit of itens in facet's result
-        /// </summary>
-        public int? Limit { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        public List<string> Excludes { get; set; }
+            return this;
+        }
     }
 }

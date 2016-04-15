@@ -10,16 +10,9 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FilterQueryParameter<TDocument> : IFilterParameter<TDocument>, IParameter<List<string>>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="value">Parameter value used to create the query</param>
-        /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public FilterQueryParameter(IQueryParameterValue value, string tagName = null)
-        {
-            this.Value = value;
-            this.TagName = tagName;
-        }
+        private Expression<Func<TDocument, object>> _expression { get; set; }
+        private IQueryParameterValue _value { get; set; }
+        private string _tagName { get; set; }
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -32,25 +25,26 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            Checker.IsNull(this.Value);
-
             //TODO
             //container.Add($"fq={UtilHelper.GetSolrFilterWithTag(this.TagName, this.Value.Execute())}");
         }
 
         /// <summary>
-        /// Expression used to find the property name
+        /// Configure current instance
         /// </summary>
-        public Expression<Func<TDocument, object>> Expression { get; set; }
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="value">Value of the filter</param>
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public IFilterParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, IQueryParameterValue value, string tagName)
+        {
+            Checker.IsNull(expression);
+            Checker.IsNull(value);
 
-        /// <summary>
-        /// Value of the filter
-        /// </summary>
-        public IQueryParameterValue Value { get; set; }
+            this._expression = expression;
+            this._value = value;
+            this._tagName = tagName;
 
-        /// <summary>
-        /// Tag name to use in facet excluding list
-        /// </summary>
-        public string TagName { get; set; }
+            return this;
+        }
     }
 }

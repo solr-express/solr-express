@@ -4,7 +4,6 @@ using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -12,34 +11,13 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, IParameter<List<string>>, IValidation
       where TDocument : IDocument
     {
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        public FacetRangeParameter()
-        {
-        }
-
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        /// <param name="aliasName">Name of the alias added in the query</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="gap">Size of each range bucket to make the facet</param>
-        /// <param name="start">Lower bound to make the facet</param>
-        /// <param name="end">Upper bound to make the facet</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetRangeParameter(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null, params string[] excludes)
-            : this()
-        {
-            this.AliasName = aliasName;
-            this.Expression = expression;
-            this.Gap = gap;
-            this.Start = start;
-            this.End = end;
-            this.SortType = sortType;
-            this.Excludes = excludes?.ToList();
-        }
+        private string _aliasName { get; set; }
+        private string _end { get; set; }
+        private Expression<Func<TDocument, object>> _expression { get; set; }
+        private string _gap { get; set; }
+        private SolrFacetSortType? _sortType { get; set; }
+        private string _start { get; set; }
+        private string[] _excludes { get; set; }
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -52,41 +30,38 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            Checker.IsNullOrWhiteSpace(this.AliasName);
-            Checker.IsNull(this.Expression);
-
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             // TODO
             //container.Add($"facet.range={this.Expression.GetSolrFacetWithExcludesSolr4(this.AliasName, fieldName, this.Excludes)}");
 
-            if (!string.IsNullOrWhiteSpace(this.Gap))
+            if (!string.IsNullOrWhiteSpace(this._gap))
             {
-                container.Add($"f.{fieldName}.facet.range.gap={this.Gap}");
+                container.Add($"f.{fieldName}.facet.range.gap={this._gap}");
             }
-            if (!string.IsNullOrWhiteSpace(this.Start))
+            if (!string.IsNullOrWhiteSpace(this._start))
             {
-                container.Add($"f.{fieldName}.facet.range.start={this.Start}");
+                container.Add($"f.{fieldName}.facet.range.start={this._start}");
             }
-            if (!string.IsNullOrWhiteSpace(this.End))
+            if (!string.IsNullOrWhiteSpace(this._end))
             {
-                container.Add($"f.{fieldName}.facet.range.end={this.End}");
+                container.Add($"f.{fieldName}.facet.range.end={this._end}");
             }
 
             container.Add($"f.{fieldName}.facet.range.other=before");
             container.Add($"f.{fieldName}.facet.range.other=after");
 
-            if (this.SortType.HasValue)
+            if (this._sortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == SolrFacetSortType.CountDesc || this.SortType.Value == SolrFacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
                 //TODO
                 //UtilHelper.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
@@ -104,13 +79,10 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="errorMessage">The error message, if applicable</param>
         public void Validate(out bool isValid, out string errorMessage)
         {
-            Checker.IsNullOrWhiteSpace(this.AliasName);
-            Checker.IsNull(this.Expression);
-
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
@@ -119,7 +91,7 @@ namespace SolrExpress.Solr4.Parameter
             }
             else
             {
-                var propertyType = this.Expression.GetPropertyTypeFromExpression();
+                var propertyType = this._expression.GetPropertyTypeFromExpression();
 
                 switch (propertyType.ToString())
                 {
@@ -138,40 +110,31 @@ namespace SolrExpress.Solr4.Parameter
                 }
             }
         }
-
+                
         /// <summary>
-        /// Name of the alias added in the query
+        /// Configure current instance
         /// </summary>
-        public string AliasName { get; set; }
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="gap">Size of each range bucket to make the facet</param>
+        /// <param name="start">Lower bound to make the facet</param>
+        /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, SolrFacetSortType? sortType, params string[] excludes)
+        {
+            Checker.IsNullOrWhiteSpace(this._aliasName);
+            Checker.IsNull(this._expression);
 
-        /// <summary>
-        /// Expression used to find the property name
-        /// </summary>
-        public string End { get; set; }
+            this._aliasName = aliasName;
+            this._expression = expression;
+            this._gap = gap;
+            this._start = start;
+            this._end = end;
+            this._sortType = sortType;
+            this._excludes = excludes;
 
-        /// <summary>
-        /// Size of each range bucket to make the facet
-        /// </summary>
-        public Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// Lower bound to make the facet
-        /// </summary>
-        public string Gap { get; set; }
-
-        /// <summary>
-        /// Upper bound to make the facet
-        /// </summary>
-        public SolrFacetSortType? SortType { get; set; }
-
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        public string Start { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        public List<string> Excludes { get; set; }
+            return this;
+        }
     }
 }

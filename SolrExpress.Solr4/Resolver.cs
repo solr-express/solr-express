@@ -8,6 +8,16 @@ namespace SolrExpress.Solr4
     /// </summary>
     public sealed class Resolver : IResolver
     {
+        public TConcrete Get<TConcrete>() where TConcrete : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public TConcrete Get<TConcrete>(ISettings settings) where TConcrete : class
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Get concrete class that implements informed interface
         /// </summary>

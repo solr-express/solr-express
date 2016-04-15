@@ -5,23 +5,7 @@ namespace SolrExpress.Solr4.Parameter
 {
     public sealed class RowsParameter : ILimitParameter, IParameter<List<string>>
     {
-        /// <summary>
-        /// Create a offset parameter
-        /// </summary>
-        /// <param name="value">Value of the parameter limit</param>
-        public RowsParameter()
-        {
-        }
-
-        /// <summary>
-        /// Create a offset parameter
-        /// </summary>
-        /// <param name="value">Value of the parameter limit</param>
-        public RowsParameter(int value)
-            : this()
-        {
-            this.Value = value;
-        }
+        private int _value { get; set; }
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -34,12 +18,18 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add($"rows={this.Value}");
+            container.Add($"rows={this._value}");
         }
 
         /// <summary>
-        /// Value of limit
+        /// Configure current instance
         /// </summary>
-        public int Value { get; set; }
+        /// <param name="value">Value of limit</param>
+        public ILimitParameter Configure(int value)
+        {
+            this._value = value;
+
+            return this;
+        }
     }
 }
