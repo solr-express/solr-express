@@ -57,10 +57,9 @@ namespace SolrExpress.Solr4.Parameter
 
                 Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
-                //TODO
-                //UtilHelper.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
+                this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
-                //container.Add($"f.{this.AliasName}.facet.sort={typeName}");
+                container.Add($"f.{this._aliasName}.facet.sort={typeName}");
             }
 
             container.Add($"f.{this._aliasName}.facet.mincount=1");

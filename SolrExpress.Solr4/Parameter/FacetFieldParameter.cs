@@ -2,6 +2,7 @@
 using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr4.Extension.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -34,9 +35,9 @@ namespace SolrExpress.Solr4.Parameter
 
             var aliasName = this._expression.GetPropertyNameFromExpression();
             var fieldName = this._expression.GetFieldNameFromExpression();
+            var facetField = this._excludes.GetSolrFacetWithExcludes(aliasName, fieldName);
 
-            //TODO
-            //container.Add($"facet.field={UtilHelper.GetSolrFacetWithExcludesSolr4(aliasName, fieldName, this.Excludes)}");
+            container.Add($"facet.field={facetField}");
 
             if (this._sortType.HasValue)
             {
@@ -45,10 +46,9 @@ namespace SolrExpress.Solr4.Parameter
 
                 Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
-                //TODO
-                //UtilHelper.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
+                this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
-                //container.Add($"f.{aliasName}.facet.sort={typeName}");
+                container.Add($"f.{aliasName}.facet.sort={typeName}");
             }
 
             container.Add($"f.{aliasName}.facet.mincount=1");

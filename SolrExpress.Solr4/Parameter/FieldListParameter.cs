@@ -27,8 +27,7 @@ namespace SolrExpress.Solr4.Parameter
         {
             foreach (var expression in this._expressions)
             {
-                //TODO
-                //var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
+                var fieldName = expression.GetFieldNameFromExpression();
 
                 var fieldList = container.FirstOrDefault(q => q.StartsWith("fl="));
 
@@ -36,11 +35,11 @@ namespace SolrExpress.Solr4.Parameter
                 {
                     container.Remove(fieldList);
 
-                //    fieldList = $"{fieldList},{fieldName}";
+                    fieldList = $"{fieldList},{fieldName}";
                 }
                 else
                 {
-                 //   fieldList = $"fl={fieldName}";
+                    fieldList = $"fl={fieldName}";
                 }
 
                 container.Add(fieldList);

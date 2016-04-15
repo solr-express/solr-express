@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CustomContractResolver.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
+    <Compile Include="Extension\Internal\SolrFacetSortTypeExtension.cs" />
     <Compile Include="Extension\Internal\SolrSpatialFunctionTypeExtension.cs" />
     <Compile Include="Extension\SolrQueryableExtension.cs" />
     <Compile Include="Extension\SolrQueryResultExtension.cs" />

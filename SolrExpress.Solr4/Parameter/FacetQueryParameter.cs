@@ -1,7 +1,9 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr4.Extension.Internal;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
@@ -31,9 +33,8 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             var query = this._query.Execute();
-
-            //TODO
-            //container.Add($"facet.query={UtilHelper.GetSolrFacetWithExcludesSolr4(this._aliasName, query, this._excludes)}");
+            
+            container.Add($"facet.query={this._excludes.GetSolrFacetWithExcludes(this._aliasName, query)}");
 
             if (this._sortType.HasValue)
             {
@@ -42,10 +43,9 @@ namespace SolrExpress.Solr4.Parameter
 
                 Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
-                //TODO
-                //UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out dummy);
+                this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
-                //container.Add($"f.{this._aliasName}.facet.sort={typeName}");
+                container.Add($"f.{this._aliasName}.facet.sort={typeName}");
             }
 
             container.Add($"f.{this._aliasName}.facet.mincount=1");
