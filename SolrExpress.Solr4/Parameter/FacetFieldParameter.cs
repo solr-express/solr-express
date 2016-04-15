@@ -87,7 +87,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
         {
-            Checker.IsNull(this._expression);
+            Checker.IsNull(expression);
 
             this._expression = expression;
             this._sortType = sortType;
