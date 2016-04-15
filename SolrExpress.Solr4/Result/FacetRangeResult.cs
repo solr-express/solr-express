@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Result;
 using System;
 using System.Collections.Generic;
@@ -68,8 +69,7 @@ namespace SolrExpress.Solr4.Builder
             {
                 foreach (var range in facetData)
                 {
-                    //TODO
-                    //((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, gapValue);
+                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue.Addition((TFacetKey)gapValue);
                 }
             }
 

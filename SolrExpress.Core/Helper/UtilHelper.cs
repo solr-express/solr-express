@@ -42,23 +42,7 @@ namespace SolrExpress.Core.Helper
             return fieldName;
         }
 
-        /// <summary>
-        /// Get the filter with tag
-        /// </summary>
-        /// <param name="tagName">Tag name</param>
-        /// <param name="fieldName">Field name</param>
-        internal static string GetSolrFilterWithTag(string aliasName, string query)
-        {
-            if (!string.IsNullOrWhiteSpace(aliasName))
-            {
-                return string.Format(
-                    "{{!tag={0}}}{1}",
-                    aliasName,
-                    query);
-            }
 
-            return query;
-        }
 
 
     }

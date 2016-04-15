@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using System;
@@ -25,14 +26,7 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var expression = string.Empty;
-
-            if (string.IsNullOrWhiteSpace(this._tagName))
-            {
-                expression = string.Format("{{!tag={0}}}", this._tagName);
-            }
-
-            expression += this._value.Execute();
+            var expression = this._value.Execute().GetSolrFilterWithTag(this._tagName);
 
             container.Add($"fq={expression}");
         }
