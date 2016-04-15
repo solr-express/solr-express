@@ -1,22 +1,12 @@
-﻿using System;
+﻿using SolrExpress.Core;
+using SolrExpress.Core.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class MinimumShouldMatchParameter : IParameter<List<string>>
+    public sealed class MinimumShouldMatchParameter : IMinimumShouldMatchParameter, IParameter<List<string>>
     {
-        private readonly string _expression;
-
-        /// <summary>
-        /// Create a minimun should parameter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to make the mm parameter</param>
-        public MinimumShouldMatchParameter(string expression)
-        {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
-
-            this._expression = expression;
-        }
+        private string _expression;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -30,6 +20,19 @@ namespace SolrExpress.Solr4.Parameter
         public void Execute(List<string> container)
         {
             container.Add($"mm={this._expression}");
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Expression used to make the mm parameter</param>
+        public IMinimumShouldMatchParameter Configure(string expression)
+        {
+            Checker.IsNullOrWhiteSpace(expression);
+
+            this._expression = expression;
+
+            return this;
         }
     }
 }

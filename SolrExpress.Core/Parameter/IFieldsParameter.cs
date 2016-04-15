@@ -13,7 +13,6 @@ namespace SolrExpress.Core.Parameter
         /// Configure current instance
         /// </summary>
         /// <param name="expressions">Expression used to find the property name</param>
-        /// <returns></returns>
         IFieldsParameter<TDocument> Configure(Expression<Func<TDocument, object>>[] expressions);
     }
 }

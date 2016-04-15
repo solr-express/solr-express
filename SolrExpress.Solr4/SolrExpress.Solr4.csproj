@@ -64,7 +64,9 @@
     <Compile Include="Parameter\FacetQueryParameter.cs" />
     <Compile Include="Parameter\FacetRangeParameter.cs" />
     <Compile Include="Parameter\FacetSpatialParameter.cs" />
+    <Compile Include="Parameter\FieldListParameter.cs" />
     <Compile Include="Parameter\FilterQueryParameter.cs" />
+    <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
     <Compile Include="Parameter\RowsParameter.cs" />
     <Compile Include="Parameter\StartParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

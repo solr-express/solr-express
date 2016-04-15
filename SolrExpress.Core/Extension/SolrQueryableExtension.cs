@@ -229,5 +229,21 @@ namespace SolrExpress.Core.Extension
 
             return queryable.Parameter(parameter);
         }
+
+        /// <summary>
+        /// Create a minimum should match parameter
+        /// </summary>
+        /// <param name="expression">Expression used to make the mm parameter</param>
+        public static SolrQueryable<TDocument> MinimumShouldMatch<TDocument>(this SolrQueryable<TDocument> queryable, string expression)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .Get<IMinimumShouldMatchParameter>()
+                .Configure(expression);
+
+            return queryable.Parameter(parameter);
+        }
+        
     }
 }

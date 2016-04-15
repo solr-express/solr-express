@@ -1,6 +1,5 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
@@ -10,21 +9,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class FieldListParameter<TDocument> : IFieldsParameter, IParameter<List<string>>, IValidation
+    public sealed class FieldListParameter<TDocument> : IFieldsParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private readonly Expression<Func<TDocument, object>>[] _expressions;
-
-        /// <summary>
-        /// Create a fields parameter
-        /// </summary>
-        /// <param name="expressions">Expression used to find the property name</param>
-        public FieldListParameter(params Expression<Func<TDocument, object>>[] expressions)
-        {
-            ThrowHelper<ArgumentNullException>.If(expressions == null);
-
-            this._expressions = expressions;
-        }
+        private Expression<Func<TDocument, object>>[] _expressions;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -39,7 +27,8 @@ namespace SolrExpress.Solr4.Parameter
         {
             foreach (var expression in this._expressions)
             {
-                var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
+                //TODO
+                //var fieldName = UtilHelper.GetFieldNameFromExpression(expression);
 
                 var fieldList = container.FirstOrDefault(q => q.StartsWith("fl="));
 
@@ -47,11 +36,11 @@ namespace SolrExpress.Solr4.Parameter
                 {
                     container.Remove(fieldList);
 
-                    fieldList = $"{fieldList},{fieldName}";
+                //    fieldList = $"{fieldList},{fieldName}";
                 }
                 else
                 {
-                    fieldList = $"fl={fieldName}";
+                 //   fieldList = $"fl={fieldName}";
                 }
 
                 container.Add(fieldList);
@@ -70,7 +59,7 @@ namespace SolrExpress.Solr4.Parameter
 
             foreach (var expression in this._expressions)
             {
-                var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
+                var solrFieldAttribute = expression.GetSolrFieldAttributeFromPropertyInfo();
 
                 if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
                 {
@@ -79,6 +68,19 @@ namespace SolrExpress.Solr4.Parameter
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expressions">Expression used to find the property name</param>
+        public IFieldsParameter<TDocument> Configure(Expression<Func<TDocument, object>>[] expressions)
+        {
+            Checker.IsNull(expressions);
+
+            this._expressions = expressions;
+
+            return this;
         }
     }
 }
