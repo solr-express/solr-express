@@ -1,25 +1,14 @@
-﻿using SolrExpress.Core.Helper;
+﻿using SolrExpress.Core;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
-using System;
+using SolrExpress.Core.ParameterValue;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class QueryParameter : IQueryParameter, IParameter<List<string>>
+    public sealed class QueryParameter<TDocument> : IQueryParameter<TDocument>, IParameter<List<string>>
+        where TDocument : IDocument
     {
-        private readonly IQueryParameterValue _value;
-
-        /// <summary>
-        /// Create a query parameter
-        /// </summary>
-        /// <param name="value">Parameter value used to create the query</param>
-        public QueryParameter(IQueryParameterValue value)
-        {
-            ThrowHelper<ArgumentNullException>.If(value == null);
-
-            this._value = value;
-        }
+        private IQueryParameterValue _value;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -33,6 +22,19 @@ namespace SolrExpress.Solr4.Parameter
         public void Execute(List<string> container)
         {
             container.Add($"q={this._value.Execute()}");
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="value">Parameter to include in the query</param>
+        public IQueryParameter<TDocument> Configure(IQueryParameterValue value)
+        {
+            Checker.IsNull(value);
+
+            this._value = value;
+
+            return this;
         }
     }
 }

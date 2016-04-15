@@ -244,6 +244,20 @@ namespace SolrExpress.Core.Extension
 
             return queryable.Parameter(parameter);
         }
-        
+
+        /// <summary>
+        /// Create a query field parameter
+        /// </summary>
+        /// <param name="expression">Expression used to make the mm parameter</param>
+        public static SolrQueryable<TDocument> QueryField<TDocument>(this SolrQueryable<TDocument> queryable, string expression)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .Get<IQueryFieldParameter>()
+                .Configure(expression);
+
+            return queryable.Parameter(parameter);
+        }
     }
 }

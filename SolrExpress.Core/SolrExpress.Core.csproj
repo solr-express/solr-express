@@ -87,6 +87,7 @@
     <Compile Include="Parameter\IMinimumShouldMatchParameter.cs" />
     <Compile Include="Parameter\IOffsetParameter.cs" />
     <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\IQueryFieldParameter.cs" />
     <Compile Include="Parameter\IQueryParameter.cs" />
     <Compile Include="ParameterValue\IQueryParameterValue.cs" />
     <Compile Include="Parameter\ISortParameter.cs" />
