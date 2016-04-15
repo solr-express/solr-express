@@ -17,7 +17,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetLimitParameter(10);
+            var parameter = new FacetLimitParameter();
+            parameter.Configure(10);
 
             // Act
             parameter.Execute(container);

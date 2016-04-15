@@ -33,7 +33,7 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             var query = this._query.Execute();
-            
+
             container.Add($"facet.query={this._excludes.GetSolrFacetWithExcludes(this._aliasName, query)}");
 
             if (this._sortType.HasValue)
@@ -76,10 +76,10 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType, params string[] excludes)
+        public IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
         {
-            Checker.IsNullOrWhiteSpace(this._aliasName);
-            Checker.IsNull(this._query);
+            Checker.IsNullOrWhiteSpace(aliasName);
+            Checker.IsNull(query);
 
             this._aliasName = aliasName;
             this._query = query;
