@@ -5,7 +5,6 @@ using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
@@ -13,34 +12,13 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        public FacetSpatialParameter()
-        {
-        }
-
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        /// <param name="aliasName">Name of the alias added in the query</param>
-        /// <param name="functionType">Function used in the spatial filter</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        /// <param name="distance">Distance from the center point</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetSpatialParameter(string aliasName, SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance, SolrFacetSortType? sortType = null, params string[] excludes)
-            : this()
-        {
-            this.AliasName = aliasName;
-            this.FunctionType = functionType;
-            this.Expression = expression;
-            this.CenterPoint = centerPoint;
-            this.Distance = distance;
-            this.SortType = sortType;
-            this.Excludes = excludes?.ToList();
-        }
+        private string _aliasName { get; set; }
+        private SolrSpatialFunctionType _functionType { get; set; }
+        private Expression<Func<TDocument, object>> _expression { get; set; }
+        private GeoCoordinate _centerPoint { get; set; }
+        private decimal _distance { get; set; }
+        private SolrFacetSortType? _sortType { get; set; }
+        private string[] _excludes { get; set; }
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -53,15 +31,15 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            Checker.IsNullOrWhiteSpace(this.AliasName);
-            Checker.IsNull(this.Expression);
+            Checker.IsNullOrWhiteSpace(this._aliasName);
+            Checker.IsNull(this._expression);
 
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             //TODO
             //var formule = UtilHelper.GetSolrSpatialFormule(
@@ -72,12 +50,12 @@ namespace SolrExpress.Solr4.Parameter
 
             //container.Add($"facet.query={UtilHelper.GetSolrFacetWithExcludesSolr4(this.AliasName, formule, this.Excludes)}");
 
-            if (this.SortType.HasValue)
+            if (this._sortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == SolrFacetSortType.CountDesc || this.SortType.Value == SolrFacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
 
                 //TODO
                 //UtilHelper.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
@@ -85,7 +63,7 @@ namespace SolrExpress.Solr4.Parameter
                 //container.Add($"f.{this.AliasName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{this.AliasName}.facet.mincount=1");
+            container.Add($"f.{this._aliasName}.facet.mincount=1");
         }
 
         /// <summary>
@@ -95,13 +73,13 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="errorMessage">The error message, if applicable</param>
         public void Validate(out bool isValid, out string errorMessage)
         {
-            Checker.IsNullOrWhiteSpace(this.AliasName);
-            Checker.IsNull(this.Expression);
+            Checker.IsNullOrWhiteSpace(this._aliasName);
+            Checker.IsNull(this._expression);
 
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
@@ -111,38 +89,26 @@ namespace SolrExpress.Solr4.Parameter
         }
 
         /// <summary>
-        /// Name of the alias added in the query
+        /// Configure current instance
         /// </summary>
-        public string AliasName { get; set; }
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="functionType">Function used in the spatial filter</param>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from the center point</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetSpatialParameter<TDocument> Configure(string aliasName, SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance, SolrFacetSortType? sortType = null, params string[] excludes)
+        {
+            this._aliasName = aliasName;
+            this._functionType = functionType;
+            this._expression = expression;
+            this._centerPoint = centerPoint;
+            this._distance = distance;
+            this._sortType = sortType;
+            this._excludes = excludes;
 
-        /// <summary>
-        /// Function used in the spatial filter
-        /// </summary>
-        public SolrSpatialFunctionType FunctionType { get; set; }
-
-        /// <summary>
-        /// Expression used to find the property name
-        /// </summary>
-        public Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// Center point to spatial filter
-        /// </summary>
-        public GeoCoordinate CenterPoint { get; set; }
-
-        /// <summary>
-        /// Distance from the center point
-        /// </summary>
-        public decimal Distance { get; set; }
-
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        public SolrFacetSortType? SortType { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        public List<string> Excludes { get; set; }
+            return this;
+        }
     }
 }

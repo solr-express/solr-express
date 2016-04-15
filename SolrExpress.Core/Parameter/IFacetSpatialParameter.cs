@@ -1,6 +1,5 @@
 ﻿using SolrExpress.Core.ParameterValue;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
@@ -12,38 +11,15 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Name of the alias added in the query
+        /// Configure current instance
         /// </summary>
-        string AliasName { get; set; }
-
-        /// <summary>
-        /// Function used in the spatial filter
-        /// </summary>
-        SolrSpatialFunctionType FunctionType { get; set; }
-
-        /// <summary>
-        /// Expression used to find the property name
-        /// </summary>
-        Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// Center point to spatial filter
-        /// </summary>
-        GeoCoordinate CenterPoint { get; set; }
-
-        /// <summary>
-        /// Distance from the center point
-        /// </summary>
-        decimal Distance { get; set; }
-
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        SolrFacetSortType? SortType { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        List<string> Excludes { get; set; }
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="functionType">Function used in the spatial filter</param>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from the center point</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        IFacetSpatialParameter<TDocument> Configure(string aliasName, SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance, SolrFacetSortType? sortType = null, params string[] excludes);
     }
 }
