@@ -71,6 +71,7 @@
     <Compile Include="Parameter\QueryParameter.cs" />
     <Compile Include="Parameter\RowsParameter.cs" />
     <Compile Include="Parameter\SortParameter.cs" />
+    <Compile Include="Parameter\SpatialFilterParameter.cs" />
     <Compile Include="Parameter\StartParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />

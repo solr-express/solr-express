@@ -259,5 +259,23 @@ namespace SolrExpress.Core.Extension
 
             return queryable.Parameter(parameter);
         }
+
+        /// <summary>
+        /// Create a query field parameter
+        /// </summary>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="functionType">Function used in the spatial filter</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from the center point</param>
+        public static SolrQueryable<TDocument> SpatialFilter<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, SolrSpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .Get<ISpatialFilterParameter<TDocument>>()
+                .Configure(expression, functionType, centerPoint, distance);
+
+            return queryable.Parameter(parameter);
+        }
     }
 }

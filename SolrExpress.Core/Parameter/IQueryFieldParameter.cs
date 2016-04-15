@@ -1,5 +1,8 @@
 ﻿namespace SolrExpress.Core.Parameter
 {
+    /// <summary>
+    /// Signatures to use in query field parameter
+    /// </summary>
     public interface IQueryFieldParameter : IParameter
     {
         /// <summary>

@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core.Extension.Internal;
+using SolrExpress.Core.Parameter;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
 using System;
 using System.Collections.Generic;
@@ -9,30 +9,13 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : IParameter<List<string>>, IValidation
+    public sealed class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private readonly SolrSpatialFunctionType _functionType;
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly GeoCoordinate _centerPoint;
-        private readonly decimal _distance;
-
-        /// <summary>
-        /// Create a spatial filter parameter
-        /// </summary>
-        /// <param name="functionType">Function used in the spatial filter</param>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        /// <param name="distance">Distance from the center point</param>
-        public SpatialFilterParameter(SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance)
-        {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
-
-            this._functionType = functionType;
-            this._expression = expression;
-            this._centerPoint = centerPoint;
-            this._distance = distance;
-        }
+        private SolrSpatialFunctionType _functionType;
+        private Expression<Func<TDocument, object>> _expression;
+        private GeoCoordinate _centerPoint;
+        private decimal _distance;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -45,15 +28,16 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
-            var formule = UtilHelper.GetSolrSpatialFormule(
-                this._functionType,
-                fieldName,
-                this._centerPoint,
-                this._distance);
+            //TODO
+            //var formule = UtilHelper.GetSolrSpatialFormule(
+            //    this._functionType,
+            //    fieldName,
+            //    this._centerPoint,
+            //    this._distance);
 
-            container.Add($"fq={formule}");
+            //container.Add($"fq={formule}");
         }
 
         /// <summary>
@@ -66,13 +50,32 @@ namespace SolrExpress.Solr4.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
                 errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
             }
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="functionType">Function used in the spatial filter</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from the center point</param>
+        public ISpatialFilterParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrSpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
+        {
+            Checker.IsNull(expression);
+
+            this._functionType = functionType;
+            this._expression = expression;
+            this._centerPoint = centerPoint;
+            this._distance = distance;
+
+            return this;
         }
     }
 }

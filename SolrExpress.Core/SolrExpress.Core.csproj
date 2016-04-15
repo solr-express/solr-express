@@ -91,6 +91,7 @@
     <Compile Include="Parameter\IQueryParameter.cs" />
     <Compile Include="ParameterValue\IQueryParameterValue.cs" />
     <Compile Include="Parameter\ISortParameter.cs" />
+    <Compile Include="Parameter\ISpatialFilterParameter.cs" />
     <Compile Include="Parameter\SolrFacetSortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
