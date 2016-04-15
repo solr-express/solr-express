@@ -3,6 +3,7 @@ using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr4.Extension.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -40,15 +41,10 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             var fieldName = this._expression.GetFieldNameFromExpression();
+            var formule = this._functionType.GetSolrSpatialFormule(fieldName, this._centerPoint, this._distance);
+            var facetName = this._excludes.GetSolrFacetWithExcludes(this._aliasName, formule);
 
-            //TODO
-            //var formule = UtilHelper.GetSolrSpatialFormule(
-            //    this.FunctionType,
-            //    fieldName,
-            //    this.CenterPoint,
-            //    this.Distance);
-
-            //container.Add($"facet.query={UtilHelper.GetSolrFacetWithExcludesSolr4(this.AliasName, formule, this.Excludes)}");
+            container.Add($"facet.query={facetName}");
 
             if (this._sortType.HasValue)
             {

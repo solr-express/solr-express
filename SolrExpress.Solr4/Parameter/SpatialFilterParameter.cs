@@ -30,14 +30,9 @@ namespace SolrExpress.Solr4.Parameter
         {
             var fieldName = this._expression.GetFieldNameFromExpression();
 
-            //TODO
-            //var formule = UtilHelper.GetSolrSpatialFormule(
-            //    this._functionType,
-            //    fieldName,
-            //    this._centerPoint,
-            //    this._distance);
+            var formule = this._functionType.GetSolrSpatialFormule(fieldName, this._centerPoint, this._distance);
 
-            //container.Add($"fq={formule}");
+            container.Add($"fq={formule}");
         }
 
         /// <summary>

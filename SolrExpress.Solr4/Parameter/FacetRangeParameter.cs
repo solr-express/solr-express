@@ -2,6 +2,7 @@
 using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr4.Extension.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -36,9 +37,9 @@ namespace SolrExpress.Solr4.Parameter
             }
 
             var fieldName = this._expression.GetFieldNameFromExpression();
+            var facetName = this._excludes.GetSolrFacetWithExcludes(this._aliasName, fieldName);
 
-            // TODO
-            //container.Add($"facet.range={this.Expression.GetSolrFacetWithExcludesSolr4(this.AliasName, fieldName, this.Excludes)}");
+            container.Add($"facet.range={facetName}");
 
             if (!string.IsNullOrWhiteSpace(this._gap))
             {

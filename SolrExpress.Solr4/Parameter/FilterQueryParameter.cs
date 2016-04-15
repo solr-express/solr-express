@@ -25,8 +25,16 @@ namespace SolrExpress.Solr4.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            //TODO
-            //container.Add($"fq={UtilHelper.GetSolrFilterWithTag(this.TagName, this.Value.Execute())}");
+            var expression = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(this._tagName))
+            {
+                expression = string.Format("{{!tag={0}}}", this._tagName);
+            }
+
+            expression += this._value.Execute();
+
+            container.Add($"fq={expression}");
         }
 
         /// <summary>
