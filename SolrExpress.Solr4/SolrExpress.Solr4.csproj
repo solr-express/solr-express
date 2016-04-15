@@ -68,6 +68,7 @@
     <Compile Include="Parameter\RowsParameter.cs" />
     <Compile Include="Parameter\StartParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider.cs" />
     <Compile Include="Result\DocumentResult.cs" />
     <Compile Include="Resolver.cs" />
     <Compile Include="Result\FacetFieldResult.cs" />
