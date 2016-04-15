@@ -11,18 +11,11 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find the property name
+        /// Configure current instance
         /// </summary>
-        Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// Value of the filter
-        /// </summary>
-        IQueryParameterValue Value { get; set; }
-
-        /// <summary>
-        /// Tag name to use in facet excluding list
-        /// </summary>
-        string TagName { get; set; }
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="value">Value of the filter</param>
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        IFilterParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, IQueryParameterValue value, string tagName);
     }
 }

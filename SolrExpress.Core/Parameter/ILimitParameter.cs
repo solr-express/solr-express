@@ -6,8 +6,9 @@
     public interface ILimitParameter : IParameter
     {
         /// <summary>
-        /// Value of limit
+        /// Configure current instance
         /// </summary>
-        int Value { get; set; }
+        /// <param name="value">Value of limit</param>
+        ILimitParameter Configure(int value);
     }
 }

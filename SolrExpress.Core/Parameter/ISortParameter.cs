@@ -10,13 +10,10 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find the property name
+        /// Configure current instance
         /// </summary>
-        Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// True to ascendent order, otherwise false
-        /// </summary>
-        bool Ascendent { get; set; }
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="ascendent">True to ascendent order, otherwise false</param>
+        ISortParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, bool ascendent);
     }
 }

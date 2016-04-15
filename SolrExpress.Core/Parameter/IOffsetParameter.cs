@@ -6,8 +6,10 @@
     public interface IOffsetParameter : IParameter
     {
         /// <summary>
-        /// Value of limit
+        /// Configure current instance
         /// </summary>
-        int Value { get; set; }
+        /// <param name="value">Value of limit</param>
+        /// <returns></returns>
+        IOffsetParameter Configure(int value);
     }
 }

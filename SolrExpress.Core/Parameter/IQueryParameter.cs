@@ -9,8 +9,9 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Parameter to include in the query
+        /// Configure current instance
         /// </summary>
-        IQueryParameterValue Value { get; set; }
+        /// <param name="value">Parameter to include in the query</param>
+        IQueryParameter<TDocument> Configure(IQueryParameterValue value);
     }
 }

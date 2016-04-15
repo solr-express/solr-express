@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
@@ -11,8 +10,10 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find the property name
+        /// Configure current instance
         /// </summary>
-        List<Expression<Func<TDocument, object>>> Expressions { get; set; }
+        /// <param name="expressions">Expression used to find the property name</param>
+        /// <returns></returns>
+        IFieldsParameter<TDocument> Configure(Expression<Func<TDocument, object>>[] expressions);
     }
 }

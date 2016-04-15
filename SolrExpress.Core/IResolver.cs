@@ -9,7 +9,7 @@
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        TConcrete GetParameter<TConcrete>()
+        TConcrete Get<TConcrete>()
             where TConcrete : class;
 
         /// <summary>
@@ -17,8 +17,7 @@
         /// </summary>
         /// <param name="settings">Settings to configure concrete class</param>
         /// <returns>Concrete class</returns>
-        TConcrete GetParameter<TConcrete, TSettings>(TSettings settings)
-            where TConcrete : class
-            where TSettings : ISettings;
+        TConcrete Get<TConcrete>(ISettings settings)
+            where TConcrete : class;
     }
 }

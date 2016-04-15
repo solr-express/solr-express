@@ -10,23 +10,12 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Name of the alias added in the query
+        /// Configure current instance
         /// </summary>
-        string AliasName { get; set; }
-
-        /// <summary>
-        /// Query used to make the facet
-        /// </summary>
-        IQueryParameterValue Query { get; set; }
-
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        SolrFacetSortType? SortType { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        List<string> Excludes { get; set; }
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="query">Query used to make the facet</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType, List<string> excludes);
     }
 }

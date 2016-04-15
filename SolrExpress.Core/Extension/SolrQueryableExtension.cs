@@ -2,6 +2,7 @@
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Extension
@@ -13,14 +14,15 @@ namespace SolrExpress.Core.Extension
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetField<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null)
+        /// <param name="limit">Limit of itens in facet's result</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public static SolrQueryable<TDocument> FacetField<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType, int? limit = null, List<string> excludes = null)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IFacetFieldParameter<TDocument>, FacetFieldSettings<TDocument>>(new FacetFieldSettings<TDocument>
-            {
-                Expression = expression,
-                SortType = sortType
-            });
+            var parameter = queryable
+                .Resolver
+                .Get<IFacetFieldParameter<TDocument>>()
+                .Configure(expression, sortType, limit, excludes);
 
             return queryable.Parameter(parameter);
         }
@@ -31,13 +33,14 @@ namespace SolrExpress.Core.Extension
         /// <param name="aliasName">Name of the alias added in the query</param>
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> queryable, string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public static SolrQueryable<TDocument> FacetQuery<TDocument>(this SolrQueryable<TDocument> queryable, string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, List<string> excludes = null)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IFacetQueryParameter<TDocument>>();
-            parameter.AliasName = aliasName;
-            parameter.Query = query;
-            parameter.SortType = sortType;
+            var parameter = queryable
+                .Resolver
+                .Get<IFacetQueryParameter<TDocument>>()
+                .Configure(aliasName, query, sortType, excludes);
 
             return queryable.Parameter(parameter);
         }
@@ -54,13 +57,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> FacetRange<TDocument>(this SolrQueryable<TDocument> queryable, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, SolrFacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IFacetRangeParameter<TDocument>>();
-            parameter.AliasName = aliasName;
-            parameter.Expression = expression;
-            parameter.Gap = gap;
-            parameter.Start = start;
-            parameter.End = end;
-            parameter.SortType = sortType;
+            var parameter = queryable
+                .Resolver
+                .Get<IFacetRangeParameter<TDocument>>()
+                .Configure(aliasName, expression, gap, start, end, sortType);
 
             return queryable.Parameter(parameter);
         }
@@ -72,8 +72,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Fields<TDocument>(this SolrQueryable<TDocument> queryable, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IFieldsParameter<TDocument>>();
-            parameter.Expressions.AddRange(expressions);
+            var parameter = queryable
+                .Resolver
+                .Get<IFieldsParameter<TDocument>>()
+                .Configure(expressions);
 
             return queryable.Parameter(parameter);
         }
@@ -83,14 +85,16 @@ namespace SolrExpress.Core.Extension
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="value">Value of the filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, string value)
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public static SolrQueryable<TDocument> Filter<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, string value, string tagName = null)
             where TDocument : IDocument
         {
             var paramaterValue = new Single<TDocument>(expression, value);
 
-            var parameter = queryable.Resolver.GetParameter<IFilterParameter<TDocument>>();
-            parameter.Expression = expression;
-            parameter.Value = paramaterValue;
+            var parameter = queryable
+                .Resolver
+                .Get<IFilterParameter<TDocument>>()
+                .Configure(expression, paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
         }
@@ -101,15 +105,17 @@ namespace SolrExpress.Core.Extension
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
-        public static SolrQueryable<TDocument> Filter<TDocument, TValue>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, TValue? from, TValue? to)
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public static SolrQueryable<TDocument> Filter<TDocument, TValue>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, TValue? from, TValue? to, string tagName = null)
             where TDocument : IDocument
             where TValue : struct
         {
             var paramaterValue = new Range<TDocument, TValue>(expression, from, to);
 
-            var parameter = queryable.Resolver.GetParameter<IFilterParameter<TDocument>>();
-            parameter.Expression = expression;
-            parameter.Value = paramaterValue;
+            var parameter = queryable
+                .Resolver
+                .Get<IFilterParameter<TDocument>>()
+                .Configure(expression, paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
         }
@@ -121,8 +127,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Limit<TDocument>(this SolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<ILimitParameter>();
-            parameter.Value = value;
+            var parameter = queryable
+                .Resolver
+                .Get<ILimitParameter>()
+                .Configure(value);
 
             return queryable.Parameter(parameter);
         }
@@ -134,8 +142,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Offset<TDocument>(this SolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IOffsetParameter>();
-            parameter.Value = value;
+            var parameter = queryable
+                .Resolver
+                .Get<IOffsetParameter>()
+                .Configure(value);
 
             return queryable.Parameter(parameter);
         }
@@ -147,8 +157,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Query<TDocument>(this SolrQueryable<TDocument> queryable, IQueryParameterValue value)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IQueryParameter<TDocument>>();
-            parameter.Value = value;
+            var parameter = queryable
+                .Resolver
+                .Get<IQueryParameter<TDocument>>()
+                .Configure(value);
 
             return queryable.Parameter(parameter);
         }
@@ -162,8 +174,10 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Any(value);
 
-            var parameter = queryable.Resolver.GetParameter<IQueryParameter<TDocument>>();
-            parameter.Value = paramaterValue;
+            var parameter = queryable
+                .Resolver
+                .Get<IQueryParameter<TDocument>>()
+                .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
         }
@@ -178,8 +192,10 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Single<TDocument>(expression, value);
 
-            var parameter = queryable.Resolver.GetParameter<IQueryParameter<TDocument>>();
-            parameter.Value = paramaterValue;
+            var parameter = queryable
+                .Resolver
+                .Get<IQueryParameter<TDocument>>()
+                .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
         }
@@ -192,9 +208,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> Sort<TDocument>(this SolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, bool ascendent)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<ISortParameter<TDocument>>();
-            parameter.Expression = expression;
-            parameter.Ascendent = ascendent;
+            var parameter = queryable
+                .Resolver
+                .Get<ISortParameter<TDocument>>()
+                .Configure(expression, ascendent);
 
             return queryable.Parameter(parameter);
         }
@@ -206,8 +223,10 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryable<TDocument> FacetLimit<TDocument>(this SolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable.Resolver.GetParameter<IFacetLimitParameter>();
-            parameter.Value = value;
+            var parameter = queryable
+                .Resolver
+                .Get<IFacetLimitParameter>()
+                .Configure(value);
 
             return queryable.Parameter(parameter);
         }

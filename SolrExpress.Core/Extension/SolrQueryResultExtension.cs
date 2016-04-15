@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryResult<TDocument> Document<TDocument>(this SolrQueryResult<TDocument> queryResult, out List<TDocument> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetParameter<IDocumentResult<TDocument>>();
+            var result = queryResult.Resolver.Get<IDocumentResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -27,7 +27,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryResult<TDocument> FacetField<TDocument>(this SolrQueryResult<TDocument> queryResult, out List<FacetKeyValue<string>> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetParameter<IFacetFieldResult<TDocument>>();
+            var result = queryResult.Resolver.Get<IFacetFieldResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -41,7 +41,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryResult<TDocument> FacetQuery<TDocument>(this SolrQueryResult<TDocument> queryResult, out Dictionary<string, long> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetParameter<IFacetQueryResult<TDocument>>();
+            var result = queryResult.Resolver.Get<IFacetQueryResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -55,7 +55,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryResult<TDocument> FacetRange<TDocument>(this SolrQueryResult<TDocument> queryResult, out List<FacetKeyValue<FacetRange>> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetParameter<IFacetRangeResult<TDocument>>();
+            var result = queryResult.Resolver.Get<IFacetRangeResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -69,7 +69,7 @@ namespace SolrExpress.Core.Extension
         public static SolrQueryResult<TDocument> Statistic<TDocument>(this SolrQueryResult<TDocument> queryResult, out Statistic data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetParameter<IStatisticResult<TDocument>>();
+            var result = queryResult.Resolver.Get<IStatisticResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 

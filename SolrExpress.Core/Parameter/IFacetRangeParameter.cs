@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
@@ -11,38 +10,14 @@ namespace SolrExpress.Core.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Name of the alias added in the query
+        /// Configure current instance
         /// </summary>
-        string AliasName { get; set; }
-
-        /// <summary>
-        /// Expression used to find the property name
-        /// </summary>
-        string End { get; set; }
-
-        /// <summary>
-        /// Size of each range bucket to make the facet
-        /// </summary>
-        Expression<Func<TDocument, object>> Expression { get; set; }
-
-        /// <summary>
-        /// Lower bound to make the facet
-        /// </summary>
-        string Gap { get; set; }
-
-        /// <summary>
-        /// Upper bound to make the facet
-        /// </summary>
-        SolrFacetSortType? SortType { get; set; }
-
-        /// <summary>
-        /// Sort type of the result of the facet
-        /// </summary>
-        string Start { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        List<string> Excludes { get; set; }
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="gap">Size of each range bucket to make the facet</param>
+        /// <param name="start">Lower bound to make the facet</param>
+        /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, SolrFacetSortType? sortType);
     }
 }
