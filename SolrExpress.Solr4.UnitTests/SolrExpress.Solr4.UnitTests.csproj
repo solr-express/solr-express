@@ -71,6 +71,7 @@
     <Compile Include="Parameter\FilterQueryParameterTests.cs" />
     <Compile Include="Parameter\MinimumShouldMatchParameterTests.cs" />
     <Compile Include="Parameter\QueryFieldParameterTests.cs" />
+    <Compile Include="Parameter\QueryParameterTests.cs" />
     <Compile Include="Parameter\RowsParameterTests.cs" />
     <Compile Include="Parameter\SortParameterTests.cs" />
     <Compile Include="Parameter\SpatialFilterParameterTests.cs" />

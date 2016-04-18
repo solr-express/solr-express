@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
 using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -19,7 +19,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new QueryParameter(new Single<TestDocument>(q => q.Id, "ITEM01"));
+            var parameter = new QueryParameter<TestDocument>();
+            parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
             parameter.Execute(container);
@@ -39,7 +40,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void QueryParameter002()
         {
             // Arrange / Act / Assert
-            new QueryParameter(null);
+            var parameter = new QueryParameter<TestDocument>();
+            parameter.Configure(null);
         }
     }
 }
