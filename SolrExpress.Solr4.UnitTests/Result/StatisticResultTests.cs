@@ -1,21 +1,21 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Exception;
+using SolrExpress.Core;
 using SolrExpress.Solr4.Builder;
+using System;
 
-namespace SolrExpress.Solr4.UnitTests.Builder
+namespace SolrExpress.Solr4.UnitTests.Result
 {
     [TestClass]
-    public class StatisticResultBuilderTests
+    public class StatisticResultTests
     {
         /// <summary>
-        /// Where   Using a StatisticResultBuilder instance
+        /// Where   Using a StatisticResult instance
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void StatisticResultBuilder001()
+        public void StatisticResult001()
         {
             // Arrange
             var jsonStr = @"
@@ -26,7 +26,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder<TestDocument>();
+            var builder = new StatisticResult<TestDocument>();
             bool isEmpty;
             long documentCount;
             TimeSpan timeToExecution;
@@ -44,13 +44,13 @@ namespace SolrExpress.Solr4.UnitTests.Builder
         }
 
         /// <summary>
-        /// Where   Using a StatisticResultBuilder instance
+        /// Where   Using a StatisticResult instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void StatisticResultBuilder002()
+        public void StatisticResult002()
         {
             // Arrange
             var jsonStr = @"
@@ -61,20 +61,20 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder<TestDocument>();
+            var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
         }
 
         /// <summary>
-        /// Where   Using a StatisticResultBuilder instance
+        /// Where   Using a StatisticResult instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void StatisticResultBuilder003()
+        public void StatisticResult003()
         {
             // Arrange
             var jsonStr = @"
@@ -84,20 +84,20 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                 ""QTime"":10}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder<TestDocument>();
+            var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
         }
 
         /// <summary>
-        /// Where   Using a StatisticResultBuilder instance
+        /// Where   Using a StatisticResult instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void StatisticResultBuilder004()
+        public void StatisticResult004()
         {
             // Arrange
             var jsonStr = @"
@@ -105,24 +105,24 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new StatisticResultBuilder<TestDocument>();
+            var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
         }
 
         /// <summary>
-        /// Where   Using a StatisticResultBuilder instance
+        /// Where   Using a StatisticResult instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void StatisticResultBuilder005()
+        public void StatisticResult005()
         {
             // Arrange
             var jsonObject = new JObject();
-            var builder = new StatisticResultBuilder<TestDocument>();
+            var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);

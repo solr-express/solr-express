@@ -1,22 +1,22 @@
-﻿using System;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Entity;
+using SolrExpress.Core.Result;
 using SolrExpress.Solr4.Builder;
+using System;
+using System.Linq;
 
-namespace SolrExpress.Solr4.UnitTests.Builder
+namespace SolrExpress.Solr4.UnitTests.Result
 {
     [TestClass]
-    public class FacetRangeResultBuilderTests
+    public class FacetRangeResultTests
     {
         /// <summary>
-        /// Where   Using a FacetRangeResultBuilder instance
+        /// Where   Using a FacetRangeResult instance
         /// When    Invoking the method "Execute" using a valid JSON (with integer values)
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void FacetRangeResultBuilder001()
+        public void FacetRangeResult001()
         {
             // Arrange
             var jObject = JObject.Parse(@"
@@ -41,7 +41,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder<TestDocument>();
+            var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
@@ -54,12 +54,12 @@ namespace SolrExpress.Solr4.UnitTests.Builder
         }
 
         /// <summary>
-        /// Where   Using a FacetRangeResultBuilder instance
+        /// Where   Using a FacetRangeResult instance
         /// When    Invoking the method "Execute" using a valid JSON (with date time values)
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void FacetRangeResultBuilder002()
+        public void FacetRangeResult002()
         {
             // Arrange
             var jObject = JObject.Parse(@"
@@ -78,7 +78,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder<TestDocument>();
+            var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
@@ -91,12 +91,12 @@ namespace SolrExpress.Solr4.UnitTests.Builder
         }
 
         /// <summary>
-        /// Where   Using a FacetRangeResultBuilder instance
+        /// Where   Using a FacetRangeResult instance
         /// When    Invoking the method "Execute" using a valid JSON (with float values)
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void FacetRangeResultBuilder003()
+        public void FacetRangeResult003()
         {
             // Arrange
             var jObject = JObject.Parse(@"
@@ -121,7 +121,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResultBuilder<TestDocument>();
+            var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
             parameter.Execute(jObject);

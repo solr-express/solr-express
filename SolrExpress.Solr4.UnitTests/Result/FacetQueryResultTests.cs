@@ -2,18 +2,18 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr4.Builder;
 
-namespace SolrExpress.Solr4.UnitTests.Builder
+namespace SolrExpress.Solr4.UnitTests.Result
 {
     [TestClass]
-    public class FacetQueryResultBuilderTests
+    public class FacetQueryResultTests
     {
         /// <summary>
-        /// Where   Using a FacetQueryResultBuilder instance
+        /// Where   Using a FacetQueryResult instance
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void FacetQueryResultBuilder001()
+        public void FacetQueryResult001()
         {
             // Arrange
             var jObject = JObject.Parse(@"
@@ -24,7 +24,7 @@ namespace SolrExpress.Solr4.UnitTests.Builder
                 }
             }");
 
-            var parameter = new FacetQueryResultBuilder<TestDocument>();
+            var parameter = new FacetQueryResult<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
