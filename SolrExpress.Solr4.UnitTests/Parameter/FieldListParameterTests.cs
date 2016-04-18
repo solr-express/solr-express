@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Solr4.Parameter;
 using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -18,8 +19,10 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FieldListParameter<TestDocument>(q => q.Id);
-            var parameter2 = new FieldListParameter<TestDocument>(q => q.Score);
+            var parameter1 = new FieldListParameter<TestDocument>();
+            var parameter2 = new FieldListParameter<TestDocument>();
+            parameter1.Configure(q => q.Id);
+            parameter2.Configure(q => q.Score);
 
             // Act
             parameter1.Execute(container);
@@ -41,7 +44,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>(q => q.NotStored);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotStored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -61,7 +65,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>(q => q.Stored);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -80,7 +85,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FieldListParameter<TestDocument>(q => q.Id, q => q.Score);
+            var parameter = new FieldListParameter<TestDocument>();
+            parameter.Configure(q => q.Id, q => q.Score);
 
             // Act
             parameter.Execute(container);
@@ -101,7 +107,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>(q => q.Stored, q => q.NotStored);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored, q => q.NotStored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -120,7 +127,22 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void FieldListParameter006()
         {
             // Arrange / Act / Assert
-            new FieldListParameter<TestDocument>(null);
+            var parameter = new FieldListParameter<TestDocument>();
+            parameter.Configure(null);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with empty collection
+        /// What    Throws ArgumentOutOfRangeException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void FieldListParameter007()
+        {
+            // Arrange / Act / Assert
+            var parameter = new FieldListParameter<TestDocument>();
+            parameter.Configure(new Expression<Func<TestDocument, object>>[] { });
         }
     }
 }

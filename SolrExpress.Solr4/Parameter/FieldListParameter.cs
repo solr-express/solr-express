@@ -73,9 +73,10 @@ namespace SolrExpress.Solr4.Parameter
         /// Configure current instance
         /// </summary>
         /// <param name="expressions">Expression used to find the property name</param>
-        public IFieldsParameter<TDocument> Configure(Expression<Func<TDocument, object>>[] expressions)
+        public IFieldsParameter<TDocument> Configure(params Expression<Func<TDocument, object>>[] expressions)
         {
             Checker.IsNull(expressions);
+            Checker.IsTrue<ArgumentOutOfRangeException>(expressions.Count() == 0);
 
             this._expressions = expressions;
 
