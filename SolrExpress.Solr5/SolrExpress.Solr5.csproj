@@ -61,6 +61,7 @@
     <Compile Include="Result\FacetFieldResult.cs" />
     <Compile Include="Result\FacetQueryResult.cs" />
     <Compile Include="Result\FacetRangeResult.cs" />
+    <Compile Include="Result\StatisticResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
