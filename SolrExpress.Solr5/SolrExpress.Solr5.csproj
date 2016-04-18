@@ -60,6 +60,7 @@
     <Compile Include="Result\DocumentResult.cs" />
     <Compile Include="Result\FacetFieldResult.cs" />
     <Compile Include="Result\FacetQueryResult.cs" />
+    <Compile Include="Result\FacetRangeResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

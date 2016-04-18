@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +10,7 @@ namespace SolrExpress.Solr5.Result
     /// <summary>
     /// Facet range data builder
     /// </summary>
-    public sealed class FacetRangeResultBuilder<TDocument> : IFacetRangeResultBuilder<TDocument>, IConvertJsonObject
+    public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
@@ -41,29 +38,31 @@ namespace SolrExpress.Solr5.Result
             var second = facetData.Skip(1).FirstOrDefault();
             var last = facetData.Last();
 
-            object gap;
+            //TODO
 
-            if (typeof(TFacetKey) == typeof(DateTime))
-            {
-                gap = GenericHelper.Subtract<TFacetKey?, TimeSpan?>(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
+            //object gap;
 
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<DateTime>)range.Key).MaximumValue = ((FacetRange<DateTime>)range.Key).MinimumValue.Value.Add((TimeSpan)gap);
-                }
-            }
-            else
-            {
-                gap = GenericHelper.Subtract(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
+            //if (typeof(TFacetKey) == typeof(DateTime))
+            //{
+            //    gap = GenericHelper.Subtract<TFacetKey?, TimeSpan?>(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
 
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, (TFacetKey?)gap);
-                }
-            }
+            //    foreach (var range in facetData)
+            //    {
+            //        ((FacetRange<DateTime>)range.Key).MaximumValue = ((FacetRange<DateTime>)range.Key).MinimumValue.Value.Add((TimeSpan)gap);
+            //    }
+            //}
+            //else
+            //{
+            //    gap = GenericHelper.Subtract(((FacetRange<TFacetKey>)second.Key).MinimumValue, ((FacetRange<TFacetKey>)first.Key).MinimumValue);
 
-            ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
-            ((FacetRange<TFacetKey>)facetAfter).MinimumValue = ((FacetRange<TFacetKey>)last.Key).MaximumValue;
+            //    foreach (var range in facetData)
+            //    {
+            //        ((FacetRange<TFacetKey>)range.Key).MaximumValue = GenericHelper.Addition(((FacetRange<TFacetKey>)range.Key).MinimumValue, (TFacetKey?)gap);
+            //    }
+            //}
+
+            //((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
+            //((FacetRange<TFacetKey>)facetAfter).MinimumValue = ((FacetRange<TFacetKey>)last.Key).MaximumValue;
         }
 
         /// <summary>
