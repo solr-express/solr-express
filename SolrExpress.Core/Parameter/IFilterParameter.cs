@@ -1,6 +1,4 @@
 ﻿using SolrExpress.Core.ParameterValue;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Parameter
 {
@@ -13,9 +11,8 @@ namespace SolrExpress.Core.Parameter
         /// <summary>
         /// Configure current instance
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="value">Value of the filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
-        IFilterParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, IQueryParameterValue value, string tagName);
+        IFilterParameter<TDocument> Configure(IQueryParameterValue value, string tagName = null);
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr4.Parameter;
 using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -19,8 +19,10 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FilterQueryParameter(new Single<TestDocument>(q => q.Id, "X"));
-            var parameter2 = new FilterQueryParameter(new Single<TestDocument>(q => q.Score, "Y"));
+            var parameter1 = new FilterQueryParameter<TestDocument>();
+            var parameter2 = new FilterQueryParameter<TestDocument>();
+            parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
+            parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
 
             // Act
             parameter1.Execute(container);
@@ -42,7 +44,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void FilterQueryParameter002()
         {
             // Arrange / Act / Assert
-            new FilterQueryParameter(null);
+            var parameter = new FilterQueryParameter<TestDocument>();
+            parameter.Configure(null);
         }
 
         /// <summary>
@@ -55,10 +58,11 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FilterQueryParameter(new Single<TestDocument>(q => q.Id, "X"), "tag1");
+            var parameter = new FilterQueryParameter<TestDocument>();
+            parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
 
             // Act
-            parameter1.Execute(container);
+            parameter.Execute(container);
 
             // Assert
             Assert.AreEqual(1, container.Count);

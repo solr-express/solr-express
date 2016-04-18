@@ -11,7 +11,6 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FilterQueryParameter<TDocument> : IFilterParameter<TDocument>, IParameter<List<string>>
         where TDocument : IDocument
     {
-        private Expression<Func<TDocument, object>> _expression { get; set; }
         private IQueryParameterValue _value { get; set; }
         private string _tagName { get; set; }
 
@@ -34,15 +33,12 @@ namespace SolrExpress.Solr4.Parameter
         /// <summary>
         /// Configure current instance
         /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
         /// <param name="value">Value of the filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public IFilterParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, IQueryParameterValue value, string tagName)
+        public IFilterParameter<TDocument> Configure(IQueryParameterValue value, string tagName = null)
         {
-            Checker.IsNull(expression);
             Checker.IsNull(value);
 
-            this._expression = expression;
             this._value = value;
             this._tagName = tagName;
 

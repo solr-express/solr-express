@@ -93,7 +93,7 @@ namespace SolrExpress.Core.Extension
             var parameter = queryable
                 .Resolver
                 .Get<IFilterParameter<TDocument>>()
-                .Configure(expression, paramaterValue, tagName);
+                .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
         }
@@ -114,7 +114,7 @@ namespace SolrExpress.Core.Extension
             var parameter = queryable
                 .Resolver
                 .Get<IFilterParameter<TDocument>>()
-                .Configure(expression, paramaterValue, tagName);
+                .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
         }
