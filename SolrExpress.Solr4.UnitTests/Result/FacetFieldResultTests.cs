@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Solr4.Builder;
+using SolrExpress.Solr4.Result;
 
 namespace SolrExpress.Solr4.UnitTests.Result
 {

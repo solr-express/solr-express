@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Result;
-using SolrExpress.Solr4.Builder;
+using SolrExpress.Solr4.Result;
 using System;
 using System.Linq;
 
