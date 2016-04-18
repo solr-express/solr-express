@@ -56,30 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\BuilderFactory.cs" />
-    <Compile Include="Builder\DocumentBuilder.cs" />
-    <Compile Include="Builder\FacetFieldResultBuilder.cs" />
-    <Compile Include="Builder\FacetQueryResultBuilder.cs" />
-    <Compile Include="Builder\FacetRangeResultBuilder.cs" />
-    <Compile Include="Builder\StatisticResultBuilder.cs" />
-    <Compile Include="Parameter\AnyParameter.cs" />
-    <Compile Include="Parameter\FacetFieldParameter.cs" />
-    <Compile Include="Parameter\FacetLimitParameter.cs" />
-    <Compile Include="Parameter\FacetQueryParameter.cs" />
-    <Compile Include="Parameter\FacetRangeParameter.cs" />
-    <Compile Include="Parameter\FacetSpatialParameter.cs" />
-    <Compile Include="Parameter\FieldsParameter.cs" />
-    <Compile Include="Parameter\FilterParameter.cs" />
-    <Compile Include="Parameter\LimitParameter.cs" />
-    <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
-    <Compile Include="Parameter\OffsetParameter.cs" />
-    <Compile Include="Parameter\ParameterFactory.cs" />
-    <Compile Include="Parameter\QueryFieldParameter.cs" />
-    <Compile Include="Parameter\QueryParameter.cs" />
-    <Compile Include="Parameter\SortParameter.cs" />
-    <Compile Include="Parameter\SpatialFilterParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\Provider.cs" />
+    <Compile Include="Result\DocumentResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,6 +73,7 @@
       <Name>SolrExpress.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

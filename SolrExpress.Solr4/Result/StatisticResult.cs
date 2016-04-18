@@ -3,7 +3,7 @@ using SolrExpress.Core;
 using SolrExpress.Core.Result;
 using System;
 
-namespace SolrExpress.Solr4.Builder
+namespace SolrExpress.Solr4.Result
 {
     /// <summary>
     /// Statistic data builder

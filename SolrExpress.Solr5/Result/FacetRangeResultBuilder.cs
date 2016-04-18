@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Solr5.Builder
+namespace SolrExpress.Solr5.Result
 {
     /// <summary>
     /// Facet range data builder

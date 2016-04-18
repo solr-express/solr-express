@@ -8,7 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SolrExpress.Solr4.Builder
+namespace SolrExpress.Solr4.Result
 {
     /// <summary>
     /// Facet range data builder

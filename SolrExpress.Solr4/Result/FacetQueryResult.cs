@@ -4,7 +4,7 @@ using SolrExpress.Core.Result;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Solr4.Builder
+namespace SolrExpress.Solr4.Result
 {
     /// <summary>
     /// Facet query data builder

@@ -1,20 +1,16 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Json;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Result;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr5.Builder
+namespace SolrExpress.Solr5.Result
 {
     /// <summary>
     /// Document data builder
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
-    public sealed class DocumentBuilder<TDocument> : IDocumentBuilder<TDocument>, IConvertJsonObject
+    public sealed class DocumentResult<TDocument> : IDocumentResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
@@ -23,7 +19,7 @@ namespace SolrExpress.Solr5.Builder
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            ThrowHelper<UnexpectedJsonFormatException>.If(jsonObject["response"]?["docs"] == null, jsonObject.ToString());
+            Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["response"]?["docs"] == null, jsonObject.ToString());
 
             var jsonSerializer = JsonSerializer.Create();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());

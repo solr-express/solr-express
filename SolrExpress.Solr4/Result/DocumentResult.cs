@@ -4,7 +4,7 @@ using SolrExpress.Core;
 using SolrExpress.Core.Result;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr4.Builder
+namespace SolrExpress.Solr4.Result
 {
     /// <summary>
     /// Document data builder
