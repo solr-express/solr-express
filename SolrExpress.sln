@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4", "SolrEx
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4.UnitTests", "SolrExpress.Solr4.UnitTests\SolrExpress.Solr4.UnitTests.csproj", "{9B7A0323-0529-4729-B563-AC1D60013C68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5", "SolrExpress.Solr5\SolrExpress.Solr5.csproj", "{3B679214-5E64-44CE-9188-D692F2371709}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{9B7A0323-0529-4729-B563-AC1D60013C68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9B7A0323-0529-4729-B563-AC1D60013C68}.Release|x64.ActiveCfg = Release|Any CPU
 		{9B7A0323-0529-4729-B563-AC1D60013C68}.Release|x64.Build.0 = Release|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B679214-5E64-44CE-9188-D692F2371709}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
