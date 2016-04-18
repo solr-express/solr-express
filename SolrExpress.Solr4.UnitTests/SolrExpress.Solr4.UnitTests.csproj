@@ -66,6 +66,7 @@
     <Compile Include="Parameter\FacetFieldParameterTests.cs" />
     <Compile Include="Parameter\FacetLimitParameterTests.cs" />
     <Compile Include="Parameter\FacetQueryParameterTests.cs" />
+    <Compile Include="Parameter\FacetRangeParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDocument.cs" />
     <Compile Include="TestDocumentWithAnyPropertyTypes.cs" />

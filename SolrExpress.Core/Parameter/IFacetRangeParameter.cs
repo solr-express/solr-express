@@ -19,6 +19,6 @@ namespace SolrExpress.Core.Parameter
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, SolrFacetSortType? sortType, params string[] excludes);
+        IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, SolrFacetSortType? sortType = null, params string[] excludes);
     }
 }
