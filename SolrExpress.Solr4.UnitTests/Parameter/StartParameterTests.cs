@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Solr4.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Parameter
 {
@@ -17,7 +17,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new StartParameter(10);
+            var parameter = new StartParameter();
+            parameter.Configure(10);
 
             // Act
             parameter.Execute(container);

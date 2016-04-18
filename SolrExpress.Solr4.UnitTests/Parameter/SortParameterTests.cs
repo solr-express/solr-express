@@ -18,7 +18,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new SortParameter<TestDocument>(q => q.Id, true);
+            var parameter = new SortParameter<TestDocument>();
+            parameter.Configure(q => q.Id, true);
 
             // Act
             parameter.Execute(container);
@@ -38,7 +39,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void SortParameter002()
         {
             // Arrange / Act / Assert
-            new SortParameter<TestDocument>(null, true);
+            var parameter = new SortParameter<TestDocument>();
+            parameter.Configure(null, true);
         }
     }
 }

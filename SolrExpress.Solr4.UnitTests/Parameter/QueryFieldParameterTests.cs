@@ -18,7 +18,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new QueryFieldParameter("id^10 score~2^20");
+            var parameter = new QueryFieldParameter();
+            parameter.Configure("id^10 score~2^20");
 
             // Act
             parameter.Execute(container);
@@ -38,7 +39,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void QueryFieldParameter002()
         {
             // Arrange / Act / Assert
-            new QueryFieldParameter(null);
+            var parameter = new QueryFieldParameter();
+            parameter.Configure(null);
         }
     }
 }

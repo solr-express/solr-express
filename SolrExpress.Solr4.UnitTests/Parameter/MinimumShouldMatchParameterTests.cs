@@ -18,7 +18,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new MinimumShouldMatchParameter("75%");
+            var parameter = new MinimumShouldMatchParameter();
+            parameter.Configure("75%");
 
             // Act
             parameter.Execute(container);
@@ -38,7 +39,8 @@ namespace SolrExpress.Solr4.UnitTests.Parameter
         public void MinimumShouldMatchParameter002()
         {
             // Arrange / Act / Assert
-            new MinimumShouldMatchParameter(null);
+            var parameter = new MinimumShouldMatchParameter();
+            parameter.Configure(null);
         }
     }
 }
