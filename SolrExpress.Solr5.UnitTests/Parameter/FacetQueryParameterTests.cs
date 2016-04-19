@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
 using System;
@@ -31,7 +31,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"));
+            var parameter = new FacetQueryParameter<TestDocument>();
+            parameter.Configure("X", new Any("avg('Y')"));
 
             // Act
             parameter.Execute(jObject);
@@ -65,7 +66,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), SolrFacetSortType.CountDesc);
+            var parameter = new FacetQueryParameter<TestDocument>();
+            parameter.Configure("X", new Any("avg('Y')"), SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);
@@ -85,7 +87,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FacetQueryParameter003()
         {
             // Arrange / Act / Assert
-            new FacetQueryParameter(null, new Any("x"));
+            var parameter = new FacetQueryParameter<TestDocument>();
+            parameter.Configure(null, new Any("x"));
         }
 
         /// <summary>
@@ -98,7 +101,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FacetQueryParameter004()
         {
             // Arrange / Act / Assert
-            new FacetQueryParameter("x", null);
+            var parameter = new FacetQueryParameter<TestDocument>();
+            parameter.Configure("x", null);
         }
 
         /// <summary>
@@ -122,7 +126,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+            var parameter = new FacetQueryParameter<TestDocument>();
+            parameter.Configure("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(jObject);
