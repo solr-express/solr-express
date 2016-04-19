@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Enumerator;
+using SolrExpress.Core.Parameter;
 using SolrExpress.Solr5.Parameter;
 using System;
 
@@ -30,7 +30,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id);
+            var parameter = new FacetFieldParameter<TestDocument>();
+            parameter.Configure(q => q.Id);
 
             // Act
             parameter.Execute(jObject);
@@ -64,7 +65,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, SolrFacetSortType.CountDesc);
+            var parameter = new FacetFieldParameter<TestDocument>();
+            parameter.Configure(q => q.Id, SolrFacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);
@@ -84,7 +86,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FacetFieldParameter003()
         {
             // Arrange / Act / Assert
-            new FacetFieldParameter<TestDocument>(null);
+            var parameter = new FacetFieldParameter<TestDocument>();
+            parameter.Configure(null);
         }
 
         /// <summary>
@@ -109,7 +112,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, limit: 10);
+            var parameter = new FacetFieldParameter<TestDocument>();
+            parameter.Configure(q => q.Id, limit: 10);
 
             // Act
             parameter.Execute(jObject);
@@ -140,7 +144,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetFieldParameter<TestDocument>(q => q.Id, excludes: new[] { "tag1", "tag2" });
+            var parameter = new FacetFieldParameter<TestDocument>();
+            parameter.Configure(q => q.Id, excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(jObject);

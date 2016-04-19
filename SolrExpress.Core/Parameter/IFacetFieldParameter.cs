@@ -16,6 +16,6 @@ namespace SolrExpress.Core.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="limit">Limit of itens in facet's result</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType, int? limit, string[] excludes);
+        IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes);
     }
 }
