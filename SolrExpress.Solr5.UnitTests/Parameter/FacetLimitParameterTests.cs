@@ -24,7 +24,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetLimitParameter(10);
+            var parameter = new FacetLimitParameter();
+            parameter.Configure(10);
 
             // Act
             parameter.Execute(jObject);

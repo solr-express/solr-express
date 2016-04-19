@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Parameter\AnyParameterTests.cs" />
     <Compile Include="Parameter\FacetFieldParameterTests.cs" />
+    <Compile Include="Parameter\FacetLimitParameterTests.cs" />
     <Compile Include="Parameter\FieldsParameterTests.cs" />
     <Compile Include="Parameter\FilterParameterTests.cs" />
     <Compile Include="Parameter\LimitParameterTests.cs" />
