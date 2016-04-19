@@ -67,6 +67,9 @@
     <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
     <Compile Include="Parameter\OffsetParameter.cs" />
     <Compile Include="Parameter\QueryFieldParameter.cs" />
+    <Compile Include="Parameter\QueryParameter.cs" />
+    <Compile Include="Parameter\SortParameter.cs" />
+    <Compile Include="Parameter\SpatialFilterParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Result\DocumentResult.cs" />

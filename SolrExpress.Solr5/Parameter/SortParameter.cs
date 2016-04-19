@@ -1,31 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class SortParameter<TDocument> : ISortParameter, IParameter<JObject>
+    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, IParameter<JObject>
         where TDocument : IDocument
     {
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly bool _ascendent;
-
-        /// <summary>
-        /// Create a sort parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public SortParameter(Expression<Func<TDocument, object>> expression, bool ascendent)
-        {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
-
-            this._expression = expression;
-            this._ascendent = ascendent;
-        }
+        private Expression<Func<TDocument, object>> _expression;
+        private bool _ascendent;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -40,13 +26,28 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["sort"] ?? new JArray();
 
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
 
             var value = $"{fieldName} {(this._ascendent ? "asc" : "desc")}";
 
             jArray.Add(value);
 
             jObject["sort"] = jArray;
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="ascendent">True to ascendent order, otherwise false</param>
+        public ISortParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, bool ascendent)
+        {
+            Checker.IsNull(expression);
+
+            this._expression = expression;
+            this._ascendent = ascendent;
+
+            return this;
         }
     }
 }
