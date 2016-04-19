@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 
@@ -24,8 +25,7 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            //TODO
-            //jArray.Add(UtilHelper.GetSolrFilterWithTag(this._tagName, this._value.Execute()));
+            jArray.Add(this._value.Execute().GetSolrFilterWithTag(this._tagName));
 
             jObject["filter"] = jArray;
         }

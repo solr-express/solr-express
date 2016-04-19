@@ -4,7 +4,9 @@ using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr5.Extension.Internal;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -35,33 +37,31 @@ namespace SolrExpress.Solr5.Parameter
 
             var fieldName = this._expression.GetFieldNameFromExpression();
 
-            //TODO
-            //var formule = UtilHelper.GetSolrSpatialFormule(
-            //    this._functionType,
-            //    fieldName,
-            //    this._centerPoint,
-            //    this._distance);
+            var formule = this._functionType.GetSolrSpatialFormule(
+                fieldName,
+                this._centerPoint,
+                this._distance);
 
-            //var array = new List<JProperty>
-            //{
-            //    new JProperty("q", UtilHelper.GetSolrFacetWithExcludesSolr5(formule, this._excludes))
-            //};
+            var array = new List<JProperty>
+            {
+                new JProperty("q", this._excludes.GetSolrFacetWithExcludes(formule))
+            };
 
-            //if (this._sortType.HasValue)
-            //{
-            //    string typeName;
-            //    string sortName;
+            if (this._sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
 
-            //    UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+                this._sortType.Value.GetSolrFacetSort(out typeName, out sortName);
 
-            //    array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            //}
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
 
-            //var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
 
-            //facetObject.Add(jProperty);
+            facetObject.Add(jProperty);
 
-            //jObject["facet"] = facetObject;
+            jObject["facet"] = facetObject;
         }
 
         /// <summary>

@@ -3,7 +3,9 @@ using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr5.Extension.Internal;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -34,42 +36,41 @@ namespace SolrExpress.Solr5.Parameter
 
             var fieldName = this._expression.GetFieldNameFromExpression();
 
-            //TODO
-            //var array = new List<JProperty>
-            //{
-            //    new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
-            //};
+            var array = new List<JProperty>
+            {
+                new JProperty("field", this._excludes.GetSolrFacetWithExcludes(fieldName))
+            };
 
-            //if (!string.IsNullOrWhiteSpace(this._gap))
-            //{
-            //    array.Add(new JProperty("gap", this._gap));
-            //}
-            //if (!string.IsNullOrWhiteSpace(this._start))
-            //{
-            //    array.Add(new JProperty("start", this._start));
-            //}
-            //if (!string.IsNullOrWhiteSpace(this._end))
-            //{
-            //    array.Add(new JProperty("end", this._end));
-            //}
+            if (!string.IsNullOrWhiteSpace(this._gap))
+            {
+                array.Add(new JProperty("gap", this._gap));
+            }
+            if (!string.IsNullOrWhiteSpace(this._start))
+            {
+                array.Add(new JProperty("start", this._start));
+            }
+            if (!string.IsNullOrWhiteSpace(this._end))
+            {
+                array.Add(new JProperty("end", this._end));
+            }
 
-            //array.Add(new JProperty("other", new JArray("before", "after")));
+            array.Add(new JProperty("other", new JArray("before", "after")));
 
-            //if (this._sortType.HasValue)
-            //{
-            //    string typeName;
-            //    string sortName;
+            if (this._sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
 
-            //    UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+                this._sortType.Value.GetSolrFacetSort(out typeName, out sortName);
 
-            //    array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            //}
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
 
-            //var value = new JProperty(this._aliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
+            var value = new JProperty(this._aliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
 
-            //facetObject.Add(value);
+            facetObject.Add(value);
 
-            //jObject["facet"] = facetObject;
+            jObject["facet"] = facetObject;
         }
 
         /// <summary>

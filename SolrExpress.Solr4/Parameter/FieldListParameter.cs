@@ -76,7 +76,7 @@ namespace SolrExpress.Solr4.Parameter
         public IFieldsParameter<TDocument> Configure(params Expression<Func<TDocument, object>>[] expressions)
         {
             Checker.IsNull(expressions);
-            Checker.IsTrue<ArgumentOutOfRangeException>(expressions.Count() == 0);
+            Checker.IsTrue<ArgumentOutOfRangeException>(expressions.Length == 0);
 
             this._expressions = expressions;
 

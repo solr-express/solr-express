@@ -31,14 +31,13 @@ namespace SolrExpress.Solr5.Parameter
             var fieldName = this._expression.GetFieldNameFromExpression();
 
             var jObj = (JObject)jObject["params"] ?? new JObject();
-            //TODO
-            //var formule = UtilHelper.GetSolrSpatialFormule(
-            //    this._functionType,
-            //    fieldName,
-            //    this._centerPoint,
-            //    this._distance);
 
-            //jObj.Add(new JProperty("fq", formule));
+            var formule = this._functionType.GetSolrSpatialFormule(
+                fieldName,
+                this._centerPoint,
+                this._distance);
+
+            jObj.Add(new JProperty("fq", formule));
 
             jObject["params"] = jObj;
         }

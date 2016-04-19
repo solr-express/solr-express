@@ -64,7 +64,7 @@ namespace SolrExpress.Core.Extension.Internal
         /// </summary>
         /// <param name="query">Query value</param>
         /// <param name="tagName">Tag name</param>
-        internal static string GetSolrFilterWithTag(this  string query, string aliasName)
+        internal static string GetSolrFilterWithTag(this string query, string aliasName)
         {
             if (!string.IsNullOrWhiteSpace(aliasName))
             {

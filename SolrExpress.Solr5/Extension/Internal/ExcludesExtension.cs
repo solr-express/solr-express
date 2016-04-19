@@ -1,35 +1,17 @@
-﻿using SolrExpress.Core.Attribute;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
-using System;
-using System.Globalization;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-
-namespace SolrExpress.Core.Helper
+﻿namespace SolrExpress.Solr5.Extension.Internal
 {
     /// <summary>
-    /// Helper class use in the SOLR Query core
+    /// Extension class used in Expression<Func<TDocument>> to manipulate string[]
+    /// Exclusive methods to Solr 5
     /// </summary>
-    internal static class UtilHelper
+    internal static class ExcludesExtension
     {
-        
-
-        
-        
-
-
-
-
-
-
         /// <summary>
         /// Get the field with excludes
         /// </summary>
         /// <param name="fieldName">Field name</param>
         /// <param name="sortName">List of excludes</param>
-        internal static string GetSolrFacetWithExcludesSolr5(string fieldName, string[] excludes)
+        internal static string GetSolrFacetWithExcludes(this string[] excludes, string fieldName)
         {
             if (excludes != null && excludes.Length > 0)
             {
@@ -41,9 +23,5 @@ namespace SolrExpress.Core.Helper
 
             return fieldName;
         }
-
-
-
-
     }
 }

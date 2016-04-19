@@ -3,7 +3,9 @@ using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
+using SolrExpress.Solr5.Extension.Internal;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -32,32 +34,31 @@ namespace SolrExpress.Solr5.Parameter
             var fieldName = this._expression.GetFieldNameFromExpression();
             var aliasName = this._expression.GetPropertyNameFromExpression();
 
-            //TODO
-            //var array = new List<JProperty>
-            //{
-            //    new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
-            //};
+            var array = new List<JProperty>
+            {
+                new JProperty("field", this._excludes.GetSolrFacetWithExcludes(fieldName))
+            };
 
-            //if (_sortType.HasValue)
-            //{
-            //    string typeName;
-            //    string sortName;
+            if (_sortType.HasValue)
+            {
+                string typeName;
+                string sortName;
 
-            //    UtilHelper.GetSolrFacetSort(_sortType.Value, out typeName, out sortName);
+                _sortType.Value.GetSolrFacetSort(out typeName, out sortName);
 
-            //    array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            //}
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
 
-            //if (this._limit.HasValue)
-            //{
-            //    array.Add(new JProperty("limit", this._limit));
-            //}
+            if (this._limit.HasValue)
+            {
+                array.Add(new JProperty("limit", this._limit));
+            }
 
-            //var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
 
-            //facetObject.Add(value);
+            facetObject.Add(value);
 
-            //jObject["facet"] = facetObject;
+            jObject["facet"] = facetObject;
         }
 
         /// <summary>
