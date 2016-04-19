@@ -1,43 +1,41 @@
-﻿using SolrExpress.Core.Attribute;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core;
 using System;
-using SolrExpress.Core.Entity;
 
 namespace SolrExpress.Solr4.IntegrationTests
 {
     public class TechProductDocument : IDocument
     {
-        [SolrFieldAttribute("id")]
+        [SolrField("id")]
         public string Id { get; set; }
 
-        [SolrFieldAttribute("name")]
+        [SolrField("name")]
         public string Name { get; set; }
 
-        [SolrFieldAttribute("manu")]
+        [SolrField("manu")]
         public string Manufacturer { get; set; }
 
-        [SolrFieldAttribute("manu_id_s")]
+        [SolrField("manu_id_s")]
         public string ManufacturerId { get; set; }
 
-        [SolrFieldAttribute("cat")]
+        [SolrField("cat")]
         public string[] Categories { get; set; }
 
-        [SolrFieldAttribute("features")]
+        [SolrField("features")]
         public string[] Features { get; set; }
 
-        [SolrFieldAttribute("price")]
+        [SolrField("price")]
         public decimal Price { get; set; }
 
-        [SolrFieldAttribute("popularity")]
+        [SolrField("popularity")]
         public decimal Popularity { get; set; }
 
-        [SolrFieldAttribute("inStock")]
+        [SolrField("inStock")]
         public bool InStock { get; set; }
 
-        [SolrFieldAttribute("manufacturedate_dt")]
+        [SolrField("manufacturedate_dt")]
         public DateTime ManufacturedateIn { get; set; }
 
-        [SolrFieldAttribute("store")]
+        [SolrField("store")]
         public GeoCoordinate StoredAt { get; set; }
     }
 }

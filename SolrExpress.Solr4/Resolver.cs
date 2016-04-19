@@ -13,11 +13,6 @@ namespace SolrExpress.Solr4
             throw new NotImplementedException();
         }
 
-        public TConcrete Get<TConcrete>(ISettings settings) where TConcrete : class
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Get concrete class that implements informed interface
         /// </summary>

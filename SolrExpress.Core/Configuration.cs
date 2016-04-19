@@ -3,9 +3,9 @@
     /// <summary>
     /// Configurations to control SOLR Query behavior
     /// </summary>
-    public sealed class SolrExpressConfiguration
+    public sealed class Configuration
     {
-        public SolrExpressConfiguration()
+        public Configuration()
         {
             this.FailFast = true;
         }

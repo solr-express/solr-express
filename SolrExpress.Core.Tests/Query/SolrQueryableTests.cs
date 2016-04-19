@@ -65,7 +65,7 @@ namespace SolrExpress.Core.Tests.Query
             // Arrange
             var mockValidate = new Mock<IValidation>();
             var mockParameter = mockValidate.As<IParameter>();
-            var solrQueryConfiguration = new SolrExpressConfiguration
+            var solrQueryConfiguration = new Configuration
             {
                 FailFast = false
             };

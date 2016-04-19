@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Configurations about SolrQueriable behavior
         /// </summary>
-        private readonly SolrExpressConfiguration _configuration;
+        private readonly Configuration _configuration;
 
         /// <summary>
         /// List of the parameters arranged in the queryable class
@@ -39,19 +39,19 @@ namespace SolrExpress.Core.Query
         /// Resolver used to resolve classes dependency
         /// </summary>
         public IResolver Resolver { get; private set; }
-        
+
         /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="provider">Provider used to resolve expression</param>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public SolrQueryable(IProvider provider, IResolver resolver, SolrExpressConfiguration configuration = null)
+        public SolrQueryable(IProvider provider, IResolver resolver, Configuration configuration = null)
         {
             Checker.IsNull(provider);
             Checker.IsNull(resolver);
 
-            this._configuration = configuration ?? new SolrExpressConfiguration();
+            this._configuration = configuration ?? new Configuration();
 
             this.Provider = provider;
             this.Resolver = resolver;
@@ -111,6 +111,25 @@ namespace SolrExpress.Core.Query
             this._resultInterceptors.Add(interceptor);
 
             return this;
+        }
+
+        /// <summary>
+        /// Execute the search in the solr with informed parameters
+        /// </summary>
+        /// <param name="handler">Handler name used in solr request</param>
+        /// <returns>Solr result</returns>
+        public SolrQueryResult<TDocument> Execute(string handler = null)
+        {
+            var query = this.Provider.GetQuery(this._parameters);
+
+            this._queryInterceptors.ForEach(q => q.Execute(ref query));
+
+            var requestHandler = string.IsNullOrWhiteSpace(handler) ? RequestHandler.SELECT : handler;
+            var json = this.Provider.Execute(requestHandler, query);
+
+            this._resultInterceptors.ForEach(q => q.Execute(ref json));
+
+            return new SolrQueryResult<TDocument>(this.Resolver, json);
         }
     }
 }
