@@ -24,7 +24,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new QueryParameter(new Single<TestDocument>(q => q.Id, "ITEM01"));
+            var parameter = new QueryParameter<TestDocument>();
+            parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
             parameter.Execute(jObject);
@@ -44,7 +45,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void QueryParameter002()
         {
             // Arrange / Act / Assert
-            new QueryParameter(null);
+            var parameter = new QueryParameter<TestDocument>();
+            parameter.Configure(null);
         }
     }
 }

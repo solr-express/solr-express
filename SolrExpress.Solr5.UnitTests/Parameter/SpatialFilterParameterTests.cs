@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
+using SolrExpress.Core;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Solr5.Parameter;
 using System;
 
@@ -27,7 +27,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Geofilt, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+            var parameter = new SpatialFilterParameter<TestDocument>();
+            parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 
             // Act
             parameter.Execute(jObject);
@@ -54,7 +55,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Bbox, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+            var parameter = new SpatialFilterParameter<TestDocument>();
+            parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Bbox, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 
             // Act
             parameter.Execute(jObject);
@@ -75,7 +77,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(SolrSpatialFunctionType.Geofilt, q => q.NotIndexed, new GeoCoordinate(), 0);
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -95,7 +98,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(SolrSpatialFunctionType.Geofilt, q => q.Indexed, new GeoCoordinate(), 0);
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -114,7 +118,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void SpatialFilterParameter005()
         {
             // Arrange / Act / Assert
-            new SpatialFilterParameter<TestDocument>(SolrSpatialFunctionType.Bbox, null, new GeoCoordinate(), 10);
+            var parameter = new SpatialFilterParameter<TestDocument>();
+            parameter.Configure(null, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 10);
         }
     }
 }

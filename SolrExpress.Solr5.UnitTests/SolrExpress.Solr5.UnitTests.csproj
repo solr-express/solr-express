@@ -68,6 +68,10 @@
     <Compile Include="Parameter\LimitParameterTests.cs" />
     <Compile Include="Parameter\MinimumShouldMatchParameterTests.cs" />
     <Compile Include="Parameter\OffsetParameterTests.cs" />
+    <Compile Include="Parameter\QueryFieldParameterTests.cs" />
+    <Compile Include="Parameter\QueryParameterTests.cs" />
+    <Compile Include="Parameter\SortParameterTests.cs" />
+    <Compile Include="Parameter\SpatialFilterParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\DocumentResultTests.cs" />
     <Compile Include="Result\FacetFieldResultTests.cs" />

@@ -23,7 +23,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SortParameter<TestDocument>(q => q.Id, true);
+            var parameter = new SortParameter<TestDocument>();
+            parameter.Configure(q => q.Id, true);
 
             // Act
             parameter.Execute(jObject);
@@ -43,7 +44,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void SortParameter002()
         {
             // Arrange / Act / Assert
-            new SortParameter<TestDocument>(null, true);
+            var parameter = new SortParameter<TestDocument>();
+            parameter.Configure(null, true);
         }
     }
 }
