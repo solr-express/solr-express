@@ -1,28 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
-using System;
+using SolrExpress.Core.ParameterValue;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FilterParameter : IFilterParameter, IParameter<JObject>
+    public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, IParameter<JObject>
+        where TDocument : IDocument
     {
-        private readonly IQueryParameterValue _value;
-        private readonly string _tagName;
-
-        /// <summary>
-        /// Create a filter parameter
-        /// </summary>
-        /// <param name="value">Parameter value used to create the query</param>
-        /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public FilterParameter(IQueryParameterValue value, string tagName = null)
-        {
-            ThrowHelper<ArgumentNullException>.If(value == null);
-
-            this._value = value;
-            this._tagName = tagName;
-        }
+        private IQueryParameterValue _value;
+        private string _tagName;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -37,9 +24,25 @@ namespace SolrExpress.Solr5.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(UtilHelper.GetSolrFilterWithTag(this._tagName, this._value.Execute()));
+            //TODO
+            //jArray.Add(UtilHelper.GetSolrFilterWithTag(this._tagName, this._value.Execute()));
 
             jObject["filter"] = jArray;
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="value">Value of the filter</param>
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        public IFilterParameter<TDocument> Configure(IQueryParameterValue value, string tagName = null)
+        {
+            Checker.IsNull(value);
+
+            this._value = value;
+            this._tagName = tagName;
+
+            return this;
         }
     }
 }

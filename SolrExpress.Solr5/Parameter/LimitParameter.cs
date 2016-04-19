@@ -1,21 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
     public sealed class LimitParameter : ILimitParameter, IParameter<JObject>
     {
-        private readonly int _value;
-
-        /// <summary>
-        /// Create a limit parameter
-        /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
-        public LimitParameter(int value)
-        {
-            this._value = value;
-        }
+        private int _value;
 
         /// <summary>
         /// True to indicate multiples instance of the parameter, otherwise false
@@ -29,6 +19,17 @@ namespace SolrExpress.Solr5.Parameter
         public void Execute(JObject jObject)
         {
             jObject["limit"] = new JValue(_value);
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="value">Value of limit</param>
+        public ILimitParameter Configure(int value)
+        {
+            this._value = value;
+
+            return this;
         }
     }
 }

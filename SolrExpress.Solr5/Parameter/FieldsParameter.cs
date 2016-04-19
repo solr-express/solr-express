@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
@@ -9,21 +8,10 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FieldsParameter<TDocument> : IFieldsParameter, IParameter<JObject>, IValidation
+    public sealed class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, IParameter<JObject>, IValidation
         where TDocument : IDocument
     {
-        private readonly Expression<Func<TDocument, object>>[] _expressions;
-
-        /// <summary>
-        /// Create a fields parameter
-        /// </summary>
-        /// <param name="expressions">Expression used to find the property name</param>
-        public FieldsParameter(params Expression<Func<TDocument, object>>[] expressions)
-        {
-            ThrowHelper<ArgumentNullException>.If(expressions == null);
-
-            this._expressions = expressions;
-        }
+        private Expression<Func<TDocument, object>>[] _expressions;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -40,7 +28,7 @@ namespace SolrExpress.Solr5.Parameter
 
             foreach (var expression in this._expressions)
             {
-                var value = UtilHelper.GetFieldNameFromExpression(expression);
+                var value = expression.GetFieldNameFromExpression();
 
                 jArray.Add(value);
             }
@@ -60,7 +48,7 @@ namespace SolrExpress.Solr5.Parameter
 
             foreach (var expression in this._expressions)
             {
-                var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(expression);
+                var solrFieldAttribute = expression.GetSolrFieldAttributeFromPropertyInfo();
 
                 if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
                 {
@@ -70,6 +58,19 @@ namespace SolrExpress.Solr5.Parameter
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expressions">Expression used to find the property name</param>
+        public IFieldsParameter<TDocument> Configure(params Expression<Func<TDocument, object>>[] expressions)
+        {
+            Checker.IsNull(expressions);
+
+            this._expressions = expressions;
+
+            return this;
         }
     }
 }
