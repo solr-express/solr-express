@@ -1,24 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
+using SolrExpress.Core;
+using SolrExpress.Core.Parameter;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class MinimumShouldMatchParameter : IParameter<JObject>
+    public sealed class MinimumShouldMatchParameter : IMinimumShouldMatchParameter, IParameter<JObject>
     {
-        private readonly string _expression;
-
-        /// <summary>
-        /// Create a minimun should parameter parameter
-        /// </summary>
-        /// <param name="expression">Expression used to make the mm parameter</param>
-        public MinimumShouldMatchParameter(string expression)
-        {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
-
-            this._expression = expression;
-        }
+        private string _expression;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -37,6 +25,19 @@ namespace SolrExpress.Solr5.Parameter
             jObj.Add(jProperty);
 
             jObject["params"] = jObj;
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Expression used to make the mm parameter</param>
+        public IMinimumShouldMatchParameter Configure(string expression)
+        {
+            Checker.IsNullOrWhiteSpace(expression);
+
+            this._expression = expression;
+
+            return this;
         }
     }
 }

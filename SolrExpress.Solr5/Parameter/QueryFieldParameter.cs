@@ -1,24 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
-using System;
+using SolrExpress.Core;
+using SolrExpress.Core.Parameter;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class QueryFieldParameter : IParameter<JObject>
+    public sealed class QueryFieldParameter : IQueryFieldParameter, IParameter<JObject>
     {
-        private readonly string _expression;
-
-        /// <summary>
-        /// Create a query field parameter
-        /// </summary>
-        /// <param name="expression">Query used to make the query field</param>
-        public QueryFieldParameter(string expression)
-        {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(expression));
-
-            this._expression = expression;
-        }
+        private string _expression;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -37,6 +25,19 @@ namespace SolrExpress.Solr5.Parameter
             jObj.Add(jProperty);
 
             jObject["params"] = jObj;
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Query used to make the query field</param>
+        public IQueryFieldParameter Configure(string expression)
+        {
+            Checker.IsNullOrWhiteSpace(expression);
+
+            this._expression = expression;
+
+            return this;
         }
     }
 }

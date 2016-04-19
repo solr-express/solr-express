@@ -64,6 +64,9 @@
     <Compile Include="Parameter\FieldsParameter.cs" />
     <Compile Include="Parameter\FilterParameter.cs" />
     <Compile Include="Parameter\LimitParameter.cs" />
+    <Compile Include="Parameter\MinimumShouldMatchParameter.cs" />
+    <Compile Include="Parameter\OffsetParameter.cs" />
+    <Compile Include="Parameter\QueryFieldParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Result\DocumentResult.cs" />
