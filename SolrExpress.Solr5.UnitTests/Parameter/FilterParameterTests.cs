@@ -27,8 +27,10 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter(new Single<TestDocument>(q => q.Id, "X"));
-            var parameter2 = new FilterParameter(new Single<TestDocument>(q => q.Score, "Y"));
+            var parameter1 = new FilterParameter<TestDocument>();
+            var parameter2 = new FilterParameter<TestDocument>();
+            parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
+            parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
 
             // Act
             parameter1.Execute(jObject);
@@ -49,7 +51,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FilterParameter002()
         {
             // Arrange / Act / Assert
-            new FilterParameter(null);
+            var parameter = new FilterParameter<TestDocument>();
+            parameter.Configure(null);
         }
 
         /// <summary>
@@ -69,10 +72,11 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter(new Single<TestDocument>(q => q.Id, "X"), "tag1");
+            var parameter = new FilterParameter<TestDocument>();
+            parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
 
             // Act
-            parameter1.Execute(jObject);
+            parameter.Execute(jObject);
             actual = jObject.ToString();
 
             // Assert

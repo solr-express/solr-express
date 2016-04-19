@@ -25,7 +25,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new MinimumShouldMatchParameter("75%");
+            var parameter = new MinimumShouldMatchParameter();
+            parameter.Configure("75%");
 
             // Act
             parameter.Execute(jObject);
@@ -45,7 +46,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void MinimumShouldMatchParameter002()
         {
             // Arrange / Act / Assert
-            new MinimumShouldMatchParameter(null);
+            var parameter = new MinimumShouldMatchParameter();
+            parameter.Configure(null);
         }
     }
 }

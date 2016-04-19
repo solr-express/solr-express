@@ -64,6 +64,10 @@
   <ItemGroup>
     <Compile Include="Parameter\AnyParameterTests.cs" />
     <Compile Include="Parameter\FieldsParameterTests.cs" />
+    <Compile Include="Parameter\FilterParameterTests.cs" />
+    <Compile Include="Parameter\LimitParameterTests.cs" />
+    <Compile Include="Parameter\MinimumShouldMatchParameterTests.cs" />
+    <Compile Include="Parameter\OffsetParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Result\DocumentResultTests.cs" />
     <Compile Include="Result\FacetFieldResultTests.cs" />
