@@ -1,19 +1,19 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Solr5.Builder;
+using SolrExpress.Solr5.Result;
 
 namespace SolrExpress.Solr5.UnitTests.Result
 {
     [TestClass]
-    public class FacetFieldResultBuilderTests
+    public class FacetFieldResultTests
     {
         /// <summary>
-        /// Where   Using a FacetFieldResultBuilder instance
+        /// Where   Using a FacetFieldResult instance
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void FacetFieldResultBuilder001()
+        public void FacetFieldResult001()
         {
             // Arrange
             var jObject = JObject.Parse(@"
@@ -34,7 +34,7 @@ namespace SolrExpress.Solr5.UnitTests.Result
                 }
             }");
 
-            var parameter = new FacetFieldResultBuilder<TestDocument>();
+            var parameter = new FacetFieldResult<TestDocument>();
 
             // Act
             parameter.Execute(jObject);
