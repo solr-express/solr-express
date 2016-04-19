@@ -1,21 +1,21 @@
-﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Exception;
-using SolrExpress.Solr5.Builder;
+using SolrExpress.Core;
+using SolrExpress.Solr5.Result;
+using System.Collections.Generic;
 
-namespace SolrExpress.Solr5.UnitTests.Builder
+namespace SolrExpress.Solr5.UnitTests.Result
 {
     [TestClass]
-    public class DocumentBuilderTests
+    public class DocumentResultTests
     {
         /// <summary>
-        /// Where   Using a DocumentBuilder instance
+        /// Where   Using a DocumentResult instance
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void DocumentBuilder001()
+        public void DocumentResult001()
         {
             // Arrange
             var jsonStr = @"
@@ -27,7 +27,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentBuilder<TestDocument>();
+            var builder = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act
@@ -41,13 +41,13 @@ namespace SolrExpress.Solr5.UnitTests.Builder
         }
 
         /// <summary>
-        /// Where   Using a DocumentBuilder instance
+        /// Where   Using a DocumentResult instance
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(UnexpectedJsonFormatException))]
-        public void DocumentBuilder002()
+        public void DocumentResult002()
         {
             // Arrange
             var jsonStr = @"
@@ -59,19 +59,19 @@ namespace SolrExpress.Solr5.UnitTests.Builder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentBuilder<TestDocument>();
+            var builder = new DocumentResult<TestDocument>();
 
             // Act / Assert
             builder.Execute(jsonObject);
         }
 
         /// <summary>
-        /// Where   Using a DocumentBuilder instance
+        /// Where   Using a DocumentResult instance
         /// When    Invoking the method "Execute" using a valid JSON with a geo coordinate value
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void DocumentBuilder003()
+        public void DocumentResult003()
         {
             // Arrange
             var jsonStr = @"
@@ -82,7 +82,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentBuilder<TestDocument>();
+            var builder = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act
@@ -96,12 +96,12 @@ namespace SolrExpress.Solr5.UnitTests.Builder
         }
 
         /// <summary>
-        /// Where   Using a DocumentBuilder instance
+        /// Where   Using a DocumentResult instance
         /// When    Invoking the method "Execute" using a valid JSON and a concrect class using SolrFieldAttribute
         /// What    Parse to informed concret classes
         /// </summary>
         [TestMethod]
-        public void DocumentBuilder004()
+        public void DocumentResult004()
         {
             // Arrange
             var jsonStr = @"
@@ -112,7 +112,7 @@ namespace SolrExpress.Solr5.UnitTests.Builder
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentBuilder<TestDocument>();
+            var builder = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act

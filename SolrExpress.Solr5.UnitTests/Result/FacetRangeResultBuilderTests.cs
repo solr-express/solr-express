@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Entity;
 using SolrExpress.Solr5.Builder;
 
-namespace SolrExpress.Solr5.UnitTests.Builder
+namespace SolrExpress.Solr5.UnitTests.Result
 {
     [TestClass]
     public class FacetRangeResultBuilderTests
