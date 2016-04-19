@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
@@ -11,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter, IParameter<JObject>, IValidation
+    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, IParameter<JObject>, IValidation
         where TDocument : IDocument
     {
         private readonly Expression<Func<TDocument, object>> _expression;

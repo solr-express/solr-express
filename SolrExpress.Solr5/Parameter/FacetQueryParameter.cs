@@ -1,37 +1,19 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Enumerator;
-using SolrExpress.Core.Helper;
+using SolrExpress.Core;
 using SolrExpress.Core.Parameter;
+using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
-using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Parameter
 {
-    public sealed class FacetQueryParameter : IFacetQueryParameter, IParameter<JObject>, IValidation
+    public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IParameter<JObject>, IValidation
+         where TDocument : IDocument
     {
-        private readonly string _aliasName;
-        private readonly IQueryParameterValue _query;
-        private readonly SolrFacetSortType? _sortType;
-        private readonly string[] _excludes;
-
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        /// <param name="aliasName">Name of the alias added in the query</param>
-        /// <param name="query">Query used to make the facet</param>
-        /// <param name="sortType">Sort type of the result of the facet</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetQueryParameter(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
-        {
-            ThrowHelper<ArgumentNullException>.If(string.IsNullOrWhiteSpace(aliasName));
-            ThrowHelper<ArgumentNullException>.If(query == null);
-
-            this._aliasName = aliasName;
-            this._query = query;
-            this._sortType = sortType;
-            this._excludes = excludes;
-        }
+        private string _aliasName;
+        private IQueryParameterValue _query;
+        private SolrFacetSortType? _sortType;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -46,26 +28,27 @@ namespace SolrExpress.Solr5.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var array = new List<JProperty>
-            {
-                new JProperty("q", UtilHelper.GetSolrFacetWithExcludesSolr5(this._query.Execute(), this._excludes))
-            };
+            //TODO
+            //var array = new List<JProperty>
+            //{
+            //    new JProperty("q", UtilHelper.GetSolrFacetWithExcludesSolr5(this._query.Execute(), this._excludes))
+            //};
 
-            if (this._sortType.HasValue)
-            {
-                string typeName;
-                string sortName;
+            //if (this._sortType.HasValue)
+            //{
+            //    string typeName;
+            //    string sortName;
 
-                UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
+            //    UtilHelper.GetSolrFacetSort(this._sortType.Value, out typeName, out sortName);
 
-                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            }
+            //    array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            //}
 
-            var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            //var jProperty = new JProperty(this._aliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
 
-            facetObject.Add(jProperty);
+            //facetObject.Add(jProperty);
 
-            jObject["facet"] = facetObject;
+            //jObject["facet"] = facetObject;
         }
 
         /// <summary>
@@ -84,6 +67,26 @@ namespace SolrExpress.Solr5.Parameter
             {
                 queryValidation.Validate(out isValid, out errorMessage);
             }
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="aliasName">Name of the alias added in the query</param>
+        /// <param name="query">Query used to make the facet</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
+        {
+            Checker.IsNullOrWhiteSpace(aliasName);
+            Checker.IsNull(query);
+
+            this._aliasName = aliasName;
+            this._query = query;
+            this._sortType = sortType;
+            this._excludes = excludes;
+
+            return this;
         }
     }
 }

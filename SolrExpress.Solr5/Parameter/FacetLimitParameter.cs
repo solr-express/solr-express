@@ -1,21 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Parameter;
-using SolrExpress.Core.Query;
 
 namespace SolrExpress.Solr5.Parameter
 {
     public sealed class FacetLimitParameter : IFacetLimitParameter, IParameter<JObject>
     {
-        private readonly int _value;
-
-        /// <summary>
-        /// Create a facet limit parameter
-        /// </summary>
-        /// <param name="value">Value of the parameter limit</param>
-        public FacetLimitParameter(int value)
-        {
-            this._value = value;
-        }
+        private int _value;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -34,6 +24,17 @@ namespace SolrExpress.Solr5.Parameter
             jObj.Add(jProperty);
 
             jObject["params"] = jObj;
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="value">Value of limit</param>
+        public IFacetLimitParameter Configure(int value)
+        {
+            this._value = value;
+
+            return this;
         }
     }
 }
