@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Helper;
-using SolrExpress.Core.Query;
+using SolrExpress.Core;
+using SolrExpress.Core.Parameter;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace SolrExpress.Solr5.Query
+namespace SolrExpress.Solr5
 {
     /// <summary>
     /// SOLR 5.x access provider
@@ -83,8 +82,7 @@ namespace SolrExpress.Solr5.Query
                         content = reader.ReadToEnd();
                     }
                 }
-
-                ThrowHelper<UnexpectedJsonQueryException>.If(response.StatusCode != HttpStatusCode.OK, content);
+                Checker.IsTrue<UnexpectedJsonQueryException>(response.StatusCode != HttpStatusCode.OK, content);
 
                 return content;
             }
