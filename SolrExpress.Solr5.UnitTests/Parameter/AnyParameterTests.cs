@@ -24,7 +24,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new AnyParameter("x", "y");
+            var parameter = new AnyParameter();
+            parameter.Configure("x", "y");
 
             // Act
             parameter.Execute(jObject);

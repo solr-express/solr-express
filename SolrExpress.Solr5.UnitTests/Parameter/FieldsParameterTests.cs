@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Parameter;
 using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.UnitTests.Parameter
 {
@@ -26,8 +27,10 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FieldsParameter<TestDocument>(q => q.Id);
-            var parameter2 = new FieldsParameter<TestDocument>(q => q.Score);
+            var parameter1 = new FieldsParameter<TestDocument>();
+            var parameter2 = new FieldsParameter<TestDocument>();
+            parameter1.Configure(q => q.Id);
+            parameter2.Configure(q => q.Score);
 
             // Act
             parameter1.Execute(jObject);
@@ -49,7 +52,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(q => q.NotStored);
+            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotStored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -69,7 +73,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(q => q.Stored);
+            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -96,7 +101,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FieldsParameter<TestDocument>(q => q.Id, q => q.Score);
+            var parameter = new FieldsParameter<TestDocument>();
+            parameter.Configure(q => q.Id, q => q.Score);
 
             // Act
             parameter.Execute(jObject);
@@ -117,7 +123,8 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(q => q.Stored, q => q.NotStored);
+            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored, q => q.NotStored);
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -136,7 +143,22 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
         public void FieldListParameter006()
         {
             // Arrange / Act / Assert
-            new FieldsParameter<TestDocument>(null);
+            var parameter = new FieldsParameter<TestDocument>();
+            parameter.Configure(null);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Create the instance with empty collection
+        /// What    Throws ArgumentOutOfRangeException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void FieldListParameter007()
+        {
+            // Arrange / Act / Assert
+            var parameter = new FieldsParameter<TestDocument>();
+            parameter.Configure(new Expression<Func<TestDocument, object>>[] { });
         }
     }
 }
