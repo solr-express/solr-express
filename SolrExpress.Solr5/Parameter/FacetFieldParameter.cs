@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Query;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -11,27 +11,10 @@ namespace SolrExpress.Solr5.Parameter
     public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, IParameter<JObject>, IValidation
         where TDocument : IDocument
     {
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly SolrFacetSortType? _sortType;
-        private readonly int? _limit;
-        private readonly string[] _excludes;
-
-        /// <summary>
-        /// Create a facet parameter
-        /// </summary>
-        /// <param name="expression">Expression used to find the property name</param>
-        /// <param name="sortType">Sort type of facet's result</param>
-        /// <param name="limit">Limit of facet's result</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public FacetFieldParameter(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
-        {
-            ThrowHelper<ArgumentNullException>.If(expression == null);
-
-            this._expression = expression;
-            this._sortType = sortType;
-            this._limit = limit;
-            this._excludes = excludes;
-        }
+        private Expression<Func<TDocument, object>> _expression;
+        private SolrFacetSortType? _sortType;
+        private int? _limit;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -46,34 +29,35 @@ namespace SolrExpress.Solr5.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var fieldName = UtilHelper.GetFieldNameFromExpression(this._expression);
-            var aliasName = UtilHelper.GetPropertyNameFromExpression(this._expression);
+            var fieldName = this._expression.GetFieldNameFromExpression();
+            var aliasName = this._expression.GetPropertyNameFromExpression();
 
-            var array = new List<JProperty>
-            {
-                new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
-            };
+            //TODO
+            //var array = new List<JProperty>
+            //{
+            //    new JProperty("field", UtilHelper.GetSolrFacetWithExcludesSolr5(fieldName, this._excludes))
+            //};
 
-            if (_sortType.HasValue)
-            {
-                string typeName;
-                string sortName;
+            //if (_sortType.HasValue)
+            //{
+            //    string typeName;
+            //    string sortName;
 
-                UtilHelper.GetSolrFacetSort(_sortType.Value, out typeName, out sortName);
+            //    UtilHelper.GetSolrFacetSort(_sortType.Value, out typeName, out sortName);
 
-                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
-            }
+            //    array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            //}
 
-            if (this._limit.HasValue)
-            {
-                array.Add(new JProperty("limit", this._limit));
-            }
+            //if (this._limit.HasValue)
+            //{
+            //    array.Add(new JProperty("limit", this._limit));
+            //}
 
-            var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            //var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
 
-            facetObject.Add(value);
+            //facetObject.Add(value);
 
-            jObject["facet"] = facetObject;
+            //jObject["facet"] = facetObject;
         }
 
         /// <summary>
@@ -86,13 +70,32 @@ namespace SolrExpress.Solr5.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = UtilHelper.GetSolrFieldAttributeFromPropertyInfo(this._expression);
+            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
                 isValid = false;
                 errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
             }
+        }
+
+        /// <summary>
+        /// Configure current instance
+        /// </summary>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <param name="sortType">Sort type of the result of the facet</param>
+        /// <param name="limit">Limit of itens in facet's result</param>
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType, int? limit, string[] excludes)
+        {
+            Checker.IsNull(expression);
+
+            this._expression = expression;
+            this._sortType = sortType;
+            this._limit = limit;
+            this._excludes = excludes;
+
+            return this;
         }
     }
 }
