@@ -8,44 +8,31 @@ namespace SolrExpress.Solr4
     /// </summary>
     public sealed class Resolver : IResolver
     {
-        public TConcrete Get<TConcrete>() where TConcrete : class
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        public T GetParameter<T>() 
-            where T : class
+        public TConcrete Get<TConcrete>()
+            where TConcrete : class
         {
             throw new NotImplementedException();
-
-//            var dic = new Dictionary<Type, object> {
-//                []
-//            };
-
-
-
-
-
-//public IDocumentBuilder<TDocument> GetDocumentBuilder()
-//return new DocumentBuilder<TDocument>();
-
-//public IFacetFieldResultBuilder<TDocument> GetFacetFieldBuilder()
-//return new FacetFieldResultBuilder<TDocument>();
-
-//public IFacetQueryResultBuilder<TDocument> GetFacetQueryBuilder()
-//return new FacetQueryResultBuilder<TDocument>();
-
-//public IFacetRangeResultBuilder<TDocument> GetFacetRangeBuilder()
-//return new FacetRangeResultBuilder<TDocument>();
-
-//public IStatisticResultBuilder<TDocument> GetStatisticBuilder()
-//return new StatisticResultBuilder<TDocument>();
-
-
         }
+
+        //public IDocumentBuilder<TDocument> GetDocumentBuilder()
+        //return new DocumentBuilder<TDocument>();
+
+        //public IFacetFieldResultBuilder<TDocument> GetFacetFieldBuilder()
+        //return new FacetFieldResultBuilder<TDocument>();
+
+        //public IFacetQueryResultBuilder<TDocument> GetFacetQueryBuilder()
+        //return new FacetQueryResultBuilder<TDocument>();
+
+        //public IFacetRangeResultBuilder<TDocument> GetFacetRangeBuilder()
+        //return new FacetRangeResultBuilder<TDocument>();
+
+        //public IStatisticResultBuilder<TDocument> GetStatisticBuilder()
+        //return new StatisticResultBuilder<TDocument>();
+
+
     }
 }
