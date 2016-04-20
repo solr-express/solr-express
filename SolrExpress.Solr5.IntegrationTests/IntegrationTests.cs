@@ -1,12 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SolrExpress.Core.Constant;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
+using SolrExpress.Core;
 using SolrExpress.Core.ParameterValue;
 using SolrExpress.Core.Query;
-using SolrExpress.Solr5.Builder;
+using SolrExpress.Core.Result;
 using SolrExpress.Solr5.Parameter;
-using SolrExpress.Solr5.Query;
+using SolrExpress.Solr5.Result;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.IntegrationTests
@@ -24,8 +22,8 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
 
             // Act / Assert
             solrQuery.Execute();
@@ -41,15 +39,15 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             result = solrQuery.Execute();
-            data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(10, data.Count);
@@ -66,17 +64,17 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FilterParameter(new Single<TechProductDocument>(q => q.InStock, "true")));
-            solrQuery.Parameter(new FilterParameter(new Single<TechProductDocument>(q => q.ManufacturerId, "corsair")));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FilterParameter<TechProductDocument>().Configure(new Single<TechProductDocument>(q => q.InStock, "true")));
+            solrQuery.Parameter(new FilterParameter<TechProductDocument>().Configure(new Single<TechProductDocument>(q => q.ManufacturerId, "corsair")));
             result = solrQuery.Execute();
-            data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(3, data.Count);
@@ -93,17 +91,17 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>(q => q.ManufacturerId));
-            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>(q => q.InStock));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.ManufacturerId));
+            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.InStock));
             result = solrQuery.Execute();
-            data = result.Get(new FacetFieldResultBuilder<TechProductDocument>()).Data;
+            data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(2, data.Count);
@@ -121,17 +119,17 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             Dictionary<string, long> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetQueryParameter("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
-            solrQuery.Parameter(new FacetQueryParameter("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FacetQueryParameter<TechProductDocument>().Configure("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10)));
+            solrQuery.Parameter(new FacetQueryParameter<TechProductDocument>().Configure("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
             result = solrQuery.Execute();
-            data = result.Get(new FacetQueryResultBuilder<TechProductDocument>()).Data;
+            data = result.Get(new FacetQueryResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(2, data.Count);
@@ -149,17 +147,17 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<FacetKeyValue<FacetRange>> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>("Facet1", q => q.Popularity, "1", "1", "10"));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>("Facet2", q => q.Price, "10", "10", "1000"));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet1", q => q.Popularity, "1", "1", "10"));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet2", q => q.Price, "10", "10", "1000"));
             result = solrQuery.Execute();
-            data = result.Get(new FacetRangeResultBuilder<TechProductDocument>()).Data;
+            data = result.Get(new FacetRangeResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(2, data.Count);
@@ -177,15 +175,15 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
-            StatisticResultBuilder<TechProductDocument> data;
+            StatisticResult<TechProductDocument> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             result = solrQuery.Execute();
-            data = result.Get(new StatisticResultBuilder<TechProductDocument>());
+            data = result.Get(new StatisticResult<TechProductDocument>());
 
             // Assert
             Assert.AreEqual(32, data.Data.DocumentCount);
@@ -202,17 +200,17 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<FacetKeyValue<FacetRange>> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>("Facet1", q => q.Popularity, "1", "1", "10"));
-            solrQuery.Parameter(new FacetLimitParameter(1));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet1", q => q.Popularity, "1", "1", "10"));
+            solrQuery.Parameter(new FacetLimitParameter().Configure(1));
             result = solrQuery.Execute();
-            data = result.Get(new FacetRangeResultBuilder<TechProductDocument>()).Data;
+            data = result.Get(new FacetRangeResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(1, data.Count);
@@ -230,16 +228,16 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new QueryAll()));
-            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>(q => q.ManufacturerId, limit: 10));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.ManufacturerId, limit: 10));
             result = solrQuery.Execute();
-            data = result.Get(new FacetFieldResultBuilder<TechProductDocument>()).Data;
+            data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(1, data.Count);
@@ -257,15 +255,15 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var config = new SolrQueryConfiguration { FailFast = false, Handler = RequestHandler.SELECT };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new ParameterFactory<TechProductDocument>(), new BuilderFactory<TechProductDocument>(), config);
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new Resolver(), config);
             SolrQueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
             // Act
-            solrQuery.Parameter(new QueryParameter(new Multi(SolrQueryConditionType.Or, new Single<TechProductDocument>(c => c.Id, "S*"), new Single<TechProductDocument>(c => c.Id, "*TEST"))));
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new Multi(SolrQueryConditionType.Or, new Single<TechProductDocument>(c => c.Id, "S*"), new Single<TechProductDocument>(c => c.Id, "*TEST"))));
             result = solrQuery.Execute();
-            data = result.Get(new DocumentBuilder<TechProductDocument>()).Data;
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
             Assert.AreEqual(4, data.Count);
