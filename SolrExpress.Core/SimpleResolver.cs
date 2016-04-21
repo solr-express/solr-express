@@ -9,8 +9,6 @@ namespace SolrExpress.Core
     /// </summary>
     public class SimpleResolver : IResolver
     {
-        private Dictionary<Type, Type> mappings = new Dictionary<Type, Type>();
-
         /// <summary>
         /// Resolve target type based in informed source type
         /// </summary>
@@ -18,11 +16,14 @@ namespace SolrExpress.Core
         /// <returns>Target type or null</returns>
         private Type ResolveType(Type source)
         {
-            var item = mappings.Keys.FirstOrDefault(q => $"{q.Namespace}.{q.Name}".Equals($"{source.Namespace}.{source.Name}"));
+            var item = this
+                .Mappings
+                .Keys
+                .FirstOrDefault(q => $"{q.Namespace}.{q.Name}".Equals($"{source.Namespace}.{source.Name}"));
 
             if (item != null)
             {
-                var target = mappings[item];
+                var target = this.Mappings[item];
 
                 if (target.ContainsGenericParameters)
                 {
@@ -51,5 +52,10 @@ namespace SolrExpress.Core
             var constructor = target.GetConstructors()[0];
             return (T)constructor.Invoke(new object[] { });
         }
+
+        /// <summary>
+        /// Mappings to resolve dependency injection
+        /// </summary>
+        public Dictionary<Type, Type> Mappings { get; private set; } = new Dictionary<Type, Type>();
     }
 }

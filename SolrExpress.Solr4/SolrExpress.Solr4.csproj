@@ -77,7 +77,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
     <Compile Include="Result\DocumentResult.cs" />
-    <Compile Include="Resolver.cs" />
     <Compile Include="Result\FacetFieldResult.cs" />
     <Compile Include="Result\FacetQueryResult.cs">
       <SubType>Code</SubType>

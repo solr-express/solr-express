@@ -77,7 +77,6 @@
     <Compile Include="Parameter\SpatialFilterParameterTests.cs" />
     <Compile Include="Parameter\StartParameterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResolverTests.cs" />
     <Compile Include="Result\DocumentResultTests.cs" />
     <Compile Include="Result\FacetFieldResultTests.cs" />
     <Compile Include="Result\FacetQueryResultTests.cs" />
