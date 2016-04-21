@@ -125,11 +125,13 @@
     <Compile Include="Result\IResult.cs" />
     <Compile Include="Result\IStatisticResult.cs" />
     <Compile Include="Result\Statistic.cs" />
+    <Compile Include="SimpleResolver.cs" />
     <Compile Include="SolrFieldAttribute.cs" />
     <Compile Include="Checker.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="UnexpectedDependencyInjectionMappingException.cs" />
     <Compile Include="UnexpectedJsonFormatException.cs" />
-    <Compile Include="UnexpectedJsonQueryException.cs" />
+    <Compile Include="UnexpectedSolrRequestException.cs" />
     <Compile Include="UnsupportedSortTypeException.cs" />
   </ItemGroup>
   <ItemGroup>

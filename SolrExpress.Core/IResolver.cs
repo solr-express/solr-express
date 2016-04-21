@@ -9,6 +9,6 @@
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        T Get<T>();
+        T GetInstance<T>();
     }
 }

@@ -142,11 +142,29 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Não foi possível resolver o type \&quot;{0}&quot;\\r\nNão foi encontrado um mapping para o type.
+        /// </summary>
+        internal static string UnexpectedDependencyInjectionMappingException {
+            get {
+                return ResourceManager.GetString("UnexpectedDependencyInjectionMappingException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O parâmetro \&quot;{0}\&quot; não foi encontrado no json de origem.
         /// </summary>
         internal static string UnexpectedJsonException {
             get {
                 return ResourceManager.GetString("UnexpectedJsonException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não existe resolução para a requisição efetuada ao Solr.
+        /// </summary>
+        internal static string UnexpectedSolrRequestException {
+            get {
+                return ResourceManager.GetString("UnexpectedSolrRequestException", resourceCulture);
             }
         }
         

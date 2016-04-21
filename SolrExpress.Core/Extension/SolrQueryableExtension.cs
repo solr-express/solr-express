@@ -20,7 +20,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IFacetFieldParameter<TDocument>>()
+                .GetInstance<IFacetFieldParameter<TDocument>>()
                 .Configure(expression, sortType, limit, excludes);
 
             return queryable.Parameter(parameter);
@@ -38,7 +38,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IFacetQueryParameter<TDocument>>()
+                .GetInstance<IFacetQueryParameter<TDocument>>()
                 .Configure(aliasName, query, sortType, excludes);
 
             return queryable.Parameter(parameter);
@@ -58,7 +58,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IFacetRangeParameter<TDocument>>()
+                .GetInstance<IFacetRangeParameter<TDocument>>()
                 .Configure(aliasName, expression, gap, start, end, sortType);
 
             return queryable.Parameter(parameter);
@@ -73,7 +73,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IFieldsParameter<TDocument>>()
+                .GetInstance<IFieldsParameter<TDocument>>()
                 .Configure(expressions);
 
             return queryable.Parameter(parameter);
@@ -92,7 +92,7 @@ namespace SolrExpress.Core.Extension
 
             var parameter = queryable
                 .Resolver
-                .Get<IFilterParameter<TDocument>>()
+                .GetInstance<IFilterParameter<TDocument>>()
                 .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
@@ -113,7 +113,7 @@ namespace SolrExpress.Core.Extension
 
             var parameter = queryable
                 .Resolver
-                .Get<IFilterParameter<TDocument>>()
+                .GetInstance<IFilterParameter<TDocument>>()
                 .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
@@ -128,7 +128,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<ILimitParameter>()
+                .GetInstance<ILimitParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -143,7 +143,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IOffsetParameter>()
+                .GetInstance<IOffsetParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -158,7 +158,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IQueryParameter<TDocument>>()
+                .GetInstance<IQueryParameter<TDocument>>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -175,7 +175,7 @@ namespace SolrExpress.Core.Extension
 
             var parameter = queryable
                 .Resolver
-                .Get<IQueryParameter<TDocument>>()
+                .GetInstance<IQueryParameter<TDocument>>()
                 .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
@@ -193,7 +193,7 @@ namespace SolrExpress.Core.Extension
 
             var parameter = queryable
                 .Resolver
-                .Get<IQueryParameter<TDocument>>()
+                .GetInstance<IQueryParameter<TDocument>>()
                 .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
@@ -209,7 +209,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<ISortParameter<TDocument>>()
+                .GetInstance<ISortParameter<TDocument>>()
                 .Configure(expression, ascendent);
 
             return queryable.Parameter(parameter);
@@ -224,7 +224,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IFacetLimitParameter>()
+                .GetInstance<IFacetLimitParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -239,7 +239,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IMinimumShouldMatchParameter>()
+                .GetInstance<IMinimumShouldMatchParameter>()
                 .Configure(expression);
 
             return queryable.Parameter(parameter);
@@ -254,7 +254,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<IQueryFieldParameter>()
+                .GetInstance<IQueryFieldParameter>()
                 .Configure(expression);
 
             return queryable.Parameter(parameter);
@@ -272,7 +272,7 @@ namespace SolrExpress.Core.Extension
         {
             var parameter = queryable
                 .Resolver
-                .Get<ISpatialFilterParameter<TDocument>>()
+                .GetInstance<ISpatialFilterParameter<TDocument>>()
                 .Configure(expression, functionType, centerPoint, distance);
 
             return queryable.Parameter(parameter);

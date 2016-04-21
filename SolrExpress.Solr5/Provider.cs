@@ -82,13 +82,13 @@ namespace SolrExpress.Solr5
                         content = reader.ReadToEnd();
                     }
                 }
-                Checker.IsTrue<UnexpectedJsonQueryException>(response.StatusCode != HttpStatusCode.OK, content);
+                Checker.IsTrue<UnexpectedSolrRequestException>(response.StatusCode != HttpStatusCode.OK, content);
 
                 return content;
             }
             catch (System.Exception e)
             {
-                throw new UnexpectedJsonQueryException(e.Message);
+                throw new UnexpectedSolrRequestException(e.Message);
             }
         }
 

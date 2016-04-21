@@ -19,7 +19,7 @@ namespace SolrExpress.Solr4.UnitTests
             var resolver = new Resolver();
 
             // Act
-            var result = resolver.Get<IDocumentResult<TestDocument>>();
+            var result = resolver.GetInstance<IDocumentResult<TestDocument>>();
 
             // Assert
             Assert.IsInstanceOfType(result, typeof(DocumentResult<TestDocument>));

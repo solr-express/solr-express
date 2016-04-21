@@ -1,19 +1,21 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Result;
-using SolrExpress.Solr4.Result;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Solr4
+namespace SolrExpress.Core
 {
     /// <summary>
-    /// Solr 4 classes dependency resolver
+    /// Simple dependency injection resolver
     /// </summary>
-    public sealed class Resolver : IResolver
+    public class SimpleResolver : IResolver
     {
         private Dictionary<Type, Type> mappings = new Dictionary<Type, Type>();
 
+        /// <summary>
+        /// Resolve target type based in informed source type
+        /// </summary>
+        /// <param name="source">Source type used to resolve target type</param>
+        /// <returns>Target type or null</returns>
         private Type ResolveType(Type source)
         {
             var item = mappings.Keys.FirstOrDefault(q => $"{q.Namespace}.{q.Name}".Equals($"{source.Namespace}.{source.Name}"));
@@ -39,28 +41,15 @@ namespace SolrExpress.Solr4
         /// <returns>Concrete class</returns>
         public T GetInstance<T>()
         {
-            this.mappings.Add(typeof(IDocumentResult<>), typeof(DocumentResult<>));
+            var target = this.ResolveType(typeof(T));
 
-            var target = ResolveType(typeof(T));
+            if (target == null)
+            {
+                throw new UnexpectedDependencyInjectionMappingException(typeof(T).FullName);
+            }
+
             var constructor = target.GetConstructors()[0];
             return (T)constructor.Invoke(new object[] { });
         }
-
-        //public IDocumentBuilder<TDocument> GetDocumentBuilder()
-        //return new DocumentBuilder<TDocument>();
-
-        //public IFacetFieldResultBuilder<TDocument> GetFacetFieldBuilder()
-        //return new FacetFieldResultBuilder<TDocument>();
-
-        //public IFacetQueryResultBuilder<TDocument> GetFacetQueryBuilder()
-        //return new FacetQueryResultBuilder<TDocument>();
-
-        //public IFacetRangeResultBuilder<TDocument> GetFacetRangeBuilder()
-        //return new FacetRangeResultBuilder<TDocument>();
-
-        //public IStatisticResultBuilder<TDocument> GetStatisticBuilder()
-        //return new StatisticResultBuilder<TDocument>();
-
-
     }
 }

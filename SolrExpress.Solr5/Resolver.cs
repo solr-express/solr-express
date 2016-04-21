@@ -12,7 +12,7 @@ namespace SolrExpress.Solr5
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        public T Get<T>()
+        public T GetInstance<T>()
         {
             throw new NotImplementedException();
         }
