@@ -19,6 +19,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr4.Integrati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr5.IntegrationTests", "SolrExpress.Solr5.IntegrationTests\SolrExpress.Solr5.IntegrationTests.csproj", "{6B090194-E1C6-481E-9486-6997F5029FF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr6.IntegrationTests", "SolrExpress.Solr6.IntegrationTests\SolrExpress.Solr6.IntegrationTests.csproj", "{2F14102B-F4B2-4271-898F-ECB77B905040}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr6.UnitTests", "SolrExpress.Solr6.UnitTests\SolrExpress.Solr6.UnitTests.csproj", "{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Solr6", "SolrExpress.Solr6\SolrExpress.Solr6.csproj", "{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +97,30 @@ Global
 		{6B090194-E1C6-481E-9486-6997F5029FF5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B090194-E1C6-481E-9486-6997F5029FF5}.Release|x64.ActiveCfg = Release|Any CPU
 		{6B090194-E1C6-481E-9486-6997F5029FF5}.Release|x64.Build.0 = Release|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Debug|x64.Build.0 = Debug|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Release|x64.ActiveCfg = Release|Any CPU
+		{2F14102B-F4B2-4271-898F-ECB77B905040}.Release|x64.Build.0 = Release|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Debug|x64.Build.0 = Debug|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Release|x64.ActiveCfg = Release|Any CPU
+		{3CD04F4B-5855-4EE4-8DF3-F2290ECAA490}.Release|x64.Build.0 = Release|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{711756DC-CBDC-4CC0-A650-C049E8EFEFF9}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
