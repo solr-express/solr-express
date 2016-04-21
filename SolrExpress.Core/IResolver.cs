@@ -9,7 +9,6 @@
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        TConcrete Get<TConcrete>()
-            where TConcrete : class;
+        T Get<T>();
     }
 }

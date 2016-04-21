@@ -1,5 +1,9 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.Result;
+using SolrExpress.Solr4.Result;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Solr4
 {
@@ -8,14 +12,29 @@ namespace SolrExpress.Solr4
     /// </summary>
     public sealed class Resolver : IResolver
     {
+        private Dictionary<Type, Type> mappings = new Dictionary<Type, Type>();
+
+        private Type ResolveType(Type type)
+        {
+            if (mappings.Keys.Contains(type))
+            {
+                return mappings[type];
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Get concrete class that implements informed interface
         /// </summary>
         /// <returns>Concrete class</returns>
-        public TConcrete Get<TConcrete>()
-            where TConcrete : class
+        public T Get<T>()
         {
-            throw new NotImplementedException();
+            this.mappings.Add(typeof(IDocumentResult<>), typeof(DocumentResult<>));
+
+            var target = ResolveType(typeof(T));
+            var constructor = target.GetConstructors()[0];
+            return (T)constructor.Invoke(new object[] { });
         }
 
         //public IDocumentBuilder<TDocument> GetDocumentBuilder()
