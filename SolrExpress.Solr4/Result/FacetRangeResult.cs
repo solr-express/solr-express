@@ -67,9 +67,11 @@ namespace SolrExpress.Solr4.Result
             }
             else
             {
+                var convertedGapValue = (TFacetKey)Convert.ChangeType(gapValue, typeof(TFacetKey));
+
                 foreach (var range in facetData)
                 {
-                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue.Addition((TFacetKey)gapValue);
+                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue.Addition(convertedGapValue);
                 }
             }
 
