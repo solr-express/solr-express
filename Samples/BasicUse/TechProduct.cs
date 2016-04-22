@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Attribute;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core;
 using System;
 
 namespace BasicUse
@@ -11,13 +9,13 @@ namespace BasicUse
 
         public string Name { get; set; }
 
-        [SolrFieldAttribute("manu")]
+        [SolrField("manu")]
         public string Manufacturer { get; set; }
 
-        [SolrFieldAttribute("manu_id_s")]
+        [SolrField("manu_id_s")]
         public string ManufacturerId { get; set; }
 
-        [SolrFieldAttribute("cat")]
+        [SolrField("cat")]
         public string[] Categories { get; set; }
 
         public string[] Features { get; set; }
@@ -28,10 +26,10 @@ namespace BasicUse
 
         public bool InStock { get; set; }
 
-        [SolrFieldAttribute("manufacturedate_dt")]
+        [SolrField("manufacturedate_dt")]
         public DateTime ManufacturedateIn { get; set; }
 
-        [SolrFieldAttribute("store", Indexed = true, Stored = true, OmitNorms = true)]
+        [SolrField("store", Indexed = true, Stored = true, OmitNorms = true)]
         public GeoCoordinate StoredAt { get; set; }
     }
 }

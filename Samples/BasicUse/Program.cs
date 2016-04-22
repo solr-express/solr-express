@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Core.ParameterValue;
-using SolrExpress.Solr5.Builder;
 using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.Result;
 using System;
 using System.Collections.Generic;
 
@@ -16,12 +16,12 @@ namespace BasicUse
                 List<TechProduct> documents;
 
                 ctx.TechProducts
-                    .Parameter(new QueryParameter(new QueryAll()))
-                    .Parameter(new LimitParameter(3));
+                    .Parameter(new QueryParameter<TechProduct>().Configure(new QueryAll()))
+                    .Parameter(new LimitParameter().Configure(3));
 
                 var result = ctx.TechProducts.Execute();
 
-                documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
+                documents = result.Get(new DocumentResult<TechProduct>()).Data;
                 
                 foreach (var document in documents)
                 {

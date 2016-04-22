@@ -1,9 +1,7 @@
-﻿using SolrExpress.Core.Constant;
-using SolrExpress.Core.Entity;
+﻿using SolrExpress.Core;
 using SolrExpress.Core.Query;
-using SolrExpress.Solr5.Builder;
-using SolrExpress.Solr5.Parameter;
-using SolrExpress.Solr5.Query;
+using SolrExpress.Solr5;
+using SolrExpress.Solr5.Extension;
 using System;
 
 namespace BasicUse
@@ -13,15 +11,13 @@ namespace BasicUse
         public SolrContext()
         {
             var provider = new Provider("http://localhost:8983/solr/techproducts");
-            var parameterFactory = new ParameterFactory<TechProduct>();
-            var builderFactory = new BuilderFactory<TechProduct>();
-            var configuration = new SolrQueryConfiguration
+            var resolver = new SimpleResolver().Configure();
+            var configuration = new Configuration
             {
-                FailFast = true,
-                Handler = RequestHandler.SELECT
+                FailFast = true
             };
 
-            this.TechProducts = new SolrQueryable<TechProduct>(provider, parameterFactory, builderFactory, configuration);
+            this.TechProducts = new SolrQueryable<TechProduct>(provider, resolver, configuration);
         }
 
         public SolrQueryable<TechProduct> TechProducts { get; private set; }
