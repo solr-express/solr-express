@@ -1,17 +1,17 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Parameter;
 using SolrExpress.Core.Result;
-using SolrExpress.Solr4.Parameter;
-using SolrExpress.Solr4.Result;
+using SolrExpress.Solr5.Parameter;
+using SolrExpress.Solr5.Result;
 
-namespace SolrExpress.Solr4.Extension.Internal
+namespace SolrExpress.Solr5.Extension
 {
     /// <summary>
     /// Extension class used to manipulate SimpleResolver
     /// </summary>
-    internal static class SimpleResolverExntesion
+    public static class SimpleResolverExntesion
     {
-        internal static SimpleResolver Configure(this SimpleResolver resolver)
+        public static SimpleResolver Configure(this SimpleResolver resolver)
         {
             resolver.Mappings.Add(typeof(IAnyParameter), typeof(AnyParameter));
             resolver.Mappings.Add(typeof(IFacetFieldParameter<>), typeof(FacetFieldParameter<>));
@@ -19,11 +19,11 @@ namespace SolrExpress.Solr4.Extension.Internal
             resolver.Mappings.Add(typeof(IFacetQueryParameter<>), typeof(FacetQueryParameter<>));
             resolver.Mappings.Add(typeof(IFacetRangeParameter<>), typeof(FacetRangeParameter<>));
             resolver.Mappings.Add(typeof(IFacetSpatialParameter<>), typeof(FacetSpatialParameter<>));
-            resolver.Mappings.Add(typeof(IFieldsParameter<>), typeof(FieldListParameter<>));
-            resolver.Mappings.Add(typeof(IFilterParameter<>), typeof(FilterQueryParameter<>));
-            resolver.Mappings.Add(typeof(ILimitParameter), typeof(RowsParameter));
+            resolver.Mappings.Add(typeof(IFieldsParameter<>), typeof(FieldsParameter<>));
+            resolver.Mappings.Add(typeof(IFilterParameter<>), typeof(FilterParameter<>));
+            resolver.Mappings.Add(typeof(ILimitParameter), typeof(LimitParameter));
             resolver.Mappings.Add(typeof(IMinimumShouldMatchParameter), typeof(MinimumShouldMatchParameter));
-            resolver.Mappings.Add(typeof(IOffsetParameter), typeof(StartParameter));
+            resolver.Mappings.Add(typeof(IOffsetParameter), typeof(OffsetParameter));
             resolver.Mappings.Add(typeof(IQueryFieldParameter), typeof(QueryFieldParameter));
             resolver.Mappings.Add(typeof(IQueryParameter<>), typeof(QueryParameter<>));
             resolver.Mappings.Add(typeof(ISortParameter<>), typeof(SortParameter<>));
