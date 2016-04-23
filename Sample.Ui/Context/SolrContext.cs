@@ -4,7 +4,7 @@ using SolrExpress.Solr5;
 using SolrExpress.Solr5.Extension;
 using System;
 
-namespace BasicUse
+namespace Sample.Ui.Context
 {
     public class SolrContext : IDisposable
     {

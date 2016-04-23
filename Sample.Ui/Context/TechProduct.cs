@@ -1,9 +1,7 @@
-﻿using SolrExpress.Core.Attribute;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core;
 using System;
 
-namespace SearchUI.Models
+namespace Sample.Ui.Context
 {
     public class TechProduct : IDocument
     {

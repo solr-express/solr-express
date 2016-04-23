@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net45": {
+      "wrappedProject": "../../SolrExpress.Core/SolrExpress.Core.csproj",
+      "bin": {
+        "assembly": "../../SolrExpress.Core/obj/{configuration}/SolrExpress.Core.dll",
+        "pdb": "../../SolrExpress.Core/obj/{configuration}/SolrExpress.Core.pdb"
+      },
+      "dependencies": {
+        "Microsoft.Net.Compilers": "1.2.1",
+        "Newtonsoft.Json": "8.0.3"
+      }
+    }
+  }
+}

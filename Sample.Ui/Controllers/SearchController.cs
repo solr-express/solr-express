@@ -1,18 +1,16 @@
-﻿using SearchUI.Context;
-using SearchUI.Models;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Enumerator;
+﻿using Microsoft.AspNet.Mvc;
+using Sample.Ui.Context;
+using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.ParameterValue;
-using SolrExpress.Solr5.Parameter;
+using SolrExpress.Core.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Http;
 
-namespace SearchUI.Controllers
+namespace Sample.Ui.Controllers
 {
-    public class SearchController : ApiController
+    public class SearchController : Controller
     {
         private List<FacetKeyValue<string>> GetFacetRangeViewModelList(List<FacetKeyValue<FacetRange>> facetRangeList)
         {
@@ -35,7 +33,7 @@ namespace SearchUI.Controllers
         }
 
         [HttpGet()]
-        public IHttpActionResult Get(int page, string keyWord)
+        public object Get(int page, string keyWord)
         {
             using (var ctx = new SolrContext())
             {
@@ -49,7 +47,7 @@ namespace SearchUI.Controllers
 
                 ctx
                     .TechProducts
-                    .Parameter(new QueryFieldParameter("name^13~3 manu^8~2 id^5"))
+                    .QueryField("name^13~3 manu^8~2 id^5")
                     .Query(keyWord ?? "*")
                     .Limit(itemsPerPage)
                     .Offset(page)
@@ -58,10 +56,7 @@ namespace SearchUI.Controllers
                     .FacetRange("Price", q => q.Price, "10", "10", "100")
                     .FacetRange("Popularity", q => q.Popularity, "1", "1", "10")
                     .FacetRange("ManufacturedateIn", q => q.ManufacturedateIn, "+1MONTH", "NOW-10YEARS", "NOW")
-                    // Using fluent and SpatialParameterValue
                     .FacetQuery("StoreIn1000km", new Spatial<TechProduct>(SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M))
-                    // OR not using fluent and FacetSpatialParameter
-                    //.Parameter(new FacetSpatialParameter<TechProduct>("StoreIn1000km", SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M))
                     .Execute()
                     .Document(out documents)
                     .Statistic(out statistics)
@@ -86,7 +81,7 @@ namespace SearchUI.Controllers
                     }
                 };
 
-                return Ok(resul);
+                return resul;
             }
         }
     }
