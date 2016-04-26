@@ -24,7 +24,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
 
             // Act / Assert
             solrQuery.Execute();
@@ -41,8 +41,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
             // Act
@@ -66,8 +66,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
             
             // Act
@@ -93,8 +93,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
             // Act
@@ -121,8 +121,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             Dictionary<string, long> data;
 
             // Act
@@ -149,8 +149,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             List<FacetKeyValue<FacetRange>> data;
 
             // Act
@@ -177,8 +177,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             StatisticResult<TechProductDocument> data;
 
             // Act
@@ -202,8 +202,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
-            SolrQueryResult<TechProductDocument> result;
+            var solrQuery = new Queryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
             // Act

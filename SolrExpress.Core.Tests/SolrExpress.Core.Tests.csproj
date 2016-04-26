@@ -87,7 +87,7 @@
     <Compile Include="ParameterValue\QueryAllTests.cs" />
     <Compile Include="ParameterValue\RangeTests.cs" />
     <Compile Include="ParameterValue\SingleTests.cs" />
-    <Compile Include="Query\SolrQueryableTests.cs" />
+    <Compile Include="Query\QueryableTests.cs" />
     <Compile Include="SimpleResolverTests.cs" />
     <Compile Include="TestDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

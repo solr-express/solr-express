@@ -7,7 +7,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR queryable with fluent API
     /// </summary>
-    public class SolrQueryable<TDocument>
+    public class Queryable<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -46,15 +46,15 @@ namespace SolrExpress.Core.Query
         /// <param name="provider">Provider used to resolve expression</param>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public SolrQueryable(IProvider provider, IResolver resolver, Configuration configuration = null)
+        public Queryable(IProvider provider, IResolver resolver, Configuration configuration)
         {
             Checker.IsNull(provider);
             Checker.IsNull(resolver);
-
-            this._configuration = configuration ?? new Configuration();
+            Checker.IsNull(configuration);
 
             this.Provider = provider;
             this.Resolver = resolver;
+            this._configuration = configuration;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="parameter">The parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Parameter(IParameter parameter)
+        public Queryable<TDocument> Parameter(IParameter parameter)
         {
             Checker.IsNull(parameter);
             var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
@@ -90,7 +90,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">The query interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
+        public Queryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 
@@ -104,7 +104,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">The result interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
+        public Queryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 
@@ -118,7 +118,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="handler">Handler name used in solr request</param>
         /// <returns>Solr result</returns>
-        public SolrQueryResult<TDocument> Execute(string handler = null)
+        public QueryResult<TDocument> Execute(string handler = null)
         {
             var query = this.Provider.GetQuery(this._parameters);
 
@@ -129,7 +129,7 @@ namespace SolrExpress.Core.Query
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
-            return new SolrQueryResult<TDocument>(this.Resolver, json);
+            return new QueryResult<TDocument>(this.Resolver, json);
         }
     }
 }

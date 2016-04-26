@@ -6,7 +6,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR query result with fluent API
     /// </summary>
-    public class SolrQueryResult<TDocument>
+    public class QueryResult<TDocument>
         where TDocument : IDocument
     {
         private readonly string _jsonPlainText;
@@ -22,7 +22,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="json">Result of the SOLR</param>
-        public SolrQueryResult(IResolver resolver, string json)
+        public QueryResult(IResolver resolver, string json)
         {
             Checker.IsNull(resolver);
             Checker.IsNullOrWhiteSpace(json);

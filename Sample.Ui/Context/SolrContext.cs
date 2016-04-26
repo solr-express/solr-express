@@ -17,10 +17,10 @@ namespace Sample.Ui.Context
                 FailFast = true
             };
 
-            this.TechProducts = new SolrQueryable<TechProduct>(provider, resolver, configuration);
+            this.TechProducts = new Queryable<TechProduct>(provider, resolver, configuration);
         }
 
-        public SolrQueryable<TechProduct> TechProducts { get; private set; }
+        public Queryable<TechProduct> TechProducts { get; private set; }
 
         public void Dispose()
         {
