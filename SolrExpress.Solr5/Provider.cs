@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Parameter;
+using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,14 +51,14 @@ namespace SolrExpress.Solr5
         /// Execute the informated uri and return the result of the request
         /// </summary>
         /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="query">Solr query</param>
+        /// <param name="instruction">Solr query</param>
         /// <returns>Result of the request</returns>
-        public string Execute(string handler, string query)
+        public string Execute(string handler, string instruction)
         {
             var baseUrl = $"{this._solrHost}/{handler}?echoParams=none&wt=json&indent=off";
 
             var encoding = new UTF8Encoding();
-            var bytes = encoding.GetBytes(query);
+            var bytes = encoding.GetBytes(instruction);
 
             var request = WebRequest.Create(baseUrl);
             request.Method = "GET-X";

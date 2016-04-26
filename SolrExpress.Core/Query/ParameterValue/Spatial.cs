@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Core.ParameterValue
+namespace SolrExpress.Core.Query.ParameterValue
 {
     /// <summary>
     /// Result spatial value

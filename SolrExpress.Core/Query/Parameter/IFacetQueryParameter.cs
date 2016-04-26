@@ -1,6 +1,6 @@
-﻿using SolrExpress.Core.ParameterValue;
+﻿using SolrExpress.Core.Query.ParameterValue;
 
-namespace SolrExpress.Core.Parameter
+namespace SolrExpress.Core.Query.Parameter
 {
     /// <summary>
     /// Signatures to use in facet query parameter

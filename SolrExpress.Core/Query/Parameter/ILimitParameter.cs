@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Parameter
+﻿namespace SolrExpress.Core.Query.Parameter
 {
     /// <summary>
     /// Signatures to use in limit parameter

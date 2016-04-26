@@ -2,7 +2,7 @@
 using Sample.Ui.Context;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
-using SolrExpress.Core.ParameterValue;
+using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Core.Result;
 using System;
 using System.Collections.Generic;

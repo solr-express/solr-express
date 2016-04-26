@@ -1,6 +1,6 @@
-﻿using SolrExpress.Core.Parameter;
-using SolrExpress.Core.ParameterValue;
-using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Query;
+using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Core.Query.ParameterValue;
 using System;
 using System.Linq.Expressions;
 

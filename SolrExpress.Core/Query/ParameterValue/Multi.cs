@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core.Query;
 using System.Linq;
 
-namespace SolrExpress.Core.ParameterValue
+namespace SolrExpress.Core.Query.ParameterValue
 {
     /// <summary>
     /// Multi value parameter

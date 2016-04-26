@@ -1,4 +1,4 @@
-﻿using SolrExpress.Core.Parameter;
+﻿using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 using System.Linq;
 

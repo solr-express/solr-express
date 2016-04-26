@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Core.Extension;
-using SolrExpress.Core.ParameterValue;
+using SolrExpress.Core.Query.ParameterValue;
 using System;
 using System.Collections.Generic;
 
@@ -16,6 +16,7 @@ namespace Sample.SimpleUse
 
                 ctx
                     .TechProducts
+                    .Select
                     .Query(new QueryAll())
                     .Limit(3)
                     .Execute()

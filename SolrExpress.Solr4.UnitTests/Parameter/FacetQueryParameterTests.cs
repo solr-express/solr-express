@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core;
-using SolrExpress.Core.Parameter;
-using SolrExpress.Core.ParameterValue;
+using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Solr4.Parameter;
 using System;
 using System.Collections.Generic;

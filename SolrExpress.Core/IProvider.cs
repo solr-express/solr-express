@@ -1,4 +1,4 @@
-﻿using SolrExpress.Core.Parameter;
+﻿using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Core
@@ -18,12 +18,9 @@ namespace SolrExpress.Core
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
-        /// <summary>
-        /// Execute the informated uri and return the result of the request
-        /// </summary>
         /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="query">Solr query</param>
+        /// <param name="instruction">Solr query</param>
         /// <returns>Result of the request</returns>
-        string Execute(string handler, string query);
+        string Execute(string handler, string instruction);
     }
 }

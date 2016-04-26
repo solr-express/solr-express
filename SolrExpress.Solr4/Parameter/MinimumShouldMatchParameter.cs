@@ -1,5 +1,5 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Parameter;
+using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Parameter

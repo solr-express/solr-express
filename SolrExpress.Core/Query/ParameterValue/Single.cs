@@ -3,7 +3,7 @@ using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Core.ParameterValue
+namespace SolrExpress.Core.Query.ParameterValue
 {
     /// <summary>
     /// Single value parameter

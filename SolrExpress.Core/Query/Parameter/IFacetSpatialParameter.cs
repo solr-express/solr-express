@@ -1,8 +1,8 @@
-﻿using SolrExpress.Core.ParameterValue;
+﻿using SolrExpress.Core.Query.ParameterValue;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Core.Parameter
+namespace SolrExpress.Core.Query.Parameter
 {
     /// <summary>
     /// Signatures to use in facet spatial parameter

@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.ParameterValue
+﻿namespace SolrExpress.Core.Query.ParameterValue
 {
     /// <summary>
     /// Free value parameter
