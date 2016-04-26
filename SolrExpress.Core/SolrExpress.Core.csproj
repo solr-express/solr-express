@@ -134,6 +134,8 @@
     <Compile Include="UnexpectedJsonFormatException.cs" />
     <Compile Include="UnexpectedSolrRequestException.cs" />
     <Compile Include="UnsupportedSortTypeException.cs" />
+    <Compile Include="Update\IAtomicDelete.cs" />
+    <Compile Include="Update\IAtomicUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
@@ -150,9 +152,7 @@
     <None Include="SolrExpress.Core.nuspec" />
     <None Include="SolrExpress.Core.snk" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Update\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core.Query;
+using SolrExpress.Core.Update;
 using System;
 
 namespace SolrExpress.Core
@@ -44,16 +45,43 @@ namespace SolrExpress.Core
         /// <param name="documents">Documents to add</param>
         public void Add(params TDocument[] documents)
         {
-            throw new NotImplementedException();
+            Checker.IsNull(documents);
+            Checker.IsTrue<ArgumentOutOfRangeException>(documents.Length == 0);
+
+            using (var update = this.Resolver.GetInstance<IAtomicUpdate<TDocument>>())
+            {
+                update.Execute(documents);
+            }
         }
 
         /// <summary>
         /// Remove informed documents from SOLR collection
         /// </summary>
-        /// <param name="documents">Documents to add</param>
+        /// <param name="documents">Documents to remove</param>
         public void Remove(params TDocument[] documents)
         {
-            throw new NotImplementedException();
+            Checker.IsNull(documents);
+            Checker.IsTrue<ArgumentOutOfRangeException>(documents.Length == 0);
+
+            using (var update = this.Resolver.GetInstance<IAtomicDelete<TDocument>>())
+            {
+                update.Execute(documents);
+            }
+        }
+
+        /// <summary>
+        /// Remove informed documents from SOLR collection
+        /// </summary>
+        /// <param name="documentIds">Document IDs to remove</param>
+        public void Remove(params long[] documentIds)
+        {
+            Checker.IsNull(documentIds);
+            Checker.IsTrue<ArgumentOutOfRangeException>(documentIds.Length == 0);
+
+            using (var update = this.Resolver.GetInstance<IAtomicDelete<TDocument>>())
+            {
+                update.Execute(documentIds);
+            }
         }
 
         /// <summary>
