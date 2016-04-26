@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomContractResolver.cs" />
+    <Compile Include="DocumentCollection.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
     <Compile Include="Extension\Internal\GenericExtension.cs" />
     <Compile Include="Extension\Internal\UtilityExtension.cs" />
@@ -149,7 +150,9 @@
     <None Include="SolrExpress.Core.nuspec" />
     <None Include="SolrExpress.Core.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Update\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

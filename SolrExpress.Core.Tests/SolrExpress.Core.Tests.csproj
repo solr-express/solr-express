@@ -80,6 +80,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DocumentCollectionTests.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtensionTests.cs" />
     <Compile Include="ParameterValue\AnyTests.cs" />
     <Compile Include="ParameterValue\MultiTests.cs" />

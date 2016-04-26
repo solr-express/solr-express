@@ -5,7 +5,7 @@ using System.Linq;
 namespace SolrExpress.Core.Query
 {
     /// <summary>
-    /// SOLR queryable with fluent API
+    /// SOLR queryable
     /// </summary>
     public class SolrQueryable<TDocument>
         where TDocument : IDocument
@@ -29,16 +29,6 @@ namespace SolrExpress.Core.Query
         /// List of the result interceptors arranged in the queryable class
         /// </summary>
         private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        public IProvider Provider { get; private set; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        public IResolver Resolver { get; private set; }
 
         /// <summary>
         /// Default constructor of the class
@@ -131,5 +121,15 @@ namespace SolrExpress.Core.Query
 
             return new QueryResult<TDocument>(this.Resolver, json);
         }
+
+        /// <summary>
+        /// Provider used to resolve the expression
+        /// </summary>
+        public IProvider Provider { get; private set; }
+
+        /// <summary>
+        /// Resolver used to resolve classes dependency
+        /// </summary>
+        public IResolver Resolver { get; private set; }
     }
 }

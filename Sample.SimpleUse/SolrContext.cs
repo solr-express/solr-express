@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Query;
 using SolrExpress.Solr5;
 using SolrExpress.Solr5.Extension;
 using System;
@@ -17,10 +16,10 @@ namespace Sample.SimpleUse
                 FailFast = true
             };
 
-            this.TechProducts = new SolrQueryable<TechProduct>(provider, resolver, configuration);
+            this.TechProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
         }
 
-        public SolrQueryable<TechProduct> TechProducts { get; private set; }
+        public DocumentCollection<TechProduct> TechProducts { get; private set; }
 
         public void Dispose()
         {
