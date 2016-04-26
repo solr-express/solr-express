@@ -7,7 +7,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR queryable with fluent API
     /// </summary>
-    public class Queryable<TDocument>
+    public class SolrQueryable<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace SolrExpress.Core.Query
         /// <param name="provider">Provider used to resolve expression</param>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public Queryable(IProvider provider, IResolver resolver, Configuration configuration)
+        public SolrQueryable(IProvider provider, IResolver resolver, Configuration configuration)
         {
             Checker.IsNull(provider);
             Checker.IsNull(resolver);
@@ -62,7 +62,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="parameter">The parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public Queryable<TDocument> Parameter(IParameter parameter)
+        public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
             Checker.IsNull(parameter);
             var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
@@ -90,7 +90,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">The query interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public Queryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
+        public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 
@@ -104,7 +104,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">The result interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public Queryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
+        public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 

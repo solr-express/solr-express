@@ -99,7 +99,7 @@
     <Compile Include="Query\IQueryInterceptor.cs" />
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
-    <Compile Include="Query\Queryable.cs" />
+    <Compile Include="Query\SolrQueryable.cs" />
     <Compile Include="Query\QueryResult.cs" />
     <Compile Include="Query\UnknownResolveResultBuilderException.cs" />
     <Compile Include="RequestHandler.cs" />

@@ -17,10 +17,10 @@ namespace Sample.SimpleUse
                 FailFast = true
             };
 
-            this.TechProducts = new Queryable<TechProduct>(provider, resolver, configuration);
+            this.TechProducts = new SolrQueryable<TechProduct>(provider, resolver, configuration);
         }
 
-        public Queryable<TechProduct> TechProducts { get; private set; }
+        public SolrQueryable<TechProduct> TechProducts { get; private set; }
 
         public void Dispose()
         {

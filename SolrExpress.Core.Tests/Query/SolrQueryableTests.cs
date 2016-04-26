@@ -7,7 +7,7 @@ using System;
 namespace SolrExpress.Core.Tests.Query
 {
     [TestClass]
-    public class QueryableTests
+    public class SolrQueryableTests
     {
         /// <summary>
         /// Where   Using a SolrQueryable instance
@@ -22,7 +22,7 @@ namespace SolrExpress.Core.Tests.Query
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
             queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
@@ -43,7 +43,7 @@ namespace SolrExpress.Core.Tests.Query
             var mockParameter = mockValidate.As<IParameter>();
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             var isValid = false;
             string errorMessage;
@@ -71,7 +71,7 @@ namespace SolrExpress.Core.Tests.Query
             };
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
 
             bool isValid;
             string errorMessage;
@@ -94,7 +94,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
             queryable.Parameter(null);
@@ -111,7 +111,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
             queryable.QueryInterceptor(null);
@@ -128,7 +128,7 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new Queryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
             queryable.ResultInterceptor(null);
@@ -144,7 +144,7 @@ namespace SolrExpress.Core.Tests.Query
         public void SolrQueryable007()
         {
             // Arrange / Act / Assert
-            new Queryable<TestDocument>(null, new Mock<IResolver>().Object, new Configuration());
+            new SolrQueryable<TestDocument>(null, new Mock<IResolver>().Object, new Configuration());
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace SolrExpress.Core.Tests.Query
         public void SolrQueryable008()
         {
             // Arrange / Act / Assert
-            new Queryable<TestDocument>(new Mock<IProvider>().Object, null, new Configuration());
+            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, null, new Configuration());
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace SolrExpress.Core.Tests.Query
         public void SolrQueryable009()
         {
             // Arrange / Act / Assert
-            new Queryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
+            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
         }
     }
 }
