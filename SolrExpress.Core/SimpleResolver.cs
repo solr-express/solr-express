@@ -21,19 +21,19 @@ namespace SolrExpress.Core
                 .Keys
                 .FirstOrDefault(q => $"{q.Namespace}.{q.Name}".Equals($"{source.Namespace}.{source.Name}"));
 
-            if (item != null)
+            if (item == null)
             {
-                var target = this.Mappings[item];
-
-                if (target.ContainsGenericParameters)
-                {
-                    target = target.MakeGenericType(source.GenericTypeArguments);
-                }
-
-                return target;
+                return null;
             }
 
-            return null;
+            var target = this.Mappings[item];
+
+            if (target.ContainsGenericParameters)
+            {
+                target = target.MakeGenericType(source.GenericTypeArguments);
+            }
+
+            return target;
         }
 
         /// <summary>

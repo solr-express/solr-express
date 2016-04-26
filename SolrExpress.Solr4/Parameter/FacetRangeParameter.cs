@@ -12,13 +12,13 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, IParameter<List<string>>, IValidation
       where TDocument : IDocument
     {
-        private string _aliasName { get; set; }
-        private string _end { get; set; }
-        private Expression<Func<TDocument, object>> _expression { get; set; }
-        private string _gap { get; set; }
-        private SolrFacetSortType? _sortType { get; set; }
-        private string _start { get; set; }
-        private string[] _excludes { get; set; }
+        private string _aliasName;
+        private string _end;
+        private Expression<Func<TDocument, object>> _expression;
+        private string _gap;
+        private SolrFacetSortType? _sortType;
+        private string _start;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false

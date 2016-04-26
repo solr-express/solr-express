@@ -73,11 +73,13 @@ namespace SolrExpress.Solr5.Parameter
 
             var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
-            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
-                isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
+                return;
             }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
         }
 
         /// <summary>

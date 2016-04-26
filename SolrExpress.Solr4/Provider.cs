@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 
-namespace SolrExpress.Solr4.Query
+namespace SolrExpress.Solr4
 {
     /// <summary>
     /// SOLR 4.9x access provider

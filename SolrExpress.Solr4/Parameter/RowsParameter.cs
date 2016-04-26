@@ -5,7 +5,7 @@ namespace SolrExpress.Solr4.Parameter
 {
     public sealed class RowsParameter : ILimitParameter, IParameter<List<string>>
     {
-        private int _value { get; set; }
+        private int _value;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false

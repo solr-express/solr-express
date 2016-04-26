@@ -16,14 +16,10 @@
         {
             if (excludes != null && excludes.Length > 0)
             {
-                return string.Format(
-                    "{{!ex={0} key={1}}}{2}",
-                    string.Join(",", excludes),
-                    aliasName,
-                    fieldName);
+                return $"{{!ex={string.Join(",", excludes)} key={aliasName}}}{fieldName}";
             }
 
-            return string.Format("{{!key={0}}}{1}", aliasName, fieldName);
+            return $"{{!key={aliasName}}}{fieldName}";
         }
     }
 }

@@ -5,7 +5,7 @@ namespace SolrExpress.Solr4.Parameter
 {
     public sealed class StartParameter : IOffsetParameter, IParameter<List<string>>
     {
-        private int _value { get; set; }
+        private int _value;
 
         /// <summary>
         /// True to indicate multiples instance of the parameter, otherwise false
@@ -20,7 +20,7 @@ namespace SolrExpress.Solr4.Parameter
         {
             container.Add($"start={this._value}");
         }
-        
+
         /// <summary>
         /// Configure current instance
         /// </summary>

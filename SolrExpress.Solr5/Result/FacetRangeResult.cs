@@ -70,80 +70,78 @@ namespace SolrExpress.Solr5.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facets"] != null)
+            if (jsonObject["facets"] == null)
             {
-                this.Data = new List<FacetKeyValue<FacetRange>>();
+                throw new UnexpectedJsonFormatException(jsonObject.ToString());
+            }
 
-                var list = jsonObject["facets"]
-                    .Children()
-                    .Where(q =>
-                        q is JProperty &&
-                        q.Values().Count() == 3 &&
-                        ((JProperty)q).Value is JObject &&
-                        ((JProperty)q).Value["after"] != null &&
-                        ((JProperty)q).Value["before"] != null &&
-                        ((JProperty)q).Value["buckets"] != null)
-                    .ToList();
+            this.Data = new List<FacetKeyValue<FacetRange>>();
 
-                if (!list.Any())
-                {
-                    return;
-                }
+            var list = jsonObject["facets"]
+                .Children()
+                .Where(q =>
+                    q is JProperty &&
+                    q.Values().Count() == 3 &&
+                    ((JProperty)q).Value is JObject &&
+                    ((JProperty)q).Value["after"] != null &&
+                    ((JProperty)q).Value["before"] != null &&
+                    ((JProperty)q).Value["buckets"] != null)
+                .ToList();
 
-                foreach (var item in list)
-                {
-                    var jTokenType = ((JProperty)(item)).Value["buckets"][0]["val"].Type;
-
-                    var facet = new FacetKeyValue<FacetRange>()
-                    {
-                        Name = ((JProperty)item).Name,
-                        Data = new Dictionary<FacetRange, long>()
-                    };
-
-                    var facetData = ((JProperty)(item)).Value["buckets"]
-                        .ToDictionary(
-                            k =>
-                            {
-                                var result = this.GetFacetRangeByType(jTokenType);
-
-                                result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
-
-                                return result;
-                            },
-                            v => v["count"].ToObject<long>());
-
-                    var before = this.GetFacetRangeByType(jTokenType);
-                    var after = this.GetFacetRangeByType(jTokenType);
-
-                    switch (jTokenType)
-                    {
-                        case JTokenType.Float:
-                            this.ProcessGap<float>(facetData, before, after);
-                            break;
-                        case JTokenType.Date:
-                            this.ProcessGap<DateTime>(facetData, before, after);
-                            break;
-                        default:
-                            this.ProcessGap<int>(facetData, before, after);
-                            break;
-                    }
-
-                    facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
-
-                    foreach (var facetDataItem in facetData)
-                    {
-                        facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
-                    }
-
-                    facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
-
-                    this.Data.Add(facet);
-                }
-
+            if (!list.Any())
+            {
                 return;
             }
 
-            throw new UnexpectedJsonFormatException(jsonObject.ToString());
+            foreach (var item in list)
+            {
+                var jTokenType = ((JProperty)(item)).Value["buckets"][0]["val"].Type;
+
+                var facet = new FacetKeyValue<FacetRange>
+                {
+                    Name = ((JProperty)item).Name,
+                    Data = new Dictionary<FacetRange, long>()
+                };
+
+                var facetData = ((JProperty)(item)).Value["buckets"]
+                    .ToDictionary(
+                        k =>
+                        {
+                            var result = this.GetFacetRangeByType(jTokenType);
+
+                            result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
+
+                            return result;
+                        },
+                        v => v["count"].ToObject<long>());
+
+                var before = this.GetFacetRangeByType(jTokenType);
+                var after = this.GetFacetRangeByType(jTokenType);
+
+                switch (jTokenType)
+                {
+                    case JTokenType.Float:
+                        this.ProcessGap<float>(facetData, before, after);
+                        break;
+                    case JTokenType.Date:
+                        this.ProcessGap<DateTime>(facetData, before, after);
+                        break;
+                    default:
+                        this.ProcessGap<int>(facetData, before, after);
+                        break;
+                }
+
+                facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
+
+                foreach (var facetDataItem in facetData)
+                {
+                    facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
+                }
+
+                facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
+
+                this.Data.Add(facet);
+            }
         }
 
         /// <summary>

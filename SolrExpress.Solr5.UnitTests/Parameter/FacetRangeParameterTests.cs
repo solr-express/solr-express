@@ -339,15 +339,17 @@ namespace SolrExpress.Solr5.UnitTests.Parameter
                   }
                 }
               }
-            }");
-            string actual;
+            }").ToString();
             var jObject = new JObject();
             var parameter = new FacetRangeParameter<TestDocument>();
             parameter.Configure("X", q => q.Id, "1", "10", "20", excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = jObject.ToString();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
     }
 }

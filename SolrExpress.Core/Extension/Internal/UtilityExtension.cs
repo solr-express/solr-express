@@ -55,7 +55,7 @@ namespace SolrExpress.Core.Extension.Internal
                 "{{!{0} sfield={1} pt={2} d={3}}}",
                 functionType.ToString().ToLower(),
                 fieldName,
-                centerPoint.ToString(),
+                centerPoint,
                 distance.ToString("0.#", CultureInfo.InvariantCulture));
         }
 
@@ -66,15 +66,7 @@ namespace SolrExpress.Core.Extension.Internal
         /// <param name="tagName">Tag name</param>
         internal static string GetSolrFilterWithTag(this string query, string aliasName)
         {
-            if (!string.IsNullOrWhiteSpace(aliasName))
-            {
-                return string.Format(
-                    "{{!tag={0}}}{1}",
-                    aliasName,
-                    query);
-            }
-
-            return query;
+            return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
         }
     }
 }

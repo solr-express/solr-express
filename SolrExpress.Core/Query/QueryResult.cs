@@ -39,19 +39,26 @@ namespace SolrExpress.Core.Query
         public T Get<T>(T result)
             where T : IResult
         {
-            if (result is IConvertJsonObject)
+            var convertJsonObject = result as IConvertJsonObject;
+
+            if (convertJsonObject != null)
             {
                 this._jsonObject = this._jsonObject ?? JObject.Parse(this._jsonPlainText);
 
-                ((IConvertJsonObject)result).Execute(this._jsonObject);
-            }
-            else if (result is IConvertJsonPlainText)
-            {
-                ((IConvertJsonPlainText)result).Execute(this._jsonPlainText);
+                convertJsonObject.Execute(this._jsonObject);
             }
             else
             {
-                throw new UnknownResolveResultBuilderException(result.GetType().Name);
+                var convertJsonPlainText = result as IConvertJsonPlainText;
+
+                if (convertJsonPlainText != null)
+                {
+                    convertJsonPlainText.Execute(this._jsonPlainText);
+                }
+                else
+                {
+                    throw new UnknownResolveResultBuilderException(result.GetType().Name);
+                }
             }
 
             return result;

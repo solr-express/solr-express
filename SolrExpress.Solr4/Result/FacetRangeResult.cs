@@ -87,24 +87,22 @@ namespace SolrExpress.Solr4.Result
         private object GetGapValue(string gap)
         {
             int objInt;
+            float objSingle;
 
             if (int.TryParse(gap, out objInt))
             {
                 return objInt;
             }
 
-            try
+            if (float.TryParse(gap, out objSingle))
             {
-                return Convert.ToSingle(gap, CultureInfo.InvariantCulture);
-            }
-            catch (Exception)
-            {
+                return objSingle;
             }
 
             // Assuming than gap is DateTime type
             var gapNumber = this.GetNumber(gap);
 
-            var keys = new Dictionary<string, DateTime>()
+            var keys = new Dictionary<string, DateTime>
             {
                 ["MILISECOND"] = DateTime.MinValue.AddMilliseconds(1),
                 ["SECOND"] = DateTime.MinValue.AddSeconds(1),
@@ -113,7 +111,7 @@ namespace SolrExpress.Solr4.Result
                 ["DAY"] = DateTime.MinValue.AddDays(1),
                 ["WEAK"] = DateTime.MinValue.AddDays(7),
                 ["MONTH"] = DateTime.MinValue.AddMonths(1),
-                ["YEAR"] = DateTime.MinValue.AddYears(1),
+                ["YEAR"] = DateTime.MinValue.AddYears(1)
             };
 
             var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
@@ -137,7 +135,7 @@ namespace SolrExpress.Solr4.Result
 
             foreach (var item in list)
             {
-                var facet = new FacetKeyValue<FacetRange>()
+                var facet = new FacetKeyValue<FacetRange>
                 {
                     Name = ((JProperty)item).Name,
                     Data = new Dictionary<FacetRange, long>()

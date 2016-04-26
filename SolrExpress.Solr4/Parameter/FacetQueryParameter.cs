@@ -11,10 +11,10 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private string _aliasName { get; set; }
-        private IQueryParameterValue _query { get; set; }
-        private SolrFacetSortType? _sortType { get; set; }
-        private string[] _excludes { get; set; }
+        private string _aliasName;
+        private IQueryParameterValue _query;
+        private SolrFacetSortType? _sortType;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false

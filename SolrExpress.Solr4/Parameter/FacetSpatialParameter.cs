@@ -13,13 +13,13 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private string _aliasName { get; set; }
-        private SolrSpatialFunctionType _functionType { get; set; }
-        private Expression<Func<TDocument, object>> _expression { get; set; }
-        private GeoCoordinate _centerPoint { get; set; }
-        private decimal _distance { get; set; }
-        private SolrFacetSortType? _sortType { get; set; }
-        private string[] _excludes { get; set; }
+        private string _aliasName;
+        private SolrSpatialFunctionType _functionType;
+        private Expression<Func<TDocument, object>> _expression;
+        private GeoCoordinate _centerPoint;
+        private decimal _distance;
+        private SolrFacetSortType? _sortType;
+        private string[] _excludes;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -76,11 +76,13 @@ namespace SolrExpress.Solr4.Parameter
 
             var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
-            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
-                isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
+                return;
             }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException;
         }
 
         /// <summary>

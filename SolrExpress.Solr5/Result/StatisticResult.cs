@@ -17,22 +17,20 @@ namespace SolrExpress.Solr5.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["response"]?["numFound"] != null && jsonObject["responseHeader"]?["QTime"] != null)
+            if (jsonObject["response"]?["numFound"] == null || jsonObject["responseHeader"]?["QTime"] == null)
             {
-                var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
-                var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
-
-                this.Data = new Statistic
-                {
-                    DocumentCount = documentCount,
-                    IsEmpty = documentCount.Equals(0),
-                    ElapsedTime = new TimeSpan(0, 0, 0, 0, qTime)
-                };
-
-                return;
+                throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            throw new UnexpectedJsonFormatException(jsonObject.ToString());
+            var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
+            var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
+
+            this.Data = new Statistic
+            {
+                DocumentCount = documentCount,
+                IsEmpty = documentCount.Equals(0),
+                ElapsedTime = new TimeSpan(0, 0, 0, 0, qTime)
+            };
         }
 
         /// <summary>

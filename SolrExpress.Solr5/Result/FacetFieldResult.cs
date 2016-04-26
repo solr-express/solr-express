@@ -37,7 +37,7 @@ namespace SolrExpress.Solr5.Result
             }
 
             var facets = list
-                .Select(item => new FacetKeyValue<string>()
+                .Select(item => new FacetKeyValue<string>
                 {
                     Name = ((JProperty)item).Name,
                     Data = ((JProperty)(item)).Value["buckets"]

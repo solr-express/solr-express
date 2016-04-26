@@ -23,7 +23,7 @@ namespace SolrExpress.Core.Extension
         /// <summary>
         /// Returns a facet field list
         /// </summary>
-        /// <param name="data">Facet field list</param
+        /// <param name="data">Facet field list</param>
         public static QueryResult<TDocument> FacetField<TDocument>(this QueryResult<TDocument> queryResult, out List<FacetKeyValue<string>> data)
             where TDocument : IDocument
         {

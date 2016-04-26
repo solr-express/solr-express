@@ -56,17 +56,18 @@ namespace SolrExpress.Solr4.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            foreach (var expression in this._expressions)
-            {
-                var solrFieldAttribute = expression.GetSolrFieldAttributeFromPropertyInfo();
+            var withError = this
+                ._expressions
+                .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
+                .Any(solrFieldAttribute => solrFieldAttribute != null && !solrFieldAttribute.Stored);
 
-                if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
-                {
-                    isValid = false;
-                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFieldsException;
-                    break;
-                }
+            if (!withError)
+            {
+                return;
             }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFieldsException;
         }
 
         /// <summary>

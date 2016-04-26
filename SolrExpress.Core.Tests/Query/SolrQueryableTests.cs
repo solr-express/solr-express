@@ -45,7 +45,7 @@ namespace SolrExpress.Core.Tests.Query
             var providerMock = new Mock<IProvider>();
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
-            var isValid = false;
+            bool isValid;
             string errorMessage;
 
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));

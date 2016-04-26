@@ -18,32 +18,29 @@ namespace SolrExpress.Solr5.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(JObject jsonObject)
         {
-            if (jsonObject["facets"] != null)
+            if (jsonObject["facets"] == null)
             {
-                var list = jsonObject["facets"]
-                    .Children()
-                    .Where(q =>
-                        q is JProperty &&
-                        q.Values().Count() == 1 &&
-                        ((JProperty)q).Value is JObject &&
-                        ((JObject)((JProperty)q).Value)["count"] != null)
-                    .ToList();
-
-                if (list.Any())
-                {
-                    this.Data = list.ToDictionary(
-                        k => ((JProperty)k).Name,
-                        v => ((JObject)((JProperty)v).Value)["count"].ToObject<long>());
-                }
-                else
-                {
-                    this.Data = new Dictionary<string, long>();
-                }
-
-                return;
+                throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            throw new UnexpectedJsonFormatException(jsonObject.ToString());
+            var list = jsonObject["facets"]
+                .Children()
+                .Where(q =>
+                    q is JProperty &&
+                    q.Values().Count() == 1 && 
+                    (((JProperty) q).Value as JObject)?["count"] != null)
+                .ToList();
+
+            if (list.Any())
+            {
+                this.Data = list.ToDictionary(
+                    k => ((JProperty)k).Name,
+                    v => ((JObject)((JProperty)v).Value)["count"].ToObject<long>());
+            }
+            else
+            {
+                this.Data = new Dictionary<string, long>();
+            }
         }
 
         /// <summary>

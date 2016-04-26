@@ -4,6 +4,7 @@ using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Parameter
@@ -46,18 +47,18 @@ namespace SolrExpress.Solr5.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            foreach (var expression in this._expressions)
+            var withError = this
+                ._expressions
+                .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
+                .Any(solrFieldAttribute => solrFieldAttribute != null && !solrFieldAttribute.Stored);
+
+            if (!withError)
             {
-                var solrFieldAttribute = expression.GetSolrFieldAttributeFromPropertyInfo();
-
-                if (solrFieldAttribute != null && !solrFieldAttribute.Stored)
-                {
-                    isValid = false;
-                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFieldsException;
-
-                    break;
-                }
+                return;
             }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInFieldsException;
         }
 
         /// <summary>

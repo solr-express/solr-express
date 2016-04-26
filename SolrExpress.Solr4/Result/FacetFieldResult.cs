@@ -29,7 +29,7 @@ namespace SolrExpress.Solr4.Result
             var facets = list
                 .Select(item =>
                 {
-                    var value = new FacetKeyValue<string>()
+                    var value = new FacetKeyValue<string>
                     {
                         Name = ((JProperty)item).Name,
                         Data = new Dictionary<string, long>()

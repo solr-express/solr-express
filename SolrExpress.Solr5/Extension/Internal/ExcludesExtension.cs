@@ -15,10 +15,7 @@
         {
             if (excludes != null && excludes.Length > 0)
             {
-                return string.Format(
-                    "{{!ex={0}}}{1}",
-                    string.Join(",", excludes),
-                    fieldName);
+                return $"{{!ex={string.Join(",", excludes)}}}{fieldName}";
             }
 
             return fieldName;

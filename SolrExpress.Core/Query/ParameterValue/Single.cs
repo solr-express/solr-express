@@ -51,11 +51,13 @@ namespace SolrExpress.Core.Query.ParameterValue
 
             var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
 
-            if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
+            if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
-                isValid = false;
-                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
+                return;
             }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
         }
     }
 }

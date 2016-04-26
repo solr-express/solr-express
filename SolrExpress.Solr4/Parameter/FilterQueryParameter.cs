@@ -9,8 +9,8 @@ namespace SolrExpress.Solr4.Parameter
     public sealed class FilterQueryParameter<TDocument> : IFilterParameter<TDocument>, IParameter<List<string>>
         where TDocument : IDocument
     {
-        private IQueryParameterValue _value { get; set; }
-        private string _tagName { get; set; }
+        private IQueryParameterValue _value;
+        private string _tagName;
 
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false

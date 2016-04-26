@@ -114,7 +114,7 @@ namespace SolrExpress.Core.Query
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
-            var requestHandler = string.IsNullOrWhiteSpace(handler) ? RequestHandler.SELECT : handler;
+            var requestHandler = string.IsNullOrWhiteSpace(handler) ? RequestHandler.Select : handler;
             var json = this.Provider.Execute(requestHandler, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));

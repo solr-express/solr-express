@@ -52,14 +52,16 @@ namespace SolrExpress.Core.Query.ParameterValue
             {
                 var queryValidation = queryParameterValue as IValidation;
 
-                if (queryValidation != null)
+                if (queryValidation == null)
                 {
-                    queryValidation.Validate(out isValid, out errorMessage);
+                    continue;
+                }
 
-                    if (!isValid)
-                    {
-                        break;
-                    }
+                queryValidation.Validate(out isValid, out errorMessage);
+
+                if (!isValid)
+                {
+                    break;
                 }
             }
         }

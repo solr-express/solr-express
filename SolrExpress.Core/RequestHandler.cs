@@ -5,12 +5,12 @@
     /// </summary>
     public static class RequestHandler
     {
-        public const string SELECT = "select";
+        public const string Select = "select";
 
-        public const string GET = "get";
+        public const string Get = "get";
 
-        public const string QUERY = "query";
+        public const string Query = "query";
 
-        public const string UPDATE = "update";
+        public const string Update = "update";
     }
 }

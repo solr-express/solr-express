@@ -32,19 +32,19 @@ namespace SolrExpress.Solr5
         /// <returns>Solr query</returns>
         public string GetQuery(List<IParameter> parameters)
         {
-            if (parameters.Any())
+            if (!parameters.Any())
             {
-                var jsonObj = new JObject();
-
-                foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
-                {
-                    ((IParameter<JObject>)item).Execute(jsonObj);
-                }
-
-                return jsonObj.ToString();
+                return string.Empty;
             }
 
-            return string.Empty;
+            var jsonObj = new JObject();
+
+            foreach (var item in parameters.OrderBy(q => q.GetType().ToString()))
+            {
+                ((IParameter<JObject>)item).Execute(jsonObj);
+            }
+
+            return jsonObj.ToString();
         }
 
         /// <summary>
