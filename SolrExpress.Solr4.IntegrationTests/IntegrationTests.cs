@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SolrExpress.Core;
+using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr4.Query.Parameter;
 using SolrExpress.Solr4.Query.Result;
+using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.IntegrationTests
@@ -48,7 +50,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             result = solrQuery.Execute();
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
-            
+
             // Assert
             Assert.AreEqual(10, data.Count);
             Assert.AreEqual("GB18030TEST", data[0].Id);
@@ -68,7 +70,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
             QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
-            
+
             // Act
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             solrQuery.Parameter(new FilterQueryParameter<TechProductDocument>().Configure(new Single<TechProductDocument>(q => q.InStock, "true")));
@@ -102,7 +104,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             solrQuery.Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.InStock));
             result = solrQuery.Execute();
             data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
-            
+
             // Assert
             Assert.AreEqual(2, data.Count);
             Assert.AreEqual("ManufacturerId", data[0].Name);
@@ -130,7 +132,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             solrQuery.Parameter(new FacetQueryParameter<TechProductDocument>().Configure("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)));
             result = solrQuery.Execute();
             data = result.Get(new FacetQueryResult<TechProductDocument>()).Data;
-                        
+
             // Assert
             Assert.AreEqual(2, data.Count);
             Assert.AreEqual(2, data["Facet1"]);
@@ -215,6 +217,80 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.AreEqual(1, data.Count);
             Assert.AreEqual("ManufacturerId", data[0].Name);
             Assert.AreEqual(1, data[0].Data.Count);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding a new document into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest009()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver(), config);
+            List<TechProductDocument> fetchedDocuments;
+            var documentId = Guid.NewGuid().ToString("N");
+            var documentToAdd = new TechProductDocument
+            {
+                Id = documentId,
+                Name = "IntegrationTest009"
+            };
+            var update = documentCollection.Update;
+
+            // Act
+            update.Add(documentToAdd);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select
+                .Query(q => q.Id, documentId)
+                .Execute()
+                .Document(out fetchedDocuments);
+
+            Assert.AreEqual(1, fetchedDocuments.Count);
+            Assert.AreEqual(documentId, fetchedDocuments[0].Id);
+            Assert.AreEqual("IntegrationTest009", fetchedDocuments[0].Name);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding a new document into collection and delete this document
+        /// What    Create a communication between software and SOLR and document is deleted from collection
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest010()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver(), config);
+            List<TechProductDocument> fetchedDocuments;
+            var documentId = Guid.NewGuid().ToString("N");
+            var documentToAdd = new TechProductDocument
+            {
+                Id = documentId,
+                Name = "IntegrationTest009"
+            };
+            var update = documentCollection.Update;
+            update.Add(documentToAdd);
+            update.Commit();
+
+            // Act
+            update.Delete(documentId);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select
+                .Query(q => q.Id, documentId)
+                .Execute()
+                .Document(out fetchedDocuments);
+
+            Assert.AreEqual(0, fetchedDocuments.Count);
         }
     }
 }
