@@ -85,7 +85,9 @@
     <Compile Include="Query\Result\FacetRangeResult.cs" />
     <Compile Include="Query\Result\StatisticResult.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Update\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="SolrExpress.Solr4.nuspec" />

@@ -11,13 +11,7 @@ namespace SolrExpress.Core.Update
         /// <summary>
         /// Remove informed documents from SOLR collection
         /// </summary>
-        /// <param name="documents">Documents to add</param>
-        void Execute(params TDocument[] documents);
-
-        /// <summary>
-        /// Remove informed documents from SOLR collection
-        /// </summary>
         /// <param name="documentIds">Document IDs to remove</param>
-        void Execute(params long[] documentIds);
+        void Execute(params string[] documentIds);
     }
 }

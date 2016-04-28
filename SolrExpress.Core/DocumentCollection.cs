@@ -1,6 +1,8 @@
 ﻿using SolrExpress.Core.Query;
 using SolrExpress.Core.Update;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Core
 {
@@ -11,9 +13,14 @@ namespace SolrExpress.Core
         where TDocument : IDocument
     {
         /// <summary>
-        /// Lazy solr queryable instance to provide create queries in SOLR
+        /// Documents to add in SOLR collection
         /// </summary>
-        private Lazy<SolrQueryable<TDocument>> _select;
+        private List<TDocument> _documentsToAdd = new List<TDocument>();
+
+        /// <summary>
+        /// Documents to delete from SOLR collection
+        /// </summary>
+        private List<string> _documentsToDelete = new List<string>();
 
         /// <summary>
         /// Configurations about SolrQueriable behavior
@@ -35,7 +42,6 @@ namespace SolrExpress.Core
             this.Provider = provider;
             this.Resolver = resolver;
             this._configuration = configuration;
-            this._select = new Lazy<SolrQueryable<TDocument>>(() => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this._configuration));
         }
 
         /// <summary>
@@ -43,45 +49,53 @@ namespace SolrExpress.Core
         /// If a doc with same id exists in collection, the document is updated
         /// </summary>
         /// <param name="documents">Documents to add</param>
-        public void Add(params TDocument[] documents)
+        public DocumentCollection<TDocument> Add(params TDocument[] documents)
         {
             Checker.IsNull(documents);
             Checker.IsTrue<ArgumentOutOfRangeException>(documents.Length == 0);
 
-            using (var update = this.Resolver.GetInstance<IAtomicUpdate<TDocument>>())
-            {
-                update.Execute(documents);
-            }
-        }
+            this._documentsToAdd.AddRange(documents);
 
-        /// <summary>
-        /// Remove informed documents from SOLR collection
-        /// </summary>
-        /// <param name="documents">Documents to remove</param>
-        public void Remove(params TDocument[] documents)
-        {
-            Checker.IsNull(documents);
-            Checker.IsTrue<ArgumentOutOfRangeException>(documents.Length == 0);
-
-            using (var update = this.Resolver.GetInstance<IAtomicDelete<TDocument>>())
-            {
-                update.Execute(documents);
-            }
+            return this;
         }
 
         /// <summary>
         /// Remove informed documents from SOLR collection
         /// </summary>
         /// <param name="documentIds">Document IDs to remove</param>
-        public void Remove(params long[] documentIds)
+        public DocumentCollection<TDocument> Delete(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
             Checker.IsTrue<ArgumentOutOfRangeException>(documentIds.Length == 0);
 
-            using (var update = this.Resolver.GetInstance<IAtomicDelete<TDocument>>())
+            this._documentsToDelete.AddRange(documentIds);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Commit adds and removes in SOLR collection
+        /// </summary>
+        public void Commit()
+        {
+            if (this._documentsToAdd.Any())
             {
-                update.Execute(documentIds);
+                using (var update = this.Resolver.GetInstance<IAtomicUpdate<TDocument>>())
+                {
+                    update.Execute(this._documentsToAdd.ToArray());
+                }
             }
+
+            if (this._documentsToDelete.Any())
+            {
+                using (var update = this.Resolver.GetInstance<IAtomicDelete<TDocument>>())
+                {
+                    update.Execute(this._documentsToDelete.ToArray());
+                }
+            }
+
+            this._documentsToAdd = new List<TDocument>();
+            this._documentsToDelete = new List<string>();
         }
 
         /// <summary>
@@ -97,6 +111,6 @@ namespace SolrExpress.Core
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public SolrQueryable<TDocument> Select => _select.Value;
+        public SolrQueryable<TDocument> Select => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this._configuration);
     }
 }

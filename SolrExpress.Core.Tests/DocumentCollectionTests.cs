@@ -82,26 +82,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Remove((TestDocument[])null);
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentCollection instance
-        /// When    Invokes method Remove with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void DocumentCollection006()
-        {
-            // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
-
-            // Act / Assert
-            documentCollection.Remove((long[])null);
+            documentCollection.Delete(null);
         }
 
         /// <summary>
@@ -111,7 +92,7 @@ namespace SolrExpress.Core.Tests
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void DocumentCollection007()
+        public void DocumentCollection006()
         {
             // Arrange
             var provider = new Mock<IProvider>().Object;
@@ -130,6 +111,24 @@ namespace SolrExpress.Core.Tests
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void DocumentCollection007()
+        {
+            // Arrange
+            var provider = new Mock<IProvider>().Object;
+            var resolver = new Mock<IResolver>().Object;
+            var configuration = new Configuration();
+            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+
+            // Act / Assert
+            documentCollection.Delete(new string[] { });
+        }
+
+        /// <summary>
+        /// Where   Using a DocumentCollection instance
+        /// When    Invokes property Select twice
+        /// What    Each invokes returns a different instance
+        /// </summary>
+        [TestMethod]
         public void DocumentCollection008()
         {
             // Arrange
@@ -138,33 +137,40 @@ namespace SolrExpress.Core.Tests
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
-            // Act / Assert
-            documentCollection.Remove(new TestDocument[] { });
+            // Act
+            var select1 = documentCollection.Select;
+            var select2 = documentCollection.Select;
+
+            // Assert
+            Assert.AreNotSame(select1, select2);
         }
 
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Invokes method Remove with a empty collection
-        /// What    Throws ArgumentNullException
+        /// When    Invokes method Commit without invokes method Add
+        /// What    Don't invoke class than implements IAtomicUpdate
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DocumentCollection009()
         {
             // Arrange
             var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
+            var resolver = new Mock<IResolver>();
+            resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
             var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
-            // Act / Assert
-            documentCollection.Remove(new long[] { });
+            // Act
+            documentCollection.Commit();
+
+            // Assert
+            resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Never);
         }
 
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Invokes method Add with a empty collection
-        /// What    Throws ArgumentNullException
+        /// When    Invokes method Commit invoking method Add before
+        /// What    Invoke class than implements IAtomicUpdate
         /// </summary>
         [TestMethod]
         public void DocumentCollection010()
@@ -175,18 +181,24 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            documentCollection.Add(new TestDocument());
 
             // Act
-            documentCollection.Add(new[] { new TestDocument() });
+            documentCollection.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Once);
         }
 
+
+
+
+
+
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Invokes method Add with a empty collection
-        /// What    Throws ArgumentNullException
+        /// When    Invokes method Commit without invokes method Add
+        /// What    Don't invoke class than implements IAtomicDelete
         /// </summary>
         [TestMethod]
         public void DocumentCollection011()
@@ -199,16 +211,16 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
             // Act
-            documentCollection.Remove(new[] { new TestDocument() });
+            documentCollection.Commit();
 
             // Assert
-            resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Once);
+            resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Never);
         }
 
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Invokes method Add with a empty collection
-        /// What    Throws ArgumentNullException
+        /// When    Invokes method Commit invoking method Add before
+        /// What    Invoke class than implements IAtomicDelete
         /// </summary>
         [TestMethod]
         public void DocumentCollection012()
@@ -219,12 +231,15 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            documentCollection.Delete("");
 
             // Act
-            documentCollection.Remove(new[] { 1L });
+            documentCollection.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Once);
         }
+
+
     }
 }
