@@ -80,6 +80,7 @@
     <Compile Include="Query\Result\FacetQueryResult.cs" />
     <Compile Include="Query\Result\FacetRangeResult.cs" />
     <Compile Include="Query\Result\StatisticResult.cs" />
+    <Compile Include="Update\AtomicDelete.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,9 +96,7 @@
       <Name>SolrExpress.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Update\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
