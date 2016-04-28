@@ -3,7 +3,7 @@ using Sample.Ui.Context;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query.ParameterValue;
-using SolrExpress.Core.Result;
+using SolrExpress.Core.Query.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;

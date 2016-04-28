@@ -82,12 +82,12 @@
   <ItemGroup>
     <Compile Include="DocumentCollectionTests.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtensionTests.cs" />
-    <Compile Include="ParameterValue\AnyTests.cs" />
-    <Compile Include="ParameterValue\MultiTests.cs" />
-    <Compile Include="ParameterValue\NegateTests.cs" />
-    <Compile Include="ParameterValue\QueryAllTests.cs" />
-    <Compile Include="ParameterValue\RangeTests.cs" />
-    <Compile Include="ParameterValue\SingleTests.cs" />
+    <Compile Include="Query\ParameterValue\AnyTests.cs" />
+    <Compile Include="Query\ParameterValue\MultiTests.cs" />
+    <Compile Include="Query\ParameterValue\NegateTests.cs" />
+    <Compile Include="Query\ParameterValue\QueryAllTests.cs" />
+    <Compile Include="Query\ParameterValue\RangeTests.cs" />
+    <Compile Include="Query\ParameterValue\SingleTests.cs" />
     <Compile Include="Query\SolrQueryableTests.cs" />
     <Compile Include="SimpleResolverTests.cs" />
     <Compile Include="TestDocument.cs" />

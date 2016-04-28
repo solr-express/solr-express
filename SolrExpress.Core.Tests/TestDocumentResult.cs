@@ -1,4 +1,4 @@
-﻿using SolrExpress.Core.Result;
+﻿using SolrExpress.Core.Query.Result;
 using System.Collections.Generic;
 
 namespace SolrExpress.Core.Tests

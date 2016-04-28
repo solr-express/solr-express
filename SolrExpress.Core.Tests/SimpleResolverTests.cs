@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SolrExpress.Core.Result;
+using SolrExpress.Core.Query.Result;
 
 namespace SolrExpress.Core.Tests
 {

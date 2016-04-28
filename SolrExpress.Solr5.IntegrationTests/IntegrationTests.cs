@@ -2,9 +2,9 @@
 using SolrExpress.Core;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.ParameterValue;
-using SolrExpress.Core.Result;
-using SolrExpress.Solr5.Parameter;
-using SolrExpress.Solr5.Result;
+using SolrExpress.Core.Query.Result;
+using SolrExpress.Solr5.Query.Parameter;
+using SolrExpress.Solr5.Query.Result;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.IntegrationTests

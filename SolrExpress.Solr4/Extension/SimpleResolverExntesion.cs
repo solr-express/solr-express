@@ -1,8 +1,8 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Core.Result;
-using SolrExpress.Solr4.Parameter;
-using SolrExpress.Solr4.Result;
+using SolrExpress.Core.Query.Result;
+using SolrExpress.Solr4.Query.Parameter;
+using SolrExpress.Solr4.Query.Result;
 
 namespace SolrExpress.Solr4.Extension
 {
