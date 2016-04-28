@@ -62,5 +62,34 @@ namespace SolrExpress.Solr4.UnitTests.Update
             // Assert
             Assert.AreEqual(expected.ToString(), actual);
         }
+
+        /// <summary>
+        /// Where   Using a AtomicDelete instance
+        /// When    Invoking the method "Execute"
+        /// What    Create a valid JSON
+        /// </summary>
+        [TestMethod]
+        public void AtomicDelete003()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+                ""delete"":{
+                    ""id"": ""(123456 OR 987654)""
+                }
+            }");
+            string actual;
+            var jObject = new JObject();
+            var atomic = new AtomicDelete<TestDocument>();
+            atomic.Configure("123456");
+            atomic.Configure("987654");
+
+            // Act
+            atomic.Execute(jObject);
+            actual = jObject.ToString();
+
+            // Assert
+            Assert.AreEqual(expected.ToString(), actual);
+        }
     }
 }

@@ -83,9 +83,11 @@
     <Compile Include="Query\Result\FacetRangeResultTests.cs" />
     <Compile Include="Query\Result\StatisticResultTests.cs" />
     <Compile Include="TestDocument.cs" />
+    <Compile Include="TestDocumentSimple.cs" />
     <Compile Include="TestDocumentWithAnyPropertyTypes.cs" />
     <Compile Include="TestDocumentWithAttribute.cs" />
     <Compile Include="Update\AtomicDeleteTests.cs" />
+    <Compile Include="Update\AtomicUpdateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
