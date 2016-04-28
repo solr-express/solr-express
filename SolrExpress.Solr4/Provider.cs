@@ -1,5 +1,7 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Core.Update;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace SolrExpress.Solr4
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <returns>Solr query</returns>
-        public string GetQuery(List<IParameter> parameters)
+        public string GetQueryInstruction(List<IParameter> parameters)
         {
             var list = new List<string>();
 
@@ -38,6 +40,17 @@ namespace SolrExpress.Solr4
             }
 
             return string.Join("&", list);
+        }
+
+        /// <summary>
+        /// Execute the atomic update commands and return the formed solr query
+        /// </summary>
+        /// <param name="atomicUpdate">Atomic update to be executed</param>
+        /// <param name="atomicDelete">Atomic delete to be executed</param>
+        /// <returns>Solr query</returns>
+        public string GetAtomicUpdateInstruction(IAtomicUpdate atomicUpdate = null, IAtomicDelete atomicDelete = null)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>

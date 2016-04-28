@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Core.Update;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +32,7 @@ namespace SolrExpress.Solr5
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <returns>Solr query</returns>
-        public string GetQuery(List<IParameter> parameters)
+        public string GetQueryInstruction(List<IParameter> parameters)
         {
             if (!parameters.Any())
             {
@@ -45,6 +47,17 @@ namespace SolrExpress.Solr5
             }
 
             return jsonObj.ToString();
+        }
+
+        /// <summary>
+        /// Execute the atomic update commands and return the formed solr query
+        /// </summary>
+        /// <param name="atomicUpdate">Atomic update to be executed</param>
+        /// <param name="atomicDelete">Atomic delete to be executed</param>
+        /// <returns>Solr query</returns>
+        public string GetAtomicUpdateInstruction(IAtomicUpdate atomicUpdate = null, IAtomicDelete atomicDelete = null)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -91,10 +104,5 @@ namespace SolrExpress.Solr5
                 throw new UnexpectedSolrRequestException(e.Message);
             }
         }
-
-        /// <summary>
-        /// Handler name used in solr request
-        /// </summary>
-        public string Handler { get; set; }
     }
 }

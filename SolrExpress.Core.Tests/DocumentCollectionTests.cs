@@ -63,7 +63,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Add(null);
+            documentCollection.Update.Add(null);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Delete(null);
+            documentCollection.Update.Delete(null);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Add(new TestDocument[] { });
+            documentCollection.Update.Add(new TestDocument[] { });
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Delete(new string[] { });
+            documentCollection.Update.Delete(new string[] { });
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
             // Act
-            documentCollection.Commit();
+            documentCollection.Update.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Never);
@@ -181,19 +181,14 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
-            documentCollection.Add(new TestDocument());
+            var update = documentCollection.Update.Add(new TestDocument());
 
             // Act
-            documentCollection.Commit();
+            update.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Once);
         }
-
-
-
-
-
 
         /// <summary>
         /// Where   Using a DocumentCollection instance
@@ -211,7 +206,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
             // Act
-            documentCollection.Commit();
+            documentCollection.Update.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Never);
@@ -231,15 +226,13 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
-            documentCollection.Delete("");
+            var update = documentCollection.Update.Delete("");
 
             // Act
-            documentCollection.Commit();
+            update.Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Once);
         }
-
-
     }
 }

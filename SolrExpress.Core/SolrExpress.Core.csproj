@@ -136,6 +136,7 @@
     <Compile Include="UnsupportedSortTypeException.cs" />
     <Compile Include="Update\IAtomicDelete.cs" />
     <Compile Include="Update\IAtomicUpdate.cs" />
+    <Compile Include="Update\SolrAtomicUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">

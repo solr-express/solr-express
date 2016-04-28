@@ -7,7 +7,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR queryable
     /// </summary>
-    public class SolrQueryable<TDocument>
+    public sealed class SolrQueryable<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -110,7 +110,7 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public QueryResult<TDocument> Execute(string handler = null)
         {
-            var query = this.Provider.GetQuery(this._parameters);
+            var query = this.Provider.GetQueryInstruction(this._parameters);
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
