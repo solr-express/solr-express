@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Update;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Update
 {
     public sealed class AtomicDelete<TDocument> : IAtomicDelete<TDocument>
         where TDocument : IDocument
     {
-        private string[] _documentIds;
+        private List<string> _documentIds = new List<string>();
 
         /// <summary>
         /// Dispose
@@ -25,7 +26,7 @@ namespace SolrExpress.Solr5.Update
             Checker.IsNull(documentIds);
             Checker.IsEmpty(documentIds);
 
-            this._documentIds = documentIds;
+            this._documentIds.AddRange(documentIds);
         }
 
         /// <summary>
@@ -36,7 +37,7 @@ namespace SolrExpress.Solr5.Update
         {
             JProperty jProperty;
 
-            if (this._documentIds.Length == 1)
+            if (this._documentIds.Count == 1)
             {
                 jProperty = new JProperty("id", this._documentIds[0]);
             }
@@ -48,6 +49,8 @@ namespace SolrExpress.Solr5.Update
             var delete = new JObject(jProperty);
 
             jObject["delete"] = delete;
+
+            this._documentIds = new List<string>();
         }
     }
 }
