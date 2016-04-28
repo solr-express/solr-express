@@ -81,6 +81,7 @@
     <Compile Include="Query\Result\FacetRangeResult.cs" />
     <Compile Include="Query\Result\StatisticResult.cs" />
     <Compile Include="Update\AtomicDelete.cs" />
+    <Compile Include="Update\AtomicUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -87,6 +87,7 @@
     <Compile Include="TestDocumentWithAnyPropertyTypes.cs" />
     <Compile Include="TestDocumentWithAttribute.cs" />
     <Compile Include="Update\AtomicDeleteTests.cs" />
+    <Compile Include="Update\AtomicUpdateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">

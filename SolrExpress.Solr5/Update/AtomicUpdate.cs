@@ -1,13 +1,14 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Update;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Update
 {
     public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
         where TDocument : IDocument
     {
-        private TDocument[] _documents;
+        private List<TDocument> _documents = new List<TDocument>();
 
         /// <summary>
         /// Dispose
@@ -26,13 +27,13 @@ namespace SolrExpress.Solr5.Update
             Checker.IsNull(documents);
             Checker.IsEmpty(documents);
 
-            this._documents = documents;
+            this._documents.AddRange(documents);
         }
 
         /// <summary>
         /// Create atomic update command
         /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
+        /// <param name="jObject">Container to parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
             var jArray = new JArray();
@@ -42,7 +43,13 @@ namespace SolrExpress.Solr5.Update
                 jArray.Add(JObject.FromObject(document));
             }
 
-            jObject.Add(jArray);
+            var jPropertyDoc = new JProperty("doc", jArray);
+
+            var jPropertyAdd = new JProperty("add", new JObject(jPropertyDoc));
+
+            jObject.Add(jPropertyAdd);
+
+            this._documents = new List<TDocument>();
         }
     }
 }
