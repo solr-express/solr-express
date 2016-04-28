@@ -84,10 +84,9 @@
     </Compile>
     <Compile Include="Query\Result\FacetRangeResult.cs" />
     <Compile Include="Query\Result\StatisticResult.cs" />
+    <Compile Include="Update\AtomicDelete.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Update\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="SolrExpress.Solr4.nuspec" />

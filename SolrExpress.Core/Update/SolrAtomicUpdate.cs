@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SolrExpress.Core.Update
@@ -60,7 +59,7 @@ namespace SolrExpress.Core.Update
         public SolrAtomicUpdate<TDocument> Add(params TDocument[] documents)
         {
             Checker.IsNull(documents);
-            Checker.IsTrue<ArgumentOutOfRangeException>(documents.Length == 0);
+            Checker.IsEmpty(documents);
 
             this._documentsToAdd.AddRange(documents);
 
@@ -74,7 +73,7 @@ namespace SolrExpress.Core.Update
         public SolrAtomicUpdate<TDocument> Delete(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
-            Checker.IsTrue<ArgumentOutOfRangeException>(documentIds.Length == 0);
+            Checker.IsEmpty(documentIds);
 
             this._documentsToDelete.AddRange(documentIds);
 

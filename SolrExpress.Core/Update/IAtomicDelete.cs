@@ -25,7 +25,7 @@ namespace SolrExpress.Core.Update
         /// <summary>
         /// Create atomic update command
         /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        void Execute(JObject container);
+        /// <param name="jObject">Container to parameters to request to SOLR</param>
+        void Execute(JObject jObject);
     }
 }

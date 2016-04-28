@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query;
+using SolrExpress.Core.Query.Parameter;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -68,7 +68,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         public IFieldsParameter<TDocument> Configure(params Expression<Func<TDocument, object>>[] expressions)
         {
             Checker.IsNull(expressions);
-            Checker.IsTrue<ArgumentOutOfRangeException>(expressions.Length == 0);
+            Checker.IsEmpty(expressions);
 
             this._expressions = expressions;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace SolrExpress.Core
 {
@@ -71,6 +72,18 @@ namespace SolrExpress.Core
             if (value < minValue)
             {
                 throw new ArgumentException();
+            }
+        }
+
+        /// <summary>
+        /// Throws ArgumentOutOfRangeException if specified collection is empty
+        /// </summary>
+        /// <param name="collection">Collection to check</param>
+        internal static void IsEmpty(ICollection collection)
+        {
+            if (collection.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException();
             }
         }
     }
