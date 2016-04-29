@@ -4,17 +4,13 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 
 ## Available at NuGet
 
-If you want to use [Solr 4.9+](http://archive.apache.org/dist/lucene/solr/4.9.0).
-
-Just install SolrExpress.Solr4 package using below command.
+[Solr 4.9+](http://archive.apache.org/dist/lucene/solr/4.9.0).
 
 ```powershell
 Install-Package SolrExpress.Solr4
 ```
 
-If you want to use [Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
-
-Just install SolrExpress.Solr5 package using below command.
+[Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
 
 ```powershell
 Install-Package SolrExpress.Solr5

@@ -59,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="read.md" />
+    <None Include="README.md" />
     <None Include="SolrExpress.Solr4.IntegrationTests.publickey" />
     <None Include="SolrExpress.Solr4.IntegrationTests.snk" />
   </ItemGroup>

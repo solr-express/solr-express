@@ -11,10 +11,7 @@ namespace Sample.SimpleUse
         {
             var provider = new Provider("http://localhost:8983/solr/techproducts");
             var resolver = new SimpleResolver().Configure();
-            var configuration = new Configuration
-            {
-                FailFast = true
-            };
+            var configuration = new Configuration();
 
             this.TechProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
         }

@@ -29,49 +29,54 @@ Step by step to use the framework
 
 3. The framework uses NewtonSoftware to parse json result from Solr because this, you can change the case of the properties
 
-4. In the cases what the name is not good to you, and you want a name more cool or a name than represents your bussiness logic,
-	you can use SolrFieldAttribute to indicates this name
+4. In the cases than you want a name more cool or a name than represents your bussiness logic, you can use SolrFieldAttribute to indicates this name
 
 5. If you want use fail fast feature (activated by default), you need pass some information about field properties to the SolrFieldAttribute.
-	The properties indexed, stored, omitNorms will be validate and throws exceptions depending of the use of the fields
+	pProperties indexed, stored, omitNorms will be used in validation and throws exceptions depending of the use of the fields
 
-* Create a instance of SolrQueryable class and set the Provider instance.
+* Create a instance of DocumentCollection, IoC/DI Resolver and Confiruation classes
 
 ```csharp
-	public class SolrContext : IDisposable
+    public class SolrContext : IDisposable
     {
         public SolrContext()
         {
             var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var resolver = new SimpleResolver().Configure();
+            var configuration = new Configuration();
 
-            this.TechProducts = new SolrQueryable<TechProduct>(provider);
+            this.TechProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
         }
 
-        public SolrQueryable<TechProduct> TechProducts { get; private set; }
+        public DocumentCollection<TechProduct> TechProducts { get; private set; }
+
+        public void Dispose()
+        {
+        }
     }
 ```
 **Notes:**
 
-1. I use a context to isolate the SolrQueryable creation, but you can use a factory to do this
+1. I use a context to isolate the DocumentCollection creation, but you can use a factory to do this
 
-2. To example purposes, I set collection address in hard code but, don't do this in real life.
-	Put the information in a config file or some other place
+2. To example purposes, I set collection address in hard code.
 
 * Use parameters
 
 ```csharp
 var ctx = new SolrContext();
-ctx.TechProducts.Parameter(new QueryParameter(new QueryAll()));
+var select = ctx.TechProducts.Select.Query(new QueryAll());
 ```
 
 * Execute the query
 
 ```csharp
-var result = ctx.TechProducts.Execute();
+var result = select.Execute();
 ```
 
 * And get results
 
 ```csharp
-var documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
+List<TechProduct> documents;
+result.Document(out documents);
 ```
