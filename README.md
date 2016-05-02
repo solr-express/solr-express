@@ -12,18 +12,18 @@ Install-Package SolrExpress.Solr5
 > - Solr 5.5 available [here](http://archive.apache.org/dist/lucene/solr/5.5.0)
 
 ## Index
-1. [Compatibility](https://github.com/solr-express/solr-express#compatibility)
-2. [Packages](https://github.com/solr-express/solr-express#packages)
-3. [Features](https://github.com/solr-express/solr-express#features)
-	1. [Parameters](https://github.com/solr-express/solr-express#1-parameters)
-	2. [Queries](https://github.com/solr-express/solr-express#2-queries)
-	3. [Results](https://github.com/solr-express/solr-express#3-results)
-	4. [Friendly Field Name](https://github.com/solr-express/solr-express#4-friendly-field-name)
-	5. [Fail Fast](https://github.com/solr-express/solr-express#5-fail-fast)
-2. [Examples](https://github.com/solr-express/solr-express#examples)
-	1. [Basic use](https://github.com/solr-express/solr-express#basic-use)
-	2. [SearchUI](https://github.com/solr-express/solr-express#searchui)
-3. [License](https://github.com/solr-express/solr-express#license)
+1. [Compatibility](#compatibility)
+2. [Packages](#packages)
+3. [Features](#features)
+	1. [Parameters](#1-parameters)
+	2. [Queries](#2-queries)
+	3. [Results](#3-results)
+	4. [Friendly Field Name](#4-friendly-field-name)
+	5. [Fail Fast](#5-fail-fast)
+2. [Examples](#examples)
+	1. [Basic use](#basic-use)
+	2. [SearchUI](#searchui)
+3. [License](#license)
 
 ## Compatibility
 .Net Framework 4.5 or higher
