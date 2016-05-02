@@ -1,5 +1,5 @@
 ## Solr Server
-First of all, you need startup a Solr Server and configure a collection, to do this, follow instructions in [this link](https://github.com/solr-express/solr-express/blob/master/SolrExpress.Solr5.IntegrationTests/read.md)
+Follow these [instructions](https://github.com/solr-express/solr-express/blob/master/SolrExpress.Solr5.IntegrationTests/README.md)
 
 ## Basic use
 

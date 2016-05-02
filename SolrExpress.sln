@@ -39,6 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96365F54-C
 		README.md = README.md
 		SolrExpress.Solr4.IntegrationTests\README.md = SolrExpress.Solr4.IntegrationTests\README.md
 		SolrExpress.Solr5.IntegrationTests\README.md = SolrExpress.Solr5.IntegrationTests\README.md
+		Sample.SimpleUse\README.md = Sample.SimpleUse\README.md
 	EndProjectSection
 EndProject
 Global
