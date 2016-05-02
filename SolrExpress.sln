@@ -27,6 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.SimpleUse", "Sample.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.Ui", "Sample.Ui\Sample.Ui.xproj", "{9A00B1C6-71FA-4D61-8189-A4F8A5ED4DE0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{F53EDFBA-08A0-478C-8798-ABC2F1B1584C}"
+	ProjectSection(SolutionItems) = preProject
+		build.bat = build.bat
+		SolrExpress.Core.nuspec = SolrExpress.Core.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
