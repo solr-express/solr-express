@@ -33,6 +33,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{F53EDFBA
 		SolrExpress.Core.nuspec = SolrExpress.Core.nuspec
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96365F54-CC81-4B5A-B96E-B118676C491F}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+		SolrExpress.Solr4.IntegrationTests\README.md = SolrExpress.Solr4.IntegrationTests\README.md
+		SolrExpress.Solr5.IntegrationTests\README.md = SolrExpress.Solr5.IntegrationTests\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
