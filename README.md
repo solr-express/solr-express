@@ -1,47 +1,34 @@
 # Solr Express
-
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
 ## Available at NuGet
-
-If you want to use [Solr 4.9+](http://archive.apache.org/dist/lucene/solr/4.9.0).
-
-Just install SolrExpress.Solr4 package using below command.
-
 ```powershell
 Install-Package SolrExpress.Solr4
-```
-
-If you want to use [Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
-
-Just install SolrExpress.Solr5 package using below command.
-
-```powershell
 Install-Package SolrExpress.Solr5
 ```
 
-## Index
+> **Note:**
+> - Solr 4.9 available [here](http://archive.apache.org/dist/lucene/solr/4.9.0)
+> - Solr 5.5 available [here](http://archive.apache.org/dist/lucene/solr/5.5.0)
 
-1. [Compatibility](https://github.com/solr-express/solr-express#compatibility)
-2. [Packages](https://github.com/solr-express/solr-express#packages)
-3. [Features](https://github.com/solr-express/solr-express#features)
-	1. [Parameters](https://github.com/solr-express/solr-express#1-parameters)
-	2. [Queries](https://github.com/solr-express/solr-express#2-queries)
-	3. [Builders](https://github.com/solr-express/solr-express#3-builders)
-	4. [Fluent API](https://github.com/solr-express/solr-express#4-fluent-api)
-	5. [Friendly Field Name](https://github.com/solr-express/solr-express#5-friendly-field-name)
-	6. [Fail Fast](https://github.com/solr-express/solr-express#6-fail-fast)
-2. [Examples](https://github.com/solr-express/solr-express#examples)
-	1. [Basic use](https://github.com/solr-express/solr-express#basic-use)
-	2. [SearchUI](https://github.com/solr-express/solr-express#searchui)
-3. [License](https://github.com/solr-express/solr-express#license)
+## Index
+1. [Compatibility](#compatibility)
+2. [Packages](#packages)
+3. [Features](#features)
+	1. [Parameters](#1-parameters)
+	2. [Queries](#2-queries)
+	3. [Results](#3-results)
+	4. [Friendly Field Name](#4-friendly-field-name)
+	5. [Fail Fast](#5-fail-fast)
+2. [Examples](#examples)
+	1. [Basic use](#basic-use)
+	2. [SearchUI](#searchui)
+3. [License](#license)
 
 ## Compatibility
-
 .Net Framework 4.5 or higher
 
 ## Packages
-
 ### SolrExpress.Core
 Core library with main logic and generic implementations
 
@@ -51,130 +38,99 @@ Solr 4 implementation, full compatibility with the [Solr 4.9+](http://archive.ap
 Implementation using default query handler and mechanism provided by request parameters.
 
 ### SolrExpress.Solr5
-Solr 5 implementation, full compatibility with the [Solr 5.3+](http://archive.apache.org/dist/lucene/solr/5.3.1).
+Solr 5 implementation, full compatibility with the [Solr 5.5+](http://archive.apache.org/dist/lucene/solr/5.5.0).
 
 Implementation using default query handler and mechanism provided by JSON Request API.
 
 ## Features
-
 ### 1. Parameters
 Allows send parameters to Sorl in a controlled and buildable way.
 
 #### 1.1. FacetFieldParameter
-
 Create a facet field type parameter using the informed field name and sort type.
-
 ```csharp
-new FacetFieldParameter<MyDocument>(q => q.Id, SolrFacetSortType.CountDesc);
+FacetField(q => q.Id)
 ```
 
 #### 1.2. FacetQueryParameter
-
 Create a facet query type parameter using the informed field alias, query class and sort type.
-
 ```csharp
-new FacetQueryParameter("Alias", new QueryAll(), SolrFacetSortType.CountDesc);
+FacetQuery("Alias", new QueryAll())
 ```
 
 #### 1.3. FacetRangeParameter
-
 Create a facet range type parameter using the informed field name, query class and sort type.
-
 ```csharp
-new FacetRangeParameter<MyDocument>("X", q => q.Price, "1", "10", "20", SolrFacetSortType.CountDesc);
+FacetRange("X", q => q.Price, "1", "10", "20")
 ```
 
 #### 1.4. FieldsParameter
-
 Create a fields parameter (field list in Solr 4) using the informed field list.
-
-* One by one
-
 ```csharp
-new FieldListParameter<MyDocument>(q => q.Id);
-new FieldListParameter<MyDocument>(q => q.Score);
+FieldList(q => q.Id)
+FieldList(q => q.Score)
 ```
-
-* All in the same moment
-
+OR
 ```csharp
-new FieldListParameter<MyDocument>(q => q.Id, q => q.Score);
+FieldListParameter(q => q.Id, q => q.Score)
 ```
 
 #### 1.5. FilterParameter
-
 Create a fields parameter (filter query in Solr 4) using the informed query class.
-
 ```csharp
-new FilterParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
+Filter(q => q.Id, "XPTO")
 ```
 
 #### 1.6. LimitParameter
-
 Create a limit parameter (rows in Solr 4) using the informed number.
-
 ```csharp
-new LimitParameter(50);
+Limit(50)
 ```
 
 #### 1.7. MinimumShouldMatchParameter
-
 Create a minimum should match parameter using the informed expression.
-
 ```csharp
-new MinimumShouldMatchParameter("75%");
+MinimumShouldMatch("75%")
 ```
 
 #### 1.8. OffsetParameter
-
 Create a offset parameter (start in Solr 4) using the informed number.
-
 ```csharp
-new OffsetParameter(50);
+Offset(50)
 ```
 
 #### 1.9. QueryFieldParameter
-
 Create a query field parameter using the informed expression.
-
 ```csharp
-new QueryFieldParameter("Id^10 Name^5~2");
+QueryField("Id^10 Name^5~2")
 ```
 
 #### 1.10. QueryParameter
-
 Create a query parameter using the informed query class.
-
 ```csharp
-new QueryParameter(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
+Query(q => q.Id, "XPTO")
 ```
 
 #### 1.11. SortParameter
-
 Create a sort parameter using the informed expression and ascending type.
-
 ```csharp
-new SortParameter(q => q.Id, true);
+Sort(q => q.Id)
 ```
 
 #### 1.12. SpatialFilterParameter
-
 Create a spatial filter parameter using the informed spatial function, expression, geo coordinate of origin and distance from origin point.
-
 ```csharp
 // Using Geofilt function
-new SpatialFilterParameter<MyDocument>(SolrSpatialFunctionType.Geofilt, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+SpatialFilter(q => q.Spatial, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(-1.1M, -2.2M), 5.5M)
 
 // Using Bbox function
-new SpatialFilterParameter<MyDocument>(SolrSpatialFunctionType.Bbox, q => q.Spatial, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
+SpatialFilter(q => q.Spatial, SolrSpatialFunctionType.Bbox, new GeoCoordinate(-1.1M, -2.2M), 5.5M)
 ```
 
 ### 2. Queries
-
 Allows create simple or complex queries in a controlled, buildable and testable way.
 
 #### 2.1. QueryAll
-
 Create a query to return all documents.
 
 ```csharp
@@ -235,7 +191,7 @@ Create a container to negate the queries.
 new NegativeValue(new SingleValue<MyDocument>(q => q.Id, "XPTO"));
 ```
 
-### 3. Builders
+### 3. Results
 
 Allows parse Sorl result in a controlled and buildable way.
 
@@ -279,54 +235,19 @@ Parse the "statistic" part of the Solr result in a several properties with Solr 
 new StatisticResultBuilder();
 ```
 
-### 4. Fluent API
-Allows use of fluent API to make the life easier and a beautiful code.
-To exemplify this, see the code below without and with the fluent api.
 
-```csharp
-	// Source without fluent API
-	using (var ctx = new SolrContext())
-	{
-		List<TechProduct> documents;
-
-		ctx.TechProducts
-			.Parameter(new QueryParameter(new QueryAll()))
-			.Parameter(new LimitParameter(3));
-
-		var result = ctx.TechProducts.Execute();
-
-		documents = result.Get(new DocumentBuilder<TechProduct>()).Data;
-	}
-```
-
-```csharp
-	// Source with fluent API
-	using (var ctx = new SolrContext())
-	{
-		List<TechProduct> documents;
-
-		ctx.TechProducts
-			.Query(new QueryAll())
-			.Limit(3);
-
-		var result = ctx.TechProducts.Execute();
-
-		result.Document<TechProduct>(out documents);
-	}
-```
-
-### 5. Friendly field name
+### 4. Friendly field name
 Allows use of SolrFieldAttribute attribute and control "from-to" field name between Solr document and POCO class.
 
 ```csharp
 	public class MyDocument : IDocument
 	{
-		[SolrFieldAttribute("Field_With_A_Name_Hosted_In_Solr_Document")]
+		[SolrField("Field_With_A_Name_Hosted_In_Solr_Document")]
         public GeoCoordinate StoredAt { get; set; }
 	}
 ```
 
-### 6. Fail fast
+### 5. Fail fast
 Allows throws exceptions in some cases and make unit tests easier to be created.
 
 To do this, use the SolrFieldAttribute attribute in properties of the POCO than represents the Solr document.
@@ -334,7 +255,7 @@ To do this, use the SolrFieldAttribute attribute in properties of the POCO than 
 ```csharp
 	public class MyDocument : IDocument
 	{
-		[SolrFieldAttribute("StoredAt", Indexed = true, Stored = true, OmitNorms = true)]
+		[SolrField("StoredAt", Indexed = true, Stored = true, OmitNorms = true)]
         public GeoCoordinate StoredAt { get; set; }
 	}
 ```
@@ -343,24 +264,36 @@ Each property of the attribute is validate in different moments. For example, in
 
 To all use cases, see [official wiki](http://wiki.apache.org/solr/FieldOptionsByUseCase)
 
-To deactivate the fail fast feature (not recommended), when created the SolrQueryable, pass a configuration object in the constructor like the below code:
+To deactivate fail fast feature (not recommended), when created the SolrQueryable, pass a configuration object in the constructor like the below code:
 
 ```csharp
-	var provider = new Provider("http://localhost:8983/solr/techproducts");
+    public class SolrContext : IDisposable
+    {
+        public SolrContext()
+        {
+            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var resolver = new SimpleResolver().Configure();
+            var configuration = new Configuration
+            {
+                FailFast = false // This deactivate fail fast feature
+            };
 
-	var config = new SolrQueryConfiguration
-	{
-		FailFast = false
-	};
+            this.TechProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
+        }
 
-	this.TechProducts = new SolrQueryable<TechProduct>(provider, config);
+        public DocumentCollection<TechProduct> TechProducts { get; private set; }
+
+        public void Dispose()
+        {
+        }
+    }
 ```
 
 ## Examples
 
 ### Basic use
 
-Step to step to use the framework:
+Step by step to use the framework:
 
 * Create a class and implement the IDocument interface
 
@@ -368,40 +301,43 @@ Step to step to use the framework:
     public class MyDocument : IDocument
 ```
 
-* Create a instance of SolrQueryable class. Set the Provider instance.
+* Create a instance of DocumentCollection class. Set the Provider, DI controller and Config instances.
 
 ```csharp
-    var myProvider = new Provider("http://localhost:8983/solr/mycollection");
+    var provider = new Provider("http://localhost:8983/solr/techproducts");
+    var resolver = new SimpleResolver().Configure();
+    var configuration = new Configuration();
 
-    var myDocuments = new SolrQueryable<MyDocument>(myProvider);
+    var myDocuments = new DocumentCollection<MyDocument>(provider, resolver, configuration);
 ```
 
 * Use parameters
 
 ```csharp
 // This will create a query like http://localhost:8983/solr/mycollection/query?q=*:*
-myDocuments.Parameter(new QueryParameter(new QueryAll()));
+var query = myDocuments.Select.Query(new QueryAll());
 ```
 
 * Execute the query
 
 ```csharp
-var queryResult = myDocuments.Execute();
+var queryResult = query.Execute();
 ```
 
 * And get results
 
 ```csharp
-var documents = queryResult.Get(new DocumentBuilder<MyDocument>()).Data;
+List<MyDocument> documents;
+queryResult.Document(out documents);
 ```
 
 Tan dam!! Done!
 
-All sorces of this example is available [here](https://github.com/solr-express/solr-express/tree/master/Examples/BasicUse)
+All sorces of this example is available [here](https://github.com/solr-express/solr-express/blob/master/Sample.SimpleUse)
 
 ### SearchUI
 
-A fully implemented example is available [here](https://github.com/solr-express/solr-express/blob/master/Samples/SearchUI/)
+A fully implemented example is available [here](https://github.com/solr-express/solr-express/blob/master/Sample.Ui)
 
 ## License
 

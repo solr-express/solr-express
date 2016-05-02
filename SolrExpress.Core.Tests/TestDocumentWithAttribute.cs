@@ -1,7 +1,4 @@
-﻿using SolrExpress.Core.Attribute;
-using SolrExpress.Core.Entity;
-
-namespace SolrExpress.Core.Tests
+﻿namespace SolrExpress.Core.Tests
 {
     public class TestDocumentWithAttribute : IDocument
     {

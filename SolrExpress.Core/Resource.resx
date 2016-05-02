@@ -144,8 +144,14 @@
   <data name="InvalidParameterTypeException" xml:space="preserve">
     <value>Parameter \"{0}\" throwed an exception:\r\n\"{1}\"</value>
   </data>
+  <data name="UnexpectedDependencyInjectionMappingException" xml:space="preserve">
+    <value>Unknown to resolve type \"{0}"\\r\nMapping not found</value>
+  </data>
   <data name="UnexpectedJsonException" xml:space="preserve">
-    <value>The parameter \"{0}\" was not found in the source json</value>
+    <value>Parameter \"{0}\" was not found in the source json</value>
+  </data>
+  <data name="UnexpectedSolrRequestException" xml:space="preserve">
+    <value>Unknown to resolve solr query request</value>
   </data>
   <data name="UnknownResolveResultBuilderException" xml:space="preserve">
     <value>Unknown resolve of the result builder type \"{0}\" because this type doesn't implement IConvertJsonObject or IConvertJsonPlainText</value>

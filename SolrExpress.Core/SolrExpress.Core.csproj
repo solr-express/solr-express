@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.1.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <AssemblyName>SolrExpress.Core</AssemblyName>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(DefineConstants)' == 'STRONGNAME' ">
     <AssemblyName>SolrExpress.Core.Signed</AssemblyName>
@@ -41,8 +43,8 @@
     <AssemblyOriginatorKeyFile>SolrExpress.Core.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -54,67 +56,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attribute\SolrFieldAttribute.cs" />
-    <Compile Include="Builder\IBuilderFactory.cs" />
-    <Compile Include="Builder\IDocumentBuilder.cs" />
-    <Compile Include="Builder\IFacetFieldResultBuilder.cs" />
-    <Compile Include="Builder\IFacetQueryResultBuilder.cs" />
-    <Compile Include="Builder\IFacetRangeResultBuilder.cs" />
-    <Compile Include="Builder\IStatisticResultBuilder.cs" />
-    <Compile Include="Constant\RequestHandler.cs" />
-    <Compile Include="Entity\SolrQueryConfiguration.cs" />
-    <Compile Include="Entity\Statistic.cs" />
-    <Compile Include="Enumerator\SolrFacetSortType.cs" />
-    <Compile Include="Enumerator\SolrQueryConditionType.cs" />
-    <Compile Include="Enumerator\SolrSpatialFunctionType.cs" />
-    <Compile Include="Exception\AllowMultipleInstanceOfParameterTypeException.cs" />
-    <Compile Include="Exception\InvalidParameterTypeException.cs" />
-    <Compile Include="Exception\UnexpectedJsonFormatException.cs" />
-    <Compile Include="Exception\UnexpectedJsonQueryException.cs" />
-    <Compile Include="Exception\UnknownResolveResultBuilderException.cs" />
-    <Compile Include="Exception\UnsupportedSortTypeException.cs" />
+    <Compile Include="CustomContractResolver.cs" />
+    <Compile Include="DocumentCollection.cs" />
+    <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
+    <Compile Include="Extension\Internal\GenericExtension.cs" />
+    <Compile Include="Extension\Internal\UtilityExtension.cs" />
     <Compile Include="Extension\SolrQueryableExtension.cs" />
     <Compile Include="Extension\SolrQueryResultExtension.cs" />
-    <Compile Include="Helper\GenericHelper.cs" />
-    <Compile Include="Helper\ThrowHelper.cs" />
-    <Compile Include="Helper\UtilHelper.cs" />
-    <Compile Include="Json\CustomContractResolver.cs" />
-    <Compile Include="Json\GeoCoordinateConverter.cs" />
-    <Compile Include="ParameterValue\Any.cs" />
-    <Compile Include="ParameterValue\Multi.cs" />
-    <Compile Include="ParameterValue\Negate.cs" />
-    <Compile Include="ParameterValue\QueryAll.cs" />
-    <Compile Include="ParameterValue\Range.cs" />
-    <Compile Include="ParameterValue\Single.cs" />
-    <Compile Include="ParameterValue\Spatial.cs" />
-    <Compile Include="Parameter\IAnyParameter.cs" />
-    <Compile Include="Parameter\IParameterFactory.cs" />
-    <Compile Include="Parameter\IFacetFieldParameter.cs" />
-    <Compile Include="Parameter\IFacetLimitParameter.cs" />
-    <Compile Include="Parameter\IFacetQueryParameter.cs" />
-    <Compile Include="Parameter\IFacetRangeParameter.cs" />
-    <Compile Include="Parameter\IFieldsParameter.cs" />
-    <Compile Include="Parameter\IFilterParameter.cs" />
-    <Compile Include="Parameter\ILimitParameter.cs" />
-    <Compile Include="Parameter\IOffsetParameter.cs" />
-    <Compile Include="Parameter\IQueryParameter.cs" />
-    <Compile Include="Parameter\ISortParameter.cs" />
+    <Compile Include="GeoCoordinate.cs" />
+    <Compile Include="GeoCoordinateConverter.cs" />
+    <Compile Include="IDocument.cs" />
+    <Compile Include="IResolver.cs" />
+    <Compile Include="Query\ParameterValue\Any.cs" />
+    <Compile Include="Query\ParameterValue\Multi.cs" />
+    <Compile Include="Query\ParameterValue\Negate.cs" />
+    <Compile Include="Query\ParameterValue\QueryAll.cs" />
+    <Compile Include="Query\ParameterValue\Range.cs" />
+    <Compile Include="Query\ParameterValue\Single.cs" />
+    <Compile Include="Query\ParameterValue\SolrQueryConditionType.cs" />
+    <Compile Include="Query\ParameterValue\SolrSpatialFunctionType.cs" />
+    <Compile Include="Query\ParameterValue\Spatial.cs" />
+    <Compile Include="Query\Parameter\IAnyParameter.cs" />
+    <Compile Include="Query\Parameter\IFacetFieldParameter.cs" />
+    <Compile Include="Query\Parameter\IFacetLimitParameter.cs" />
+    <Compile Include="Query\Parameter\IFacetQueryParameter.cs" />
+    <Compile Include="Query\Parameter\IFacetRangeParameter.cs" />
+    <Compile Include="Query\Parameter\IFacetSpatialParameter.cs" />
+    <Compile Include="Query\Parameter\IFieldsParameter.cs" />
+    <Compile Include="Query\Parameter\IFilterParameter.cs" />
+    <Compile Include="Query\Parameter\ILimitParameter.cs" />
+    <Compile Include="Query\Parameter\IMinimumShouldMatchParameter.cs" />
+    <Compile Include="Query\Parameter\IOffsetParameter.cs" />
+    <Compile Include="Query\Parameter\IParameter.cs" />
+    <Compile Include="Query\Parameter\IQueryFieldParameter.cs" />
+    <Compile Include="Query\Parameter\IQueryParameter.cs" />
+    <Compile Include="Query\ParameterValue\IQueryParameterValue.cs" />
+    <Compile Include="Query\Parameter\ISortParameter.cs" />
+    <Compile Include="Query\Parameter\ISpatialFilterParameter.cs" />
+    <Compile Include="Query\Parameter\SolrFacetSortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entity\GeoCoordinate.cs" />
-    <Compile Include="Query\IConvertJsonObject.cs" />
-    <Compile Include="Query\IConvertJsonPlainText.cs" />
-    <Compile Include="Entity\IDocument.cs" />
+    <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
+    <Compile Include="IProvider.cs" />
     <Compile Include="Query\IQueryInterceptor.cs" />
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
-    <Compile Include="Query\IProvider.cs" />
-    <Compile Include="Query\IParameter.cs" />
-    <Compile Include="Query\IQueryParameterValue.cs" />
-    <Compile Include="Builder\IResultBuilder.cs" />
-    <Compile Include="Query\SolrQueryResult.cs" />
-    <Compile Include="Entity\FacetKeyValue.cs" />
-    <Compile Include="Entity\FacetRange.cs" />
     <Compile Include="Query\SolrQueryable.cs" />
+    <Compile Include="Query\QueryResult.cs" />
+    <Compile Include="Query\UnknownResolveResultBuilderException.cs" />
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="Resource-pt-BR.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -125,6 +114,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Query\Result\FacetKeyValue.cs" />
+    <Compile Include="Query\Result\FacetRange.cs" />
+    <Compile Include="Query\Result\IConvertJsonObject.cs" />
+    <Compile Include="Query\Result\IConvertJsonPlainText.cs" />
+    <Compile Include="Query\Result\IDocumentResult.cs" />
+    <Compile Include="Query\Result\IFacetFieldResult.cs" />
+    <Compile Include="Query\Result\IFacetQueryResult.cs" />
+    <Compile Include="Query\Result\IFacetRangeResult.cs" />
+    <Compile Include="Query\InvalidParameterTypeException.cs" />
+    <Compile Include="Query\Result\IResult.cs" />
+    <Compile Include="Query\Result\IStatisticResult.cs" />
+    <Compile Include="Query\Result\Statistic.cs" />
+    <Compile Include="SimpleResolver.cs" />
+    <Compile Include="SolrFieldAttribute.cs" />
+    <Compile Include="Checker.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="UnexpectedDependencyInjectionMappingException.cs" />
+    <Compile Include="UnexpectedJsonFormatException.cs" />
+    <Compile Include="UnexpectedSolrRequestException.cs" />
+    <Compile Include="UnsupportedSortTypeException.cs" />
+    <Compile Include="Update\IAtomicDelete.cs" />
+    <Compile Include="Update\IAtomicUpdate.cs" />
+    <Compile Include="Update\SolrAtomicUpdate.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource-pt-BR.resx">
@@ -143,4 +155,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.2.1\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
 </Project>

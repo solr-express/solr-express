@@ -1,9 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using SolrExpress.Core.Builder;
-using SolrExpress.Core.Entity;
-using SolrExpress.Core.Exception;
-using SolrExpress.Core.Parameter;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query;
 using System;
 
@@ -25,7 +22,7 @@ namespace SolrExpress.Core.Tests.Query
             var providerMock = new Mock<IProvider>();
             var mockParameter = new Mock<IParameter>();
             mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
             queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
@@ -46,9 +43,9 @@ namespace SolrExpress.Core.Tests.Query
             var mockParameter = mockValidate.As<IParameter>();
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
-            var isValid = false;
+            bool isValid;
             string errorMessage;
 
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
@@ -68,13 +65,13 @@ namespace SolrExpress.Core.Tests.Query
             // Arrange
             var mockValidate = new Mock<IValidation>();
             var mockParameter = mockValidate.As<IParameter>();
-            var solrQueryConfiguration = new SolrQueryConfiguration
+            var solrQueryConfiguration = new Configuration
             {
                 FailFast = false
             };
 
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
 
             bool isValid;
             string errorMessage;
@@ -88,20 +85,24 @@ namespace SolrExpress.Core.Tests.Query
 
         /// <summary>
         /// Where   Using a SolrQueryable instance
-        /// When    Create the instance with null
+        /// When    Invoking the method "Parameter" with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable004()
         {
-            // Arrange / Act / Assert
-            new SolrQueryable<TestDocument>(null, null, null);
+            // Arrange
+            var providerMock = new Mock<IProvider>();
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+
+            // Act / Assert
+            queryable.Parameter(null);
         }
 
         /// <summary>
         /// Where   Using a SolrQueryable instance
-        /// When    Invoking the method "Parameter" with null
+        /// When    Invoking the method "QueryInterceptor" with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
@@ -110,10 +111,10 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            queryable.Parameter(null);
+            queryable.QueryInterceptor(null);
         }
 
         /// <summary>
@@ -127,54 +128,49 @@ namespace SolrExpress.Core.Tests.Query
         {
             // Arrange
             var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
-
-            // Act / Assert
-            queryable.QueryInterceptor(null);
-        }
-
-        /// <summary>
-        /// Where   Using a SolrQueryable instance
-        /// When    Invoking the method "QueryInterceptor" with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void SolrQueryable007()
-        {
-            // Arrange
-            var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object);
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
             queryable.ResultInterceptor(null);
         }
 
         /// <summary>
-        /// Where   Using a SolrQueryable instance configured with Handler name
-        /// When    Creating SolrQueryable object
-        /// What    Change provider instance property "Handler" with informad name
+        /// Where   Using a SolrQueryable instance
+        /// When    Create the instance with null in provider parameter
+        /// What    Throws ArgumentNullException
         /// </summary>
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SolrQueryable007()
+        {
+            // Arrange / Act / Assert
+            new SolrQueryable<TestDocument>(null, new Mock<IResolver>().Object, new Configuration());
+        }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Create the instance with null in resolver parameter
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable008()
         {
-            // Arrange
-            string handlerName = "HANDLER-NAME";
-            var solrQueryConfiguration = new SolrQueryConfiguration
-            {
-                Handler = handlerName
-            };
+            // Arrange / Act / Assert
+            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, null, new Configuration());
+        }
 
-            var providerMock = new Mock<IProvider>();
-            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IParameterFactory<TestDocument>>().Object, new Mock<IBuilderFactory<TestDocument>>().Object, solrQueryConfiguration);
-
-            providerMock.Setup(q => q.Execute(It.IsAny<string>(), It.IsAny<string>())).Returns(".");
-
-            // Act
-            queryable.Execute();
-
-            // Assert
-            providerMock.Verify(q => q.Execute(It.Is<string>(s => s.Equals(handlerName)), It.IsAny<string>()), Times.Once);
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Create the instance with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void SolrQueryable009()
+        {
+            // Arrange / Act / Assert
+            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
         }
     }
 }

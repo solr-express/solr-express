@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SolrExpress.Core</id>
-    <version>1.2.0.0</version>
+    <version>2.0.0.0</version>
     <authors>Diego Luiz Brum</authors>
     <owners>Diego Luiz Brum</owners>
     <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
