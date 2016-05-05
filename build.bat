@@ -25,6 +25,10 @@ REM BUILD NOT SIGNED PACKAGES
 .nuget\nuget.exe pack SolrExpress.Core\SolrExpress.Core.csproj -IncludeReferencedProjects -Properties Configuration=Release -Verbosity detailed -build
 .nuget\nuget.exe pack SolrExpress.Solr4\SolrExpress.Solr4.csproj -IncludeReferencedProjects -Properties Configuration=Release -Verbosity detailed -build
 .nuget\nuget.exe pack SolrExpress.Solr5\SolrExpress.Solr5.csproj -IncludeReferencedProjects -Properties Configuration=Release -Verbosity detailed -build
+
+REM MOVE FILES
+move *.nupkg nuget-packages
+
 @echo.
 
 pause
