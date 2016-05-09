@@ -88,6 +88,7 @@
     <Compile Include="Query\ParameterValue\QueryAllTests.cs" />
     <Compile Include="Query\ParameterValue\RangeTests.cs" />
     <Compile Include="Query\ParameterValue\SingleTests.cs" />
+    <Compile Include="Query\SimpleLogQueryInterceptorTests.cs" />
     <Compile Include="Query\SolrQueryableTests.cs" />
     <Compile Include="SimpleResolverTests.cs" />
     <Compile Include="TestDocument.cs" />
