@@ -90,6 +90,7 @@
     <Compile Include="Query\ParameterValue\SingleTests.cs" />
     <Compile Include="Query\SimpleLogQueryInterceptorTests.cs" />
     <Compile Include="Query\SolrQueryableTests.cs" />
+    <Compile Include="Query\SimpleLogResultInterceptorTests.cs" />
     <Compile Include="SimpleResolverTests.cs" />
     <Compile Include="TestDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

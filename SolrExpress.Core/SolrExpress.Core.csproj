@@ -101,6 +101,7 @@
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
     <Compile Include="Query\SimpleLogQueryInterceptor.cs" />
+    <Compile Include="Query\SimpleLogResultInterceptor.cs" />
     <Compile Include="Query\SolrQueryable.cs" />
     <Compile Include="Query\QueryResult.cs" />
     <Compile Include="Query\UnknownResolveResultBuilderException.cs" />
