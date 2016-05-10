@@ -95,13 +95,13 @@ namespace SolrExpress.Solr5
                         content = reader.ReadToEnd();
                     }
                 }
-                Checker.IsTrue<UnexpectedSolrRequestException>(response.StatusCode != HttpStatusCode.OK, content);
+                Checker.IsTrue<UnexpectedSolrRequestException>(response.StatusCode != HttpStatusCode.OK, $"{baseUrl}\r\n{instruction}", content);
 
                 return content;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                throw new UnexpectedSolrRequestException(e.Message);
+                throw new UnexpectedSolrRequestException($"{baseUrl}\r\n{instruction}", e.Message);
             }
         }
     }

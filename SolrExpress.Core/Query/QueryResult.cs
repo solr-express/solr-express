@@ -57,7 +57,7 @@ namespace SolrExpress.Core.Query
                 }
                 else
                 {
-                    throw new UnknownResolveResultBuilderException(result.GetType().Name);
+                    throw new UnknownResolveResultBuilderException(result.GetType().FullName);
                 }
             }
 

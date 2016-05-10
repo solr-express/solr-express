@@ -56,7 +56,7 @@ namespace SolrExpress.Core.Query
         {
             Checker.IsNull(parameter);
             var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
-            Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter.ToString());
+            Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter.GetType().FullName);
 
             var parameterValidation = parameter as IValidation;
 

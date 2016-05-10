@@ -80,13 +80,13 @@ namespace SolrExpress.Solr4
                     }
                 }
 
-                Checker.IsTrue<UnexpectedSolrRequestException>(response.StatusCode != HttpStatusCode.OK, content);
+                Checker.IsTrue<UnexpectedSolrRequestException>(response.StatusCode != HttpStatusCode.OK, baseUrl, content);
 
                 return content;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                throw new UnexpectedSolrRequestException(e.Message);
+                throw new UnexpectedSolrRequestException(baseUrl, e.Message);
             }
         }
     }

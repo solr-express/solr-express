@@ -145,13 +145,19 @@
     <value>Parameter "{0}" validation message: "{1}"</value>
   </data>
   <data name="UnexpectedDependencyInjectionMappingException" xml:space="preserve">
-    <value>Unknown to resolve type "{0}". Mapping not found</value>
+    <value>Unknown to resolve type "{0}"
+Mapping not found</value>
   </data>
   <data name="UnexpectedJsonException" xml:space="preserve">
     <value>Parameter "{0}" was not found in the source json</value>
   </data>
   <data name="UnexpectedSolrRequestException" xml:space="preserve">
-    <value>Unknown to resolve solr query request</value>
+    <value>Unknown to resolve solr query request
+Requested instruction:
+{0}
+
+Server message:
+{1}</value>
   </data>
   <data name="UnknownResolveResultBuilderException" xml:space="preserve">
     <value>Unknown resolve of the result builder type "{0}" because this type doesn't implement IConvertJsonObject or IConvertJsonPlainText</value>

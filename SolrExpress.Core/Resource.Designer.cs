@@ -142,7 +142,8 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown to resolve type &quot;{0}&quot;. Mapping not found.
+        ///   Looks up a localized string similar to Unknown to resolve type &quot;{0}&quot;
+        ///Mapping not found.
         /// </summary>
         internal static string UnexpectedDependencyInjectionMappingException {
             get {
@@ -160,7 +161,12 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown to resolve solr query request.
+        ///   Looks up a localized string similar to Unknown to resolve solr query request
+        ///Requested instruction:
+        ///{0}
+        ///
+        ///Server message:
+        ///{1}.
         /// </summary>
         internal static string UnexpectedSolrRequestException {
             get {

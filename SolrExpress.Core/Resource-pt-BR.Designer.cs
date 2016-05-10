@@ -142,7 +142,8 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível resolver o type &quot;{0}&quot;. Não foi encontrado um mapping para o type.
+        ///   Looks up a localized string similar to Não foi possível resolver o type &quot;{0}&quot;
+        ///Não foi encontrado um mapping para o type.
         /// </summary>
         internal static string UnexpectedDependencyInjectionMappingException {
             get {
@@ -160,7 +161,12 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não existe resolução para a requisição efetuada ao Solr.
+        ///   Looks up a localized string similar to Não existe resolução para a requisição efetuada ao Solr
+        ///Informações da solicitação:
+        ///{0}
+        ///
+        ///Mensagem do servidor:
+        ///{1}.
         /// </summary>
         internal static string UnexpectedSolrRequestException {
             get {

@@ -8,7 +8,8 @@ namespace SolrExpress.Core
         /// Default constructor of the class
         /// </summary>
         /// <param name="json">Unexpected JSON string</param>
-        public UnexpectedSolrRequestException(string json)
+        /// <param name="message">Server message</param>
+        public UnexpectedSolrRequestException(string json, string message)
             : base(string.Format(Resource.UnexpectedSolrRequestException, json))
         {
         }
