@@ -24,15 +24,22 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var jArray = (JArray)jObject["sort"] ?? new JArray();
+            var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
 
             var fieldName = this._expression.GetFieldNameFromExpression();
 
             var value = $"{fieldName} {(this._ascendent ? "asc" : "desc")}";
 
-            jArray.Add(value);
+            if (jValue.Value != null)
+            {
+                jValue.Value += $", {value}";
+            }
+            else
+            {
+                jValue.Value = value;
+            }
 
-            jObject["sort"] = jArray;
+            jObject["sort"] = jValue;
         }
 
         /// <summary>

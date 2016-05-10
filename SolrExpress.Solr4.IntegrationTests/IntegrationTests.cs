@@ -292,5 +292,58 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             Assert.AreEqual(0, fetchedDocuments.Count);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (once)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest011()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
+            List<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, true));
+            result = solrQuery.Execute();
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+
+            // Assert
+            Assert.AreEqual(10, data.Count);
+            Assert.AreEqual("0579B002", data[0].Id);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest012()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            QueryResult<TechProductDocument> result;
+            List<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, false));
+            solrQuery.Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Name, true));
+            result = solrQuery.Execute();
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+
+            // Assert
+            Assert.AreEqual(10, data.Count);
+            Assert.AreEqual("viewsonic", data[0].Id);
+        }
     }
 }
