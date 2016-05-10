@@ -61,7 +61,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter \&quot;{0}\&quot; is not allowed because another instance of the same type was added.
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is not allowed because another instance of the same type was added.
         /// </summary>
         internal static string AllowMultipleInstanceOfParameterTypeException {
             get {
@@ -79,7 +79,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A field must be \&quot;indexed=true\&quot; to be used in a facet.
+        ///   Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in a facet.
         /// </summary>
         internal static string FieldMustBeIndexedTrueToBeUsedInAFacetException {
             get {
@@ -88,7 +88,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A field must be \&quot;indexed=true\&quot; to be used in a query.
+        ///   Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in a query.
         /// </summary>
         internal static string FieldMustBeIndexedTrueToBeUsedInAQueryException {
             get {
@@ -106,7 +106,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A field must be \&quot;stored=true\&quot; to be used in field list.
+        ///   Looks up a localized string similar to A field must be &quot;stored=true&quot; to be used in field list.
         /// </summary>
         internal static string FieldMustBeStoredTrueToBeUsedInFieldsException {
             get {
@@ -133,7 +133,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter \&quot;{0}\&quot; throwed an exception:\r\n\&quot;{1}\&quot;.
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; validation message: &quot;{1}&quot;.
         /// </summary>
         internal static string InvalidParameterTypeException {
             get {
@@ -142,7 +142,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown to resolve type \&quot;{0}&quot;\\r\nMapping not found.
+        ///   Looks up a localized string similar to Unknown to resolve type &quot;{0}&quot;. Mapping not found.
         /// </summary>
         internal static string UnexpectedDependencyInjectionMappingException {
             get {
@@ -151,7 +151,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter \&quot;{0}\&quot; was not found in the source json.
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; was not found in the source json.
         /// </summary>
         internal static string UnexpectedJsonException {
             get {
@@ -169,7 +169,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown resolve of the result builder type \&quot;{0}\&quot; because this type doesn&apos;t implement IConvertJsonObject or IConvertJsonPlainText.
+        ///   Looks up a localized string similar to Unknown resolve of the result builder type &quot;{0}&quot; because this type doesn&apos;t implement IConvertJsonObject or IConvertJsonPlainText.
         /// </summary>
         internal static string UnknownResolveResultBuilderException {
             get {
@@ -196,7 +196,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter \&quot;{0}\&quot; have a specific version.
+        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; have a specific version.
         /// </summary>
         internal static string UseSpecificParameterRatherThanAnyException {
             get {

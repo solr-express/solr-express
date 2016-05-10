@@ -46,7 +46,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             bool isValid;
-            string errorMessage;
+            var errorMessage = "test";
 
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
 
@@ -191,7 +191,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             bool isValid;
-            string errorMessage;
+            var errorMessage = "test";
 
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
 

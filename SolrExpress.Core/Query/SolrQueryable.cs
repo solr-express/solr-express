@@ -74,7 +74,7 @@ namespace SolrExpress.Core.Query
 
                 parameterValidation.Validate(out isValid, out errorMessage);
 
-                Checker.IsTrue<InvalidParameterTypeException>(!isValid, parameterValidation.ToString(), errorMessage);
+                Checker.IsTrue<InvalidParameterTypeException>(!isValid, parameterValidation.GetType().FullName, errorMessage);
             }
 
             this._parameters.Add(parameter);

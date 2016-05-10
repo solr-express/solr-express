@@ -61,7 +61,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parâmetro \&quot;{0}\&quot; não pode ser adicionado por já existir uma outra instância com o mesmo tipo.
+        ///   Looks up a localized string similar to Parâmetro &quot;{0}&quot; não pode ser adicionado por já existir uma outra instância com o mesmo tipo.
         /// </summary>
         internal static string AllowMultipleInstanceOfParameterTypeException {
             get {
@@ -79,7 +79,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Um campo deve ser \&quot;indexed=true\&quot; para ser usado em facet.
+        ///   Looks up a localized string similar to Um campo deve ser &quot;indexed=true&quot; para ser usado em facet.
         /// </summary>
         internal static string FieldMustBeIndexedTrueToBeUsedInAFacet {
             get {
@@ -88,7 +88,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Um campo deve ser \&quot;indexed=true\&quot; para ser usado em query.
+        ///   Looks up a localized string similar to Um campo deve ser &quot;indexed=true&quot; para ser usado em query.
         /// </summary>
         internal static string FieldMustBeIndexedTrueToBeUsedInAQuery {
             get {
@@ -106,7 +106,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Um campo deve ser \&quot;stored=true\&quot; para ser usado em fields.
+        ///   Looks up a localized string similar to Um campo deve ser &quot;stored=true&quot; para ser usado em fields.
         /// </summary>
         internal static string FieldMustBeStoredTrueToBeUsedInFields {
             get {
@@ -133,7 +133,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parâmetro \&quot;{0}\&quot; lançou a exceção:\r\n\&quot;{1}\&quot;.
+        ///   Looks up a localized string similar to Parâmetro &quot;{0}&quot;, mensagem de validação: &quot;{1}&quot;.
         /// </summary>
         internal static string InvalidParameterTypeException {
             get {
@@ -142,7 +142,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível resolver o type \&quot;{0}&quot;\\r\nNão foi encontrado um mapping para o type.
+        ///   Looks up a localized string similar to Não foi possível resolver o type &quot;{0}&quot;. Não foi encontrado um mapping para o type.
         /// </summary>
         internal static string UnexpectedDependencyInjectionMappingException {
             get {
@@ -151,7 +151,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O parâmetro \&quot;{0}\&quot; não foi encontrado no json de origem.
+        ///   Looks up a localized string similar to O parâmetro &quot;{0}&quot; não foi encontrado no json de origem.
         /// </summary>
         internal static string UnexpectedJsonException {
             get {
@@ -169,7 +169,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Não foi possível efetuar a conversão por causa que o builder \&quot;{0}\&quot; não implementa IConvertJsonObject ou IConvertJsonPlainText.
+        ///   Looks up a localized string similar to Não foi possível efetuar a conversão por causa que o builder &quot;{0}&quot; não implementa IConvertJsonObject ou IConvertJsonPlainText.
         /// </summary>
         internal static string UnknownResolveResultBuilderException {
             get {
@@ -196,7 +196,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O parâmetro \&quot;{0}\&quot; possui uma versão específica.
+        ///   Looks up a localized string similar to O parâmetro &quot;{0}&quot; possui uma versão específica.
         /// </summary>
         internal static string UseSpecificParameterRatherThanAnyException {
             get {
