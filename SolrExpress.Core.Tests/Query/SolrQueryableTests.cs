@@ -172,5 +172,95 @@ namespace SolrExpress.Core.Tests.Query
             // Arrange / Act / Assert
             new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
         }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance configured with FailFast = true and CheckAnyParameter = true
+        /// When    Invoking the method "Parameter" with a invalid value
+        /// What    Throws InvalidParameterTypeException
+        /// </summary>
+        [TestMethod]
+        [ExpectedException(typeof(InvalidParameterTypeException))]
+        public void SolrQueryable010()
+        {
+            // Arrange
+            var mockValidate = new Mock<IValidation>();
+            var mockParameter = mockValidate.As<IParameter>();
+            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+
+            var providerMock = new Mock<IProvider>();
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
+
+            bool isValid;
+            string errorMessage;
+
+            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+
+            // Act / Assert
+            queryable.Parameter(mockAnyParameter.Object);
+        }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance configured with FailFast = false and CheckAnyParameter = true
+        /// When    Invoking the method "Parameter" with a invalid value
+        /// What    Do not invoke Validate method of parameter class
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable011()
+        {
+            // Arrange
+            var mockValidate = new Mock<IValidation>();
+            var mockParameter = mockValidate.As<IParameter>();
+            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+            var solrQueryConfiguration = new Configuration
+            {
+                FailFast = false
+            };
+
+            var providerMock = new Mock<IProvider>();
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
+
+            bool isValid;
+            string errorMessage;
+
+            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+
+            // Act
+            queryable.Parameter(mockAnyParameter.Object);
+
+            // Assert
+            mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
+        }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance configured with FailFast = true and CheckAnyParameter = false
+        /// When    Invoking the method "Parameter" with a invalid value
+        /// What    Do not invoke Validate method of parameter class
+        /// </summary>
+        [TestMethod]
+        public void SolrQueryable012()
+        {
+            // Arrange
+            var mockValidate = new Mock<IValidation>();
+            var mockParameter = mockValidate.As<IParameter>();
+            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+            var solrQueryConfiguration = new Configuration
+            {
+                CheckAnyParameter = false
+            };
+
+            var providerMock = new Mock<IProvider>();
+            var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, solrQueryConfiguration);
+
+            bool isValid;
+            string errorMessage;
+
+            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+
+            // Act
+            queryable.Parameter(mockAnyParameter.Object);
+
+            // Assert
+            mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
+        }
     }
 }

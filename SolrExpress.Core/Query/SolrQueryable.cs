@@ -60,7 +60,14 @@ namespace SolrExpress.Core.Query
 
             var parameterValidation = parameter as IValidation;
 
-            if (this._configuration.FailFast && parameterValidation != null)
+            var mustValidate = this._configuration.FailFast && parameterValidation != null;
+
+            if (parameter is IAnyParameter)
+            {
+                mustValidate = mustValidate && this._configuration.CheckAnyParameter && parameter is IAnyParameter;
+            }
+
+            if (mustValidate)
             {
                 bool isValid;
                 string errorMessage;

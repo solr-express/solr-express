@@ -277,5 +277,21 @@ namespace SolrExpress.Core.Extension
 
             return queryable.Parameter(parameter);
         }
+
+        /// <summary>
+        /// Create a any parameter
+        /// </summary>
+        /// <param name="name">Name of the parameter</param>
+        /// <param name="value">Value of the parameter</param>
+        public static SolrQueryable<TDocument> Any<TDocument>(this SolrQueryable<TDocument> queryable, string name, string value)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .GetInstance<IAnyParameter>()
+                .Configure(name, value);
+
+            return queryable.Parameter(parameter);
+        }
     }
 }

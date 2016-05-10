@@ -194,5 +194,14 @@ namespace SolrExpress.Core {
                 return ResourceManager.GetString("UnsupportedSortTypeException", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string UseSpecificParameterRatherThanAnyException {
+            get {
+                return ResourceManager.GetString("UseSpecificParameterRatherThanAnyException", resourceCulture);
+            }
+        }
     }
 }

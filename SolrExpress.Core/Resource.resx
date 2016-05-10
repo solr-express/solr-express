@@ -162,4 +162,7 @@
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Descending sort type is an unsupported feature in Solr 4</value>
   </data>
+  <data name="UseSpecificParameterRatherThanAnyException" xml:space="preserve">
+    <value />
+  </data>
 </root>
