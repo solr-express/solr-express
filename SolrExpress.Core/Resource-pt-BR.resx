@@ -162,4 +162,7 @@
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Ordenação do tipo descendente é um aspecto não suportado no Solr 4</value>
   </data>
+  <data name="UseSpecificParameterRatherThanAnyException" xml:space="preserve">
+    <value>O parâmetro \"{0}\" possui uma versão específica</value>
+  </data>
 </root>

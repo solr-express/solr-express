@@ -196,7 +196,7 @@ namespace SolrExpress.Core {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Parameter \&quot;{0}\&quot; have a specific version.
         /// </summary>
         internal static string UseSpecificParameterRatherThanAnyException {
             get {
