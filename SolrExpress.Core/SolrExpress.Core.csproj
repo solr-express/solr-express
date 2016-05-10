@@ -67,6 +67,7 @@
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
     <Compile Include="IResolver.cs" />
+    <Compile Include="Query\Parameter\BoostFunctionType.cs" />
     <Compile Include="Query\Parameter\IBoostParameter.cs" />
     <Compile Include="Query\ParameterValue\Any.cs" />
     <Compile Include="Query\ParameterValue\Multi.cs" />
