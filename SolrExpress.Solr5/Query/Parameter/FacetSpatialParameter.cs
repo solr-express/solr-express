@@ -19,7 +19,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         private Expression<Func<TDocument, object>> _expression;
         private GeoCoordinate _centerPoint;
         private decimal _distance;
-        private SolrFacetSortType? _sortType;
+        private FacetSortType? _sortType;
         private string[] _excludes;
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="distance">Distance from the center point</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetSpatialParameter<TDocument> Configure(string aliasName, SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance, SolrFacetSortType? sortType = null, params string[] excludes)
+        public IFacetSpatialParameter<TDocument> Configure(string aliasName, SolrSpatialFunctionType functionType, Expression<Func<TDocument, object>> expression, GeoCoordinate centerPoint, decimal distance, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(expression);

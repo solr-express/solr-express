@@ -67,6 +67,7 @@
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
     <Compile Include="IResolver.cs" />
+    <Compile Include="Query\Parameter\IBoostParameter.cs" />
     <Compile Include="Query\ParameterValue\Any.cs" />
     <Compile Include="Query\ParameterValue\Multi.cs" />
     <Compile Include="Query\ParameterValue\Negate.cs" />
@@ -93,7 +94,7 @@
     <Compile Include="Query\ParameterValue\IQueryParameterValue.cs" />
     <Compile Include="Query\Parameter\ISortParameter.cs" />
     <Compile Include="Query\Parameter\ISpatialFilterParameter.cs" />
-    <Compile Include="Query\Parameter\SolrFacetSortType.cs" />
+    <Compile Include="Query\Parameter\FacetSortType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Query\AllowMultipleInstanceOfParameterTypeException.cs" />
     <Compile Include="IProvider.cs" />

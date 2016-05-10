@@ -13,7 +13,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         where TDocument : IDocument
     {
         private Expression<Func<TDocument, object>> _expression;
-        private SolrFacetSortType? _sortType;
+        private FacetSortType? _sortType;
         private int? _limit;
         private string[] _excludes;
 
@@ -44,7 +44,7 @@ namespace SolrExpress.Solr4.Query.Parameter
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == SolrFacetSortType.CountDesc || this._sortType.Value == SolrFacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == FacetSortType.CountDesc || this._sortType.Value == FacetSortType.IndexDesc);
 
                 this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
@@ -87,7 +87,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="limit">Limit of itens in facet's result</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, SolrFacetSortType? sortType = null, int? limit = null, params string[] excludes)
+        public IFacetFieldParameter<TDocument> Configure(Expression<Func<TDocument, object>> expression, FacetSortType? sortType = null, int? limit = null, params string[] excludes)
         {
             Checker.IsNull(expression);
 

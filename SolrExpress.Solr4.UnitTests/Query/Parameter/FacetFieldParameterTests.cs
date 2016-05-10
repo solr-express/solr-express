@@ -44,7 +44,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetFieldParameter<TestDocument>();
-            parameter.Configure(q => q.Id, SolrFacetSortType.CountAsc);
+            parameter.Configure(q => q.Id, FacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -69,7 +69,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetFieldParameter<TestDocument>();
-            parameter.Configure(q => q.Id, SolrFacetSortType.CountDesc);
+            parameter.Configure(q => q.Id, FacetSortType.CountDesc);
 
             // Act / Assert
             parameter.Execute(container);
@@ -87,7 +87,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetFieldParameter<TestDocument>();
-            parameter.Configure(q => q.Id, SolrFacetSortType.IndexDesc);
+            parameter.Configure(q => q.Id, FacetSortType.IndexDesc);
 
             // Act / Assert
             parameter.Execute(container);

@@ -3,7 +3,7 @@
     /// <summary>
     /// Sort's type of the facet result
     /// </summary>
-    public enum SolrFacetSortType
+    public enum FacetSortType
     {
         /// <summary>
         /// Sort by index, ascending

@@ -14,7 +14,7 @@ namespace SolrExpress.Solr5.Query.Parameter
     {
         private string _aliasName;
         private IQueryParameterValue _query;
-        private SolrFacetSortType? _sortType;
+        private FacetSortType? _sortType;
         private string[] _excludes;
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, SolrFacetSortType? sortType = null, params string[] excludes)
+        public IFacetQueryParameter<TDocument> Configure(string aliasName, IQueryParameterValue query, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(query);

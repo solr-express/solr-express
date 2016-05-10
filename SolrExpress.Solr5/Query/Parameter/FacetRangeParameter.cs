@@ -18,7 +18,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         private string _gap;
         private string _start;
         private string _end;
-        private SolrFacetSortType? _sortType;
+        private FacetSortType? _sortType;
         private string[] _excludes;
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="end">Upper bound to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, SolrFacetSortType? sortType = null, params string[] excludes)
+        public IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(expression);

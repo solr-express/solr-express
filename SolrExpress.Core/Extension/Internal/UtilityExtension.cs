@@ -16,23 +16,23 @@ namespace SolrExpress.Core.Extension.Internal
         /// <param name="solrFacetSortType">Type used in match</param>
         /// <param name="typeName">Type name</param>
         /// <param name="sortName">Sort direction</param>
-        internal static void GetSolrFacetSort(this SolrFacetSortType solrFacetSortType, out string typeName, out string sortName)
+        internal static void GetSolrFacetSort(this FacetSortType solrFacetSortType, out string typeName, out string sortName)
         {
             switch (solrFacetSortType)
             {
-                case SolrFacetSortType.IndexAsc:
+                case FacetSortType.IndexAsc:
                     typeName = "index";
                     sortName = "asc";
                     break;
-                case SolrFacetSortType.IndexDesc:
+                case FacetSortType.IndexDesc:
                     typeName = "index";
                     sortName = "desc";
                     break;
-                case SolrFacetSortType.CountAsc:
+                case FacetSortType.CountAsc:
                     typeName = "count";
                     sortName = "asc";
                     break;
-                case SolrFacetSortType.CountDesc:
+                case FacetSortType.CountDesc:
                     typeName = "count";
                     sortName = "desc";
                     break;
