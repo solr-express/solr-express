@@ -60,6 +60,7 @@
     <Compile Include="Extension\SimpleResolverExntesion.cs" />
     <Compile Include="Query\ParameterContainer.cs" />
     <Compile Include="Query\Parameter\AnyParameter.cs" />
+    <Compile Include="Query\Parameter\BoostParameter.cs" />
     <Compile Include="Query\Parameter\FacetFieldParameter.cs" />
     <Compile Include="Query\Parameter\FacetLimitParameter.cs" />
     <Compile Include="Query\Parameter\FacetQueryParameter.cs" />

@@ -12,7 +12,7 @@ namespace SolrExpress.Core.Query.Parameter
         /// Configure current instance
         /// </summary>
         /// <param name="query">Query used to make boost</param>
-        /// <param name="sortType">Boost type used in calculation</param>
-        IBoostParameter<TDocument> Configure(IQueryParameterValue query, FacetSortType? sortType = null);
+        /// <param name="boostFunctionType">Boost type used in calculation</param>
+        IBoostParameter<TDocument> Configure(IQueryParameterValue query, BoostFunctionType boostFunctionType);
     }
 }

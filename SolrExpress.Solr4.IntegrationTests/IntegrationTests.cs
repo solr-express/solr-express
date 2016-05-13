@@ -2,6 +2,7 @@
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr4.Extension;
@@ -54,7 +55,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.AreEqual(10, data.Count);
-            Assert.AreEqual("GB18030TEST", data[0].Id);
         }
 
         /// <summary>
@@ -388,6 +388,129 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
             Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
             Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest014()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            QueryResult<TechProductDocument> result;
+            List<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, false));
+            solrQuery.Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Name, true));
+            result = solrQuery.Execute();
+            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+
+            // Assert
+            Assert.AreEqual(10, data.Count);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding 2 new documents into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest015()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            List<TechProductDocument> fetchedDocuments;
+            var documentId1 = Guid.NewGuid().ToString("N");
+            var documentId2 = Guid.NewGuid().ToString("N");
+            var documentToAdd1 = new TechProductDocument
+            {
+                Id = documentId1,
+                Name = "IntegrationTest013"
+            };
+            var documentToAdd2 = new TechProductDocument
+            {
+                Id = documentId2,
+                Name = "IntegrationTest013"
+            };
+            var update = documentCollection.Update;
+
+            // Act
+            update.Add(documentToAdd1, documentToAdd2);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select
+                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Execute()
+                .Document(out fetchedDocuments);
+
+            Assert.AreEqual(2, fetchedDocuments.Count);
+            Assert.AreEqual(documentId1, fetchedDocuments[0].Id);
+            Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
+            Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
+            Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Statistic
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest016()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            QueryResult<TechProductDocument> result;
+            StatisticResult<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Boost));
+            result = solrQuery.Execute();
+            data = result.Get(new StatisticResult<TechProductDocument>());
+
+            // Assert
+            Assert.IsTrue(data.Data.DocumentCount > 1);
+            Assert.IsFalse(data.Data.IsEmpty);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Statistic
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest017()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            QueryResult<TechProductDocument> result;
+            StatisticResult<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Bf));
+            result = solrQuery.Execute();
+            data = result.Get(new StatisticResult<TechProductDocument>());
+
+            // Assert
+            Assert.IsTrue(data.Data.DocumentCount > 1);
+            Assert.IsFalse(data.Data.IsEmpty);
         }
     }
 }

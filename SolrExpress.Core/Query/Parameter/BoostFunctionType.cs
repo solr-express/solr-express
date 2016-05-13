@@ -11,8 +11,8 @@
         Boost,
 
         /// <summary>
-        /// Sort using "bq" function (additive)
+        /// Sort using "bf" function (additive)
         /// </summary>
-        Bq
+        Bf
     }
 }

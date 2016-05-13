@@ -2,6 +2,7 @@
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr5.Extension;
@@ -445,6 +446,58 @@ namespace SolrExpress.Solr5.IntegrationTests
             Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
             Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
             Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Statistic
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest016()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            QueryResult<TechProductDocument> result;
+            StatisticResult<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Boost));
+            result = solrQuery.Execute();
+            data = result.Get(new StatisticResult<TechProductDocument>());
+
+            // Assert
+            Assert.IsTrue(data.Data.DocumentCount > 1);
+            Assert.IsFalse(data.Data.IsEmpty);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Statistic
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest017()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var config = new Configuration { FailFast = false };
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            QueryResult<TechProductDocument> result;
+            StatisticResult<TechProductDocument> data;
+
+            // Act
+            solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
+            solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Bf));
+            result = solrQuery.Execute();
+            data = result.Get(new StatisticResult<TechProductDocument>());
+
+            // Assert
+            Assert.IsTrue(data.Data.DocumentCount > 1);
+            Assert.IsFalse(data.Data.IsEmpty);
         }
     }
 }

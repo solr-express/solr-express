@@ -314,5 +314,21 @@ namespace SolrExpress.Core.Extension
 
             return queryable.Parameter(parameter);
         }
+
+        /// <summary>
+        /// Create a boost parameter
+        /// </summary>
+        /// <param name="query">Query used to make boost</param>
+        /// <param name="boostFunctionType">Boost type used in calculation. Default is BoostFunctionType.Boost</param>
+        public static SolrQueryable<TDocument> Boost<TDocument>(this SolrQueryable<TDocument> queryable, IQueryParameterValue query, BoostFunctionType? boostFunctionType = null)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .GetInstance<IBoostParameter<TDocument>>()
+                .Configure(query, boostFunctionType ?? BoostFunctionType.Boost);
+
+            return queryable.Parameter(parameter);
+        }
     }
 }

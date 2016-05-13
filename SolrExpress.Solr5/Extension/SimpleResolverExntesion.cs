@@ -32,6 +32,7 @@ namespace SolrExpress.Solr5.Extension
             resolver.Mappings.Add(typeof(IQueryParameter<>), typeof(QueryParameter<>));
             resolver.Mappings.Add(typeof(ISortParameter<>), typeof(SortParameter<>));
             resolver.Mappings.Add(typeof(ISpatialFilterParameter<>), typeof(SpatialFilterParameter<>));
+            resolver.Mappings.Add(typeof(IBoostParameter<>), typeof(BoostParameter<>));
 
             resolver.Mappings.Add(typeof(IDocumentResult<>), typeof(DocumentResult<>));
             resolver.Mappings.Add(typeof(IFacetFieldResult<>), typeof(FacetFieldResult<>));
