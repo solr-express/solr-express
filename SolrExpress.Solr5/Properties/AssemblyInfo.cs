@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("f56423f9-becd-45f7-bc39-c3ca6c581780")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
 
 #if STRONGNAME
 [assembly: AssemblyTitle("SolrExpress.Solr5.Signed")]

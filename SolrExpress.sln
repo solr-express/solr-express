@@ -30,7 +30,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{F53EDFBA-08A0-478C-8798-ABC2F1B1584C}"
 	ProjectSection(SolutionItems) = preProject
 		build.bat = build.bat
-		SolrExpress.Core.nuspec = SolrExpress.Core.nuspec
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{96365F54-CC81-4B5A-B96E-B118676C491F}"
