@@ -4,6 +4,7 @@ using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Core.Query.Result;
+using SolrExpress.Solr4.Extension;
 using SolrExpress.Solr4.Query.Parameter;
 using SolrExpress.Solr4.Query.Result;
 using System;
@@ -25,7 +26,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
 
             // Act / Assert
             solrQuery.Execute();
@@ -42,7 +43,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
@@ -67,7 +68,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
@@ -94,7 +95,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
@@ -122,7 +123,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             Dictionary<string, long> data;
 
@@ -135,8 +136,8 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.AreEqual(2, data.Count);
-            Assert.AreEqual(2, data["Facet1"]);
-            Assert.AreEqual(15, data["Facet2"]);
+            Assert.IsTrue(data["Facet1"] > 0);
+            Assert.IsTrue(data["Facet2"] > 0);
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<FacetKeyValue<FacetRange>> data;
 
@@ -178,7 +179,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             StatisticResult<TechProductDocument> data;
 
@@ -188,7 +189,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new StatisticResult<TechProductDocument>());
 
             // Assert
-            Assert.AreEqual(32, data.Data.DocumentCount);
+            Assert.IsTrue(data.Data.DocumentCount > 0);
             Assert.IsFalse(data.Data.IsEmpty);
         }
 
@@ -203,7 +204,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<FacetKeyValue<string>> data;
 
@@ -230,7 +231,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver(), config);
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             List<TechProductDocument> fetchedDocuments;
             var documentId = Guid.NewGuid().ToString("N");
             var documentToAdd = new TechProductDocument
@@ -267,7 +268,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver(), config);
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             List<TechProductDocument> fetchedDocuments;
             var documentId = Guid.NewGuid().ToString("N");
             var documentToAdd = new TechProductDocument
@@ -302,9 +303,9 @@ namespace SolrExpress.Solr4.IntegrationTests
         public void IntegrationTest011()
         {
             // Arrange
-            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
@@ -316,7 +317,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.AreEqual(10, data.Count);
-            Assert.AreEqual("0579B002", data[0].Id);
         }
 
         /// <summary>
@@ -328,9 +328,9 @@ namespace SolrExpress.Solr4.IntegrationTests
         public void IntegrationTest012()
         {
             // Arrange
-            var provider = new Provider("http://localhost:8983/solr/techproducts");
+            var provider = new Provider("http://localhost:8983/solr/collection1");
             var config = new Configuration { FailFast = false };
-            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver(), config);
+            var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
             List<TechProductDocument> data;
 
@@ -343,7 +343,51 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.AreEqual(10, data.Count);
-            Assert.AreEqual("viewsonic", data[0].Id);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding 2 new documents into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [TestMethod]
+        public void IntegrationTest013()
+        {
+            // Arrange
+            var provider = new Provider("http://localhost:8983/solr/collection1");
+            var config = new Configuration { FailFast = false };
+            var documentCollection = new DocumentCollection<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
+            List<TechProductDocument> fetchedDocuments;
+            var documentId1 = Guid.NewGuid().ToString("N");
+            var documentId2 = Guid.NewGuid().ToString("N");
+            var documentToAdd1 = new TechProductDocument
+            {
+                Id = documentId1,
+                Name = "IntegrationTest013"
+            };
+            var documentToAdd2 = new TechProductDocument
+            {
+                Id = documentId2,
+                Name = "IntegrationTest013"
+            };
+            var update = documentCollection.Update;
+
+            // Act
+            update.Add(documentToAdd1, documentToAdd2);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select
+                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Execute()
+                .Document(out fetchedDocuments);
+
+            Assert.AreEqual(2, fetchedDocuments.Count);
+            Assert.AreEqual(documentId1, fetchedDocuments[0].Id);
+            Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
+            Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
+            Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace SolrExpress.Solr4.Query.Result
 
             var jsonSerializer = JsonSerializer.Create();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+            jsonSerializer.Converters.Add(new DateTimeConverter());
             jsonSerializer.ContractResolver = new CustomContractResolver();
 
             this.Data = jsonObject["response"]["docs"].ToObject<List<TDocument>>(jsonSerializer);

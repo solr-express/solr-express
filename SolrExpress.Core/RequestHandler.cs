@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Core
 {
     /// <summary>
-    /// Default handlers to use in SOLR instructions
+    /// Default handlers to use in SOLR request
     /// </summary>
     public static class RequestHandler
     {

@@ -117,12 +117,16 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public QueryResult<TDocument> Execute(string handler = null)
         {
-            var query = this.Provider.GetQueryInstruction(this._parameters);
+            var systemParameter = this.Resolver.GetInstance<ISystemParameter>();
+            this._parameters.Add(systemParameter);
+
+            var parameterContainer = this.Resolver.GetInstance<IParameterContainer>();
+            parameterContainer.AddParameters(this._parameters);
+            var query = parameterContainer.Execute();
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
-            var requestHandler = string.IsNullOrWhiteSpace(handler) ? RequestHandler.Select : handler;
-            var json = this.Provider.Execute(requestHandler, query);
+            var json = this.Provider.Get(handler ?? RequestHandler.Select, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 

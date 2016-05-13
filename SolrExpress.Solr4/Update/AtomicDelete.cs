@@ -32,25 +32,22 @@ namespace SolrExpress.Solr4.Update
         /// <summary>
         /// Create atomic update command
         /// </summary>
-        /// <param name="jObject">Container to parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public string Execute()
         {
             JProperty jProperty;
 
             if (this._documentIds.Count == 1)
             {
-                jProperty = new JProperty("id", this._documentIds[0]);
+                jProperty = new JProperty("delete", this._documentIds[0]);
             }
             else
             {
-                jProperty = new JProperty("id", $"({string.Join(" OR ", this._documentIds)})");
+                jProperty = new JProperty("delete", $"({string.Join(" OR ", this._documentIds)})");
             }
 
-            var delete = new JObject(jProperty);
+            var jObject = new JObject(jProperty);
 
-            jObject["delete"] = delete;
-
-            this._documentIds = new List<string>();
+            return jObject.ToString();
         }
     }
 }

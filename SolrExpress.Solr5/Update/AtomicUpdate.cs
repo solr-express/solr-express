@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Update;
 using System.Collections.Generic;
@@ -33,23 +34,16 @@ namespace SolrExpress.Solr5.Update
         /// <summary>
         /// Create atomic update command
         /// </summary>
-        /// <param name="jObject">Container to parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public string Execute()
         {
-            var jArray = new JArray();
+            var jsonSerializer = JsonSerializer.Create();
+            jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+            jsonSerializer.Converters.Add(new DateTimeConverter());
+            jsonSerializer.ContractResolver = new CustomContractResolver();
 
-            foreach (var document in this._documents)
-            {
-                jArray.Add(JObject.FromObject(document));
-            }
+            var jArray = JArray.FromObject(this._documents, jsonSerializer);
 
-            var jPropertyDoc = new JProperty("doc", jArray);
-
-            var jPropertyAdd = new JProperty("add", new JObject(jPropertyDoc));
-
-            jObject.Add(jPropertyAdd);
-
-            this._documents = new List<TDocument>();
+            return jArray.ToString();
         }
     }
 }

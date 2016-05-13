@@ -6,14 +6,7 @@ namespace SolrExpress.Core.Update
     /// <summary>
     /// Signatures to remove informed documents from SOLR collection
     /// </summary>
-    public interface IAtomicDelete : IDisposable
-    {
-    }
-
-    /// <summary>
-    /// Signatures to remove informed documents from SOLR collection
-    /// </summary>
-    public interface IAtomicDelete<TDocument> : IAtomicDelete
+    public interface IAtomicDelete<TDocument> : IAtomicInstruction
         where TDocument : IDocument
     {
         /// <summary>
@@ -21,11 +14,5 @@ namespace SolrExpress.Core.Update
         /// </summary>
         /// <param name="documentIds">Document IDs to remove</param>
         void Configure(params string[] documentIds);
-
-        /// <summary>
-        /// Create atomic update command
-        /// </summary>
-        /// <param name="jObject">Container to parameters to request to SOLR</param>
-        void Execute(JObject jObject);
     }
 }

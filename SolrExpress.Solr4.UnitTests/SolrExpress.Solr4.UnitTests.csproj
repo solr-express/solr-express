@@ -86,8 +86,6 @@
     <Compile Include="TestDocumentSimple.cs" />
     <Compile Include="TestDocumentWithAnyPropertyTypes.cs" />
     <Compile Include="TestDocumentWithAttribute.cs" />
-    <Compile Include="Update\AtomicDeleteTests.cs" />
-    <Compile Include="Update\AtomicUpdateTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress.Core\SolrExpress.Core.csproj">
@@ -104,7 +102,9 @@
     <None Include="SolrExpress.Solr4.UnitTests.publickey" />
     <None Include="SolrExpress.Solr4.UnitTests.snk" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Update\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

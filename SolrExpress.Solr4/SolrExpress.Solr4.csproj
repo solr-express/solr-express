@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Extension\Internal\ExcludesExtension.cs" />
     <Compile Include="Extension\SimpleResolverExntesion.cs" />
+    <Compile Include="Query\ParameterContainer.cs" />
     <Compile Include="Query\Parameter\AnyParameter.cs" />
     <Compile Include="Query\Parameter\FacetFieldParameter.cs">
       <SubType>Code</SubType>
@@ -77,6 +78,7 @@
     <Compile Include="Query\Parameter\StartParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider.cs" />
+    <Compile Include="Query\Parameter\SystemParameter.cs" />
     <Compile Include="Query\Result\DocumentResult.cs" />
     <Compile Include="Query\Result\FacetFieldResult.cs" />
     <Compile Include="Query\Result\FacetQueryResult.cs">

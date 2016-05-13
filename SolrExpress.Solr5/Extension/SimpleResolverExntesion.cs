@@ -1,8 +1,12 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
+using SolrExpress.Core.Update;
+using SolrExpress.Solr5.Query;
 using SolrExpress.Solr5.Query.Parameter;
 using SolrExpress.Solr5.Query.Result;
+using SolrExpress.Solr5.Update;
 
 namespace SolrExpress.Solr5.Extension
 {
@@ -34,6 +38,13 @@ namespace SolrExpress.Solr5.Extension
             resolver.Mappings.Add(typeof(IFacetQueryResult<>), typeof(FacetQueryResult<>));
             resolver.Mappings.Add(typeof(IFacetRangeResult<>), typeof(FacetRangeResult<>));
             resolver.Mappings.Add(typeof(IStatisticResult<>), typeof(StatisticResult<>));
+
+            resolver.Mappings.Add(typeof(IAtomicUpdate<>), typeof(AtomicUpdate<>));
+            resolver.Mappings.Add(typeof(IAtomicDelete<>), typeof(AtomicDelete<>));
+
+            resolver.Mappings.Add(typeof(IParameterContainer), typeof(ParameterContainer));
+
+            resolver.Mappings.Add(typeof(ISystemParameter), typeof(SystemParameter));
 
             return resolver;
         }

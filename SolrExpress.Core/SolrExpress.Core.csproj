@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomContractResolver.cs" />
+    <Compile Include="DateTimeConverter.cs" />
     <Compile Include="DocumentCollection.cs" />
     <Compile Include="Extension\Internal\ExpressionIDocumentExtension.cs" />
     <Compile Include="Extension\Internal\GenericExtension.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="GeoCoordinateConverter.cs" />
     <Compile Include="IDocument.cs" />
     <Compile Include="IResolver.cs" />
+    <Compile Include="Query\IParameterContainer.cs" />
     <Compile Include="Query\Parameter\BoostFunctionType.cs" />
     <Compile Include="Query\Parameter\IBoostParameter.cs" />
     <Compile Include="Query\ParameterValue\Any.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Query\IQueryInterceptor.cs" />
     <Compile Include="Query\IResultInterceptor.cs" />
     <Compile Include="Query\IValidation.cs" />
+    <Compile Include="Query\Parameter\ISystemParameter.cs" />
     <Compile Include="Query\SimpleLogQueryInterceptor.cs" />
     <Compile Include="Query\SimpleLogResultInterceptor.cs" />
     <Compile Include="Query\SolrQueryable.cs" />
@@ -139,6 +142,7 @@
     <Compile Include="UnexpectedSolrRequestException.cs" />
     <Compile Include="UnsupportedSortTypeException.cs" />
     <Compile Include="Update\IAtomicDelete.cs" />
+    <Compile Include="Update\IAtomicInstruction.cs" />
     <Compile Include="Update\IAtomicUpdate.cs" />
     <Compile Include="Update\SolrAtomicUpdate.cs" />
   </ItemGroup>

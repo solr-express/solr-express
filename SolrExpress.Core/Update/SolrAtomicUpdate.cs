@@ -85,24 +85,32 @@ namespace SolrExpress.Core.Update
         /// </summary>
         public void Commit()
         {
-            IAtomicUpdate<TDocument> atomicUpdate = null;
-            IAtomicDelete<TDocument> atomicDelete = null;
+            var atomicInstructions = new List<IAtomicInstruction>();
 
             if (this._documentsToAdd.Any())
             {
-                atomicUpdate = this._resolver.GetInstance<IAtomicUpdate<TDocument>>();
-                atomicUpdate.Configure(this._documentsToAdd.ToArray());
+                var atomicInstruction = this._resolver.GetInstance<IAtomicUpdate<TDocument>>();
+                atomicInstruction.Configure(this._documentsToAdd.ToArray());
+                atomicInstructions.Add(atomicInstruction);
             }
 
             if (this._documentsToDelete.Any())
             {
-                atomicDelete = this._resolver.GetInstance<IAtomicDelete<TDocument>>();
-                atomicDelete.Configure(this._documentsToDelete.ToArray());
+                var atomicInstruction = this._resolver.GetInstance<IAtomicDelete<TDocument>>();
+                atomicInstruction.Configure(this._documentsToDelete.ToArray());
+                atomicInstructions.Add(atomicInstruction);
             }
 
-            var query = this._provider.GetAtomicUpdateInstruction(atomicUpdate, atomicDelete);
+            foreach (var atomicInstruction in atomicInstructions)
+            {
+                var data = atomicInstruction.Execute();
+                this._provider.Post(RequestHandler.Update, data);
+            }
 
-            this._provider.Execute(RequestHandler.Update, query);
+            if (atomicInstructions.Any())
+            {
+                this._provider.Post(RequestHandler.Update, "{\"commit\":{}}");
+            }
 
             this._documentsToAdd = new List<TDocument>();
             this._documentsToDelete = new List<string>();
