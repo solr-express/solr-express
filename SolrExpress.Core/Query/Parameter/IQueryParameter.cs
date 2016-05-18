@@ -13,5 +13,10 @@ namespace SolrExpress.Core.Query.Parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
         IQueryParameter<TDocument> Configure(IQueryParameterValue value);
+
+        /// <summary>
+        /// Parameter to include in the query
+        /// </summary>
+        IQueryParameterValue Value { get; }
     }
 }

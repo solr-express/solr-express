@@ -14,5 +14,10 @@ namespace SolrExpress.Core.Query.Parameter
         /// </summary>
         /// <param name="expressions">Expression used to find the property name</param>
         IFieldsParameter<TDocument> Configure(params Expression<Func<TDocument, object>>[] expressions);
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        Expression<Func<TDocument, object>>[] Expressions { get; }
     }
 }

@@ -14,5 +14,15 @@ namespace SolrExpress.Core.Query.Parameter
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation</param>
         IBoostParameter<TDocument> Configure(IQueryParameterValue query, BoostFunctionType boostFunctionType);
+
+        /// <summary>
+        /// Query used to make boost
+        /// </summary>
+        IQueryParameterValue Query { get; }
+
+        /// <summary>
+        /// Boost type used in calculation
+        /// </summary>
+        BoostFunctionType BoostFunctionType { get; }
     }
 }

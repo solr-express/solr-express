@@ -97,7 +97,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            queryable.Parameter(null);
+            queryable.Parameter((IParameter)null);
         }
 
         /// <summary>

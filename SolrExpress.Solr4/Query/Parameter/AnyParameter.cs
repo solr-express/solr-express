@@ -7,13 +7,20 @@ namespace SolrExpress.Solr4.Query.Parameter
 {
     public sealed class AnyParameter : IAnyParameter, IParameter<List<string>>, IValidation
     {
-        private string _name;
-        private string _value;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Name of the parameter
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Value of the parameter
+        /// </summary>
+        public string Value { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter
@@ -21,7 +28,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            container.Add($"{this._name}={this._value}");
+            container.Add($"{this.Name}={this.Value}");
         }
 
         /// <summary>
@@ -31,8 +38,8 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="value">Value of the parameter</param>
         public IAnyParameter Configure(string name, string value)
         {
-            this._name = name;
-            this._value = value;
+            this.Name = name;
+            this.Value = value;
 
             return this;
         }
@@ -62,10 +69,10 @@ namespace SolrExpress.Solr4.Query.Parameter
                 "start"
             };
 
-            if (specificParameters.Contains(this._name.ToLowerInvariant()))
+            if (specificParameters.Contains(this.Name.ToLowerInvariant()))
             {
                 isValid = false;
-                errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, this._name);
+                errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, this.Name);
             }
         }
     }

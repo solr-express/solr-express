@@ -10,13 +10,20 @@ namespace SolrExpress.Solr5.Query.Parameter
     public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, IParameter<JObject>
         where TDocument : IDocument
     {
-        private Expression<Func<TDocument, object>> _expression;
-        private bool _ascendent;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// True to ascendent order, otherwise false
+        /// </summary>
+        public bool Ascendent { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -26,9 +33,9 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
 
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            var value = $"{fieldName} {(this._ascendent ? "asc" : "desc")}";
+            var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
 
             if (jValue.Value != null)
             {
@@ -51,8 +58,8 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             Checker.IsNull(expression);
 
-            this._expression = expression;
-            this._ascendent = ascendent;
+            this.Expression = expression;
+            this.Ascendent = ascendent;
 
             return this;
         }

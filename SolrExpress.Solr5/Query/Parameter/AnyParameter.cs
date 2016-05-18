@@ -8,13 +8,20 @@ namespace SolrExpress.Solr5.Query.Parameter
 {
     public sealed class AnyParameter : IAnyParameter, IParameter<JObject>, IValidation
     {
-        private string _name;
-        private string _value;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Name of the parameter
+        /// </summary>
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Value of the parameter
+        /// </summary>
+        public string Value { get; private set; }
 
         /// <summary>
         /// Configure current instance
@@ -23,8 +30,8 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="value">Value of the parameter</param>
         public IAnyParameter Configure(string name, string value)
         {
-            this._name = name;
-            this._value = value;
+            this.Name = name;
+            this.Value = value;
 
             return this;
         }
@@ -37,7 +44,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            jObj.Add(new JProperty(this._name, this._value));
+            jObj.Add(new JProperty(this.Name, this.Value));
 
             jObject["params"] = jObj;
         }
@@ -67,10 +74,10 @@ namespace SolrExpress.Solr5.Query.Parameter
                 "start"
             };
 
-            if (specificParameters.Contains(this._name.ToLowerInvariant()))
+            if (specificParameters.Contains(this.Name.ToLowerInvariant()))
             {
                 isValid = false;
-                errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, this._name);
+                errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, this.Name);
             }
         }
     }

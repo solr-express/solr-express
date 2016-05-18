@@ -12,13 +12,20 @@ namespace SolrExpress.Solr4.Query.Parameter
     public class BoostParameter<TDocument> : IBoostParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        IQueryParameterValue _query;
-        BoostFunctionType _boostFunctionType;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = false;
+
+        /// <summary>
+        /// Query used to make boost
+        /// </summary>
+        public IQueryParameterValue Query { get; private set; }
+
+        /// <summary>
+        /// Boost type used in calculation
+        /// </summary>
+        public BoostFunctionType BoostFunctionType { get; private set; }
 
         /// <summary>
         /// Configure current instance
@@ -29,8 +36,8 @@ namespace SolrExpress.Solr4.Query.Parameter
         {
             Checker.IsNull(query);
 
-            this._query = query;
-            this._boostFunctionType = boostFunctionType;
+            this.Query = query;
+            this.BoostFunctionType = boostFunctionType;
 
             return this;
         }
@@ -43,7 +50,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         {
             var boostFunction = BoostFunctionType.Bf.ToString().ToLower();
 
-            container.Add($"{boostFunction}={this._query.Execute()}");
+            container.Add($"{boostFunction}={this.Query.Execute()}");
         }
 
         /// <summary>
@@ -56,7 +63,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var queryValidation = this._query as IValidation;
+            var queryValidation = this.Query as IValidation;
 
             if (queryValidation != null)
             {

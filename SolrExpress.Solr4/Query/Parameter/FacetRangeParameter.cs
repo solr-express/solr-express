@@ -12,18 +12,45 @@ namespace SolrExpress.Solr4.Query.Parameter
     public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, IParameter<List<string>>, IValidation
       where TDocument : IDocument
     {
-        private string _aliasName;
-        private string _end;
-        private Expression<Func<TDocument, object>> _expression;
-        private string _gap;
-        private FacetSortType? _sortType;
-        private string _start;
-        private string[] _excludes;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Name of the alias added in the query
+        /// </summary>
+        public string AliasName { get; private set; }
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// Size of each range bucket to make the facet
+        /// </summary>
+        public string Gap { get; private set; }
+
+        /// <summary>
+        /// Lower bound to make the facet
+        /// </summary>
+        public string Start { get; private set; }
+
+        /// <summary>
+        /// Upper bound to make the facet
+        /// </summary>
+        public string End { get; private set; }
+
+        /// <summary>
+        /// Sort type of the result of the facet
+        /// </summary>
+        public FacetSortType? SortType { get; private set; }
+
+        /// <summary>
+        /// List of tags to exclude in facet calculation
+        /// </summary>
+        public string[] Excludes { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "facet.range"
@@ -36,35 +63,35 @@ namespace SolrExpress.Solr4.Query.Parameter
                 container.Add("facet=true");
             }
 
-            var fieldName = this._expression.GetFieldNameFromExpression();
-            var facetName = this._excludes.GetSolrFacetWithExcludes(this._aliasName, fieldName);
+            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, fieldName);
 
             container.Add($"facet.range={facetName}");
 
-            if (!string.IsNullOrWhiteSpace(this._gap))
+            if (!string.IsNullOrWhiteSpace(this.Gap))
             {
-                container.Add($"f.{fieldName}.facet.range.gap={this._gap}");
+                container.Add($"f.{fieldName}.facet.range.gap={this.Gap}");
             }
-            if (!string.IsNullOrWhiteSpace(this._start))
+            if (!string.IsNullOrWhiteSpace(this.Start))
             {
-                container.Add($"f.{fieldName}.facet.range.start={this._start}");
+                container.Add($"f.{fieldName}.facet.range.start={this.Start}");
             }
-            if (!string.IsNullOrWhiteSpace(this._end))
+            if (!string.IsNullOrWhiteSpace(this.End))
             {
-                container.Add($"f.{fieldName}.facet.range.end={this._end}");
+                container.Add($"f.{fieldName}.facet.range.end={this.End}");
             }
 
             container.Add($"f.{fieldName}.facet.range.other=before");
             container.Add($"f.{fieldName}.facet.range.other=after");
 
-            if (this._sortType.HasValue)
+            if (this.SortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == FacetSortType.CountDesc || this._sortType.Value == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
+                this.SortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
                 container.Add($"f.{fieldName}.facet.range.sort={typeName}");
             }
@@ -82,7 +109,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
@@ -91,7 +118,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             }
             else
             {
-                var propertyType = this._expression.GetPropertyTypeFromExpression();
+                var propertyType = this.Expression.GetPropertyTypeFromExpression();
 
                 switch (propertyType.ToString())
                 {
@@ -129,13 +156,13 @@ namespace SolrExpress.Solr4.Query.Parameter
             Checker.IsNull(start);
             Checker.IsNull(end);
 
-            this._aliasName = aliasName;
-            this._expression = expression;
-            this._gap = gap;
-            this._start = start;
-            this._end = end;
-            this._sortType = sortType;
-            this._excludes = excludes;
+            this.AliasName = aliasName;
+            this.Expression = expression;
+            this.Gap = gap;
+            this.Start = start;
+            this.End = end;
+            this.SortType = sortType;
+            this.Excludes = excludes;
 
             return this;
         }

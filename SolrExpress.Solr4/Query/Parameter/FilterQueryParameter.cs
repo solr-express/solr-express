@@ -9,13 +9,20 @@ namespace SolrExpress.Solr4.Query.Parameter
     public sealed class FilterQueryParameter<TDocument> : IFilterParameter<TDocument>, IParameter<List<string>>
         where TDocument : IDocument
     {
-        private IQueryParameterValue _value;
-        private string _tagName;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Value of the filter
+        /// </summary>
+        public IQueryParameterValue Value { get; private set; }
+
+        /// <summary>
+        /// Tag name to use in facet excluding list
+        /// </summary>
+        public string TagName { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "fq"
@@ -23,7 +30,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var expression = this._value.Execute().GetSolrFilterWithTag(this._tagName);
+            var expression = this.Value.Execute().GetSolrFilterWithTag(this.TagName);
 
             container.Add($"fq={expression}");
         }
@@ -37,8 +44,8 @@ namespace SolrExpress.Solr4.Query.Parameter
         {
             Checker.IsNull(value);
 
-            this._value = value;
-            this._tagName = tagName;
+            this.Value = value;
+            this.TagName = tagName;
 
             return this;
         }

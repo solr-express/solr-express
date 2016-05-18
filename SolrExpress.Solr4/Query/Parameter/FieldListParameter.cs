@@ -12,12 +12,15 @@ namespace SolrExpress.Solr4.Query.Parameter
     public sealed class FieldListParameter<TDocument> : IFieldsParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private Expression<Func<TDocument, object>>[] _expressions;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>>[] Expressions { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "fl"
@@ -25,7 +28,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            foreach (var expression in this._expressions)
+            foreach (var expression in this.Expressions)
             {
                 var fieldName = expression.GetFieldNameFromExpression();
 
@@ -57,7 +60,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             errorMessage = string.Empty;
 
             var withError = this
-                ._expressions
+                .Expressions
                 .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
                 .Any(solrFieldAttribute => solrFieldAttribute != null && !solrFieldAttribute.Stored);
 
@@ -79,7 +82,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             Checker.IsNull(expressions);
             Checker.IsEmpty(expressions);
 
-            this._expressions = expressions;
+            this.Expressions = expressions;
 
             return this;
         }
