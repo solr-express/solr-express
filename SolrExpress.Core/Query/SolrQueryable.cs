@@ -48,9 +48,24 @@ namespace SolrExpress.Core.Query
         }
 
         /// <summary>
+        /// Add a parameters to the query
+        /// </summary>
+        /// <param name="parameters">Parameters to add in the query</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> Parameter(params IParameter[] parameters)
+        {
+            foreach (var parameter in parameters)
+            {
+                this.Parameter(parameter);
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// Add a parameter to the query
         /// </summary>
-        /// <param name="parameter">The parameter to add in the query</param>
+        /// <param name="parameter">Parameter to add in the query</param>
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> Parameter(IParameter parameter)
         {
