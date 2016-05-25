@@ -11,5 +11,10 @@
         /// <param name="value">Value of limit</param>
         /// <returns></returns>
         IOffsetParameter Configure(int value);
+
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        int Value { get; }
     }
 }

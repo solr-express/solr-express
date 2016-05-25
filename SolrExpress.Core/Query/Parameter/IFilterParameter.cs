@@ -14,5 +14,15 @@ namespace SolrExpress.Core.Query.Parameter
         /// <param name="value">Value of the filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
         IFilterParameter<TDocument> Configure(IQueryParameterValue value, string tagName = null);
+
+        /// <summary>
+        /// Value of the filter
+        /// </summary>
+        IQueryParameterValue Value { get; }
+
+        /// <summary>
+        /// Tag name to use in facet excluding list
+        /// </summary>
+        string TagName { get; }
     }
 }

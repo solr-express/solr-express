@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
+using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.ParameterValue;
-using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
 
@@ -12,15 +12,30 @@ namespace SolrExpress.Solr5.Query.Parameter
     public sealed class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, IParameter<JObject>, IValidation
         where TDocument : IDocument
     {
-        private SolrSpatialFunctionType _functionType;
-        private Expression<Func<TDocument, object>> _expression;
-        private GeoCoordinate _centerPoint;
-        private decimal _distance;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = false;
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// Function used in the spatial filter
+        /// </summary>
+        public SolrSpatialFunctionType FunctionType { get; private set; }
+
+        /// <summary>
+        /// Center point to spatial filter
+        /// </summary>
+        public GeoCoordinate CenterPoint { get; private set; }
+
+        /// <summary>
+        /// Distance from the center point
+        /// </summary>
+        public decimal Distance { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -28,14 +43,14 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            var formule = this._functionType.GetSolrSpatialFormule(
+            var formule = this.FunctionType.GetSolrSpatialFormule(
                 fieldName,
-                this._centerPoint,
-                this._distance);
+                this.CenterPoint,
+                this.Distance);
 
             jObj.Add(new JProperty("fq", formule));
 
@@ -52,7 +67,7 @@ namespace SolrExpress.Solr5.Query.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
@@ -74,10 +89,10 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             Checker.IsNull(expression);
 
-            this._functionType = functionType;
-            this._expression = expression;
-            this._centerPoint = centerPoint;
-            this._distance = distance;
+            this.FunctionType = functionType;
+            this.Expression = expression;
+            this.CenterPoint = centerPoint;
+            this.Distance = distance;
 
             return this;
         }

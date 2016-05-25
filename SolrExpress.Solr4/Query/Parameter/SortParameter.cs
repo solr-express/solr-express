@@ -11,13 +11,20 @@ namespace SolrExpress.Solr4.Query.Parameter
     public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, IParameter<List<string>>
         where TDocument : IDocument
     {
-        private Expression<Func<TDocument, object>> _expression;
-        private bool _ascendent;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// True to ascendent order, otherwise false
+        /// </summary>
+        public bool Ascendent { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -25,9 +32,9 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            var value = $"{fieldName} {(this._ascendent ? "asc" : "desc")}";
+            var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
 
             var sort = container.FirstOrDefault(q => q.StartsWith("sort="));
 
@@ -54,8 +61,8 @@ namespace SolrExpress.Solr4.Query.Parameter
         {
             Checker.IsNull(expression);
 
-            this._expression = expression;
-            this._ascendent = ascendent;
+            this.Expression = expression;
+            this.Ascendent = ascendent;
 
             return this;
         }

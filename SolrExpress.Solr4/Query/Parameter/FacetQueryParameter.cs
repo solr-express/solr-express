@@ -11,15 +11,30 @@ namespace SolrExpress.Solr4.Query.Parameter
     public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
-        private string _aliasName;
-        private IQueryParameterValue _query;
-        private FacetSortType? _sortType;
-        private string[] _excludes;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Name of the alias added in the query
+        /// </summary>
+        public string AliasName { get; private set; }
+
+        /// <summary>
+        /// Query used to make the facet
+        /// </summary>
+        public IQueryParameterValue Query { get; private set; }
+
+        /// <summary>
+        /// Sort type of the result of the facet
+        /// </summary>
+        public FacetSortType? SortType { get; private set; }
+
+        /// <summary>
+        /// List of tags to exclude in facet calculation
+        /// </summary>
+        public string[] Excludes { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -32,23 +47,23 @@ namespace SolrExpress.Solr4.Query.Parameter
                 container.Add("facet=true");
             }
 
-            var query = this._query.Execute();
+            var query = this.Query.Execute();
 
-            container.Add($"facet.query={this._excludes.GetSolrFacetWithExcludes(this._aliasName, query)}");
+            container.Add($"facet.query={this.Excludes.GetSolrFacetWithExcludes(this.AliasName, query)}");
 
-            if (this._sortType.HasValue)
+            if (this.SortType.HasValue)
             {
                 string typeName;
                 string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this._sortType.Value == FacetSortType.CountDesc || this._sortType.Value == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                this._sortType.Value.GetSolrFacetSort(out typeName, out dummy);
+                this.SortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
-                container.Add($"f.{this._aliasName}.facet.sort={typeName}");
+                container.Add($"f.{this.AliasName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{this._aliasName}.facet.mincount=1");
+            container.Add($"f.{this.AliasName}.facet.mincount=1");
         }
 
         /// <summary>
@@ -61,7 +76,7 @@ namespace SolrExpress.Solr4.Query.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var queryValidation = this._query as IValidation;
+            var queryValidation = this.Query as IValidation;
 
             if (queryValidation != null)
             {
@@ -81,10 +96,10 @@ namespace SolrExpress.Solr4.Query.Parameter
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(query);
 
-            this._aliasName = aliasName;
-            this._query = query;
-            this._sortType = sortType;
-            this._excludes = excludes;
+            this.AliasName = aliasName;
+            this.Query = query;
+            this.SortType = sortType;
+            this.Excludes = excludes;
 
             return this;
         }

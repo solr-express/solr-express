@@ -5,12 +5,15 @@ namespace SolrExpress.Solr5.Query.Parameter
 {
     public sealed class FacetLimitParameter : IFacetLimitParameter, IParameter<JObject>
     {
-        private int _value;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = false;
+
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        public int Value { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "rows"
@@ -19,7 +22,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         public void Execute(JObject jObject)
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
-            var jProperty = new JProperty("facet.limit", this._value);
+            var jProperty = new JProperty("facet.limit", this.Value);
 
             jObj.Add(jProperty);
 
@@ -32,7 +35,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="value">Value of limit</param>
         public IFacetLimitParameter Configure(int value)
         {
-            this._value = value;
+            this.Value = value;
 
             return this;
         }

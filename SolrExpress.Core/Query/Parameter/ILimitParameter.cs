@@ -10,5 +10,10 @@
         /// </summary>
         /// <param name="value">Value of limit</param>
         ILimitParameter Configure(int value);
+
+        /// <summary>
+        /// Value of limit
+        /// </summary>
+        int Value { get; }
     }
 }

@@ -9,13 +9,20 @@ namespace SolrExpress.Solr5.Query.Parameter
     public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, IParameter<JObject>
         where TDocument : IDocument
     {
-        private IQueryParameterValue _value;
-        private string _tagName;
-
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
+
+        /// <summary>
+        /// Value of the filter
+        /// </summary>
+        public IQueryParameterValue Value { get; private set; }
+
+        /// <summary>
+        /// Tag name to use in facet excluding list
+        /// </summary>
+        public string TagName { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "sort"
@@ -25,7 +32,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(this._value.Execute().GetSolrFilterWithTag(this._tagName));
+            jArray.Add(this.Value.Execute().GetSolrFilterWithTag(this.TagName));
 
             jObject["filter"] = jArray;
         }
@@ -39,8 +46,8 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             Checker.IsNull(value);
 
-            this._value = value;
-            this._tagName = tagName;
+            this.Value = value;
+            this.TagName = tagName;
 
             return this;
         }
