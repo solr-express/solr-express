@@ -11,13 +11,9 @@
     "warningsAsErrors": true,
     "keyFile": "SolrExpress.Core.snk"
   },
-  
+
   "frameworks": {
     "net451": { },
-    "netstandard1.5": {
-      "imports": [
-        "portable-net452+win81"
-      ]
-    }
+    "netcoreapp1.0": { }
   }
 }
