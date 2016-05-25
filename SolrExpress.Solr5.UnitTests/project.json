@@ -1,0 +1,19 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "SolrExpress.Solr5.UnitTests Class Library",
+  "authors": [ "diego.lb" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "testRunner": "xunit",
+
+  "frameworks": {
+    "net451": { },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net452+win81"
+      ]
+    }
+  }
+}

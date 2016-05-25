@@ -1,0 +1,17 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "SolrExpress.Core Class Library",
+  "authors": [ "diego.lb" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "frameworks": {
+    "net451": { },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net452+win81"
+      ]
+    }
+  }
+}
