@@ -1,10 +1,16 @@
 ﻿{
-  "version": "1.0.0-*",
-  "description": "SolrExpress.Solr4 Class Library",
+  "version": "3.0.0.0",
+  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 4.x",
+  "requireLicenseAcceptance": false,
   "authors": [ "diego.lb" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+  "tags": [ "SOLR", "C#", ".Net" ],
+  "projectUrl": "https://github.com/solr-express/solr-express",
+  "licenseUrl": "https://github.com/solr-express/solr-express",
+
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "SolrExpress.Solr4.snk"
+  },
 
   "frameworks": {
     "net451": { },
