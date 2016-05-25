@@ -6,14 +6,15 @@
   "tags": [ "SOLR", "C#", ".Net" ],
   "projectUrl": "https://github.com/solr-express/solr-express",
   "licenseUrl": "https://github.com/solr-express/solr-express",
-
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "SolrExpress.Core.snk"
   },
-
   "frameworks": {
-    "net451": { },
-    "netcoreapp1.0": { }
+    "net451": {
+      "dependencies": {
+        "Newtonsoft.Json": "8.0.3"
+      }
+    }
   }
 }

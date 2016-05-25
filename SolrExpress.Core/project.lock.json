@@ -11,13 +11,6 @@
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
         }
-      },
-      "SolrExpress.Core/3.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "8.0.3"
-        }
       }
     },
     ".NETFramework,Version=v4.5.1/win7-x86": {
@@ -28,13 +21,6 @@
         },
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
-        }
-      },
-      "SolrExpress.Core/3.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "8.0.3"
         }
       }
     },
@@ -47,21 +33,10 @@
         "runtime": {
           "lib/net45/Newtonsoft.Json.dll": {}
         }
-      },
-      "SolrExpress.Core/3.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "8.0.3"
-        }
       }
     }
   },
   "libraries": {
-    "SolrExpress.Core/3.0.0": {
-      "type": "project",
-      "path": "../SolrExpress.Core/project.json"
-    },
     "Newtonsoft.Json/8.0.3": {
       "type": "package",
       "sha512": "KGsYQdS2zLH+H8x2cZaSI7e+YZ4SFIbyy1YJQYl6GYBWjf5o4H1A68nxyq+WTyVSOJQ4GqS/DiPE+UseUizgMg==",
@@ -86,9 +61,9 @@
     }
   },
   "projectFileDependencyGroups": {
-    "": [
-      "SolrExpress.Core >= 3.0.0"
-    ],
-    ".NETFramework,Version=v4.5.1": []
+    "": [],
+    ".NETFramework,Version=v4.5.1": [
+      "Newtonsoft.Json >= 8.0.3"
+    ]
   }
 }

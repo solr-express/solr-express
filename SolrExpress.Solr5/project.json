@@ -6,18 +6,14 @@
   "tags": [ "SOLR", "C#", ".Net" ],
   "projectUrl": "https://github.com/solr-express/solr-express",
   "licenseUrl": "https://github.com/solr-express/solr-express",
-
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "SolrExpress.Solr5.snk"
   },
-
   "frameworks": {
-    "net451": { },
-    "netstandard1.5": {
-      "imports": [
-        "portable-net452+win81"
-      ]
-    }
+    "net451": { }
+  },
+  "dependencies": {
+    "SolrExpress.Core": "3.0.0.0"
   }
 }
