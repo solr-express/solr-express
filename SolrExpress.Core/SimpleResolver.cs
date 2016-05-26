@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+#if NETSTANDARD1_5
+using System.Reflection;
+#endif
 
 namespace SolrExpress.Core
 {
@@ -28,7 +31,12 @@ namespace SolrExpress.Core
 
             var target = this.Mappings[item];
 
+
+#if NETSTANDARD1_5
+            if (target.GetTypeInfo().ContainsGenericParameters)
+#else
             if (target.ContainsGenericParameters)
+#endif
             {
                 target = target.MakeGenericType(source.GenericTypeArguments);
             }
@@ -49,7 +57,11 @@ namespace SolrExpress.Core
                 throw new UnexpectedDependencyInjectionMappingException(typeof(T).FullName);
             }
 
+#if NETSTANDARD1_5
+            var constructor = target.GetTypeInfo().GetConstructors()[0];
+#else
             var constructor = target.GetConstructors()[0];
+#endif
             return (T)constructor.Invoke(new object[] { });
         }
 

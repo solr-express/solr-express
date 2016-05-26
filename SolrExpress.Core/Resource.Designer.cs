@@ -10,8 +10,10 @@
 
 namespace SolrExpress.Core {
     using System;
-    
-    
+#if NETSTANDARD1_5
+    using System.Reflection;
+#endif
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -39,7 +41,11 @@ namespace SolrExpress.Core {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
+#if NETSTANDARD1_5
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource", typeof(Resource).GetTypeInfo().Assembly);
+#else  
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource", typeof(Resource).Assembly);
+#endif
                     resourceMan = temp;
                 }
                 return resourceMan;

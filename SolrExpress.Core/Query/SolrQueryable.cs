@@ -140,7 +140,7 @@ namespace SolrExpress.Core.Query
             var query = parameterContainer.Execute();
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
-
+            
             var json = this.Provider.Get(handler ?? RequestHandler.Select, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
