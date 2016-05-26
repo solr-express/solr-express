@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query;
 using System;
 
 namespace SolrExpress.Core.Tests.Query
 {
-    [TestClass]
     public class SimpleLogQueryInterceptorTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Creating class with null value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SimpleLogQueryInterceptor001()
         {
@@ -25,7 +24,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Creating class with empty value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SimpleLogQueryInterceptor002()
         {

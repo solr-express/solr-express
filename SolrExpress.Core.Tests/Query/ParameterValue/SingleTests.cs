@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 using System;
 
 namespace SolrExpress.Core.Tests.Query.ParameterValue
 {
-    [TestClass]
     public class SingleTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with a string value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Single001()
         {
             // Arrange
@@ -32,7 +31,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
         /// What    Returns valid=false
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Single002()
         {
             // Arrange
@@ -52,7 +51,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
         /// What    Returns valid=true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Single003()
         {
             // Arrange
@@ -72,7 +71,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Single004()
         {
@@ -85,7 +84,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Single005()
         {

@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.Result;
 
 namespace SolrExpress.Core.Tests
 {
-    [TestClass]
     public class SimpleResolverTests
     {
         /// <summary>
@@ -11,7 +10,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invoking the method "GetInstance" using interface IDocumentResult<TestDocument>
         /// What    Returns TestDocumentResult<TestDocument> class
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void SimpleResolver001()
         {
             // Arrange
@@ -30,7 +29,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invoking the method "GetInstance" using interface IDocumentResult<TestDocument>
         /// What    Throw UnexpectedDependencyInjectionMappingException exception
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(UnexpectedDependencyInjectionMappingException))]
         public void SimpleResolver002()
         {

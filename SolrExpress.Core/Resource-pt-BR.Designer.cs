@@ -10,7 +10,7 @@
 
 namespace SolrExpress.Core {
     using System;
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
     using System.Reflection;
 #endif
 
@@ -41,7 +41,7 @@ namespace SolrExpress.Core {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource-pt-BR", typeof(Resource_pt_BR).GetTypeInfo().Assembly);
 #else  
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource-pt-BR", typeof(Resource_pt_BR).Assembly);

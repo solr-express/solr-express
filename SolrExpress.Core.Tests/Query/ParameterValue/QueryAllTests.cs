@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 
 namespace SolrExpress.Core.Tests.Query.ParameterValue
 {
-    [TestClass]
     public class QueryAllTests
     {
         /// <summary>
@@ -11,7 +10,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance
         /// What    Get "*:*" value
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void QueryAll001()
         {
             // Arrange

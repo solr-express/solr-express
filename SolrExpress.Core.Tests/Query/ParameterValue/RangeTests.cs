@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 using System;
 
 namespace SolrExpress.Core.Tests.Query.ParameterValue
 {
-    [TestClass]
     public class RangeTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with int type in value, passing null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range001()
         {
             // Arrange
@@ -32,7 +31,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with int type in value, passing null in "from" value and not null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range002()
         {
             // Arrange
@@ -52,7 +51,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with int type in value, passing not null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range003()
         {
             // Arrange
@@ -72,7 +71,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with int type in value, passing not null in "from" value and null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range004()
         {
             // Arrange
@@ -92,7 +91,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with decimal type in value, passing null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range005()
         {
             // Arrange
@@ -112,7 +111,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with decimal type in value, passing null in "from" value and not null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range006()
         {
             // Arrange
@@ -132,7 +131,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with decimal type in value, passing not null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range007()
         {
             // Arrange
@@ -152,7 +151,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with decimal type in value, passing not null in "from" value and null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range008()
         {
             // Arrange
@@ -172,7 +171,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with double type in value, passing null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range009()
         {
             // Arrange
@@ -192,7 +191,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with double type in value, passing null in "from" value and not null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range010()
         {
             // Arrange
@@ -212,7 +211,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with double type in value, passing not null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range011()
         {
             // Arrange
@@ -232,7 +231,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with double type in value, passing not null in "from" value and null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range012()
         {
             // Arrange
@@ -252,7 +251,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with DateTime type in value, passing null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range013()
         {
             // Arrange
@@ -272,7 +271,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with DateTime type in value, passing null in "from" value and not null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range014()
         {
             // Arrange
@@ -292,7 +291,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with DateTime type in value, passing not null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range015()
         {
             // Arrange
@@ -312,7 +311,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with DateTime type in value, passing not null in "from" value and null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range016()
         {
             // Arrange
@@ -332,7 +331,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with GeoCoordinate type in value, passing null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range017()
         {
             // Arrange
@@ -352,7 +351,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with GeoCoordinate type in value, passing null in "from" value and not null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range018()
         {
             // Arrange
@@ -372,7 +371,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with GeoCoordinate type in value, passing not null in "from" and "to" values
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range019()
         {
             // Arrange
@@ -392,7 +391,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with GeoCoordinate type in value, passing not null in "from" value and null in "to" value
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Range020()
         {
             // Arrange
@@ -412,7 +411,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Range021()
         {

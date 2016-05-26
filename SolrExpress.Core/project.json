@@ -1,22 +1,12 @@
 ﻿{
-  "version": "3.0.0.0",
-  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way - Core library",
   "authors": [ "diego.lb" ],
-  "packOptions": {
-    "licenseUrl": "https://github.com/solr-express/solr-express",
-    "repository": {
-      "url": "https://github.com/solr-express/solr-express",
-      "type": "git"
-    },
-    "tags": [ "SOLR", "C#", ".Net" ],
-    "requireLicenseAcceptance": false
-  },
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../Key.snk"
   },
+  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way - Core library",
   "frameworks": {
-    "netstandard1.5": {
+    "netcoreapp1.0": {
       "dependencies": {
         "Newtonsoft.Json": "8.0.4-beta1",
         "System.Console": "4.0.0-rc2-24027",
@@ -30,5 +20,15 @@
         "Newtonsoft.Json": "8.0.3"
       }
     }
-  }
+  },
+  "packOptions": {
+    "licenseUrl": "https://github.com/solr-express/solr-express",
+    "repository": {
+      "url": "https://github.com/solr-express/solr-express",
+      "type": "git"
+    },
+    "tags": [ "SOLR", "C#", ".Net" ],
+    "requireLicenseAcceptance": false
+  },
+  "version": "3.0.0.0"
 }

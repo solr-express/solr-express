@@ -2,31 +2,7 @@
   "locked": false,
   "version": 2,
   "targets": {
-    ".NETFramework,Version=v4.5.1": {
-      "Newtonsoft.Json/8.0.3": {
-        "type": "package",
-        "compile": {
-          "lib/net45/Newtonsoft.Json.dll": {}
-        },
-        "runtime": {
-          "lib/net45/Newtonsoft.Json.dll": {}
-        }
-      },
-      "SolrExpress.Core/3.0.0": {
-        "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
-        "dependencies": {
-          "Newtonsoft.Json": "8.0.3"
-        },
-        "compile": {
-          "net451/SolrExpress.Core.dll": {}
-        },
-        "runtime": {
-          "net451/SolrExpress.Core.dll": {}
-        }
-      }
-    },
-    ".NETStandard,Version=v1.5": {
+    ".NETCoreApp,Version=v1.0": {
       "Microsoft.CSharp/4.0.1-rc2-24027": {
         "type": "package",
         "dependencies": {
@@ -1061,7 +1037,7 @@
       },
       "SolrExpress.Core/3.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v1.5",
+        "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
           "Newtonsoft.Json": "8.0.4-beta1",
           "System.Console": "4.0.0-rc2-24027",
@@ -1070,10 +1046,34 @@
           "System.IO.FileSystem": "4.0.1-rc2-24027"
         },
         "compile": {
-          "netstandard1.5/SolrExpress.Core.dll": {}
+          "netcoreapp1.0/SolrExpress.Core.dll": {}
         },
         "runtime": {
-          "netstandard1.5/SolrExpress.Core.dll": {}
+          "netcoreapp1.0/SolrExpress.Core.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.5.1": {
+      "Newtonsoft.Json/8.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "SolrExpress.Core/3.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1",
+        "dependencies": {
+          "Newtonsoft.Json": "8.0.3"
+        },
+        "compile": {
+          "net451/SolrExpress.Core.dll": {}
+        },
+        "runtime": {
+          "net451/SolrExpress.Core.dll": {}
         }
       }
     }
@@ -4123,17 +4123,10 @@
     "": [
       "SolrExpress.Core >= 3.0.0"
     ],
-    ".NETFramework,Version=v4.5.1": [
-      "Newtonsoft.Json >= 8.0.3"
-    ],
-    ".NETStandard,Version=v1.5": [
-      "Newtonsoft.Json >= 8.0.4-beta1",
-      "System.Console >= 4.0.0-rc2-24027",
-      "System.Diagnostics.Tools >= 4.0.1-rc2-24027",
-      "System.IO >= 4.1.0-rc2-24027",
-      "System.IO.FileSystem >= 4.0.1-rc2-24027",
+    ".NETCoreApp,Version=v1.0": [
       "System.Net.Requests >= 4.0.11-rc2-24027"
-    ]
+    ],
+    ".NETFramework,Version=v4.5.1": []
   },
   "tools": {},
   "projectFileToolGroups": {}

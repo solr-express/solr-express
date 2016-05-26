@@ -1,7 +1,24 @@
 ﻿{
-  "version": "3.0.0.0",
-  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x",
   "authors": [ "diego.lb" ],
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../Key.snk"
+  },
+  "dependencies": {
+    "SolrExpress.Core": "3.0.0.0"
+  },
+  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "System.Net.Requests": "4.0.11-rc2-24027"
+      }
+    },
+    "net451": {
+      "dependencies": {
+      }
+    }
+  },
   "packOptions": {
     "licenseUrl": "https://github.com/solr-express/solr-express",
     "repository": {
@@ -11,28 +28,5 @@
     "tags": [ "SOLR", "C#", ".Net" ],
     "requireLicenseAcceptance": false
   },
-  "buildOptions": {
-    "warningsAsErrors": true,
-    "keyFile": "../Key.snk"
-  },
-  "dependencies": {
-    "SolrExpress.Core": "3.0.0.0"
-  },
-  "frameworks": {
-    "netstandard1.5": {
-      "dependencies": {
-        "System.Net.Requests": "4.0.11-rc2-24027",
-        "Newtonsoft.Json": "8.0.4-beta1",
-        "System.Console": "4.0.0-rc2-24027",
-        "System.Diagnostics.Tools": "4.0.1-rc2-24027",
-        "System.IO": "4.1.0-rc2-24027",
-        "System.IO.FileSystem": "4.0.1-rc2-24027"
-      }
-    },
-    "net451": {
-      "dependencies": {
-        "Newtonsoft.Json": "8.0.3"
-      }
-    }
-  }
+  "version": "3.0.0.0"
 }

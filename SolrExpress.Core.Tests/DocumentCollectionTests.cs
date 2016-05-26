@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Moq;
 using SolrExpress.Core.Update;
 using System;
 
 namespace SolrExpress.Core.Tests
 {
-    [TestClass]
     public class DocumentCollectionTests
     {
         /// <summary>
@@ -13,7 +12,7 @@ namespace SolrExpress.Core.Tests
         /// When    Create the instance with null in provider parameter
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection001()
         {
@@ -26,7 +25,7 @@ namespace SolrExpress.Core.Tests
         /// When    Create the instance with null in resolver parameter
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection002()
         {
@@ -39,7 +38,7 @@ namespace SolrExpress.Core.Tests
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection003()
         {
@@ -52,7 +51,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Add with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection004()
         {
@@ -71,7 +70,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Remove with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection005()
         {
@@ -90,7 +89,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Add with a empty collection
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DocumentCollection006()
         {
@@ -109,7 +108,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Remove with a empty collection
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DocumentCollection007()
         {
@@ -128,7 +127,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes property Select twice
         /// What    Each invokes returns a different instance
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentCollection008()
         {
             // Arrange
@@ -150,7 +149,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Commit without invokes method Add
         /// What    Don't invoke class than implements IAtomicUpdate
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentCollection009()
         {
             // Arrange
@@ -172,7 +171,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Commit invoking method Add before
         /// What    Invoke class than implements IAtomicUpdate
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentCollection010()
         {
             // Arrange
@@ -195,7 +194,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Commit without invokes method Add
         /// What    Don't invoke class than implements IAtomicDelete
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentCollection011()
         {
             // Arrange
@@ -217,7 +216,7 @@ namespace SolrExpress.Core.Tests
         /// When    Invokes method Commit invoking method Add before
         /// What    Invoke class than implements IAtomicDelete
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentCollection012()
         {
             // Arrange

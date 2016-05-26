@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Moq;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query;
@@ -6,7 +6,6 @@ using System;
 
 namespace SolrExpress.Core.Tests.Query
 {
-    [TestClass]
     public class SolrQueryableTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" using a concret class than implement IQueryParameter, configured to do not allow multiple instances
         /// What    Throws AllowMultipleInstanceOfParameterTypeException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(AllowMultipleInstanceOfParameterTypeException))]
         public void SolrQueryable001()
         {
@@ -34,7 +33,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" with a invalid value
         /// What    Throws InvalidParameterTypeException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(InvalidParameterTypeException))]
         public void SolrQueryable002()
         {
@@ -59,7 +58,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter"
         /// What    Do not invoke Validate method of parameter class
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void SolrQueryable003()
         {
             // Arrange
@@ -88,7 +87,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable004()
         {
@@ -105,7 +104,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "QueryInterceptor" with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable005()
         {
@@ -122,7 +121,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "QueryInterceptor" with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable006()
         {
@@ -139,7 +138,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Create the instance with null in provider parameter
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable007()
         {
@@ -152,7 +151,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Create the instance with null in resolver parameter
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable008()
         {
@@ -165,7 +164,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable009()
         {
@@ -178,7 +177,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" with a invalid value
         /// What    Throws InvalidParameterTypeException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(InvalidParameterTypeException))]
         public void SolrQueryable010()
         {
@@ -204,7 +203,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" with a invalid value
         /// What    Do not invoke Validate method of parameter class
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void SolrQueryable011()
         {
             // Arrange
@@ -236,7 +235,7 @@ namespace SolrExpress.Core.Tests.Query
         /// When    Invoking the method "Parameter" with a invalid value
         /// What    Do not invoke Validate method of parameter class
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void SolrQueryable012()
         {
             // Arrange

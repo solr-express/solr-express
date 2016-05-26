@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Extension.Internal;
 using System;
 
 namespace SolrExpress.Core.Tests.Extension.Internal
 {
-    [TestClass]
     public class ExpressionIDocumentExtensionTests
     {
         private class Document : IDocument
@@ -55,7 +54,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension001()
         {
             // Arrange
@@ -73,7 +72,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension002()
         {
             // Arrange
@@ -91,7 +90,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension003()
         {
             // Arrange
@@ -109,7 +108,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension004()
         {
             // Arrange
@@ -127,7 +126,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension005()
         {
             // Arrange
@@ -145,7 +144,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension006()
         {
             // Arrange
@@ -163,7 +162,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable int property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension007()
         {
             // Arrange
@@ -181,7 +180,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable long property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension008()
         {
             // Arrange
@@ -199,7 +198,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable DateTime property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension009()
         {
             // Arrange
@@ -217,7 +216,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable DateTimeOffset property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension010()
         {
             // Arrange
@@ -235,7 +234,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable bool property
         /// What    Return the name of the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension011()
         {
             // Arrange
@@ -253,7 +252,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension012()
         {
             // Arrange
@@ -271,7 +270,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension013()
         {
             // Arrange
@@ -289,7 +288,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension014()
         {
             // Arrange
@@ -307,7 +306,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension015()
         {
             // Arrange
@@ -325,7 +324,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension016()
         {
             // Arrange
@@ -343,7 +342,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void ExpressionIDocumentExtension017()
         {
             // Arrange

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
 using System.Threading.Tasks;
 #endif
 
@@ -31,7 +31,7 @@ namespace SolrExpress.Solr5
         /// <param name="request">Configured request used in comunication with SOLR</param>
         /// <param name="rawData">Raw data send in request (used in log)</param>
         /// <returns>Result of the request</returns>
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
         private async Task<string> ExecuteAsync(WebRequest request, string rawData)
         {
             try
@@ -122,7 +122,7 @@ namespace SolrExpress.Solr5
             request.ContentLength = bytes.Length;
 #endif
 
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
             var taskStream = request.GetRequestStreamAsync();
             taskStream.Wait();
             var stream = taskStream.Result;
@@ -149,7 +149,7 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare("GET-X", handler, data);
 
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
             var task = this.ExecuteAsync(request, data);
             task.Wait();
 
@@ -169,7 +169,7 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare("POST", handler, data);
 
-#if NETSTANDARD1_5
+#if NETCOREAPP1_0
             var task = this.ExecuteAsync(request, data);
             task.Wait();
 

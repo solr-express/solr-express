@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 using System;
 
 namespace SolrExpress.Core.Tests.Query.ParameterValue
 {
-    [TestClass]
     public class MultiTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Multi001()
         {
@@ -28,7 +27,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with 1 query parameter
         /// What    Throws ArgumentException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentException))]
         public void Multi002()
         {
@@ -44,7 +43,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with AND condition and 2 query parameters
         /// What    Throws ArgumentException
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Multi003()
         {
             // Arrange
@@ -64,7 +63,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with OR condition and 2 query parameters
         /// What    Throws ArgumentException
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Multi004()
         {
             // Arrange

@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 using System;
 
 namespace SolrExpress.Core.Tests.Query.ParameterValue
 {
-    [TestClass]
     public class NegateTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with a value
         /// What    Get the informed value
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void Negate001()
         {
             // Arrange
@@ -32,7 +31,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
+        [Fact]
         [ExpectedException(typeof(ArgumentNullException))]
         public void Negate002()
         {
