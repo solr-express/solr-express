@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.Query;
@@ -13,7 +13,6 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.IntegrationTests
 {
-    [TestClass]
     public class IntegrationTests
     {
         /// <summary>
@@ -21,7 +20,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest001()
         {
             // Arrange
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest002()
         {
             // Arrange
@@ -54,7 +53,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(10, data.Count);
+            Assert.Equal(10, data.Count);
         }
 
         /// <summary>
@@ -62,7 +61,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest003()
         {
             // Arrange
@@ -80,8 +79,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(3, data.Count);
-            Assert.AreEqual("TWINX2048-3200PRO", data[0].Id);
+            Assert.Equal(3, data.Count);
+            Assert.Equal("TWINX2048-3200PRO", data[0].Id);
         }
 
         /// <summary>
@@ -89,7 +88,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest004()
         {
             // Arrange
@@ -107,9 +106,9 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(2, data.Count);
-            Assert.AreEqual("ManufacturerId", data[0].Name);
-            Assert.AreEqual("InStock", data[1].Name);
+            Assert.Equal(2, data.Count);
+            Assert.Equal("ManufacturerId", data[0].Name);
+            Assert.Equal("InStock", data[1].Name);
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest005()
         {
             // Arrange
@@ -135,9 +134,9 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new FacetQueryResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(2, data.Count);
-            Assert.IsTrue(data["Facet1"] > 0);
-            Assert.IsTrue(data["Facet2"] > 0);
+            Assert.Equal(2, data.Count);
+            Assert.True(data["Facet1"] > 0);
+            Assert.True(data["Facet2"] > 0);
         }
 
         /// <summary>
@@ -145,7 +144,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest006()
         {
             // Arrange
@@ -163,9 +162,9 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new FacetRangeResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(2, data.Count);
-            Assert.AreEqual("Facet1", data[0].Name);
-            Assert.AreEqual("Facet2", data[1].Name);
+            Assert.Equal(2, data.Count);
+            Assert.Equal("Facet1", data[0].Name);
+            Assert.Equal("Facet2", data[1].Name);
         }
 
         /// <summary>
@@ -173,7 +172,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest007()
         {
             // Arrange
@@ -189,8 +188,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new StatisticResult<TechProductDocument>());
 
             // Assert
-            Assert.IsTrue(data.Data.DocumentCount > 0);
-            Assert.IsFalse(data.Data.IsEmpty);
+            Assert.True(data.Data.DocumentCount > 0);
+            Assert.False(data.Data.IsEmpty);
         }
 
         /// <summary>
@@ -198,7 +197,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest008()
         {
             // Arrange
@@ -215,9 +214,9 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(1, data.Count);
-            Assert.AreEqual("ManufacturerId", data[0].Name);
-            Assert.AreEqual(1, data[0].Data.Count);
+            Assert.Equal(1, data.Count);
+            Assert.Equal("ManufacturerId", data[0].Name);
+            Assert.Equal(1, data[0].Data.Count);
         }
 
         /// <summary>
@@ -225,7 +224,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Adding a new document into collection
         /// What    Create a communication between software and SOLR and add document in collection
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest009()
         {
             // Arrange
@@ -252,9 +251,9 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.AreEqual(1, fetchedDocuments.Count);
-            Assert.AreEqual(documentId, fetchedDocuments[0].Id);
-            Assert.AreEqual("IntegrationTest009", fetchedDocuments[0].Name);
+            Assert.Equal(1, fetchedDocuments.Count);
+            Assert.Equal(documentId, fetchedDocuments[0].Id);
+            Assert.Equal("IntegrationTest009", fetchedDocuments[0].Name);
         }
 
         /// <summary>
@@ -262,7 +261,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Adding a new document into collection and delete this document
         /// What    Create a communication between software and SOLR and document is deleted from collection
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest010()
         {
             // Arrange
@@ -291,7 +290,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.AreEqual(0, fetchedDocuments.Count);
+            Assert.Equal(0, fetchedDocuments.Count);
         }
 
         /// <summary>
@@ -299,7 +298,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest011()
         {
             // Arrange
@@ -316,7 +315,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(10, data.Count);
+            Assert.Equal(10, data.Count);
         }
 
         /// <summary>
@@ -324,7 +323,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest012()
         {
             // Arrange
@@ -342,7 +341,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(10, data.Count);
+            Assert.Equal(10, data.Count);
         }
 
         /// <summary>
@@ -350,7 +349,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Adding 2 new documents into collection
         /// What    Create a communication between software and SOLR and add document in collection
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest013()
         {
             // Arrange
@@ -383,11 +382,11 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.AreEqual(2, fetchedDocuments.Count);
-            Assert.AreEqual(documentId1, fetchedDocuments[0].Id);
-            Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
-            Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
-            Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
+            Assert.Equal(2, fetchedDocuments.Count);
+            Assert.Equal(documentId1, fetchedDocuments[0].Id);
+            Assert.Equal(documentId2, fetchedDocuments[1].Id);
+            Assert.Equal("IntegrationTest013", fetchedDocuments[0].Name);
+            Assert.Equal("IntegrationTest013", fetchedDocuments[1].Name);
         }
 
         /// <summary>
@@ -395,7 +394,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest014()
         {
             // Arrange
@@ -413,7 +412,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new DocumentResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.AreEqual(10, data.Count);
+            Assert.Equal(10, data.Count);
         }
 
         /// <summary>
@@ -421,7 +420,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Adding 2 new documents into collection
         /// What    Create a communication between software and SOLR and add document in collection
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest015()
         {
             // Arrange
@@ -454,11 +453,11 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.AreEqual(2, fetchedDocuments.Count);
-            Assert.AreEqual(documentId1, fetchedDocuments[0].Id);
-            Assert.AreEqual(documentId2, fetchedDocuments[1].Id);
-            Assert.AreEqual("IntegrationTest013", fetchedDocuments[0].Name);
-            Assert.AreEqual("IntegrationTest013", fetchedDocuments[1].Name);
+            Assert.Equal(2, fetchedDocuments.Count);
+            Assert.Equal(documentId1, fetchedDocuments[0].Id);
+            Assert.Equal(documentId2, fetchedDocuments[1].Id);
+            Assert.Equal("IntegrationTest013", fetchedDocuments[0].Name);
+            Assert.Equal("IntegrationTest013", fetchedDocuments[1].Name);
         }
 
         /// <summary>
@@ -466,7 +465,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest016()
         {
             // Arrange
@@ -483,8 +482,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new StatisticResult<TechProductDocument>());
 
             // Assert
-            Assert.IsTrue(data.Data.DocumentCount > 1);
-            Assert.IsFalse(data.Data.IsEmpty);
+            Assert.True(data.Data.DocumentCount > 1);
+            Assert.False(data.Data.IsEmpty);
         }
 
         /// <summary>
@@ -492,7 +491,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void IntegrationTest017()
         {
             // Arrange
@@ -509,8 +508,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             data = result.Get(new StatisticResult<TechProductDocument>());
 
             // Assert
-            Assert.IsTrue(data.Data.DocumentCount > 1);
-            Assert.IsFalse(data.Data.IsEmpty);
+            Assert.True(data.Data.DocumentCount > 1);
+            Assert.False(data.Data.IsEmpty);
         }
     }
 }
