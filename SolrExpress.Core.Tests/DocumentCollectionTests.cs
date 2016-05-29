@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Moq;
+﻿using Moq;
 using SolrExpress.Core.Update;
 using System;
+using Xunit;
 
 namespace SolrExpress.Core.Tests
 {
@@ -13,11 +13,10 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection001()
         {
             // Arrange / Act / Assert
-            new DocumentCollection<TestDocument>(null, new Mock<IResolver>().Object, new Configuration());
+            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(null, new Mock<IResolver>().Object, new Configuration()));
         }
 
         /// <summary>
@@ -26,11 +25,10 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection002()
         {
             // Arrange / Act / Assert
-            new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, null, new Configuration());
+            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, null, new Configuration()));
         }
 
         /// <summary>
@@ -39,11 +37,10 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection003()
         {
             // Arrange / Act / Assert
-            new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
+            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null));
         }
 
         /// <summary>
@@ -52,7 +49,6 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection004()
         {
             // Arrange
@@ -62,7 +58,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Update.Add(null);
+            Assert.Throws<ArgumentNullException>(() => documentCollection.Update.Add(null));
         }
 
         /// <summary>
@@ -71,7 +67,6 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void DocumentCollection005()
         {
             // Arrange
@@ -81,7 +76,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Update.Delete(null);
+            Assert.Throws<ArgumentNullException>(() => documentCollection.Update.Delete(null));
         }
 
         /// <summary>
@@ -90,7 +85,6 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DocumentCollection006()
         {
             // Arrange
@@ -100,7 +94,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Update.Add(new TestDocument[] { });
+            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update.Add(new TestDocument[] { }));
         }
 
         /// <summary>
@@ -109,7 +103,6 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void DocumentCollection007()
         {
             // Arrange
@@ -119,7 +112,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            documentCollection.Update.Delete(new string[] { });
+            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update.Delete(new string[] { }));
         }
 
         /// <summary>
@@ -141,7 +134,7 @@ namespace SolrExpress.Core.Tests
             var select2 = documentCollection.Select;
 
             // Assert
-            Assert.AreNotSame(select1, select2);
+            Assert.NotSame(select1, select2);
         }
 
         /// <summary>

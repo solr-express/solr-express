@@ -64,7 +64,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyString);
 
             // Assert
-            Assert.AreEqual("PropertyString", name);
+            Assert.Equal("PropertyString", name);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyInt);
 
             // Assert
-            Assert.AreEqual("PropertyInt", name);
+            Assert.Equal("PropertyInt", name);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLong);
 
             // Assert
-            Assert.AreEqual("PropertyLong", name);
+            Assert.Equal("PropertyLong", name);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTime);
 
             // Assert
-            Assert.AreEqual("PropertyDateTime", name);
+            Assert.Equal("PropertyDateTime", name);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffset);
 
             // Assert
-            Assert.AreEqual("PropertyDateTimeOffset", name);
+            Assert.Equal("PropertyDateTimeOffset", name);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBool);
 
             // Assert
-            Assert.AreEqual("PropertyBool", name);
+            Assert.Equal("PropertyBool", name);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyIntNullable);
 
             // Assert
-            Assert.AreEqual("PropertyIntNullable", name);
+            Assert.Equal("PropertyIntNullable", name);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLongNullable);
 
             // Assert
-            Assert.AreEqual("PropertyLongNullable", name);
+            Assert.Equal("PropertyLongNullable", name);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeNullable);
 
             // Assert
-            Assert.AreEqual("PropertyDateTimeNullable", name);
+            Assert.Equal("PropertyDateTimeNullable", name);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetNullable);
 
             // Assert
-            Assert.AreEqual("PropertyDateTimeOffsetNullable", name);
+            Assert.Equal("PropertyDateTimeOffsetNullable", name);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBoolNullable);
 
             // Assert
-            Assert.AreEqual("PropertyBoolNullable", name);
+            Assert.Equal("PropertyBoolNullable", name);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyStringWithAttr);
 
             // Assert
-            Assert.AreEqual("PropString", name);
+            Assert.Equal("PropString", name);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyIntWithAttr);
 
             // Assert
-            Assert.AreEqual("PropInt", name);
+            Assert.Equal("PropInt", name);
         }
 
         /// <summary>
@@ -298,7 +298,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLongWithAttr);
 
             // Assert
-            Assert.AreEqual("PropLong", name);
+            Assert.Equal("PropLong", name);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeWithAttr);
 
             // Assert
-            Assert.AreEqual("PropDateTime", name);
+            Assert.Equal("PropDateTime", name);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetWithAttr);
 
             // Assert
-            Assert.AreEqual("PropDateTimeOffset", name);
+            Assert.Equal("PropDateTimeOffset", name);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace SolrExpress.Core.Tests.Extension.Internal
             name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBoolWithAttr);
 
             // Assert
-            Assert.AreEqual("PropBool", name);
+            Assert.Equal("PropBool", name);
         }
     }
 }

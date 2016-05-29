@@ -23,7 +23,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -32,14 +32,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Negate002()
         {
-            // Arrange
-            var parameter = new Negate(null);
-
-            // Act / Assert
-            parameter.Execute();
+            // Arrange/ Act / Assert
+            Assert.Throws<ArgumentNullException>(() => new Negate(null));
         }
     }
 }

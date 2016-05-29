@@ -12,14 +12,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Multi001()
         {
-            // Arrange
-            var parameter = new Multi(SolrQueryConditionType.And, null);
-
-            // Act / Assert
-            parameter.Execute();
+            // Arrange/ Act / Assert
+            Assert.Throws<ArgumentNullException>(() => new Multi(SolrQueryConditionType.And, null));
         }
 
         /// <summary>
@@ -28,14 +24,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentException))]
         public void Multi002()
         {
-            // Arrange
-            var parameter = new Multi(SolrQueryConditionType.And, new Any("X"));
-
-            // Act / Assert
-            parameter.Execute();
+            // Arrange/ Act / Assert
+            Assert.Throws<ArgumentException>(() => new Multi(SolrQueryConditionType.And, new Any("X")));
         }
 
         /// <summary>
@@ -55,7 +47,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -75,7 +67,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 }

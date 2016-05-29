@@ -12,11 +12,10 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SimpleLogResultInterceptor001()
         {
             // Arrange / Act / Assert
-            new SimpleLogResultInterceptor(null);
+            Assert.Throws<ArgumentNullException>(() => new SimpleLogResultInterceptor(null));
         }
 
         /// <summary>
@@ -25,11 +24,10 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SimpleLogResultInterceptor002()
         {
             // Arrange / Act / Assert
-            new SimpleLogResultInterceptor("");
+            Assert.Throws<ArgumentNullException>(() => new SimpleLogResultInterceptor(""));
         }
     }
 }

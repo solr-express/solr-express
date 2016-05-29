@@ -22,7 +22,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 }

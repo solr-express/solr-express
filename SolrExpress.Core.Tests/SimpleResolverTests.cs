@@ -21,7 +21,7 @@ namespace SolrExpress.Core.Tests
             var result = resolver.GetInstance<IDocumentResult<TestDocument>>();
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(TestDocumentResult<TestDocument>));
+            Assert.IsType(typeof(TestDocumentResult<TestDocument>), result);
         }
 
         /// <summary>
@@ -30,14 +30,13 @@ namespace SolrExpress.Core.Tests
         /// What    Throw UnexpectedDependencyInjectionMappingException exception
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(UnexpectedDependencyInjectionMappingException))]
         public void SimpleResolver002()
         {
             // Arrange
             var resolver = new SimpleResolver();
 
             // Act / Assert
-            var result = resolver.GetInstance<IDocumentResult<TestDocument>>();
+            Assert.Throws<UnexpectedDependencyInjectionMappingException>(() => resolver.GetInstance<IDocumentResult<TestDocument>>());
         }
     }
 }

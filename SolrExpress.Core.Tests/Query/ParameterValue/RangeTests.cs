@@ -23,7 +23,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -412,11 +412,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Range021()
         {
             // Arrange / Act / Assert
-            new Range<TestDocument, int>(null);
+            Assert.Throws<ArgumentNullException>(() => new Range<TestDocument, int>(null));
         }
     }
 }

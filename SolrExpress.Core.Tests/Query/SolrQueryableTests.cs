@@ -14,7 +14,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws AllowMultipleInstanceOfParameterTypeException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(AllowMultipleInstanceOfParameterTypeException))]
         public void SolrQueryable001()
         {
             // Arrange
@@ -25,7 +24,7 @@ namespace SolrExpress.Core.Tests.Query
             queryable.Parameter(mockParameter.Object);
 
             // Act / Assert
-            queryable.Parameter(mockParameter.Object);
+            Assert.Throws<AllowMultipleInstanceOfParameterTypeException>(() => queryable.Parameter(mockParameter.Object));
         }
 
         /// <summary>
@@ -34,7 +33,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws InvalidParameterTypeException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(InvalidParameterTypeException))]
         public void SolrQueryable002()
         {
             // Arrange
@@ -50,7 +48,7 @@ namespace SolrExpress.Core.Tests.Query
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act / Assert
-            queryable.Parameter(mockParameter.Object);
+            Assert.Throws<InvalidParameterTypeException>(() => queryable.Parameter(mockParameter.Object));
         }
 
         /// <summary>
@@ -88,7 +86,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable004()
         {
             // Arrange
@@ -96,7 +93,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            queryable.Parameter((IParameter)null);
+            Assert.Throws<ArgumentNullException>(() => queryable.Parameter((IParameter)null));
         }
 
         /// <summary>
@@ -105,7 +102,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable005()
         {
             // Arrange
@@ -113,7 +109,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            queryable.QueryInterceptor(null);
+            Assert.Throws<ArgumentNullException>(() => queryable.QueryInterceptor(null));
         }
 
         /// <summary>
@@ -122,7 +118,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable006()
         {
             // Arrange
@@ -130,7 +125,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            queryable.ResultInterceptor(null);
+            Assert.Throws<ArgumentNullException>(() => queryable.ResultInterceptor(null));
         }
 
         /// <summary>
@@ -139,11 +134,10 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable007()
         {
             // Arrange / Act / Assert
-            new SolrQueryable<TestDocument>(null, new Mock<IResolver>().Object, new Configuration());
+            Assert.Throws<ArgumentNullException>(() => new SolrQueryable<TestDocument>(null, new Mock<IResolver>().Object, new Configuration()));
         }
 
         /// <summary>
@@ -152,11 +146,10 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable008()
         {
             // Arrange / Act / Assert
-            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, null, new Configuration());
+            Assert.Throws<ArgumentNullException>(() => new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, null, new Configuration()));
         }
 
         /// <summary>
@@ -165,11 +158,10 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void SolrQueryable009()
         {
             // Arrange / Act / Assert
-            new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null);
+            Assert.Throws<ArgumentNullException>(() => new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null));
         }
 
         /// <summary>
@@ -178,7 +170,6 @@ namespace SolrExpress.Core.Tests.Query
         /// What    Throws InvalidParameterTypeException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(InvalidParameterTypeException))]
         public void SolrQueryable010()
         {
             // Arrange
@@ -195,7 +186,7 @@ namespace SolrExpress.Core.Tests.Query
             mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act / Assert
-            queryable.Parameter(mockAnyParameter.Object);
+            Assert.Throws<InvalidParameterTypeException>(() => queryable.Parameter(mockAnyParameter.Object));
         }
 
         /// <summary>

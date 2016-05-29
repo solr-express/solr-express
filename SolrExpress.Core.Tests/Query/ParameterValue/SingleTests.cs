@@ -23,7 +23,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             actual = parameter.Execute();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             parameter.Validate(out actual, out dummy);
 
             // Assert
-            Assert.IsFalse(actual);
+            Assert.False(actual);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
             parameter.Validate(out actual, out dummy);
 
             // Assert
-            Assert.IsTrue(actual);
+            Assert.True(actual);
         }
 
         /// <summary>
@@ -72,11 +72,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Single004()
         {
             // Arrange / Act / Assert
-            new Single<TestDocument>(null, "x");
+            Assert.Throws<ArgumentNullException>(() => new Single<TestDocument>(null, "x"));
         }
 
         /// <summary>
@@ -85,11 +84,10 @@ namespace SolrExpress.Core.Tests.Query.ParameterValue
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void Single005()
         {
             // Arrange / Act / Assert
-            new Single<TestDocument>(q => q.Id, null);
+            Assert.Throws<ArgumentNullException>(() => new Single<TestDocument>(q => q.Id, null));
         }
     }
 }
