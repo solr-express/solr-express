@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr4.Query.Parameter;
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class FacetFieldParameterTests
     {
         /// <summary>
@@ -15,7 +14,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter001()
         {
             // Arrange
@@ -27,10 +26,10 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(3, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.field={!key=Id}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
+            Assert.Equal(3, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.field={!key=Id}Id", container[1]);
+            Assert.Equal("f.Id.facet.mincount=1", container[2]);
         }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort type and direction parameters
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter002()
         {
             // Arrange
@@ -50,11 +49,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(4, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.field={!key=Id}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.sort=count", container[2]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[3]);
+            Assert.Equal(4, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.field={!key=Id}Id", container[1]);
+            Assert.Equal("f.Id.facet.sort=count", container[2]);
+            Assert.Equal("f.Id.facet.mincount=1", container[3]);
         }
 
         /// <summary>
@@ -62,8 +61,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort count desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        [Fact]
         public void FacetFieldParameter003()
         {
             // Arrange
@@ -72,7 +70,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Configure(q => q.Id, FacetSortType.CountDesc);
 
             // Act / Assert
-            parameter.Execute(container);
+            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
         }
 
         /// <summary>
@@ -80,8 +78,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort index desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        [Fact]
         public void FacetFieldParameter004()
         {
             // Arrange
@@ -90,7 +87,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Configure(q => q.Id, FacetSortType.IndexDesc);
 
             // Act / Assert
-            parameter.Execute(container);
+            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
         }
 
         /// <summary>
@@ -98,13 +95,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetFieldParameter005()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var paramater = new FacetFieldParameter<TestDocument>();
-            paramater.Configure(null);
+            
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => paramater.Configure(null));
         }
 
         /// <summary>
@@ -112,7 +110,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the limit parameter
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter006()
         {
             // Arrange
@@ -124,11 +122,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(4, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.field={!key=Id}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
-            Assert.AreEqual("f.Id.facet.limit=10", container[3]);
+            Assert.Equal(4, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.field={!key=Id}Id", container[1]);
+            Assert.Equal("f.Id.facet.mincount=1", container[2]);
+            Assert.Equal("f.Id.facet.limit=10", container[3]);
         }
 
         /// <summary>
@@ -136,7 +134,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments and an excluding list
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter007()
         {
             // Arrange
@@ -148,10 +146,10 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(3, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.field={!ex=tag1,tag2 key=Id}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[2]);
+            Assert.Equal(3, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.field={!ex=tag1,tag2 key=Id}Id", container[1]);
+            Assert.Equal("f.Id.facet.mincount=1", container[2]);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr5.Query.Parameter;
@@ -6,7 +6,6 @@ using System;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class FacetRangeParameterTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter001()
         {
             // Arrange
@@ -45,7 +44,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -53,7 +52,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort type and direction parameters
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter002()
         {
             // Arrange
@@ -87,7 +86,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type integer and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter003()
         {
             // Arrange
@@ -108,8 +107,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type long and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter004()
         {
             // Arrange
@@ -130,8 +129,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -139,7 +138,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type float and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter005()
         {
             // Arrange
@@ -152,8 +151,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -161,7 +160,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type double and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter006()
         {
             // Arrange
@@ -174,8 +173,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -183,7 +182,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type decimal and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter007()
         {
             // Arrange
@@ -196,8 +195,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -205,7 +204,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type DateTime and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter008()
         {
             // Arrange
@@ -218,8 +217,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -227,7 +226,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type string and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter009()
         {
             // Arrange
@@ -240,8 +239,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsFalse(isValid);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.False(isValid);
+            Assert.False(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -249,13 +248,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter010()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure(null, q => q.Id, "", "", "");
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, q => q.Id, "", "", ""));
         }
 
         /// <summary>
@@ -263,13 +263,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter011()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", null, "", "", "");
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null, "", "", ""));
         }
 
         /// <summary>
@@ -277,13 +278,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter012()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, null, "", "");
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, null, "", ""));
         }
 
         /// <summary>
@@ -291,13 +293,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter013()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, "", null, "");
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", null, ""));
         }
 
         /// <summary>
@@ -305,13 +308,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter014()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, "", "", null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", "", null));
         }
 
         /// <summary>
@@ -319,7 +323,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments and an excluding list
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter015()
         {
             // Arrange
@@ -349,7 +353,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             var actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected, actual);
+            Assert.Equal(expected, actual);
         }
     }
 }

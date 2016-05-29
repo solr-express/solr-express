@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Update;
 
 namespace SolrExpress.Solr5.UnitTests.Update
 {
-    [TestClass]
     public class AtomicUpdateTests
     {
         /// <summary>
@@ -12,22 +11,17 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicUpdate001()
         {
             // Arrange
-            var expected = JObject.Parse(@"{
-                ""add"": {
-                    ""doc"": [
-                        {
-                        ""Id"": ""123456"",
-                        ""Text"": ""ymmud""
-                        }
-                    ]
-                }
-            }");
-            string actual;
-            var jObject = new JObject();
+            var expected = JArray.Parse(@"
+            [
+              {
+                ""Id"": ""123456"",
+                ""Text"": ""ymmud""
+              }
+            ]");
             var document = new TestDocumentSimple
             {
                 Id = "123456",
@@ -37,11 +31,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
             atomic.Configure(document);
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JArray.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
 
         /// <summary>
@@ -49,26 +42,20 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicUpdate002()
         {
             // Arrange
-            var expected = JObject.Parse(@"{
-                ""add"": {
-                    ""doc"": [
-                        {
-                        ""Id"": ""123456"",
-                        ""Text"": ""ymmud""
-                        },
-                        {
-                        ""Id"": ""654321"",
-                        ""Text"": ""ymmud2""
-                        }
-                    ]
-                }
-            }");
-            string actual;
-            var jObject = new JObject();
+            var expected = JArray.Parse(@"[
+              {
+                ""Id"": ""123456"",
+                ""Text"": ""ymmud""
+              },
+              {
+                ""Id"": ""654321"",
+                ""Text"": ""ymmud2""
+              }
+            ]");
             var document1 = new TestDocumentSimple
             {
                 Id = "123456",
@@ -83,11 +70,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
             atomic.Configure(document1, document2);
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JArray.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
 
         /// <summary>
@@ -95,26 +81,20 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicUpdate003()
         {
             // Arrange
-            var expected = JObject.Parse(@"{
-                ""add"": {
-                    ""doc"": [
-                        {
-                        ""Id"": ""123456"",
-                        ""Text"": ""ymmud""
-                        },
-                        {
-                        ""Id"": ""654321"",
-                        ""Text"": ""ymmud2""
-                        }
-                    ]
-                }
-            }");
-            string actual;
-            var jObject = new JObject();
+            var expected = JArray.Parse(@"[
+              {
+                ""Id"": ""123456"",
+                ""Text"": ""ymmud""
+              },
+              {
+                ""Id"": ""654321"",
+                ""Text"": ""ymmud2""
+              }
+            ]");
             var document1 = new TestDocumentSimple
             {
                 Id = "123456",
@@ -130,11 +110,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
             atomic.Configure(document2);
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JArray.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
     }
 }

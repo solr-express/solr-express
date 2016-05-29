@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Solr4.Query.Parameter;
 using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class MinimumShouldMatchParameterTests
     {
         /// <summary>
@@ -13,7 +12,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute"
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void MinimumShouldMatchParameter001()
         {
             // Arrange
@@ -25,8 +24,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(1, container.Count);
-            Assert.AreEqual("mm=75%", container[0]);
+            Assert.Equal(1, container.Count);
+            Assert.Equal("mm=75%", container[0]);
         }
 
         /// <summary>
@@ -34,13 +33,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void MinimumShouldMatchParameter002()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new MinimumShouldMatchParameter();
-            parameter.Configure(null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
     }
 }

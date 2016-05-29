@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Solr5.Query.Result;
@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Result
 {
-    [TestClass]
     public class DocumentResultTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentResult001()
         {
             // Arrange
@@ -35,9 +34,9 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             lst = builder.Data;
 
             // Assert
-            Assert.AreEqual(1, lst.Count);
-            Assert.AreEqual("ITEM01", lst[0].Id);
-            Assert.AreEqual(1.5M, lst[0].Score);
+            Assert.Equal(1, lst.Count);
+            Assert.Equal("ITEM01", lst[0].Id);
+            Assert.Equal(1.5M, lst[0].Score);
         }
 
         /// <summary>
@@ -45,8 +44,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a invvalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UnexpectedJsonFormatException))]
+        [Fact]
         public void DocumentResult002()
         {
             // Arrange
@@ -62,7 +60,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var builder = new DocumentResult<TestDocument>();
 
             // Act / Assert
-            builder.Execute(jsonObject);
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
         }
 
         /// <summary>
@@ -70,7 +68,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON with a geo coordinate value
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentResult003()
         {
             // Arrange
@@ -90,9 +88,9 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             lst = builder.Data;
 
             // Assert
-            Assert.AreEqual(1, lst.Count);
-            Assert.AreEqual(-1.5M, lst[0].Spatial.Latitude);
-            Assert.AreEqual(2.5M, lst[0].Spatial.Longitude);
+            Assert.Equal(1, lst.Count);
+            Assert.Equal(-1.5M, lst[0].Spatial.Latitude);
+            Assert.Equal(2.5M, lst[0].Spatial.Longitude);
         }
 
         /// <summary>
@@ -100,7 +98,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON and a concrect class using SolrFieldAttribute
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void DocumentResult004()
         {
             // Arrange
@@ -120,8 +118,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             lst = builder.Data;
 
             // Assert
-            Assert.AreEqual(1, lst.Count);
-            Assert.AreEqual("Dummy", lst[0].Dummy);
+            Assert.Equal(1, lst.Count);
+            Assert.Equal("Dummy", lst[0].Dummy);
         }
     }
 }

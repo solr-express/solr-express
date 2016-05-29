@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr4.Query.Result;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
-    [TestClass]
     public class FacetFieldResultTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldResult001()
         {
             // Arrange
@@ -31,13 +30,13 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             parameter.Execute(jObject);
 
             // Assert
-            Assert.AreEqual(1, parameter.Data.Count);
-            Assert.AreEqual("facetField", parameter.Data[0].Name);
-            Assert.AreEqual(2, parameter.Data[0].Data.Count);
-            Assert.IsTrue(parameter.Data[0].Data.ContainsKey("VALUE001"));
-            Assert.AreEqual(10, parameter.Data[0].Data["VALUE001"]);
-            Assert.IsTrue(parameter.Data[0].Data.ContainsKey("VALUE002"));
-            Assert.AreEqual(20, parameter.Data[0].Data["VALUE002"]);
+            Assert.Equal(1, parameter.Data.Count);
+            Assert.Equal("facetField", parameter.Data[0].Name);
+            Assert.Equal(2, parameter.Data[0].Data.Count);
+            Assert.True(parameter.Data[0].Data.ContainsKey("VALUE001"));
+            Assert.Equal(10, parameter.Data[0].Data["VALUE001"]);
+            Assert.True(parameter.Data[0].Data.ContainsKey("VALUE002"));
+            Assert.Equal(20, parameter.Data[0].Data["VALUE002"]);
         }
     }
 }

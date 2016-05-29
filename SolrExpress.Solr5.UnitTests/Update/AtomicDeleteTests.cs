@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Update;
 
 namespace SolrExpress.Solr5.UnitTests.Update
 {
-    [TestClass]
     public class AtomicDeleteTests
     {
         /// <summary>
@@ -12,27 +11,22 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicDelete001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-                ""delete"":{
-                    ""id"": ""123456""
-                }
+                  ""delete"": ""123456""
             }");
-            string actual;
-            var jObject = new JObject();
             var atomic = new AtomicDelete<TestDocument>();
             atomic.Configure("123456");
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JObject.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
 
         /// <summary>
@@ -40,27 +34,22 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicDelete002()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-                ""delete"":{
-                    ""id"": ""(123456 OR 987654)""
-                }
+                ""delete"": ""(123456 OR 987654)""
             }");
-            string actual;
-            var jObject = new JObject();
             var atomic = new AtomicDelete<TestDocument>();
             atomic.Configure("123456", "987654");
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JObject.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
 
         /// <summary>
@@ -68,28 +57,23 @@ namespace SolrExpress.Solr5.UnitTests.Update
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AtomicDelete003()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
-                ""delete"":{
-                    ""id"": ""(123456 OR 987654)""
-                }
+                ""delete"": ""(123456 OR 987654)""
             }");
-            string actual;
-            var jObject = new JObject();
             var atomic = new AtomicDelete<TestDocument>();
             atomic.Configure("123456");
             atomic.Configure("987654");
 
             // Act
-            atomic.Execute(jObject);
-            actual = jObject.ToString();
+            var actual = JObject.Parse(atomic.Execute());
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual.ToString());
         }
     }
 }

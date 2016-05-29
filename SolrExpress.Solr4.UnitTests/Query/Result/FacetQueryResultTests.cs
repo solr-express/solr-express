@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr4.Query.Result;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
-    [TestClass]
     public class FacetQueryResultTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetQueryResult001()
         {
             // Arrange
@@ -30,9 +29,9 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             parameter.Execute(jObject);
 
             // Assert
-            Assert.AreEqual(1, parameter.Data.Count);
-            Assert.IsTrue(parameter.Data.ContainsKey("facetQuery"));
-            Assert.AreEqual(10, parameter.Data["facetQuery"]);
+            Assert.Equal(1, parameter.Data.Count);
+            Assert.True(parameter.Data.ContainsKey("facetQuery"));
+            Assert.Equal(10, parameter.Data["facetQuery"]);
         }
     }
 }

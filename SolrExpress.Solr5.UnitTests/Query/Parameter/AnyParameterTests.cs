@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Query.Parameter;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class AnyParameterTests
     {
         /// <summary>
@@ -12,7 +11,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void AnyParameter001()
         {
             // Arrange
@@ -32,7 +31,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
     }
 }

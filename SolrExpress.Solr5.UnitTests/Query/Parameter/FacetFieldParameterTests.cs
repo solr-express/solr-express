@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr5.Query.Parameter;
@@ -6,7 +6,6 @@ using System;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class FacetFieldParameterTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter001()
         {
             // Arrange
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort type and direction parameters
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter002()
         {
             // Arrange
@@ -73,7 +72,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -81,13 +80,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetFieldParameter003()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetFieldParameter<TestDocument>();
-            parameter.Configure(null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the limit parameter
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter004()
         {
             // Arrange
@@ -120,7 +120,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments and an excluding list
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetFieldParameter005()
         {
             // Arrange
@@ -152,7 +152,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
     }
 }

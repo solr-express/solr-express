@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr4.Query.Result;
@@ -7,7 +7,6 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
-    [TestClass]
     public class FacetRangeResultTests
     {
         /// <summary>
@@ -15,7 +14,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON (with integer values)
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeResult001()
         {
             // Arrange
@@ -47,10 +46,10 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             parameter.Execute(jObject);
 
             // Assert
-            Assert.AreEqual(1, parameter.Data.Count);
-            Assert.AreEqual("facetRange", parameter.Data[0].Name);
-            Assert.AreEqual(11, parameter.Data[0].Data.Count);
-            Assert.IsInstanceOfType(parameter.Data[0].Data.First().Key, typeof(FacetRange<int>));
+            Assert.Equal(1, parameter.Data.Count);
+            Assert.Equal("facetRange", parameter.Data[0].Name);
+            Assert.Equal(11, parameter.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<int>), parameter.Data[0].Data.First().Key);
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON (with date time values)
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeResult002()
         {
             // Arrange
@@ -84,10 +83,10 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             parameter.Execute(jObject);
 
             // Assert
-            Assert.AreEqual(1, parameter.Data.Count);
-            Assert.AreEqual("facetRange", parameter.Data[0].Name);
-            Assert.AreEqual(5, parameter.Data[0].Data.Count);
-            Assert.IsInstanceOfType(parameter.Data[0].Data.First().Key, typeof(FacetRange<DateTime>));
+            Assert.Equal(1, parameter.Data.Count);
+            Assert.Equal("facetRange", parameter.Data[0].Name);
+            Assert.Equal(5, parameter.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<DateTime>), parameter.Data[0].Data.First().Key);
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         /// When    Invoking the method "Execute" using a valid JSON (with float values)
         /// What    Parse to informed concret classes
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeResult003()
         {
             // Arrange
@@ -127,10 +126,10 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             parameter.Execute(jObject);
 
             // Assert
-            Assert.AreEqual(1, parameter.Data.Count);
-            Assert.AreEqual("facetRange", parameter.Data[0].Name);
-            Assert.AreEqual(11, parameter.Data[0].Data.Count);
-            Assert.IsInstanceOfType(parameter.Data[0].Data.First().Key, typeof(FacetRange<float>));
+            Assert.Equal(1, parameter.Data.Count);
+            Assert.Equal("facetRange", parameter.Data[0].Name);
+            Assert.Equal(11, parameter.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<float>), parameter.Data[0].Data.First().Key);
         }
     }
 }

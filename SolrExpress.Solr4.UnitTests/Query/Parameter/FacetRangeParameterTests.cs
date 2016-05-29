@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr4.Query.Parameter;
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class FacetRangeParameterTests
     {
         /// <summary>
@@ -15,7 +14,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter001()
         {
             // Arrange
@@ -27,15 +26,15 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(8, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.range={!key=X}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
-            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
-            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
-            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
-            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[7]);
+            Assert.Equal(8, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.range={!key=X}Id", container[1]);
+            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
+            Assert.Equal("f.Id.facet.range.start=10", container[3]);
+            Assert.Equal("f.Id.facet.range.end=20", container[4]);
+            Assert.Equal("f.Id.facet.range.other=before", container[5]);
+            Assert.Equal("f.Id.facet.range.other=after", container[6]);
+            Assert.Equal("f.Id.facet.mincount=1", container[7]);
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort type and direction parameters
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter002()
         {
             // Arrange
@@ -55,16 +54,16 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(9, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.range={!key=X}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
-            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
-            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
-            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
-            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
-            Assert.AreEqual("f.Id.facet.range.sort=count", container[7]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[8]);
+            Assert.Equal(9, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.range={!key=X}Id", container[1]);
+            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
+            Assert.Equal("f.Id.facet.range.start=10", container[3]);
+            Assert.Equal("f.Id.facet.range.end=20", container[4]);
+            Assert.Equal("f.Id.facet.range.other=before", container[5]);
+            Assert.Equal("f.Id.facet.range.other=after", container[6]);
+            Assert.Equal("f.Id.facet.range.sort=count", container[7]);
+            Assert.Equal("f.Id.facet.mincount=1", container[8]);
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type integer and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter003()
         {
             // Arrange
@@ -85,8 +84,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type long and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter004()
         {
             // Arrange
@@ -107,8 +106,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -116,7 +115,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type float and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter005()
         {
             // Arrange
@@ -129,8 +128,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -138,7 +137,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type double and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter006()
         {
             // Arrange
@@ -151,8 +150,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -160,7 +159,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type decimal and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter007()
         {
             // Arrange
@@ -173,8 +172,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -182,7 +181,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type DateTime and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter008()
         {
             // Arrange
@@ -195,8 +194,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsTrue(isValid);
-            Assert.IsTrue(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.True(isValid);
+            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -204,7 +203,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Validate" using a field type string and with fail fast actived
         /// What    Is valid should be true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter009()
         {
             // Arrange
@@ -217,8 +216,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out isValid, out errorMessage);
 
             // Assert
-            Assert.IsFalse(isValid);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(errorMessage));
+            Assert.False(isValid);
+            Assert.False(string.IsNullOrWhiteSpace(errorMessage));
         }
 
         /// <summary>
@@ -226,8 +225,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort count desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        [Fact]
         public void FacetRangeParamete010()
         {
             // Arrange
@@ -236,7 +234,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Configure("X", q => q.Id, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act / Assert
-            parameter.Execute(container);
+            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
         }
 
         /// <summary>
@@ -244,8 +242,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the sort index desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(UnsupportedSortTypeException))]
+        [Fact]
         public void FacetRangeParamete011()
         {
             // Arrange
@@ -254,7 +251,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Configure("X", q => q.Id, "1", "10", "20", FacetSortType.IndexDesc);
 
             // Act / Assert
-            parameter.Execute(container);
+            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
         }
 
         /// <summary>
@@ -262,13 +259,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null in alias name
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter012()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure(null, q => q.Id, null, null, null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, q => q.Id, null, null, null));
         }
 
         /// <summary>
@@ -276,13 +274,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null in expression value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter013()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", null, null, null, null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null, null, null, null));
         }
 
         /// <summary>
@@ -290,13 +289,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null in gap value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter014()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, null, null, null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, null, null, null));
         }
 
         /// <summary>
@@ -304,13 +304,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null in start value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter015()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, "", null, null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", null, null));
         }
 
         /// <summary>
@@ -318,13 +319,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null in end value
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FacetRangeParameter016()
         {
             // Arrange / Act / Assert
             var parameter = new FacetRangeParameter<TestDocument>();
-            parameter.Configure("x", q => q.Id, "", "", null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", "", null));
         }
 
         /// <summary>
@@ -332,7 +334,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using the default arguments and an excluding list
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FacetRangeParameter017()
         {
             // Arrange
@@ -344,15 +346,15 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(8, container.Count);
-            Assert.AreEqual("facet=true", container[0]);
-            Assert.AreEqual("facet.range={!ex=tag1,tag2 key=X}Id", container[1]);
-            Assert.AreEqual("f.Id.facet.range.gap=1", container[2]);
-            Assert.AreEqual("f.Id.facet.range.start=10", container[3]);
-            Assert.AreEqual("f.Id.facet.range.end=20", container[4]);
-            Assert.AreEqual("f.Id.facet.range.other=before", container[5]);
-            Assert.AreEqual("f.Id.facet.range.other=after", container[6]);
-            Assert.AreEqual("f.Id.facet.mincount=1", container[7]);
+            Assert.Equal(8, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.range={!ex=tag1,tag2 key=X}Id", container[1]);
+            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
+            Assert.Equal("f.Id.facet.range.start=10", container[3]);
+            Assert.Equal("f.Id.facet.range.end=20", container[4]);
+            Assert.Equal("f.Id.facet.range.other=before", container[5]);
+            Assert.Equal("f.Id.facet.range.other=after", container[6]);
+            Assert.Equal("f.Id.facet.mincount=1", container[7]);
         }
     }
 }

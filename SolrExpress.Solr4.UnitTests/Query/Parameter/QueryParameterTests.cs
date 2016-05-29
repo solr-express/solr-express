@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Core.Query.ParameterValue;
 using SolrExpress.Solr4.Query.Parameter;
 using System;
@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class QueryParameterTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute"
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void QueryParameter001()
         {
             // Arrange
@@ -26,8 +25,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(1, container.Count);
-            Assert.AreEqual("q=Id:ITEM01", container[0]);
+            Assert.Equal(1, container.Count);
+            Assert.Equal("q=Id:ITEM01", container[0]);
         }
 
         /// <summary>
@@ -35,13 +34,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void QueryParameter002()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new QueryParameter<TestDocument>();
-            parameter.Configure(null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
     }
 }

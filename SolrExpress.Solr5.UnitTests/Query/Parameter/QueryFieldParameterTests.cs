@@ -1,11 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Query.Parameter;
 using System;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class QueryFieldParameterTests
     {
         /// <summary>
@@ -13,7 +12,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute"
         /// What    Create a valid JSON
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void QueryFieldParameter001()
         {
             // Arrange
@@ -33,7 +32,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.AreEqual(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -41,13 +40,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void QueryFieldParameter002()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new QueryFieldParameter();
-            parameter.Configure(null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
     }
 }

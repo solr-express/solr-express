@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using SolrExpress.Solr4.Query.Parameter;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
-    [TestClass]
     public class FieldListParameterTests
     {
         /// <summary>
@@ -14,7 +13,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using 2 instances
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FieldListParameter001()
         {
             // Arrange
@@ -29,8 +28,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter2.Execute(container);
 
             // Assert
-            Assert.AreEqual(1, container.Count);
-            Assert.AreEqual("fl=Id,Score", container[0]);
+            Assert.Equal(1, container.Count);
+            Assert.Equal("fl=Id,Score", container[0]);
         }
 
         /// <summary>
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
         /// What    Returns valid=false
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FieldListParameter002()
         {
             // Arrange
@@ -51,7 +50,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out actual, out dummy);
 
             // Assert
-            Assert.IsFalse(actual);
+            Assert.False(actual);
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
         /// What    Returns valid=true
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FieldListParameter003()
         {
             // Arrange
@@ -72,7 +71,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out actual, out dummy);
 
             // Assert
-            Assert.IsTrue(actual);
+            Assert.True(actual);
         }
 
         /// <summary>
@@ -80,7 +79,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Invoking the method "Execute" using 1 instance and 2 expressions
         /// What    Create a valid string
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FieldListParameter004()
         {
             // Arrange
@@ -92,8 +91,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.AreEqual(1, container.Count);
-            Assert.AreEqual("fl=Id,Score", container[0]);
+            Assert.Equal(1, container.Count);
+            Assert.Equal("fl=Id,Score", container[0]);
         }
 
         /// <summary>
@@ -101,7 +100,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
         /// What    Returns valid=false
         /// </summary>
-        [TestMethod]
+        [Fact]
         public void FieldListParameter005()
         {
             // Arrange
@@ -114,7 +113,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             parameter.Validate(out actual, out dummy);
 
             // Assert
-            Assert.IsFalse(actual);
+            Assert.False(actual);
         }
 
         /// <summary>
@@ -122,13 +121,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void FieldListParameter006()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FieldListParameter<TestDocument>();
-            parameter.Configure(null);
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
 
         /// <summary>
@@ -136,13 +136,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         /// When    Create the instance with empty collection
         /// What    Throws ArgumentOutOfRangeException
         /// </summary>
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Fact]
         public void FieldListParameter007()
         {
-            // Arrange / Act / Assert
+            // Arrange
             var parameter = new FieldListParameter<TestDocument>();
-            parameter.Configure(new Expression<Func<TestDocument, object>>[] { });
+
+            // Act / Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
         }
     }
 }
