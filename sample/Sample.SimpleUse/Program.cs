@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace Sample.SimpleUse
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             using (var ctx = new SolrContext())
             {
