@@ -7852,13 +7852,13 @@
     },
     "SolrExpress.Core/3.0.0": {
       "type": "project",
-      "path": "../SolrExpress.Core/project.json",
-      "msbuildProject": "../SolrExpress.Core/SolrExpress.Core.xproj"
+      "path": "../../src/SolrExpress.Core/project.json",
+      "msbuildProject": "../../src/SolrExpress.Core/SolrExpress.Core.xproj"
     },
     "SolrExpress.Solr4/3.0.0": {
       "type": "project",
-      "path": "../SolrExpress.Solr4/project.json",
-      "msbuildProject": "../SolrExpress.Solr4/SolrExpress.Solr4.xproj"
+      "path": "../../src/SolrExpress.Solr4/project.json",
+      "msbuildProject": "../../src/SolrExpress.Solr4/SolrExpress.Solr4.xproj"
     }
   },
   "projectFileDependencyGroups": {

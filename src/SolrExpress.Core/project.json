@@ -2,7 +2,7 @@
   "authors": [ "diego.lb" ],
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "../Key.snk"
+    "keyFile": "../../Key.snk"
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way - Core library",
   "frameworks": {

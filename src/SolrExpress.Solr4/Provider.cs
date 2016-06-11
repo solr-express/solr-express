@@ -50,19 +50,23 @@ namespace SolrExpress.Solr4
                     }
                 }
             }
-            catch (Exception e)
+            catch (WebException webException)
             {
-                var response = ((WebException)e).Response;
+                var response = webException.Response;
 
                 using (var dataStream = response.GetResponseStream())
                 {
                     using (var reader = new StreamReader(dataStream))
                     {
-                        var content = $"{e.Message}\r\n{reader.ReadToEnd()}";
+                        var content = $"{webException.Message}\r\n{reader.ReadToEnd()}";
 
                         throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", content);
                     }
                 }
+            }
+            catch (Exception exception)
+            {
+                throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", exception.ToString());
             }
         }
 #else

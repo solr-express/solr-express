@@ -7825,8 +7825,8 @@
     },
     "SolrExpress.Core/3.0.0": {
       "type": "project",
-      "path": "../SolrExpress.Core/project.json",
-      "msbuildProject": "../SolrExpress.Core/SolrExpress.Core.xproj"
+      "path": "../../src/SolrExpress.Core/project.json",
+      "msbuildProject": "../../src/SolrExpress.Core/SolrExpress.Core.xproj"
     }
   },
   "projectFileDependencyGroups": {

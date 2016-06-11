@@ -2,7 +2,7 @@
   "authors": [ "diego.lb" ],
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "../Key.snk"
+    "keyFile": "../../Key.snk"
   },
   "dependencies": {
     "SolrExpress.Core": "3.0.0.0"

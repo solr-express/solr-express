@@ -50,19 +50,23 @@ namespace SolrExpress.Solr5
                     }
                 }
             }
-            catch (Exception e)
+            catch (WebException webException)
             {
-                var response = ((WebException)e).Response;
+                var response = webException.Response;
 
                 using (var dataStream = response.GetResponseStream())
                 {
                     using (var reader = new StreamReader(dataStream))
                     {
-                        var content = $"{e.Message}\r\n{reader.ReadToEnd()}";
+                        var content = $"{webException.Message}\r\n{reader.ReadToEnd()}";
 
                         throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", content);
                     }
                 }
+            }
+            catch (Exception exception)
+            {
+                throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", exception.ToString());
             }
         }
 #else
@@ -127,9 +131,6 @@ namespace SolrExpress.Solr5
             taskStream.Wait();
             var stream = taskStream.Result;
             stream.Write(bytes, 0, bytes.Length);
-
-            var taskExecute = this.ExecuteAsync(request, data);
-            taskExecute.Wait();
 #else
             var stream = request.GetRequestStream();
             stream.Write(bytes, 0, bytes.Length);

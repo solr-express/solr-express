@@ -43,7 +43,10 @@ namespace SolrExpress.Solr5.Query.Result
 
             if (typeof(TFacetKey) == typeof(DateTime))
             {
-                gap = ((FacetRange<TFacetKey>)second.Key).MinimumValue.Value.Subtract<TFacetKey, TimeSpan>(((FacetRange<TFacetKey>)first.Key).MinimumValue.Value);
+                var firstValue = (DateTime)Convert.ChangeType(((FacetRange<TFacetKey>)first.Key).MinimumValue.Value, typeof(DateTime));
+                var secondValue = (DateTime)Convert.ChangeType(((FacetRange<TFacetKey>)second.Key).MinimumValue.Value, typeof(DateTime));
+
+                gap = secondValue.Subtract(firstValue);
 
                 foreach (var range in facetData)
                 {
