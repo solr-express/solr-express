@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sample.Ui.Context;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
@@ -32,7 +32,7 @@ namespace Sample.Ui.Controllers
                 .ToList();
         }
 
-        [HttpGet()]
+        [HttpGet("api/search")]
         public object Get(int page, string keyWord)
         {
             using (var ctx = new SolrContext())
