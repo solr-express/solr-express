@@ -2551,7 +2551,7 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0": {
+      "SolrExpress.Core/3.0.0-beta": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -2662,7 +2662,7 @@
           "lib/net45/xunit.execution.desktop.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0": {
+      "SolrExpress.Core/3.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -7823,7 +7823,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "SolrExpress.Core/3.0.0": {
+    "SolrExpress.Core/3.0.0-beta": {
       "type": "project",
       "path": "../../src/SolrExpress.Core/project.json",
       "msbuildProject": "../../src/SolrExpress.Core/SolrExpress.Core.xproj"
@@ -7831,7 +7831,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "SolrExpress.Core >= 3.0.0"
+      "SolrExpress.Core >= 3.0.0-beta"
     ],
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.NETCore.App >= 1.0.0-rc2-3002702",

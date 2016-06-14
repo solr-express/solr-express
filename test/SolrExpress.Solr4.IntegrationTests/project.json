@@ -5,8 +5,8 @@
     "keyFile": "../../Key.snk"
   },
   "dependencies": {
-    "SolrExpress.Core": "3.0.0.0",
-    "SolrExpress.Solr4": "3.0.0.0"
+    "SolrExpress.Core": "3.0.0-beta",
+    "SolrExpress.Solr4": "3.0.0-beta"
   },
   "description": "SolrExpress.Solr4.IntegrationTests Class Library",
   "frameworks": {
@@ -45,5 +45,5 @@
     "tags": [ "SOLR", "C#", ".Net" ]
   },
   "testRunner": "xunit",
-  "version": "3.0.0.0"
+  "version": "3.0.0-beta"
 }

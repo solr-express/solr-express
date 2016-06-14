@@ -4176,7 +4176,7 @@
           "lib/netstandard1.3/System.Xml.XPath.XDocument.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0": {
+      "SolrExpress.Core/3.0.0-beta": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -4193,11 +4193,11 @@
           "netcoreapp1.0/SolrExpress.Core.dll": {}
         }
       },
-      "SolrExpress.Solr5/3.0.0": {
+      "SolrExpress.Solr5/3.0.0-beta": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
-          "SolrExpress.Core": "3.0.0",
+          "SolrExpress.Core": "3.0.0-beta",
           "System.Net.Requests": "4.0.11-rc2-24027"
         },
         "compile": {
@@ -10555,12 +10555,12 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "SolrExpress.Core/3.0.0": {
+    "SolrExpress.Core/3.0.0-beta": {
       "type": "project",
       "path": "../../src/SolrExpress.Core/project.json",
       "msbuildProject": "../../src/SolrExpress.Core/SolrExpress.Core.xproj"
     },
-    "SolrExpress.Solr5/3.0.0": {
+    "SolrExpress.Solr5/3.0.0-beta": {
       "type": "project",
       "path": "../../src/SolrExpress.Solr5/project.json",
       "msbuildProject": "../../src/SolrExpress.Solr5/SolrExpress.Solr5.xproj"
@@ -10590,8 +10590,8 @@
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc2-final",
       "Microsoft.VisualStudio.Web.CodeGeneration.Tools >= 1.0.0-preview1-final",
       "Microsoft.VisualStudio.Web.CodeGenerators.Mvc >= 1.0.0-preview1-final",
-      "SolrExpress.Core >= 3.0.0",
-      "SolrExpress.Solr5 >= 3.0.0"
+      "SolrExpress.Core >= 3.0.0-beta",
+      "SolrExpress.Solr5 >= 3.0.0-beta"
     ],
     ".NETCoreApp,Version=v1.0": []
   },

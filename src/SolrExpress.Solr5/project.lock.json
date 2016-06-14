@@ -1035,7 +1035,7 @@
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0": {
+      "SolrExpress.Core/3.0.0-beta": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -1063,7 +1063,7 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0": {
+      "SolrExpress.Core/3.0.0-beta": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -4113,7 +4113,7 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "SolrExpress.Core/3.0.0": {
+    "SolrExpress.Core/3.0.0-beta": {
       "type": "project",
       "path": "../SolrExpress.Core/project.json",
       "msbuildProject": "../SolrExpress.Core/SolrExpress.Core.xproj"
@@ -4121,7 +4121,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "SolrExpress.Core >= 3.0.0"
+      "SolrExpress.Core >= 3.0.0-beta"
     ],
     ".NETCoreApp,Version=v1.0": [
       "System.Net.Requests >= 4.0.11-rc2-24027"

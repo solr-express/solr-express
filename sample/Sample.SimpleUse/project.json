@@ -5,7 +5,7 @@
   },
 
   "dependencies": {
-    "SolrExpress.Solr5": "3.0.0.0"
+    "SolrExpress.Solr5": "3.0.0-beta"
   },
 
   "frameworks": {

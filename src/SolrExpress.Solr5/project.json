@@ -5,7 +5,7 @@
     "keyFile": "../../Key.snk"
   },
   "dependencies": {
-    "SolrExpress.Core": "3.0.0.0"
+    "SolrExpress.Core": "3.0.0-beta"
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x",
   "frameworks": {
@@ -28,5 +28,5 @@
     "tags": [ "SOLR", "C#", ".Net" ],
     "requireLicenseAcceptance": false
   },
-  "version": "3.0.0.0"
+  "version": "3.0.0-beta"
 }
