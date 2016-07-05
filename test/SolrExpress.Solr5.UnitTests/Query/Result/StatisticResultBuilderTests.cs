@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Solr5.Query.Result;
 using System;
+using System.Collections.Generic;
+using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Solr5.Query.Parameter;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Result
 {
@@ -17,6 +20,11 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         public void StatisticResult001()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new LimitParameter().Configure(10),
+                new OffsetParameter().Configure(1)
+            };
             var jsonStr = @"
             {
               ""responseHeader"":{
@@ -31,7 +39,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             TimeSpan timeToExecution;
 
             // Act
-            builder.Execute(null, jsonObject);
+            builder.Execute(parameters, jsonObject);
             documentCount = builder.Data.DocumentCount;
             timeToExecution = builder.Data.ElapsedTime;
 
