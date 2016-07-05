@@ -107,6 +107,20 @@ namespace SolrExpress.Core.Query
         }
 
         /// <summary>
+        /// Add a query interceptor to the queryable
+        /// </summary>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> QueryInterceptor<TQueryInterceptor>()
+            where TQueryInterceptor : class, IQueryInterceptor, new()
+        {
+            var interceptor = new TQueryInterceptor();
+
+            this._queryInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
         /// Add a result interceptor to the queryable
         /// </summary>
         /// <param name="interceptor">The result interceptor to add in the queryable</param>
@@ -114,6 +128,20 @@ namespace SolrExpress.Core.Query
         public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
+
+            this._resultInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a result interceptor to the queryable
+        /// </summary>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> ResultInterceptor<TResultInterceptor>()
+            where TResultInterceptor : class, IResultInterceptor, new()
+        {
+            var interceptor = new TResultInterceptor();
 
             this._resultInterceptors.Add(interceptor);
 
