@@ -4,30 +4,30 @@ using System;
 
 namespace SolrExpress.Core.Tests.Query
 {
-    public class SimpleLogResultInterceptorTests
+    public class SimpleLogInFileResultInterceptorTests
     {
         /// <summary>
-        /// Where   Using a SimpleLogResultInterceptor instance
+        /// Where   Using a SimpleLogInFileResultInterceptor instance
         /// When    Creating class with null value
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void SimpleLogResultInterceptor001()
+        public void SimpleLogInFileResultInterceptor001()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new SimpleLogResultInterceptor(null));
+            Assert.Throws<ArgumentNullException>(() => new SimpleLogInFileResultInterceptor(null));
         }
 
         /// <summary>
-        /// Where   Using a SimpleLogResultInterceptor instance
+        /// Where   Using a SimpleLogInFileResultInterceptor instance
         /// When    Creating class with empty value
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void SimpleLogResultInterceptor002()
+        public void SimpleLogInFileResultInterceptor002()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new SimpleLogResultInterceptor(""));
+            Assert.Throws<ArgumentNullException>(() => new SimpleLogInFileResultInterceptor(""));
         }
     }
 }
