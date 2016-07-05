@@ -1,0 +1,48 @@
+﻿{
+  "authors": [ "diego.lb" ],
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../Key.snk"
+  },
+  "dependencies": {
+    "SolrExpress.Core": "3.0.0-beta2"
+  },
+  "description": "SolrExpress.Core.Tests Class Library",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8"
+      ],
+      "dependencies": {
+        "dotnet-test-xunit": "1.0.0-rc2-build10025",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        },
+        "moq.netcore": "4.4.0-beta8",
+        "System.Diagnostics.TraceSource": "4.0.0",
+        "xunit": "2.1.0"
+      }
+    },
+    "net451": {
+      "dependencies": {
+        "Moq": "4.5.3",
+        "System.Runtime": "4.1.0",
+        "System.Threading.Tasks": "4.0.11",
+        "xunit": "2.2.0-beta1-build3239"
+      }
+    }
+  },
+  "packOptions": {
+    "licenseUrl": "https://github.com/solr-express/solr-express",
+    "repository": {
+      "url": "https://github.com/solr-express/solr-express",
+      "type": "git"
+    },
+    "requireLicenseAcceptance": false,
+    "tags": [ "SOLR", "C#", ".Net" ]
+  },
+  "testRunner": "xunit",
+  "version": "3.0.0-beta"
+}
