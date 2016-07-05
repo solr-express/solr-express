@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +16,9 @@ namespace SolrExpress.Solr4.Query.Result
         /// <summary>
         /// Execute the parse of the JSON object in facet query list
         /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
-        public void Execute(JObject jsonObject)
+        public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_queries"] == null, jsonObject.ToString());
 

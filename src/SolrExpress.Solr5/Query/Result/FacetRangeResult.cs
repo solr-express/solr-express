@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
 using System;
 using System.Collections.Generic;
@@ -70,8 +71,9 @@ namespace SolrExpress.Solr5.Query.Result
         /// <summary>
         /// Execute the parse of the JSON object in facet range list
         /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
-        public void Execute(JObject jsonObject)
+        public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
             if (jsonObject["facets"] == null)
             {

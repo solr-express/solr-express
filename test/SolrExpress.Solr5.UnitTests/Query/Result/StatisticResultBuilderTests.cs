@@ -31,7 +31,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             TimeSpan timeToExecution;
 
             // Act
-            builder.Execute(jsonObject);
+            builder.Execute(null, jsonObject);
             documentCount = builder.Data.DocumentCount;
             timeToExecution = builder.Data.ElapsedTime;
 
@@ -60,7 +60,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
         }
     }
 }

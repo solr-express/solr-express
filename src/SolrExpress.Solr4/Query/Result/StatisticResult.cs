@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Extension.Internal;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
-using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Query.Result
 {
@@ -14,19 +16,16 @@ namespace SolrExpress.Solr4.Query.Result
         /// <summary>
         /// Execute the parse of the JSON object in statistic
         /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
-        public void Execute(JObject jsonObject)
+        public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["response"]?["numFound"] == null || jsonObject["responseHeader"]?["QTime"] == null);
 
-            var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
             var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
+            var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
 
-            this.Data = new Statistic
-            {
-                DocumentCount = documentCount,
-                ElapsedTime = new TimeSpan(0, 0, 0, 0, qTime)
-            };
+            this.Data = new Statistic().Calculate(parameters, qTime, documentCount);
         }
 
         public Statistic Data { get; set; }

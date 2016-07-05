@@ -3,6 +3,9 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Solr4.Query.Result;
 using System;
+using SolrExpress.Core.Query.Parameter;
+using System.Collections.Generic;
+using SolrExpress.Solr4.Query.Parameter;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
@@ -17,6 +20,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         public void StatisticResult001()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new RowsParameter().Configure(10),
+                new StartParameter().Configure(1)
+            };            
             var jsonStr = @"
             {
               ""responseHeader"":{
@@ -30,7 +38,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             TimeSpan timeToExecution;
 
             // Act
-            builder.Execute(jsonObject);
+            builder.Execute(parameters, jsonObject);
             documentCount = builder.Data.DocumentCount;
             timeToExecution = builder.Data.ElapsedTime;
 
@@ -48,6 +56,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         public void StatisticResult002()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new RowsParameter().Configure(10),
+                new StartParameter().Configure(1)
+            };
             var jsonStr = @"
             {
               ""responseHeaderX"":{
@@ -59,7 +72,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -71,6 +84,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         public void StatisticResult003()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new RowsParameter().Configure(10),
+                new StartParameter().Configure(1)
+            };
             var jsonStr = @"
             {
               ""responseHeader"":{
@@ -81,7 +99,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -93,6 +111,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         public void StatisticResult004()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new RowsParameter().Configure(10),
+                new StartParameter().Configure(1)
+            };
             var jsonStr = @"
             {
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
@@ -101,7 +124,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -113,11 +136,16 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
         public void StatisticResult005()
         {
             // Arrange
+            var parameters = new List<IParameter>
+            {
+                new RowsParameter().Configure(10),
+                new StartParameter().Configure(1)
+            };
             var jsonObject = new JObject();
             var builder = new StatisticResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(parameters, jsonObject));
         }
     }
 }

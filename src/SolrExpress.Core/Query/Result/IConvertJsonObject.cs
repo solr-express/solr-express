@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Query.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Core.Query.Result
 {
@@ -10,7 +12,8 @@ namespace SolrExpress.Core.Query.Result
         /// <summary>
         /// Execute the parse of the JSON object
         /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
-        void Execute(JObject jsonObject);
+        void Execute(List<IParameter> parameters, JObject jsonObject);
     }
 }

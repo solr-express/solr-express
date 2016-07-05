@@ -46,7 +46,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(jObject);
+            parameter.Execute(null, jObject);
 
             // Assert
             Assert.Equal(1, parameter.Data.Count);
@@ -92,7 +92,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(jObject);
+            parameter.Execute(null, jObject);
 
             // Assert
             Assert.Equal(1, parameter.Data.Count);
@@ -138,7 +138,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var parameter = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(jObject);
+            parameter.Execute(null, jObject);
 
             // Assert
             Assert.Equal(1, parameter.Data.Count);

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
 using System.Collections.Generic;
 
@@ -16,8 +17,9 @@ namespace SolrExpress.Solr5.Query.Result
         /// <summary>
         /// Execute the JSON object parse in the list of informed document
         /// </summary>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
-        public void Execute(JObject jsonObject)
+        public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["response"]?["docs"] == null, jsonObject.ToString());
 

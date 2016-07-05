@@ -27,11 +27,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             }";
             var jsonObject = JObject.Parse(jsonStr);
             var result = new DocumentResult<TestDocument>();
-            
+
             List<TestDocument> lst;
 
             // Act
-            result.Execute(jsonObject);
+            result.Execute(null, jsonObject);
             lst = result.Data;
 
             // Assert
@@ -61,7 +61,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             var result = new DocumentResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(null, jsonObject));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             List<TestDocument> lst;
 
             // Act
-            result.Execute(jsonObject);
+            result.Execute(null, jsonObject);
             lst = result.Data;
 
             // Assert
@@ -115,7 +115,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             List<TestDocument> lst;
 
             // Act
-            result.Execute(jsonObject);
+            result.Execute(null, jsonObject);
             lst = result.Data;
 
             // Assert

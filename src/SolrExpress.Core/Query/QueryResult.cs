@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
+using System.Collections.Generic;
 
 namespace SolrExpress.Core.Query
 {
@@ -10,9 +12,8 @@ namespace SolrExpress.Core.Query
         where TDocument : IDocument
     {
         private readonly string _jsonPlainText;
+        private readonly List<IParameter> _parameters;
         private JObject _jsonObject;
-        private long _offset;
-        private long _limit;
 
         /// <summary>
         /// Resolver used to resolve classes dependency
@@ -23,20 +24,16 @@ namespace SolrExpress.Core.Query
         /// Default constructor of the class
         /// </summary>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
+        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="json">Result of the SOLR</param
-        /// <param name="offset">Offset value of collection</param>
-        /// <param name="limit">Limit value of collection</param>
-        public QueryResult(IResolver resolver, string json, long offset, long limit)
+        public QueryResult(IResolver resolver, List<IParameter> parameters, string json)
         {
             Checker.IsNull(resolver);
             Checker.IsNullOrWhiteSpace(json);
-            Checker.IsLowerThan(offset, 1);
-            Checker.IsLowerThan(limit, 1);
 
             this.Resolver = resolver;
+            this._parameters = parameters;
             this._jsonPlainText = json;
-            this._offset = offset;
-            this._limit = limit;
         }
 
         /// <summary>
@@ -53,7 +50,7 @@ namespace SolrExpress.Core.Query
             {
                 this._jsonObject = this._jsonObject ?? JObject.Parse(this._jsonPlainText);
 
-                convertJsonObject.Execute(this._jsonObject);
+                convertJsonObject.Execute(this._parameters, this._jsonObject);
             }
             else
             {
@@ -61,7 +58,7 @@ namespace SolrExpress.Core.Query
 
                 if (convertJsonPlainText != null)
                 {
-                    convertJsonPlainText.Execute(this._jsonPlainText);
+                    convertJsonPlainText.Execute(this._parameters, this._jsonPlainText);
                 }
                 else
                 {

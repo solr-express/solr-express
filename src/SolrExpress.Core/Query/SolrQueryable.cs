@@ -1,7 +1,6 @@
 ﻿using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace SolrExpress.Core.Query
 {
@@ -27,16 +26,6 @@ namespace SolrExpress.Core.Query
         private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
 
         /// <summary>
-        /// Offset value of collection
-        /// </summary>
-        private long _offset;
-
-        /// <summary>
-        /// Limit value of collection
-        /// </summary>
-        private long _limit;
-
-        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="provider">Provider used to resolve expression</param>
@@ -56,7 +45,7 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Set pagination parameters if it was not set
         /// </summary>
-        private void SetPaginationParameters()
+        private void SetDefaultPaginationParameters()
         {
             var offsetParameter = (IOffsetParameter)this._parameters.FirstOrDefault(q => q is IOffsetParameter);
 
@@ -73,9 +62,6 @@ namespace SolrExpress.Core.Query
                 limitParameter = this.Resolver.GetInstance<ILimitParameter>().Configure(10);
                 this._parameters.Add(limitParameter);
             }
-
-            this._offset = offsetParameter.Value + 1;
-            this._limit = limitParameter.Value;
         }
 
         /// <summary>
@@ -197,7 +183,7 @@ namespace SolrExpress.Core.Query
             var systemParameter = this.Resolver.GetInstance<ISystemParameter>();
             this._parameters.Add(systemParameter);
 
-            this.SetPaginationParameters();
+            this.SetDefaultPaginationParameters();
 
             var parameterContainer = this.Resolver.GetInstance<IParameterContainer>();
             parameterContainer.AddParameters(this._parameters);
@@ -209,7 +195,7 @@ namespace SolrExpress.Core.Query
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
-            return new QueryResult<TDocument>(this.Resolver, json, this._offset, this._limit);
+            return new QueryResult<TDocument>(this.Resolver, this._parameters, json);
         }
 
         /// <summary>
