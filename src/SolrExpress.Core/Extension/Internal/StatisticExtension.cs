@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-//TODO: Create unit tests
 namespace SolrExpress.Core.Extension.Internal
 {
     /// <summary>
@@ -14,11 +13,9 @@ namespace SolrExpress.Core.Extension.Internal
     {
         internal static Statistic Calculate(this Statistic statistic, List<IParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
-            var offsetParameter = (IOffsetParameter)parameters.FirstOrDefault(q => q is IOffsetParameter);
-            var limitParameter = (ILimitParameter)parameters.FirstOrDefault(q => q is ILimitParameter);
-
-            // TODO: Create exception to validate these parameters
-
+            var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
+            var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);
+            
             var offset = offsetParameter.Value + 1;
             var limit = limitParameter.Value;
 
