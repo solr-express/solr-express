@@ -7,7 +7,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// Simple solr query interceptor used to log queries
     /// </summary>
-    public class SimpleLogQueryInterceptor : IQueryInterceptor
+    public class SimpleLogInFileQueryInterceptor : IQueryInterceptor
     {
         /// <summary>
         /// Path to save log files
@@ -18,7 +18,7 @@ namespace SolrExpress.Core.Query
         /// Default constructor of class
         /// </summary>
         /// <param name="logPath">Path to save log files</param>
-        public SimpleLogQueryInterceptor(string logPath)
+        public SimpleLogInFileQueryInterceptor(string logPath)
         {
             Checker.IsNullOrWhiteSpace(logPath);
 
@@ -63,8 +63,6 @@ namespace SolrExpress.Core.Query
             this.Query = query;
 
             var logContent = this.GetLogContent();
-
-            Console.WriteLine(logContent);
 
             this.LogInFile(logContent);
         }
