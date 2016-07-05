@@ -27,18 +27,15 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             var jsonObject = JObject.Parse(jsonStr);
             var builder = new StatisticResult<TestDocument>();
             
-            bool isEmpty;
             long documentCount;
             TimeSpan timeToExecution;
 
             // Act
             builder.Execute(jsonObject);
-            isEmpty = builder.Data.IsEmpty;
             documentCount = builder.Data.DocumentCount;
             timeToExecution = builder.Data.ElapsedTime;
 
             // Assert
-            Assert.Equal(false, isEmpty);
             Assert.Equal(1000, documentCount);
             Assert.Equal(new TimeSpan(0, 0, 0, 0, 10), timeToExecution);
         }

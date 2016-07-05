@@ -13,7 +13,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <summary>
         /// Value of limit
         /// </summary>
-        public int Value { get; private set; }
+        public long Value { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "start"
@@ -29,7 +29,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
         /// <returns></returns>
-        public IOffsetParameter Configure(int value)
+        public IOffsetParameter Configure(long value)
         {
             this.Value = value;
 

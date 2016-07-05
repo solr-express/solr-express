@@ -189,7 +189,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.True(data.Data.DocumentCount > 0);
-            Assert.False(data.Data.IsEmpty);
         }
 
         /// <summary>
@@ -483,7 +482,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);
-            Assert.False(data.Data.IsEmpty);
         }
 
         /// <summary>
@@ -509,7 +507,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);
-            Assert.False(data.Data.IsEmpty);
         }
     }
 }

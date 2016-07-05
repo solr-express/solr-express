@@ -58,7 +58,7 @@ namespace SolrExpress.Core
         {
             if (value < minValue || value > maxValue)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(erroMessage);
             }
         }
 

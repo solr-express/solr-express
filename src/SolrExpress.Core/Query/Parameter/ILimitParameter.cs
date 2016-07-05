@@ -9,11 +9,11 @@
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
-        ILimitParameter Configure(int value);
+        ILimitParameter Configure(long value);
 
         /// <summary>
         /// Value of limit
         /// </summary>
-        int Value { get; }
+        long Value { get; }
     }
 }

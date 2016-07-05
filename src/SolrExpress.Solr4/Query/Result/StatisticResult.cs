@@ -28,7 +28,6 @@ namespace SolrExpress.Solr4.Query.Result
             this.Data = new Statistic
             {
                 DocumentCount = documentCount,
-                IsEmpty = documentCount.Equals(0),
                 ElapsedTime = new TimeSpan(0, 0, 0, 0, qTime)
             };
         }

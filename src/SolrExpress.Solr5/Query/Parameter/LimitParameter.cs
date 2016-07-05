@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <summary>
         /// Value of limit
         /// </summary>
-        public int Value { get; private set; }
+        public long Value { get; private set; }
 
         /// <summary>
         /// Execute the creation of the parameter "limit"
@@ -28,7 +28,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
-        public ILimitParameter Configure(int value)
+        public ILimitParameter Configure(long value)
         {
             this.Value = value;
 

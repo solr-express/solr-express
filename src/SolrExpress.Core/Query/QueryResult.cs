@@ -11,6 +11,8 @@ namespace SolrExpress.Core.Query
     {
         private readonly string _jsonPlainText;
         private JObject _jsonObject;
+        private long _offset;
+        private long _limit;
 
         /// <summary>
         /// Resolver used to resolve classes dependency
@@ -21,14 +23,20 @@ namespace SolrExpress.Core.Query
         /// Default constructor of the class
         /// </summary>
         /// <param name="resolver">Resolver used to resolve classes dependency</param>
-        /// <param name="json">Result of the SOLR</param>
-        public QueryResult(IResolver resolver, string json)
+        /// <param name="json">Result of the SOLR</param
+        /// <param name="offset">Offset value of collection</param>
+        /// <param name="limit">Limit value of collection</param>
+        public QueryResult(IResolver resolver, string json, long offset, long limit)
         {
             Checker.IsNull(resolver);
             Checker.IsNullOrWhiteSpace(json);
+            Checker.IsLowerThan(offset, 1);
+            Checker.IsLowerThan(limit, 1);
 
             this.Resolver = resolver;
             this._jsonPlainText = json;
+            this._offset = offset;
+            this._limit = limit;
         }
 
         /// <summary>
