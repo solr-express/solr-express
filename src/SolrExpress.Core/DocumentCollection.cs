@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Core.Query;
 using SolrExpress.Core.Update;
+using System;
 
 namespace SolrExpress.Core
 {
@@ -9,11 +10,6 @@ namespace SolrExpress.Core
     public class DocumentCollection<TDocument>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Configurations about SolrQueriable behavior
-        /// </summary>
-        private readonly Configuration _configuration;
-
         /// <summary>
         /// Default constructor of the class
         /// </summary>
@@ -28,9 +24,19 @@ namespace SolrExpress.Core
 
             this.Provider = provider;
             this.Resolver = resolver;
-            this._configuration = configuration;
+            this.Configuration = configuration;
         }
-       
+
+        /// <summary>
+        /// Solr queryable instance to provide create queries in SOLR
+        /// </summary>
+        public SolrQueryable<TDocument> Select() => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this.Configuration);
+
+        /// <summary>
+        /// Solr queryable instance to provide create queries in SOLR
+        /// </summary>
+        public SolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Provider, this.Resolver, this.Configuration);
+
         /// <summary>
         /// Provider used to resolve the expression
         /// </summary>
@@ -42,13 +48,8 @@ namespace SolrExpress.Core
         public IResolver Resolver { get; private set; }
 
         /// <summary>
-        /// Solr queryable instance to provide create queries in SOLR
+        /// Configurations about SolrQueriable behavior
         /// </summary>
-        public SolrQueryable<TDocument> Select => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this._configuration);
-
-        /// <summary>
-        /// Solr queryable instance to provide create queries in SOLR
-        /// </summary>
-        public SolrAtomicUpdate<TDocument> Update => new SolrAtomicUpdate<TDocument>(this.Provider, this.Resolver, this._configuration);
+        public Configuration Configuration { get; private set; }
     }
 }

@@ -20,21 +20,6 @@ namespace SolrExpress.Core.Update
         private List<string> _documentsToDelete = new List<string>();
 
         /// <summary>
-        /// Configurations about SolrQueriable behavior
-        /// </summary>
-        private readonly Configuration _configuration;
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        private readonly IProvider _provider;
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        private readonly IResolver _resolver;
-
-        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="provider">Provider used to resolve expression</param>
@@ -46,9 +31,9 @@ namespace SolrExpress.Core.Update
             Checker.IsNull(resolver);
             Checker.IsNull(configuration);
 
-            this._provider = provider;
-            this._resolver = resolver;
-            this._configuration = configuration;
+            this.Provider = provider;
+            this.Resolver = resolver;
+            this.Configuration = configuration;
         }
 
         /// <summary>
@@ -89,14 +74,14 @@ namespace SolrExpress.Core.Update
 
             if (this._documentsToAdd.Any())
             {
-                var atomicInstruction = this._resolver.GetInstance<IAtomicUpdate<TDocument>>();
+                var atomicInstruction = this.Resolver.GetInstance<IAtomicUpdate<TDocument>>();
                 atomicInstruction.Configure(this._documentsToAdd.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
 
             if (this._documentsToDelete.Any())
             {
-                var atomicInstruction = this._resolver.GetInstance<IAtomicDelete<TDocument>>();
+                var atomicInstruction = this.Resolver.GetInstance<IAtomicDelete<TDocument>>();
                 atomicInstruction.Configure(this._documentsToDelete.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
@@ -104,16 +89,31 @@ namespace SolrExpress.Core.Update
             foreach (var atomicInstruction in atomicInstructions)
             {
                 var data = atomicInstruction.Execute();
-                this._provider.Post(RequestHandler.Update, data);
+                this.Provider.Post(RequestHandler.Update, data);
             }
 
             if (atomicInstructions.Any())
             {
-                this._provider.Post(RequestHandler.Update, "{\"commit\":{}}");
+                this.Provider.Post(RequestHandler.Update, "{\"commit\":{}}");
             }
 
             this._documentsToAdd = new List<TDocument>();
             this._documentsToDelete = new List<string>();
         }
+
+        /// <summary>
+        /// Configurations about SolrQueriable behavior
+        /// </summary>
+        public Configuration Configuration { get; private set; }
+
+        /// <summary>
+        /// Provider used to resolve the expression
+        /// </summary>
+        public IProvider Provider { get; private set; }
+
+        /// <summary>
+        /// Resolver used to resolve classes dependency
+        /// </summary>
+        public IResolver Resolver { get; private set; }
     }
 }

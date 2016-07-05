@@ -293,7 +293,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 Id = documentId,
                 Name = "IntegrationTest009"
             };
-            var update = documentCollection.Update;
+            var update = documentCollection.Update();
 
             // Act
             update.Add(documentToAdd);
@@ -301,7 +301,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Assert
             documentCollection
-                .Select
+                .Select()
                 .Query(q => q.Id, documentId)
                 .Execute()
                 .Document(out fetchedDocuments);
@@ -331,7 +331,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 Name = "IntegrationTest009",
                 ManufacturedateIn = DateTime.Now
             };
-            var update = documentCollection.Update;
+            var update = documentCollection.Update();
             update.Add(documentToAdd);
             update.Commit();
 
@@ -341,7 +341,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Assert
             documentCollection
-                .Select
+                .Select()
                 .Query(q => q.Id, documentId)
                 .Execute()
                 .Document(out fetchedDocuments);
@@ -427,7 +427,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 Id = documentId2,
                 Name = "IntegrationTest013"
             };
-            var update = documentCollection.Update;
+            var update = documentCollection.Update();
 
             // Act
             update.Add(documentToAdd1, documentToAdd2);
@@ -435,7 +435,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Assert
             documentCollection
-                .Select
+                .Select()
                 .Query(q => q.Id, $"({documentId1} OR {documentId2})")
                 .Execute()
                 .Document(out fetchedDocuments);

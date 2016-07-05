@@ -47,7 +47,7 @@ namespace Sample.Ui.Controllers
 
                 ctx
                     .TechProducts
-                    .Select
+                    .Select()
                     .QueryField("name^13~3 manu^8~2 id^5")
                     .Query(keyWord ?? "*")
                     .Limit(itemsPerPage)

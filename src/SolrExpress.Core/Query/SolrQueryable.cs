@@ -11,11 +11,6 @@ namespace SolrExpress.Core.Query
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configurations about SolrQueriable behavior
-        /// </summary>
-        private readonly Configuration _configuration;
-
-        /// <summary>
         /// List of the parameters arranged in the queryable class
         /// </summary>
         private readonly List<IParameter> _parameters = new List<IParameter>();
@@ -44,7 +39,7 @@ namespace SolrExpress.Core.Query
 
             this.Provider = provider;
             this.Resolver = resolver;
-            this._configuration = configuration;
+            this.Configuration = configuration;
         }
 
         /// <summary>
@@ -75,11 +70,11 @@ namespace SolrExpress.Core.Query
 
             var parameterValidation = parameter as IValidation;
 
-            var mustValidate = this._configuration.FailFast && parameterValidation != null;
+            var mustValidate = this.Configuration.FailFast && parameterValidation != null;
 
             if (parameter is IAnyParameter)
             {
-                mustValidate = mustValidate && this._configuration.CheckAnyParameter && parameter is IAnyParameter;
+                mustValidate = mustValidate && this.Configuration.CheckAnyParameter && parameter is IAnyParameter;
             }
 
             if (mustValidate)
@@ -140,13 +135,18 @@ namespace SolrExpress.Core.Query
             var query = parameterContainer.Execute();
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
-            
+
             var json = this.Provider.Get(handler ?? RequestHandler.Select, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
             return new QueryResult<TDocument>(this.Resolver, json);
         }
+
+        /// <summary>
+        /// Configurations about SolrQueriable behavior
+        /// </summary>
+        public Configuration Configuration { get; private set; }
 
         /// <summary>
         /// Provider used to resolve the expression

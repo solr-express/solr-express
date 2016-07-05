@@ -13,10 +13,10 @@ namespace Sample.SimpleUse
             using (var ctx = new SolrContext())
             {
                 List<TechProduct> documents;
-
+                
                 ctx
                     .TechProducts
-                    .Select
+                    .Select()
                     .Query(new QueryAll())
                     .Limit(3)
                     .Execute()

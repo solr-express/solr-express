@@ -58,7 +58,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => documentCollection.Update.Add(null));
+            Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Add(null));
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => documentCollection.Update.Delete(null));
+            Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Delete(null));
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update.Add(new TestDocument[] { }));
+            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Add(new TestDocument[] { }));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update.Delete(new string[] { }));
+            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Delete(new string[] { }));
         }
 
         /// <summary>
@@ -130,8 +130,8 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
 
             // Act
-            var select1 = documentCollection.Select;
-            var select2 = documentCollection.Select;
+            var select1 = documentCollection.Select();
+            var select2 = documentCollection.Select();
 
             // Assert
             Assert.NotSame(select1, select2);
@@ -153,7 +153,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
             // Act
-            documentCollection.Update.Commit();
+            documentCollection.Update().Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Never);
@@ -173,7 +173,7 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
-            var update = documentCollection.Update.Add(new TestDocument());
+            var update = documentCollection.Update().Add(new TestDocument());
 
             // Act
             update.Commit();
@@ -198,7 +198,7 @@ namespace SolrExpress.Core.Tests
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
 
             // Act
-            documentCollection.Update.Commit();
+            documentCollection.Update().Commit();
 
             // Assert
             resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Never);
@@ -218,7 +218,7 @@ namespace SolrExpress.Core.Tests
             resolver.Setup(q => q.GetInstance<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             var configuration = new Configuration();
             var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
-            var update = documentCollection.Update.Delete("");
+            var update = documentCollection.Update().Delete("");
 
             // Act
             update.Commit();
