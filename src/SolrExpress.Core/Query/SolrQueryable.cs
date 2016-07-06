@@ -26,6 +26,11 @@ namespace SolrExpress.Core.Query
         private readonly List<IResultInterceptor> _resultInterceptors = new List<IResultInterceptor>();
 
         /// <summary>
+        /// Handler name used in solr request
+        /// </summary>
+        private string _handlerName = RequestHandler.Select;
+
+        /// <summary>
         /// Default constructor of the class
         /// </summary>
         /// <param name="provider">Provider used to resolve expression</param>
@@ -210,11 +215,24 @@ namespace SolrExpress.Core.Query
         }
 
         /// <summary>
+        /// Handler name used in solr request
+        /// </summary>
+        /// <param name="name">Name to be used</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> Handler(string name)
+        {
+            Checker.IsNullOrWhiteSpace(name);
+
+            this._handlerName = name;
+
+            return this;
+        }
+
+        /// <summary>
         /// Execute the search in the solr with informed parameters
         /// </summary>
-        /// <param name="handler">Handler name used in solr request</param>
         /// <returns>Solr result</returns>
-        public QueryResult<TDocument> Execute(string handler = null)
+        public QueryResult<TDocument> Execute()
         {
             this.Parameter(this.Configuration.GlobalParameters.ToArray());
             this.QueryInterceptor(this.Configuration.GlobalQueryInterceptors.ToArray());
@@ -231,7 +249,7 @@ namespace SolrExpress.Core.Query
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
-            var json = this.Provider.Get(handler ?? RequestHandler.Select, query);
+            var json = this.Provider.Get(this._handlerName, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 

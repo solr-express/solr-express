@@ -252,5 +252,20 @@ namespace SolrExpress.Core.Tests.Query
             // Assert
             mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
         }
+
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Invoking the method "Handler" with null
+        /// What    Throws ArgumentNullException
+        /// </summary>
+        [Fact]
+        public void SolrQueryable013()
+        {
+            // Arrange
+            var queryable = new SolrQueryable<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, new Configuration());
+
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => queryable.Handler(null));
+        }
     }
 }
