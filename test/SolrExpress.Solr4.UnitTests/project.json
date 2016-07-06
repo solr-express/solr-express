@@ -5,8 +5,8 @@
     "keyFile": "../../Key.snk"
   },
   "dependencies": {
-    "SolrExpress.Core": "3.0.0-beta2",
-    "SolrExpress.Solr4": "3.0.0-beta2"
+    "SolrExpress.Core": "3.0.0",
+    "SolrExpress.Solr4": "3.0.0"
   },
   "description": "SolrExpress.Solr4.UnitTests Class Library",
   "frameworks": {

@@ -2748,7 +2748,7 @@
           "lib/dotnet/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0-beta2": {
+      "SolrExpress.Core/3.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
@@ -2765,11 +2765,11 @@
           "netcoreapp1.0/SolrExpress.Core.dll": {}
         }
       },
-      "SolrExpress.Solr4/3.0.0-beta2": {
+      "SolrExpress.Solr4/3.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
-          "SolrExpress.Core": "3.0.0-beta2",
+          "SolrExpress.Core": "3.0.0",
           "System.Net.Requests": "4.0.11"
         },
         "compile": {
@@ -2881,7 +2881,7 @@
           "lib/net45/xunit.execution.desktop.dll": {}
         }
       },
-      "SolrExpress.Core/3.0.0-beta2": {
+      "SolrExpress.Core/3.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
@@ -2894,11 +2894,11 @@
           "net451/SolrExpress.Core.dll": {}
         }
       },
-      "SolrExpress.Solr4/3.0.0-beta2": {
+      "SolrExpress.Solr4/3.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "SolrExpress.Core": "3.0.0-beta2"
+          "SolrExpress.Core": "3.0.0"
         },
         "compile": {
           "net451/SolrExpress.Solr4.dll": {}
@@ -8218,12 +8218,12 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "SolrExpress.Core/3.0.0-beta2": {
+    "SolrExpress.Core/3.0.0": {
       "type": "project",
       "path": "../../src/SolrExpress.Core/project.json",
       "msbuildProject": "../../src/SolrExpress.Core/SolrExpress.Core.xproj"
     },
-    "SolrExpress.Solr4/3.0.0-beta2": {
+    "SolrExpress.Solr4/3.0.0": {
       "type": "project",
       "path": "../../src/SolrExpress.Solr4/project.json",
       "msbuildProject": "../../src/SolrExpress.Solr4/SolrExpress.Solr4.xproj"
@@ -8231,8 +8231,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "SolrExpress.Core >= 3.0.0-beta2",
-      "SolrExpress.Solr4 >= 3.0.0-beta2"
+      "SolrExpress.Core >= 3.0.0",
+      "SolrExpress.Solr4 >= 3.0.0"
     ],
     ".NETCoreApp,Version=v1.0": [
       "Microsoft.NETCore.App >= 1.0.0",

@@ -2769,7 +2769,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v1.0",
         "dependencies": {
-          "SolrExpress.Core": "3.0.0-beta2",
+          "SolrExpress.Core": "3.0.0",
           "System.Net.Requests": "4.0.11"
         },
         "compile": {
@@ -2898,7 +2898,7 @@
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
         "dependencies": {
-          "SolrExpress.Core": "3.0.0-beta2"
+          "SolrExpress.Core": "3.0.0"
         },
         "compile": {
           "net451/SolrExpress.Solr4.dll": {}

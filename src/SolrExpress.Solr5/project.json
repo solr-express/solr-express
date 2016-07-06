@@ -5,7 +5,7 @@
     "keyFile": "../../Key.snk"
   },
   "dependencies": {
-    "SolrExpress.Core": "3.0.0-beta2"
+    "SolrExpress.Core": "3.0.0"
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x",
   "frameworks": {
@@ -20,7 +20,7 @@
     }
   },
   "packOptions": {
-    "licenseUrl": "https://github.com/solr-express/solr-express",
+    "licenseUrl": "https://github.com/solr-express/solr-express/blob/master/LICENSE",
     "repository": {
       "url": "https://github.com/solr-express/solr-express",
       "type": "git"
@@ -28,5 +28,5 @@
     "tags": [ "SOLR", "C#", ".Net" ],
     "requireLicenseAcceptance": false
   },
-  "version": "3.0.0-beta2"
+  "version": "3.0.0"
 }

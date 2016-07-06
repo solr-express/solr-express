@@ -3992,7 +3992,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "SolrExpress.Core >= 3.0.0-beta2"
+      "SolrExpress.Core >= 3.0.0"
     ],
     ".NETCoreApp,Version=v1.0": [
       "System.Net.Requests >= 4.0.11"
