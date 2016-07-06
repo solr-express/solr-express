@@ -109,7 +109,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => queryable.QueryInterceptor(null));
+            Assert.Throws<ArgumentNullException>(() => queryable.QueryInterceptor((IQueryInterceptor)null));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace SolrExpress.Core.Tests.Query
             var queryable = new SolrQueryable<TestDocument>(providerMock.Object, new Mock<IResolver>().Object, new Configuration());
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => queryable.ResultInterceptor(null));
+            Assert.Throws<ArgumentNullException>(() => queryable.ResultInterceptor((IResultInterceptor)null));
         }
 
         /// <summary>

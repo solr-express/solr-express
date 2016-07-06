@@ -120,7 +120,25 @@ namespace SolrExpress.Core.Query
         /// <summary>
         /// Add a query interceptor to the queryable
         /// </summary>
-        /// <param name="interceptor">The query interceptor to add in the queryable</param>
+        /// <param name="interceptors">Query interceptors to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> QueryInterceptor(params IQueryInterceptor[] interceptors)
+        {
+            if (interceptors != null)
+            {
+                foreach (var interceptor in interceptors)
+                {
+                    this.QueryInterceptor(interceptor);
+                }
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a query interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptor">Query interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
         public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
@@ -141,6 +159,24 @@ namespace SolrExpress.Core.Query
             var interceptor = new TQueryInterceptor();
 
             this._queryInterceptors.Add(interceptor);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a result interceptor to the queryable
+        /// </summary>
+        /// <param name="interceptors">Result interceptors to add in the queryable</param>
+        /// <returns>Itself</returns>
+        public SolrQueryable<TDocument> ResultInterceptor(params IResultInterceptor[] interceptors)
+        {
+            if (interceptors != null)
+            {
+                foreach (var interceptor in interceptors)
+                {
+                    this.ResultInterceptor(interceptor);
+                }
+            }
 
             return this;
         }
@@ -180,6 +216,10 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public QueryResult<TDocument> Execute(string handler = null)
         {
+            this.Parameter(this.Configuration.GlobalParameters.ToArray());
+            this.QueryInterceptor(this.Configuration.GlobalQueryInterceptors.ToArray());
+            this.ResultInterceptor(this.Configuration.GlobalResultInterceptors.ToArray());
+
             var systemParameter = this.Resolver.GetInstance<ISystemParameter>();
             this._parameters.Add(systemParameter);
 
