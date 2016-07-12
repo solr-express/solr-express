@@ -15,7 +15,12 @@
         "System.IO.FileSystem": "4.0.1"
       }
     },
-    "net451": {
+    "net4": {
+      "dependencies": {
+        "Newtonsoft.Json": "9.0.1"
+      }
+    },
+    "net45": {
       "dependencies": {
         "Newtonsoft.Json": "9.0.1"
       }

@@ -21,7 +21,11 @@ namespace SolrExpress.Core.Query.Result
         /// Get the type of the generic member
         /// </summary>
         /// <returns>Type of the generic member</returns>
+#if NET40
+        public Type GetKeyType() => this.GetType().GetGenericArguments()[0];
+#else
         public Type GetKeyType() => this.GetType().GenericTypeArguments[0];
+#endif
 
         /// <summary>
         /// Get the value to the property MinimumValue without strong type

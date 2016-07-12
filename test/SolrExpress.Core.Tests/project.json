@@ -25,7 +25,13 @@
         "xunit": "2.1.0"
       }
     },
-    "net451": {
+    "net4": {
+      "dependencies": {
+        "Moq": "4.2.1510.2205",
+        "xunit": "1.9.2"
+      }
+    },
+    "net45": {
       "dependencies": {
         "Moq": "4.5.3",
         "System.Runtime": "4.1.0",

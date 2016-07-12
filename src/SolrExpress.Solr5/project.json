@@ -14,9 +14,12 @@
         "System.Net.Requests": "4.0.11"
       }
     },
-    "net451": {
+    "net4": {
       "dependencies": {
+        "Newtonsoft.Json": "9.0.1"
       }
+    },
+    "net45": {
     }
   },
   "packOptions": {

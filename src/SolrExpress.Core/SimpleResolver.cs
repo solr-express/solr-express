@@ -38,7 +38,11 @@ namespace SolrExpress.Core
             if (target.ContainsGenericParameters)
 #endif
             {
+#if NET40
+                target = target.MakeGenericType(source.GetGenericArguments());
+#else
                 target = target.MakeGenericType(source.GenericTypeArguments);
+#endif
             }
 
             return target;
