@@ -191,4 +191,4 @@ ModelManifest.xml
 Examples/packages/*
 Examples/.vs/*
 .nuget/*
-.vs/config/applicationhost.config
+.vs/*
