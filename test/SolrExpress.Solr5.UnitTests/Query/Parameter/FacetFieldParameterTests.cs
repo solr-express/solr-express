@@ -37,7 +37,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(actual, expected.ToString());
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(actual, expected.ToString());
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(actual, expected.ToString());
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(actual, expected.ToString());
         }
     }
 }

@@ -48,7 +48,7 @@ namespace SolrExpress.Solr4.Query.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var boostFunction = BoostFunctionType.Bf.ToString().ToLower();
+            var boostFunction = this.BoostFunctionType.ToString().ToLower();
 
             container.Add($"{boostFunction}={this.Query.Execute()}");
         }

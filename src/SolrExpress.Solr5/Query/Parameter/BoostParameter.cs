@@ -50,7 +50,7 @@ namespace SolrExpress.Solr5.Query.Parameter
         {
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            var boostFunction = BoostFunctionType.Bf.ToString().ToLower();
+            var boostFunction = this.BoostFunctionType.ToString().ToLower();
 
             jObj.Add(new JProperty(boostFunction, this.Query.Execute()));
 
