@@ -9,9 +9,9 @@ namespace SolrExpress.Core.Extension.Internal
     /// <summary>
     /// Extension class used to manipulate Statistic
     /// </summary>
-    internal static class StatisticExtension
+    internal static class InformationExtension
     {
-        internal static Statistic Calculate(this Statistic statistic, List<IParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
+        internal static Information Calculate(this Information information, List<IParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
             var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
             var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);
@@ -19,7 +19,7 @@ namespace SolrExpress.Core.Extension.Internal
             var offset = offsetParameter.Value + 1;
             var limit = limitParameter.Value;
 
-            statistic = new Statistic
+            information = new Information
             {
                 ElapsedTime = new TimeSpan(0, 0, 0, 0, elapsedTimeInMilliseconds),
                 DocumentCount = documentCount,
@@ -28,12 +28,12 @@ namespace SolrExpress.Core.Extension.Internal
                 PageCount = documentCount > 0 ? (int)Math.Ceiling(documentCount / (double)limit) : 0
             };
 
-            statistic.HasPreviousPage = statistic.PageNumber > 1;
-            statistic.HasNextPage = statistic.PageNumber < statistic.PageCount;
-            statistic.IsFirstPage = statistic.PageNumber == 1;
-            statistic.IsLastPage = statistic.PageNumber >= statistic.PageCount;
+            information.HasPreviousPage = information.PageNumber > 1;
+            information.HasNextPage = information.PageNumber < information.PageCount;
+            information.IsFirstPage = information.PageNumber == 1;
+            information.IsLastPage = information.PageNumber >= information.PageCount;
 
-            return statistic;
+            return information;
         }
     }
 }

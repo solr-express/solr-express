@@ -66,10 +66,10 @@ namespace SolrExpress.Core.Extension
         /// Returns statistics about the search
         /// </summary>
         /// <param name="data">Statics about search execution</param>
-        public static QueryResult<TDocument> Statistic<TDocument>(this QueryResult<TDocument> queryResult, out Statistic data)
+        public static QueryResult<TDocument> Information<TDocument>(this QueryResult<TDocument> queryResult, out Information data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IStatisticResult<TDocument>>();
+            var result = queryResult.Resolver.GetInstance<IInformationResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 

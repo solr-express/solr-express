@@ -1,11 +1,11 @@
 ﻿namespace SolrExpress.Core.Query.Result
 {
-    public interface IStatisticResult<TDocument> : IResult
+    public interface IInformationResult<TDocument> : IResult
         where TDocument : IDocument
     {
         /// <summary>
         /// Facet data
         /// </summary>
-        Statistic Data { get; }
+        Information Data { get; }
     }
 }

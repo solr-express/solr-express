@@ -180,12 +180,12 @@ namespace SolrExpress.Solr4.IntegrationTests
             var config = new Configuration { FailFast = false };
             var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
-            StatisticResult<TechProductDocument> data;
+            InformationResult<TechProductDocument> data;
 
             // Act
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             result = solrQuery.Execute();
-            data = result.Get(new StatisticResult<TechProductDocument>());
+            data = result.Get(new InformationResult<TechProductDocument>());
 
             // Assert
             Assert.True(data.Data.DocumentCount > 0);
@@ -472,13 +472,13 @@ namespace SolrExpress.Solr4.IntegrationTests
             var config = new Configuration { FailFast = false };
             var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
-            StatisticResult<TechProductDocument> data;
+            InformationResult<TechProductDocument> data;
 
             // Act
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Boost));
             result = solrQuery.Execute();
-            data = result.Get(new StatisticResult<TechProductDocument>());
+            data = result.Get(new InformationResult<TechProductDocument>());
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);
@@ -497,13 +497,13 @@ namespace SolrExpress.Solr4.IntegrationTests
             var config = new Configuration { FailFast = false };
             var solrQuery = new SolrQueryable<TechProductDocument>(provider, new SimpleResolver().Configure(), config);
             QueryResult<TechProductDocument> result;
-            StatisticResult<TechProductDocument> data;
+            InformationResult<TechProductDocument> data;
 
             // Act
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             solrQuery.Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Bf));
             result = solrQuery.Execute();
-            data = result.Get(new StatisticResult<TechProductDocument>());
+            data = result.Get(new InformationResult<TechProductDocument>());
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);

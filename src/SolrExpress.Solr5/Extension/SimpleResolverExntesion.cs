@@ -38,7 +38,7 @@ namespace SolrExpress.Solr5.Extension
             resolver.Mappings.Add(typeof(IFacetFieldResult<>), typeof(FacetFieldResult<>));
             resolver.Mappings.Add(typeof(IFacetQueryResult<>), typeof(FacetQueryResult<>));
             resolver.Mappings.Add(typeof(IFacetRangeResult<>), typeof(FacetRangeResult<>));
-            resolver.Mappings.Add(typeof(IStatisticResult<>), typeof(StatisticResult<>));
+            resolver.Mappings.Add(typeof(IInformationResult<>), typeof(InformationResult<>));
 
             resolver.Mappings.Add(typeof(IAtomicUpdate<>), typeof(AtomicUpdate<>));
             resolver.Mappings.Add(typeof(IAtomicDelete<>), typeof(AtomicDelete<>));

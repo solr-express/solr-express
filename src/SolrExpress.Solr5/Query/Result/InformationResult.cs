@@ -5,16 +5,16 @@ using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr4.Query.Result
+namespace SolrExpress.Solr5.Query.Result
 {
     /// <summary>
     /// Statistic data builder
     /// </summary>
-    public sealed class StatisticResult<TDocument> : IStatisticResult<TDocument>, IConvertJsonObject
+    public sealed class InformationResult<TDocument> : IInformationResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
         /// <summary>
-        /// Execute the parse of the JSON object in statistic
+        /// Execute the statistic parse of the json
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>
@@ -25,9 +25,12 @@ namespace SolrExpress.Solr4.Query.Result
             var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
             var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
 
-            this.Data = new Statistic().Calculate(parameters, qTime, documentCount);
+            this.Data = new Information().Calculate(parameters, qTime, documentCount);
         }
 
-        public Statistic Data { get; set; }
+        /// <summary>
+        /// Facet data
+        /// </summary>
+        public Information Data { get; set; }
     }
 }

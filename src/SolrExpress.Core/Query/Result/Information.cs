@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Core.Query.Result
 {
-    public sealed class Statistic
+    public sealed class Information
     {
         /// <summary>
         /// Maximum size any individual subset

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace SolrExpress.Core.Extension.Internal
 {
-    public class StatisticExtensionTests
+    public class InformationExtensionTests
     {
         /// <summary>
         /// Where   Using StatisticExtension class
@@ -30,7 +30,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = StatisticExtension.Calculate(null, list, 1, 200);
+            var statistic = InformationExtension.Calculate(null, list, 1, 200);
 
             // Assert
             Assert.Equal(200, statistic.DocumentCount);
@@ -66,7 +66,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = StatisticExtension.Calculate(null, list, 1, 201);
+            var statistic = InformationExtension.Calculate(null, list, 1, 201);
 
             // Assert
             Assert.Equal(201, statistic.DocumentCount);
@@ -102,7 +102,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = StatisticExtension.Calculate(null, list, 1, 0);
+            var statistic = InformationExtension.Calculate(null, list, 1, 0);
 
             // Assert
             Assert.Equal(0, statistic.DocumentCount);

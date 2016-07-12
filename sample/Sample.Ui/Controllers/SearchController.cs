@@ -41,7 +41,7 @@ namespace Sample.Ui.Controllers
                 List<FacetKeyValue<string>> facetFieldList;
                 Dictionary<string, long> facetQueryList;
                 List<FacetKeyValue<FacetRange>> facetRangeList;
-                Statistic statistics;
+                Information statistics;
 
                 const int itemsPerPage = 10;
 
@@ -60,7 +60,7 @@ namespace Sample.Ui.Controllers
                     .FacetQuery("StoreIn1000km", new Spatial<TechProduct>(SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M))
                     .Execute()
                     .Document(out documents)
-                    .Statistic(out statistics)
+                    .Information(out statistics)
                     .FacetField(out facetFieldList)
                     .FacetQuery(out facetQueryList)
                     .FacetRange(out facetRangeList);
