@@ -1,7 +1,7 @@
-﻿using Xunit;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Query.Parameter;
 using System;
+using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {

@@ -237,6 +237,22 @@ namespace SolrExpress.Core.Extension
         }
 
         /// <summary>
+        /// Create a random sort parameter
+        /// </summary>
+        /// <param name="ascendent">True to ascendent order, otherwise false</param>
+        /// <param name="expressions">Expression used to find the property name</param>
+        public static SolrQueryable<TDocument> RandomSort<TDocument>(this SolrQueryable<TDocument> queryable, bool ascendent)
+            where TDocument : IDocument
+        {
+            var parameter = queryable
+                .Resolver
+                .GetInstance<IRandomSortParameter>()
+                .Configure(ascendent);
+
+            return queryable.Parameter(parameter);
+        }
+
+        /// <summary>
         /// Create a facet limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
