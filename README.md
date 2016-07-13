@@ -26,7 +26,17 @@ Install-Package SolrExpress.Solr5
 3. [License](#license)
 
 ## Compatibility
-.Net Framework 4.5 or higher
+| Framework | Compatibility |
+|-----------|---------------|
+| .Net 4.0  | Full          |
+| .Net 4.5  | Full          |
+| Core      | Full          |
+
+| Solr | Compatibility                           | Tested                                       |
+|------|-----------------------------------------|----------------------------------------------|
+| 4.9  | Full                                    | Yes                                          |
+| 5.5  | Full                                    | Yes                                          |
+| 6.0  | Features created in Solr 5.x works well | Only features created in Solr 5.x works well |
 
 ## Packages
 ### SolrExpress.Core
