@@ -32,11 +32,11 @@ Install-Package SolrExpress.Solr5
 | .Net 4.5  | Full          |
 | Core      | Full          |
 
-| Solr | Compatibility                           | Tested                                       |
-|------|-----------------------------------------|----------------------------------------------|
-| 4.9  | Full                                    | Yes                                          |
-| 5.5  | Full                                    | Yes                                          |
-| 6.0  | Features created in Solr 5.x works well | Only features created in Solr 5.x works well |
+| Solr | Compatibility                           | Tested                            |
+|------|-----------------------------------------|-----------------------------------|
+| 4.9  | Full                                    | Yes                               |
+| 5.5  | Full                                    | Yes                               |
+| 6.0  | Features created in Solr 5.x works well | Only features created in Solr 5.x |
 
 ## Packages
 ### SolrExpress.Core
