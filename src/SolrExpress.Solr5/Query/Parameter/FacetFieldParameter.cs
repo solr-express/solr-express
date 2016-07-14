@@ -54,6 +54,8 @@ namespace SolrExpress.Solr5.Query.Parameter
                 new JProperty("field", this.Excludes.GetSolrFacetWithExcludes(fieldName))
             };
 
+            array.Add(new JProperty("mincount", 1));
+
             if (this.SortType.HasValue)
             {
                 string typeName;

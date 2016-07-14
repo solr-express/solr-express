@@ -23,7 +23,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
               ""facet"": {
                 ""X"": {
                   ""query"": {
-                    ""q"": ""avg('Y')""
+                    ""q"": ""avg('Y')"",
+                    ""mincount"": 1
                   }
                 }
               }
@@ -56,6 +57,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
                 ""X"": {
                   ""query"": {
                     ""q"": ""avg('Y')"",
+                    ""mincount"": 1,
                     ""sort"": {
                       ""count"": ""desc""
                     }
@@ -120,7 +122,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
               ""facet"": {
                 ""X"": {
                   ""query"": {
-                    ""q"": ""{!ex=tag1,tag2}avg('Y')""
+                    ""q"": ""{!ex=tag1,tag2}avg('Y')"",
+                    ""mincount"": 1
                   }
                 }
               }

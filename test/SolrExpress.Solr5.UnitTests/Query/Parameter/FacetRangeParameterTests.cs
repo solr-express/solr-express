@@ -23,6 +23,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
                 ""X"": {
                   ""range"": {
                     ""field"": ""Id"",
+                    ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",
                     ""end"": ""20"",
@@ -62,6 +63,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
                 ""X"": {
                   ""range"": {
                     ""field"": ""Id"",
+                    ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",
                     ""end"": ""20"",
@@ -333,6 +335,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
                 ""X"": {
                   ""range"": {
                     ""field"": ""{!ex=tag1,tag2}Id"",
+                    ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",
                     ""end"": ""20"",

@@ -68,6 +68,8 @@ namespace SolrExpress.Solr5.Query.Parameter
                 new JProperty("field", this.Excludes.GetSolrFacetWithExcludes(fieldName))
             };
 
+            array.Add(new JProperty("mincount", 1));
+
             if (!string.IsNullOrWhiteSpace(this.Gap))
             {
                 array.Add(new JProperty("gap", this.Gap));
