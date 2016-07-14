@@ -356,5 +356,33 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             Assert.Equal("f.Id.facet.range.other=after", container[6]);
             Assert.Equal("f.Id.facet.mincount=1", container[7]);
         }
+
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" using the default arguments
+        /// What    Create a valid string
+        /// </summary>
+        [Fact]
+        public void FacetRangeParameter018()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = new FacetRangeParameter<TestDocument>();
+            parameter.Configure("X", q => q.Id, "+7DAY", "NOW-21DAYS", "NOW+1DAY");
+
+            // Act
+            parameter.Execute(container);
+
+            // Assert
+            Assert.Equal(8, container.Count);
+            Assert.Equal("facet=true", container[0]);
+            Assert.Equal("facet.range={!key=X}Id", container[1]);
+            Assert.Equal("f.Id.facet.range.gap=%2B7DAY", container[2]);
+            Assert.Equal("f.Id.facet.range.start=NOW-21DAYS", container[3]);
+            Assert.Equal("f.Id.facet.range.end=NOW%2B1DAY", container[4]);
+            Assert.Equal("f.Id.facet.range.other=before", container[5]);
+            Assert.Equal("f.Id.facet.range.other=after", container[6]);
+            Assert.Equal("f.Id.facet.mincount=1", container[7]);
+        }
     }
 }

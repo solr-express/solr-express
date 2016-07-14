@@ -70,15 +70,15 @@ namespace SolrExpress.Solr4.Query.Parameter
 
             if (!string.IsNullOrWhiteSpace(this.Gap))
             {
-                container.Add($"f.{fieldName}.facet.range.gap={this.Gap}");
+                container.Add($"f.{fieldName}.facet.range.gap={Uri.EscapeDataString(this.Gap)}");
             }
             if (!string.IsNullOrWhiteSpace(this.Start))
             {
-                container.Add($"f.{fieldName}.facet.range.start={this.Start}");
+                container.Add($"f.{fieldName}.facet.range.start={Uri.EscapeDataString(this.Start)}");
             }
             if (!string.IsNullOrWhiteSpace(this.End))
             {
-                container.Add($"f.{fieldName}.facet.range.end={this.End}");
+                container.Add($"f.{fieldName}.facet.range.end={Uri.EscapeDataString(this.End)}");
             }
 
             container.Add($"f.{fieldName}.facet.range.other=before");
