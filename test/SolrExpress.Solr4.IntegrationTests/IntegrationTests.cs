@@ -158,14 +158,15 @@ namespace SolrExpress.Solr4.IntegrationTests
             solrQuery.Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()));
             solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet1", q => q.Popularity, "1", "1", "10"));
             solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet2", q => q.Price, "10", "10", "1000"));
-            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet3", q => q.ManufacturedateIn, "10DAYS", "NOW-30YEARS", "NOW+1DAY"));
+            solrQuery.Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY"));
             result = solrQuery.Execute();
             data = result.Get(new FacetRangeResult<TechProductDocument>()).Data;
 
             // Assert
-            Assert.Equal(2, data.Count);
+            Assert.Equal(3, data.Count);
             Assert.Equal("Facet1", data[0].Name);
             Assert.Equal("Facet2", data[1].Name);
+            Assert.Equal("Facet3", data[2].Name);
         }
 
         /// <summary>
