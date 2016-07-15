@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Query;
 using System;
 using System.Globalization;
 using System.Linq.Expressions;
@@ -43,30 +42,30 @@ namespace SolrExpress.Core.Query.ParameterValue
             string fromValue;
             string toValue;
 
+            string format = null;
+
             if (typeof(TValue) == typeof(int))
             {
-                fromValue = this._from != null ? Convert.ToInt32(this._from.Value).ToString("0", CultureInfo.InvariantCulture) : "*";
-                toValue = this._to != null ? Convert.ToInt32(this._to.Value).ToString("0", CultureInfo.InvariantCulture) : "*";
+                format = "0";
             }
-            else if (typeof(TValue) == typeof(double))
+            else if (typeof(TValue) == typeof(double) || typeof(TValue) == typeof(decimal))
             {
-                fromValue = this._from != null ? Convert.ToDouble(this._from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*";
-                toValue = this._to != null ? Convert.ToDouble(this._to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*";
-            }
-            else if (typeof(TValue) == typeof(decimal))
-            {
-                fromValue = this._from != null ? Convert.ToDecimal(this._from.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*";
-                toValue = this._to != null ? Convert.ToDecimal(this._to.Value).ToString("0.#", CultureInfo.InvariantCulture) : "*";
+                format = "0.#";
             }
             else if (typeof(TValue) == typeof(DateTime))
             {
-                fromValue = this._from != null ? Convert.ToDateTime(this._from.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*";
-                toValue = this._to != null ? Convert.ToDateTime(this._to.Value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture) : "*";
+                format = "yyyy-MM-dd'T'HH:mm:ss'Z'";
             }
-            else
+
+            if (string.IsNullOrWhiteSpace(format))
             {
                 fromValue = this._from?.ToString() ?? "*";
                 toValue = this._to?.ToString() ?? "*";
+            }
+            else
+            {
+                fromValue = this._from != null ? ((IFormattable)this._from.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
+                toValue = this._to != null ? ((IFormattable)this._to.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
             }
 
             return $"{fieldName}:[{fromValue} TO {toValue}]";
