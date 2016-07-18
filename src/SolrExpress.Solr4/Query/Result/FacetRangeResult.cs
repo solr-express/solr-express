@@ -19,64 +19,79 @@ namespace SolrExpress.Solr4.Query.Result
         /// <summary>
         /// Get a FacetRange instance basead in the informed JTokenType
         /// </summary>
-        /// <param name="type">JTokenType used to return the instance</param>
+        /// <param name="type">Type used to return the instance</param>
         /// <returns>A FacetRange instance</returns>
-        private FacetRange CreateFacetRange(JTokenType type)
+        private FacetRange CreateFacetRange(Type type)
         {
-            switch (type)
+            if (type == typeof(float))
             {
-                case JTokenType.Float:
-                    return new FacetRange<float>();
-                case JTokenType.Date:
-                    return new FacetRange<DateTime>();
-                default:
-                    return new FacetRange<int>();
+                return new FacetRange<float>();
             }
+
+            if (type == typeof(decimal))
+            {
+                return new FacetRange<decimal>();
+            }
+
+            if (type == typeof(DateTime))
+            {
+                return new FacetRange<DateTime>();
+            }
+
+            return new FacetRange<int>();
         }
 
         /// <summary>
-        /// Returns the number part of the informed string
+        /// Get facet value in strong type
         /// </summary>
-        /// <param name="value">String to clean</param>
-        /// <returns>Number part of the value</returns>
-        private int GetNumber(string value)
+        /// <param name="facetType">Facet type</param>
+        /// <param name="value">Facet value</param>
+        /// <returns></returns>
+        private object GetFacetValue(Type facetType, JToken value)
         {
-            return string.IsNullOrWhiteSpace(value) ? 0 : int.Parse(Regex.Replace(value, "[^0-9]", string.Empty, RegexOptions.IgnoreCase));
+            if (facetType == typeof(float))
+            {
+                return value.ToObject<float>();
+            }
+
+            if (facetType == typeof(decimal))
+            {
+                return value.ToObject<decimal>();
+            }
+
+            if (facetType == typeof(DateTime))
+            {
+                return value.ToObject<DateTime>();
+            }
+
+            return value.ToObject<int>();
         }
 
         /// <summary>
-        /// Calculate the gap in ranges of the informed facet
+        /// Returns maximum value of gap
         /// </summary>
-        /// <typeparam name="TFacetKey"></typeparam>
-        /// <param name="facetData">Dictionary with facet data</param>
+        /// <param name="facetType">Facet type</param>
+        /// <param name="minimumValue">Minimum value of gap</param>
         /// <param name="gapValue">Gap of the facet range</param>
-        /// <param name="facetBefore"></param>
-        /// <param name="facetAfter"></param>
-        private void CalculateGap<TFacetKey>(Dictionary<FacetRange, long> facetData, object gapValue, FacetRange facetBefore, FacetRange facetAfter)
-            where TFacetKey : struct, IComparable
+        /// <returns></returns>
+        private object CalculateMaximumValue(Type facetType, JToken minimumValue, object gapValue)
         {
-            var first = facetData.First();
-            var last = facetData.Last();
-
-            if (typeof(TFacetKey) == typeof(DateTime))
+            if (facetType == typeof(float))
             {
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<DateTime>)range.Key).MaximumValue = ((FacetRange<DateTime>)range.Key).MinimumValue.Value.Add((TimeSpan)gapValue);
-                }
-            }
-            else
-            {
-                var convertedGapValue = (TFacetKey)Convert.ChangeType(gapValue, typeof(TFacetKey));
-
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue.Addition(convertedGapValue);
-                }
+                return ((float)this.GetFacetValue(facetType, minimumValue)) + Convert.ToSingle(gapValue);
             }
 
-            ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
-            ((FacetRange<TFacetKey>)facetAfter).MinimumValue = ((FacetRange<TFacetKey>)last.Key).MaximumValue;
+            if (facetType == typeof(decimal))
+            {
+                return ((decimal)this.GetFacetValue(facetType, minimumValue)) + Convert.ToDecimal(gapValue);
+            }
+
+            if (facetType == typeof(DateTime))
+            {
+                return ((DateTime)this.GetFacetValue(facetType, minimumValue)).Add((TimeSpan)gapValue);
+            }
+
+            return ((int)this.GetFacetValue(facetType, minimumValue)) + Convert.ToInt32(gapValue);
         }
 
         /// <summary>
@@ -100,7 +115,7 @@ namespace SolrExpress.Solr4.Query.Result
             }
 
             // Assuming than gap is DateTime type
-            var gapNumber = this.GetNumber(gap);
+            var gapNumber = int.Parse(Regex.Replace(gap, "[^0-9]", string.Empty, RegexOptions.IgnoreCase));
 
             var keys = new Dictionary<string, DateTime>
             {
@@ -128,89 +143,56 @@ namespace SolrExpress.Solr4.Query.Result
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_ranges"] == null, jsonObject.ToString());
 
-            var list = jsonObject["facet_counts"]["facet_ranges"]
-                .Children()
-                .ToList();
-
-            this.Data = new List<FacetKeyValue<FacetRange>>();
-
-            foreach (var item in list)
+            if (jsonObject["facet_counts"]["facet_ranges"] == null)
             {
-                var facet = new FacetKeyValue<FacetRange>
-                {
-                    Name = ((JProperty)item).Name,
-                    Data = new Dictionary<FacetRange, long>()
-                };
-
-                var facetData = new Dictionary<FacetRange, long>();
-
-                var gap = ((JValue)((JProperty)item).Value["gap"]).ToObject<string>();
-                var array = (JArray)((JProperty)item).Value["counts"];
-
-                var gapValue = this.GetGapValue(gap);
-
-                var jTokenType = array[0].Type;
-
-                if (jTokenType == JTokenType.String)
-                {
-                    int dummyInt;
-                    float dummyFloat;
-
-                    if (int.TryParse(array[0].ToString(), out dummyInt))
+                this.Data = new List<FacetKeyValue<FacetRange>>();
+            }
+            else
+            {
+                this.Data = jsonObject["facet_counts"]["facet_ranges"]
+                    .Children()
+                    .Select(item =>
                     {
-                        jTokenType = JTokenType.Integer;
-                    }
-                    else if (float.TryParse(array[0].ToString(), out dummyFloat))
-                    {
-                        jTokenType = JTokenType.Float;
-                    }
-                }
+                        var jProperty = ((JProperty)item);
 
-                for (var i = 0; i < array.Count; i += 2)
-                {
-                    var result = this.CreateFacetRange(jTokenType);
+                        var facet = new FacetKeyValue<FacetRange>
+                        {
+                            Name = jProperty.Name,
+                            Data = new Dictionary<FacetRange, long>()
+                        };
 
-                    result.SetMinimumValue(array[i].ToObject(result.GetKeyType()));
+                        var facetParameter = (IFacetRangeParameter<TDocument>)parameters.First(q =>
+                        {
+                            return
+                                (q is IFacetRangeParameter<TDocument>) &&
+                                ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
+                        });
 
-                    facetData.Add(result, array[i + 1].ToObject<long>());
-                }
+                        var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
 
-                var before = this.CreateFacetRange(jTokenType);
-                var after = this.CreateFacetRange(jTokenType);
+                        var firstValue = this.CreateFacetRange(facetType);
+                        firstValue.SetMaximumValue(this.GetFacetValue(facetType, jProperty.Value["start"]));
+                        facet.Data.Add(firstValue, jProperty.Value["before"].ToObject<long>());
 
-                switch (jTokenType)
-                {
-                    case JTokenType.Float:
-                        this.CalculateGap<float>(facetData, gapValue, before, after);
-                        break;
-                    case JTokenType.Date:
-                        this.CalculateGap<DateTime>(facetData, gapValue, before, after);
-                        break;
-                    default:
-                        this.CalculateGap<int>(facetData, gapValue, before, after);
-                        break;
-                }
+                        var gap = jProperty.Value["gap"].ToObject<string>();
+                        var gapValue = this.GetGapValue(gap);
 
-                var beforeValue = ((JProperty)(item)).Value["before"].ToObject<long>();
+                        for (int index = 0; index < jProperty.Value["counts"].Count(); index += 2)
+                        {
+                            var value = this.CreateFacetRange(facetType);
+                            value.SetMinimumValue(jProperty.Value["counts"][index]);
+                            value.SetMaximumValue(this.CalculateMaximumValue(facetType, jProperty.Value["counts"][index], gapValue));
 
-                if (beforeValue > 0)
-                {
-                    facet.Data.Add(before, beforeValue);
-                }
+                            facet.Data.Add(value, jProperty.Value["counts"][index + 1].ToObject<long>());
+                        }
 
-                foreach (var facetDataItem in facetData)
-                {
-                    facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
-                }
+                        var lastValue = this.CreateFacetRange(facetType);
+                        lastValue.SetMaximumValue(this.GetFacetValue(facetType, jProperty.Value["end"]));
+                        facet.Data.Add(lastValue, jProperty.Value["after"].ToObject<long>());
 
-                var afterValue = ((JProperty)(item)).Value["after"].ToObject<long>();
-
-                if (afterValue > 0)
-                {
-                    facet.Data.Add(after, afterValue);
-                }
-
-                this.Data.Add(facet);
+                        return facet;
+                    })
+                    .ToList();
             }
         }
 

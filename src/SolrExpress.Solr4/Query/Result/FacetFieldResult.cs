@@ -22,32 +22,33 @@ namespace SolrExpress.Solr4.Query.Result
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_fields"] == null, jsonObject.ToString());
 
-            this.Data = new List<FacetKeyValue<string>>();
-
-            var list = jsonObject["facet_counts"]["facet_fields"]
-                .Children()
-                .ToList();
-
-            var facets = list
-                .Select(item =>
-                {
-                    var value = new FacetKeyValue<string>
+            if (jsonObject["facet_counts"]["facet_fields"] == null)
+            {
+                this.Data = new List<FacetKeyValue<string>>();
+            }
+            else
+            {
+                this.Data = jsonObject["facet_counts"]["facet_fields"]
+                    .Children()
+                    .Select(item =>
                     {
-                        Name = ((JProperty)item).Name,
-                        Data = new Dictionary<string, long>()
-                    };
+                        var value = new FacetKeyValue<string>
+                        {
+                            Name = ((JProperty)item).Name,
+                            Data = new Dictionary<string, long>()
+                        };
 
-                    var array = ((JArray)((JProperty)(item)).Value);
+                        var array = ((JArray)((JProperty)(item)).Value);
 
-                    for (int i = 0; i < array.Count; i += 2)
-                    {
-                        value.Data[array[i].ToObject<string>()] = array[i + 1].ToObject<long>();
-                    }
+                        for (int i = 0; i < array.Count; i += 2)
+                        {
+                            value.Data[array[i].ToObject<string>()] = array[i + 1].ToObject<long>();
+                        }
 
-                    return value;
-                });
-
-            this.Data.AddRange(facets);
+                        return value;
+                    })
+                    .ToList();
+            }
         }
 
         public List<FacetKeyValue<string>> Data { get; set; }

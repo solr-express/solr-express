@@ -1,0 +1,19 @@
+<Playlist Version="1.0">
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest004" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest008" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest015" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest003" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest007" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest012" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest005" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest013" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest009" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest010" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest014" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest011" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest017" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest001" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest002" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest016" />
+    <Add Test="SolrExpress.Solr4.IntegrationTests.IntegrationTests.IntegrationTest006" />
+</Playlist>

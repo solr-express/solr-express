@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core;
+using System;
 
 namespace SolrExpress.Solr4.UnitTests
 {
@@ -7,6 +8,8 @@ namespace SolrExpress.Solr4.UnitTests
         public string Id { get; set; }
 
         public decimal Score { get; set; }
+
+        public DateTime CreatedAt { get; set; }
 
         public GeoCoordinate Spatial { get; set; }
 

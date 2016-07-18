@@ -1,9 +1,12 @@
-﻿using Xunit;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.Result;
+using SolrExpress.Solr4.Query.Parameter;
 using SolrExpress.Solr4.Query.Result;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
@@ -22,34 +25,34 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             {
                   ""facet_counts"":{
                     ""facet_ranges"":{
-                      ""facetRange"":{
-                        ""counts"":[
-                          ""1"",2,
-                          ""2"",0,
-                          ""3"",0,
-                          ""4"",0,
-                          ""5"",0,
-                          ""6"",0,
-                          ""7"",1,
-                          ""8"",0,
-                          ""9"",1],
-                        ""gap"":10.0,
-                        ""start"":10.0,
-                        ""end"":100.0,
-                        ""before"":3,
-                        ""after"":9}}}
+                        ""facetRange"": {
+                            ""counts"": [
+                              ""10.0"", 2,
+                              ""70.0"", 1,
+                              ""90.0"", 1
+                            ],
+                            ""gap"": 10,
+                            ""start"": 10,
+                            ""end"": 100,
+                            ""before"": 34,
+                            ""after"": 9}}}
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocument>().Configure("facetRange", q=> q.Score, "10", "10", "100")
+            };
+            var result = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(11, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<int>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(5, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<decimal>), result.Data[0].Data.First().Key);
+            Assert.Equal(10, ((FacetRange<decimal>)result.Data[0].Data.First().Key).MaximumValue.Value);
+            Assert.Equal(34, result.Data[0].Data.First().Value);
         }
 
         /// <summary>
@@ -68,7 +71,6 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
                       ""facetRange"":{
                         ""counts"":[
                             ""2014-06-22T20:33:00.741Z"",10,
-                            ""2014-06-28T20:33:00.741Z"",0,
                             ""2014-07-04T20:33:00.741Z"",10],
                         ""gap"":""+6DAYS"",
                         ""start"":""2014-06-22T20:33:00.741Z"",
@@ -77,16 +79,21 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocument>().Configure("facetRange", q=> q.CreatedAt, "10", "10", "100")
+            };
+            var result = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(5, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<DateTime>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(4, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<DateTime>), result.Data[0].Data.First().Key);
+            Assert.Equal(DateTime.Parse("2014-06-22T20:33:00.741Z").Date, ((FacetRange<DateTime>)result.Data[0].Data.First().Key).MaximumValue.Value.Date);
+            Assert.Equal(3, result.Data[0].Data.First().Value);
         }
 
         /// <summary>
@@ -104,15 +111,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
                     ""facet_ranges"":{
                       ""facetRange"":{
                         ""counts"":[
-                          ""10.0"",2,
-                          ""20.0"",0,
-                          ""30.0"",0,
-                          ""40.0"",0,
-                          ""50.0"",0,
-                          ""60.0"",0,
-                          ""70.0"",1,
-                          ""80.0"",0,
-                          ""90.0"",1],
+                          ""10.5"",2,
+                          ""31.5"",1],
                         ""gap"":10.5,
                         ""start"":10.0,
                         ""end"":100.0,
@@ -120,16 +120,21 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
                         ""after"":9}}}
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocument>().Configure("facetRange", q=> q.Score, "10", "10", "100")
+            };
+            var result = new FacetRangeResult<TestDocument>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(11, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<float>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(4, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<decimal>), result.Data[0].Data.First().Key);
+            Assert.Equal(10, ((FacetRange<decimal>)result.Data[0].Data.First().Key).MaximumValue.Value);
+            Assert.Equal(3, result.Data[0].Data.First().Value);
         }
     }
 }
