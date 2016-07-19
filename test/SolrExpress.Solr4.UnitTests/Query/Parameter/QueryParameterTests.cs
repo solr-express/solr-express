@@ -26,7 +26,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("q=Id:ITEM01", container[0]);
+            Assert.Equal("q=_id_:ITEM01", container[0]);
         }
 
         /// <summary>

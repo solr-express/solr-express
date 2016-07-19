@@ -20,8 +20,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             var expected = JObject.Parse(@"
             {
               ""fields"": [
-                ""Id"",
-                ""Score""
+                ""_id_"",
+                ""_score_""
               ]
             }");
             string actual;
@@ -94,8 +94,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             var expected = JObject.Parse(@"
             {
               ""fields"": [
-                ""Id"",
-                ""Score""
+                ""_id_"",
+                ""_score_""
               ]
             }");
             string actual;

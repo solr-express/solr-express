@@ -28,13 +28,13 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(8, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.range={!key=X}Id", container[1]);
-            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
-            Assert.Equal("f.Id.facet.range.start=10", container[3]);
-            Assert.Equal("f.Id.facet.range.end=20", container[4]);
-            Assert.Equal("f.Id.facet.range.other=before", container[5]);
-            Assert.Equal("f.Id.facet.range.other=after", container[6]);
-            Assert.Equal("f.Id.facet.mincount=1", container[7]);
+            Assert.Equal("facet.range={!key=X}_id_", container[1]);
+            Assert.Equal("f._id_.facet.range.gap=1", container[2]);
+            Assert.Equal("f._id_.facet.range.start=10", container[3]);
+            Assert.Equal("f._id_.facet.range.end=20", container[4]);
+            Assert.Equal("f._id_.facet.range.other=before", container[5]);
+            Assert.Equal("f._id_.facet.range.other=after", container[6]);
+            Assert.Equal("f._id_.facet.mincount=1", container[7]);
         }
 
         /// <summary>
@@ -56,14 +56,14 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(9, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.range={!key=X}Id", container[1]);
-            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
-            Assert.Equal("f.Id.facet.range.start=10", container[3]);
-            Assert.Equal("f.Id.facet.range.end=20", container[4]);
-            Assert.Equal("f.Id.facet.range.other=before", container[5]);
-            Assert.Equal("f.Id.facet.range.other=after", container[6]);
-            Assert.Equal("f.Id.facet.range.sort=count", container[7]);
-            Assert.Equal("f.Id.facet.mincount=1", container[8]);
+            Assert.Equal("facet.range={!key=X}_id_", container[1]);
+            Assert.Equal("f._id_.facet.range.gap=1", container[2]);
+            Assert.Equal("f._id_.facet.range.start=10", container[3]);
+            Assert.Equal("f._id_.facet.range.end=20", container[4]);
+            Assert.Equal("f._id_.facet.range.other=before", container[5]);
+            Assert.Equal("f._id_.facet.range.other=after", container[6]);
+            Assert.Equal("f._id_.facet.range.sort=count", container[7]);
+            Assert.Equal("f._id_.facet.mincount=1", container[8]);
         }
 
         /// <summary>
@@ -348,13 +348,13 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(8, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.range={!ex=tag1,tag2 key=X}Id", container[1]);
-            Assert.Equal("f.Id.facet.range.gap=1", container[2]);
-            Assert.Equal("f.Id.facet.range.start=10", container[3]);
-            Assert.Equal("f.Id.facet.range.end=20", container[4]);
-            Assert.Equal("f.Id.facet.range.other=before", container[5]);
-            Assert.Equal("f.Id.facet.range.other=after", container[6]);
-            Assert.Equal("f.Id.facet.mincount=1", container[7]);
+            Assert.Equal("facet.range={!ex=tag1,tag2 key=X}_id_", container[1]);
+            Assert.Equal("f._id_.facet.range.gap=1", container[2]);
+            Assert.Equal("f._id_.facet.range.start=10", container[3]);
+            Assert.Equal("f._id_.facet.range.end=20", container[4]);
+            Assert.Equal("f._id_.facet.range.other=before", container[5]);
+            Assert.Equal("f._id_.facet.range.other=after", container[6]);
+            Assert.Equal("f._id_.facet.mincount=1", container[7]);
         }
 
         /// <summary>
@@ -376,13 +376,13 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(8, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.range={!key=X}Id", container[1]);
-            Assert.Equal("f.Id.facet.range.gap=%2B7DAY", container[2]);
-            Assert.Equal("f.Id.facet.range.start=NOW-21DAYS", container[3]);
-            Assert.Equal("f.Id.facet.range.end=NOW%2B1DAY", container[4]);
-            Assert.Equal("f.Id.facet.range.other=before", container[5]);
-            Assert.Equal("f.Id.facet.range.other=after", container[6]);
-            Assert.Equal("f.Id.facet.mincount=1", container[7]);
+            Assert.Equal("facet.range={!key=X}_id_", container[1]);
+            Assert.Equal("f._id_.facet.range.gap=%2B7DAY", container[2]);
+            Assert.Equal("f._id_.facet.range.start=NOW-21DAYS", container[3]);
+            Assert.Equal("f._id_.facet.range.end=NOW%2B1DAY", container[4]);
+            Assert.Equal("f._id_.facet.range.other=before", container[5]);
+            Assert.Equal("f._id_.facet.range.other=after", container[6]);
+            Assert.Equal("f._id_.facet.mincount=1", container[7]);
         }
     }
 }

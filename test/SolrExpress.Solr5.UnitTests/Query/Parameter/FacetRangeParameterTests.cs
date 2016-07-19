@@ -22,7 +22,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
               ""facet"": {
                 ""X"": {
                   ""range"": {
-                    ""field"": ""Id"",
+                    ""field"": ""_id_"",
                     ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",
@@ -62,7 +62,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
               ""facet"": {
                 ""X"": {
                   ""range"": {
-                    ""field"": ""Id"",
+                    ""field"": ""_id_"",
                     ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",
@@ -334,7 +334,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
               ""facet"": {
                 ""X"": {
                   ""range"": {
-                    ""field"": ""{!ex=tag1,tag2}Id"",
+                    ""field"": ""{!ex=tag1,tag2}_id_"",
                     ""mincount"": 1,
                     ""gap"": ""1"",
                     ""start"": ""10"",

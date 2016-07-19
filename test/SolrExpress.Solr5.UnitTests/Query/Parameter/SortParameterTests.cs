@@ -19,7 +19,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""sort"": ""Id asc""
+              ""sort"": ""_id_ asc""
             }");
             string actual;
             var jObject = new JObject();

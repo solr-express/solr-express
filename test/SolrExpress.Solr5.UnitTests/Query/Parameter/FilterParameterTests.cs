@@ -20,8 +20,8 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""Id:X"",
-                ""Score:Y""
+                ""_id_:X"",
+                ""_score_:Y""
               ]
             }");
             string actual;
@@ -67,7 +67,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""{!tag=tag1}Id:X""
+                ""{!tag=tag1}_id_:X""
               ]
             }");
             string actual;

@@ -28,8 +28,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(3, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.field={!key=Id}Id", container[1]);
-            Assert.Equal("f.Id.facet.mincount=1", container[2]);
+            Assert.Equal("facet.field={!key=Id}_id_", container[1]);
+            Assert.Equal("f._id_.facet.mincount=1", container[2]);
         }
 
         /// <summary>
@@ -51,9 +51,9 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(4, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.field={!key=Id}Id", container[1]);
-            Assert.Equal("f.Id.facet.sort=count", container[2]);
-            Assert.Equal("f.Id.facet.mincount=1", container[3]);
+            Assert.Equal("facet.field={!key=Id}_id_", container[1]);
+            Assert.Equal("f._id_.facet.sort=count", container[2]);
+            Assert.Equal("f._id_.facet.mincount=1", container[3]);
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(4, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.field={!key=Id}Id", container[1]);
-            Assert.Equal("f.Id.facet.mincount=1", container[2]);
-            Assert.Equal("f.Id.facet.limit=10", container[3]);
+            Assert.Equal("facet.field={!key=Id}_id_", container[1]);
+            Assert.Equal("f._id_.facet.mincount=1", container[2]);
+            Assert.Equal("f._id_.facet.limit=10", container[3]);
         }
 
         /// <summary>
@@ -148,8 +148,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Assert
             Assert.Equal(3, container.Count);
             Assert.Equal("facet=true", container[0]);
-            Assert.Equal("facet.field={!ex=tag1,tag2 key=Id}Id", container[1]);
-            Assert.Equal("f.Id.facet.mincount=1", container[2]);
+            Assert.Equal("facet.field={!ex=tag1,tag2 key=Id}_id_", container[1]);
+            Assert.Equal("f._id_.facet.mincount=1", container[2]);
         }
     }
 }

@@ -29,8 +29,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(2, container.Count);
-            Assert.Equal("fq=Id:X", container[0]);
-            Assert.Equal("fq=Score:Y", container[1]);
+            Assert.Equal("fq=_id_:X", container[0]);
+            Assert.Equal("fq=_score_:Y", container[1]);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fq={!tag=tag1}Id:X", container[0]);
+            Assert.Equal("fq={!tag=tag1}_id_:X", container[0]);
         }
     }
 }

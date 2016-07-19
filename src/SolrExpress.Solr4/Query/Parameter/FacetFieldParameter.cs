@@ -63,10 +63,10 @@ namespace SolrExpress.Solr4.Query.Parameter
 
                 this.SortType.Value.GetSolrFacetSort(out typeName, out dummy);
 
-                container.Add($"f.{aliasName}.facet.sort={typeName}");
+                container.Add($"f.{fieldName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{aliasName}.facet.mincount=1");
+            container.Add($"f.{fieldName}.facet.mincount=1");
 
             if (this.Limit.HasValue)
             {

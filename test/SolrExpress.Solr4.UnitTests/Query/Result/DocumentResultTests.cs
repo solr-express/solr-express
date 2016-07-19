@@ -21,8 +21,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             {
               ""response"":{""numFound"":7722,""start"":0,""maxScore"":1.0,""docs"":[
                   {
-                    ""id"":""ITEM01"",
-                    ""score"":1.5}]
+                    ""_id_"":""ITEM01"",
+                    ""_score_"":1.5}]
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
@@ -53,8 +53,8 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             {
               ""responseX"":{""numFound"":7722,""start"":0,""maxScore"":1.0,""docs"":[
                   {
-                    ""id"":""ITEM01"",
-                    ""score"":1.5}]
+                    ""_id_"":""ITEM01"",
+                    ""_score_"":1.5}]
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);
@@ -77,7 +77,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             {
               ""response"":{""numFound"":7722,""start"":0,""maxScore"":1.0,""docs"":[
                   {
-                    ""spatial"":""-1.5,2.5""}]
+                    ""_spatial_"":""-1.5,2.5""}]
               }
             }";
             var jsonObject = JObject.Parse(jsonStr);

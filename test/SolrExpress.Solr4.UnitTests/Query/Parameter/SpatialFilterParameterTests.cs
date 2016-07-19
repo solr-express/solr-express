@@ -27,7 +27,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fq={!geofilt sfield=Spatial pt=-1.1,-2.2 d=5.5}", container[0]);
+            Assert.Equal("fq={!geofilt sfield=_spatial_ pt=-1.1,-2.2 d=5.5}", container[0]);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fq={!bbox sfield=Spatial pt=-1.1,-2.2 d=5.5}", container[0]);
+            Assert.Equal("fq={!bbox sfield=_spatial_ pt=-1.1,-2.2 d=5.5}", container[0]);
         }
 
         /// <summary>

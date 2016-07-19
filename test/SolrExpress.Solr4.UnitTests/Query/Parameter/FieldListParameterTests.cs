@@ -29,7 +29,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fl=Id,Score", container[0]);
+            Assert.Equal("fl=_id_,_score_", container[0]);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fl=Id,Score", container[0]);
+            Assert.Equal("fl=_id_,_score_", container[0]);
         }
 
         /// <summary>
