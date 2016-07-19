@@ -129,6 +129,9 @@
   <data name="FieldMustBeIndexedTrueToBeUsedInAQuery" xml:space="preserve">
     <value>Um campo deve ser "indexed=true" para ser usado em query</value>
   </data>
+  <data name="FieldMustBeIndexedTrueToBeUsedInASortException" xml:space="preserve">
+    <value>Um campo deve ser "indexed=true" para ser usado em sort</value>
+  </data>
   <data name="FieldMustBeNumericOrDateTimeToBeUsedInFacetRange" xml:space="preserve">
     <value>Um campo deve ser numérico ou de data para ser usado em facet range</value>
   </data>

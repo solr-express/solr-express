@@ -24,21 +24,21 @@ namespace SolrExpress.Core {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    public class Resource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        public Resource() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
 #if NETCOREAPP1_0
@@ -57,7 +57,7 @@ namespace SolrExpress.Core {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -69,7 +69,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Parameter &quot;{0}&quot; is not allowed because another instance of the same type was added.
         /// </summary>
-        internal static string AllowMultipleInstanceOfParameterTypeException {
+        public static string AllowMultipleInstanceOfParameterTypeException {
             get {
                 return ResourceManager.GetString("AllowMultipleInstanceOfParameterTypeException", resourceCulture);
             }
@@ -78,7 +78,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Expression must be a property reference.
         /// </summary>
-        internal static string ExpressionMustBePropertyException {
+        public static string ExpressionMustBePropertyException {
             get {
                 return ResourceManager.GetString("ExpressionMustBePropertyException", resourceCulture);
             }
@@ -87,7 +87,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in a facet.
         /// </summary>
-        internal static string FieldMustBeIndexedTrueToBeUsedInAFacetException {
+        public static string FieldMustBeIndexedTrueToBeUsedInAFacetException {
             get {
                 return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAFacetException", resourceCulture);
             }
@@ -96,16 +96,27 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in a query.
         /// </summary>
-        internal static string FieldMustBeIndexedTrueToBeUsedInAQueryException {
+        public static string FieldMustBeIndexedTrueToBeUsedInAQueryException {
             get {
                 return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInAQueryException", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///    Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in a sort.
+        /// </summary>
+        public static string FieldMustBeIndexedTrueToBeUsedInASortException
+        {
+            get
+            {
+                return ResourceManager.GetString("FieldMustBeIndexedTrueToBeUsedInASortException", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to A field must be numeric or DateTime to be used in a facet range.
         /// </summary>
-        internal static string FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException {
+        public static string FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException {
             get {
                 return ResourceManager.GetString("FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException", resourceCulture);
             }
@@ -114,7 +125,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to A field must be &quot;stored=true&quot; to be used in field list.
         /// </summary>
-        internal static string FieldMustBeStoredTrueToBeUsedInFieldsException {
+        public static string FieldMustBeStoredTrueToBeUsedInFieldsException {
             get {
                 return ResourceManager.GetString("FieldMustBeStoredTrueToBeUsedInFieldsException", resourceCulture);
             }
@@ -123,7 +134,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Latitude most be inside range from -90.0 to 90.0.
         /// </summary>
-        internal static string InvalidLatitudeException {
+        public static string InvalidLatitudeException {
             get {
                 return ResourceManager.GetString("InvalidLatitudeException", resourceCulture);
             }
@@ -132,7 +143,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Longitude most be inside range from -180.0 to 180.0.
         /// </summary>
-        internal static string InvalidLongitudeException {
+        public static string InvalidLongitudeException {
             get {
                 return ResourceManager.GetString("InvalidLongitudeException", resourceCulture);
             }
@@ -141,7 +152,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Parameter &quot;{0}&quot; validation message: &quot;{1}&quot;.
         /// </summary>
-        internal static string InvalidParameterTypeException {
+        public static string InvalidParameterTypeException {
             get {
                 return ResourceManager.GetString("InvalidParameterTypeException", resourceCulture);
             }
@@ -151,7 +162,7 @@ namespace SolrExpress.Core {
         ///   Looks up a localized string similar to Unknown to resolve type &quot;{0}&quot;
         ///Mapping not found.
         /// </summary>
-        internal static string UnexpectedDependencyInjectionMappingException {
+        public static string UnexpectedDependencyInjectionMappingException {
             get {
                 return ResourceManager.GetString("UnexpectedDependencyInjectionMappingException", resourceCulture);
             }
@@ -160,7 +171,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Parameter &quot;{0}&quot; was not found in the source json.
         /// </summary>
-        internal static string UnexpectedJsonException {
+        public static string UnexpectedJsonException {
             get {
                 return ResourceManager.GetString("UnexpectedJsonException", resourceCulture);
             }
@@ -174,7 +185,7 @@ namespace SolrExpress.Core {
         ///Server message:
         ///{1}.
         /// </summary>
-        internal static string UnexpectedSolrRequestException {
+        public static string UnexpectedSolrRequestException {
             get {
                 return ResourceManager.GetString("UnexpectedSolrRequestException", resourceCulture);
             }
@@ -183,7 +194,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Unknown resolve of the result builder type &quot;{0}&quot; because this type doesn&apos;t implement IConvertJsonObject or IConvertJsonPlainText.
         /// </summary>
-        internal static string UnknownResolveResultBuilderException {
+        public static string UnknownResolveResultBuilderException {
             get {
                 return ResourceManager.GetString("UnknownResolveResultBuilderException", resourceCulture);
             }
@@ -192,7 +203,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Unknown to resolve the expression.
         /// </summary>
-        internal static string UnknownToResolveExpressionException {
+        public static string UnknownToResolveExpressionException {
             get {
                 return ResourceManager.GetString("UnknownToResolveExpressionException", resourceCulture);
             }
@@ -201,7 +212,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Descending sort type is an unsupported feature in Solr 4.
         /// </summary>
-        internal static string UnsupportedSortTypeException {
+        public static string UnsupportedSortTypeException {
             get {
                 return ResourceManager.GetString("UnsupportedSortTypeException", resourceCulture);
             }
@@ -210,7 +221,7 @@ namespace SolrExpress.Core {
         /// <summary>
         ///   Looks up a localized string similar to Parameter &quot;{0}&quot; have a specific version.
         /// </summary>
-        internal static string UseSpecificParameterRatherThanAnyException {
+        public static string UseSpecificParameterRatherThanAnyException {
             get {
                 return ResourceManager.GetString("UseSpecificParameterRatherThanAnyException", resourceCulture);
             }

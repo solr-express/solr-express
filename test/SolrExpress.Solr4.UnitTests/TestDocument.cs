@@ -15,5 +15,8 @@ namespace SolrExpress.Solr4.UnitTests
 
         [SolrField("_dummy_")]
         public string Dummy { get; set; }
+
+        [SolrField("indexed_false", Indexed = false)]
+        public long IndexedFalse { get; set; }
     }
 }

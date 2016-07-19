@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Extension.Internal;
+using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr4.Query.Parameter.Internal;
 using System;
@@ -8,7 +9,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Query.Parameter
 {
-    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, IParameter<List<string>>
+    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, IParameter<List<string>>, IValidation
         where TDocument : IDocument
     {
         /// <summary>
@@ -51,6 +52,31 @@ namespace SolrExpress.Solr4.Query.Parameter
             this.Ascendent = ascendent;
 
             return this;
+        }
+
+        /// <summary>
+        /// Check for the parameter validation
+        /// </summary>
+        /// <param name="isValid">True if is valid, otherwise false</param>
+        /// <param name="errorMessage">The error message, if applicable</param>
+        public void Validate(out bool isValid, out string errorMessage)
+        {
+            isValid = true;
+            errorMessage = string.Empty;
+
+            var solrFieldAttribute = this
+                .Expression
+                .GetSolrFieldAttributeFromPropertyInfo();
+
+            var withError = solrFieldAttribute != null && !solrFieldAttribute.Indexed;
+
+            if (!withError)
+            {
+                return;
+            }
+
+            isValid = false;
+            errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInASortException;
         }
     }
 }
