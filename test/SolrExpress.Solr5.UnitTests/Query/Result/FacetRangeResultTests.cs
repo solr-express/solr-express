@@ -4,6 +4,9 @@ using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr5.Query.Result;
 using System;
 using System.Linq;
+using SolrExpress.Core.Query.Parameter;
+using SolrExpress.Solr5.Query.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Result
 {
@@ -43,16 +46,19 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 }
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropInteger, "10", "10", "100")
+            };
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(4, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<int>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(4, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<int>), result.Data[0].Data.First().Key);
         }
 
         /// <summary>
@@ -89,16 +95,19 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 }
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/YEAR-1", "NOW/DAY+1")
+            };
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(4, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<DateTime>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(4, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<DateTime>), result.Data[0].Data.First().Key);
         }
 
         /// <summary>
@@ -135,16 +144,19 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 }
             }");
 
-            var parameter = new FacetRangeResult<TestDocument>();
+            var parameters = new List<IParameter> {
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropDecimal, "10", "10", "100")
+            };
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.Equal("facetRange", parameter.Data[0].Name);
-            Assert.Equal(4, parameter.Data[0].Data.Count);
-            Assert.IsType(typeof(FacetRange<float>), parameter.Data[0].Data.First().Key);
+            Assert.Equal(1, result.Data.Count);
+            Assert.Equal("facetRange", result.Data[0].Name);
+            Assert.Equal(4, result.Data[0].Data.Count);
+            Assert.IsType(typeof(FacetRange<decimal>), result.Data[0].Data.First().Key);
         }
     }
 }

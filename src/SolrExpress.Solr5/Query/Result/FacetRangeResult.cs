@@ -61,19 +61,12 @@ namespace SolrExpress.Solr5.Query.Result
 
             if (facetType == typeof(DateTime))
             {
-                return Convert.ToDateTime(value);
+                return DateTime.Now - (TimeSpan)GetGapValue(value);
             }
 
             return Convert.ToInt32(value);
         }
 
-        /// <summary>
-        /// Returns maximum value of gap
-        /// </summary>
-        /// <param name="facetType">Facet type</param>
-        /// <param name="minimumValue">Minimum value of gap</param>
-        /// <param name="gapValue">Gap of the facet range</param>
-        /// <returns></returns>
         /// <summary>
         /// Returns maximum value of gap
         /// </summary>
@@ -198,22 +191,22 @@ namespace SolrExpress.Solr5.Query.Result
                     firstValue.SetMaximumValue(this.GetFacetValue(facetType, facetParameter.Start));
                     facet.Data.Add(firstValue, jProperty.Value["before"]["count"].ToObject<long>());
 
-                    var facetData = jProperty
+                    jProperty
                         .Value["buckets"]
-                        .ToDictionary(
-                            k =>
-                            {
-                                var result = this.CreateFacetRange(facetType);
+                        .ToList()
+                        .ForEach(bucket =>
+                        {
+                            var value = this.CreateFacetRange(facetType);
 
-                                result.SetMinimumValue(k["val"].ToObject(facetType));
-                                result.SetMaximumValue(this.CalculateMaximumValue(facetType, k["val"], gapValue));
+                            value.SetMinimumValue(bucket["val"].ToObject(facetType));
+                            value.SetMaximumValue(this.CalculateMaximumValue(facetType, bucket["val"], gapValue));
 
-                                return result;
-                            },
-                            v => v["count"].ToObject<long>());
+                            facet.Data.Add(value, bucket["count"].ToObject<long>());
+                        });
+
 
                     var lastValue = this.CreateFacetRange(facetType);
-                    lastValue.SetMaximumValue(this.GetFacetValue(facetType, facetParameter.End));
+                    lastValue.SetMinimumValue(this.GetFacetValue(facetType, facetParameter.End));
                     facet.Data.Add(lastValue, jProperty.Value["after"]["count"].ToObject<long>());
 
                     return facet;

@@ -163,7 +163,7 @@ namespace SolrExpress.Solr4.Query.Result
                     }
 
                     var lastValue = this.CreateFacetRange(facetType);
-                    lastValue.SetMaximumValue(jProperty.Value["end"].ToObject(facetType));
+                    lastValue.SetMinimumValue(jProperty.Value["end"].ToObject(facetType));
                     facet.Data.Add(lastValue, jProperty.Value["after"].ToObject<long>());
 
                     return facet;
