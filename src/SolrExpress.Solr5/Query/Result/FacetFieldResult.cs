@@ -22,8 +22,6 @@ namespace SolrExpress.Solr5.Query.Result
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facets"] == null, jsonObject.ToString());
 
-            this.Data = new List<FacetKeyValue<string>>();
-
             var list = jsonObject["facets"]
                 .Children()
                 .Where(q =>
@@ -35,10 +33,12 @@ namespace SolrExpress.Solr5.Query.Result
 
             if (!list.Any())
             {
+                this.Data = new List<FacetKeyValue<string>>();
+
                 return;
             }
 
-            var facets = list
+            this.Data = list
                 .Select(item => new FacetKeyValue<string>
                 {
                     Name = ((JProperty)item).Name,
@@ -46,9 +46,8 @@ namespace SolrExpress.Solr5.Query.Result
                         .ToDictionary(
                             k => k["val"].ToObject<string>(),
                             v => v["count"].ToObject<long>())
-                });
-
-            this.Data.AddRange(facets);
+                })
+                .ToList();
         }
 
         /// <summary>

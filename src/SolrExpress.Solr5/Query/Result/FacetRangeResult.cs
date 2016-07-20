@@ -6,6 +6,7 @@ using SolrExpress.Core.Query.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace SolrExpress.Solr5.Query.Result
 {
@@ -16,56 +17,130 @@ namespace SolrExpress.Solr5.Query.Result
         where TDocument : IDocument
     {
         /// <summary>
-        /// Get a FacetRange instance based in the informed JTokenType
+        /// Get a FacetRange instance basead in the informed JTokenType
         /// </summary>
-        /// <param name="type">JTokenType used to return the instance</param>
+        /// <param name="type">Type used to return the instance</param>
         /// <returns>A FacetRange instance</returns>
-        private FacetRange GetFacetRangeByType(JTokenType type)
+        private FacetRange CreateFacetRange(Type type)
         {
-            switch (type)
+            if (type == typeof(float))
             {
-                case JTokenType.Float:
-                    return new FacetRange<float>();
-                case JTokenType.Date:
-                    return new FacetRange<DateTime>();
-                default:
-                    return new FacetRange<int>();
+                return new FacetRange<float>();
             }
+
+            if (type == typeof(decimal))
+            {
+                return new FacetRange<decimal>();
+            }
+
+            if (type == typeof(DateTime))
+            {
+                return new FacetRange<DateTime>();
+            }
+
+            return new FacetRange<int>();
         }
 
-        private void ProcessGap<TFacetKey>(Dictionary<FacetRange, long> facetData, FacetRange facetBefore, FacetRange facetAfter)
-            where TFacetKey : struct, IComparable
+        /// <summary>
+        /// Get facet value in strong type
+        /// </summary>
+        /// <param name="facetType">Facet type</param>
+        /// <param name="value">Facet value</param>
+        /// <returns></returns>
+        private object GetFacetValue(Type facetType, string value)
         {
-            var first = facetData.First();
-            var second = facetData.Skip(1).FirstOrDefault();
-            var last = facetData.Last();
-
-            object gap;
-
-            if (typeof(TFacetKey) == typeof(DateTime))
+            if (facetType == typeof(float))
             {
-                var firstValue = (DateTime)Convert.ChangeType(((FacetRange<TFacetKey>)first.Key).MinimumValue.Value, typeof(DateTime));
-                var secondValue = (DateTime)Convert.ChangeType(((FacetRange<TFacetKey>)second.Key).MinimumValue.Value, typeof(DateTime));
-
-                gap = secondValue.Subtract(firstValue);
-
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<DateTime>)range.Key).MaximumValue = ((FacetRange<DateTime>)range.Key).MinimumValue.Value.Add((TimeSpan)gap);
-                }
-            }
-            else
-            {
-                gap = ((FacetRange<TFacetKey>)second.Key).MinimumValue.Subtract(((FacetRange<TFacetKey>)first.Key).MinimumValue);
-
-                foreach (var range in facetData)
-                {
-                    ((FacetRange<TFacetKey>)range.Key).MaximumValue = ((FacetRange<TFacetKey>)range.Key).MinimumValue.Addition((TFacetKey?)gap);
-                }
+                return Convert.ToSingle(value);
             }
 
-            ((FacetRange<TFacetKey>)facetBefore).MaximumValue = ((FacetRange<TFacetKey>)first.Key).MinimumValue;
-            ((FacetRange<TFacetKey>)facetAfter).MinimumValue = ((FacetRange<TFacetKey>)last.Key).MaximumValue;
+            if (facetType == typeof(decimal))
+            {
+                return Convert.ToDecimal(value);
+            }
+
+            if (facetType == typeof(DateTime))
+            {
+                return Convert.ToDateTime(value);
+            }
+
+            return Convert.ToInt32(value);
+        }
+
+        /// <summary>
+        /// Returns maximum value of gap
+        /// </summary>
+        /// <param name="facetType">Facet type</param>
+        /// <param name="minimumValue">Minimum value of gap</param>
+        /// <param name="gapValue">Gap of the facet range</param>
+        /// <returns></returns>
+        /// <summary>
+        /// Returns maximum value of gap
+        /// </summary>
+        /// <param name="facetType">Facet type</param>
+        /// <param name="minimumValue">Minimum value of gap</param>
+        /// <param name="gapValue">Gap of the facet range</param>
+        /// <returns></returns>
+        private object CalculateMaximumValue(Type facetType, JToken minimumValue, object gapValue)
+        {
+            var value = minimumValue.ToObject(facetType);
+
+            if (facetType == typeof(float))
+            {
+                return ((float)value) + Convert.ToSingle(gapValue);
+            }
+
+            if (facetType == typeof(decimal))
+            {
+                return ((decimal)value) + Convert.ToDecimal(gapValue);
+            }
+
+            if (facetType == typeof(DateTime))
+            {
+                return ((DateTime)value).Add((TimeSpan)gapValue);
+            }
+
+            return ((int)value) + Convert.ToInt32(gapValue);
+        }
+
+        /// <summary>
+        /// Process gap value in gap object
+        /// </summary>
+        /// <param name="gap">Gap string returned from Solr</param>
+        /// <returns>.Net object equivalent</returns>
+        private object GetGapValue(string gap)
+        {
+            int objInt;
+            float objSingle;
+
+            if (int.TryParse(gap, out objInt))
+            {
+                return objInt;
+            }
+
+            if (float.TryParse(gap, out objSingle))
+            {
+                return objSingle;
+            }
+
+            // Assuming than gap is DateTime type
+            var gapNumber = int.Parse(Regex.Replace(gap, "[^0-9]", string.Empty, RegexOptions.IgnoreCase));
+
+            var keys = new Dictionary<string, DateTime>
+            {
+                ["MILISECOND"] = DateTime.MinValue.AddMilliseconds(1),
+                ["SECOND"] = DateTime.MinValue.AddSeconds(1),
+                ["MINUTE"] = DateTime.MinValue.AddMinutes(1),
+                ["HOUR"] = DateTime.MinValue.AddHours(1),
+                ["DAY"] = DateTime.MinValue.AddDays(1),
+                ["WEAK"] = DateTime.MinValue.AddDays(7),
+                ["MONTH"] = DateTime.MinValue.AddMonths(1),
+                ["YEAR"] = DateTime.MinValue.AddYears(1)
+            };
+
+            var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
+
+            return new TimeSpan(key.Value.Ticks * gapNumber);
         }
 
         /// <summary>
@@ -80,8 +155,6 @@ namespace SolrExpress.Solr5.Query.Result
                 throw new UnexpectedJsonFormatException(jsonObject.ToString());
             }
 
-            this.Data = new List<FacetKeyValue<FacetRange>>();
-
             var list = jsonObject["facets"]
                 .Children()
                 .Where(q =>
@@ -95,58 +168,57 @@ namespace SolrExpress.Solr5.Query.Result
 
             if (!list.Any())
             {
+                this.Data = new List<FacetKeyValue<FacetRange>>();
                 return;
             }
 
-            foreach (var item in list)
-            {
-                var jTokenType = ((JProperty)(item)).Value["buckets"][0]["val"].Type;
-
-                var facet = new FacetKeyValue<FacetRange>
+            this.Data = list
+                .Select(item =>
                 {
-                    Name = ((JProperty)item).Name,
-                    Data = new Dictionary<FacetRange, long>()
-                };
+                    var jProperty = ((JProperty)item);
 
-                var facetData = ((JProperty)(item)).Value["buckets"]
-                    .ToDictionary(
-                        k =>
-                        {
-                            var result = this.GetFacetRangeByType(jTokenType);
+                    var facet = new FacetKeyValue<FacetRange>
+                    {
+                        Name = jProperty.Name,
+                        Data = new Dictionary<FacetRange, long>()
+                    };
 
-                            result.SetMinimumValue(k["val"].ToObject(result.GetKeyType()));
+                    var facetParameter = (IFacetRangeParameter<TDocument>)parameters.First(q =>
+                    {
+                        return
+                            (q is IFacetRangeParameter<TDocument>) &&
+                            ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
+                    });
 
-                            return result;
-                        },
-                        v => v["count"].ToObject<long>());
+                    var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
 
-                var before = this.GetFacetRangeByType(jTokenType);
-                var after = this.GetFacetRangeByType(jTokenType);
+                    var gapValue = this.GetGapValue(facetParameter.Gap);
 
-                switch (jTokenType)
-                {
-                    case JTokenType.Float:
-                        this.ProcessGap<float>(facetData, before, after);
-                        break;
-                    case JTokenType.Date:
-                        this.ProcessGap<DateTime>(facetData, before, after);
-                        break;
-                    default:
-                        this.ProcessGap<int>(facetData, before, after);
-                        break;
-                }
+                    var firstValue = this.CreateFacetRange(facetType);
+                    firstValue.SetMaximumValue(this.GetFacetValue(facetType, facetParameter.Start));
+                    facet.Data.Add(firstValue, jProperty.Value["before"]["count"].ToObject<long>());
 
-                facet.Data.Add(before, ((JProperty)(item)).Value["before"]["count"].ToObject<long>());
+                    var facetData = jProperty
+                        .Value["buckets"]
+                        .ToDictionary(
+                            k =>
+                            {
+                                var result = this.CreateFacetRange(facetType);
 
-                foreach (var facetDataItem in facetData)
-                {
-                    facet.Data.Add(facetDataItem.Key, facetDataItem.Value);
-                }
+                                result.SetMinimumValue(k["val"].ToObject(facetType));
+                                result.SetMaximumValue(this.CalculateMaximumValue(facetType, k["val"], gapValue));
 
-                facet.Data.Add(after, ((JProperty)(item)).Value["after"]["count"].ToObject<long>());
+                                return result;
+                            },
+                            v => v["count"].ToObject<long>());
 
-                this.Data.Add(facet);
-            }
+                    var lastValue = this.CreateFacetRange(facetType);
+                    lastValue.SetMaximumValue(this.GetFacetValue(facetType, facetParameter.End));
+                    facet.Data.Add(lastValue, jProperty.Value["after"]["count"].ToObject<long>());
+
+                    return facet;
+                })
+                .ToList();
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace SolrExpress.Solr4.Query.Result
         {
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_queries"] == null, jsonObject.ToString());
 
-            if (jsonObject["facet_counts"]["facet_queries"] == null)
+            if (!jsonObject["facet_counts"]["facet_queries"].Children().Any())
             {
                 this.Data = new Dictionary<string, long>();
             }
