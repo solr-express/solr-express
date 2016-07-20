@@ -12,10 +12,6 @@ namespace SolrExpress.Core.Query.ParameterValue
         where TDocument : IDocument
         where TValue : struct
     {
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly TValue? _from;
-        private readonly TValue? _to;
-
         /// <summary>
         /// Create a range solr parameter value
         /// </summary>
@@ -26,9 +22,9 @@ namespace SolrExpress.Core.Query.ParameterValue
         {
             Checker.IsNull(expression);
 
-            this._expression = expression;
-            this._from = from;
-            this._to = to;
+            this.Expression = expression;
+            this.From = from;
+            this.To = to;
         }
 
         /// <summary>
@@ -37,7 +33,7 @@ namespace SolrExpress.Core.Query.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
             string fromValue;
             string toValue;
@@ -59,13 +55,13 @@ namespace SolrExpress.Core.Query.ParameterValue
 
             if (string.IsNullOrWhiteSpace(format))
             {
-                fromValue = this._from?.ToString() ?? "*";
-                toValue = this._to?.ToString() ?? "*";
+                fromValue = this.From?.ToString() ?? "*";
+                toValue = this.To?.ToString() ?? "*";
             }
             else
             {
-                fromValue = this._from != null ? ((IFormattable)this._from.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
-                toValue = this._to != null ? ((IFormattable)this._to.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
+                fromValue = this.From != null ? ((IFormattable)this.From.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
+                toValue = this.To != null ? ((IFormattable)this.To.Value).ToString(format, CultureInfo.InvariantCulture) : "*";
             }
 
             return $"{fieldName}:[{fromValue} TO {toValue}]";
@@ -81,7 +77,7 @@ namespace SolrExpress.Core.Query.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
@@ -91,5 +87,20 @@ namespace SolrExpress.Core.Query.ParameterValue
             isValid = false;
             errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
         }
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// From value in a range filter
+        /// </summary>
+        public TValue? From { get; private set; }
+
+        /// <summary>
+        /// To value in a range filter
+        /// </summary>
+        public TValue? To { get; private set; }
     }
 }

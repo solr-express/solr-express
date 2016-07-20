@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Query;
-using System.Linq;
+﻿using System.Linq;
 
 namespace SolrExpress.Core.Query.ParameterValue
 {
@@ -8,21 +7,18 @@ namespace SolrExpress.Core.Query.ParameterValue
     /// </summary>
     public sealed class Multi : IQueryParameterValue, IValidation
     {
-        private readonly SolrQueryConditionType _conditionType;
-        private readonly IQueryParameterValue[] _values;
-
         /// <summary>
         /// Create a multi solr parameter value
         /// </summary>
         /// <param name="conditionType">Condition type</param>
-        /// <param name="values">Value array of the filter</param>
+        /// <param name="values">Value array of filter</param>
         public Multi(SolrQueryConditionType conditionType, params IQueryParameterValue[] values)
         {
             Checker.IsNull(values);
             Checker.IsLowerThan(values.Length, 2);
 
-            this._values = values;
-            this._conditionType = conditionType;
+            this.Values = values;
+            this.ConditionType = conditionType;
         }
 
         /// <summary>
@@ -32,8 +28,8 @@ namespace SolrExpress.Core.Query.ParameterValue
         public string Execute()
         {
             var expression = string.Join(
-                string.Concat(" ", this._conditionType.ToString().ToUpper(), " "),
-                this._values.Select(q => q.Execute()));
+                string.Concat(" ", this.ConditionType.ToString().ToUpper(), " "),
+                this.Values.Select(q => q.Execute()));
 
             return $"({expression})";
         }
@@ -48,7 +44,7 @@ namespace SolrExpress.Core.Query.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            foreach (var queryParameterValue in this._values)
+            foreach (var queryParameterValue in this.Values)
             {
                 var queryValidation = queryParameterValue as IValidation;
 
@@ -65,5 +61,15 @@ namespace SolrExpress.Core.Query.ParameterValue
                 }
             }
         }
+
+        /// <summary>
+        /// Condition type
+        /// </summary>
+        public SolrQueryConditionType ConditionType { get; private set; }
+
+        /// <summary>
+        /// Value array of filter
+        /// </summary>
+        public IQueryParameterValue[] Values { get; private set; }
     }
 }

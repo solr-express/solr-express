@@ -10,11 +10,6 @@ namespace SolrExpress.Core.Query.ParameterValue
     public sealed class Spatial<TDocument> : IQueryParameterValue
         where TDocument : IDocument
     {
-        private readonly SolrSpatialFunctionType _functionType;
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly GeoCoordinate _centerPoint;
-        private readonly decimal _distance;
-
         /// <summary>
         /// Create a spatial filter parameter
         /// </summary>
@@ -26,10 +21,10 @@ namespace SolrExpress.Core.Query.ParameterValue
         {
             Checker.IsNull(expression);
 
-            this._functionType = functionType;
-            this._expression = expression;
-            this._centerPoint = centerPoint;
-            this._distance = distance;
+            this.FunctionType = functionType;
+            this.Expression = expression;
+            this.CenterPoint = centerPoint;
+            this.Distance = distance;
         }
 
         /// <summary>
@@ -38,12 +33,32 @@ namespace SolrExpress.Core.Query.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            return this._functionType.GetSolrSpatialFormule(
+            return this.FunctionType.GetSolrSpatialFormule(
                 fieldName,
-                this._centerPoint,
-                this._distance);
+                this.CenterPoint,
+                this.Distance);
         }
+
+        /// <summary>
+        /// Function used in the spatial filter
+        /// </summary>
+        public SolrSpatialFunctionType FunctionType { get; private set; }
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// Center point to spatial filter
+        /// </summary>
+        public GeoCoordinate CenterPoint { get; private set; }
+
+        /// <summary>
+        /// Distance from the center point
+        /// </summary>
+        public decimal Distance { get; private set; }
     }
 }

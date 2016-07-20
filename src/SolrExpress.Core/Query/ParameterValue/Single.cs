@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Query;
 using System;
 using System.Linq.Expressions;
 
@@ -11,9 +10,6 @@ namespace SolrExpress.Core.Query.ParameterValue
     public sealed class Single<TDocument> : IQueryParameterValue, IValidation
         where TDocument : IDocument
     {
-        private readonly Expression<Func<TDocument, object>> _expression;
-        private readonly string _value;
-
         /// <summary>
         /// Create a single solr parameter value
         /// </summary>
@@ -24,8 +20,8 @@ namespace SolrExpress.Core.Query.ParameterValue
             Checker.IsNull(expression);
             Checker.IsNullOrWhiteSpace(value);
 
-            this._expression = expression;
-            this._value = value;
+            this.Expression = expression;
+            this.Value = value;
         }
 
         /// <summary>
@@ -34,9 +30,9 @@ namespace SolrExpress.Core.Query.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this._expression.GetFieldNameFromExpression();
+            var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            return $"{fieldName}:{this._value}";
+            return $"{fieldName}:{this.Value}";
         }
 
         /// <summary>
@@ -49,7 +45,7 @@ namespace SolrExpress.Core.Query.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this._expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
@@ -59,5 +55,15 @@ namespace SolrExpress.Core.Query.ParameterValue
             isValid = false;
             errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
         }
+
+        /// <summary>
+        /// Expression used to find the property name
+        /// </summary>
+        public Expression<Func<TDocument, object>> Expression { get; private set; }
+
+        /// <summary>
+        /// Value of the filter
+        /// </summary>
+        public string Value { get; private set; }
     }
 }
