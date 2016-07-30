@@ -53,7 +53,7 @@ namespace SolrExpress.Solr5.Query.Parameter
             var withError = this
                 .Expressions
                 .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
-                .Any(solrFieldAttribute => solrFieldAttribute != null && !solrFieldAttribute.Stored);
+                .Any(solrFieldAttribute => (!solrFieldAttribute?.Stored) ?? true);
 
             if (!withError)
             {

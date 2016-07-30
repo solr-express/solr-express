@@ -68,7 +68,7 @@ namespace SolrExpress.Solr5.Query.Parameter
                 fieldName,
                 this.CenterPoint,
                 this.Distance);
-                        
+
             var array = new List<JProperty>
             {
                 new JProperty("q", this.Excludes.GetSolrFacetWithExcludes(formule))
@@ -105,7 +105,7 @@ namespace SolrExpress.Solr5.Query.Parameter
 
             var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
-            if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
+            if (solrFieldAttribute?.Indexed ?? true)
             {
                 return;
             }

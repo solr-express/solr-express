@@ -107,5 +107,50 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 10));
         }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void SpatialFilterParameter006()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void SpatialFilterParameter007()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException, errorMessage);
+        }
     }
 }

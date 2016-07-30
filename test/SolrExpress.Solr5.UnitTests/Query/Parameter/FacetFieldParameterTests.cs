@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr5.Query.Parameter;
 using System;
+using SolrExpress.Core;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
@@ -157,6 +158,49 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 
             // Assert
             Assert.Equal(actual, expected.ToString());
+        }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FacetFieldParameter006()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FacetFieldParameter007()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException, errorMessage);
         }
     }
 }

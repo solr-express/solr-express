@@ -65,10 +65,7 @@ namespace SolrExpress.Solr4.Query.Parameter
 
             var queryValidation = this.Query as IValidation;
 
-            if (queryValidation != null)
-            {
-                queryValidation.Validate(out isValid, out errorMessage);
-            }
+            queryValidation?.Validate(out isValid, out errorMessage);
         }
     }
 }

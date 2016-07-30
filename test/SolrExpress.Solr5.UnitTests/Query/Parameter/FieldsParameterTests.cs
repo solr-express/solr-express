@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Solr5.Query.Parameter;
 using System;
 using System.Linq.Expressions;
+using SolrExpress.Core;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 {
@@ -42,53 +43,11 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 
         /// <summary>
         /// Where   Using a FieldsParameter instance
-        /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
-        /// What    Returns valid=false
-        /// </summary>
-        [Fact]
-        public void FieldsParameter002()
-        {
-            // Arrange
-            bool actual;
-            string dummy;
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
-            parameter.Configure(q => q.NotStored);
-
-            // Act
-            parameter.Validate(out actual, out dummy);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        /// <summary>
-        /// Where   Using a FieldsParameter instance
-        /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
-        /// What    Returns valid=true
-        /// </summary>
-        [Fact]
-        public void FieldsParameter003()
-        {
-            // Arrange
-            bool actual;
-            string dummy;
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
-            parameter.Configure(q => q.Stored);
-
-            // Act
-            parameter.Validate(out actual, out dummy);
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        /// <summary>
-        /// Where   Using a FieldsParameter instance
         /// When    Invoking the method "Execute" using 1 instance and 2 expressions
         /// What    Create a valid string
         /// </summary>
         [Fact]
-        public void FieldsParameter004()
+        public void FieldsParameter002()
         {
             // Arrange
             var expected = JObject.Parse(@"
@@ -117,7 +76,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// What    Returns valid=false
         /// </summary>
         [Fact]
-        public void FieldsParameter005()
+        public void FieldsParameter003()
         {
             // Arrange
             bool actual;
@@ -138,7 +97,7 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void FieldListParameter006()
+        public void FieldsParameter004()
         {
             // Arrange
             var parameter = new FieldsParameter<TestDocument>();
@@ -153,13 +112,56 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
         /// What    Throws ArgumentOutOfRangeException
         /// </summary>
         [Fact]
-        public void FieldListParameter007()
+        public void FieldsParameter005()
         {
             // Arrange
             var parameter = new FieldsParameter<TestDocument>();
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
+        }
+
+        /// <summary>
+        /// Where   Using a FieldsParameter instance
+        /// When    Invoking the method "Validate" using field Store=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FieldsParameter006()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldsParameter instance
+        /// When    Invoking the method "Validate" using field Store=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FieldsParameter007()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new FieldsParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotStored);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeStoredTrueToBeUsedInFieldsException, errorMessage);
         }
     }
 }

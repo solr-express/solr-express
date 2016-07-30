@@ -90,7 +90,7 @@ namespace SolrExpress.Solr5.Query.Parameter
 
             var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
 
-            if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
+            if (solrFieldAttribute?.Indexed ?? true)
             {
                 return;
             }

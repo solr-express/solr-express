@@ -100,7 +100,7 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
         {
             // Arrange
             var paramater = new FacetFieldParameter<TestDocument>();
-            
+
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => paramater.Configure(null));
         }
@@ -150,6 +150,51 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
             Assert.Equal("facet=true", container[0]);
             Assert.Equal("facet.field={!ex=tag1,tag2 key=Id}_id_", container[1]);
             Assert.Equal("f._id_.facet.mincount=1", container[2]);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FacetFieldParameter008()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetFieldParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FacetFieldParameter009()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException, errorMessage);
         }
     }
 }

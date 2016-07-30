@@ -68,9 +68,7 @@ namespace SolrExpress.Solr5.Query.Parameter
                 .Expression
                 .GetSolrFieldAttributeFromPropertyInfo();
 
-            var withError = solrFieldAttribute != null && !solrFieldAttribute.Indexed;
-
-            if (!withError)
+            if (solrFieldAttribute?.Indexed ?? true)
             {
                 return;
             }

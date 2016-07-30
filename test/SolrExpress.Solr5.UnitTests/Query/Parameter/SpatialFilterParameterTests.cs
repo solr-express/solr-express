@@ -88,38 +88,60 @@ namespace SolrExpress.Solr5.UnitTests.Query.Parameter
 
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
-        /// When    Create the instance with an expression using a field indicated with "index=true" and invoke Validate method
-        /// What    Returns valid=true
-        /// </summary>
-        [Fact]
-        public void SpatialFilterParameter004()
-        {
-            // Arrange
-            bool actual;
-            string dummy;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
-            parameter.Configure(q => q.Indexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
-
-            // Act
-            parameter.Validate(out actual, out dummy);
-
-            // Assert
-            Assert.True(actual);
-        }
-
-        /// <summary>
-        /// Where   Using a SpatialFilterParameter instance
         /// When    Create the instance with null
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void SpatialFilterParameter005()
+        public void SpatialFilterParameter004()
         {
             // Arrange
             var parameter = new SpatialFilterParameter<TestDocument>();
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 10));
+        }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void SpatialFilterParameter006()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void SpatialFilterParameter007()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+            
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException, errorMessage);
         }
     }
 }

@@ -68,11 +68,7 @@ namespace SolrExpress.Solr5.Query.Parameter
             errorMessage = string.Empty;
 
             var queryValidation = this.Query as IValidation;
-
-            if (queryValidation != null)
-            {
-                queryValidation.Validate(out isValid, out errorMessage);
-            }
+            queryValidation?.Validate(out isValid, out errorMessage);
         }
     }
 }

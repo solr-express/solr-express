@@ -46,17 +46,40 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Execute" using a expression with a index=false field
-        /// What    Validation returns false
+        /// When    Invoking the method "Validate" using field Indexed=true
+        /// What    Valid is true
         /// </summary>
         [Fact]
         public void SortParameter003()
         {
             // Arrange
-            var parameter = new SortParameter<TestDocument>();
-            parameter.Configure(q => q.IndexedFalse, true);
             bool isValid;
             string errorMessage;
+            var container = new List<string>();
+            var parameter = new SortParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Indexed, true);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a SortParameter instance
+        /// When    Invoking the method "Validate" using field Indexed=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void SortParameter004()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new SortParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotIndexed, true);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);

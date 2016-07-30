@@ -3,6 +3,7 @@ using SolrExpress.Solr4.Query.Parameter;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using SolrExpress.Core;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 {
@@ -144,6 +145,51 @@ namespace SolrExpress.Solr4.UnitTests.Query.Parameter
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Invoking the method "Validate" using field Stored=true
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FieldListParameter008()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.Stored);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.True(isValid);
+        }
+
+        /// <summary>
+        /// Where   Using a FieldListParameter instance
+        /// When    Invoking the method "Validate" using field Stored=false
+        /// What    Valid is true
+        /// </summary>
+        [Fact]
+        public void FieldListParameter009()
+        {
+            // Arrange
+            bool isValid;
+            string errorMessage;
+            var container = new List<string>();
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            parameter.Configure(q => q.NotStored);
+
+            // Act
+            parameter.Validate(out isValid, out errorMessage);
+
+            // Assert
+            Assert.False(isValid);
+            Assert.Equal(Resource.FieldMustBeStoredTrueToBeUsedInFieldsException, errorMessage);
         }
     }
 }
