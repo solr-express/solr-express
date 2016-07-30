@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Query.Parameter;
+using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Query.Parameter
 {
@@ -27,11 +28,28 @@ namespace SolrExpress.Solr5.Query.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
+            var parameters = new Dictionary<string, string>
+            {
+                ["echoParams"] = "none",
+                ["wt"] = "json",
+                ["indent"] = "off",
+                ["defType"] = "edismax",
+                ["fl"] = "*,score",
+                ["q.alt"] = "*:*",
+                ["sort"] = "score asc",
+                ["df"] = "id",
+                ["q]"] = "*:*"
+            };
+
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            jObj.Add(new JProperty("echoParams", "none"));
-            jObj.Add(new JProperty("wt", "json"));
-            jObj.Add(new JProperty("indent", "off"));
+            foreach (var parameter in parameters)
+            {
+                if (jObj[parameter.Key] == null)
+                {
+                    jObj.Add(new JProperty(parameter.Key, parameter.Value));
+                }
+            }
 
             jObject["params"] = jObj;
         }
