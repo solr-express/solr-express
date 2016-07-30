@@ -1,3 +1,10 @@
+# [3.1.2] - 2016-07-30
+## Enhancement
+* Add default parameters (#125)
+* Create unit test to test validations methods (#129)
+* Organize changelogs in CHANGELOG.md file (#133)
+* Change projects dependencies (#136)
+
 # [3.1.1] - 2016-07-19
 
 ## Bug fix
