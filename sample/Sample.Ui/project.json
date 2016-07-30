@@ -39,8 +39,12 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "SolrExpress.Core": "3.1.1",
-    "SolrExpress.Solr5": "3.1.1"
+    "SolrExpress.Core": {
+      "target": "project"
+    },
+    "SolrExpress.Solr5": {
+      "target": "project"
+    }
   },
 
   "tools": {

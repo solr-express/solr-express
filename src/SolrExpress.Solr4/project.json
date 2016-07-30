@@ -5,7 +5,9 @@
     "keyFile": "../../Key.snk"
   },
   "dependencies": {
-    "SolrExpress.Core": "3.1.1"
+    "SolrExpress.Core": {
+      "target": "project"
+    }
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 4.x",
   "frameworks": {
