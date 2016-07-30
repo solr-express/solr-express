@@ -30,6 +30,16 @@ namespace SolrExpress.Solr4.Query.Parameter
             container.Add("echoParams=none");
             container.Add("wt=json");
             container.Add("indent=off");
+
+
+
+//Add follow parameters in default parameters
+//* defType
+//* fl
+//*q.alt
+//* sort
+//* df
+//* q:*:*(if IQueryParameter didn't informed)
         }
     }
 }
