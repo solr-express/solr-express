@@ -16,7 +16,7 @@ namespace SolrExpress.Core.Benchmarks.Query
         public void Setup()
         {
             var mockProvider = new Mock<IProvider>();
-            var mockResolver = new Mock<IDependencyResolver>();
+            var mockResolver = new Mock<IResolver>();
             var configuration = new Configuration();
             var parametersLarge = new List<IParameter<object>>();
             var parametersSmall = new List<IParameter<object>>();
