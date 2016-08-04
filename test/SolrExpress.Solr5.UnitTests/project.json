@@ -1,5 +1,4 @@
 ﻿{
-  "authors": [ "diego.lb" ],
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../Key.snk"
@@ -12,7 +11,6 @@
       "target": "project"
     }
   },
-  "description": "SolrExpress.Solr5.UnitTests Class Library",
   "frameworks": {
     "netcoreapp1.0": {
       "imports": [
@@ -39,21 +37,11 @@
     "net45": {
       "dependencies": {
         "Moq": "4.5.3",
-        "System.Runtime": "4.1.0",
-        "System.Threading.Tasks": "4.0.11",
+        "System.Runtime": "4.0.0",
+        "System.Threading.Tasks": "4.0.0",
         "xunit": "2.2.0-beta1-build3239"
       }
     }
   },
-  "packOptions": {
-    "licenseUrl": "https://github.com/solr-express/solr-express",
-    "repository": {
-      "url": "https://github.com/solr-express/solr-express",
-      "type": "git"
-    },
-    "requireLicenseAcceptance": false,
-    "tags": [ "SOLR", "C#", ".Net" ]
-  },
-  "testRunner": "xunit",
-  "version": "3.1.2"
+  "testRunner": "xunit"
 }

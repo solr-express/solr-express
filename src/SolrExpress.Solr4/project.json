@@ -4,6 +4,19 @@
     "warningsAsErrors": true,
     "keyFile": "../../Key.snk"
   },
+  "configurations": {
+    "Debug": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "buildOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  },
   "dependencies": {
     "SolrExpress.Core": {
       "target": "project"

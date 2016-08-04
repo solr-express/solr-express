@@ -1,13 +1,27 @@
-﻿{
+{
   "authors": [ "diego.lb" ],
   "buildOptions": {
     "warningsAsErrors": true,
     "keyFile": "../../Key.snk"
   },
+  "configurations": {
+    "Debug": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "buildOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way - Core library",
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
+        "Microsoft.Extensions.Options": "1.0.0",
         "Newtonsoft.Json": "9.0.1",
         "System.Console": "4.0.0",
         "System.Diagnostics.Tools": "4.0.1",
