@@ -3,19 +3,21 @@ using Moq;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr4.Query;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Solr4.Benchmarks.Query
 {
     public class ParameterContainerBenchmarks
     {
-        private ParameterContainer _parameterContainerLarge;
-        private ParameterContainer _parameterContainerSmall;
+        private ParameterContainer _parameterContainer10;
+        private ParameterContainer _parameterContainer100;
+        private ParameterContainer _parameterContainer500;
+        private ParameterContainer _parameterContainer1000;
 
         [Setup]
         public void Setup()
         {
-            var parametersLarge = new List<IParameter>();
-            var parametersSmall = new List<IParameter>();
+            var parameters = new List<IParameter>();
 
             for (int i = 0; i < 1000; i++)
             {
@@ -23,45 +25,62 @@ namespace SolrExpress.Solr4.Benchmarks.Query
                 parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
                 parameterMock.Setup(q => q.Execute(It.IsAny<List<string>>())).Callback((List<string> list) => list.Add("X"));
 
-                parametersLarge.Add(parameterMock.Object);
+                parameters.Add(parameterMock.Object);
             }
+            
+            this._parameterContainer10 = new ParameterContainer();
+            this._parameterContainer100 = new ParameterContainer();
+            this._parameterContainer500 = new ParameterContainer();
+            this._parameterContainer1000 = new ParameterContainer();
 
-            for (int i = 0; i < 10; i++)
-            {
-                var parameterMock = new Mock<IParameter<List<string>>>();
-                parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
-                parameterMock.Setup(q => q.Execute(It.IsAny<List<string>>())).Callback((List<string> list) => list.Add("X"));
-
-                parametersSmall.Add(parameterMock.Object);
-            }
-
-            this._parameterContainerLarge = new ParameterContainer();
-            this._parameterContainerLarge.AddParameters(parametersLarge);
-
-            this._parameterContainerSmall = new ParameterContainer();
-            this._parameterContainerSmall.AddParameters(parametersSmall);
+            this._parameterContainer10.AddParameters(parameters.Take(10).ToList());
+            this._parameterContainer100.AddParameters(parameters.Take(100).ToList());
+            this._parameterContainer500.AddParameters(parameters.Take(500).ToList());
+            this._parameterContainer1000.AddParameters(parameters);
         }
 
         /// <summary>
-        /// Where   Using a SolrQueryable instance
+        /// Where   Using a ParameterContainer instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 10 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void ParameterContainerWith10Parameters()
+        {
+            var result = this._parameterContainer10.Execute();
+        }
+
+        /// <summary>
+        /// Where   Using a ParameterContainer instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 100 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void ParameterContainerWith100Parameters()
+        {
+            var result = this._parameterContainer100.Execute();
+        }
+
+        /// <summary>
+        /// Where   Using a ParameterContainer instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 500 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void ParameterContainerWith500Parameters()
+        {
+            var result = this._parameterContainer500.Execute();
+        }
+
+        /// <summary>
+        /// Where   Using a ParameterContainer instance
         /// When    Invoking the method "Execute"
         /// With    Using 1000 parameters
         /// </summary>
         [Benchmark]
-        public void SolrQueryableWith1000Parameters()
+        public void ParameterContainerWith1000Parameters()
         {
-            var result = this._parameterContainerLarge.Execute();
-        }
-
-        /// <summary>
-        /// Where   Using a SolrQueryable instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 10 parameters
-        /// </summary>
-        [Benchmark]
-        public void SolrQueryableWith10Parameters()
-        {
-            var result = this._parameterContainerSmall.Execute();
+            var result = this._parameterContainer1000.Execute();
         }
     }
 }

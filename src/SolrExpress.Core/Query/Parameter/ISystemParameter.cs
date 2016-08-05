@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in internal use
     /// </summary>
-    internal interface ISystemParameter : IParameter
+    public interface ISystemParameter : IParameter
     {
         /// <summary>
         /// Configure current instance

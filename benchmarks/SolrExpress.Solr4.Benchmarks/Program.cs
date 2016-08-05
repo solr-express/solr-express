@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Benchmarks
                 .With(StatisticColumn.AllStatistics)
                 .With(ExecutionValidator.FailOnError)
                 .With(Job.LongRun);
-            
+
             BenchmarkRunner.Run<ParameterContainerBenchmarks>(config);
         }
     }

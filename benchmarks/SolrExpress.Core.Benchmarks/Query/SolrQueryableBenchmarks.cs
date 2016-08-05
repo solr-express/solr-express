@@ -4,13 +4,16 @@ using Moq;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Core.Benchmarks.Query
 {
     public class SolrQueryableBenchmarks
     {
-        private SolrQueryable<TestDocument> _queryableLarge;
-        private SolrQueryable<TestDocument> _queryableSmall;
+        private SolrQueryable<TestDocument> _solrQueryable10;
+        private SolrQueryable<TestDocument> _solrQueryable100;
+        private SolrQueryable<TestDocument> _solrQueryable500;
+        private SolrQueryable<TestDocument> _solrQueryable1000;
 
         [Setup]
         public void Setup()
@@ -18,8 +21,7 @@ namespace SolrExpress.Core.Benchmarks.Query
             var mockProvider = new Mock<IProvider>();
             var mockResolver = new Mock<IResolver>();
             var configuration = new Configuration();
-            var parametersLarge = new List<IParameter<object>>();
-            var parametersSmall = new List<IParameter<object>>();
+            var parameters = new List<IParameter<object>>();
 
             mockProvider.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
 
@@ -34,23 +36,51 @@ namespace SolrExpress.Core.Benchmarks.Query
                 parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
                 parameterMock.Setup(q => q.Execute(It.IsAny<object>()));
 
-                parametersLarge.Add(parameterMock.Object);
+                parameters.Add(parameterMock.Object);
             }
+            
+            this._solrQueryable10 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
+            this._solrQueryable100 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
+            this._solrQueryable500 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
+            this._solrQueryable1000 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
 
-            for (int i = 0; i < 10; i++)
-            {
-                var parameterMock = new Mock<IParameter<object>>();
-                parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
-                parameterMock.Setup(q => q.Execute(It.IsAny<object>()));
+            this._solrQueryable10.Parameter(parameters.Take(10).ToArray());
+            this._solrQueryable100.Parameter(parameters.Take(100).ToArray());
+            this._solrQueryable500.Parameter(parameters.Take(500).ToArray());
+            this._solrQueryable1000.Parameter(parameters.ToArray());
+        }
 
-                parametersSmall.Add(parameterMock.Object);
-            }
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 10 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void SolrQueryableWith10Parameters()
+        {
+            var result = this._solrQueryable10.Execute();
+        }
 
-            this._queryableLarge = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
-            this._queryableLarge.Parameter(parametersLarge.ToArray());
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 100 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void SolrQueryableWith100Parameters()
+        {
+            var result = this._solrQueryable100.Execute();
+        }
 
-            this._queryableSmall = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
-            this._queryableSmall.Parameter(parametersSmall.ToArray());
+        /// <summary>
+        /// Where   Using a SolrQueryable instance
+        /// When    Invoking the method "Execute"
+        /// With    Using 500 parameters
+        /// </summary>
+        [Benchmark(Baseline = true)]
+        public void SolrQueryableWith500Parameters()
+        {
+            var result = this._solrQueryable500.Execute();
         }
 
         /// <summary>
@@ -61,18 +91,7 @@ namespace SolrExpress.Core.Benchmarks.Query
         [Benchmark]
         public void SolrQueryableWith1000Parameters()
         {
-            var result = this._queryableLarge.Execute();
-        }
-
-        /// <summary>
-        /// Where   Using a SolrQueryable instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 10 parameters
-        /// </summary>
-        [Benchmark]
-        public void SolrQueryableWith10Parameters()
-        {
-            var result = this._queryableLarge.Execute();
+            var result = this._solrQueryable1000.Execute();
         }
     }
 }

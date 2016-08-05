@@ -1,6 +1,5 @@
 ﻿using SolrExpress.Core.Query;
 using SolrExpress.Core.Update;
-using System;
 
 namespace SolrExpress.Core
 {
