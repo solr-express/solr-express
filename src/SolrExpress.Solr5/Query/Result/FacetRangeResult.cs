@@ -93,6 +93,11 @@ namespace SolrExpress.Solr5.Query.Result
                 return ((DateTime)value).Add((TimeSpan)gapValue);
             }
 
+            if (facetType == typeof(long))
+            {
+                return ((long)value) + Convert.ToInt64(gapValue);
+            }
+
             return ((int)value) + Convert.ToInt32(gapValue);
         }
 
