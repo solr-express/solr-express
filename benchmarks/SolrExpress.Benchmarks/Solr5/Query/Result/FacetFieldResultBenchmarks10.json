@@ -1,0 +1,401 @@
+﻿{
+  "facets": {
+    "count": 100,
+    "balance": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 634
+        },
+        {
+          "val": "VALUE1",
+          "count": 1655
+        },
+        {
+          "val": "VALUE2",
+          "count": 768
+        },
+        {
+          "val": "VALUE3",
+          "count": 982
+        },
+        {
+          "val": "VALUE4",
+          "count": 302
+        },
+        {
+          "val": "VALUE5",
+          "count": 1211
+        },
+        {
+          "val": "VALUE6",
+          "count": 1864
+        },
+        {
+          "val": "VALUE7",
+          "count": 867
+        },
+        {
+          "val": "VALUE8",
+          "count": 165
+        },
+        {
+          "val": "VALUE9",
+          "count": 522
+        }
+      ]
+    },
+    "age": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 752
+        },
+        {
+          "val": "VALUE1",
+          "count": 1955
+        },
+        {
+          "val": "VALUE2",
+          "count": 1611
+        },
+        {
+          "val": "VALUE3",
+          "count": 921
+        },
+        {
+          "val": "VALUE4",
+          "count": 1699
+        },
+        {
+          "val": "VALUE5",
+          "count": 1951
+        },
+        {
+          "val": "VALUE6",
+          "count": 1011
+        },
+        {
+          "val": "VALUE7",
+          "count": 48
+        },
+        {
+          "val": "VALUE8",
+          "count": 176
+        },
+        {
+          "val": "VALUE9",
+          "count": 1291
+        }
+      ]
+    },
+    "eyeColor": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 1405
+        },
+        {
+          "val": "VALUE1",
+          "count": 1241
+        },
+        {
+          "val": "VALUE2",
+          "count": 154
+        },
+        {
+          "val": "VALUE3",
+          "count": 1448
+        },
+        {
+          "val": "VALUE4",
+          "count": 861
+        },
+        {
+          "val": "VALUE5",
+          "count": 886
+        },
+        {
+          "val": "VALUE6",
+          "count": 712
+        },
+        {
+          "val": "VALUE7",
+          "count": 1841
+        },
+        {
+          "val": "VALUE8",
+          "count": 1380
+        },
+        {
+          "val": "VALUE9",
+          "count": 604
+        }
+      ]
+    },
+    "name": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 495
+        },
+        {
+          "val": "VALUE1",
+          "count": 600
+        },
+        {
+          "val": "VALUE2",
+          "count": 727
+        },
+        {
+          "val": "VALUE3",
+          "count": 1823
+        },
+        {
+          "val": "VALUE4",
+          "count": 831
+        },
+        {
+          "val": "VALUE5",
+          "count": 630
+        },
+        {
+          "val": "VALUE6",
+          "count": 420
+        },
+        {
+          "val": "VALUE7",
+          "count": 1818
+        },
+        {
+          "val": "VALUE8",
+          "count": 490
+        },
+        {
+          "val": "VALUE9",
+          "count": 921
+        }
+      ]
+    },
+    "gender": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 265
+        },
+        {
+          "val": "VALUE1",
+          "count": 874
+        },
+        {
+          "val": "VALUE2",
+          "count": 189
+        },
+        {
+          "val": "VALUE3",
+          "count": 1510
+        },
+        {
+          "val": "VALUE4",
+          "count": 1093
+        },
+        {
+          "val": "VALUE5",
+          "count": 252
+        },
+        {
+          "val": "VALUE6",
+          "count": 1514
+        },
+        {
+          "val": "VALUE7",
+          "count": 333
+        },
+        {
+          "val": "VALUE8",
+          "count": 742
+        },
+        {
+          "val": "VALUE9",
+          "count": 1212
+        }
+      ]
+    },
+    "company": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 1418
+        },
+        {
+          "val": "VALUE1",
+          "count": 1246
+        },
+        {
+          "val": "VALUE2",
+          "count": 1698
+        },
+        {
+          "val": "VALUE3",
+          "count": 1119
+        },
+        {
+          "val": "VALUE4",
+          "count": 1327
+        },
+        {
+          "val": "VALUE5",
+          "count": 1984
+        },
+        {
+          "val": "VALUE6",
+          "count": 483
+        },
+        {
+          "val": "VALUE7",
+          "count": 1106
+        },
+        {
+          "val": "VALUE8",
+          "count": 1073
+        },
+        {
+          "val": "VALUE9",
+          "count": 1337
+        }
+      ]
+    },
+    "email": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 1817
+        },
+        {
+          "val": "VALUE1",
+          "count": 1037
+        },
+        {
+          "val": "VALUE2",
+          "count": 1922
+        },
+        {
+          "val": "VALUE3",
+          "count": 707
+        },
+        {
+          "val": "VALUE4",
+          "count": 1047
+        },
+        {
+          "val": "VALUE5",
+          "count": 1693
+        },
+        {
+          "val": "VALUE6",
+          "count": 758
+        },
+        {
+          "val": "VALUE7",
+          "count": 1756
+        },
+        {
+          "val": "VALUE8",
+          "count": 133
+        },
+        {
+          "val": "VALUE9",
+          "count": 1265
+        }
+      ]
+    },
+    "phone": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 1548
+        },
+        {
+          "val": "VALUE1",
+          "count": 1930
+        },
+        {
+          "val": "VALUE2",
+          "count": 272
+        },
+        {
+          "val": "VALUE3",
+          "count": 145
+        },
+        {
+          "val": "VALUE4",
+          "count": 458
+        },
+        {
+          "val": "VALUE5",
+          "count": 15
+        },
+        {
+          "val": "VALUE6",
+          "count": 1936
+        },
+        {
+          "val": "VALUE7",
+          "count": 929
+        },
+        {
+          "val": "VALUE8",
+          "count": 394
+        },
+        {
+          "val": "VALUE9",
+          "count": 532
+        }
+      ]
+    },
+    "favoriteFruit": {
+      "buckets": [
+        {
+          "val": "VALUE0",
+          "count": 1502
+        },
+        {
+          "val": "VALUE1",
+          "count": 1872
+        },
+        {
+          "val": "VALUE2",
+          "count": 1519
+        },
+        {
+          "val": "VALUE3",
+          "count": 759
+        },
+        {
+          "val": "VALUE4",
+          "count": 377
+        },
+        {
+          "val": "VALUE5",
+          "count": 1337
+        },
+        {
+          "val": "VALUE6",
+          "count": 1568
+        },
+        {
+          "val": "VALUE7",
+          "count": 444
+        },
+        {
+          "val": "VALUE8",
+          "count": 322
+        },
+        {
+          "val": "VALUE9",
+          "count": 1058
+        }
+      ]
+    }
+  }
+}

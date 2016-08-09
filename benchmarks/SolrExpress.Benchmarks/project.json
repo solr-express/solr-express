@@ -1,0 +1,69 @@
+{
+  "buildOptions": {
+    "allowUnsafe": true,
+    "emitEntryPoint": true,
+    "keyFile": "../../Key.snk",
+    "strongName": true,
+    "warningsAsErrors": true
+  },
+  "configurations": {
+    "Debug": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "buildOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  },
+  "dependencies": {
+    "SolrExpress.Core": {
+      "target": "project"
+    },
+    "SolrExpress.Solr4": {
+      "target": "project"
+    },
+    "SolrExpress.Solr5": {
+      "target": "project"
+    }
+  },
+  "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "define": [ "CLASSIC" ]
+      },
+      "frameworkAssemblies": {
+        "System.Reflection": "4.0.0.0"
+      },
+      "dependencies": {
+        "BenchmarkDotNet": "0.9.8",
+        "Moq": "4.5.16"
+      }
+    },
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [ "CORE" ]
+      },
+      "dependencies": {
+        "BenchmarkDotNet": "0.9.8",
+        "Microsoft.NETCore.App": {
+          "version": "1.0.0",
+          "type": "platform"
+        },
+        "moq.netcore": "4.4.0-beta8",
+        "System.ComponentModel.EventBasedAsync": "4.0.11",
+        "System.Diagnostics.TraceSource": "4.0.0",
+        "System.IO": "4.1.0",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Text.Encoding": "4.0.11"
+      },
+      "imports": [
+        "dnxcore50"
+      ]
+    }
+  }
+}

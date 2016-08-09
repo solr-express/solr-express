@@ -1,0 +1,305 @@
+{
+  "facets": {
+    "count": 1000,
+    "VaLUE0": {
+      "count": 0
+    },
+    "VaLUE1": {
+      "count": 100
+    },
+    "VaLUE2": {
+      "count": 200
+    },
+    "VaLUE3": {
+      "count": 300
+    },
+    "VaLUE4": {
+      "count": 400
+    },
+    "VaLUE5": {
+      "count": 500
+    },
+    "VaLUE6": {
+      "count": 600
+    },
+    "VaLUE7": {
+      "count": 700
+    },
+    "VaLUE8": {
+      "count": 800
+    },
+    "VaLUE9": {
+      "count": 900
+    },
+    "VaLUE10": {
+      "count": 1000
+    },
+    "VaLUE11": {
+      "count": 1100
+    },
+    "VaLUE12": {
+      "count": 1200
+    },
+    "VaLUE13": {
+      "count": 1300
+    },
+    "VaLUE14": {
+      "count": 1400
+    },
+    "VaLUE15": {
+      "count": 1500
+    },
+    "VaLUE16": {
+      "count": 1600
+    },
+    "VaLUE17": {
+      "count": 1700
+    },
+    "VaLUE18": {
+      "count": 1800
+    },
+    "VaLUE19": {
+      "count": 1900
+    },
+    "VaLUE20": {
+      "count": 2000
+    },
+    "VaLUE21": {
+      "count": 2100
+    },
+    "VaLUE22": {
+      "count": 2200
+    },
+    "VaLUE23": {
+      "count": 2300
+    },
+    "VaLUE24": {
+      "count": 2400
+    },
+    "VaLUE25": {
+      "count": 2500
+    },
+    "VaLUE26": {
+      "count": 2600
+    },
+    "VaLUE27": {
+      "count": 2700
+    },
+    "VaLUE28": {
+      "count": 2800
+    },
+    "VaLUE29": {
+      "count": 2900
+    },
+    "VaLUE30": {
+      "count": 3000
+    },
+    "VaLUE31": {
+      "count": 3100
+    },
+    "VaLUE32": {
+      "count": 3200
+    },
+    "VaLUE33": {
+      "count": 3300
+    },
+    "VaLUE34": {
+      "count": 3400
+    },
+    "VaLUE35": {
+      "count": 3500
+    },
+    "VaLUE36": {
+      "count": 3600
+    },
+    "VaLUE37": {
+      "count": 3700
+    },
+    "VaLUE38": {
+      "count": 3800
+    },
+    "VaLUE39": {
+      "count": 3900
+    },
+    "VaLUE40": {
+      "count": 4000
+    },
+    "VaLUE41": {
+      "count": 4100
+    },
+    "VaLUE42": {
+      "count": 4200
+    },
+    "VaLUE43": {
+      "count": 4300
+    },
+    "VaLUE44": {
+      "count": 4400
+    },
+    "VaLUE45": {
+      "count": 4500
+    },
+    "VaLUE46": {
+      "count": 4600
+    },
+    "VaLUE47": {
+      "count": 4700
+    },
+    "VaLUE48": {
+      "count": 4800
+    },
+    "VaLUE49": {
+      "count": 4900
+    },
+    "VaLUE50": {
+      "count": 5000
+    },
+    "VaLUE51": {
+      "count": 5100
+    },
+    "VaLUE52": {
+      "count": 5200
+    },
+    "VaLUE53": {
+      "count": 5300
+    },
+    "VaLUE54": {
+      "count": 5400
+    },
+    "VaLUE55": {
+      "count": 5500
+    },
+    "VaLUE56": {
+      "count": 5600
+    },
+    "VaLUE57": {
+      "count": 5700
+    },
+    "VaLUE58": {
+      "count": 5800
+    },
+    "VaLUE59": {
+      "count": 5900
+    },
+    "VaLUE60": {
+      "count": 6000
+    },
+    "VaLUE61": {
+      "count": 6100
+    },
+    "VaLUE62": {
+      "count": 6200
+    },
+    "VaLUE63": {
+      "count": 6300
+    },
+    "VaLUE64": {
+      "count": 6400
+    },
+    "VaLUE65": {
+      "count": 6500
+    },
+    "VaLUE66": {
+      "count": 6600
+    },
+    "VaLUE67": {
+      "count": 6700
+    },
+    "VaLUE68": {
+      "count": 6800
+    },
+    "VaLUE69": {
+      "count": 6900
+    },
+    "VaLUE70": {
+      "count": 7000
+    },
+    "VaLUE71": {
+      "count": 7100
+    },
+    "VaLUE72": {
+      "count": 7200
+    },
+    "VaLUE73": {
+      "count": 7300
+    },
+    "VaLUE74": {
+      "count": 7400
+    },
+    "VaLUE75": {
+      "count": 7500
+    },
+    "VaLUE76": {
+      "count": 7600
+    },
+    "VaLUE77": {
+      "count": 7700
+    },
+    "VaLUE78": {
+      "count": 7800
+    },
+    "VaLUE79": {
+      "count": 7900
+    },
+    "VaLUE80": {
+      "count": 8000
+    },
+    "VaLUE81": {
+      "count": 8100
+    },
+    "VaLUE82": {
+      "count": 8200
+    },
+    "VaLUE83": {
+      "count": 8300
+    },
+    "VaLUE84": {
+      "count": 8400
+    },
+    "VaLUE85": {
+      "count": 8500
+    },
+    "VaLUE86": {
+      "count": 8600
+    },
+    "VaLUE87": {
+      "count": 8700
+    },
+    "VaLUE88": {
+      "count": 8800
+    },
+    "VaLUE89": {
+      "count": 8900
+    },
+    "VaLUE90": {
+      "count": 9000
+    },
+    "VaLUE91": {
+      "count": 9100
+    },
+    "VaLUE92": {
+      "count": 9200
+    },
+    "VaLUE93": {
+      "count": 9300
+    },
+    "VaLUE94": {
+      "count": 9400
+    },
+    "VaLUE95": {
+      "count": 9500
+    },
+    "VaLUE96": {
+      "count": 9600
+    },
+    "VaLUE97": {
+      "count": 9700
+    },
+    "VaLUE98": {
+      "count": 9800
+    },
+    "VaLUE99": {
+      "count": 9900
+    }
+  }
+}
