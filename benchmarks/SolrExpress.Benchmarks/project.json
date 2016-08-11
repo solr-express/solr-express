@@ -20,6 +20,8 @@
     }
   },
   "dependencies": {
+    "BenchmarkDotNet": "0.9.8-develop",
+    "Moq": "4.6.36-alpha",
     "SolrExpress.Core": {
       "target": "project"
     },
@@ -37,10 +39,6 @@
       },
       "frameworkAssemblies": {
         "System.Reflection": "4.0.0.0"
-      },
-      "dependencies": {
-        "BenchmarkDotNet": "0.9.8",
-        "Moq": "4.5.16"
       }
     },
     "netcoreapp1.0": {
@@ -48,22 +46,19 @@
         "define": [ "CORE" ]
       },
       "dependencies": {
-        "BenchmarkDotNet": "0.9.8",
         "Microsoft.NETCore.App": {
           "version": "1.0.0",
           "type": "platform"
         },
-        "moq.netcore": "4.4.0-beta8",
         "System.ComponentModel.EventBasedAsync": "4.0.11",
         "System.Diagnostics.TraceSource": "4.0.0",
         "System.IO": "4.1.0",
         "System.Reflection": "4.1.0",
         "System.Reflection.Extensions": "4.0.1",
         "System.Text.Encoding": "4.0.11"
-      },
-      "imports": [
-        "dnxcore50"
-      ]
+      }
     }
-  }
+  },
+  "title": "SolrExpress.Benchmarks",
+  "version": "3.1.2"
 }

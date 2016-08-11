@@ -39,7 +39,7 @@ namespace SolrExpress.Benchmarks.Core.Query
 
                 parameters.Add(parameterMock.Object);
             }
-            
+
             this._solrQueryable10 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
             this._solrQueryable100 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
             this._solrQueryable500 = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);

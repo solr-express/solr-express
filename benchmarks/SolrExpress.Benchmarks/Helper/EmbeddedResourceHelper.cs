@@ -12,7 +12,7 @@ namespace SolrExpress.Benchmarks.Helper
     {
         public static string GetByName(Assembly assembly, string name)
         {
-            var resourceName = $"{assembly.GetName().Name}.Query.Result.{name}.json";
+            var resourceName = $"{assembly.GetName().Name}.{name}.json";
             var resourceStream = assembly.GetManifestResourceStream(resourceName);
 
             if (resourceStream == null)

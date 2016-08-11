@@ -35,10 +35,10 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetRangeResultBenchmarks).GetTypeInfo().Assembly;
-            var str10 = EmbeddedResourceHelper.GetByName(assembly, "FacetRangeResultBenchmarks10");
-            var str100 = EmbeddedResourceHelper.GetByName(assembly, "FacetRangeResultBenchmarks100");
-            var str500 = EmbeddedResourceHelper.GetByName(assembly, "FacetRangeResultBenchmarks500");
-            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "FacetRangeResultBenchmarks1000");
+            var str10 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetRangeResultBenchmarks10");
+            var str100 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetRangeResultBenchmarks100");
+            var str500 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetRangeResultBenchmarks500");
+            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetRangeResultBenchmarks1000");
 
             this._jsonObject10 = JObject.Parse(str10);
             this._jsonObject100 = JObject.Parse(str100);
@@ -52,7 +52,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
         /// With    Using 10 itens in raw text
         /// </summary>
         [Benchmark(Baseline = true)]
-        public void FacetRangeResultWith10Parameters()
+        public void With10Parameters()
         {
             this._facetRangeResult10.Execute(this._parameters, this._jsonObject10);
         }
@@ -63,7 +63,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
         /// With    Using 100 itens in raw text
         /// </summary>
         [Benchmark]
-        public void FacetRangeResultWith100Parameters()
+        public void With100Parameters()
         {
             this._facetRangeResult10.Execute(this._parameters, this._jsonObject100);
         }
@@ -74,7 +74,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
         /// With    Using 500 itens in raw text
         /// </summary>
         [Benchmark]
-        public void FacetRangeResultWith500Parameters()
+        public void With500Parameters()
         {
             this._facetRangeResult10.Execute(this._parameters, this._jsonObject500);
         }
@@ -85,7 +85,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
         /// With    Using 1000 itens in raw text
         /// </summary>
         [Benchmark]
-        public void FacetRangeResultWith1000Parameters()
+        public void With1000Parameters()
         {
             this._facetRangeResult10.Execute(this._parameters, this._jsonObject1000);
         }

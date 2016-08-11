@@ -46,7 +46,7 @@ namespace SolrExpress.Benchmarks.Solr5.Query
         /// With    Using 10 parameters
         /// </summary>
         [Benchmark(Baseline = true)]
-        public void ParameterContainerWith10Parameters()
+        public void With10Parameters()
         {
             var result = this._parameterContainer10.Execute();
         }
@@ -57,7 +57,7 @@ namespace SolrExpress.Benchmarks.Solr5.Query
         /// With    Using 100 parameters
         /// </summary>
         [Benchmark]
-        public void ParameterContainerWith100Parameters()
+        public void With100Parameters()
         {
             var result = this._parameterContainer100.Execute();
         }
@@ -68,7 +68,7 @@ namespace SolrExpress.Benchmarks.Solr5.Query
         /// With    Using 500 parameters
         /// </summary>
         [Benchmark]
-        public void ParameterContainerWith500Parameters()
+        public void With500Parameters()
         {
             var result = this._parameterContainer500.Execute();
         }
@@ -79,7 +79,7 @@ namespace SolrExpress.Benchmarks.Solr5.Query
         /// With    Using 1000 parameters
         /// </summary>
         [Benchmark]
-        public void ParameterContainerWith1000Parameters()
+        public void With1000Parameters()
         {
             var result = this._parameterContainer1000.Execute();
         }

@@ -4,6 +4,8 @@ using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Validators;
 using SolrExpress.Benchmarks.Exporter;
+using System;
+using System.Reflection;
 
 namespace SolrExpress.Benchmarks
 {
@@ -17,7 +19,7 @@ namespace SolrExpress.Benchmarks
                 .With(StatisticColumn.AllStatistics)
                 .With(ExecutionValidator.FailOnError)
                 .With(Job.Dry.With(Runtime.Core))
-                .With(Job.Dry.With(Runtime.Clr));
+                .With(Job.Dry.With(Runtime.Core));
 
             BenchmarkRunner.Run<Core.Query.SolrQueryableBenchmarks>(config);
 
@@ -32,6 +34,8 @@ namespace SolrExpress.Benchmarks
             BenchmarkRunner.Run<Solr5.Query.Result.FacetFieldResultBenchmarks>(config);
             BenchmarkRunner.Run<Solr5.Query.Result.FacetQueryResultBenchmarks>(config);
             BenchmarkRunner.Run<Solr5.Query.Result.FacetRangeResultBenchmarks>(config);
+
+            Console.Read();
         }
     }
 }
