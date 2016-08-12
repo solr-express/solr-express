@@ -3,8 +3,8 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Validators;
-using SolrExpress.Benchmarks.Core.Query;
 using SolrExpress.Benchmarks.Exporter;
+using SolrExpress.Core.Benchmarks.Query;
 using System;
 
 namespace SolrExpress.Benchmarks

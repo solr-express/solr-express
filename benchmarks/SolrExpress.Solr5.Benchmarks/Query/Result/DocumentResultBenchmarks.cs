@@ -11,80 +11,30 @@ namespace SolrExpress.Benchmarks.Solr5.Query.Result
     public class DocumentResultBenchmarks
     {
         private List<IParameter> _emptyParameters;
-        private JObject _jsonObject10;
-        private JObject _jsonObject100;
-        private JObject _jsonObject500;
-        private JObject _jsonObject1000;
-        private DocumentResult<TestDocument> _documentResult10;
-        private DocumentResult<TestDocument> _documentResult100;
-        private DocumentResult<TestDocument> _documentResult500;
-        private DocumentResult<TestDocument> _documentResult1000;
+        private JObject _jsonObject;
+        private DocumentResult<TestDocument> _documentResult;
+
+        [Params(10, 100, 500, 1000)]
+        public int ElementsCount { get; set; }
 
         [Setup]
         public void Setup()
         {
             this._emptyParameters = new List<IParameter>();
 
-            this._documentResult10 = new DocumentResult<TestDocument>();
-            this._documentResult100 = new DocumentResult<TestDocument>();
-            this._documentResult500 = new DocumentResult<TestDocument>();
-            this._documentResult1000 = new DocumentResult<TestDocument>();
+            this._documentResult = new DocumentResult<TestDocument>();
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(DocumentResultBenchmarks).GetTypeInfo().Assembly;
-            var str10 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks10");
-            var str100 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks100");
-            var str500 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks500");
-            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks1000");
+            var str = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks{this.ElementsCount}");
 
-            this._jsonObject10 = JObject.Parse(str10);
-            this._jsonObject100 = JObject.Parse(str100);
-            this._jsonObject500 = JObject.Parse(str500);
-            this._jsonObject1000 = JObject.Parse(str1000);
+            this._jsonObject = JObject.Parse(str);
         }
-
-        /// <summary>
-        /// Where   Using a DocumentResult instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 10 itens in raw text
-        /// </summary>
-        [Benchmark(Baseline = true)]
-        public void With10Parameters()
-        {
-            this._documentResult10.Execute(this._emptyParameters, this._jsonObject10);
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentResult instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 100 itens in raw text
-        /// </summary>
+        
         [Benchmark]
-        public void With100Parameters()
+        public void Execute()
         {
-            this._documentResult10.Execute(this._emptyParameters, this._jsonObject100);
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentResult instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 500 itens in raw text
-        /// </summary>
-        [Benchmark]
-        public void With500Parameters()
-        {
-            this._documentResult10.Execute(this._emptyParameters, this._jsonObject500);
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentResult instance
-        /// When    Invoking the method "Execute"
-        /// With    Using 1000 itens in raw text
-        /// </summary>
-        [Benchmark]
-        public void With1000Parameters()
-        {
-            this._documentResult10.Execute(this._emptyParameters, this._jsonObject1000);
+            this._documentResult.Execute(this._emptyParameters, this._jsonObject);
         }
     }
 }

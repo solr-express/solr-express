@@ -2,11 +2,9 @@
 using BenchmarkDotNet.Running;
 using Moq;
 using SolrExpress.Benchmarks.Helper;
-using SolrExpress.Core;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SolrExpress.Core.Benchmarks.Query
 {
@@ -32,7 +30,7 @@ namespace SolrExpress.Core.Benchmarks.Query
             mockResolver.Setup(q => q.GetInstance<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
             mockResolver.Setup(q => q.GetInstance<IParameterContainer>()).Returns(new Mock<IParameterContainer>().Object);
 
-            for (int i = 0; i < ElementsCount; i++)
+            for (int i = 0; i < this.ElementsCount; i++)
             {
                 var parameterMock = new Mock<IParameter<object>>();
                 parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
@@ -40,21 +38,16 @@ namespace SolrExpress.Core.Benchmarks.Query
 
                 parameters.Add(parameterMock.Object);
             }
-            
+
             _solrQueryable = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
 
-            _solrQueryable.Parameter(parameters.Take(ElementsCount).ToArray());
+            _solrQueryable.Parameter(parameters.ToArray());
         }
 
-        /// <summary>
-        /// Where   Using a SolrQueryable instance
-        /// When    Invoking the method "Execute"
-        /// With    Using N parameters
-        /// </summary>
         [Benchmark]
-        public void Execute()
+        public void Benchmark()
         {
-            return this._solrQueryable.Execute();
+            this._solrQueryable.Execute();
         }
     }
 }
