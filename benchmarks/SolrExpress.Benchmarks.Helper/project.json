@@ -1,33 +1,12 @@
-{
+﻿{
   "buildOptions": {
     "allowUnsafe": true,
-    "emitEntryPoint": true,
     "keyFile": "../../Key.snk",
     "strongName": true,
     "warningsAsErrors": true
   },
-  "configurations": {
-    "Debug": {
-      "buildOptions": {
-        "define": [ "DEBUG", "TRACE" ]
-      }
-    },
-    "Release": {
-      "buildOptions": {
-        "define": [ "RELEASE", "TRACE" ],
-        "optimize": true
-      }
-    }
-  },
   "dependencies": {
-    "BenchmarkDotNet": "0.9.8",
-    "SolrExpress.Core.Benchmarks": {
-      "target": "project"
-    },
-    "SolrExpress.Solr4.Benchmarks": {
-      "target": "project"
-    },
-    "SolrExpress.Solr5.Benchmarks": {
+    "SolrExpress.Core": {
       "target": "project"
     }
   },

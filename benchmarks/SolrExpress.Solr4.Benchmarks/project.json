@@ -1,7 +1,6 @@
-{
+﻿{
   "buildOptions": {
     "allowUnsafe": true,
-    "emitEntryPoint": true,
     "keyFile": "../../Key.snk",
     "strongName": true,
     "warningsAsErrors": true
@@ -21,13 +20,11 @@
   },
   "dependencies": {
     "BenchmarkDotNet": "0.9.8",
-    "SolrExpress.Core.Benchmarks": {
+    "Moq": "4.6.36-alpha",
+    "SolrExpress.Benchmarks.Helper": {
       "target": "project"
     },
-    "SolrExpress.Solr4.Benchmarks": {
-      "target": "project"
-    },
-    "SolrExpress.Solr5.Benchmarks": {
+    "SolrExpress.Solr4": {
       "target": "project"
     }
   },

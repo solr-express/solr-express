@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using Moq;
+using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Core;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;

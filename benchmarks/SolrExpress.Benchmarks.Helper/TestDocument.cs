@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
 using System;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     public class TestDocument : IDocument
     {

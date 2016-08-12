@@ -3,9 +3,9 @@ using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using BenchmarkDotNet.Validators;
+using SolrExpress.Benchmarks.Core.Query;
 using SolrExpress.Benchmarks.Exporter;
 using System;
-using System.Reflection;
 
 namespace SolrExpress.Benchmarks
 {
@@ -18,22 +18,23 @@ namespace SolrExpress.Benchmarks
                 .With(new CustomMarkdownExporter())
                 .With(StatisticColumn.AllStatistics)
                 .With(ExecutionValidator.FailOnError)
+            //.With(new Job { Runtime = Runtime.Core });
                 .With(Job.Dry.With(Runtime.Core))
-                .With(Job.Dry.With(Runtime.Core));
+                .With(Job.Dry.With(Runtime.Clr));
 
-            BenchmarkRunner.Run<Core.Query.SolrQueryableBenchmarks>(config);
+            BenchmarkRunner.Run<SolrQueryableBenchmarks>(config);
 
-            BenchmarkRunner.Run<Solr4.Query.ParameterContainerBenchmarks>(config);
-            BenchmarkRunner.Run<Solr4.Query.Result.DocumentResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr4.Query.Result.FacetFieldResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr4.Query.Result.FacetQueryResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr4.Query.Result.FacetRangeResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Query.ParameterContainerBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Query.Result.DocumentResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Query.Result.FacetFieldResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Query.Result.FacetQueryResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Query.Result.FacetRangeResultBenchmarks>(config);
 
-            BenchmarkRunner.Run<Solr5.Query.ParameterContainerBenchmarks>(config);
-            BenchmarkRunner.Run<Solr5.Query.Result.DocumentResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr5.Query.Result.FacetFieldResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr5.Query.Result.FacetQueryResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr5.Query.Result.FacetRangeResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr5.Query.ParameterContainerBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr5.Query.Result.DocumentResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr5.Query.Result.FacetFieldResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr5.Query.Result.FacetQueryResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr5.Query.Result.FacetRangeResultBenchmarks>(config);
 
             Console.Read();
         }

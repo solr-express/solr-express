@@ -32,10 +32,10 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetQueryResultBenchmarks).GetTypeInfo().Assembly;
-            var str10 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetQueryResultBenchmarks10");
-            var str100 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetQueryResultBenchmarks100");
-            var str500 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetQueryResultBenchmarks500");
-            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetQueryResultBenchmarks1000");
+            var str10 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks10");
+            var str100 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks100");
+            var str500 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks500");
+            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks1000");
 
             this._jsonObject10 = JObject.Parse(str10);
             this._jsonObject100 = JObject.Parse(str100);

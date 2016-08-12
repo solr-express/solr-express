@@ -32,10 +32,10 @@ namespace SolrExpress.Benchmarks.Solr5.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(DocumentResultBenchmarks).GetTypeInfo().Assembly;
-            var str10 = EmbeddedResourceHelper.GetByName(assembly, "Solr5.Query.Result.DocumentResultBenchmarks10");
-            var str100 = EmbeddedResourceHelper.GetByName(assembly, "Solr5.Query.Result.DocumentResultBenchmarks100");
-            var str500 = EmbeddedResourceHelper.GetByName(assembly, "Solr5.Query.Result.DocumentResultBenchmarks500");
-            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "Solr5.Query.Result.DocumentResultBenchmarks1000");
+            var str10 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks10");
+            var str100 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks100");
+            var str500 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks500");
+            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks1000");
 
             this._jsonObject10 = JObject.Parse(str10);
             this._jsonObject100 = JObject.Parse(str100);

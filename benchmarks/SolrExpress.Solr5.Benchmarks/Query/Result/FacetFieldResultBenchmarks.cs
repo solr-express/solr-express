@@ -2,11 +2,11 @@
 using Newtonsoft.Json.Linq;
 using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Solr4.Query.Result;
+using SolrExpress.Solr5.Query.Result;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace SolrExpress.Benchmarks.Solr4.Query.Result
+namespace SolrExpress.Benchmarks.Solr5.Query.Result
 {
     public class FacetFieldResultBenchmarks
     {
@@ -32,10 +32,10 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetFieldResultBenchmarks).GetTypeInfo().Assembly;
-            var str10 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetFieldResultBenchmarks10");
-            var str100 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetFieldResultBenchmarks100");
-            var str500 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetFieldResultBenchmarks500");
-            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "Solr4.Query.Result.FacetFieldResultBenchmarks1000");
+            var str10 = EmbeddedResourceHelper.GetByName(assembly,  "SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks10");
+            var str100 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks100");
+            var str500 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks500");
+            var str1000 = EmbeddedResourceHelper.GetByName(assembly, "SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks1000");
 
             this._jsonObject10 = JObject.Parse(str10);
             this._jsonObject100 = JObject.Parse(str100);
