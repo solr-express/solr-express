@@ -10,9 +10,8 @@ namespace SolrExpress.Benchmarks.Helper
     /// </summary>
     public static class EmbeddedResourceHelper
     {
-        public static string GetByName(Assembly assembly, string name)
+        public static string GetByName(Assembly assembly, string resourceName)
         {
-            var resourceName = $"{name}.json";
             var resourceStream = assembly.GetManifestResourceStream(resourceName);
 
             if (resourceStream == null)

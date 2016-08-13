@@ -45,7 +45,7 @@ namespace SolrExpress.Core.Benchmarks.Query
         }
 
         [Benchmark]
-        public void Benchmark()
+        public void Execute()
         {
             this._solrQueryable.Execute();
         }

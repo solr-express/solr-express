@@ -74,7 +74,7 @@ namespace SolrExpress.Benchmarks.Exporter
 
         public IEnumerable<string> ExportToFiles(Summary summary)
         {
-            var summaryFullName = summary.Benchmarks.Select(b => b.Target.Type.Name).Distinct().First();
+            var summaryFullName = summary.Benchmarks.Select(b => b.Target.Type.FullName).Distinct().First();
             var fileName = $"{summaryFullName}.md";
 
             var filePath = Path.Combine(summary.ResultsDirectoryPath, fileName);

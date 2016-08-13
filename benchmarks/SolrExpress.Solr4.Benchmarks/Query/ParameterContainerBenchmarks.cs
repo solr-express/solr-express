@@ -32,7 +32,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query
         }
 
         [Benchmark]
-        public void With10Parameters()
+        public void Execute()
         {
             this._parameterContainer.Execute();
         }

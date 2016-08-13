@@ -29,7 +29,7 @@ namespace SolrExpress.Benchmarks.Solr5.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetRangeResultBenchmarks).GetTypeInfo().Assembly;
-            var str = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr5.Query.Result.FacetRangeResultBenchmarks{this.ElementsCount}");
+            var str = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Solr5.Benchmarks.Query.Result.FacetRangeResultBenchmarks{this.ElementsCount}.json");
 
             this._jsonObject = JObject.Parse(str);
         }

@@ -26,7 +26,7 @@ namespace SolrExpress.Benchmarks.Solr4.Query.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetQueryResultBenchmarks).GetTypeInfo().Assembly;
-            var str = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks{this.ElementsCount}");
+            var str = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Solr4.Benchmarks.Query.Result.FacetQueryResultBenchmarks{this.ElementsCount}.json");
 
             this._jsonObject = JObject.Parse(str);
         }
