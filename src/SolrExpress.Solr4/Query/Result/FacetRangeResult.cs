@@ -122,6 +122,7 @@ namespace SolrExpress.Solr4.Query.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
+            Checker.IsNull(parameters);
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facet_counts"]?["facet_ranges"] == null, jsonObject.ToString());
 
             if (!jsonObject["facet_counts"]["facet_ranges"].Children().Any())

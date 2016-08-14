@@ -1,8 +1,9 @@
-﻿using Xunit;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr4.Query.Result;
 using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Query.Result
 {
@@ -28,10 +29,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             var jsonObject = JObject.Parse(jsonStr);
             var result = new DocumentResult<TestDocument>();
 
+            var parameters = new List<IParameter>();
             List<TestDocument> lst;
 
             // Act
-            result.Execute(null, jsonObject);
+            result.Execute(parameters, jsonObject);
             lst = result.Data;
 
             // Assert
@@ -57,11 +59,12 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
                     ""_score_"":1.5}]
               }
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
             var result = new DocumentResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -82,10 +85,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             }";
             var jsonObject = JObject.Parse(jsonStr);
             var result = new DocumentResult<TestDocument>();
+            var parameters = new List<IParameter>();
             List<TestDocument> lst;
 
             // Act
-            result.Execute(null, jsonObject);
+            result.Execute(parameters, jsonObject);
             lst = result.Data;
 
             // Assert
@@ -112,10 +116,11 @@ namespace SolrExpress.Solr4.UnitTests.Query.Result
             }";
             var jsonObject = JObject.Parse(jsonStr);
             var result = new DocumentResult<TestDocument>();
+            var parameters = new List<IParameter>();
             List<TestDocument> lst;
 
             // Act
-            result.Execute(null, jsonObject);
+            result.Execute(parameters, jsonObject);
             lst = result.Data;
 
             // Assert

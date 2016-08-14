@@ -20,6 +20,7 @@ namespace SolrExpress.Solr5.Query.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
+            Checker.IsNull(parameters);
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["facets"] == null, jsonObject.ToString());
 
             var list = jsonObject["facets"]

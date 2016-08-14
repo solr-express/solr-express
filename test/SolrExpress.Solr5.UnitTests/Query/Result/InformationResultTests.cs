@@ -64,11 +64,12 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 ""QTime"":10},
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new InformationResult<TestDocument>();
+            var result = new InformationResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -86,11 +87,12 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 ""status"":0,
                 ""QTime"":10}
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new InformationResult<TestDocument>();
+            var result = new InformationResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -106,11 +108,12 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
             {
                 ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new InformationResult<TestDocument>();
+            var result = new InformationResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -122,11 +125,12 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
         public void InformationResult005()
         {
             // Arrange
+            var parameters = new List<IParameter>();
             var jsonObject = new JObject();
-            var builder = new InformationResult<TestDocument>();
+            var result = new InformationResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
     }
 }

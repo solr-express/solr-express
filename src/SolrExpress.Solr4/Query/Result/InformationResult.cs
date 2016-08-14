@@ -20,6 +20,7 @@ namespace SolrExpress.Solr4.Query.Result
         /// <param name="jsonObject">JSON object used in the parse</param>
         public void Execute(List<IParameter> parameters, JObject jsonObject)
         {
+            Checker.IsNull(parameters);
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["response"]?["numFound"] == null || jsonObject["responseHeader"]?["QTime"] == null, new[] { jsonObject.ToString() });
 
             var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();

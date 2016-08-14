@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Solr5.Query.Result;
 using System.Collections.Generic;
+using SolrExpress.Core.Query.Parameter;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Result
 {
@@ -25,13 +26,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                     ""_score_"":1.5}]
               }
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentResult<TestDocument>();
+            var result = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act
-            builder.Execute(null, jsonObject);
-            lst = builder.Data;
+            result.Execute(parameters, jsonObject);
+            lst = result.Data;
 
             // Assert
             Assert.Equal(1, lst.Count);
@@ -56,11 +58,12 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                     ""_score_"":1.5}]
               }
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentResult<TestDocument>();
+            var result = new DocumentResult<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => builder.Execute(null, jsonObject));
+            Assert.Throws<UnexpectedJsonFormatException>(() => result.Execute(parameters, jsonObject));
         }
 
         /// <summary>
@@ -79,13 +82,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                     ""_spatial_"":""-1.5,2.5""}]
               }
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentResult<TestDocument>();
+            var result = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act
-            builder.Execute(null, jsonObject);
-            lst = builder.Data;
+            result.Execute(parameters, jsonObject);
+            lst = result.Data;
 
             // Assert
             Assert.Equal(1, lst.Count);
@@ -109,13 +113,14 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                     ""_dummy_"":""Dummy""}]
               }
             }";
+            var parameters = new List<IParameter>();
             var jsonObject = JObject.Parse(jsonStr);
-            var builder = new DocumentResult<TestDocument>();
+            var result = new DocumentResult<TestDocument>();
             List<TestDocument> lst;
 
             // Act
-            builder.Execute(null, jsonObject);
-            lst = builder.Data;
+            result.Execute(parameters, jsonObject);
+            lst = result.Data;
 
             // Assert
             Assert.Equal(1, lst.Count);

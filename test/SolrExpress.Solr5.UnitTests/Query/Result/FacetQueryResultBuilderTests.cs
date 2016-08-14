@@ -1,6 +1,8 @@
-﻿using Xunit;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Solr5.Query.Result;
+using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Query.Result
 {
@@ -25,15 +27,16 @@ namespace SolrExpress.Solr5.UnitTests.Query.Result
                 }
             }");
 
-            var parameter = new FacetQueryResult<TestDocument>();
+            var parameters = new List<IParameter>();
+            var result = new FacetQueryResult<TestDocument>();
 
             // Act
-            parameter.Execute(null, jObject);
+            result.Execute(parameters, jObject);
 
             // Assert
-            Assert.Equal(1, parameter.Data.Count);
-            Assert.True(parameter.Data.ContainsKey("facetQuery"));
-            Assert.Equal(10, parameter.Data["facetQuery"]);
+            Assert.Equal(1, result.Data.Count);
+            Assert.True(result.Data.ContainsKey("facetQuery"));
+            Assert.Equal(10, result.Data["facetQuery"]);
         }
     }
 }
