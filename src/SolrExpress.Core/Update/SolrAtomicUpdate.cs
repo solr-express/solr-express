@@ -6,7 +6,7 @@ namespace SolrExpress.Core.Update
     /// <summary>
     /// SOLR atomic update container
     /// </summary>
-    public sealed class SolrAtomicUpdate<TDocument>
+    public sealed class SolrAtomicUpdate<TDocument> : ISolrAtomicUpdate<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -41,7 +41,7 @@ namespace SolrExpress.Core.Update
         /// If a doc with same id exists in collection, the document is updated
         /// </summary>
         /// <param name="documents">Documents to add</param>
-        public SolrAtomicUpdate<TDocument> Add(params TDocument[] documents)
+        public ISolrAtomicUpdate<TDocument> Add(params TDocument[] documents)
         {
             Checker.IsNull(documents);
             Checker.IsEmpty(documents);
@@ -55,7 +55,7 @@ namespace SolrExpress.Core.Update
         /// Remove informed documents from SOLR collection
         /// </summary>
         /// <param name="documentIds">Document IDs to remove</param>
-        public SolrAtomicUpdate<TDocument> Delete(params string[] documentIds)
+        public ISolrAtomicUpdate<TDocument> Delete(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
             Checker.IsEmpty(documentIds);

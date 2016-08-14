@@ -8,7 +8,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR query result with fluent API
     /// </summary>
-    public class QueryResult<TDocument>
+    public class QueryResult<TDocument> : IQueryResult<TDocument>
         where TDocument : IDocument
     {
         private readonly string _jsonPlainText;

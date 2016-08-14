@@ -7,7 +7,7 @@ namespace SolrExpress.Core.Query
     /// <summary>
     /// SOLR queryable
     /// </summary>
-    public sealed class SolrQueryable<TDocument>
+    public sealed class SolrQueryable<TDocument> : ISolrQueryable<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -74,7 +74,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="parameters">Parameters to add in the query</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Parameter(params IParameter[] parameters)
+        public ISolrQueryable<TDocument> Parameter(params IParameter[] parameters)
         {
             if (parameters != null)
             {
@@ -92,7 +92,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="parameter">Parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Parameter(IParameter parameter)
+        public ISolrQueryable<TDocument> Parameter(IParameter parameter)
         {
             Checker.IsNull(parameter);
             var multipleInstances = this._parameters.Any(q => q.GetType() == parameter.GetType()) && !parameter.AllowMultipleInstances;
@@ -127,7 +127,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptors">Query interceptors to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> QueryInterceptor(params IQueryInterceptor[] interceptors)
+        public ISolrQueryable<TDocument> QueryInterceptor(params IQueryInterceptor[] interceptors)
         {
             if (interceptors != null)
             {
@@ -145,7 +145,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">Query interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
+        public ISolrQueryable<TDocument> QueryInterceptor(IQueryInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 
@@ -158,7 +158,7 @@ namespace SolrExpress.Core.Query
         /// Add a query interceptor to the queryable
         /// </summary>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> QueryInterceptor<TQueryInterceptor>()
+        public ISolrQueryable<TDocument> QueryInterceptor<TQueryInterceptor>()
             where TQueryInterceptor : class, IQueryInterceptor, new()
         {
             var interceptor = new TQueryInterceptor();
@@ -173,7 +173,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptors">Result interceptors to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> ResultInterceptor(params IResultInterceptor[] interceptors)
+        public ISolrQueryable<TDocument> ResultInterceptor(params IResultInterceptor[] interceptors)
         {
             if (interceptors != null)
             {
@@ -191,7 +191,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="interceptor">The result interceptor to add in the queryable</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
+        public ISolrQueryable<TDocument> ResultInterceptor(IResultInterceptor interceptor)
         {
             Checker.IsNull(interceptor);
 
@@ -204,7 +204,7 @@ namespace SolrExpress.Core.Query
         /// Add a result interceptor to the queryable
         /// </summary>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> ResultInterceptor<TResultInterceptor>()
+        public ISolrQueryable<TDocument> ResultInterceptor<TResultInterceptor>()
             where TResultInterceptor : class, IResultInterceptor, new()
         {
             var interceptor = new TResultInterceptor();
@@ -219,7 +219,7 @@ namespace SolrExpress.Core.Query
         /// </summary>
         /// <param name="name">Name to be used</param>
         /// <returns>Itself</returns>
-        public SolrQueryable<TDocument> Handler(string name)
+        public ISolrQueryable<TDocument> Handler(string name)
         {
             Checker.IsNullOrWhiteSpace(name);
 

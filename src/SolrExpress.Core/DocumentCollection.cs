@@ -6,7 +6,7 @@ namespace SolrExpress.Core
     /// <summary>
     /// SOLR document collection
     /// </summary>
-    public class DocumentCollection<TDocument>
+    public class DocumentCollection<TDocument>: IDocumentCollection<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -29,12 +29,12 @@ namespace SolrExpress.Core
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public SolrQueryable<TDocument> Select() => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this.Configuration);
+        public ISolrQueryable<TDocument> Select() => new SolrQueryable<TDocument>(this.Provider, this.Resolver, this.Configuration);
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public SolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Provider, this.Resolver, this.Configuration);
+        public ISolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Provider, this.Resolver, this.Configuration);
 
         /// <summary>
         /// Provider used to resolve the expression
