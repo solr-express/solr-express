@@ -21,6 +21,7 @@
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {
+        "Microsoft.Extensions.DependencyInjection": "1.0.0",
         "Microsoft.Extensions.Options": "1.0.0",
         "Newtonsoft.Json": "9.0.1",
         "System.Console": "4.0.0",
@@ -31,12 +32,14 @@
     },
     "net4": {
       "dependencies": {
-        "Newtonsoft.Json": "9.0.1"
+        "Newtonsoft.Json": "9.0.1",
+        "SimpleInjector": "3.2.0"
       }
     },
     "net45": {
       "dependencies": {
-        "Newtonsoft.Json": "9.0.1"
+        "Newtonsoft.Json": "9.0.1",
+        "SimpleInjector": "3.2.0"
       }
     }
   },

@@ -25,18 +25,8 @@
         void Commit();
 
         /// <summary>
-        /// Configurations about SolrQueriable behavior
+        /// SolrExpress options
         /// </summary>
-        Configuration Configuration { get; }
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        IProvider Provider { get; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        IResolver Resolver { get; }
+        DocumentCollectionOptions<TDocument> Options { get; }
     }
 }

@@ -8,7 +8,6 @@ namespace SolrExpress.Core.Query
     public interface ISolrQueryable<TDocument>
         where TDocument : IDocument
     {
-
         /// <summary>
         /// Add a parameters to the query
         /// </summary>
@@ -79,18 +78,8 @@ namespace SolrExpress.Core.Query
         QueryResult<TDocument> Execute();
 
         /// <summary>
-        /// Configurations about SolrQueriable behavior
+        /// SolrExpress options
         /// </summary>
-        Configuration Configuration { get; }
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        IProvider Provider { get; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        IResolver Resolver { get; }
+        DocumentCollectionOptions<TDocument> Options { get; }
     }
 }

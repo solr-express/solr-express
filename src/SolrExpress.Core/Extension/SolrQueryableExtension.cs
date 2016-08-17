@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using SolrExpress.Core.Query.ParameterValue;
 using System;
@@ -18,9 +19,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> FacetField<TDocument>(this ISolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, FacetSortType? sortType = null, int? limit = null, params string[] excludes)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFacetFieldParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFacetFieldParameter<TDocument>>()
                 .Configure(expression, sortType, limit, excludes);
 
             return queryable.Parameter(parameter);
@@ -36,9 +37,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> FacetQuery<TDocument>(this ISolrQueryable<TDocument> queryable, string aliasName, IQueryParameterValue query, FacetSortType? sortType = null, params string[] excludes)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFacetQueryParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFacetQueryParameter<TDocument>>()
                 .Configure(aliasName, query, sortType, excludes);
 
             return queryable.Parameter(parameter);
@@ -56,9 +57,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> FacetRange<TDocument>(this ISolrQueryable<TDocument> queryable, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, FacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFacetRangeParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFacetRangeParameter<TDocument>>()
                 .Configure(aliasName, expression, gap, start, end, sortType);
 
             return queryable.Parameter(parameter);
@@ -71,9 +72,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Fields<TDocument>(this ISolrQueryable<TDocument> queryable, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFieldsParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFieldsParameter<TDocument>>()
                 .Configure(expressions);
 
             return queryable.Parameter(parameter);
@@ -90,9 +91,9 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Single<TDocument>(expression, value);
 
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFilterParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFilterParameter<TDocument>>()
                 .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
@@ -111,9 +112,9 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Range<TDocument, TValue>(expression, from, to);
 
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFilterParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFilterParameter<TDocument>>()
                 .Configure(paramaterValue, tagName);
 
             return queryable.Parameter(parameter);
@@ -126,9 +127,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Limit<TDocument>(this ISolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<ILimitParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<ILimitParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -141,9 +142,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Offset<TDocument>(this ISolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IOffsetParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IOffsetParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -156,9 +157,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Query<TDocument>(this ISolrQueryable<TDocument> queryable, IQueryParameterValue value)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IQueryParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IQueryParameter<TDocument>>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -173,9 +174,9 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Any(value);
 
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IQueryParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IQueryParameter<TDocument>>()
                 .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
@@ -191,9 +192,9 @@ namespace SolrExpress.Core.Extension
         {
             var paramaterValue = new Single<TDocument>(expression, value);
 
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IQueryParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IQueryParameter<TDocument>>()
                 .Configure(paramaterValue);
 
             return queryable.Parameter(parameter);
@@ -207,9 +208,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Sort<TDocument>(this ISolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, bool ascendent)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<ISortParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<ISortParameter<TDocument>>()
                 .Configure(expression, ascendent);
 
             return queryable.Parameter(parameter);
@@ -225,9 +226,9 @@ namespace SolrExpress.Core.Extension
         {
             foreach (var expression in expressions)
             {
-                var parameter = queryable
-                    .Resolver
-                    .GetInstance<ISortParameter<TDocument>>()
+                var parameter = ApplicationServices
+                    .Current
+                    .GetService<ISortParameter<TDocument>>()
                     .Configure(expression, ascendent);
 
                 queryable.Parameter(parameter);
@@ -244,9 +245,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> RandomSort<TDocument>(this ISolrQueryable<TDocument> queryable, bool ascendent)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IRandomSortParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IRandomSortParameter>()
                 .Configure(ascendent);
 
             return queryable.Parameter(parameter);
@@ -259,9 +260,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> FacetLimit<TDocument>(this ISolrQueryable<TDocument> queryable, int value)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IFacetLimitParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IFacetLimitParameter>()
                 .Configure(value);
 
             return queryable.Parameter(parameter);
@@ -274,9 +275,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> MinimumShouldMatch<TDocument>(this ISolrQueryable<TDocument> queryable, string expression)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IMinimumShouldMatchParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IMinimumShouldMatchParameter>()
                 .Configure(expression);
 
             return queryable.Parameter(parameter);
@@ -289,9 +290,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> QueryField<TDocument>(this ISolrQueryable<TDocument> queryable, string expression)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IQueryFieldParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IQueryFieldParameter>()
                 .Configure(expression);
 
             return queryable.Parameter(parameter);
@@ -307,9 +308,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> SpatialFilter<TDocument>(this ISolrQueryable<TDocument> queryable, Expression<Func<TDocument, object>> expression, SolrSpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<ISpatialFilterParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<ISpatialFilterParameter<TDocument>>()
                 .Configure(expression, functionType, centerPoint, distance);
 
             return queryable.Parameter(parameter);
@@ -323,9 +324,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Any<TDocument>(this ISolrQueryable<TDocument> queryable, string name, string value)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IAnyParameter>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IAnyParameter>()
                 .Configure(name, value);
 
             return queryable.Parameter(parameter);
@@ -339,9 +340,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrQueryable<TDocument> Boost<TDocument>(this ISolrQueryable<TDocument> queryable, IQueryParameterValue query, BoostFunctionType? boostFunctionType = null)
             where TDocument : IDocument
         {
-            var parameter = queryable
-                .Resolver
-                .GetInstance<IBoostParameter<TDocument>>()
+            var parameter = ApplicationServices
+                .Current
+                .GetService<IBoostParameter<TDocument>>()
                 .Configure(query, boostFunctionType ?? BoostFunctionType.Boost);
 
             return queryable.Parameter(parameter);

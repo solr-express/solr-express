@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SolrExpress.Core.DependencyInjection;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SolrExpress.Core.Update
@@ -20,20 +21,23 @@ namespace SolrExpress.Core.Update
         private List<string> _documentsToDelete = new List<string>();
 
         /// <summary>
-        /// Default constructor of the class
+        /// SOLR connection
         /// </summary>
-        /// <param name="provider">Provider used to resolve expression</param>
-        /// <param name="resolver">Resolver used to resolve classes dependency</param>
-        /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public SolrAtomicUpdate(IProvider provider, IResolver resolver, Configuration configuration)
-        {
-            Checker.IsNull(provider);
-            Checker.IsNull(resolver);
-            Checker.IsNull(configuration);
+        private readonly ISolrConnection _solrConnection;
 
-            this.Provider = provider;
-            this.Resolver = resolver;
-            this.Configuration = configuration;
+        /// <summary>
+        /// Default constructor of class
+        /// </summary>
+        /// <param name="serviceProvider">Classes dependency provider</param>
+        /// <param name="options">SolrExpress options</param>
+        public SolrAtomicUpdate(DocumentCollectionOptions<TDocument> options)
+        {
+            Checker.IsNull(options);
+
+            this.Options = options;
+
+            this._solrConnection = ApplicationServices.Current.GetService<ISolrConnection>();
+            this._solrConnection.SolrHost = this.Options.HostAddress;
         }
 
         /// <summary>
@@ -74,14 +78,14 @@ namespace SolrExpress.Core.Update
 
             if (this._documentsToAdd.Any())
             {
-                var atomicInstruction = this.Resolver.GetInstance<IAtomicUpdate<TDocument>>();
+                var atomicInstruction = ApplicationServices.Current.GetService<IAtomicUpdate<TDocument>>();
                 atomicInstruction.Configure(this._documentsToAdd.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
 
             if (this._documentsToDelete.Any())
             {
-                var atomicInstruction = this.Resolver.GetInstance<IAtomicDelete<TDocument>>();
+                var atomicInstruction = ApplicationServices.Current.GetService<IAtomicDelete<TDocument>>();
                 atomicInstruction.Configure(this._documentsToDelete.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
@@ -89,12 +93,12 @@ namespace SolrExpress.Core.Update
             foreach (var atomicInstruction in atomicInstructions)
             {
                 var data = atomicInstruction.Execute();
-                this.Provider.Post(RequestHandler.Update, data);
+                this._solrConnection.Post(RequestHandler.Update, data);
             }
 
             if (atomicInstructions.Any())
             {
-                this.Provider.Post(RequestHandler.Update, "{\"commit\":{}}");
+                this._solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
             }
 
             this._documentsToAdd = new List<TDocument>();
@@ -104,16 +108,6 @@ namespace SolrExpress.Core.Update
         /// <summary>
         /// Configurations about SolrQueriable behavior
         /// </summary>
-        public Configuration Configuration { get; private set; }
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        public IProvider Provider { get; private set; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        public IResolver Resolver { get; private set; }
+        public DocumentCollectionOptions<TDocument> Options { get; private set; }
     }
 }

@@ -5,7 +5,7 @@ namespace SolrExpress.Core
     public class UnexpectedJsonFormatException : Exception
     {
         /// <summary>
-        /// Default constructor of the class
+        /// Default constructor of class
         /// </summary>
         /// <param name="json">Unexpected JSON string</param>
         public UnexpectedJsonFormatException(string json)

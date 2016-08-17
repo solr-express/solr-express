@@ -20,7 +20,7 @@
           "version": "1.0.0",
           "type": "platform"
         },
-        "moq.netcore": "4.4.0-beta8",
+        "Moq": "4.6.36-alpha",
         "System.Diagnostics.TraceSource": "4.0.0",
         "xunit": "2.1.0"
       }
@@ -36,7 +36,7 @@
         "Moq": "4.5.3",
         "System.Runtime": "4.0.0",
         "System.Threading.Tasks": "4.0.0",
-        "xunit": "2.2.0-beta1-build3239"
+        "xunit": "2.1.0"
       }
     }
   },

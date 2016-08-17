@@ -2,6 +2,7 @@
 using BenchmarkDotNet.Running;
 using Moq;
 using SolrExpress.Benchmarks.Helper;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
@@ -18,17 +19,19 @@ namespace SolrExpress.Core.Benchmarks.Query
         [Setup]
         public void Setup()
         {
-            var mockProvider = new Mock<IProvider>();
-            var mockResolver = new Mock<IResolver>();
-            var configuration = new Configuration();
+            var mockSolrConnection = new Mock<ISolrConnection>();
+            mockSolrConnection.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
+
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(mockSolrConnection.Object);
+            mockEngine.Setup(q => q.GetService<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
+            mockEngine.Setup(q => q.GetService<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
+            mockEngine.Setup(q => q.GetService<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
+            mockEngine.Setup(q => q.GetService<IParameterContainer>()).Returns(new Mock<IParameterContainer>().Object);
+            ApplicationServices.Current = mockEngine;
+
+            var options = new DocumentCollectionOptions<TestDocument>();
             var parameters = new List<IParameter<object>>();
-
-            mockProvider.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
-
-            mockResolver.Setup(q => q.GetInstance<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
-            mockResolver.Setup(q => q.GetInstance<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
-            mockResolver.Setup(q => q.GetInstance<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
-            mockResolver.Setup(q => q.GetInstance<IParameterContainer>()).Returns(new Mock<IParameterContainer>().Object);
 
             for (int i = 0; i < this.ElementsCount; i++)
             {
@@ -39,7 +42,7 @@ namespace SolrExpress.Core.Benchmarks.Query
                 parameters.Add(parameterMock.Object);
             }
 
-            _solrQueryable = new SolrQueryable<TestDocument>(mockProvider.Object, mockResolver.Object, configuration);
+            _solrQueryable = new SolrQueryable<TestDocument>(options);
 
             _solrQueryable.Parameter(parameters.ToArray());
         }

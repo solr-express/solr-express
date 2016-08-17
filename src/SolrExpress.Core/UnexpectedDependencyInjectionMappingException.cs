@@ -5,7 +5,7 @@ namespace SolrExpress.Core
     public class UnexpectedDependencyInjectionMappingException : Exception
     {
         /// <summary>
-        /// Default constructor of the class
+        /// Default constructor of class
         /// </summary>
         /// <param name="sourceName">Source name</param>
         public UnexpectedDependencyInjectionMappingException(string sourceName)

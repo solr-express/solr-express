@@ -7,24 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 #endif
 
-namespace SolrExpress.Solr5
+namespace SolrExpress.Solr4
 {
     /// <summary>
-    /// SOLR 5.5x access provider
+    /// SOLR 4.9x access provider
     /// </summary>
-    public class Provider : IProvider
+    public class SolrConnection : ISolrConnection
     {
-        private readonly string _solrHost;
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        /// <param name="solrHost">Solr host address</param>
-        public Provider(string solrHost)
-        {
-            this._solrHost = solrHost;
-        }
-
         /// <summary>
         /// Execute the informated WebRequest and return the result of the request
         /// </summary>
@@ -106,41 +95,6 @@ namespace SolrExpress.Solr5
 #endif
 
         /// <summary>
-        /// Prepare request
-        /// </summary>
-        /// <param name="requestMethod">Request method to execute</param>
-        /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="data">Data to execute</param>
-        /// <returns>WebRequest read to execute</returns>
-        private WebRequest Prepare(string requestMethod, string handler, string data)
-        {
-            var baseUrl = $"{this._solrHost}/{handler}";
-
-            var encoding = new UTF8Encoding();
-            var bytes = encoding.GetBytes(data);
-
-            var request = WebRequest.Create(baseUrl);
-            request.Method = requestMethod;
-            request.ContentType = "application/json";
-#if NET451
-            request.ContentLength = bytes.Length;
-#endif
-
-#if NETCOREAPP1_0
-            var taskStream = request.GetRequestStreamAsync();
-            taskStream.Wait();
-            var stream = taskStream.Result;
-            stream.Write(bytes, 0, bytes.Length);
-#else
-            var stream = request.GetRequestStream();
-            stream.Write(bytes, 0, bytes.Length);
-            stream.Close();
-#endif
-
-            return request;
-        }
-
-        /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
         /// <param name="handler">Handler name used in solr request</param>
@@ -148,7 +102,12 @@ namespace SolrExpress.Solr5
         /// <returns>Result of the request</returns>
         public string Get(string handler, string data)
         {
-            var request = this.Prepare("GET-X", handler, data);
+            var baseUrl = $"{this.SolrHost}/{handler}?{data}";
+
+            var encoding = new UTF8Encoding();
+
+            var request = WebRequest.Create(baseUrl);
+            request.Method = "GET";
 
 #if NETCOREAPP1_0
             var task = this.ExecuteAsync(request, data);
@@ -168,16 +127,40 @@ namespace SolrExpress.Solr5
         /// <returns>Result of the request</returns>
         public string Post(string handler, string data)
         {
-            var request = this.Prepare("POST", handler, data);
+            var baseUrl = $"{this.SolrHost}/{handler}";
+
+            var encoding = new UTF8Encoding();
+            var bytes = encoding.GetBytes(data);
+
+            var request = WebRequest.Create(baseUrl);
+            request.Method = "POST";
+            request.ContentType = "application/json";
+#if NET451
+            request.ContentLength = bytes.Length;
+#endif
 
 #if NETCOREAPP1_0
-            var task = this.ExecuteAsync(request, data);
-            task.Wait();
+            var taskStream = request.GetRequestStreamAsync();
+            taskStream.Wait();
+            var stream = taskStream.Result;
+            stream.Write(bytes, 0, bytes.Length);
 
-            return task.Result;
+            var taskExecute = this.ExecuteAsync(request, data);
+            taskExecute.Wait();
+
+            return taskExecute.Result;
 #else
+            var stream = request.GetRequestStream();
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Close();
+
             return this.Execute(request, data);
 #endif
         }
+
+        /// <summary>
+        /// Solr host address
+        /// </summary>
+        public string SolrHost { get; set; }
     }
 }

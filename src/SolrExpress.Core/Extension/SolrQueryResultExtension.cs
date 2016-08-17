@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Query;
 using SolrExpress.Core.Query.Result;
 using System.Collections.Generic;
 
@@ -13,7 +14,9 @@ namespace SolrExpress.Core.Extension
         public static IQueryResult<TDocument> Document<TDocument>(this IQueryResult<TDocument> queryResult, out List<TDocument> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IDocumentResult<TDocument>>();
+            var result = ApplicationServices
+                .Current
+                .GetService<IDocumentResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -27,7 +30,9 @@ namespace SolrExpress.Core.Extension
         public static IQueryResult<TDocument> FacetField<TDocument>(this IQueryResult<TDocument> queryResult, out List<FacetKeyValue<string>> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IFacetFieldResult<TDocument>>();
+            var result = ApplicationServices
+                .Current
+                .GetService<IFacetFieldResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -41,7 +46,9 @@ namespace SolrExpress.Core.Extension
         public static IQueryResult<TDocument> FacetQuery<TDocument>(this IQueryResult<TDocument> queryResult, out Dictionary<string, long> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IFacetQueryResult<TDocument>>();
+            var result = ApplicationServices
+                .Current
+                .GetService<IFacetQueryResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -55,7 +62,9 @@ namespace SolrExpress.Core.Extension
         public static IQueryResult<TDocument> FacetRange<TDocument>(this IQueryResult<TDocument> queryResult, out List<FacetKeyValue<FacetRange>> data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IFacetRangeResult<TDocument>>();
+            var result = ApplicationServices
+                .Current
+                .GetService<IFacetRangeResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 
@@ -69,7 +78,9 @@ namespace SolrExpress.Core.Extension
         public static IQueryResult<TDocument> Information<TDocument>(this IQueryResult<TDocument> queryResult, out Information data)
             where TDocument : IDocument
         {
-            var result = queryResult.Resolver.GetInstance<IInformationResult<TDocument>>();
+            var result = ApplicationServices
+                .Current
+                .GetService<IInformationResult<TDocument>>();
 
             data = queryResult.Get(result).Data;
 

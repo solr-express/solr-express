@@ -5,11 +5,11 @@ using System.Collections.Generic;
 namespace SolrExpress.Core
 {
     /// <summary>
-    /// Configurations to control SOLR Query behavior
+    /// Options to control SOLR Query behavior
     /// </summary>
-    public sealed class Configuration
+    public class DocumentCollectionOptions
     {
-        public Configuration()
+        public DocumentCollectionOptions()
         {
             this.FailFast = true;
             this.CheckAnyParameter = true;
@@ -42,5 +42,17 @@ namespace SolrExpress.Core
         /// Global result interceptor used in all queryable intance
         /// </summary>
         public List<IResultInterceptor> GlobalResultInterceptors { get; private set; }
+    }
+
+    /// <summary>
+    /// Options to control SOLR Query behavior
+    /// </summary>
+    public class DocumentCollectionOptions<TDocument> : DocumentCollectionOptions
+        where TDocument : IDocument
+    {
+        /// <summary>
+        /// SOLR host address
+        /// </summary>
+        public string HostAddress { get; set; }
     }
 }

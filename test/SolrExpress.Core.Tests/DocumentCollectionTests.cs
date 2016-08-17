@@ -1,4 +1,5 @@
 ﻿using Moq;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Update;
 using System;
 using Xunit;
@@ -9,38 +10,14 @@ namespace SolrExpress.Core.Tests
     {
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Create the instance with null in provider parameter
+        /// When    Create the instance with null in options
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
         public void DocumentCollection001()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(null, new Mock<IResolver>().Object, new Configuration()));
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentCollection instance
-        /// When    Create the instance with null in resolver parameter
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void DocumentCollection002()
-        {
-            // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, null, new Configuration()));
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentCollection instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void DocumentCollection003()
-        {
-            // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(new Mock<IProvider>().Object, new Mock<IResolver>().Object, null));
+            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(null));
         }
 
         /// <summary>
@@ -49,13 +26,17 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void DocumentCollection004()
+        public void DocumentCollection002()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Add(null));
@@ -67,13 +48,17 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void DocumentCollection005()
+        public void DocumentCollection003()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Delete(null));
@@ -85,13 +70,17 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void DocumentCollection006()
+        public void DocumentCollection004()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Add(new TestDocument[] { }));
@@ -103,13 +92,17 @@ namespace SolrExpress.Core.Tests
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void DocumentCollection007()
+        public void DocumentCollection005()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Delete(new string[] { }));
@@ -121,13 +114,17 @@ namespace SolrExpress.Core.Tests
         /// What    Each invokes returns a different instance
         /// </summary>
         [Fact]
-        public void DocumentCollection008()
+        public void DocumentCollection006()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>().Object;
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act
             var select1 = documentCollection.Select();
@@ -143,20 +140,23 @@ namespace SolrExpress.Core.Tests
         /// What    Don't invoke class than implements IAtomicUpdate
         /// </summary>
         [Fact]
-        public void DocumentCollection009()
+        public void DocumentCollection007()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>();
-            resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act
             documentCollection.Update().Commit();
 
             // Assert
-            resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Never);
+            mockEngine.Verify(q => q.GetService<IAtomicUpdate<TestDocument>>(), Times.Never);
         }
 
         /// <summary>
@@ -165,21 +165,24 @@ namespace SolrExpress.Core.Tests
         /// What    Invoke class than implements IAtomicUpdate
         /// </summary>
         [Fact]
-        public void DocumentCollection010()
+        public void DocumentCollection008()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>();
-            resolver.Setup(q => q.GetInstance<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
             var update = documentCollection.Update().Add(new TestDocument());
 
             // Act
             update.Commit();
 
             // Assert
-            resolver.Verify(q => q.GetInstance<IAtomicUpdate<TestDocument>>(), Times.Once);
+            mockEngine.Verify(q => q.GetService<IAtomicUpdate<TestDocument>>(), Times.Once);
         }
 
         /// <summary>
@@ -188,20 +191,23 @@ namespace SolrExpress.Core.Tests
         /// What    Don't invoke class than implements IAtomicDelete
         /// </summary>
         [Fact]
-        public void DocumentCollection011()
+        public void DocumentCollection009()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>();
-            resolver.Setup(q => q.GetInstance<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
 
             // Act
             documentCollection.Update().Commit();
 
             // Assert
-            resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Never);
+            mockEngine.Verify(q => q.GetService<IAtomicDelete<TestDocument>>(), Times.Never);
         }
 
         /// <summary>
@@ -210,21 +216,24 @@ namespace SolrExpress.Core.Tests
         /// What    Invoke class than implements IAtomicDelete
         /// </summary>
         [Fact]
-        public void DocumentCollection012()
+        public void DocumentCollection010()
         {
             // Arrange
-            var provider = new Mock<IProvider>().Object;
-            var resolver = new Mock<IResolver>();
-            resolver.Setup(q => q.GetInstance<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
-            var configuration = new Configuration();
-            var documentCollection = new DocumentCollection<TestDocument>(provider, resolver.Object, configuration);
+            var mockEngine = new MockEngine();
+            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
+            mockEngine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+
+            ApplicationServices.Current = mockEngine;
+            var options = new DocumentCollectionOptions<TestDocument>();
+            var documentCollection = new DocumentCollection<TestDocument>(options);
             var update = documentCollection.Update().Delete("");
 
             // Act
             update.Commit();
 
             // Assert
-            resolver.Verify(q => q.GetInstance<IAtomicDelete<TestDocument>>(), Times.Once);
+            mockEngine.Verify(q => q.GetService<IAtomicDelete<TestDocument>>(), Times.Once);
         }
     }
 }

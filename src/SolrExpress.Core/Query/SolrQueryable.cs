@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Query.Parameter;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Query.Parameter;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,20 +32,22 @@ namespace SolrExpress.Core.Query
         private string _handlerName = RequestHandler.Select;
 
         /// <summary>
-        /// Default constructor of the class
+        /// SOLR connection
         /// </summary>
-        /// <param name="provider">Provider used to resolve expression</param>
-        /// <param name="resolver">Resolver used to resolve classes dependency</param>
-        /// <param name="configuration">Configurations about SolrQueriable behavior</param>
-        public SolrQueryable(IProvider provider, IResolver resolver, Configuration configuration)
-        {
-            Checker.IsNull(provider);
-            Checker.IsNull(resolver);
-            Checker.IsNull(configuration);
+        private readonly ISolrConnection _solrConnection;
 
-            this.Provider = provider;
-            this.Resolver = resolver;
-            this.Configuration = configuration;
+        /// <summary>
+        /// Default constructor of class
+        /// </summary>
+        /// <param name="options">SolrExpress options</param>
+        public SolrQueryable(DocumentCollectionOptions<TDocument> options)
+        {
+            Checker.IsNull(options);
+
+            this.Options = options;
+
+            this._solrConnection = ApplicationServices.Current.GetService<ISolrConnection>();
+            this._solrConnection.SolrHost = this.Options.HostAddress;
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace SolrExpress.Core.Query
 
             if (offsetParameter == null)
             {
-                offsetParameter = this.Resolver.GetInstance<IOffsetParameter>().Configure(0);
+                offsetParameter = ApplicationServices.Current.GetService<IOffsetParameter>().Configure(0);
                 this._parameters.Add(offsetParameter);
             }
 
@@ -64,7 +67,7 @@ namespace SolrExpress.Core.Query
 
             if (limitParameter == null)
             {
-                limitParameter = this.Resolver.GetInstance<ILimitParameter>().Configure(10);
+                limitParameter = ApplicationServices.Current.GetService<ILimitParameter>().Configure(10);
                 this._parameters.Add(limitParameter);
             }
         }
@@ -100,11 +103,11 @@ namespace SolrExpress.Core.Query
 
             var parameterValidation = parameter as IValidation;
 
-            var mustValidate = this.Configuration.FailFast && parameterValidation != null;
+            var mustValidate = this.Options.FailFast && parameterValidation != null;
 
             if (parameter is IAnyParameter)
             {
-                mustValidate = mustValidate && this.Configuration.CheckAnyParameter && parameter is IAnyParameter;
+                mustValidate = mustValidate && this.Options.CheckAnyParameter && parameter is IAnyParameter;
             }
 
             if (mustValidate)
@@ -234,41 +237,32 @@ namespace SolrExpress.Core.Query
         /// <returns>Solr result</returns>
         public QueryResult<TDocument> Execute()
         {
-            this.Parameter(this.Configuration.GlobalParameters.ToArray());
-            this.QueryInterceptor(this.Configuration.GlobalQueryInterceptors.ToArray());
-            this.ResultInterceptor(this.Configuration.GlobalResultInterceptors.ToArray());
+            var systemParameter = ApplicationServices.Current.GetService<ISystemParameter>();
+            var parameterContainer = ApplicationServices.Current.GetService<IParameterContainer>();
 
-            var systemParameter = this.Resolver.GetInstance<ISystemParameter>();
+            this.Parameter(this.Options.GlobalParameters.ToArray());
+            this.QueryInterceptor(this.Options.GlobalQueryInterceptors.ToArray());
+            this.ResultInterceptor(this.Options.GlobalResultInterceptors.ToArray());
+
             this._parameters.Add(systemParameter);
 
             this.SetDefaultPaginationParameters();
 
-            var parameterContainer = this.Resolver.GetInstance<IParameterContainer>();
             parameterContainer.AddParameters(this._parameters);
             var query = parameterContainer.Execute();
 
             this._queryInterceptors.ForEach(q => q.Execute(ref query));
 
-            var json = this.Provider.Get(this._handlerName, query);
+            var json = this._solrConnection.Get(this._handlerName, query);
 
             this._resultInterceptors.ForEach(q => q.Execute(ref json));
 
-            return new QueryResult<TDocument>(this.Resolver, this._parameters, json);
+            return new QueryResult<TDocument>(this._parameters, json);
         }
 
         /// <summary>
-        /// Configurations about SolrQueriable behavior
+        /// SolrExpress options
         /// </summary>
-        public Configuration Configuration { get; private set; }
-
-        /// <summary>
-        /// Provider used to resolve the expression
-        /// </summary>
-        public IProvider Provider { get; private set; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        public IResolver Resolver { get; private set; }
+        public DocumentCollectionOptions<TDocument> Options { get; private set; }
     }
 }

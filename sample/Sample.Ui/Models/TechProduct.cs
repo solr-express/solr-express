@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
 using System;
 
-namespace Sample.Ui.Context
+namespace Sample.Ui.Models
 {
     public class TechProduct : IDocument
     {

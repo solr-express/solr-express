@@ -1,9 +1,9 @@
 ﻿namespace SolrExpress.Core
 {
     /// <summary>
-    /// Signatures of SOLR access provider
+    /// Signatures of SOLR connection
     /// </summary>
-    public interface IProvider
+    public interface ISolrConnection
     {
         /// <summary>
         /// Execute the informated uri and return the result of the request
@@ -20,5 +20,10 @@
         /// <param name="data">Data to execute</param>
         /// <returns>Result of the request</returns>
         string Post(string handler, string data);
+
+        /// <summary>
+        /// Solr host address
+        /// </summary>
+        string SolrHost { get; set; }
     }
 }

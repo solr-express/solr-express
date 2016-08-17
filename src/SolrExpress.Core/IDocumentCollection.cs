@@ -20,18 +20,8 @@ namespace SolrExpress.Core
         ISolrAtomicUpdate<TDocument> Update();
 
         /// <summary>
-        /// Provider used to resolve the expression
+        /// SolrExpress options
         /// </summary>
-        IProvider Provider { get; }
-
-        /// <summary>
-        /// Resolver used to resolve classes dependency
-        /// </summary>
-        IResolver Resolver { get; }
-
-        /// <summary>
-        /// Configurations about SolrQueriable behavior
-        /// </summary>
-        Configuration Configuration { get; }
+        DocumentCollectionOptions<TDocument> Options { get; }
     }
 }

@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Sample.Ui.Models;
+using SolrExpress.Core;
+using SolrExpress.Core.Extension;
+using SolrExpress.Solr5.Extension;
 
 namespace Sample.Ui
 {
@@ -31,6 +35,17 @@ namespace Sample.Ui
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var options = new DocumentCollectionOptions
+            {
+                CheckAnyParameter = true,
+                FailFast = true
+            };
+
+            services.AddSolrExpress<TechProduct>(builder => builder
+                .UseOptions(options)
+                .UseHostAddress("http://localhost:8983/solr/techproducts")
+                .UseSolr5());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,7 +53,7 @@ namespace Sample.Ui
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

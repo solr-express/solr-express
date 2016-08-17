@@ -16,22 +16,14 @@ namespace SolrExpress.Core.Query
         private JObject _jsonObject;
 
         /// <summary>
-        /// Resolver used to resolve classes dependency
+        /// Default constructor of class
         /// </summary>
-        public IResolver Resolver { get; private set; }
-
-        /// <summary>
-        /// Default constructor of the class
-        /// </summary>
-        /// <param name="resolver">Resolver used to resolve classes dependency</param>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="json">Result of the SOLR</param
-        public QueryResult(IResolver resolver, List<IParameter> parameters, string json)
+        public QueryResult(List<IParameter> parameters, string json)
         {
-            Checker.IsNull(resolver);
             Checker.IsNullOrWhiteSpace(json);
 
-            this.Resolver = resolver;
             this._parameters = parameters;
             this._jsonPlainText = json;
         }
