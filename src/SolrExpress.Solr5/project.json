@@ -44,7 +44,7 @@
       "url": "https://github.com/solr-express/solr-express",
       "type": "git"
     },
-    "tags": [ "SOLR", "C#", ".Net" ],
+    "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
     "requireLicenseAcceptance": false
   },
   "version": "3.1.2"

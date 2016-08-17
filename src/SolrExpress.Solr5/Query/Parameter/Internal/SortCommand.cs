@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Solr5.Query.Parameter.Internal
 {
-    public class SortCommand
+    internal class SortCommand
     {
         /// <summary>
         /// Execute creation of parameter "sort"
@@ -10,7 +10,7 @@ namespace SolrExpress.Solr5.Query.Parameter.Internal
         /// <param name="fieldName">Field name to add in sort parameter</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(string fieldName, bool ascendent, JObject jObject)
+        internal void Execute(string fieldName, bool ascendent, JObject jObject)
         {
             var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
 

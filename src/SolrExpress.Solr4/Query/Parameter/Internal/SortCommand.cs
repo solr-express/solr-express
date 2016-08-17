@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Query.Parameter.Internal
 {
-    public class SortCommand
+    internal class SortCommand
     {
         /// <summary>
         /// Execute creation of parameter "sort"
@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Query.Parameter.Internal
         /// <param name="fieldName">Field name to add in sort parameter</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(string fieldName, bool ascendent , List<string> container)
+        internal void Execute(string fieldName, bool ascendent , List<string> container)
         {
             var value = $"{fieldName} {(ascendent ? "asc" : "desc")}";
 
