@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Query;
-using SolrExpress.Core.Query.Parameter;
+﻿using SolrExpress.Core.Search;
 using System.Collections.Generic;
 
 namespace SolrExpress.Core
@@ -13,8 +12,8 @@ namespace SolrExpress.Core
         {
             this.FailFast = true;
             this.CheckAnyParameter = true;
-            this.GlobalParameters = new List<IParameter>();
-            this.GlobalQueryInterceptors = new List<IQueryInterceptor>();
+            this.GlobalParameters = new List<ISearchParameter>();
+            this.GlobalQueryInterceptors = new List<ISearchInterceptor>();
             this.GlobalResultInterceptors = new List<IResultInterceptor>();
         }
 
@@ -31,12 +30,12 @@ namespace SolrExpress.Core
         /// <summary>
         /// Global parameter used in all queryable intance
         /// </summary>
-        public List<IParameter> GlobalParameters { get; private set; }
+        public List<ISearchParameter> GlobalParameters { get; private set; }
 
         /// <summary>
         /// Global query interceptor used in all queryable intance
         /// </summary>
-        public List<IQueryInterceptor> GlobalQueryInterceptors { get; private set; }
+        public List<ISearchInterceptor> GlobalQueryInterceptors { get; private set; }
 
         /// <summary>
         /// Global result interceptor used in all queryable intance

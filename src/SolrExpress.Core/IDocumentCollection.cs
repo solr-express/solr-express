@@ -1,4 +1,4 @@
-﻿using SolrExpress.Core.Query;
+﻿using SolrExpress.Core.Search;
 using SolrExpress.Core.Update;
 
 namespace SolrExpress.Core
@@ -12,7 +12,7 @@ namespace SolrExpress.Core
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        ISolrQueryable<TDocument> Select();
+        ISolrSearch<TDocument> Select();
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR

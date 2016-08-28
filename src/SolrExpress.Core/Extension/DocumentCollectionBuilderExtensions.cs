@@ -1,5 +1,6 @@
 ﻿#if NET40 || NET45
 using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Extension
 {

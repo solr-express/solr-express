@@ -1,15 +1,15 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Extension;
-using SolrExpress.Core.Query;
-using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Core.Query.ParameterValue;
-using SolrExpress.Core.Query.Result;
 using SolrExpress.Solr4.Extension;
-using SolrExpress.Solr4.Query.Parameter;
-using SolrExpress.Solr4.Query.Result;
 using System;
 using System.Collections.Generic;
 using Xunit;
+using SolrExpress.Core.Search.Result;
+using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Solr4.Search.Result;
+using SolrExpress.Core.Search;
+using System.Linq;
+using SolrExpress.Core.Search.Parameter;
 #if NETCOREAPP1_0
 using Microsoft.Extensions.DependencyInjection;
 #endif
@@ -89,18 +89,21 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> data;
 
             // Act
+            documentCollection.Select().Query("*:*");
+
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
+                .Query(new QueryAll())
                 .Execute();
-            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+
+            result.Document(out data);
 
             // Assert
-            Assert.Equal(10, data.Count);
+            Assert.Equal(10, data.Count());
         }
 
         /// <summary>
@@ -113,22 +116,22 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new FilterQueryParameter<TechProductDocument>().Configure(new Single<TechProductDocument>(q => q.InStock, "true")))
-                .Parameter(new FilterQueryParameter<TechProductDocument>().Configure(new Single<TechProductDocument>(q => q.ManufacturerId, "corsair")))
+                .Query(new QueryAll())
+                .Filter(q => q.InStock, "true")
+                .Filter(q => q.ManufacturerId, "corsair")
                 .Execute();
 
-            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+            result.Document(out data);
 
             // Assert
-            Assert.Equal(3, data.Count);
-            Assert.Equal("TWINX2048-3200PRO", data[0].Id);
+            Assert.Equal(3, data.Count());
+            Assert.Equal("TWINX2048-3200PRO", data.ToList()[0].Id);
         }
 
         /// <summary>
@@ -141,22 +144,23 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<FacetKeyValue<string>> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<FacetKeyValue<string>> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.ManufacturerId))
-                .Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.InStock))
+                .Query(new QueryAll())
+                .FacetField(q => q.ManufacturerId)
+                .FacetField(q => q.InStock)
                 .Execute();
-            data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
+
+            result.FacetField(out data);
 
             // Assert
-            Assert.Equal(2, data.Count);
-            Assert.Equal("ManufacturerId", data[0].Name);
-            Assert.Equal("InStock", data[1].Name);
+            Assert.Equal(2, data.Count());
+            Assert.Equal("ManufacturerId", data.ToList()[0].Name);
+            Assert.Equal("InStock", data.ToList()[1].Name);
         }
 
         /// <summary>
@@ -169,20 +173,21 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            Dictionary<string, long> data;
+            ISearchResult<TechProductDocument> result;
+            IDictionary<string, long> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new FacetQueryParameter<TechProductDocument>().Configure("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10)))
-                .Parameter(new FacetQueryParameter<TechProductDocument>().Configure("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10)))
+                .Query(new QueryAll())
+                .FacetQuery("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10))
+                .FacetQuery("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10))
                 .Execute();
-            data = result.Get(new FacetQueryResult<TechProductDocument>()).Data;
+            
+            result.FacetQuery(out data);
 
             // Assert
-            Assert.Equal(2, data.Count);
+            Assert.Equal(2, data.Count());
             Assert.True(data["Facet1"] > 0);
             Assert.True(data["Facet2"] > 0);
         }
@@ -197,24 +202,25 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<FacetKeyValue<FacetRange>> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<FacetKeyValue<FacetRange>> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet1", q => q.Popularity, "1", "1", "10"))
-                .Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet2", q => q.Price, "10", "10", "1000"))
-                .Parameter(new FacetRangeParameter<TechProductDocument>().Configure("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY"))
+                .Query(new QueryAll())
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
+                .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
+                .FacetRange("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY")
                 .Execute();
-            data = result.Get(new FacetRangeResult<TechProductDocument>()).Data;
+            
+            result.FacetRange(out data);
 
             // Assert
-            Assert.Equal(3, data.Count);
-            Assert.Equal("Facet1", data[0].Name);
-            Assert.Equal("Facet2", data[1].Name);
-            Assert.Equal("Facet3", data[2].Name);
+            Assert.Equal(3, data.Count());
+            Assert.Equal("Facet1", data.ToList()[0].Name);
+            Assert.Equal("Facet2", data.ToList()[1].Name);
+            Assert.Equal("Facet3", data.ToList()[2].Name);
         }
 
         /// <summary>
@@ -227,18 +233,19 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            InformationResult<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            Information data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
+                .Query(new QueryAll())
                 .Execute();
-            data = result.Get(new InformationResult<TechProductDocument>());
+
+            result.Information(out data);
 
             // Assert
-            Assert.True(data.Data.DocumentCount > 0);
+            Assert.True(data.DocumentCount > 0);
         }
 
         /// <summary>
@@ -251,21 +258,21 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<FacetKeyValue<string>> data;
-
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<FacetKeyValue<string>> data;
+            
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new FacetFieldParameter<TechProductDocument>().Configure(q => q.ManufacturerId, limit: 1))
+                .Query(new QueryAll())
+                .FacetField(q => q.ManufacturerId, limit: 1)
                 .Execute();
-            data = result.Get(new FacetFieldResult<TechProductDocument>()).Data;
+            result.FacetField(out data);
 
             // Assert
-            Assert.Equal(1, data.Count);
-            Assert.Equal("ManufacturerId", data[0].Name);
-            Assert.Equal(1, data[0].Data.Count);
+            Assert.Equal(1, data.Count());
+            Assert.Equal("ManufacturerId", data.ToList()[0].Name);
+            Assert.Equal(1, data.ToList()[0].Data.Count);
         }
 
         /// <summary>
@@ -278,7 +285,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            List<TechProductDocument> fetchedDocuments;
+            IEnumerable<TechProductDocument> fetchedDocuments;
             var documentId = Guid.NewGuid().ToString("N");
             var documentToAdd = new TechProductDocument
             {
@@ -298,9 +305,9 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.Equal(1, fetchedDocuments.Count);
-            Assert.Equal(documentId, fetchedDocuments[0].Id);
-            Assert.Equal("IntegrationTest009", fetchedDocuments[0].Name);
+            Assert.Equal(1, fetchedDocuments.Count());
+            Assert.Equal(documentId, fetchedDocuments.ToList()[0].Id);
+            Assert.Equal("IntegrationTest009", fetchedDocuments.ToList()[0].Name);
         }
 
         /// <summary>
@@ -313,7 +320,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            List<TechProductDocument> fetchedDocuments;
+            IEnumerable<TechProductDocument> fetchedDocuments;
             var documentId = Guid.NewGuid().ToString("N");
             var documentToAdd = new TechProductDocument
             {
@@ -335,7 +342,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.Equal(0, fetchedDocuments.Count);
+            Assert.Equal(0, fetchedDocuments.Count());
         }
 
         /// <summary>
@@ -348,19 +355,19 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, true))
+                .Query(new QueryAll())
+                .Sort(q => q.Id, true)
                 .Execute();
-            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+            result.Document(out data);
 
             // Assert
-            Assert.Equal(10, data.Count);
+            Assert.Equal(10, data.Count());
         }
 
         /// <summary>
@@ -373,20 +380,20 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, false))
-                .Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Name, true))
+                .Query(new QueryAll())
+                .Sort(q => q.Id, false)
+                .Sort(q => q.Name, true)
                 .Execute();
-            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+            result.Document(out data);
 
             // Assert
-            Assert.Equal(10, data.Count);
+            Assert.Equal(10, data.Count());
         }
 
         /// <summary>
@@ -399,7 +406,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            List<TechProductDocument> fetchedDocuments;
+            IEnumerable<TechProductDocument> fetchedDocuments;
             var documentId1 = Guid.NewGuid().ToString("N");
             var documentId2 = Guid.NewGuid().ToString("N");
             var documentToAdd1 = new TechProductDocument
@@ -425,11 +432,11 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.Equal(2, fetchedDocuments.Count);
-            Assert.Equal(documentId1, fetchedDocuments[0].Id);
-            Assert.Equal(documentId2, fetchedDocuments[1].Id);
-            Assert.Equal("IntegrationTest013", fetchedDocuments[0].Name);
-            Assert.Equal("IntegrationTest013", fetchedDocuments[1].Name);
+            Assert.Equal(2, fetchedDocuments.Count());
+            Assert.Equal(documentId1, fetchedDocuments.ToList()[0].Id);
+            Assert.Equal(documentId2, fetchedDocuments.ToList()[1].Id);
+            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[0].Name);
+            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[1].Name);
         }
 
         /// <summary>
@@ -442,20 +449,20 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
-            List<TechProductDocument> data;
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Id, false))
-                .Parameter(new SortParameter<TechProductDocument>().Configure(q => q.Name, true))
+                .Query(new QueryAll())
+                .Sort(q => q.Id, false)
+                .Sort(q => q.Name, true)
                 .Execute();
-            data = result.Get(new DocumentResult<TechProductDocument>()).Data;
+            result.Document(out data);
 
             // Assert
-            Assert.Equal(10, data.Count);
+            Assert.Equal(10, data.Count());
         }
 
         /// <summary>
@@ -468,7 +475,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            List<TechProductDocument> fetchedDocuments;
+            IEnumerable<TechProductDocument> fetchedDocuments;
             var documentId1 = Guid.NewGuid().ToString("N");
             var documentId2 = Guid.NewGuid().ToString("N");
             var documentToAdd1 = new TechProductDocument
@@ -494,11 +501,11 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Execute()
                 .Document(out fetchedDocuments);
 
-            Assert.Equal(2, fetchedDocuments.Count);
-            Assert.Equal(documentId1, fetchedDocuments[0].Id);
-            Assert.Equal(documentId2, fetchedDocuments[1].Id);
-            Assert.Equal("IntegrationTest013", fetchedDocuments[0].Name);
-            Assert.Equal("IntegrationTest013", fetchedDocuments[1].Name);
+            Assert.Equal(2, fetchedDocuments.Count());
+            Assert.Equal(documentId1, fetchedDocuments.ToList()[0].Id);
+            Assert.Equal(documentId2, fetchedDocuments.ToList()[1].Id);
+            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[0].Name);
+            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[1].Name);
         }
 
         /// <summary>
@@ -511,14 +518,14 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
+            ISearchResult<TechProductDocument> result;
             InformationResult<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Boost))
+                .Query(new QueryAll())
+                .Boost(new Any("inStock"), BoostFunctionType.Boost)
                 .Execute();
             data = result.Get(new InformationResult<TechProductDocument>());
 
@@ -536,14 +543,14 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
-            QueryResult<TechProductDocument> result;
+            ISearchResult<TechProductDocument> result;
             InformationResult<TechProductDocument> data;
 
             // Act
             result = documentCollection
                 .Select()
-                .Parameter(new QueryParameter<TechProductDocument>().Configure(new QueryAll()))
-                .Parameter(new BoostParameter<TechProductDocument>().Configure(new Any("inStock"), BoostFunctionType.Bf))
+                .Query(new QueryAll())
+                .Boost(new Any("inStock"), BoostFunctionType.Bf)
                 .Execute();
             data = result.Get(new InformationResult<TechProductDocument>());
 

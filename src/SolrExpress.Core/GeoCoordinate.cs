@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using SolrExpress.Core.Utility;
+using System.Globalization;
 
 namespace SolrExpress.Core
 {

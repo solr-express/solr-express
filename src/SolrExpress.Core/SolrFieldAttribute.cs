@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SolrExpress.Core.Utility;
+using System;
 
 namespace SolrExpress.Core
 {

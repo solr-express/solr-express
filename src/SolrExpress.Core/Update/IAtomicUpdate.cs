@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-
-namespace SolrExpress.Core.Update
+﻿namespace SolrExpress.Core.Update
 {
     /// <summary>
     /// Signatures to add informed documents in SOLR collection

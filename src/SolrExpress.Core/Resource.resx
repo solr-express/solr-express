@@ -147,10 +147,6 @@
   <data name="InvalidParameterTypeException" xml:space="preserve">
     <value>Parameter "{0}" validation message: "{1}"</value>
   </data>
-  <data name="UnexpectedDependencyInjectionMappingException" xml:space="preserve">
-    <value>Unknown to resolve type "{0}"
-Mapping not found</value>
-  </data>
   <data name="UnexpectedJsonException" xml:space="preserve">
     <value>Parameter "{0}" was not found in the source json</value>
   </data>

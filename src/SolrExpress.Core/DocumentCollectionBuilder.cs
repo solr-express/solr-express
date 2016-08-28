@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Query;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Update;
 
 namespace SolrExpress.Core
@@ -31,8 +31,15 @@ namespace SolrExpress.Core
         /// <returns>Current instance</returns>
         public DocumentCollectionBuilder<TDocument> UseOptions(DocumentCollectionOptions options)
         {
-            var shadowOptions = new DocumentCollectionOptions<TDocument>();
-            options.CopyOptionsTo(out shadowOptions);
+            var shadowOptions = new DocumentCollectionOptions<TDocument>
+            {
+                CheckAnyParameter = options.CheckAnyParameter,
+                FailFast = options.FailFast
+            };
+
+            shadowOptions.GlobalParameters.AddRange(options.GlobalParameters);
+            shadowOptions.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
+            shadowOptions.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
 
             this._options = shadowOptions;
 
@@ -65,7 +72,7 @@ namespace SolrExpress.Core
 
             ApplicationServices
                 .Current
-                .AddTransient<ISolrQueryable<TDocument>, SolrQueryable<TDocument>>()
+                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
 

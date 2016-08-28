@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Linq;
 

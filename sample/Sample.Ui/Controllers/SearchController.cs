@@ -2,8 +2,8 @@
 using Sample.Ui.Models;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
-using SolrExpress.Core.Query.ParameterValue;
-using SolrExpress.Core.Query.Result;
+using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Search.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Sample.Ui.Controllers
             this._documentCollection = documentCollection;
         }
 
-        private List<FacetKeyValue<string>> GetFacetRangeViewModelList(List<FacetKeyValue<FacetRange>> facetRangeList)
+        private List<FacetKeyValue<string>> GetFacetRangeViewModelList(IEnumerable<FacetKeyValue<FacetRange>> facetRangeList)
         {
             return facetRangeList
                 .Select(q =>
@@ -42,10 +42,10 @@ namespace Sample.Ui.Controllers
         [HttpGet("api/search")]
         public object Get(int page, string keyWord)
         {
-            List<TechProduct> documents;
-            List<FacetKeyValue<string>> facetFieldList;
-            Dictionary<string, long> facetQueryList;
-            List<FacetKeyValue<FacetRange>> facetRangeList;
+            IEnumerable<TechProduct> documents;
+            IEnumerable<FacetKeyValue<string>> facetFieldList;
+            IDictionary<string, long> facetQueryList;
+            IEnumerable<FacetKeyValue<FacetRange>> facetRangeList;
             Information statistics;
 
             const int itemsPerPage = 10;

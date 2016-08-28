@@ -6,6 +6,7 @@ namespace SolrExpress.Core.Extension.Internal
     /// <summary>
     /// Extension class use to process arithmetic operations with generics
     /// </summary>
+    [Obsolete("Verify using")]
     internal static class GenericExtension
     {
         /// <summary>

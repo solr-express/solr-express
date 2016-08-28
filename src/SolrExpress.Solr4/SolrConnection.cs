@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.Utility;
 using System;
 using System.IO;
 using System.Net;

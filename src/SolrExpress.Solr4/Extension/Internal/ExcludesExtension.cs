@@ -1,9 +1,12 @@
-﻿namespace SolrExpress.Solr4.Extension.Internal
+﻿using System;
+
+namespace SolrExpress.Solr4.Extension.Internal
 {
     /// <summary>
     /// Extension class used in Expression<Func<TDocument>> to manipulate string[]
     /// Exclusive methods to Solr 4
     /// </summary>
+    [Obsolete("Change to utility class")]
     internal static class ExcludesExtension
     {
         /// <summary>

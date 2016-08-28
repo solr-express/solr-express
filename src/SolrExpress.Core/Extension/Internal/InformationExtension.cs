@@ -1,5 +1,6 @@
-﻿using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Core.Query.Result;
+﻿using SolrExpress.Core.Search;
+using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Search.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,10 @@ namespace SolrExpress.Core.Extension.Internal
     /// <summary>
     /// Extension class used to manipulate Statistic
     /// </summary>
+    [Obsolete("Change to utility class")]
     internal static class InformationExtension
     {
-        internal static Information Calculate(this Information information, List<IParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
+        internal static Information Calculate(this Information information, IEnumerable<ISearchParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
             var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
             var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);

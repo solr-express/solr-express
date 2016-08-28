@@ -1,5 +1,5 @@
-﻿using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Core.Query.ParameterValue;
+﻿using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Search.ParameterValue;
 using System;
 using System.Globalization;
 
@@ -8,6 +8,7 @@ namespace SolrExpress.Core.Extension.Internal
     /// <summary>
     /// Extension class used in generic methods
     /// </summary>
+    [Obsolete("Change to utility class")]
     internal static class UtilityExtension
     {
         /// <summary>

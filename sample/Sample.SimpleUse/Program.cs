@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
-using SolrExpress.Core.Query.ParameterValue;
+using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Solr5.Extension;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace Sample.SimpleUse
             techProducts = serviceProvider.GetRequiredService<DocumentCollection<TechProduct>>();
 #endif
 
-            List<TechProduct> documents;
+            IEnumerable<TechProduct> documents;
 
             techProducts
                 .Select()

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Serialization;
 using SolrExpress.Core.Update;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Update

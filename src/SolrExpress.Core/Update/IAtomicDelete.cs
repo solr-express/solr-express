@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-
-namespace SolrExpress.Core.Update
+﻿namespace SolrExpress.Core.Update
 {
     /// <summary>
     /// Signatures to remove informed documents from SOLR collection

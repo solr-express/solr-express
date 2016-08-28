@@ -1,12 +1,12 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.DependencyInjection;
-using SolrExpress.Core.Query;
-using SolrExpress.Core.Query.Parameter;
-using SolrExpress.Core.Query.Result;
+using SolrExpress.Core.Search;
+using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Update;
-using SolrExpress.Solr4.Query;
-using SolrExpress.Solr4.Query.Parameter;
-using SolrExpress.Solr4.Query.Result;
+using SolrExpress.Solr4.Search;
+using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Solr4.Search.Result;
 using SolrExpress.Solr4.Update;
 
 namespace SolrExpress.Solr4.Extension
@@ -43,7 +43,7 @@ namespace SolrExpress.Solr4.Extension
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
                 .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
-                .AddTransient<IParameterContainer, ParameterContainer>()
+                .AddTransient<ISearchParameterCollection, SearchParameterCollection>()
                 .AddTransient<ISystemParameter, SystemParameter>();
 
             return builder;
