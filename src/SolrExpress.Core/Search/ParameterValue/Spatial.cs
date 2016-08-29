@@ -36,7 +36,8 @@ namespace SolrExpress.Core.Search.ParameterValue
         {
             var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            return this.FunctionType.GetSolrSpatialFormule(
+            return ExpressionUtility.GetSolrSpatialFormule(
+                this.FunctionType,
                 fieldName,
                 this.CenterPoint,
                 this.Distance);

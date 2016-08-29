@@ -69,7 +69,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             }
 
             var fieldName = this.Expression.GetFieldNameFromExpression();
-            var formule = this.FunctionType.GetSolrSpatialFormule(fieldName, this.CenterPoint, this.Distance);
+            var formule = ExpressionUtility.GetSolrSpatialFormule(this.FunctionType, fieldName, this.CenterPoint, this.Distance);
             var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, formule);
 
             container.Add($"facet.query={facetName}");
@@ -81,7 +81,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                this.SortType.Value.GetSolrFacetSort(out typeName, out dummy);
+                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
 
                 container.Add($"f.{this.AliasName}.facet.sort={typeName}");
             }

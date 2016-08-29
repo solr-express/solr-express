@@ -46,7 +46,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             var fieldName = this.Expression.GetFieldNameFromExpression();
 
-            var formule = this.FunctionType.GetSolrSpatialFormule(fieldName, this.CenterPoint, this.Distance);
+            var formule = ExpressionUtility.GetSolrSpatialFormule(this.FunctionType, fieldName, this.CenterPoint, this.Distance);
 
             container.Add($"fq={formule}");
         }

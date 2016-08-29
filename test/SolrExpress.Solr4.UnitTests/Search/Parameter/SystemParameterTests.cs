@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using SolrExpress.Solr4.Search.Parameter;
+using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -12,17 +14,23 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         [Fact]
         public void SystemParameter001()
         {
-            //// Arrange
-            //var container = new List<string>();
-            //var parameter = new SystemParameter();
-            //parameter.Configure(10);
+            // Arrange
+            var container = new List<string>();
+            var parameter = new SystemParameter();
 
-            //// Act
-            //parameter.Execute(container);
+            // Act
+            parameter.Execute(container);
 
-            //// Assert
-            //Assert.Equal(1, container.Count);
-            //Assert.Equal("rows=10", container[0]);
+            // Assert
+            Assert.Equal("echoParams=none", container[0]);
+            Assert.Equal("wt=json", container[1]);
+            Assert.Equal("indent=off", container[2]);
+            Assert.Equal("defType=edismax", container[3]);
+            Assert.Equal("fl=*,score", container[4]);
+            Assert.Equal("q.alt=*:*", container[5]);
+            Assert.Equal("sort=score asc", container[6]);
+            Assert.Equal("df=id", container[7]);
+            Assert.Equal("q=*:*", container[8]);
         }
     }
 }

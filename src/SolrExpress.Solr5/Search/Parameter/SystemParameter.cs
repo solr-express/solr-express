@@ -39,7 +39,7 @@ namespace SolrExpress.Solr5.Search.Parameter
                 ["q.alt"] = "*:*",
                 ["sort"] = "score asc",
                 ["df"] = "id",
-                ["q]"] = "*:*"
+                ["q"] = "*:*"
             };
 
             var jObj = (JObject)jObject["params"] ?? new JObject();

@@ -1,21 +1,22 @@
 ﻿using Moq;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Search.Result;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace SolrExpress.Core.Extension.Internal
+namespace SolrExpress.Core.UnitTests.Search.Result
 {
-    public class InformationExtensionTests
+    public class InformationBuilderTests
     {
         /// <summary>
-        /// Where   Using StatisticExtension class
+        /// Where   Using InformationBuilder class
         /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=200
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
-        public void StatisticExtension001()
+        public void InformationBuilder001()
         {
             // Arrange
             var offsetParameterMock = new Mock<IOffsetParameter>();
@@ -31,7 +32,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = InformationExtension.Calculate(null, list, 1, 200);
+            var statistic = InformationBuilder.Create(list, 1, 200);
 
             // Assert
             Assert.Equal(200, statistic.DocumentCount);
@@ -46,12 +47,12 @@ namespace SolrExpress.Core.Extension.Internal
         }
 
         /// <summary>
-        /// Where   Using StatisticExtension class
+        /// Where   Using InformationBuilder class
         /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=201
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
-        public void StatisticExtension002()
+        public void InformationBuilder002()
         {
             // Arrange
             var offsetParameterMock = new Mock<IOffsetParameter>();
@@ -67,7 +68,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = InformationExtension.Calculate(null, list, 1, 201);
+            var statistic = InformationBuilder.Create(list, 1, 201);
 
             // Assert
             Assert.Equal(201, statistic.DocumentCount);
@@ -82,12 +83,12 @@ namespace SolrExpress.Core.Extension.Internal
         }
 
         /// <summary>
-        /// Where   Using StatisticExtension class
+        /// Where   Using InformationBuilder class
         /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=0
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
-        public void StatisticExtension003()
+        public void InformationBuilder003()
         {
             // Arrange
             var offsetParameterMock = new Mock<IOffsetParameter>();
@@ -103,7 +104,7 @@ namespace SolrExpress.Core.Extension.Internal
             };
 
             // Act
-            var statistic = InformationExtension.Calculate(null, list, 1, 0);
+            var statistic = InformationBuilder.Create(list, 1, 0);
 
             // Assert
             Assert.Equal(0, statistic.DocumentCount);

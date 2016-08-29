@@ -3,13 +3,12 @@ using SolrExpress.Core.Search.ParameterValue;
 using System;
 using System.Globalization;
 
-namespace SolrExpress.Core.Extension.Internal
+namespace SolrExpress.Core.Utility
 {
     /// <summary>
-    /// Extension class used in generic methods
+    /// Utility class used in expression calculations
     /// </summary>
-    [Obsolete("Change to utility class")]
-    internal static class UtilityExtension
+    public class ExpressionUtility
     {
         /// <summary>
         /// Get the sort type and direction
@@ -17,7 +16,7 @@ namespace SolrExpress.Core.Extension.Internal
         /// <param name="solrFacetSortType">Type used in match</param>
         /// <param name="typeName">Type name</param>
         /// <param name="sortName">Sort direction</param>
-        internal static void GetSolrFacetSort(this FacetSortType solrFacetSortType, out string typeName, out string sortName)
+        internal static void GetSolrFacetSort(FacetSortType solrFacetSortType, out string typeName, out string sortName)
         {
             switch (solrFacetSortType)
             {
@@ -50,7 +49,7 @@ namespace SolrExpress.Core.Extension.Internal
         /// <param name="centerPoint">Center point information</param>
         /// <param name="distance">Distance</param>
         /// <returns></returns>
-        internal static string GetSolrSpatialFormule(this SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
+        internal static string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
         {
             return string.Format(
                 "{{!{0} sfield={1} pt={2} d={3}}}",
@@ -65,7 +64,7 @@ namespace SolrExpress.Core.Extension.Internal
         /// </summary>
         /// <param name="query">Query value</param>
         /// <param name="tagName">Tag name</param>
-        internal static string GetSolrFilterWithTag(this string query, string aliasName)
+        internal static string GetSolrFilterWithTag(string query, string aliasName)
         {
             return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
         }

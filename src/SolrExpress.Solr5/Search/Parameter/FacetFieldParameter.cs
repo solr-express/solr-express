@@ -62,7 +62,7 @@ namespace SolrExpress.Solr5.Search.Parameter
                 string typeName;
                 string sortName;
 
-                this.SortType.Value.GetSolrFacetSort(out typeName, out sortName);
+                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }

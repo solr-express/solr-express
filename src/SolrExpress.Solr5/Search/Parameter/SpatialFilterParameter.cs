@@ -48,7 +48,8 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var jObj = (JObject)jObject["params"] ?? new JObject();
 
-            var formule = this.FunctionType.GetSolrSpatialFormule(
+            var formule = ExpressionUtility.GetSolrSpatialFormule(
+                this.FunctionType,
                 fieldName,
                 this.CenterPoint,
                 this.Distance);

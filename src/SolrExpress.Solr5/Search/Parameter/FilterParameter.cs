@@ -33,7 +33,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
-            jArray.Add(this.Value.Execute().GetSolrFilterWithTag(this.TagName));
+            jArray.Add(ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName));
 
             jObject["filter"] = jArray;
         }

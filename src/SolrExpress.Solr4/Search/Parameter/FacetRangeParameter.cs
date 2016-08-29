@@ -92,7 +92,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                this.SortType.Value.GetSolrFacetSort(out typeName, out dummy);
+                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
 
                 container.Add($"f.{fieldName}.facet.range.sort={typeName}");
             }

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Utility;
@@ -27,7 +26,7 @@ namespace SolrExpress.Solr5.Search.Result
             var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
             var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
 
-            this.Data = new Information().Calculate(parameters, qTime, documentCount);
+            this.Data = InformationBuilder.Create(parameters, qTime, documentCount);
         }
 
         /// <summary>

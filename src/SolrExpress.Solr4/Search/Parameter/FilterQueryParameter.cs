@@ -31,7 +31,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var expression = this.Value.Execute().GetSolrFilterWithTag(this.TagName);
+            var expression = ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName);
 
             container.Add($"fq={expression}");
         }

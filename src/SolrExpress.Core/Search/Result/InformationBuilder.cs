@@ -1,27 +1,24 @@
-﻿using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Search.Result;
+﻿using SolrExpress.Core.Search.Parameter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Core.Extension.Internal
+namespace SolrExpress.Core.Search.Result
 {
     /// <summary>
-    /// Extension class used to manipulate Statistic
+    /// Builder class used to manipulate Information
     /// </summary>
-    [Obsolete("Change to utility class")]
-    internal static class InformationExtension
+    internal class InformationBuilder
     {
-        internal static Information Calculate(this Information information, IEnumerable<ISearchParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
+        internal static Information Create(IEnumerable<ISearchParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
             var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
             var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);
-            
+
             var offset = offsetParameter.Value + 1;
             var limit = limitParameter.Value;
 
-            information = new Information
+            var information = new Information
             {
                 ElapsedTime = new TimeSpan(0, 0, 0, 0, elapsedTimeInMilliseconds),
                 DocumentCount = documentCount,

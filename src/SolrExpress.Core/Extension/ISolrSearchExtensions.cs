@@ -1,14 +1,11 @@
-﻿using SolrExpress.Core.DependencyInjection;
-using SolrExpress.Core.Search;
+﻿using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.ParameterValue;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Core.Extension
 {
-    [Obsolete("Unify")]
     public static class ISolrSearchExtensions
     {
         /// <summary>
@@ -21,12 +18,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetField<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, FacetSortType? sortType = null, int? limit = null, params string[] excludes)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFacetFieldParameter<TDocument>>()
-                .Configure(expression, sortType, limit, excludes);
-            
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.FacetField(expression, sortType, limit, excludes));
             return search;
         }
 
@@ -40,12 +32,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetQuery<TDocument>(this ISolrSearch<TDocument> search, string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFacetQueryParameter<TDocument>>()
-                .Configure(aliasName, query, sortType, excludes);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.FacetQuery<TDocument>(aliasName, query, sortType, excludes));
             return search;
         }
 
@@ -61,12 +48,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetRange<TDocument>(this ISolrSearch<TDocument> search, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, FacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFacetRangeParameter<TDocument>>()
-                .Configure(aliasName, expression, gap, start, end, sortType);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.FacetRange(aliasName, expression, gap, start, end, sortType));
             return search;
         }
 
@@ -77,12 +59,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Fields<TDocument>(this ISolrSearch<TDocument> search, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFieldsParameter<TDocument>>()
-                .Configure(expressions);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Fields(expressions));
             return search;
         }
 
@@ -95,14 +72,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Filter<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, string value, string tagName = null)
             where TDocument : IDocument
         {
-            var paramaterValue = new Single<TDocument>(expression, value);
-
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFilterParameter<TDocument>>()
-                .Configure(paramaterValue, tagName);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Filter(expression, value, tagName));
             return search;
         }
 
@@ -117,14 +87,7 @@ namespace SolrExpress.Core.Extension
             where TDocument : IDocument
             where TValue : struct
         {
-            var paramaterValue = new Range<TDocument, TValue>(expression, from, to);
-
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFilterParameter<TDocument>>()
-                .Configure(paramaterValue, tagName);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Filter(expression, from, to, tagName));
             return search;
         }
 
@@ -135,12 +98,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Limit<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<ILimitParameter>()
-                .Configure(value);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Limit(value));
             return search;
         }
 
@@ -151,12 +109,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Offset<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IOffsetParameter>()
-                .Configure(value);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Offset(value));
             return search;
         }
 
@@ -167,12 +120,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue value)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IQueryParameter<TDocument>>()
-                .Configure(value);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Query<TDocument>(value));
             return search;
         }
 
@@ -183,14 +131,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, string value)
             where TDocument : IDocument
         {
-            var paramaterValue = new Any(value);
-
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IQueryParameter<TDocument>>()
-                .Configure(paramaterValue);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Query<TDocument>(value));
             return search;
         }
 
@@ -202,14 +143,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            var paramaterValue = new Single<TDocument>(expression, value);
-
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IQueryParameter<TDocument>>()
-                .Configure(paramaterValue);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Query<TDocument>(value));
             return search;
         }
 
@@ -221,12 +155,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Sort<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, bool ascendent)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<ISortParameter<TDocument>>()
-                .Configure(expression, ascendent);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Sort(expression, ascendent));
             return search;
         }
 
@@ -238,14 +167,9 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Sort<TDocument>(this ISolrSearch<TDocument> search, bool ascendent, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            foreach (var expression in expressions)
+            foreach (var item in SearchParameterBuilder.Sort(ascendent, expressions))
             {
-                var parameter = ApplicationServices
-                    .Current
-                    .GetService<ISortParameter<TDocument>>()
-                    .Configure(expression, ascendent);
-
-                search.Add(parameter);
+                search.Add(item);
             }
 
             return search;
@@ -259,12 +183,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> RandomSort<TDocument>(this ISolrSearch<TDocument> search, bool ascendent)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IRandomSortParameter>()
-                .Configure(ascendent);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.RandomSort(ascendent));
             return search;
         }
 
@@ -275,12 +194,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetLimit<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IFacetLimitParameter>()
-                .Configure(value);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.FacetLimit(value));
             return search;
         }
 
@@ -291,12 +205,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> MinimumShouldMatch<TDocument>(this ISolrSearch<TDocument> search, string expression)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IMinimumShouldMatchParameter>()
-                .Configure(expression);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.MinimumShouldMatch(expression));
             return search;
         }
 
@@ -307,12 +216,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> QueryField<TDocument>(this ISolrSearch<TDocument> search, string expression)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IQueryFieldParameter>()
-                .Configure(expression);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.QueryField(expression));
             return search;
         }
 
@@ -326,12 +230,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> SpatialFilter<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, SolrSpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<ISpatialFilterParameter<TDocument>>()
-                .Configure(expression, functionType, centerPoint, distance);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.SpatialFilter(expression, functionType, centerPoint, distance));
             return search;
         }
 
@@ -343,12 +242,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Any<TDocument>(this ISolrSearch<TDocument> search, string name, string value)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IAnyParameter>()
-                .Configure(name, value);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Any(name, value));
             return search;
         }
 
@@ -360,12 +254,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Boost<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue query, BoostFunctionType? boostFunctionType = null)
             where TDocument : IDocument
         {
-            var parameter = ApplicationServices
-                .Current
-                .GetService<IBoostParameter<TDocument>>()
-                .Configure(query, boostFunctionType ?? BoostFunctionType.Boost);
-
-            search.Add(parameter);
+            search.Add(SearchParameterBuilder.Boost<TDocument>(query, boostFunctionType ?? BoostFunctionType.Boost));
             return search;
         }
     }
