@@ -1,22 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class QueryFieldParameter : IQueryFieldParameter, ISearchParameter<JObject>
+    public sealed class QueryFieldParameter : BaseQueryFieldParameter, ISearchParameter<JObject>
     {
-        /// <summary>
-        /// True to indicate multiple instances of the parameter, otherwise false
-        /// </summary>
-        public bool AllowMultipleInstances { get; } = false;
-
-        /// <summary>
-        /// Query used to make the query field
-        /// </summary>
-        public string Expression { get; private set; }
-
         /// <summary>
         /// Execute the creation of the parameter "query field"
         /// </summary>
@@ -29,19 +18,6 @@ namespace SolrExpress.Solr5.Search.Parameter
             jObj.Add(jProperty);
 
             jObject["params"] = jObj;
-        }
-
-        /// <summary>
-        /// Configure current instance
-        /// </summary>
-        /// <param name="expression">Query used to make the query field</param>
-        public IQueryFieldParameter Configure(string expression)
-        {
-            Checker.IsNullOrWhiteSpace(expression);
-
-            this.Expression = expression;
-
-            return this;
         }
     }
 }

@@ -5,37 +5,23 @@ using SolrExpress.Solr5.Search.Parameter.Internal;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public class RandomSortParameter : IRandomSortParameter, ISearchParameter<JObject>
+    public class RandomSortParameter : BaseRandomSortParameter, ISearchParameter<JObject>
     {
-        /// <summary>
-        /// True to indicate multiple instances of the parameter, otherwise false
-        /// </summary>
-        public bool AllowMultipleInstances { get; } = true;
+        private SortCommand _sortCommand;
 
-        /// <summary>
-        /// True to ascendent order, otherwise false
-        /// </summary>
-        public bool Ascendent { get; private set; }
-
+        public RandomSortParameter(SortCommand sortCommand)
+            : base()
+        {
+            this._sortCommand = sortCommand;
+        }
+        
         /// <summary>
         /// Execute creation of parameter "sort"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var command = new SortCommand();
-            command.Execute("random", this.Ascendent, jObject);
-        }
-
-        /// <summary>
-        /// Configure current instance
-        /// </summary>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public IRandomSortParameter Configure(bool ascendent)
-        {
-            this.Ascendent = ascendent;
-
-            return this;
+            this._sortCommand.Execute("random", this.Ascendent, jObject);
         }
     }
 }

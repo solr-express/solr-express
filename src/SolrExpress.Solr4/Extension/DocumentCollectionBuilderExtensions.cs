@@ -6,8 +6,8 @@ using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Update;
 using SolrExpress.Solr4.Search;
 using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Solr4.Search.Parameter.Internal;
 using SolrExpress.Solr4.Search.Result;
-using SolrExpress.Solr4.Update;
 
 namespace SolrExpress.Solr4.Extension
 {
@@ -18,6 +18,7 @@ namespace SolrExpress.Solr4.Extension
         {
             ApplicationServices
                 .Current
+                .AddSingleton<SortCommand>()
                 .AddSingleton<ISolrConnection, SolrConnection>()
                 .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

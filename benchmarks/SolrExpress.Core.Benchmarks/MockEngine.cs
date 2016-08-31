@@ -12,6 +12,18 @@ namespace SolrExpress.Core.Benchmarks
         /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
         /// </summary>
         /// <typeparam name="TService">The type of the service to add</typeparam>
+        /// <returns>This</returns>
+        IEngine IEngine.AddSingleton<TService>()
+        {
+            this.Object.AddSingleton<TService>();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
+        /// </summary>
+        /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
         IEngine IEngine.AddSingleton<TService, TImplementation>()

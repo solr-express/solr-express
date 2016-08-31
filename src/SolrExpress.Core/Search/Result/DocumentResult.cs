@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Serialization;
 using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr5.Search.Result
+namespace SolrExpress.Core.Search.Result
 {
     /// <summary>
     /// Document data builder

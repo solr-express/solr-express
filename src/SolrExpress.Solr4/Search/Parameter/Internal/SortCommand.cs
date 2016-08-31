@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Parameter.Internal
 {
-    internal class SortCommand
+    public class SortCommand
     {
         /// <summary>
         /// Execute creation of parameter "sort"

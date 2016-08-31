@@ -1,7 +1,7 @@
 ﻿{
   "authors": [ "diego.lb" ],
   "buildOptions": {
-    "warningsAsErrors": true,
+    "warningsAsErrors": false,
     "keyFile": "../../Key.snk"
   },
   "configurations": {

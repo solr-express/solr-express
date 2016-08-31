@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Solr5.Search.Parameter.Internal
 {
-    internal class SortCommand
+    public class SortCommand
     {
         /// <summary>
         /// Execute creation of parameter "sort"

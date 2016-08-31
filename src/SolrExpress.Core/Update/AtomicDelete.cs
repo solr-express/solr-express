@@ -1,11 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Update;
 using SolrExpress.Core.Utility;
+using System;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr4.Update
+namespace SolrExpress.Core.Update
 {
+    [Obsolete("Necessita de teste para caso seja _documentIds==0")]
     public sealed class AtomicDelete<TDocument> : IAtomicDelete<TDocument>
         where TDocument : IDocument
     {

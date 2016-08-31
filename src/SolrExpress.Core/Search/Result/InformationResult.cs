@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr4.Search.Result
+namespace SolrExpress.Core.Search.Result
 {
     /// <summary>
     /// Statistic data builder
@@ -14,7 +11,7 @@ namespace SolrExpress.Solr4.Search.Result
         where TDocument : IDocument
     {
         /// <summary>
-        /// Execute the parse of the JSON object in statistic
+        /// Execute parse of the JSON object in information class
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonObject">JSON object used in the parse</param>

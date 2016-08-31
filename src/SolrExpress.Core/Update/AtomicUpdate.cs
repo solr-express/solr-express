@@ -1,12 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
 using SolrExpress.Core.Serialization;
-using SolrExpress.Core.Update;
 using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
-namespace SolrExpress.Solr5.Update
+namespace SolrExpress.Core.Update
 {
     public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
         where TDocument : IDocument

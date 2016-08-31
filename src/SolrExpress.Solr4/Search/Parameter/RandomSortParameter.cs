@@ -5,17 +5,15 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public class RandomSortParameter : IRandomSortParameter, ISearchParameter<List<string>>
+    public class RandomSortParameter : BaseRandomSortParameter, ISearchParameter<List<string>>
     {
-        /// <summary>
-        /// True to indicate multiple instances of the parameter, otherwise false
-        /// </summary>
-        public bool AllowMultipleInstances { get; } = true;
+        private SortCommand _sortCommand;
 
-        /// <summary>
-        /// True to ascendent order, otherwise false
-        /// </summary>
-        public bool Ascendent { get; private set; }
+        public RandomSortParameter(SortCommand sortCommand)
+            : base()
+        {
+            this._sortCommand = sortCommand;
+        }
 
         /// <summary>
         /// Execute creation of parameter "sort"
@@ -23,19 +21,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var command = new SortCommand();
-            command.Execute("random", this.Ascendent, container);
-        }
-
-        /// <summary>
-        /// Configure current instance
-        /// </summary>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public IRandomSortParameter Configure(bool ascendent)
-        {
-            this.Ascendent = ascendent;
-
-            return this;
+            this._sortCommand.Execute("random", this.Ascendent, container);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter.Internal
         {
             // Arrange
             var container = new List<string>();
-            var command = new SortCommand();
+            var command = new BaseSortSolr4Parameter();
 
             // Act
             command.Execute("id", true, container);
@@ -36,7 +36,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter.Internal
         {
             // Arrange
             var container = new List<string>();
-            var command = new SortCommand();
+            var command = new BaseSortSolr4Parameter();
 
             // Act
             command.Execute("field1", true, container);
