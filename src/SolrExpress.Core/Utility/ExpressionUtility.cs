@@ -55,8 +55,8 @@ namespace SolrExpress.Core.Utility
                 "{{!{0} sfield={1} pt={2} d={3}}}",
                 functionType.ToString().ToLower(),
                 fieldName,
-                centerPoint,
-                distance.ToString("0.#", CultureInfo.InvariantCulture));
+                $"{centerPoint.Latitude.ToString("G", CultureInfo.InvariantCulture)},{centerPoint.Longitude.ToString("G", CultureInfo.InvariantCulture)}",
+                distance.ToString("G", CultureInfo.InvariantCulture));
         }
 
         /// <summary>

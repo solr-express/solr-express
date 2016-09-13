@@ -143,5 +143,33 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             Assert.False(isValid);
             Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException, errorMessage);
         }
+
+        /// <summary>
+        /// Where   Using a SpatialFilterParameter instance
+        /// When    Invoking the method "Execute" using same configurations that in issue #148
+        /// What    Create a valid JSON
+        /// </summary>
+        [Fact]
+        public void SpatialFilterParameter008()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              params:{
+                fq:""{!geofilt sfield=_spatial_ pt=52.9127,4.7818799 d=1}""
+              }
+            }");
+            string actual;
+            var jObject = new JObject();
+            var parameter = new SpatialFilterParameter<TestDocument>();
+            parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(52.9127M, 4.7818799M), 1M);
+            
+            // Act
+            parameter.Execute(jObject);
+            actual = jObject.ToString();
+
+            // Assert
+            Assert.Equal(expected.ToString(), actual);
+        }
     }
 }

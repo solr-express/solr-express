@@ -28,11 +28,5 @@ namespace SolrExpress.Core
         /// The longitude of the location. May range from -180.0 to 180.0.
         /// </summary>
         public decimal Longitude { get; set; }
-
-        /// <summary>
-        /// Returns a string that represents the current coordinate
-        /// </summary>
-        /// <returns>A string that represents the current coordinate</returns>
-        public override string ToString() => $"{this.Latitude.ToString("0.0", CultureInfo.InvariantCulture)},{this.Longitude.ToString("0.0", CultureInfo.InvariantCulture)}";
     }
 }
