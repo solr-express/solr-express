@@ -1,3 +1,12 @@
+# [4.0.1] - 2016-09-14
+## Bug fix
+* ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null (#152)
+* Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` (#154)
+
+## Enhancement
+* SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance (#150)
+* ISolrSearch must accept AddRange (#153)
+
 # [4.0.0] - 2016-09-14
 ## Bug fix
 * Friendly assembly wont work (#122)
