@@ -193,3 +193,4 @@ Examples/.vs/*
 .nuget/*
 .vs/*
 project.lock.json
+*.nupkg

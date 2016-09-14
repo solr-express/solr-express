@@ -1,15 +1,12 @@
 ﻿{
-  "version": "3.1.2",
   "buildOptions": {
     "emitEntryPoint": true
   },
-
   "dependencies": {
     "SolrExpress.Solr5": {
       "target": "project"
     }
   },
-
   "frameworks": {
     "netcoreapp1.0": {
       "imports": "dnxcore50",
@@ -29,5 +26,6 @@
       "dependencies": {
       }
     }
-  }
+  },
+  "version": "4.0.0"
 }
