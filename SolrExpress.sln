@@ -55,7 +55,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Core.UnitTests"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{99DE5683-EE63-4A6B-B877-C011FD0E1CFD}"
 	ProjectSection(SolutionItems) = preProject
-		docs\index.rst = docs\index.rst
+		docs\index.md = docs\index.md
 	EndProjectSection
 EndProject
 Global
