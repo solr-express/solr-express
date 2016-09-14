@@ -1,86 +1,88 @@
 # Change log
 
 # [4.0.1] - 2016-09-14
-## Bug fix
-* ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null (#152)
-* Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` (#154)
+* Bug fix
+    * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
+    * Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` ([#154](https://github.com/solr-express/solr-express/issues/154))
 
-## Enhancement
-* SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance (#150)
-* ISolrSearch must accept AddRange (#153)
+* Enhancement
+    * SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance ([#150](https://github.com/solr-express/solr-express/issues/150))
+    * ISolrSearch must accept AddRange ([#153](https://github.com/solr-express/solr-express/issues/153))
 
 # [4.0.0] - 2016-09-14
-## Bug fix
-* Friendly assembly wont work (#122)
-* Check if parameter called "parameters" is null in result processors (#142)
-* Invalid cast when a facet range is created using a field of long type (#143)
-* Wrong query when using SpatialFilter (#148) 
+* Bug fix
+    * Friendly assembly wont work (#122)
+    * Check if parameter called "parameters" is null in result processors (#142)
+    * Invalid cast when a facet range is created using a field of long type (#143)
+    * Wrong query when using SpatialFilter (#148) 
 
-## Enhancement
-* Cleanup in package.json files (#138)
-* Create benchmarks (#139)
-* Create interface to be used in DocumentCollection, SolrQueryable e SolrAtomicUpdate classes (#140)
-* DI review (#141)
-* Code review (#147)
+* Enhancement
+    * Cleanup in package.json files (#138)
+    * Create benchmarks (#139)
+    * Create interface to be used in DocumentCollection, SolrQueryable e SolrAtomicUpdate classes (#140)
+    * DI review (#141)
+    * Code review (#147)
 
 > **PAY ATTENTION**
 > 
-> #141 and #147 causes BREAKING CHANGES 
+> Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
 
-## BREAKING CHANGES
+* **BREAKING CHANGES**
 
-* To use DocumentCollection
-Before
+    * To use DocumentCollection
 
-```csharp
-var provider = new Provider("http://localhost:8983/solr/techproducts");
-var resolver = new SimpleResolver().Configure();
-var configuration = new Configuration();
-var techProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
-```
+    Before
 
-After
+    ```csharp
+    var provider = new Provider("http://localhost:8983/solr/techproducts");
+    var resolver = new SimpleResolver().Configure();
+    var configuration = new Configuration();
+    var techProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
+    ```
 
-```csharp
-// Using Net.Core
-serviceCollection.AddSolrExpress<TechProduct>(builder => builder
-    .UseHostAddress("http://localhost:8983/solr/techproducts")
-    .UseOptions(/*options instance*/) // Optionally
-    .UseSolr5()); // Or UserSolr4()
+    After
 
-// In some controller/service/however
-public ClassConstructor(IDocumentCollection<TechProduct> techProducts)
-...
+    ```csharp
+    // Using Net.Core
+    serviceCollection.AddSolrExpress<TechProduct>(builder => builder
+        .UseHostAddress("http://localhost:8983/solr/techproducts")
+        .UseOptions(/*options instance*/) // Optionally
+        .UseSolr5()); // Or UserSolr4()
 
-// Using Net4 or Net4.5
-techProducts = new DocumentCollectionBuilder<TechProduct>()
-    .AddSolrExpress()
-    .UseHostAddress("http://localhost:8983/solr/techproducts")
-    .UseOptions(/*options instance*/) // Optionally
-    .UseSolr5()  // Or UserSolr4()
-    .Create();
-```
+    // In some controller/service/however
+    public ClassConstructor(IDocumentCollection<TechProduct> techProducts)
+    ...
 
-* To create a new parameter without using ISolrSearch
-Before
+    // Using Net4 or Net4.5
+    techProducts = new DocumentCollectionBuilder<TechProduct>()
+        .AddSolrExpress()
+        .UseHostAddress("http://localhost:8983/solr/techproducts")
+        .UseOptions(/*options instance*/) // Optionally
+        .UseSolr5()  // Or UserSolr4()
+        .Create();
+    ```
 
-```csharp
-var parameter = new QueryParameter<TechProductDocument>().Configure(new QueryAll());
-```
+    * To create a new parameter without using ISolrSearch
 
-After
+    Before
 
-```csharp
-// Using Net.Core
-// In some controller/service/however
-public ClassConstructor(ISearchParameterBuilder<TDocument> parameterBuilder)
-{
-    var parameter = parameterBuilder.Query(new QueryAll());
-}
+    ```csharp
+    var parameter = new QueryParameter<TechProductDocument>().Configure(new QueryAll());
+    ```
 
-// Using Net4 or Net4.5
-Sorry bro... continues using the old way :/
-```
+    After
+
+    ```csharp
+    // Using Net.Core
+    // In some controller/service/however
+    public ClassConstructor(ISearchParameterBuilder<TDocument> parameterBuilder)
+    {
+        var parameter = parameterBuilder.Query(new QueryAll());
+    }
+
+    // Using Net4 or Net4.5
+    Sorry bro... continues using the old way :/
+    ```
 
 # [3.1.2] - 2016-07-30
 ## Enhancement
