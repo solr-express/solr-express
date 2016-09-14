@@ -100,37 +100,43 @@ namespace SolrExpress.Core.Search
         /// Add an item to search
         /// </summary>
         /// <param name="parameter">Parameter to add in the query</param>
-        public void Add(ISearchItem item)
+        ISolrSearch<TDocument> ISolrSearch<TDocument>.Add(ISearchItem item)
         {
             Checker.IsNull(item);
 
             this.ValidateSearchParameter(item);
 
             this._items.Add(item);
+
+            return this;
         }
 
         /// <summary>
         /// Add a result interceptor to the queryable
         /// </summary>
-        void ISolrSearch<TDocument>.Add<TQueryInterceptor>(Action<TQueryInterceptor> builder)
+        ISolrSearch<TDocument> ISolrSearch<TDocument>.Add<TQueryInterceptor>(Action<TQueryInterceptor> builder)
         {
             var interceptor = new TQueryInterceptor();
 
             builder?.Invoke(interceptor);
 
             this._items.Add(interceptor);
+
+            return this;
         }
 
         /// <summary>
         /// Add a result interceptor to the queryable
         /// </summary>
-        void ISolrSearch<TDocument>.Add<TResultInterceptor>(Action<IResultInterceptor> builder)
+        ISolrSearch<TDocument> ISolrSearch<TDocument>.Add<TResultInterceptor>(Action<IResultInterceptor> builder)
         {
             var interceptor = new TResultInterceptor();
 
             builder?.Invoke(interceptor);
 
             this._items.Add(interceptor);
+
+            return this;
         }
 
         /// <summary>
@@ -163,9 +169,9 @@ namespace SolrExpress.Core.Search
             var systemParameter = this.Engine.GetService<ISystemParameter>();
             var parameterCollection = this.Engine.GetService<ISearchParameterCollection>();
 
-            this.Options.GlobalParameters.ForEach(this.Add);
-            this.Options.GlobalQueryInterceptors.ForEach(this.Add);
-            this.Options.GlobalResultInterceptors.ForEach(this.Add);
+            this.Options.GlobalParameters.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
+            this.Options.GlobalQueryInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
+            this.Options.GlobalResultInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
 
             systemParameter.Configure();
             this._items.Add(systemParameter);

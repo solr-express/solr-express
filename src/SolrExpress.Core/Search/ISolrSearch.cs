@@ -13,20 +13,20 @@ namespace SolrExpress.Core.Search
         /// Add an item to search
         /// </summary>
         /// <param name="parameter">Parameter to add in the query</param>
-        void Add(ISearchItem item);
+        ISolrSearch<TDocument> Add(ISearchItem item);
 
         /// <summary>
         /// Adds a search interceptor to the System.Collections.Generic.ICollection`1.
         /// </summary>
         /// <param name="builder">Builder to execute after interceptor creation</param>
-        void Add<TQueryInterceptor>(Action<TQueryInterceptor> builder = null)
+        ISolrSearch<TDocument> Add<TQueryInterceptor>(Action<TQueryInterceptor> builder = null)
             where TQueryInterceptor : class, ISearchInterceptor, new();
 
         /// <summary>
         /// Adds a result interceptor to the System.Collections.Generic.ICollection`1.
         /// </summary>
         /// <param name="builder">Builder to execute after interceptor creation</param>
-        void Add<TResultInterceptor>(Action<IResultInterceptor> builder = null)
+        ISolrSearch<TDocument> Add<TResultInterceptor>(Action<IResultInterceptor> builder = null)
             where TResultInterceptor : class, IResultInterceptor, new();
 
         /// <summary>
@@ -35,6 +35,7 @@ namespace SolrExpress.Core.Search
         /// <param name="item">Item to add</param>
         /// <returns>Returns true if item is found in list, otherwise false</returns>
         bool Contains(ISearchItem item);
+
         /// <summary>
         /// Handler name used in solr request
         /// </summary>

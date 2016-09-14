@@ -28,7 +28,7 @@ namespace SolrExpress.Core.UnitTests.Search
             // Arrange
             var parameter = new Mock<ISearchParameter>();
             parameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
             queryable.Add(parameter.Object);
 
             // Act / Assert
@@ -48,7 +48,7 @@ namespace SolrExpress.Core.UnitTests.Search
             var parameter = validate.As<ISearchParameter>();
 
             var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             bool isValid;
             var errorMessage = "test";
@@ -75,7 +75,7 @@ namespace SolrExpress.Core.UnitTests.Search
                 FailFast = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
@@ -96,7 +96,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch004()
         {
             // Arrange
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((ISearchParameter)null));
@@ -111,7 +111,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch005()
         {
             // Arrange
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((ISearchInterceptor)null));
@@ -126,7 +126,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch006()
         {
             // Arrange
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((IResultInterceptor)null));
@@ -146,7 +146,7 @@ namespace SolrExpress.Core.UnitTests.Search
             var anyParameter = parameter.As<IAnyParameter>();
 
             var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             bool isValid;
             var errorMessage = "test";
@@ -174,7 +174,7 @@ namespace SolrExpress.Core.UnitTests.Search
                 FailFast = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
@@ -205,7 +205,7 @@ namespace SolrExpress.Core.UnitTests.Search
                 CheckAnyParameter = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
@@ -228,7 +228,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch011()
         {
             // Arrange
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.SetHandler(null));

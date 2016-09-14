@@ -11,7 +11,7 @@ namespace SolrExpress.Core.Benchmarks.Search
 {
     public class SolrSearchBenchmarks
     {
-        private SolrSearch<TestDocument> _solrSearch;
+        private ISolrSearch<TestDocument> _solrSearch;
 
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
@@ -30,7 +30,7 @@ namespace SolrExpress.Core.Benchmarks.Search
             engine.Setup(q => q.GetService<ISearchParameterCollection>()).Returns(new Mock<ISearchParameterCollection>().Object);
 
             var options = new DocumentCollectionOptions<TestDocument>();
-            var parameters = new List<ISearchParameter<object>>();
+            var parameters = new List<ISearchItem>();
 
             for (int i = 0; i < this.ElementsCount; i++)
             {
@@ -43,7 +43,7 @@ namespace SolrExpress.Core.Benchmarks.Search
 
             _solrSearch = new SolrSearch<TestDocument>(options, engine.Object);
 
-            parameters.ForEach(_solrSearch.Add);
+            parameters.ForEach(item => _solrSearch.Add(item));
         }
 
         [Benchmark]
