@@ -133,18 +133,6 @@ namespace SolrExpress.Core.UnitTests.Search
         }
 
         /// <summary>
-        /// Where   Using a SolrSearch instance
-        /// When    Create the instance with null in options
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void SolrSearch007()
-        {
-            // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new SolrSearch<TestDocument>(null, null));
-        }
-
-        /// <summary>
         /// Where   Using a SolrSearch instance configured with FailFast = true and CheckAnyParameter = true
         /// When    Invoking the method "Parameter" with a invalid value
         /// What    Throws InvalidParameterTypeException

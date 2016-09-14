@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
@@ -16,6 +17,15 @@ namespace SolrExpress.Solr4.Extension
         {
             builder
                 .Engine
+#if NETCOREAPP1_0
+                .AddSingleton<IEngine, NetCoreEngine>((NetCoreEngine)builder.Engine)
+#else
+                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
+#endif
+                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(builder.Options)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
+                .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
                 .AddSingleton<ISolrConnection, SolrConnection>()
                 .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

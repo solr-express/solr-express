@@ -17,6 +17,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new SystemParameter();
+            parameter.Configure();
 
             // Act
             parameter.Execute(container);

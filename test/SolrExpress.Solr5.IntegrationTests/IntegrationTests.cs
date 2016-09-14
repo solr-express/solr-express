@@ -55,10 +55,10 @@ namespace SolrExpress.Solr5.IntegrationTests
         /// Get a flesh instance of DocumentCollection<TechProductDocument> 
         /// </summary>
         /// <returns>Instance of DocumentCollection<TechProductDocument></returns>
-        private DocumentCollection<TechProductDocument> GetDocumentCollection()
+        private IDocumentCollection<TechProductDocument> GetDocumentCollection()
         {
 #if NETCOREAPP1_0
-            return this._serviceProvider.GetRequiredService<DocumentCollection<TechProductDocument>>();
+            return this._serviceProvider.GetRequiredService<IDocumentCollection<TechProductDocument>>();
 #else
             return this._documentCollectionBuilder.Create();
 #endif

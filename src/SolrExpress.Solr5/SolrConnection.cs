@@ -104,7 +104,7 @@ namespace SolrExpress.Solr5
         /// <returns>WebRequest read to execute</returns>
         private WebRequest Prepare(string requestMethod, string handler, string data)
         {
-            var baseUrl = $"{this.SolrHost}/{handler}";
+            var baseUrl = $"{this.HostAddress}/{handler}";
 
             var encoding = new UTF8Encoding();
             var bytes = encoding.GetBytes(data);
@@ -173,6 +173,6 @@ namespace SolrExpress.Solr5
         /// <summary>
         /// Solr host address
         /// </summary>
-        public string SolrHost { get; set; }
+        public string HostAddress { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range001()
         {
             // Arrange
-            var expected = "Id:[* TO *]";
+            var expected = "_id_:[* TO *]";
             string actual;
             var parameter = new Range<TestDocument, int>(q => q.Id, null, null);
 
@@ -35,7 +35,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range002()
         {
             // Arrange
-            var expected = "Id:[* TO 1]";
+            var expected = "_id_:[* TO 1]";
             string actual;
             var parameter = new Range<TestDocument, int>(q => q.Id, null, 1);
 
@@ -55,7 +55,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range003()
         {
             // Arrange
-            var expected = "Id:[1 TO 10]";
+            var expected = "_id_:[1 TO 10]";
             string actual;
             var parameter = new Range<TestDocument, int>(q => q.Id, 1, 10);
 
@@ -75,7 +75,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range004()
         {
             // Arrange
-            var expected = "Id:[1 TO *]";
+            var expected = "_id_:[1 TO *]";
             string actual;
             var parameter = new Range<TestDocument, int>(q => q.Id, 1, null);
 
@@ -95,7 +95,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range005()
         {
             // Arrange
-            var expected = "Id:[* TO *]";
+            var expected = "_id_:[* TO *]";
             string actual;
             var parameter = new Range<TestDocument, decimal>(q => q.Id, null, null);
 
@@ -115,7 +115,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range006()
         {
             // Arrange
-            var expected = "Id:[* TO 1.5]";
+            var expected = "_id_:[* TO 1.5]";
             string actual;
             var parameter = new Range<TestDocument, decimal>(q => q.Id, null, 1.5M);
 
@@ -135,7 +135,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range007()
         {
             // Arrange
-            var expected = "Id:[1.5 TO 10.5]";
+            var expected = "_id_:[1.5 TO 10.5]";
             string actual;
             var parameter = new Range<TestDocument, decimal>(q => q.Id, 1.5M, 10.5M);
 
@@ -155,7 +155,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range008()
         {
             // Arrange
-            var expected = "Id:[1.5 TO *]";
+            var expected = "_id_:[1.5 TO *]";
             string actual;
             var parameter = new Range<TestDocument, decimal>(q => q.Id, 1.5M, null);
 
@@ -175,7 +175,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range009()
         {
             // Arrange
-            var expected = "Id:[* TO *]";
+            var expected = "_id_:[* TO *]";
             string actual;
             var parameter = new Range<TestDocument, double>(q => q.Id, null, null);
 
@@ -195,7 +195,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range010()
         {
             // Arrange
-            var expected = "Id:[* TO 1.5]";
+            var expected = "_id_:[* TO 1.5]";
             string actual;
             var parameter = new Range<TestDocument, double>(q => q.Id, null, 1.5D);
 
@@ -215,7 +215,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range011()
         {
             // Arrange
-            var expected = "Id:[1.5 TO 10.5]";
+            var expected = "_id_:[1.5 TO 10.5]";
             string actual;
             var parameter = new Range<TestDocument, double>(q => q.Id, 1.5D, 10.5D);
 
@@ -235,7 +235,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range012()
         {
             // Arrange
-            var expected = "Id:[1.5 TO *]";
+            var expected = "_id_:[1.5 TO *]";
             string actual;
             var parameter = new Range<TestDocument, double>(q => q.Id, 1.5D, null);
 
@@ -255,7 +255,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range013()
         {
             // Arrange
-            var expected = "Id:[* TO *]";
+            var expected = "_id_:[* TO *]";
             string actual;
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, null, null);
 
@@ -275,7 +275,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range014()
         {
             // Arrange
-            var expected = "Id:[* TO 2015-09-13T10:00:00Z]";
+            var expected = "_id_:[* TO 2015-09-13T10:00:00Z]";
             string actual;
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, null, new DateTime(2015, 09, 13, 10, 0, 0));
 
@@ -295,7 +295,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range015()
         {
             // Arrange
-            var expected = "Id:[2000-09-13T10:00:00Z TO 2015-09-13T10:00:00Z]";
+            var expected = "_id_:[2000-09-13T10:00:00Z TO 2015-09-13T10:00:00Z]";
             string actual;
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, new DateTime(2000, 09, 13, 10, 0, 0), new DateTime(2015, 09, 13, 10, 0, 0));
 
@@ -315,7 +315,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range016()
         {
             // Arrange
-            var expected = "Id:[2000-09-13T10:00:00Z TO *]";
+            var expected = "_id_:[2000-09-13T10:00:00Z TO *]";
             string actual;
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, new DateTime(2000, 09, 13, 10, 0, 0), null);
 
@@ -335,7 +335,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range017()
         {
             // Arrange
-            var expected = "Id:[* TO *]";
+            var expected = "_id_:[* TO *]";
             string actual;
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, null, null);
 
@@ -355,7 +355,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range018()
         {
             // Arrange
-            var expected = "Id:[* TO -10.5,10.5]";
+            var expected = "_id_:[* TO -10.5,10.5]";
             string actual;
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, null, new GeoCoordinate(-10.5M, 10.5M));
 
@@ -375,7 +375,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range019()
         {
             // Arrange
-            var expected = "Id:[-1.5,1.5 TO -10.5,10.5]";
+            var expected = "_id_:[-1.5,1.5 TO -10.5,10.5]";
             string actual;
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), new GeoCoordinate(-10.5M, 10.5M));
 
@@ -395,7 +395,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Range020()
         {
             // Arrange
-            var expected = "Id:[-1.5,1.5 TO *]";
+            var expected = "_id_:[-1.5,1.5 TO *]";
             string actual;
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), null);
 

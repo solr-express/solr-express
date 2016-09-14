@@ -20,11 +20,6 @@ namespace SolrExpress.Core.Search
         private readonly List<ISearchItem> _items = new List<ISearchItem>();
 
         /// <summary>
-        /// SOLR connection
-        /// </summary>
-        private readonly ISolrConnection _solrConnection;
-
-        /// <summary>
         /// Handler name used in solr request
         /// </summary>
         private string _handlerName = RequestHandler.Select;
@@ -41,8 +36,6 @@ namespace SolrExpress.Core.Search
 
             this.Options = options;
             this.Engine = engine;
-
-            this._solrConnection = this.Engine.GetService<ISolrConnection>();
         }
 
         /// <summary>
@@ -174,6 +167,7 @@ namespace SolrExpress.Core.Search
             this.Options.GlobalQueryInterceptors.ForEach(this.Add);
             this.Options.GlobalResultInterceptors.ForEach(this.Add);
 
+            systemParameter.Configure();
             this._items.Add(systemParameter);
 
             this.SetDefaultPaginationParameters();
@@ -185,7 +179,9 @@ namespace SolrExpress.Core.Search
 
             this._items.OfType<ISearchInterceptor>().ToList().ForEach(q => q.Execute(ref query));
 
-            var json = this._solrConnection.Get(this._handlerName, query);
+            var solrConnection = this.Engine.GetService<ISolrConnection>();
+            solrConnection.HostAddress = this.Options.HostAddress;
+            var json = solrConnection.Get(this._handlerName, query);
 
             this._items.OfType<IResultInterceptor>().ToList().ForEach(q => q.Execute(ref json));
 

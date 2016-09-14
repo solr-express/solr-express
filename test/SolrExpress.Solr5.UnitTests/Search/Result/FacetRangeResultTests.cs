@@ -55,7 +55,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             result.Execute(parameters, jObject);
 
             // Assert
-            var data = ((IFacetRangeResult<TestDocument>)result).Data.ToList();
+            var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
             Assert.Equal(4, data[0].Data.Count);
@@ -105,7 +105,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             result.Execute(parameters, jObject);
 
             // Assert
-            var data = ((IFacetRangeResult<TestDocument>)result).Data.ToList();
+            var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
             Assert.Equal(4, data[0].Data.Count);
@@ -155,7 +155,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             result.Execute(parameters, jObject);
 
             // Assert
-            var data = ((IFacetRangeResult<TestDocument>)result).Data.ToList();
+            var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
             Assert.Equal(4, data[0].Data.Count);

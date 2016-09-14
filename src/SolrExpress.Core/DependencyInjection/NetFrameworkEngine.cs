@@ -37,6 +37,19 @@ namespace SolrExpress.Core.DependencyInjection
         /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
+        IEngine IEngine.AddSingleton<TService, TImplementation>(TImplementation instance)
+        {
+            this._container.Register<TService>(() => instance, Lifestyle.Singleton);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
+        /// </summary>
+        /// <typeparam name="TService">The type of the service to add</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
+        /// <returns>This</returns>
         IEngine IEngine.AddSingleton<TService, TImplementation>()
         {
             this._container.Register<TService, TImplementation>(Lifestyle.Singleton);

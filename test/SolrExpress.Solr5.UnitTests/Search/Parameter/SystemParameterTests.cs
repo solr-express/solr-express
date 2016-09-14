@@ -17,20 +17,21 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             var container = new JObject();
             var parameter = new SystemParameter();
+            parameter.Configure();
 
             // Act
             parameter.Execute(container);
 
             // Assert
-            Assert.Equal("none", container["echoParams"]);
-            Assert.Equal("json", container["wt"]);
-            Assert.Equal("off", container["indent"]);
-            Assert.Equal("edismax", container["defType"]);
-            Assert.Equal("*,score", container["fl"]);
-            Assert.Equal("*:*", container["q.alt"]);
-            Assert.Equal("score asc", container["sort"]);
-            Assert.Equal("id", container["df"]);
-            Assert.Equal("*:*", container["q"]);
+            Assert.Equal("none", container["params"]["echoParams"]);
+            Assert.Equal("json", container["params"]["wt"]);
+            Assert.Equal("off", container["params"]["indent"]);
+            Assert.Equal("edismax", container["params"]["defType"]);
+            Assert.Equal("*,score", container["params"]["fl"]);
+            Assert.Equal("*:*", container["params"]["q.alt"]);
+            Assert.Equal("score asc", container["params"]["sort"]);
+            Assert.Equal("id", container["params"]["df"]);
+            Assert.Equal("*:*", container["params"]["q"]);
         }
     }
 }

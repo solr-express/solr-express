@@ -103,7 +103,7 @@ namespace SolrExpress.Solr4
         /// <returns>Result of the request</returns>
         public string Get(string handler, string data)
         {
-            var baseUrl = $"{this.SolrHost}/{handler}?{data}";
+            var baseUrl = $"{this.HostAddress}/{handler}?{data}";
 
             var encoding = new UTF8Encoding();
 
@@ -128,7 +128,7 @@ namespace SolrExpress.Solr4
         /// <returns>Result of the request</returns>
         public string Post(string handler, string data)
         {
-            var baseUrl = $"{this.SolrHost}/{handler}";
+            var baseUrl = $"{this.HostAddress}/{handler}";
 
             var encoding = new UTF8Encoding();
             var bytes = encoding.GetBytes(data);
@@ -162,6 +162,6 @@ namespace SolrExpress.Solr4
         /// <summary>
         /// Solr host address
         /// </summary>
-        public string SolrHost { get; set; }
+        public string HostAddress { get; set; }
     }
 }

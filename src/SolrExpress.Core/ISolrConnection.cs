@@ -24,6 +24,6 @@
         /// <summary>
         /// Solr host address
         /// </summary>
-        string SolrHost { get; set; }
+        string HostAddress { get; set; }
     }
 }

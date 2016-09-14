@@ -15,7 +15,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Single001()
         {
             // Arrange
-            var expected = "Id:xpto";
+            var expected = "_id_:xpto";
             string actual;
             var parameter = new Single<TestDocument>(q => q.Id, "xpto");
 

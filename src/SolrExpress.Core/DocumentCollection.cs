@@ -22,7 +22,7 @@ namespace SolrExpress.Core
         {
             Checker.IsNull(options);
             Checker.IsNull(engine);
-            
+
             this.Options = options;
             this._engine = engine;
         }
@@ -30,12 +30,12 @@ namespace SolrExpress.Core
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrSearch<TDocument> Select() => new SolrSearch<TDocument>(this.Options, this._engine);
+        public ISolrSearch<TDocument> Select() => this._engine.GetService<ISolrSearch<TDocument>>();
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Options, this._engine);
+        public ISolrAtomicUpdate<TDocument> Update() => this._engine.GetService<ISolrAtomicUpdate<TDocument>>();
 
         /// <summary>
         /// SolrExpress options

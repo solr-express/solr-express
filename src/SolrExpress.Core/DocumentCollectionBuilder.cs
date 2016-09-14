@@ -10,14 +10,12 @@ namespace SolrExpress.Core
     public class DocumentCollectionBuilder<TDocument>
         where TDocument : IDocument
     {
-        private DocumentCollectionOptions<TDocument> _options;
-
         /// <summary>
         /// Default constructor of class
         /// </summary>
         public DocumentCollectionBuilder()
         {
-            this._options = new DocumentCollectionOptions<TDocument>();
+            this.Options = new DocumentCollectionOptions<TDocument>();
 
 #if NET40 || NET45
             this.Engine = new NetFrameworkEngine();
@@ -43,7 +41,7 @@ namespace SolrExpress.Core
             shadowOptions.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
             shadowOptions.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
 
-            this._options = shadowOptions;
+            this.Options = shadowOptions;
 
             return this;
         }
@@ -55,7 +53,7 @@ namespace SolrExpress.Core
         /// <returns>Current instance</returns>
         public DocumentCollectionBuilder<TDocument> UseHostAddress(string hostAddress)
         {
-            this._options.HostAddress = hostAddress;
+            this.Options.HostAddress = hostAddress;
 
             return this;
         }
@@ -70,21 +68,17 @@ namespace SolrExpress.Core
         internal DocumentCollection<TDocument> Create()
 #endif
         {
-            var documentCollection = new DocumentCollection<TDocument>(this._options, this.Engine);
-
-            this
-                .Engine
-                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
-                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
-                .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
-                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
-
-            return documentCollection;
+            return new DocumentCollection<TDocument>(this.Options, this.Engine);
         }
 
         /// <summary>
         /// Services container
         /// </summary>
         internal IEngine Engine { get; set; }
+
+        /// <summary>
+        /// Options to control SOLR Query behavior
+        /// </summary>
+        internal DocumentCollectionOptions<TDocument> Options { get; private set; }
     }
 }

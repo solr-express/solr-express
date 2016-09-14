@@ -19,6 +19,16 @@
         /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
+        IEngine AddSingleton<TService, TImplementation>(TImplementation instance)
+            where TService : class
+            where TImplementation : class, TService;
+
+        /// <summary>
+        /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
+        /// </summary>
+        /// <typeparam name="TService">The type of the service to add</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
+        /// <returns>This</returns>
         IEngine AddSingleton<TService, TImplementation>()
             where TService : class
             where TImplementation : class, TService;

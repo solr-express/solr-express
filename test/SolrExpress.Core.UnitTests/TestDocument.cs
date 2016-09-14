@@ -2,8 +2,10 @@
 {
     public class TestDocument : IDocument
     {
+        [SolrField("_id_")]
         public string Id { get; set; }
 
+        [SolrField("_score_")]
         public decimal Score { get; set; }
 
         [SolrField("_spatial_")]

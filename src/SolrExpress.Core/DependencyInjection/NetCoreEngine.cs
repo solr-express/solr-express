@@ -1,7 +1,6 @@
 ﻿#if NETCOREAPP1_0
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using SolrExpress.Core.Utility;
 using System;
 
 namespace SolrExpress.Core.DependencyInjection
@@ -24,6 +23,14 @@ namespace SolrExpress.Core.DependencyInjection
         private IServiceCollection _serviceCollection;
 
         /// <summary>
+        /// Default constructor of class
+        /// </summary>
+        public NetCoreEngine()
+        {
+            this._serviceCollection = new ServiceCollection();
+        }
+
+        /// <summary>
         /// Get service provider instance
         /// </summary>
         /// <returns>Service provider instance</returns>
@@ -41,15 +48,13 @@ namespace SolrExpress.Core.DependencyInjection
         }
 
         /// <summary>
-        /// Set collection of service descriptors
+        /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
         /// </summary>
-        /// <param name="serviceCollection">Collection of service descriptors</param>
+        /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <returns>This</returns>
-        internal IEngine SetServiceCollection(IServiceCollection serviceCollection)
+        IEngine IEngine.AddSingleton<TService>()
         {
-            Checker.IsNull(serviceCollection);
-
-            this._serviceCollection = serviceCollection;
+            this._serviceCollection.TryAddSingleton<TService>();
 
             return this;
         }
@@ -58,10 +63,11 @@ namespace SolrExpress.Core.DependencyInjection
         /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
         /// </summary>
         /// <typeparam name="TService">The type of the service to add</typeparam>
+        /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
-        IEngine IEngine.AddSingleton<TService>()
+        IEngine IEngine.AddSingleton<TService, TImplementation>(TImplementation instance)
         {
-            this._serviceCollection.TryAddSingleton<TService>();
+            this._serviceCollection.TryAddSingleton<TService>(q => instance);
 
             return this;
         }
@@ -112,7 +118,7 @@ namespace SolrExpress.Core.DependencyInjection
         /// <returns>Instance of type TService</returns>
         TService IEngine.GetService<TService>()
         {
-            return this.GetServiceProvider().GetService<TService>();
+            return this.GetServiceProvider().GetRequiredService<TService>();
         }
     }
 }

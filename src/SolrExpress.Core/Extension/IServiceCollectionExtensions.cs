@@ -1,6 +1,6 @@
 ﻿#if NETCOREAPP1_0
 using Microsoft.Extensions.DependencyInjection;
-using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Utility;
 using System;
 
@@ -20,9 +20,12 @@ namespace SolrExpress.Core.Extension
             Checker.IsNull(builder);
 
             var builderObj = new DocumentCollectionBuilder<TDocument>();
-            ((NetCoreEngine)builderObj.Engine).SetServiceCollection(services);
-            builderObj.Create();
             builder.Invoke(builderObj);
+            var documentCollection = builderObj.Create();
+
+            services
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(q => documentCollection);
 
             return builderObj;
         }

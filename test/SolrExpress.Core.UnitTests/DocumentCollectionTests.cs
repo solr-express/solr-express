@@ -1,4 +1,5 @@
 ﻿using Moq;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Update;
 using System;
 using Xunit;
@@ -28,10 +29,8 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection002()
         {
             // Arrange
-            var engine = new MockEngine();
-            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
-            engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
-            engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
+            var engine = new Mock<IEngine>();
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
 
             var options = new DocumentCollectionOptions<TestDocument>();
             var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
@@ -49,8 +48,8 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection003()
         {
             // Arrange
-            var engine = new MockEngine();
-            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            var engine = new Mock<IEngine>();
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -70,8 +69,8 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection004()
         {
             // Arrange
-            var engine = new MockEngine();
-            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            var engine = new Mock<IEngine>();
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -91,8 +90,8 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection005()
         {
             // Arrange
-            var engine = new MockEngine();
-            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            var engine = new Mock<IEngine>();
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -105,31 +104,6 @@ namespace SolrExpress.Core.UnitTests
 
         /// <summary>
         /// Where   Using a DocumentCollection instance
-        /// When    Invokes property Select twice
-        /// What    Each invokes returns a different instance
-        /// </summary>
-        [Fact]
-        public void DocumentCollection006()
-        {
-            // Arrange
-            var engine = new MockEngine();
-            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
-            engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
-            engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
-
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
-
-            // Act
-            var select1 = documentCollection.Select();
-            var select2 = documentCollection.Select();
-
-            // Assert
-            Assert.NotSame(select1, select2);
-        }
-
-        /// <summary>
-        /// Where   Using a DocumentCollection instance
         /// When    Invokes method Commit without invokes method Add
         /// What    Don't invoke class than implements IAtomicUpdate
         /// </summary>
@@ -137,8 +111,9 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection007()
         {
             // Arrange
-            var engine = new MockEngine();
+            var engine = new Mock<IEngine>();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -161,8 +136,9 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection008()
         {
             // Arrange
-            var engine = new MockEngine();
+            var engine = new Mock<IEngine>();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -186,8 +162,9 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection009()
         {
             // Arrange
-            var engine = new MockEngine();
+            var engine = new Mock<IEngine>();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
@@ -210,8 +187,9 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection010()
         {
             // Arrange
-            var engine = new MockEngine();
+            var engine = new Mock<IEngine>();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
+            engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 

@@ -22,11 +22,6 @@ namespace SolrExpress.Core.Update
         private List<string> _documentsToDelete = new List<string>();
 
         /// <summary>
-        /// SOLR connection
-        /// </summary>
-        private readonly ISolrConnection _solrConnection;
-
-        /// <summary>
         /// Default constructor of class
         /// </summary>
         /// <param name="options">SolrExpress options</param>
@@ -38,9 +33,6 @@ namespace SolrExpress.Core.Update
 
             this.Options = options;
             this.Engine = engine;
-
-            this._solrConnection = this.Engine.GetService<ISolrConnection>();
-            this._solrConnection.SolrHost = this.Options.HostAddress;
         }
 
         /// <summary>
@@ -93,15 +85,18 @@ namespace SolrExpress.Core.Update
                 atomicInstructions.Add(atomicInstruction);
             }
 
+            var solrConnection = this.Engine.GetService<ISolrConnection>();
+            solrConnection.HostAddress = this.Options.HostAddress;
+
             foreach (var atomicInstruction in atomicInstructions)
             {
                 var data = atomicInstruction.Execute();
-                this._solrConnection.Post(RequestHandler.Update, data);
+                solrConnection.Post(RequestHandler.Update, data);
             }
 
             if (atomicInstructions.Any())
             {
-                this._solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
+                solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
             }
 
             this._documentsToAdd = new List<TDocument>();

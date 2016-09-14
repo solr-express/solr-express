@@ -1,5 +1,5 @@
 ﻿#if NET40 || NET45
-using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Extension
@@ -18,7 +18,12 @@ namespace SolrExpress.Core.Extension
             Checker.IsNull(builder);
 
             var builderObj = new DocumentCollectionBuilder<TDocument>();
-            builderObj.Create();
+            var documentCollection = builderObj.Create();
+
+            builderObj
+                .Engine
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
 
             return builderObj;
         }
