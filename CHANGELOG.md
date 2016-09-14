@@ -1,3 +1,76 @@
+# [4.0.0] - 2016-09-14
+## Bug fix
+* Friendly assembly wont work (#122)
+* Check if parameter called "parameters" is null in result processors (#142)
+* Invalid cast when a facet range is created using a field of long type (#143)
+* Wrong query when using SpatialFilter (#148) 
+
+## Enhancement
+* Cleanup in package.json files (#138)
+* Create benchmarks (#139)
+* Create interface to be used in DocumentCollection, SolrQueryable e SolrAtomicUpdate classes (#140)
+* DI review (#141)
+* Code review (#147)
+
+> **PAY ATTETNTION**
+> 
+> #141 and #147 causes BREAKING CHANGES 
+
+## BREAKING CHANGES
+
+* To use DocumentCollection
+Before
+
+```csharp
+var provider = new Provider("http://localhost:8983/solr/techproducts");
+var resolver = new SimpleResolver().Configure();
+var configuration = new Configuration();
+var techProducts = new DocumentCollection<TechProduct>(provider, resolver, configuration);
+```
+
+After
+
+```csharp
+// Using Net.Core
+serviceCollection.AddSolrExpress<TechProduct>(builder => builder
+    .UseHostAddress("http://localhost:8983/solr/techproducts")
+    .UseOptions(/*options instance*/) // Optionally
+    .UseSolr5()); // Or UserSolr4()
+
+// In some controller/service/however
+public ClassConstructor(IDocumentCollection<TechProduct> techProducts)
+...
+
+// Using Net4 or Net4.5
+techProducts = new DocumentCollectionBuilder<TechProduct>()
+    .AddSolrExpress()
+    .UseHostAddress("http://localhost:8983/solr/techproducts")
+    .UseOptions(/*options instance*/) // Optionally
+    .UseSolr5()  // Or UserSolr4()
+    .Create();
+```
+
+* To create a new parameter without using ISolrSearch
+Before
+
+```csharp
+var parameter = new QueryParameter<TechProductDocument>().Configure(new QueryAll());
+```
+
+After
+
+```csharp
+// Using Net.Core
+// In some controller/service/however
+public ClassConstructor(ISearchParameterBuilder<TDocument> parameterBuilder)
+{
+    var parameter = parameterBuilder.Query(new QueryAll());
+}
+
+// Using Net4 or Net4.5
+Sorry bro... continues using the old way :/
+```
+
 # [3.1.2] - 2016-07-30
 ## Enhancement
 * Add default parameters (#125)
