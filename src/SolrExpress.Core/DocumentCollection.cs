@@ -11,8 +11,6 @@ namespace SolrExpress.Core
     public class DocumentCollection<TDocument> : IDocumentCollection<TDocument>
         where TDocument : IDocument
     {
-        private IEngine _engine;
-
         /// <summary>
         /// Default constructor of class
         /// </summary>
@@ -24,18 +22,23 @@ namespace SolrExpress.Core
             Checker.IsNull(engine);
 
             this.Options = options;
-            this._engine = engine;
+            this.Engine = engine;
         }
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrSearch<TDocument> Select() => this._engine.GetService<ISolrSearch<TDocument>>();
+        public ISolrSearch<TDocument> Select() => this.Engine.GetService<ISolrSearch<TDocument>>();
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrAtomicUpdate<TDocument> Update() => this._engine.GetService<ISolrAtomicUpdate<TDocument>>();
+        public ISolrAtomicUpdate<TDocument> Update() => this.Engine.GetService<ISolrAtomicUpdate<TDocument>>();
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        public IEngine Engine { get; private set; }
 
         /// <summary>
         /// SolrExpress options

@@ -1,4 +1,5 @@
 ﻿#if NET40 || NET45
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Utility;
 
@@ -22,6 +23,7 @@ namespace SolrExpress.Core.Extension
 
             builderObj
                 .Engine
+                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
 

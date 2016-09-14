@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Search;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Update;
 
 namespace SolrExpress.Core
@@ -23,5 +24,10 @@ namespace SolrExpress.Core
         /// SolrExpress options
         /// </summary>
         DocumentCollectionOptions<TDocument> Options { get; }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        IEngine Engine { get; }
     }
 }
