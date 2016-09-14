@@ -28,5 +28,14 @@ namespace SolrExpress.Core
         /// The longitude of the location. May range from -180.0 to 180.0.
         /// </summary>
         public decimal Longitude { get; set; }
+
+        /// <summary>
+        /// Returns the fully qualified type name of this instance
+        /// </summary>
+        /// <returns>A System.String containing a fully qualified type name</returns>
+        public override string ToString()
+        {
+            return $"{this.Latitude.ToString("G", CultureInfo.InvariantCulture)},{this.Longitude.ToString("G", CultureInfo.InvariantCulture)}";
+        }
     }
 }

@@ -19,16 +19,15 @@ namespace SolrExpress.Core.Benchmarks.Search
         [Setup]
         public void Setup()
         {
-            var mockSolrConnection = new Mock<ISolrConnection>();
-            mockSolrConnection.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
 
-            var mockEngine = new MockEngine();
-            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(mockSolrConnection.Object);
-            mockEngine.Setup(q => q.GetService<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
-            mockEngine.Setup(q => q.GetService<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
-            mockEngine.Setup(q => q.GetService<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
-            mockEngine.Setup(q => q.GetService<ISearchParameterCollection>()).Returns(new Mock<ISearchParameterCollection>().Object);
-            ApplicationServices.Current = mockEngine;
+            var engine = new MockEngine();
+            engine.Setup(q => q.GetService<ISolrConnection>()).Returns(solrConnection.Object);
+            engine.Setup(q => q.GetService<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
+            engine.Setup(q => q.GetService<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
+            engine.Setup(q => q.GetService<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
+            engine.Setup(q => q.GetService<ISearchParameterCollection>()).Returns(new Mock<ISearchParameterCollection>().Object);
 
             var options = new DocumentCollectionOptions<TestDocument>();
             var parameters = new List<ISearchParameter<object>>();
@@ -42,7 +41,7 @@ namespace SolrExpress.Core.Benchmarks.Search
                 parameters.Add(parameterMock.Object);
             }
 
-            _solrSearch = new SolrSearch<TestDocument>(options);
+            _solrSearch = new SolrSearch<TestDocument>(options, engine.Object);
 
             parameters.ForEach(_solrSearch.Add);
         }

@@ -9,12 +9,12 @@ namespace SolrExpress.Core.UnitTests.Search
 {
     public class SolrSearchests
     {
+        private Mock<IEngine> _engine;
+
         public SolrSearchests()
         {
-            var mockEngine = new MockEngine();
-            mockEngine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
-
-            ApplicationServices.Current = mockEngine;
+            this._engine = new Mock<IEngine>();
+            this._engine.Setup(q => q.GetService<ISolrConnection>()).Returns(new Mock<ISolrConnection>().Object);
         }
 
         /// <summary>
@@ -26,13 +26,13 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch001()
         {
             // Arrange
-            var mockParameter = new Mock<ISearchParameter>();
-            mockParameter.Setup(q => q.AllowMultipleInstances).Returns(false);
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
-            queryable.Add(mockParameter.Object);
+            var parameter = new Mock<ISearchParameter>();
+            parameter.Setup(q => q.AllowMultipleInstances).Returns(false);
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
+            queryable.Add(parameter.Object);
 
             // Act / Assert
-            Assert.Throws<AllowMultipleInstanceOfParameterTypeException>(() => queryable.Add(mockParameter.Object));
+            Assert.Throws<AllowMultipleInstanceOfParameterTypeException>(() => queryable.Add(parameter.Object));
         }
 
         /// <summary>
@@ -44,19 +44,19 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch002()
         {
             // Arrange
-            var mockValidate = new Mock<IValidation>();
-            var mockParameter = mockValidate.As<ISearchParameter>();
+            var validate = new Mock<IValidation>();
+            var parameter = validate.As<ISearchParameter>();
 
             var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             bool isValid;
             var errorMessage = "test";
 
-            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+            validate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act / Assert
-            Assert.Throws<InvalidParameterTypeException>(() => queryable.Add(mockParameter.Object));
+            Assert.Throws<InvalidParameterTypeException>(() => queryable.Add(parameter.Object));
         }
 
         /// <summary>
@@ -68,23 +68,23 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch003()
         {
             // Arrange
-            var mockValidate = new Mock<IValidation>();
-            var mockParameter = mockValidate.As<ISearchParameter>();
+            var validate = new Mock<IValidation>();
+            var parameter = validate.As<ISearchParameter>();
             var documentCollectionOptions = new DocumentCollectionOptions<TestDocument>
             {
                 FailFast = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions);
+            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
 
             // Act
-            queryable.Add(mockParameter.Object);
+            queryable.Add(parameter.Object);
 
             // Assert
-            mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
+            validate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
         }
 
         /// <summary>
@@ -96,8 +96,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch004()
         {
             // Arrange
-            var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((ISearchParameter)null));
@@ -112,8 +111,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch005()
         {
             // Arrange
-            var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((ISearchInterceptor)null));
@@ -128,8 +126,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch006()
         {
             // Arrange
-            var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.Add((IResultInterceptor)null));
@@ -144,7 +141,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch007()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new SolrSearch<TestDocument>(null));
+            Assert.Throws<ArgumentNullException>(() => new SolrSearch<TestDocument>(null, null));
         }
 
         /// <summary>
@@ -156,20 +153,20 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch008()
         {
             // Arrange
-            var mockValidate = new Mock<IValidation>();
-            var mockParameter = mockValidate.As<ISearchParameter>();
-            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+            var validate = new Mock<IValidation>();
+            var parameter = validate.As<ISearchParameter>();
+            var anyParameter = parameter.As<IAnyParameter>();
 
             var providerMock = new Mock<ISolrConnection>();
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             bool isValid;
             var errorMessage = "test";
 
-            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+            validate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act / Assert
-            Assert.Throws<InvalidParameterTypeException>(() => queryable.Add(mockAnyParameter.Object));
+            Assert.Throws<InvalidParameterTypeException>(() => queryable.Add(anyParameter.Object));
         }
 
         /// <summary>
@@ -181,26 +178,26 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch009()
         {
             // Arrange
-            var mockValidate = new Mock<IValidation>();
-            var mockParameter = mockValidate.As<ISearchParameter>();
-            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+            var validate = new Mock<IValidation>();
+            var parameter = validate.As<ISearchParameter>();
+            var anyParameter = parameter.As<IAnyParameter>();
             var documentCollectionOptions = new DocumentCollectionOptions<TestDocument>
             {
                 FailFast = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions);
+            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
 
-            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+            validate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act
-            queryable.Add(mockAnyParameter.Object);
+            queryable.Add(anyParameter.Object);
 
             // Assert
-            mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
+            validate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
         }
 
         /// <summary>
@@ -212,26 +209,26 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch010()
         {
             // Arrange
-            var mockValidate = new Mock<IValidation>();
-            var mockParameter = mockValidate.As<ISearchParameter>();
-            var mockAnyParameter = mockParameter.As<IAnyParameter>();
+            var validate = new Mock<IValidation>();
+            var parameter = validate.As<ISearchParameter>();
+            var anyParameter = parameter.As<IAnyParameter>();
             var documentCollectionOptions = new DocumentCollectionOptions<TestDocument>
             {
                 CheckAnyParameter = false
             };
 
-            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions);
+            var queryable = new SolrSearch<TestDocument>(documentCollectionOptions, this._engine.Object);
 
             bool isValid;
             string errorMessage;
 
-            mockValidate.Setup(q => q.Validate(out isValid, out errorMessage));
+            validate.Setup(q => q.Validate(out isValid, out errorMessage));
 
             // Act
-            queryable.Add(mockAnyParameter.Object);
+            queryable.Add(anyParameter.Object);
 
             // Assert
-            mockValidate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
+            validate.Verify(q => q.Validate(out isValid, out errorMessage), Times.Never);
         }
 
         /// <summary>
@@ -243,7 +240,7 @@ namespace SolrExpress.Core.UnitTests.Search
         public void SolrSearch011()
         {
             // Arrange
-            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>());
+            var queryable = new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => queryable.SetHandler(null));

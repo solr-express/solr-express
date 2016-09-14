@@ -1,4 +1,6 @@
-﻿namespace SolrExpress.Core.Update
+﻿using SolrExpress.Core.DependencyInjection;
+
+namespace SolrExpress.Core.Update
 {
     /// <summary>
     /// Signatures of SOLR atomic update container
@@ -28,5 +30,10 @@
         /// SolrExpress options
         /// </summary>
         DocumentCollectionOptions<TDocument> Options { get; }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        IEngine Engine { get; }
     }
 }

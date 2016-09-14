@@ -17,8 +17,6 @@ namespace SolrExpress.Core.Extension
         {
             Checker.IsNull(builder);
 
-            ApplicationServices.Initialize<NetFrameworkEngine>();
-
             var builderObj = new DocumentCollectionBuilder<TDocument>();
             builderObj.Create();
 

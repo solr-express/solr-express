@@ -1,6 +1,7 @@
 ﻿#if NETCOREAPP1_0
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SolrExpress.Core.Utility;
 using System;
 
 namespace SolrExpress.Core.DependencyInjection
@@ -46,7 +47,9 @@ namespace SolrExpress.Core.DependencyInjection
         /// <returns>This</returns>
         internal IEngine SetServiceCollection(IServiceCollection serviceCollection)
         {
-            this._serviceCollection = this._serviceCollection ?? serviceCollection;
+            Checker.IsNull(serviceCollection);
+
+            this._serviceCollection = serviceCollection;
 
             return this;
         }

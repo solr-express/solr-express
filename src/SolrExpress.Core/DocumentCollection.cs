@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Search;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Update;
 using SolrExpress.Core.Utility;
 
@@ -10,26 +11,31 @@ namespace SolrExpress.Core
     public class DocumentCollection<TDocument> : IDocumentCollection<TDocument>
         where TDocument : IDocument
     {
+        private IEngine _engine;
+
         /// <summary>
         /// Default constructor of class
         /// </summary>
         /// <param name="options">SolrExpress options</param>
-        public DocumentCollection(DocumentCollectionOptions<TDocument> options)
+        /// <param name="engine">Services container</param>
+        public DocumentCollection(DocumentCollectionOptions<TDocument> options, IEngine engine)
         {
             Checker.IsNull(options);
-
+            Checker.IsNull(engine);
+            
             this.Options = options;
+            this._engine = engine;
         }
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrSearch<TDocument> Select() => new SolrSearch<TDocument>(this.Options);
+        public ISolrSearch<TDocument> Select() => new SolrSearch<TDocument>(this.Options, this._engine);
 
         /// <summary>
         /// Solr queryable instance to provide create queries in SOLR
         /// </summary>
-        public ISolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Options);
+        public ISolrAtomicUpdate<TDocument> Update() => new SolrAtomicUpdate<TDocument>(this.Options, this._engine);
 
         /// <summary>
         /// SolrExpress options

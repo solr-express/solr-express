@@ -1,12 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
-using SolrExpress.Solr4.Search.Result;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SolrExpress.Solr4.UnitTests.Search.Result
+namespace SolrExpress.Core.UnitTests.Search.Result
 {
     public class DocumentResultTests
     {

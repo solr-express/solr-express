@@ -9,6 +9,16 @@ namespace SolrExpress.Core.Extension
     public static class ISolrSearchExtensions
     {
         /// <summary>
+        /// Returns ISearchParameterBuilder instance
+        /// </summary>
+        /// <returns>ISearchParameterBuilder instance</returns>
+        private static ISearchParameterBuilder<TDocument> GetBuilder<TDocument>(this ISolrSearch<TDocument> search)
+            where TDocument : IDocument
+        {
+            return search.Engine.GetService<ISearchParameterBuilder<TDocument>>();
+        }
+
+        /// <summary>
         /// Create a facet field parameter
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
@@ -18,7 +28,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetField<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, FacetSortType? sortType = null, int? limit = null, params string[] excludes)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.FacetField(expression, sortType, limit, excludes));
+            search.Add(search.GetBuilder().FacetField(expression, sortType, limit, excludes));
             return search;
         }
 
@@ -32,7 +42,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetQuery<TDocument>(this ISolrSearch<TDocument> search, string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.FacetQuery<TDocument>(aliasName, query, sortType, excludes));
+            search.Add(search.GetBuilder().FacetQuery(aliasName, query, sortType, excludes));
             return search;
         }
 
@@ -48,7 +58,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetRange<TDocument>(this ISolrSearch<TDocument> search, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, FacetSortType? sortType = null)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.FacetRange(aliasName, expression, gap, start, end, sortType));
+            search.Add(search.GetBuilder().FacetRange(aliasName, expression, gap, start, end, sortType));
             return search;
         }
 
@@ -59,7 +69,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Fields<TDocument>(this ISolrSearch<TDocument> search, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Fields(expressions));
+            search.Add(search.GetBuilder().Fields(expressions));
             return search;
         }
 
@@ -72,7 +82,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Filter<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, string value, string tagName = null)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Filter(expression, value, tagName));
+            search.Add(search.GetBuilder().Filter(expression, value, tagName));
             return search;
         }
 
@@ -87,7 +97,7 @@ namespace SolrExpress.Core.Extension
             where TDocument : IDocument
             where TValue : struct
         {
-            search.Add(SearchParameterBuilder.Filter(expression, from, to, tagName));
+            search.Add(search.GetBuilder().Filter(expression, from, to, tagName));
             return search;
         }
 
@@ -98,7 +108,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Limit<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Limit(value));
+            search.Add(search.GetBuilder().Limit(value));
             return search;
         }
 
@@ -109,7 +119,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Offset<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Offset(value));
+            search.Add(search.GetBuilder().Offset(value));
             return search;
         }
 
@@ -120,7 +130,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Query<TDocument>(value));
+            search.Add(search.GetBuilder().Query(value));
             return search;
         }
 
@@ -131,7 +141,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, string value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Query<TDocument>(value));
+            search.Add(search.GetBuilder().Query(value));
             return search;
         }
 
@@ -143,7 +153,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Query<TDocument>(value));
+            search.Add(search.GetBuilder().Query(value));
             return search;
         }
 
@@ -155,7 +165,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Sort<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, bool ascendent)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Sort(expression, ascendent));
+            search.Add(search.GetBuilder().Sort(expression, ascendent));
             return search;
         }
 
@@ -167,7 +177,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Sort<TDocument>(this ISolrSearch<TDocument> search, bool ascendent, params Expression<Func<TDocument, object>>[] expressions)
             where TDocument : IDocument
         {
-            foreach (var item in SearchParameterBuilder.Sort(ascendent, expressions))
+            foreach (var item in search.GetBuilder().Sort(ascendent, expressions))
             {
                 search.Add(item);
             }
@@ -183,7 +193,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> RandomSort<TDocument>(this ISolrSearch<TDocument> search, bool ascendent)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.RandomSort(ascendent));
+            search.Add(search.GetBuilder().RandomSort(ascendent));
             return search;
         }
 
@@ -194,7 +204,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> FacetLimit<TDocument>(this ISolrSearch<TDocument> search, int value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.FacetLimit(value));
+            search.Add(search.GetBuilder().FacetLimit(value));
             return search;
         }
 
@@ -205,7 +215,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> MinimumShouldMatch<TDocument>(this ISolrSearch<TDocument> search, string expression)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.MinimumShouldMatch(expression));
+            search.Add(search.GetBuilder().MinimumShouldMatch(expression));
             return search;
         }
 
@@ -216,7 +226,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> QueryField<TDocument>(this ISolrSearch<TDocument> search, string expression)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.QueryField(expression));
+            search.Add(search.GetBuilder().QueryField(expression));
             return search;
         }
 
@@ -230,7 +240,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> SpatialFilter<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, SolrSpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.SpatialFilter(expression, functionType, centerPoint, distance));
+            search.Add(search.GetBuilder().SpatialFilter(expression, functionType, centerPoint, distance));
             return search;
         }
 
@@ -242,7 +252,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Any<TDocument>(this ISolrSearch<TDocument> search, string name, string value)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Any(name, value));
+            search.Add(search.GetBuilder().Any(name, value));
             return search;
         }
 
@@ -254,7 +264,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Boost<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue query, BoostFunctionType? boostFunctionType = null)
             where TDocument : IDocument
         {
-            search.Add(SearchParameterBuilder.Boost<TDocument>(query, boostFunctionType ?? BoostFunctionType.Boost));
+            search.Add(search.GetBuilder().Boost(query, boostFunctionType ?? BoostFunctionType.Boost));
             return search;
         }
     }

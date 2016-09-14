@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Search.Result;
+﻿using SolrExpress.Core.DependencyInjection;
+using SolrExpress.Core.Search.Result;
 
 namespace SolrExpress.Core.Search
 {
@@ -15,5 +16,10 @@ namespace SolrExpress.Core.Search
         /// <returns>Instance of T ready to be used</returns>
         T Get<T>(T result)
             where T : IResult;
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        IEngine Engine { get; }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Services container
     /// </summary>
-    internal interface IEngine
+    public interface IEngine
     {
         /// <summary>
         /// Adds a singleton service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container

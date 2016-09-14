@@ -2,12 +2,12 @@
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Solr4.Search.Parameter;
-using SolrExpress.Solr4.Search.Result;
+using SolrExpress.Solr4.UnitTests;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace SolrExpress.Solr4.UnitTests.Search.Result
+namespace SolrExpress.Core.UnitTests.Search.Result
 {
     public class InformationResultTests
     {
@@ -45,91 +45,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
             // Assert
             Assert.Equal(1000, documentCount);
             Assert.Equal(new TimeSpan(0, 0, 0, 0, 10), timeToExecution);
-        }
-
-        /// <summary>
-        /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
-        /// What    Throws UnexpectedJsonFormatException
-        /// </summary>
-        [Fact]
-        public void InformationResult002()
-        {
-            // Arrange
-            var jsonStr = @"
-            {
-              ""responseHeaderX"":{
-                ""status"":0,
-                ""QTime"":10},
-                ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
-            }";
-            var parameters = new List<ISearchParameter>();
-            var jsonObject = JObject.Parse(jsonStr);
-            var result = new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => ((IConvertJsonObject)result).Execute(parameters, jsonObject));
-        }
-
-        /// <summary>
-        /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
-        /// What    Throws UnexpectedJsonFormatException
-        /// </summary>
-        [Fact]
-        public void InformationResult003()
-        {
-            // Arrange
-            var jsonStr = @"
-            {
-              ""responseHeader"":{
-                ""status"":0,
-                ""QTime"":10}
-            }";
-            var parameters = new List<ISearchParameter>();
-            var jsonObject = JObject.Parse(jsonStr);
-            var result = new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => ((IConvertJsonObject)result).Execute(parameters, jsonObject));
-        }
-
-        /// <summary>
-        /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
-        /// What    Throws UnexpectedJsonFormatException
-        /// </summary>
-        [Fact]
-        public void InformationResult004()
-        {
-            // Arrange
-            var jsonStr = @"
-            {
-                ""response"":{""numFound"":1000,""start"":0,""maxScore"":1.0}
-            }";
-            var parameters = new List<ISearchParameter>();
-            var jsonObject = JObject.Parse(jsonStr);
-            var result = new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => ((IConvertJsonObject)result).Execute(parameters, jsonObject));
-        }
-
-        /// <summary>
-        /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
-        /// What    Throws UnexpectedJsonFormatException
-        /// </summary>
-        [Fact]
-        public void InformationResult005()
-        {
-            // Arrange
-            var parameters = new List<ISearchParameter>();
-            var jsonObject = new JObject();
-            var result = new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<UnexpectedJsonFormatException>(() => ((IConvertJsonObject)result).Execute(parameters, jsonObject));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core.DependencyInjection;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Update;
 
@@ -11,9 +10,6 @@ namespace SolrExpress.Core
     public class DocumentCollectionBuilder<TDocument>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Collection options
-        /// </summary>
         private DocumentCollectionOptions<TDocument> _options;
 
         /// <summary>
@@ -22,6 +18,12 @@ namespace SolrExpress.Core
         public DocumentCollectionBuilder()
         {
             this._options = new DocumentCollectionOptions<TDocument>();
+
+#if NET40 || NET45
+            this.Engine = new NetFrameworkEngine();
+#else
+            this.Engine = new NetCoreEngine();
+#endif
         }
 
         /// <summary>
@@ -68,15 +70,21 @@ namespace SolrExpress.Core
         internal DocumentCollection<TDocument> Create()
 #endif
         {
-            var documentCollection = new DocumentCollection<TDocument>(this._options);
+            var documentCollection = new DocumentCollection<TDocument>(this._options, this.Engine);
 
-            ApplicationServices
-                .Current
+            this
+                .Engine
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
 
             return documentCollection;
         }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        internal IEngine Engine { get; set; }
     }
 }

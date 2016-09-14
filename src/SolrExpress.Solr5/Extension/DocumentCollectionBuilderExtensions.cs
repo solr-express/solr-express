@@ -1,12 +1,10 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Update;
 using SolrExpress.Solr5.Search;
 using SolrExpress.Solr5.Search.Parameter;
-using SolrExpress.Solr5.Search.Parameter.Internal;
 using SolrExpress.Solr5.Search.Result;
 
 namespace SolrExpress.Solr5.Extension
@@ -16,9 +14,8 @@ namespace SolrExpress.Solr5.Extension
         public static DocumentCollectionBuilder<TDocument> UseSolr5<TDocument>(this DocumentCollectionBuilder<TDocument> builder)
             where TDocument : IDocument
         {
-            ApplicationServices
-                .Current
-                .AddSingleton<SortCommand>()
+            builder
+                .Engine
                 .AddSingleton<ISolrConnection, SolrConnection>()
                 .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

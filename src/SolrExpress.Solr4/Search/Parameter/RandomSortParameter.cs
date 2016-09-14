@@ -1,27 +1,36 @@
 ﻿using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Solr4.Search.Parameter.Internal;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
     public class RandomSortParameter : BaseRandomSortParameter, ISearchParameter<List<string>>
     {
-        private SortCommand _sortCommand;
-
-        public RandomSortParameter(SortCommand sortCommand)
-            : base()
-        {
-            this._sortCommand = sortCommand;
-        }
-
         /// <summary>
         /// Execute creation of parameter "sort"
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            this._sortCommand.Execute("random", this.Ascendent, container);
+            var fieldName = "random";
+
+            var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
+
+            var sort = container.FirstOrDefault(q => q.StartsWith("sort="));
+
+            if (!string.IsNullOrWhiteSpace(sort))
+            {
+                container.Remove(sort);
+
+                sort = $"{sort},{value}";
+            }
+            else
+            {
+                sort = $"sort={value}";
+            }
+
+            container.Add(sort);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
@@ -18,13 +19,17 @@ namespace SolrExpress.Core.Search.Result
         /// Default constructor of class
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
+        /// <param name="engine">Services container</param>
         /// <param name="json">Result of the SOLR</param
-        public SearchResult(List<ISearchParameter> parameters, string json)
+        public SearchResult(List<ISearchParameter> parameters, IEngine engine, string json)
         {
+            Checker.IsNull(parameters);
+            Checker.IsNull(engine);
             Checker.IsNullOrWhiteSpace(json);
 
             this._parameters = parameters;
             this._jsonPlainText = json;
+            this.Engine = engine;
         }
 
         /// <summary>
@@ -59,5 +64,10 @@ namespace SolrExpress.Core.Search.Result
 
             return result;
         }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        public IEngine Engine { get; private set; }
     }
 }

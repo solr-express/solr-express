@@ -29,15 +29,17 @@ namespace SolrExpress.Core.Update
         /// <summary>
         /// Default constructor of class
         /// </summary>
-        /// <param name="serviceProvider">Classes dependency provider</param>
         /// <param name="options">SolrExpress options</param>
-        public SolrAtomicUpdate(DocumentCollectionOptions<TDocument> options)
+        /// <param name="engine">Services container</param>
+        public SolrAtomicUpdate(DocumentCollectionOptions<TDocument> options, IEngine engine)
         {
             Checker.IsNull(options);
+            Checker.IsNull(engine);
 
             this.Options = options;
+            this.Engine = engine;
 
-            this._solrConnection = ApplicationServices.Current.GetService<ISolrConnection>();
+            this._solrConnection = this.Engine.GetService<ISolrConnection>();
             this._solrConnection.SolrHost = this.Options.HostAddress;
         }
 
@@ -79,14 +81,14 @@ namespace SolrExpress.Core.Update
 
             if (this._documentsToAdd.Any())
             {
-                var atomicInstruction = ApplicationServices.Current.GetService<IAtomicUpdate<TDocument>>();
+                var atomicInstruction = this.Engine.GetService<IAtomicUpdate<TDocument>>();
                 atomicInstruction.Configure(this._documentsToAdd.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
 
             if (this._documentsToDelete.Any())
             {
-                var atomicInstruction = ApplicationServices.Current.GetService<IAtomicDelete<TDocument>>();
+                var atomicInstruction = this.Engine.GetService<IAtomicDelete<TDocument>>();
                 atomicInstruction.Configure(this._documentsToDelete.ToArray());
                 atomicInstructions.Add(atomicInstruction);
             }
@@ -110,5 +112,10 @@ namespace SolrExpress.Core.Update
         /// Configurations about SolrQueriable behavior
         /// </summary>
         public DocumentCollectionOptions<TDocument> Options { get; private set; }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        public IEngine Engine { get; private set; }
     }
 }

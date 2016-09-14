@@ -1,8 +1,8 @@
 ﻿using Xunit;
 using Newtonsoft.Json.Linq;
-using SolrExpress.Solr5.Update;
+using SolrExpress.Core.Update;
 
-namespace SolrExpress.Solr5.UnitTests.Update
+namespace SolrExpress.Core.UnitTests.Update
 {
     public class AtomicDeleteTests
     {

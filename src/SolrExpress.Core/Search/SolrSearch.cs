@@ -3,7 +3,6 @@ using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,22 +20,29 @@ namespace SolrExpress.Core.Search
         private readonly List<ISearchItem> _items = new List<ISearchItem>();
 
         /// <summary>
-        /// Handler name used in solr request
-        /// </summary>
-        private string _handlerName = RequestHandler.Select;
-
-        /// <summary>
         /// SOLR connection
         /// </summary>
         private readonly ISolrConnection _solrConnection;
 
         /// <summary>
+        /// Handler name used in solr request
+        /// </summary>
+        private string _handlerName = RequestHandler.Select;
+
+        /// <summary>
         /// Default constructor of class
         /// </summary>
         /// <param name="options">SolrExpress options</param>
-        public SolrSearch(DocumentCollectionOptions<TDocument> options)
+        /// <param name="engine">Services container</param>
+        public SolrSearch(DocumentCollectionOptions<TDocument> options, IEngine engine)
         {
+            Checker.IsNull(options);
+            Checker.IsNull(engine);
+
             this.Options = options;
+            this.Engine = engine;
+
+            this._solrConnection = this.Engine.GetService<ISolrConnection>();
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace SolrExpress.Core.Search
 
             if (offsetParameter == null)
             {
-                offsetParameter = ApplicationServices.Current.GetService<IOffsetParameter>().Configure(0);
+                offsetParameter = this.Engine.GetService<IOffsetParameter>().Configure(0);
                 this._items.Add(offsetParameter);
             }
 
@@ -92,22 +98,10 @@ namespace SolrExpress.Core.Search
 
             if (limitParameter == null)
             {
-                limitParameter = ApplicationServices.Current.GetService<ILimitParameter>().Configure(10);
+                limitParameter = this.Engine.GetService<ILimitParameter>().Configure(10);
                 this._items.Add(limitParameter);
             }
         }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through the current list
-        /// </summary>
-        /// <returns>An enumerator</returns>
-        public IEnumerator<ISearchItem> GetEnumerator() => this._items.GetEnumerator();
-
-        /// <summary>
-        /// Returns an enumerator that iterates through the current list
-        /// </summary>
-        /// <returns>An enumerator</returns>
-        IEnumerator IEnumerable.GetEnumerator() => this._items.GetEnumerator();
 
         /// <summary>
         /// Add an item to search
@@ -147,30 +141,11 @@ namespace SolrExpress.Core.Search
         }
 
         /// <summary>
-        /// Removes all elements
-        /// </summary>
-        public void Clear() => this._items.Clear();
-
-        /// <summary>
         /// Determines whether an element is in current list
         /// </summary>
         /// <param name="item">Item to add</param>
         /// <returns>Returns true if item is found in list, otherwise false</returns>
         public bool Contains(ISearchItem item) => this._items.Contains(item);
-
-        /// <summary>
-        /// Copies the entire System.Collections.Generic.List`1 to a compatible one-dimensional array, starting at the specified index of the target array.
-        /// </summary>
-        /// <param name="array">The one-dimensional System.Array that is the destination of the elements copied.</param>
-        /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-        public void CopyTo(ISearchItem[] array, int arrayIndex) => this._items.CopyTo(array, arrayIndex);
-
-        /// <summary>
-        /// Removes the first occurrence of a specific object from current list.
-        /// </summary>
-        /// <param name="item">Item to be removed.</param>
-        /// <returns>Returns true if item is successfully removed, otherwise false.</returns>
-        public bool Remove(ISearchItem item) => this._items.Remove(item);
 
         /// <summary>
         /// Handler name used in solr request
@@ -192,8 +167,8 @@ namespace SolrExpress.Core.Search
         /// <returns>Solr result</returns>
         public ISearchResult<TDocument> Execute()
         {
-            var systemParameter = ApplicationServices.Current.GetService<ISystemParameter>();
-            var parameterCollection = ApplicationServices.Current.GetService<ISearchParameterCollection>();
+            var systemParameter = this.Engine.GetService<ISystemParameter>();
+            var parameterCollection = this.Engine.GetService<ISearchParameterCollection>();
 
             this.Options.GlobalParameters.ForEach(this.Add);
             this.Options.GlobalQueryInterceptors.ForEach(this.Add);
@@ -214,7 +189,7 @@ namespace SolrExpress.Core.Search
 
             this._items.OfType<IResultInterceptor>().ToList().ForEach(q => q.Execute(ref json));
 
-            return new SearchResult<TDocument>(searchParameters, json);
+            return new SearchResult<TDocument>(searchParameters, this.Engine, json);
         }
 
         /// <summary>
@@ -223,13 +198,13 @@ namespace SolrExpress.Core.Search
         public int Count => this._items.Count;
 
         /// <summary>
-        /// Gets if list is read only
-        /// </summary>
-        public bool IsReadOnly => false;
-
-        /// <summary>
         /// SolrExpress options
         /// </summary>
         public DocumentCollectionOptions<TDocument> Options { get; private set; }
+
+        /// <summary>
+        /// Services container
+        /// </summary>
+        public IEngine Engine { get; private set; }
     }
 }
