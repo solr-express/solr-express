@@ -1,6 +1,7 @@
-# Change log
+Change log
+==========
 
-## [4.0.1] - 2016-09-14
+# [4.0.1] - 2016-09-14
 * **Bug fix**
     * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
     * Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` ([#154](https://github.com/solr-express/solr-express/issues/154))
@@ -9,7 +10,7 @@
     * SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance ([#150](https://github.com/solr-express/solr-express/issues/150))
     * ISolrSearch must accept AddRange ([#153](https://github.com/solr-express/solr-express/issues/153))
 
-## [4.0.0] - 2016-09-14
+# [4.0.0] - 2016-09-14
 * **Enhancement**
     * Friendly assembly wont work (#122)
     * Check if parameter called "parameters" is null in result processors (#142)
@@ -86,14 +87,14 @@
     // Sorry bro... continues using the old way :/
     ```
 
-## [3.1.2] - 2016-07-30
+# [3.1.2] - 2016-07-30
 * **Enhancement**
     * Add default parameters (#125)
     * Create unit test to test validations methods (#129)
     * Organize changelogs in CHANGELOG.md file (#133)
     * Change projects dependencies (#136)
 
-## [3.1.1] - 2016-07-19
+# [3.1.1] - 2016-07-19
 * **Bug fix**
     * Create mincount using solr field name rather than POCO property name (#128)
     * In sort validation, must use "index" property rather than "stored" property (#127)
@@ -105,7 +106,7 @@
     * Recode Core.Query.ParameterValue.Range<> (#126)
     * Use min.count = 1 (#50)
 
-## [3.1.0] - 2016-07-12
+# [3.1.0] - 2016-07-12
 * **Bug fix**
     * Wrong default namespace in xprojs (#121)
     * Create wrong parameter when use BoostType.Boost (#117)
@@ -116,7 +117,7 @@
     * Rename class Statistic to Info (#116)
     * Implements random sort (#110)
 
-## [3.0.0] - 2016-07-07
+# [3.0.0] - 2016-07-07
 * **Enhancement**
     * Support to .Net Core 1.0 (#109)
     * Interceptors (Query and Result) and Parameters in global form (#114)
@@ -125,7 +126,7 @@
 > **NOTES**
 > All projects are signed by default (no more *.Signed packages)
 
-## [2.1.0] - 2016-05-13
+# [2.1.0] - 2016-05-13
 * **Bug fix**
     1. In Solr 5.5, when 2 sorts parameters are added, a bad format is created and Solr don't process the request (#101)
     2. Description of exception InvalidParameterTypeException is bad formatted (#100)
@@ -137,7 +138,7 @@
     3. Boost parameter (#102)
     4. Exception description (#98)
 
-## [2.0.0] - 2016-05-05
+# [2.0.0] - 2016-05-05
 * **Bug fix**
     * Fix hyperlink to samples in readme.md (#93)
 
@@ -146,7 +147,7 @@
     * Improves in DI
     * Atomic update (#94)
 
-## [1.2.0.1] - 2015-01-06
+# [1.2.0.1] - 2015-01-06
 * **Bug fix**
     * NuGet mistakes (#86)
     * Unit test fix (#89)
@@ -161,13 +162,13 @@
     * Create option to choose request handler (#82)
     * Fluent language (#87)
 
-## [1.1.0.2] - 2015-12-15
+# [1.1.0.2] - 2015-12-15
 * NuGet mistakes
 
-## [1.1.0.1] - 2015-12-10
+# [1.1.0.1] - 2015-12-10
 * NuGet mistakes
 
-## [1.1.0] - 2015-12-10
+# [1.1.0] - 2015-12-10
 * **Bug fix**
     * Wrong query when use MultiValue and SolrQueryConditionType (#76)
 
@@ -181,7 +182,7 @@
     * Signed package enhancement (#65)
     * Globalization (#42)
 
-## [1.0.01] - 2015-08-27
+# [1.0.01] - 2015-08-27
 
 All Is Said And Done :)
 
