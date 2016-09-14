@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Core.DependencyInjection;
 using System;
+using System.Collections.Generic;
 
 namespace SolrExpress.Core.Search
 {
@@ -12,8 +13,14 @@ namespace SolrExpress.Core.Search
         /// <summary>
         /// Add an item to search
         /// </summary>
-        /// <param name="parameter">Parameter to add in the query</param>
+        /// <param name="item">Parameter to add in the query</param>
         ISolrSearch<TDocument> Add(ISearchItem item);
+
+        /// <summary>
+        /// Add items to search
+        /// </summary>
+        /// <param name="items">Parameter to add in the query</param>
+        ISolrSearch<TDocument> AddRange(IEnumerable<ISearchItem> items);
 
         /// <summary>
         /// Adds a search interceptor to the System.Collections.Generic.ICollection`1.

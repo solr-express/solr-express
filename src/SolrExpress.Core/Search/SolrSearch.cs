@@ -99,7 +99,7 @@ namespace SolrExpress.Core.Search
         /// <summary>
         /// Add an item to search
         /// </summary>
-        /// <param name="parameter">Parameter to add in the query</param>
+        /// <param name="item">Parameter to add in the query</param>
         ISolrSearch<TDocument> ISolrSearch<TDocument>.Add(ISearchItem item)
         {
             Checker.IsNull(item);
@@ -108,6 +108,24 @@ namespace SolrExpress.Core.Search
 
             this._items.Add(item);
 
+            return this;
+        }
+
+        /// <summary>
+        /// Add items to search
+        /// </summary>
+        /// <param name="items">Parameter to add in the query</param>
+        ISolrSearch<TDocument> ISolrSearch<TDocument>.AddRange(IEnumerable<ISearchItem> items)
+        {
+            Checker.IsNull(items);
+
+            foreach (var item in items)
+            {
+                this.ValidateSearchParameter(item);
+
+                this._items.Add(item);
+            }
+            
             return this;
         }
 
