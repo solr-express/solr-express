@@ -63,7 +63,7 @@ namespace SolrExpress.Core.Search
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
-        IFilterParameter<TDocument> Filter<TValue>(Expression<Func<TDocument, object>> expression, TValue? from, TValue? to, string tagName = null)
+        IFilterParameter<TDocument> Filter<TValue>(Expression<Func<TDocument, object>> expression, TValue? from = null, TValue? to = null, string tagName = null)
             where TValue : struct;
 
         /// <summary>
