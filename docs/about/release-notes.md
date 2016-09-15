@@ -2,21 +2,17 @@
 
 Notes about releases
 
+---
+
 ## [4.0.1] - 2016-09-14
 
-### **Bug fix**
-test
-
 ### Bug fix
-test
+* ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
+* Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` ([#154](https://github.com/solr-express/solr-express/issues/154))
 
-* **Bug fix**
-    * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
-    * Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` ([#154](https://github.com/solr-express/solr-express/issues/154))
-
-* **Enhancement**
-    * SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance ([#150](https://github.com/solr-express/solr-express/issues/150))
-    * ISolrSearch must accept AddRange ([#153](https://github.com/solr-express/solr-express/issues/153))
+### Enhancement
+* SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance ([#150](https://github.com/solr-express/solr-express/issues/150))
+* ISolrSearch must accept AddRange ([#153](https://github.com/solr-express/solr-express/issues/153))
 
 ---
 
