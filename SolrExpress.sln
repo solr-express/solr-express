@@ -60,6 +60,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{99DE5683-E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{BF6FE524-2E32-492E-961E-7936B50EF454}"
 	ProjectSection(SolutionItems) = preProject
+		docs\examples\index.md = docs\examples\index.md
 		docs\examples\search-parameter-builder.md = docs\examples\search-parameter-builder.md
 		docs\examples\simple-use.md = docs\examples\simple-use.md
 	EndProjectSection
