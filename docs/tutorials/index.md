@@ -1,3 +1,3 @@
 # Samples
 
-Tests
+.

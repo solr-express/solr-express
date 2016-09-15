@@ -1,3 +1,3 @@
 # Simple use
 
-Test
+.
