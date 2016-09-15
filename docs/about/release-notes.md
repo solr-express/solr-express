@@ -1,4 +1,12 @@
-# [4.0.1] - 2016-09-14
+# Release Notes
+
+Notes about releases
+
+## [4.0.1] - 2016-09-14
+
+### **Bug fix**
+test
+
 * **Bug fix**
     * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
     * Unable to resolve service for type 'IEngine' while attempting to activate 'SearchParameterBuilder` ([#154](https://github.com/solr-express/solr-express/issues/154))
@@ -7,7 +15,9 @@
     * SolrExpress.Core.Search.ISolrSearch.Add methods must return itself instance ([#150](https://github.com/solr-express/solr-express/issues/150))
     * ISolrSearch must accept AddRange ([#153](https://github.com/solr-express/solr-express/issues/153))
 
-# [4.0.0] - 2016-09-14
+---
+
+## [4.0.0] - 2016-09-14
 * **Enhancement**
     * Friendly assembly wont work ([#122](https://github.com/solr-express/solr-express/issues/122))
     * Check if parameter called "parameters" is null in result processors ([#142](https://github.com/solr-express/solr-express/issues/142))
@@ -41,8 +51,7 @@
     After
 
     ```
-
-    // Using Net.Core
+	/* Using Net.Core */
     serviceCollection.AddSolrExpress<TechProduct>(builder => builder
         .UseHostAddress("http://localhost:8983/solr/techproducts")
         .UseOptions(/*options instance*/) // Optionally
@@ -54,7 +63,7 @@
         //...
     }
 
-    // Using Net4 or Net4.5
+    /* Using Net4 or Net4.5 */
     techProducts = new DocumentCollectionBuilder<TechProduct>()
         .AddSolrExpress()
         .UseHostAddress("http://localhost:8983/solr/techproducts")
@@ -74,20 +83,20 @@
     After
 
     ```
-    // Using Net.Core
-    // In some controller/service/however
+    /* Using Net.Core
+       In some controller/service/however */
     public ClassConstructor(ISearchParameterBuilder<TDocument> parameterBuilder)
     {
         var parameter = parameterBuilder.Query(new QueryAll());
     }
 
-    // Using Net4 or Net4.5
+    /* Using Net4 or Net4.5 */
     // Sorry bro... continues using the old way :/
     ```
 
 ---
 
-# [3.1.2] - 2016-07-30
+## [3.1.2] - 2016-07-30
 * **Enhancement**
     * Add default parameters ([#125](https://github.com/solr-express/solr-express/issues/125))
     * Create unit test to test validations methods ([#129](https://github.com/solr-express/solr-express/issues/129))
@@ -96,7 +105,7 @@
 
 ---
 
-# [3.1.1] - 2016-07-19
+## [3.1.1] - 2016-07-19
 * **Bug fix**
     * Create mincount using solr field name rather than POCO property name ([#128](https://github.com/solr-express/solr-express/issues/128))
     * In sort validation, must use "index" property rather than "stored" property ([#127](https://github.com/solr-express/solr-express/issues/127))
@@ -110,7 +119,7 @@
 
 ---
 
-# [3.1.0] - 2016-07-12
+## [3.1.0] - 2016-07-12
 * **Bug fix**
     * Wrong default namespace in xprojs ([#121](https://github.com/solr-express/solr-express/issues/121))
     * Create wrong parameter when use BoostType.Boost ([#117](https://github.com/solr-express/solr-express/issues/117))
@@ -123,7 +132,7 @@
 
 ---
 
-# [3.0.0] - 2016-07-07
+## [3.0.0] - 2016-07-07
 * **Enhancement**
     * Support to .Net Core 1.0 ([#109](https://github.com/solr-express/solr-express/issues/109))
     * Interceptors (Query and Result) and Parameters in global form ([#114](https://github.com/solr-express/solr-express/issues/114))
@@ -134,7 +143,7 @@
 
 ---
 
-# [2.1.0] - 2016-05-13
+## [2.1.0] - 2016-05-13
 * **Bug fix**
     1. In Solr 5.5, when 2 sorts parameters are added, a bad format is created and Solr don't process the request ([#101](https://github.com/solr-express/solr-express/issues/101))
     2. Description of exception InvalidParameterTypeException is bad formatted ([#100](https://github.com/solr-express/solr-express/issues/100))
@@ -148,7 +157,7 @@
 
 ---
 
-# [2.0.0] - 2016-05-05
+## [2.0.0] - 2016-05-05
 * **Bug fix**
     * Fix hyperlink to samples in readme.md ([#93](https://github.com/solr-express/solr-express/issues/93))
 
@@ -159,7 +168,7 @@
 
 ---
 
-# [1.2.0.1] - 2016-01-06
+## [1.2.0.1] - 2016-01-06
 * **Bug fix**
     * NuGet mistakes ([#86](https://github.com/solr-express/solr-express/issues/86))
     * Unit test fix ([#89](https://github.com/solr-express/solr-express/issues/89))
@@ -176,17 +185,17 @@
 
 ---
 
-# [1.1.0.2] - 2015-12-15
+## [1.1.0.2] - 2015-12-15
 * NuGet mistakes
 
 ---
 
-# [1.1.0.1] - 2015-12-10
+## [1.1.0.1] - 2015-12-10
 * NuGet mistakes
 
 ---
 
-# [1.1.0] - 2015-12-10
+## [1.1.0] - 2015-12-10
 * **Bug fix**
     * Wrong query when use MultiValue and SolrQueryConditionType ([#76](https://github.com/solr-express/solr-express/issues/76))
 
@@ -202,7 +211,7 @@
 
 ---
 
-# [1.0.01] - 2015-08-27
+## [1.0.01] - 2015-08-27
 
 All Is Said And Done :)
 
