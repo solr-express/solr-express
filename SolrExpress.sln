@@ -36,6 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 		NuGet.config = NuGet.config
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{0A60AC6A-BBA5-4D35-B85C-92B36513C72B}"
@@ -51,25 +52,6 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5.Benchmarks", "benchmarks\SolrExpress.Solr5.Benchmarks\SolrExpress.Solr5.Benchmarks.xproj", "{9C8688C7-23BA-4669-BFA8-81BCBA517251}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Core.UnitTests", "test\SolrExpress.Core.UnitTests\SolrExpress.Core.UnitTests.xproj", "{354FB40B-1454-4985-AD22-2E2837060D47}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{99DE5683-EE63-4A6B-B877-C011FD0E1CFD}"
-	ProjectSection(SolutionItems) = preProject
-		docs\index.md = docs\index.md
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{BF6FE524-2E32-492E-961E-7936B50EF454}"
-	ProjectSection(SolutionItems) = preProject
-		docs\examples\index.md = docs\examples\index.md
-		docs\examples\search-parameter-builder.md = docs\examples\search-parameter-builder.md
-		docs\examples\simple-use.md = docs\examples\simple-use.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{536F39FC-8961-4B24-A27A-F8A03829AFC5}"
-	ProjectSection(SolutionItems) = preProject
-		docs\about\license.md = docs\about\license.md
-		docs\about\release-notes.md = docs\about\release-notes.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -157,7 +139,5 @@ Global
 		{6FC5D633-4FC7-4679-A6DD-E600B9490AB5} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 		{9C8688C7-23BA-4669-BFA8-81BCBA517251} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 		{354FB40B-1454-4985-AD22-2E2837060D47} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
-		{BF6FE524-2E32-492E-961E-7936B50EF454} = {99DE5683-EE63-4A6B-B877-C011FD0E1CFD}
-		{536F39FC-8961-4B24-A27A-F8A03829AFC5} = {99DE5683-EE63-4A6B-B877-C011FD0E1CFD}
 	EndGlobalSection
 EndGlobal

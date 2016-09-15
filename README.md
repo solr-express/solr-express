@@ -19,8 +19,8 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 
 * Documentation
 	* [Overview](http://solr-express.readthedocs.io/en/latest/)
-	* Getting Started
-	* [Samples](http://solr-express.readthedocs.io/en/latest/examples/)
+	* [Getting Started](http://solr-express.readthedocs.io/en/latest/getting-started/)
+	* [Tutorials](http://solr-express.readthedocs.io/en/latest/tutorials/)
 	* [Release notes](http://solr-express.readthedocs.io/en/latest/about/release-notes/)
 * NuGet Packages
 	* [SolrExpress.Solr4](https://www.nuget.org/packages/SolrExpress.Solr4/)
@@ -32,7 +32,7 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 
 
 
-
+	
 
 
 ## Index
