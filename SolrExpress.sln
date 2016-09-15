@@ -66,6 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{BF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{536F39FC-8961-4B24-A27A-F8A03829AFC5}"
 	ProjectSection(SolutionItems) = preProject
+		docs\about\license.md = docs\about\license.md
 		docs\about\release-notes.md = docs\about\release-notes.md
 	EndProjectSection
 EndProject
