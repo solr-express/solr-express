@@ -1,6 +1,3 @@
-Change log
-==========
-
 # [4.0.1] - 2016-09-14
 * **Bug fix**
     * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null ([#152](https://github.com/solr-express/solr-express/issues/152))
@@ -44,6 +41,7 @@ Change log
     After
 
     ```
+
     // Using Net.Core
     serviceCollection.AddSolrExpress<TechProduct>(builder => builder
         .UseHostAddress("http://localhost:8983/solr/techproducts")
@@ -87,12 +85,16 @@ Change log
     // Sorry bro... continues using the old way :/
     ```
 
+---
+
 # [3.1.2] - 2016-07-30
 * **Enhancement**
     * Add default parameters ([#125](https://github.com/solr-express/solr-express/issues/125))
     * Create unit test to test validations methods ([#129](https://github.com/solr-express/solr-express/issues/129))
     * Organize changelogs in CHANGELOG.md file ([#133](https://github.com/solr-express/solr-express/issues/133))
     * Change projects dependencies ([#136](https://github.com/solr-express/solr-express/issues/136))
+
+---
 
 # [3.1.1] - 2016-07-19
 * **Bug fix**
@@ -106,6 +108,8 @@ Change log
     * Recode Core.Query.ParameterValue.Range<> ([#126](https://github.com/solr-express/solr-express/issues/126))
     * Use min.count = 1 ([#50](https://github.com/solr-express/solr-express/issues/50))
 
+---
+
 # [3.1.0] - 2016-07-12
 * **Bug fix**
     * Wrong default namespace in xprojs ([#121](https://github.com/solr-express/solr-express/issues/121))
@@ -117,6 +121,8 @@ Change log
     * Rename class Statistic to Info ([#116](https://github.com/solr-express/solr-express/issues/116))
     * Implements random sort ([#110](https://github.com/solr-express/solr-express/issues/110))
 
+---
+
 # [3.0.0] - 2016-07-07
 * **Enhancement**
     * Support to .Net Core 1.0 ([#109](https://github.com/solr-express/solr-express/issues/109))
@@ -125,6 +131,8 @@ Change log
 
 > **NOTES**
 > All projects are signed by default (no more *.Signed packages)
+
+---
 
 # [2.1.0] - 2016-05-13
 * **Bug fix**
@@ -138,6 +146,8 @@ Change log
     3. Boost parameter ([#102](https://github.com/solr-express/solr-express/issues/102))
     4. Exception description ([#98](https://github.com/solr-express/solr-express/issues/98))
 
+---
+
 # [2.0.0] - 2016-05-05
 * **Bug fix**
     * Fix hyperlink to samples in readme.md ([#93](https://github.com/solr-express/solr-express/issues/93))
@@ -147,7 +157,9 @@ Change log
     * Improves in DI
     * Atomic update ([#94](https://github.com/solr-express/solr-express/issues/94))
 
-# [1.2.0.1] - 2015-01-06
+---
+
+# [1.2.0.1] - 2016-01-06
 * **Bug fix**
     * NuGet mistakes ([#86](https://github.com/solr-express/solr-express/issues/86))
     * Unit test fix ([#89](https://github.com/solr-express/solr-express/issues/89))
@@ -162,11 +174,17 @@ Change log
     * Create option to choose request handler ([#82](https://github.com/solr-express/solr-express/issues/82))
     * Fluent language ([#87](https://github.com/solr-express/solr-express/issues/87))
 
+---
+
 # [1.1.0.2] - 2015-12-15
 * NuGet mistakes
 
+---
+
 # [1.1.0.1] - 2015-12-10
 * NuGet mistakes
+
+---
 
 # [1.1.0] - 2015-12-10
 * **Bug fix**
@@ -181,6 +199,8 @@ Change log
 * **Enhancement**
     * Signed package enhancement ([#65](https://github.com/solr-express/solr-express/issues/65))
     * Globalization ([#42](https://github.com/solr-express/solr-express/issues/42))
+
+---
 
 # [1.0.01] - 2015-08-27
 
