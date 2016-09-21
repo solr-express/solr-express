@@ -15,7 +15,7 @@ namespace Sample.SimpleUse
     {
         public static void Main(string[] args)
         {
-            DocumentCollection<TechProduct> techProducts;
+            IDocumentCollection<TechProduct> techProducts;
 
             // Emuling not use of Net Core DI services
 #if NET40 || NET45
@@ -34,15 +34,23 @@ namespace Sample.SimpleUse
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            techProducts = serviceProvider.GetRequiredService<DocumentCollection<TechProduct>>();
+            techProducts = serviceProvider.GetRequiredService<IDocumentCollection<TechProduct>>();
 #endif
 
             IEnumerable<TechProduct> documents;
 
-            techProducts
+            var select = techProducts
                 .Select()
                 .Query(new QueryAll())
                 .Limit(3)
+                .FacetField(q => q.Manufacturer)
+                .FacetField(q => q.InStock)
+                .FacetRange("Price", q => q.Price, "10", "10", "100")
+                .FacetRange("Popularity", q => q.Popularity, "1", "1", "10")
+                .FacetRange("ManufacturedateIn", q => q.ManufacturedateIn, "+1MONTH", "NOW-10YEARS", "NOW")
+                .FacetQuery("StoreIn1000km", new Spatial<TechProduct>(SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M));
+
+            select
                 .Execute()
                 .Document(out documents);
 
