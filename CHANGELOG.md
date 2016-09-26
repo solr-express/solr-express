@@ -1,3 +1,10 @@
+# [4.0.2] - 2016-09-26
+## Bug fix
+* SearchResult.Info.PageNumber not equal to StartParameter.Value (#157)
+
+## Enhancement
+* Create validation when use SolrExpress.Core.Update.AtomicDelete with 0 documentIds (#149)
+
 # [4.0.1] - 2016-09-14
 ## Bug fix
 * ISearchParameterBuilder.Filter, parameters 'from' and 'to' must be default null (#152)
