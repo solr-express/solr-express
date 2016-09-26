@@ -10,7 +10,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
     {
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
+        /// When    Invoking the method "Execute" using a invalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [Fact]
@@ -34,7 +34,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
+        /// When    Invoking the method "Execute" using a invalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [Fact]
@@ -57,7 +57,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
+        /// When    Invoking the method "Execute" using a invalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [Fact]
@@ -78,7 +78,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using a invvalid JSON
+        /// When    Invoking the method "Execute" using a invalid JSON
         /// What    Throws UnexpectedJsonFormatException
         /// </summary>
         [Fact]

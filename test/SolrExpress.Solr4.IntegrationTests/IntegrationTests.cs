@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Xunit;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Core.Search.ParameterValue;
-using SolrExpress.Solr4.Search.Result;
 using SolrExpress.Core.Search;
 using System.Linq;
 using SolrExpress.Core.Search.Parameter;
@@ -183,7 +182,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .FacetQuery("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10))
                 .FacetQuery("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10))
                 .Execute();
-            
+
             result.FacetQuery(out data);
 
             // Assert
@@ -213,7 +212,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
                 .FacetRange("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY")
                 .Execute();
-            
+
             result.FacetRange(out data);
 
             // Assert
@@ -224,7 +223,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Query" and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Query" and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -260,7 +259,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             var documentCollection = this.GetDocumentCollection();
             ISearchResult<TechProductDocument> result;
             IEnumerable<FacetKeyValue<string>> data;
-            
+
             // Act
             result = documentCollection
                 .Select()
@@ -509,7 +508,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -534,7 +533,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -556,6 +555,56 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Offset" and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a correct pagination
+        /// </summary>
+        [Fact]
+        public void IntegrationTest018()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+            IEnumerable<TechProductDocument> allDocuments;
+            IEnumerable<TechProductDocument> documentsPage1;
+            IEnumerable<TechProductDocument> documentsPage2;
+            IEnumerable<TechProductDocument> documentsPage3;
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Limit(20)
+                .Execute()
+                .Document(out allDocuments);
+
+            // Act
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 1)
+                .Execute()
+                .Document(out documentsPage1);
+
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 2)
+                .Execute()
+                .Document(out documentsPage2);
+
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 3)
+                .Execute()
+                .Document(out documentsPage3);
+
+            // Assert
+            var listAllDocuments = allDocuments.ToList();
+            Assert.Equal(listAllDocuments[0].Id, documentsPage1.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[5].Id, documentsPage2.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[10].Id, documentsPage3.ToList()[0].Id);
         }
     }
 }

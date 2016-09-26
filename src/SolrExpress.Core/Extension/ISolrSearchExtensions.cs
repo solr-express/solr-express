@@ -124,6 +124,21 @@ namespace SolrExpress.Core.Extension
         }
 
         /// <summary>
+        /// Create a offset/limit parameters
+        /// </summary>
+        /// <param name="limit">Value of limit</param>
+        /// <param name="page">Value of page</param>
+        public static ISolrSearch<TDocument> Page<TDocument>(this ISolrSearch<TDocument> search, int limit, int page)
+            where TDocument : IDocument
+        {
+            var parameterBuilder = search.GetBuilder();
+            search.Add(parameterBuilder.Limit(limit));
+            search.Add(parameterBuilder.Offset((page - 1) * limit));
+
+            return search;
+        }
+
+        /// <summary>
         /// Create a query parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>

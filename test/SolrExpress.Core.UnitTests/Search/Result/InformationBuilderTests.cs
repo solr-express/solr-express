@@ -12,7 +12,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
     {
         /// <summary>
         /// Where   Using InformationBuilder class
-        /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=200
+        /// When    Invoking the method "Calculate" using offset=0, limit=100, documents=200
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
@@ -48,7 +48,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using InformationBuilder class
-        /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=201
+        /// When    Invoking the method "Calculate" using offset=0, limit=100, documents=201
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
@@ -84,7 +84,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using InformationBuilder class
-        /// When    Invoking the method "Calculate" using offset=1, limit=100, page=1, documents=0
+        /// When    Invoking the method "Calculate" using offset=0, limit=100, documents=0
         /// What    Configure statistic instance with correct values
         /// </summary>
         [Fact]
@@ -115,6 +115,78 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             Assert.Equal(true, statistic.IsLastPage);
             Assert.Equal(0, statistic.PageCount);
             Assert.Equal(1, statistic.PageNumber);
+            Assert.Equal(100, statistic.PageSize);
+        }
+
+        /// <summary>
+        /// Where   Using InformationBuilder class
+        /// When    Invoking the method "Calculate" using offset=100, limit=100, documents=200
+        /// What    Configure statistic instance with correct values
+        /// </summary>
+        [Fact]
+        public void InformationBuilder004()
+        {
+            // Arrange
+            var offsetParameterMock = new Mock<IOffsetParameter>();
+            var limitParameterMock = new Mock<ILimitParameter>();
+
+            offsetParameterMock.SetupGet(q => q.Value).Returns(100);
+            limitParameterMock.SetupGet(q => q.Value).Returns(100);
+
+            var list = new List<ISearchParameter>
+            {
+                offsetParameterMock.Object,
+                limitParameterMock.Object
+            };
+
+            // Act
+            var statistic = InformationBuilder.Create(list, 1, 200);
+
+            // Assert
+            Assert.Equal(200, statistic.DocumentCount);
+            Assert.Equal(new TimeSpan(0, 0, 0, 0, 1), statistic.ElapsedTime);
+            Assert.Equal(false, statistic.HasNextPage);
+            Assert.Equal(true, statistic.HasPreviousPage);
+            Assert.Equal(false, statistic.IsFirstPage);
+            Assert.Equal(true, statistic.IsLastPage);
+            Assert.Equal(2, statistic.PageCount);
+            Assert.Equal(2, statistic.PageNumber);
+            Assert.Equal(100, statistic.PageSize);
+        }
+
+        /// <summary>
+        /// Where   Using InformationBuilder class
+        /// When    Invoking the method "Calculate" using offset=200, limit=100, documents=300
+        /// What    Configure statistic instance with correct values
+        /// </summary>
+        [Fact]
+        public void InformationBuilder005()
+        {
+            // Arrange
+            var offsetParameterMock = new Mock<IOffsetParameter>();
+            var limitParameterMock = new Mock<ILimitParameter>();
+
+            offsetParameterMock.SetupGet(q => q.Value).Returns(200);
+            limitParameterMock.SetupGet(q => q.Value).Returns(100);
+
+            var list = new List<ISearchParameter>
+            {
+                offsetParameterMock.Object,
+                limitParameterMock.Object
+            };
+
+            // Act
+            var statistic = InformationBuilder.Create(list, 1, 300);
+
+            // Assert
+            Assert.Equal(300, statistic.DocumentCount);
+            Assert.Equal(new TimeSpan(0, 0, 0, 0, 1), statistic.ElapsedTime);
+            Assert.Equal(false, statistic.HasNextPage);
+            Assert.Equal(true, statistic.HasPreviousPage);
+            Assert.Equal(false, statistic.IsFirstPage);
+            Assert.Equal(true, statistic.IsLastPage);
+            Assert.Equal(3, statistic.PageCount);
+            Assert.Equal(3, statistic.PageNumber);
             Assert.Equal(100, statistic.PageSize);
         }
     }

@@ -15,14 +15,14 @@ namespace SolrExpress.Core.Search.Result
             var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
             var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);
 
-            var offset = offsetParameter.Value + 1;
+            var offset = offsetParameter.Value;
             var limit = limitParameter.Value;
 
             var information = new Information
             {
                 ElapsedTime = new TimeSpan(0, 0, 0, 0, elapsedTimeInMilliseconds),
                 DocumentCount = documentCount,
-                PageNumber = offset,
+                PageNumber = (offset / limit) + 1,
                 PageSize = limit,
                 PageCount = documentCount > 0 ? (int)Math.Ceiling(documentCount / (double)limit) : 0
             };

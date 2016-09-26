@@ -220,7 +220,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Query" and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Query" and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -494,7 +494,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -519,7 +519,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Statistic
+        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
@@ -541,6 +541,56 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Assert
             Assert.True(data.Data.DocumentCount > 1);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Offset" and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a correct pagination
+        /// </summary>
+        [Fact]
+        public void IntegrationTest018()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+            IEnumerable<TechProductDocument> allDocuments;
+            IEnumerable<TechProductDocument> documentsPage1;
+            IEnumerable<TechProductDocument> documentsPage2;
+            IEnumerable<TechProductDocument> documentsPage3;
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Limit(20)
+                .Execute()
+                .Document(out allDocuments);
+
+            // Act
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 1)
+                .Execute()
+                .Document(out documentsPage1);
+
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 2)
+                .Execute()
+                .Document(out documentsPage2);
+
+            documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Page(5, 3)
+                .Execute()
+                .Document(out documentsPage3);
+
+            // Assert
+            var listAllDocuments = allDocuments.ToList();
+            Assert.Equal(listAllDocuments[0].Id, documentsPage1.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[5].Id, documentsPage2.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[10].Id, documentsPage3.ToList()[0].Id);
         }
     }
 }
