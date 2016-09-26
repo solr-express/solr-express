@@ -75,5 +75,24 @@ namespace SolrExpress.Core.UnitTests.Update
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
         }
+
+        /// <summary>
+        /// Where   Using a AtomicDelete instance
+        /// When    Invoking the method "Execute" without any document
+        /// What    Create a string.empty
+        /// </summary>
+        [Fact]
+        public void AtomicDelete004()
+        {
+            // Arrange
+            var expected = string.Empty;
+            var atomic = new AtomicDelete<TestDocumentSimple>();
+
+            // Act
+            var actual = atomic.Execute();
+
+            // Assert
+            Assert.Equal(expected.ToString(), actual.ToString());
+        }
     }
 }

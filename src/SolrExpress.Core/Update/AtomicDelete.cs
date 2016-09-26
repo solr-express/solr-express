@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Utility;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Core.Update
 {
@@ -33,20 +34,25 @@ namespace SolrExpress.Core.Update
         /// </summary>
         public string Execute()
         {
-            JProperty jProperty;
-
-            if (this._documentIds.Count == 1)
+            if (this._documentIds.Any())
             {
-                jProperty = new JProperty("delete", this._documentIds[0]);
-            }
-            else
-            {
-                jProperty = new JProperty("delete", $"({string.Join(" OR ", this._documentIds)})");
+                JProperty jProperty;
+
+                if (this._documentIds.Count == 1)
+                {
+                    jProperty = new JProperty("delete", this._documentIds[0]);
+                }
+                else
+                {
+                    jProperty = new JProperty("delete", $"({string.Join(" OR ", this._documentIds)})");
+                }
+
+                var jObject = new JObject(jProperty);
+
+                return jObject.ToString();
             }
 
-            var jObject = new JObject(jProperty);
-
-            return jObject.ToString();
+            return string.Empty;
         }
     }
 }

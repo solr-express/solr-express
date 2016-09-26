@@ -91,7 +91,10 @@ namespace SolrExpress.Core.Update
             foreach (var atomicInstruction in atomicInstructions)
             {
                 var data = atomicInstruction.Execute();
-                solrConnection.Post(RequestHandler.Update, data);
+                if (!string.IsNullOrWhiteSpace(data))
+                {
+                    solrConnection.Post(RequestHandler.Update, data);
+                }
             }
 
             if (atomicInstructions.Any())
