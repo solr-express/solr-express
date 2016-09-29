@@ -25,6 +25,6 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 	* [SolrExpress.Solr4](https://www.nuget.org/packages/SolrExpress.Solr4/)
 	* [SolrExpress.Solr5](https://www.nuget.org/packages/SolrExpress.Solr5/)
 * Solr
-	* [Solr 4.9 available](http://archive.apache.org/dist/lucene/solr/4.9.0)
-	* [Solr 5.5 available](http://archive.apache.org/dist/lucene/solr/5.5.0)
-	* [Solr 6.1 available](http://archive.apache.org/dist/lucene/solr/6.1.0)
+	* [Solr 4.9](http://archive.apache.org/dist/lucene/solr/4.9.0)
+	* [Solr 5.5](http://archive.apache.org/dist/lucene/solr/5.5.0)
+	* [Solr 6.1](http://archive.apache.org/dist/lucene/solr/6.1.0)

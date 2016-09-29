@@ -26,9 +26,9 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 	* [SolrExpress.Solr4](https://www.nuget.org/packages/SolrExpress.Solr4/)
 	* [SolrExpress.Solr5](https://www.nuget.org/packages/SolrExpress.Solr5/)
 * Solr
-	* [Solr 4.9 available](http://archive.apache.org/dist/lucene/solr/4.9.0)
-	* [Solr 5.5 available](http://archive.apache.org/dist/lucene/solr/5.5.0)
-	* [Solr 6.1 available](http://archive.apache.org/dist/lucene/solr/6.1.0)
+	* [Solr 4.9](http://archive.apache.org/dist/lucene/solr/4.9.0)
+	* [Solr 5.5](http://archive.apache.org/dist/lucene/solr/5.5.0)
+	* [Solr 6.1](http://archive.apache.org/dist/lucene/solr/6.1.0)
 
 
 
@@ -309,57 +309,3 @@ To deactivate fail fast feature (not recommended), when created the SolrQueryabl
         }
     }
 ```
-
-## Examples
-
-### Basic use
-
-Step by step to use the framework:
-
-* Create a class and implement the IDocument interface
-
-```csharp
-    public class MyDocument : IDocument
-```
-
-* Create a instance of DocumentCollection class. Set the Provider, DI controller and Config instances.
-
-```csharp
-    var provider = new Provider("http://localhost:8983/solr/techproducts");
-    var resolver = new SimpleResolver().Configure();
-    var configuration = new Configuration();
-
-    var myDocuments = new DocumentCollection<MyDocument>(provider, resolver, configuration);
-```
-
-* Use parameters
-
-```csharp
-// This will create a query like http://localhost:8983/solr/mycollection/query?q=*:*
-var query = myDocuments.Select.Query(new QueryAll());
-```
-
-* Execute the query
-
-```csharp
-var queryResult = query.Execute();
-```
-
-* And get results
-
-```csharp
-List<MyDocument> documents;
-queryResult.Document(out documents);
-```
-
-Tan dam!! Done!
-
-All sorces of this example is available [here](https://github.com/solr-express/solr-express/blob/master/Sample.SimpleUse)
-
-### SearchUI
-
-A fully implemented example is available [here](https://github.com/solr-express/solr-express/blob/master/Sample.Ui)
-
-## License
-
-This software is licensed in [MIT License (MIT)](https://github.com/solr-express/solr-express/blob/master/LICENSE)
