@@ -4,6 +4,7 @@ To start to  use SolrExpress, just follow bellow steps:
 
 1. Make sure than you have Solr runnning;
 2. Create a class to represent your collection, and implements **_IDocument_** interface and use attributes to indicate Solr fields. Like this
+
     ```
     public class TechProductDocument : IDocument
     {
@@ -19,6 +20,7 @@ To start to  use SolrExpress, just follow bellow steps:
     ```
 
 3. Configure Dependecy Injection (only if you use Net.Core), OR configure builder (only if you use Net 4.0/4.5) 
+
     ```
     #if NETCOREAPP1.0
     // In Startup.cs
@@ -53,7 +55,8 @@ To start to  use SolrExpress, just follow bellow steps:
     #endif
     ```
 
-4. Configue search parameters, execute and read results and enjoy :)
+4. Configue search parameters, execute, read results and enjoy :)
+
     ```
     public void MyAmazingSearch()
     {
