@@ -1,7 +1,5 @@
 # Getting started
 
-https://github.com/solr-express/tools
-
 To start to  use SolrExpress, just follow bellow steps:
 
 1. Make sure than you have Solr runnning;
