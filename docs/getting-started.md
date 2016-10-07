@@ -1,9 +1,9 @@
 # Getting started
 
-To start to  use SolrExpress, just follow bellow steps:
+To start to use SolrExpress, just follow bellow steps:
 
 1. Make sure than you have Solr runnning;
-2. Create a class to represent your collection, and implements **_IDocument_** interface and use attributes to indicate Solr fields. Like this
+2. Create a class to represent your collection, implements **_IDocument_** interface and use attributes to indicate Solr fields. Like this
 
 ```
 public class TechProductDocument : IDocument
