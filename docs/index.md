@@ -11,7 +11,7 @@
 
 ![Solr 4.9](https://img.shields.io/badge/Solr_4.9-Full_Compatibility-green.svg?style=flat-square)
 ![Solr 5.5](https://img.shields.io/badge/Solr_5.5-Full_Compatibility-green.svg?style=flat-square)
-![Solr 6.0](https://img.shields.io/badge/Solr_4.9-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
+![Solr 6.0](https://img.shields.io/badge/Solr_6.0-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
 
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
