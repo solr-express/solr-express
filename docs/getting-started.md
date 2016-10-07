@@ -88,5 +88,5 @@ public void MyAmazingSearch()
 
 1. The class **_TechProductDocument_** represents a document in Solr collection and to be easy to identitify this, I call this class with the same name of the Solr collection (techproducts) but you can choose any name what you want, just remember, implements **_IDocument_** interface;
 2. Framework uses NewtonSoft to parse json result and you can call your properties with a better name. (i.e. Property _Manufacturer_ represents Solr field _manu_); 
-3. If you want use fail fast feature (activated by default), you need pass some information about Solr fiels to SolrFieldAttribute. Indexed and stored will be used in validation and throws exceptions depending of the use of the fields. See more in **[Fail fast](/tutorials/fail-fast)**;
+3. If you want use fail fast feature (activated by default), you need pass some information about Solr fields to SolrFieldAttribute. Indexed and stored will be used in validation and throws exceptions depending of the use of the fields. See more in **[Fail fast](/tutorials/fail-fast)**;
 4. To example purposes, I set collection address in hard code.
