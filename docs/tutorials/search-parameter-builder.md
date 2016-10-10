@@ -1,3 +1,0 @@
-# ISearchParameterBuilder<_TDocument_>
-
-.
