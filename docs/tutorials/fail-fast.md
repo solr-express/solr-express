@@ -29,13 +29,19 @@ public class TechProductDocument : IDocument
 
 Now, some things will occur when use **SomeField**, see bellow:
 
-|Use case|Using method   |SomeField1      |SomeField2|
-|--------|---------------|----------------|----------|
-|Faceting|FacetQuery(...)|Throws exception|Works well|
-|Faceting|FacetRange(...)|Throws exception|Works well|
-|Faceting|FacetField(...)|Throws exception|Works well|
-|Search  |Query(...)     |Throws exception|Works well|
-
+|Use case     |Using method      |SomeField1      |SomeField2|
+|-------------|------------------|----------------|----------|
+|Boosting     |Boost             |                |          |
+|Faceting     |FacetField        |Throws exception|Works well|
+|Faceting     |FacetQuery        |Throws exception|Works well|
+|Faceting     |FacetRange        |Throws exception|Works well|
+|Field list   |Fields            |                |          |
+|Filtering    |Filter            |                |          |
+|Geo filtering|SpatialFilter     |                |          |
+|Search       |Query             |Throws exception|Works well|
+|Search       |QueryField        |                |          |
+|Should match |MinimumShouldMatch|                |          |
+|Sorting      |Sort              |                |          |
 
 **NOTE**
 
