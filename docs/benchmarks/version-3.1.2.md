@@ -1,4 +1,22 @@
+# Benchmarks
+
+Benchmarks using version 3.1.2
+
+## SolrExpress.Core.Benchmarks.Query.SolrQueryableBenchmarks 
+
 ```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=SolrQueryableBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
 Time unit definitions
 ns=Nanoseconds
 us=Microseconds
@@ -7,8 +25,8 @@ s=Second
 m=Minute
 h=Hour
 d=Day
+
 ```
-## SolrExpress.Core.Benchmarks.Query.SolrQueryableBenchmarks
   Method | Toolchain | Runtime | ElementsCount |      Median |     StdDev |        Mean |  StdError |     StdDev |    Op/s |         Min |          Q1 |      Median |          Q3 |         Max |
 -------- |---------- |-------- |-------------- |------------ |----------- |------------ |---------- |----------- |-------- |------------ |------------ |------------ |------------ |------------ |
  **Execute** |   **Classic** |     **Clr** |            **10** | **121.7155 us** |  **5.3290 us** | **122.9521 us** | **1.1916 us** |  **5.3290 us** | **8133.25** | **116.6130 us** | **119.0479 us** | **121.7155 us** | **125.9128 us** | **135.5022 us** |
@@ -19,8 +37,32 @@ d=Day
  Execute |      Core |    Core |           500 | 137.1667 us |  3.2036 us | 138.0903 us | 0.7164 us |  3.2036 us | 7241.64 | 135.5310 us | 136.5177 us | 137.1667 us | 137.8864 us | 148.8503 us |
  **Execute** |   **Classic** |     **Clr** |          **1000** | **168.0634 us** |  **6.0566 us** | **169.7174 us** | **1.2363 us** |  **6.0566 us** | **5892.15** | **160.7786 us** | **166.4793 us** | **168.0634 us** | **171.0969 us** | **183.1140 us** |
  Execute |      Core |    Core |          1000 | 160.9440 us |  4.7132 us | 161.8092 us | 1.0539 us |  4.7132 us | 6180.12 | 155.9909 us | 159.4137 us | 160.9440 us | 163.0667 us | 176.1440 us |
- 
-##  SolrExpress.Benchmarks.Solr4.Query.ParameterContainerBenchmarks
+
+## SolrExpress.Benchmarks.Solr4.Query.ParameterContainerBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=ParameterContainerBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |        Median |      StdDev |          Mean |   StdError |      StdDev |     Op/s |           Min |            Q1 |        Median |            Q3 |           Max |
 -------- |---------- |-------- |-------------- |-------------- |------------ |-------------- |----------- |------------ |--------- |-------------- |-------------- |-------------- |-------------- |-------------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |    **38.8562 us** |   **1.5766 us** |    **39.1054 us** |  **0.3525 us** |   **1.5766 us** | **25571.93** |    **37.2363 us** |    **37.9277 us** |    **38.8562 us** |    **39.5374 us** |    **44.6696 us** |
@@ -31,8 +73,32 @@ d=Day
  Execute |      Core |    Core |           500 | 1,902.3723 us |  48.4587 us | 1,900.3294 us | 10.8357 us |  48.4587 us |   526.22 | 1,842.4942 us | 1,852.7664 us | 1,902.3723 us | 1,936.5468 us | 1,989.9914 us |
  **Execute** |   **Classic** |     **Clr** |          **1000** | **5,346.8117 us** | **484.1726 us** | **5,465.0481 us** | **54.1321 us** | **484.1726 us** |   **182.98** | **4,712.0251 us** | **5,210.4859 us** | **5,346.8117 us** | **5,684.6650 us** | **6,888.0312 us** |
  Execute |      Core |    Core |          1000 | 4,281.2719 us | 144.0476 us | 4,355.4550 us | 28.2500 us | 144.0476 us |    229.6 | 4,230.2170 us | 4,254.7135 us | 4,281.2719 us | 4,426.8590 us | 4,726.5672 us |
-  
-##  SolrExpress.Benchmarks.Solr4.Query.Result.DocumentResultBenchmarks
+
+## SolrExpress.Benchmarks.Solr4.Query.Result.DocumentResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=DocumentResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |     Median |    StdDev |       Mean |  StdError |    StdDev |   Op/s |        Min |         Q1 |     Median |         Q3 |        Max |
 -------- |---------- |-------- |-------------- |----------- |---------- |----------- |---------- |---------- |------- |----------- |----------- |----------- |----------- |----------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |  **5.8369 ms** | **0.1640 ms** |  **5.8860 ms** | **0.0350 ms** | **0.1640 ms** | **169.89** |  **5.7466 ms** |  **5.8021 ms** |  **5.8369 ms** |  **5.8852 ms** |  **6.4309 ms** |
@@ -44,7 +110,31 @@ d=Day
  **Execute** |   **Classic** |     **Clr** |          **1000** | **24.7011 ms** | **0.5617 ms** | **24.5930 ms** | **0.1256 ms** | **0.5617 ms** |  **40.66** | **23.6521 ms** | **24.0656 ms** | **24.7011 ms** | **24.8633 ms** | **25.9396 ms** |
  Execute |      Core |    Core |          1000 | 26.3526 ms | 0.3649 ms | 26.2965 ms | 0.0816 ms | 0.3649 ms |  38.03 | 25.5416 ms | 26.0299 ms | 26.3526 ms | 26.5113 ms | 26.9871 ms |
 
-##  SolrExpress.Benchmarks.Solr4.Query.Result.FacetFieldResultBenchmarks
+## SolrExpress.Benchmarks.Solr4.Query.Result.FacetFieldResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetFieldResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |        Median |      StdDev |          Mean |   StdError |      StdDev |     Op/s |           Min |            Q1 |        Median |            Q3 |           Max |
 -------- |---------- |-------- |-------------- |-------------- |------------ |-------------- |----------- |------------ |--------- |-------------- |-------------- |-------------- |-------------- |-------------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |    **52.3435 us** |   **1.4899 us** |    **51.8324 us** |  **0.3107 us** |   **1.4899 us** | **19292.96** |    **49.3078 us** |    **50.0586 us** |    **52.3435 us** |    **52.6916 us** |    **54.8681 us** |
@@ -55,8 +145,32 @@ d=Day
  Execute |      Core |    Core |           500 | 2,806.9609 us |  89.3366 us | 2,836.0991 us | 19.9763 us |  89.3366 us |    352.6 | 2,746.5559 us | 2,770.7861 us | 2,806.9609 us | 2,857.8855 us | 3,064.8270 us |
  **Execute** |   **Classic** |     **Clr** |          **1000** | **5,736.3241 us** | **247.9246 us** | **5,837.7898 us** | **50.6074 us** | **247.9246 us** |    **171.3** | **5,623.4181 us** | **5,680.8791 us** | **5,736.3241 us** | **5,912.6421 us** | **6,633.7133 us** |
  Execute |      Core |    Core |          1000 | 6,197.7910 us | 374.5898 us | 6,227.3120 us | 83.7608 us | 374.5898 us |   160.58 | 5,861.6130 us | 5,884.9125 us | 6,197.7910 us | 6,425.2842 us | 7,119.7999 us |
- 
-##  SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks
+
+## SolrExpress.Benchmarks.Solr4.Query.Result.FacetQueryResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetQueryResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |      Median |     StdDev |        Mean |  StdError |     StdDev |      Op/s |         Min |          Q1 |      Median |          Q3 |         Max |
 -------- |---------- |-------- |-------------- |------------ |----------- |------------ |---------- |----------- |---------- |------------ |------------ |------------ |------------ |------------ |
  **Execute** |   **Classic** |     **Clr** |            **10** |   **5.1792 us** |  **0.0796 us** |   **5.1856 us** | **0.0178 us** |  **0.0796 us** | **192840.72** |   **5.0600 us** |   **5.1497 us** |   **5.1792 us** |   **5.2144 us** |   **5.3736 us** |
@@ -68,7 +182,31 @@ d=Day
  **Execute** |   **Classic** |     **Clr** |          **1000** | **385.4511 us** | **25.7640 us** | **393.5499 us** | **5.7610 us** | **25.7640 us** |   **2540.97** | **380.7744 us** | **383.5007 us** | **385.4511 us** | **389.3458 us** | **491.8627 us** |
  Execute |      Core |    Core |          1000 | 393.0937 us | 15.5670 us | 398.9731 us | 3.1776 us | 15.5670 us |   2506.43 | 383.4943 us | 390.9076 us | 393.0937 us | 399.8473 us | 444.6209 us |
 
-##  SolrExpress.Benchmarks.Solr4.Query.Result.FacetRangeResultBenchmarks
+## SolrExpress.Benchmarks.Solr4.Query.Result.FacetRangeResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetRangeResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |        Median |      StdDev |          Mean |   StdError |      StdDev |     Op/s |           Min |            Q1 |        Median |            Q3 |           Max |
 -------- |---------- |-------- |-------------- |-------------- |------------ |-------------- |----------- |------------ |--------- |-------------- |-------------- |-------------- |-------------- |-------------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |    **21.7964 us** |   **0.1640 us** |    **21.8579 us** |  **0.0367 us** |   **0.1640 us** |  **45750.1** |    **21.6644 us** |    **21.7596 us** |    **21.7964 us** |    **21.9244 us** |    **22.3594 us** |
@@ -79,8 +217,32 @@ d=Day
  Execute |      Core |    Core |           500 |   900.3231 us |  11.9994 us |   905.5578 us |  2.6832 us |  11.9994 us |  1104.29 |   895.9445 us |   898.2899 us |   900.3231 us |   907.0923 us |   937.7251 us |
  **Execute** |   **Classic** |     **Clr** |          **1000** | **2,051.7682 us** |  **27.6333 us** | **2,061.0847 us** |  **6.1790 us** |  **27.6333 us** |   **485.18** | **2,041.3355 us** | **2,045.5810 us** | **2,051.7682 us** | **2,059.0578 us** | **2,150.4672 us** |
  Execute |      Core |    Core |          1000 | 2,202.3096 us | 108.2005 us | 2,242.5859 us | 22.0863 us | 108.2005 us |   445.91 | 2,151.3378 us | 2,170.0896 us | 2,202.3096 us | 2,273.0885 us | 2,575.3354 us |
- 
+
 ## SolrExpress.Benchmarks.Solr5.Query.ParameterContainerBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [AttachedDebugger] [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=ParameterContainerBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |        Median |      StdDev |          Mean |   StdError |      StdDev |     Op/s |           Min |            Q1 |        Median |            Q3 |           Max |
 -------- |---------- |-------- |-------------- |-------------- |------------ |-------------- |----------- |------------ |--------- |-------------- |-------------- |-------------- |-------------- |-------------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |    **39.5761 us** |   **0.4694 us** |    **39.7251 us** |  **0.1050 us** |   **0.4694 us** | **25173.02** |    **39.0938 us** |    **39.4475 us** |    **39.5761 us** |    **39.8026 us** |    **41.0114 us** |
@@ -92,7 +254,31 @@ d=Day
  **Execute** |   **Classic** |     **Clr** |          **1000** | **5,411.1973 us** | **246.1758 us** | **5,502.9295 us** | **41.6113 us** | **246.1758 us** |   **181.72** | **5,226.2623 us** | **5,346.1330 us** | **5,411.1973 us** | **5,611.2471 us** | **6,107.2652 us** |
  Execute |      Core |    Core |          1000 | 4,368.1379 us | 172.6428 us | 4,422.8665 us | 35.2406 us | 172.6428 us |    226.1 | 4,238.7682 us | 4,290.8826 us | 4,368.1379 us | 4,518.6822 us | 4,941.5086 us |
 
-##  SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks
+## SolrExpress.Benchmarks.Solr5.Query.Result.DocumentResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=DocumentResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |     Median |    StdDev |       Mean |  StdError |    StdDev |   Op/s |        Min |         Q1 |     Median |         Q3 |        Max |
 -------- |---------- |-------- |-------------- |----------- |---------- |----------- |---------- |---------- |------- |----------- |----------- |----------- |----------- |----------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |  **6.0980 ms** | **0.4122 ms** |  **6.1208 ms** | **0.0541 ms** | **0.4122 ms** | **163.38** |  **5.4489 ms** |  **5.7472 ms** |  **6.0980 ms** |  **6.3600 ms** |  **7.2326 ms** |
@@ -103,8 +289,32 @@ d=Day
  Execute |      Core |    Core |           500 | 16.7019 ms | 0.5672 ms | 16.7990 ms | 0.1112 ms | 0.5672 ms |  59.53 | 16.1401 ms | 16.4867 ms | 16.7019 ms | 16.8648 ms | 18.3274 ms |
  **Execute** |   **Classic** |     **Clr** |          **1000** | **24.4055 ms** | **0.5555 ms** | **24.4568 ms** | **0.1242 ms** | **0.5555 ms** |  **40.89** | **23.7774 ms** | **24.0049 ms** | **24.4055 ms** | **24.6790 ms** | **25.8430 ms** |
  Execute |      Core |    Core |          1000 | 25.9870 ms | 0.5298 ms | 26.1086 ms | 0.1185 ms | 0.5298 ms |   38.3 | 25.4834 ms | 25.7881 ms | 25.9870 ms | 26.2892 ms | 27.2904 ms |
- 
-##  SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks
+
+## SolrExpress.Benchmarks.Solr5.Query.Result.FacetFieldResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetFieldResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |         Median |      StdDev |           Mean |   StdError |      StdDev |     Op/s |            Min |             Q1 |         Median |             Q3 |            Max |
 -------- |---------- |-------- |-------------- |--------------- |------------ |--------------- |----------- |------------ |--------- |--------------- |--------------- |--------------- |--------------- |--------------- |
  **Execute** |   **Classic** |     **Clr** |            **10** |     **93.9219 us** |   **1.0462 us** |     **93.8986 us** |  **0.2339 us** |   **1.0462 us** | **10649.78** |     **91.8399 us** |     **93.1840 us** |     **93.9219 us** |     **94.4462 us** |     **96.4595 us** |
@@ -116,7 +326,31 @@ d=Day
  **Execute** |   **Classic** |     **Clr** |          **1000** | **10,539.2560 us** | **157.0263 us** | **10,543.7406 us** | **35.1122 us** | **157.0263 us** |    **94.84** | **10,324.6297 us** | **10,449.8269 us** | **10,539.2560 us** | **10,597.4645 us** | **10,939.0178 us** |
  Execute |      Core |    Core |          1000 | 10,443.7272 us | 124.1916 us | 10,441.1280 us | 27.7701 us | 124.1916 us |    95.78 | 10,251.0658 us | 10,347.0127 us | 10,443.7272 us | 10,518.5454 us | 10,747.3873 us |
 
-##  SolrExpress.Benchmarks.Solr5.Query.Result.FacetQueryResultBenchmarks
+## SolrExpress.Benchmarks.Solr5.Query.Result.FacetQueryResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetQueryResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |      Median |     StdDev |        Mean |   StdError |     StdDev |      Op/s |         Min |          Q1 |      Median |          Q3 |         Max |
 -------- |---------- |-------- |-------------- |------------ |----------- |------------ |----------- |----------- |---------- |------------ |------------ |------------ |------------ |------------ |
  **Execute** |   **Classic** |     **Clr** |            **10** |   **6.4238 us** |  **0.8548 us** |   **6.7184 us** |  **0.1303 us** |  **0.8548 us** | **148844.13** |   **6.2640 us** |   **6.3389 us** |   **6.4238 us** |   **6.8457 us** |  **11.7041 us** |
@@ -128,7 +362,31 @@ d=Day
  **Execute** |   **Classic** |     **Clr** |          **1000** | **570.6931 us** | **15.3125 us** | **574.0943 us** |  **3.4240 us** | **15.3125 us** |   **1741.87** | **560.2855 us** | **563.0830 us** | **570.6931 us** | **573.3295 us** | **616.1708 us** |
  Execute |      Core |    Core |          1000 | 606.3703 us | 52.3751 us | 622.1681 us | 11.7114 us | 52.3751 us |   1607.28 | 561.7353 us | 576.0837 us | 606.3703 us | 667.4272 us | 727.5032 us |
 
-##  SolrExpress.Benchmarks.Solr5.Query.Result.FacetRangeResultBenchmarks
+## SolrExpress.Benchmarks.Solr5.Query.Result.FacetRangeResultBenchmarks
+
+```ini
+
+Host Process Environment Information:
+BenchmarkDotNet=v0.9.8.0
+OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-4810MQ CPU 2.80GHz, ProcessorCount=8
+Frequency=2728070 ticks, Resolution=366.5595 ns, Timer=TSC
+CLR=MS.NET 4.0.30319.42000, Arch=64-bit RELEASE [RyuJIT]
+GC=Concurrent Workstation
+JitModules=clrjit-v4.6.1586.0
+
+Type=FacetRangeResultBenchmarks  Mode=Throughput  GarbageCollection=Concurrent Workstation  
+
+Time unit definitions
+ns=Nanoseconds
+us=Microseconds
+ms=Millisecond
+s=Second
+m=Minute
+h=Hour
+d=Day
+
+```
   Method | Toolchain | Runtime | ElementsCount |      Median |     StdDev |        Mean |  StdError |     StdDev |      Op/s |         Min |          Q1 |      Median |          Q3 |         Max |
 -------- |---------- |-------- |-------------- |------------ |----------- |------------ |---------- |----------- |---------- |------------ |------------ |------------ |------------ |------------ |
  **Execute** |   **Classic** |     **Clr** |            **10** |   **8.1300 us** |  **0.0610 us** |   **8.1388 us** | **0.0136 us** |  **0.0610 us** | **122867.72** |   **8.0558 us** |   **8.1049 us** |   **8.1300 us** |   **8.1581 us** |   **8.3311 us** |

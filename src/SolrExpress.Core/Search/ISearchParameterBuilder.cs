@@ -137,7 +137,7 @@ namespace SolrExpress.Core.Search
         IQueryFieldParameter QueryField(string expression);
 
         /// <summary>
-        /// Create a query field parameter
+        /// Create a query field parameter using spatial notation
         /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="functionType">Function used in the spatial filter</param>
