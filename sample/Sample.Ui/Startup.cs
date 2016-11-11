@@ -50,7 +50,6 @@ namespace Sample.Ui
 
             app.UseDeveloperExceptionPage();
             app.UseDatabaseErrorPage();
-            app.UseBrowserLink();
 
             app.UseStaticFiles();
 
