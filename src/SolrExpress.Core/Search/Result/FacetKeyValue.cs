@@ -17,5 +17,10 @@ namespace SolrExpress.Core.Search.Result
         /// Data list of the facet
         /// </summary>
         public Dictionary<TKey, long> Data { get; set; }
+
+        /// <summary>
+        /// Tag
+        /// </summary>
+        public object Tag { get; set; }
     }
 }

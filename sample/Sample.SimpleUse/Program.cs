@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using SolrExpress.Core;
 using SolrExpress.Core.Extension;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Search.Result;
 using SolrExpress.Solr5.Extension;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,7 @@ namespace Sample.SimpleUse
 #endif
 
             IEnumerable<TechProduct> documents;
+            IEnumerable<FacetKeyValue<string>> facetFields;
 
             var select = techProducts
                 .Select()
@@ -52,11 +54,20 @@ namespace Sample.SimpleUse
 
             select
                 .Execute()
-                .Document(out documents);
+                .Document(out documents)
+                .FacetField(out facetFields);
 
             foreach (var document in documents)
             {
                 var json = JsonConvert.SerializeObject(document, Formatting.Indented);
+
+                Console.WriteLine(json);
+                Console.WriteLine(new string('-', 50));
+            }
+
+            foreach (var facetField in facetFields)
+            {
+                var json = JsonConvert.SerializeObject(facetField, Formatting.Indented);
 
                 Console.WriteLine(json);
                 Console.WriteLine(new string('-', 50));

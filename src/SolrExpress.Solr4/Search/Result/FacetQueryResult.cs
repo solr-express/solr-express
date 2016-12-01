@@ -14,11 +14,6 @@ namespace SolrExpress.Solr4.Search.Result
     public sealed class FacetQueryResult<TDocument> : IFacetQueryResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Execute the parse of the JSON object in facet query list
-        /// </summary>
-        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <param name="jsonObject">JSON object used in the parse</param>
         void IConvertJsonObject.Execute(IEnumerable<ISearchParameter> parameters, JObject jsonObject)
         {
             Checker.IsNull(parameters);
@@ -39,5 +34,7 @@ namespace SolrExpress.Solr4.Search.Result
         }
 
         public IDictionary<string, long> Data { get; set; }
+
+        public object Tag { get; set; }
     }
 }

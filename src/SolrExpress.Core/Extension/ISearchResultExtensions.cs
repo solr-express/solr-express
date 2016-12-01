@@ -55,6 +55,25 @@ namespace SolrExpress.Core.Extension
         }
 
         /// <summary>
+        /// Returns a facet query list
+        /// </summary>
+        /// <param name="data">Facet query list</param>
+        /// <param name="tag">Facet tag</param>
+        public static ISearchResult<TDocument> FacetQuery<TDocument>(this ISearchResult<TDocument> searchResult, out IDictionary<string, long> data, out object tag)
+            where TDocument : IDocument
+        {
+            var result = searchResult
+                .Engine
+                .GetService<IFacetQueryResult<TDocument>>();
+
+            var facetQueryResult = searchResult.Get(result);
+            data = facetQueryResult.Data;
+            tag = facetQueryResult.Tag;
+
+            return searchResult;
+        }
+
+        /// <summary>
         /// Returns a facet range list
         /// </summary>
         /// <param name="data">Facet range list</param>
