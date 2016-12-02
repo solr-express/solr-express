@@ -182,7 +182,7 @@ namespace SolrExpress.Solr5.Search.Result
                     var facet = new FacetKeyValue<FacetRange>
                     {
                         Name = jProperty.Name,
-                        Data = new Dictionary<FacetRange, long>()
+                        Data = new List<FacetItemValue<FacetRange>>()
                     };
 
                     var facetParameter = (IFacetRangeParameter<TDocument>)parameters.First(q =>
@@ -198,7 +198,7 @@ namespace SolrExpress.Solr5.Search.Result
 
                     var firstValue = this.CreateFacetRange(facetType);
                     firstValue.SetMaximumValue(this.GetFacetValue(facetType, facetParameter.Start));
-                    facet.Data.Add(firstValue, jProperty.Value["before"]["count"].ToObject<long>());
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["before"]["count"].ToObject<long>() });
 
                     jProperty
                         .Value["buckets"]
@@ -210,13 +210,13 @@ namespace SolrExpress.Solr5.Search.Result
                             value.SetMinimumValue(bucket["val"].ToObject(facetType));
                             value.SetMaximumValue(this.CalculateMaximumValue(facetType, bucket["val"], gapValue));
 
-                            facet.Data.Add(value, bucket["count"].ToObject<long>());
+                            ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = value, Quantity = bucket["count"].ToObject<long>() });
                         });
 
 
                     var lastValue = this.CreateFacetRange(facetType);
                     lastValue.SetMinimumValue(this.GetFacetValue(facetType, facetParameter.End));
-                    facet.Data.Add(lastValue, jProperty.Value["after"]["count"].ToObject<long>());
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["after"]["count"].ToObject<long>() });
 
                     return facet;
                 })

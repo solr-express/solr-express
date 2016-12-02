@@ -58,7 +58,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
-            Assert.Equal(4, data[0].Data.Count);
+            Assert.Equal(4, data[0].Data.Count());
             Assert.IsType(typeof(FacetRange<int>), data[0].Data.First().Key);
         }
 
@@ -108,7 +108,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
-            Assert.Equal(4, data[0].Data.Count);
+            Assert.Equal(4, data[0].Data.Count());
             Assert.IsType(typeof(FacetRange<DateTime>), data[0].Data.First().Key);
         }
 
@@ -158,7 +158,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var data = ((IFacetRangeResult<TestDocumentWithAnyPropertyTypes>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
-            Assert.Equal(4, data[0].Data.Count);
+            Assert.Equal(4, data[0].Data.Count());
             Assert.IsType(typeof(FacetRange<decimal>), data[0].Data.First().Key);
         }
     }

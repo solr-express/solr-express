@@ -45,9 +45,12 @@ namespace SolrExpress.Solr5.Search.Result
                 {
                     Name = ((JProperty)item).Name,
                     Data = ((JProperty)(item)).Value["buckets"]
-                        .ToDictionary(
-                            k => k["val"].ToObject<string>(),
-                            v => v["count"].ToObject<long>())
+                        .Select(q => new FacetItemValue<string>
+                        {
+                            Key = q["val"].ToObject<string>(),
+                            Quantity = q["count"].ToObject<long>()
+                        })
+                        .ToList()
                 })
                 .ToList();
         }

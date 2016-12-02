@@ -269,7 +269,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(1, data.Count());
             Assert.Equal("Facet1", data.ToList()[0].Name);
-            Assert.True(data.ToList()[0].Data.Count > 0);
+            Assert.True(data.ToList()[0].Data.Count() > 0);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(1, data.Count());
             Assert.Equal("ManufacturerId", data.ToList()[0].Name);
-            Assert.Equal(10, data.ToList()[0].Data.Count);
+            Assert.Equal(10, data.ToList()[0].Data.Count());
         }
 
         /// <summary>

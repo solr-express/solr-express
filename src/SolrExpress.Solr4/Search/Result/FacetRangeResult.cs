@@ -142,7 +142,7 @@ namespace SolrExpress.Solr4.Search.Result
                     var facet = new FacetKeyValue<FacetRange>
                     {
                         Name = jProperty.Name,
-                        Data = new Dictionary<FacetRange, long>()
+                        Data = new List<FacetItemValue<FacetRange>>()
                     };
 
                     var facetParameter = (IFacetRangeParameter<TDocument>)parameters.First(q =>
@@ -159,7 +159,7 @@ namespace SolrExpress.Solr4.Search.Result
 
                     var firstValue = this.CreateFacetRange(facetType);
                     firstValue.SetMaximumValue(jProperty.Value["start"].ToObject(facetType));
-                    facet.Data.Add(firstValue, jProperty.Value["before"].ToObject<long>());
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["before"].ToObject<long>() });
 
                     for (int index = 0; index < jProperty.Value["counts"].Count(); index += 2)
                     {
@@ -167,12 +167,12 @@ namespace SolrExpress.Solr4.Search.Result
                         value.SetMinimumValue(jProperty.Value["counts"][index]);
                         value.SetMaximumValue(this.CalculateMaximumValue(facetType, jProperty.Value["counts"][index], gapValue));
 
-                        facet.Data.Add(value, jProperty.Value["counts"][index + 1].ToObject<long>());
+                        ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = value, Quantity = jProperty.Value["counts"][index + 1].ToObject<long>() });
                     }
 
                     var lastValue = this.CreateFacetRange(facetType);
                     lastValue.SetMinimumValue(jProperty.Value["end"].ToObject(facetType));
-                    facet.Data.Add(lastValue, jProperty.Value["after"].ToObject<long>());
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = lastValue, Quantity = jProperty.Value["after"].ToObject<long>() });
 
                     return facet;
                 })

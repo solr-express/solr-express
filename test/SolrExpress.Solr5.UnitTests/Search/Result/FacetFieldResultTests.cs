@@ -47,11 +47,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var data = ((IFacetFieldResult<TestDocument>)result).Data.ToList();
             Assert.Equal(1, data.Count);
             Assert.Equal("facetField", data[0].Name);
-            Assert.Equal(2, data[0].Data.Count);
-            Assert.True(data[0].Data.ContainsKey("VALUE001"));
-            Assert.Equal(10, data[0].Data["VALUE001"]);
-            Assert.True(data[0].Data.ContainsKey("VALUE002"));
-            Assert.Equal(20, data[0].Data["VALUE002"]);
+            Assert.Equal(2, data[0].Data.Count());
+            Assert.True(data[0].Data.Any(q => q.Key.Equals("VALUE001")));
+            Assert.Equal(10, data[0].Data.First(q => q.Key.Equals("VALUE001")).Quantity);
+            Assert.True(data[0].Data.Any(q => q.Key.Equals("VALUE002")));
+            Assert.Equal(20, data[0].Data.First(q => q.Key.Equals("VALUE002")).Quantity);
         }
     }
 }

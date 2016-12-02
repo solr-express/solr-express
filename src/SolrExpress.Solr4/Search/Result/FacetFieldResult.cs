@@ -37,14 +37,15 @@ namespace SolrExpress.Solr4.Search.Result
                         var value = new FacetKeyValue<string>
                         {
                             Name = ((JProperty)item).Name,
-                            Data = new Dictionary<string, long>()
+                            Data = new List<FacetItemValue<string>>()
                         };
 
                         var array = ((JArray)((JProperty)(item)).Value);
 
                         for (int i = 0; i < array.Count; i += 2)
                         {
-                            value.Data[array[i].ToObject<string>()] = array[i + 1].ToObject<long>();
+
+                            ((List<FacetItemValue<string>>)value.Data).Add(new FacetItemValue<string> { Key = array[i].ToObject<string>(), Quantity = array[i + 1].ToObject<long>() });
                         }
 
                         return value;
