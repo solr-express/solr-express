@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.0.4] - 2016-12-02
+
+### Enhancement
+* Create tag property in Facet itens ([#166](https://github.com/solr-express/solr-express/issues/166))
+
+---
+
 ## [4.0.3] - 2016-12-01
 
 ### Enhancement
