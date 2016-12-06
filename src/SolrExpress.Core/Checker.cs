@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace SolrExpress.Core.Utility
+namespace SolrExpress.Core
 {
     /// <summary>
     /// Helper class used to process validations and throws exceptions
@@ -71,7 +71,7 @@ namespace SolrExpress.Core.Utility
         {
             if (value < minValue)
             {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -83,7 +83,7 @@ namespace SolrExpress.Core.Utility
         {
             if (collection.Count == 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentException();
             }
         }
     }

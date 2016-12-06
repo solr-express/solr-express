@@ -78,7 +78,7 @@ namespace SolrExpress.Core.UnitTests
             var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Add(new TestDocument[] { }));
+            Assert.Throws<ArgumentException>(() => documentCollection.Update().Add(new TestDocument[] { }));
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace SolrExpress.Core.UnitTests
             var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => documentCollection.Update().Delete(new string[] { }));
+            Assert.Throws<ArgumentException>(() => documentCollection.Update().Delete(new string[] { }));
         }
 
         /// <summary>

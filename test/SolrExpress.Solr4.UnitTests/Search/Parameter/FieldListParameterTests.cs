@@ -135,7 +135,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// <summary>
         /// Where   Using a FieldListParameter instance
         /// When    Create the instance with empty collection
-        /// What    Throws ArgumentOutOfRangeException
+        /// What    Throws ArgumentException
         /// </summary>
         [Fact]
         public void FieldListParameter007()
@@ -144,7 +144,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var parameter = new FieldListParameter<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
+            Assert.Throws<ArgumentException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
         }
 
         /// <summary>
