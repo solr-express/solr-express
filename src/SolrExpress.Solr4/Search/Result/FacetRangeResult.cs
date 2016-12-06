@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
@@ -151,8 +150,8 @@ namespace SolrExpress.Solr4.Search.Result
                             (q is IFacetRangeParameter<TDocument>) &&
                             ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
                     });
-
-                    var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
+                    
+                    var facetType = ExpressionUtility.GetPropertyTypeFromExpression(facetParameter.Expression);
 
                     var gap = jProperty.Value["gap"].ToObject<string>();
                     var gapValue = this.GetGapValue(gap);

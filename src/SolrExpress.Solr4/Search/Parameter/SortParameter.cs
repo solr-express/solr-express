@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +16,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
 
             var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
 

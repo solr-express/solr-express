@@ -1,10 +1,10 @@
-﻿using Xunit;
-using SolrExpress.Core.Extension.Internal;
+﻿using SolrExpress.Core.Utility;
 using System;
+using Xunit;
 
-namespace SolrExpress.Core.UnitTests.Extension.Internal
+namespace SolrExpress.Core.UnitTests.Utility
 {
-    public class ExpressionIDocumentExtensionTests
+    public class ExpressionUtilityTests
     {
         private class Document : IDocument
         {
@@ -50,306 +50,306 @@ namespace SolrExpress.Core.UnitTests.Extension.Internal
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension001()
+        public void ExpressionUtility001()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyString);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyString);
 
             // Assert
             Assert.Equal("PropertyString", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension002()
+        public void ExpressionUtility002()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyInt);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyInt);
 
             // Assert
             Assert.Equal("PropertyInt", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension003()
+        public void ExpressionUtility003()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLong);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyLong);
 
             // Assert
             Assert.Equal("PropertyLong", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension004()
+        public void ExpressionUtility004()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTime);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTime);
 
             // Assert
             Assert.Equal("PropertyDateTime", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension005()
+        public void ExpressionUtility005()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffset);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffset);
 
             // Assert
             Assert.Equal("PropertyDateTimeOffset", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension006()
+        public void ExpressionUtility006()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBool);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyBool);
 
             // Assert
             Assert.Equal("PropertyBool", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable int property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension007()
+        public void ExpressionUtility007()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyIntNullable);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyIntNullable);
 
             // Assert
             Assert.Equal("PropertyIntNullable", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable long property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension008()
+        public void ExpressionUtility008()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLongNullable);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyLongNullable);
 
             // Assert
             Assert.Equal("PropertyLongNullable", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable DateTime property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension009()
+        public void ExpressionUtility009()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeNullable);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeNullable);
 
             // Assert
             Assert.Equal("PropertyDateTimeNullable", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable DateTimeOffset property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension010()
+        public void ExpressionUtility010()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetNullable);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetNullable);
 
             // Assert
             Assert.Equal("PropertyDateTimeOffsetNullable", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a nullable bool property
         /// What    Return the name of the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension011()
+        public void ExpressionUtility011()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBoolNullable);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyBoolNullable);
 
             // Assert
             Assert.Equal("PropertyBoolNullable", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a string property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension012()
+        public void ExpressionUtility012()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyStringWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyStringWithAttr);
 
             // Assert
             Assert.Equal("PropString", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a int property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension013()
+        public void ExpressionUtility013()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyIntWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyIntWithAttr);
 
             // Assert
             Assert.Equal("PropInt", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a long property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension014()
+        public void ExpressionUtility014()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyLongWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyLongWithAttr);
 
             // Assert
             Assert.Equal("PropLong", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTime property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension015()
+        public void ExpressionUtility015()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeWithAttr);
 
             // Assert
             Assert.Equal("PropDateTime", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a DateTimeOffset property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension016()
+        public void ExpressionUtility016()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyDateTimeOffsetWithAttr);
 
             // Assert
             Assert.Equal("PropDateTimeOffset", name);
         }
 
         /// <summary>
-        /// Where   Using ExpressionIDocumentExtension class
+        /// Where   Using ExpressionUtility class
         /// When    Invoking the method "GetPropertyNameFromExpression" using a lambda with a bool property with SolrFieldAttribute
         /// What    Return the name of the SolrFieldAttribute associeted with the property
         /// </summary>
         [Fact]
-        public void ExpressionIDocumentExtension017()
+        public void ExpressionUtility017()
         {
             // Arrange
             string name;
 
             // Act
-            name = ExpressionIDocumentExtension.GetFieldNameFromExpression<Document>(q => q.PropertyBoolWithAttr);
+            name = ExpressionUtility.GetFieldNameFromExpression<Document>(q => q.PropertyBoolWithAttr);
 
             // Assert
             Assert.Equal("PropBool", name);

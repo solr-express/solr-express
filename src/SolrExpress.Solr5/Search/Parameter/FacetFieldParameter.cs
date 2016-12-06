@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -20,8 +19,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
-            var aliasName = this.Expression.GetPropertyNameFromExpression();
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var aliasName = ExpressionUtility.GetPropertyNameFromExpression(this.Expression);
 
             var array = new List<JProperty>
             {

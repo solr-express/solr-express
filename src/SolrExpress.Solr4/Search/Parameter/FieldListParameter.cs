@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             foreach (var expression in this.Expressions)
             {
-                var fieldName = expression.GetFieldNameFromExpression();
+                var fieldName = ExpressionUtility.GetFieldNameFromExpression(expression);
 
                 var fieldList = container.FirstOrDefault(q => q.StartsWith("fl="));
 

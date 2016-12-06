@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Search.Parameter;
+﻿using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
 using System;
 using System.Linq.Expressions;
@@ -32,7 +31,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
 
             return $"{fieldName}:{this.Value}";
         }
@@ -47,7 +46,7 @@ namespace SolrExpress.Core.Search.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {

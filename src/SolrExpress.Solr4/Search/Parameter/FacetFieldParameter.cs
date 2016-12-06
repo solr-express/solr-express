@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -21,8 +20,8 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            var aliasName = this.Expression.GetPropertyNameFromExpression();
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var aliasName = ExpressionUtility.GetPropertyNameFromExpression(this.Expression);
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
             var facetField = this.Excludes.GetSolrFacetWithExcludes(aliasName, fieldName);
 
             container.Add($"facet.field={facetField}");

@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -31,7 +30,7 @@ namespace SolrExpress.Core.Search.Parameter
 
             var withError = this
                 .Expressions
-                .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
+                .Select(expression => ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(expression))
                 .Any(solrFieldAttribute => (!solrFieldAttribute?.Stored) ?? true);
 
             if (!withError)
