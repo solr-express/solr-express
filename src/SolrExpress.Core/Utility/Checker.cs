@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace SolrExpress.Core
+namespace SolrExpress.Core.Utility
 {
     /// <summary>
     /// Helper class used to process validations and throws exceptions
