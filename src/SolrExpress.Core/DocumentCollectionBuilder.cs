@@ -1,6 +1,4 @@
 ﻿using SolrExpress.Core.DependencyInjection;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Update;
 
 namespace SolrExpress.Core
 {
