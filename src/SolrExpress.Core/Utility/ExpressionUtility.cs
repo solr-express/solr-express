@@ -13,18 +13,29 @@ namespace SolrExpress.Core.Utility
     /// </summary>
     public class ExpressionUtility
     {
+        private readonly IExpressionCache _expressionCache;
+
+        public ExpressionUtility(IExpressionCache expressionCache)
+        {
+            this._expressionCache = expressionCache;
+        }
+
         /// <summary>
         /// Returns the property name of the indicated expression
         /// </summary>
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        private static PropertyInfo GetPropertyInfoFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+        private void GetInfosFromExpression<TDocument>(Expression<Func<TDocument, object>> expression, out PropertyInfo propertyInfo, out SolrFieldAttribute solrFieldAttribute)
             where TDocument : IDocument
         {
+            if (this._expressionCache.Get(expression, out propertyInfo, out solrFieldAttribute))
+            {
+                return;
+            }
+
             var lambda = (LambdaExpression)expression;
 
-            PropertyInfo propertyInfo;
             MemberExpression memberExpression;
 
             switch (lambda.Body.NodeType)
@@ -38,7 +49,7 @@ namespace SolrExpress.Core.Utility
 
                     Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
 
-                    return propertyInfo;
+                    break;
                 case ExpressionType.MemberAccess:
                     memberExpression = (MemberExpression)lambda.Body;
 
@@ -46,10 +57,20 @@ namespace SolrExpress.Core.Utility
 
                     Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
 
-                    return propertyInfo;
+                    break;
             }
 
-            throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
+            if (propertyInfo != null)
+            {
+                var attrs = propertyInfo.GetCustomAttributes(true);
+                solrFieldAttribute = (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
+
+                this._expressionCache.Set(expression, propertyInfo, solrFieldAttribute);
+            }
+            else
+            {
+                throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
+            }
         }
 
         /// <summary>
@@ -58,7 +79,7 @@ namespace SolrExpress.Core.Utility
         /// <param name="solrFacetSortType">Type used in match</param>
         /// <param name="typeName">Type name</param>
         /// <param name="sortName">Sort direction</param>
-        internal static void GetSolrFacetSort(FacetSortType solrFacetSortType, out string typeName, out string sortName)
+        public void GetSolrFacetSort(FacetSortType solrFacetSortType, out string typeName, out string sortName)
         {
             switch (solrFacetSortType)
             {
@@ -91,7 +112,7 @@ namespace SolrExpress.Core.Utility
         /// <param name="centerPoint">Center point information</param>
         /// <param name="distance">Distance</param>
         /// <returns></returns>
-        internal static string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
+        public string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
         {
             return string.Format(
                 "{{!{0} sfield={1} pt={2} d={3}}}",
@@ -106,7 +127,7 @@ namespace SolrExpress.Core.Utility
         /// </summary>
         /// <param name="query">Query value</param>
         /// <param name="tagName">Tag name</param>
-        internal static string GetSolrFilterWithTag(string query, string aliasName)
+        public string GetSolrFilterWithTag(string query, string aliasName)
         {
             return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
         }
@@ -117,11 +138,13 @@ namespace SolrExpress.Core.Utility
         /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static string GetFieldNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+        public string GetFieldNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
             where TDocument : IDocument
         {
-            var propertyInfo = GetPropertyInfoFromExpression(expression);
-            var solrFieldAttribute = GetSolrFieldAttributeFromPropertyInfo(expression);
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
 
             return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Name;
         }
@@ -132,12 +155,15 @@ namespace SolrExpress.Core.Utility
         /// <typeparam name="T">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
-        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<TDocument>(Expression<Func<TDocument, object>> expression)
+        public SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<TDocument>(Expression<Func<TDocument, object>> expression)
             where TDocument : IDocument
         {
-            var propertyInfo = GetPropertyInfoFromExpression(expression);
-            var attrs = propertyInfo.GetCustomAttributes(true);
-            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            return solrFieldAttribute;
         }
 
         /// <summary>
@@ -146,10 +172,15 @@ namespace SolrExpress.Core.Utility
         /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static string GetPropertyNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+        public string GetPropertyNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
             where TDocument : IDocument
         {
-            return GetPropertyInfoFromExpression(expression).Name;
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            return propertyInfo.Name;
         }
 
         /// <summary>
@@ -158,10 +189,15 @@ namespace SolrExpress.Core.Utility
         /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
         /// <param name="expression">Expression used to find the property name</param>
         /// <returns>Property name indicated in the expression</returns>
-        internal static Type GetPropertyTypeFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+        public Type GetPropertyTypeFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
             where TDocument : IDocument
         {
-            return GetPropertyInfoFromExpression(expression).PropertyType;
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            return propertyInfo.PropertyType;
         }
     }
 }
