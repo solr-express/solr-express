@@ -25,10 +25,14 @@ namespace SolrExpress.Core.Extension
             builder.Invoke(builderObj);
             var documentCollection = builderObj.Create();
 
+            var expressionCache = new ExpressionCache<TDocument>();
+            ((IExpressionCache<TDocument>)expressionCache).Process();
+
             services.TryAddSingleton<IEngine>(q => (NetCoreEngine)documentCollection.Engine);
 
             services
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>(q => expressionCache)
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(q => documentCollection);
 
             return builderObj;
