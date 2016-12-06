@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Search.ParameterValue;
+﻿using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Core.Utility;
 using System;
 using System.Linq.Expressions;
@@ -62,7 +61,7 @@ namespace SolrExpress.Core.Search.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute?.Indexed ?? true)
             {

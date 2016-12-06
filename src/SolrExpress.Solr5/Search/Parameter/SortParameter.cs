@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -15,7 +15,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
 
             var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
 

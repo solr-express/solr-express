@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 using System;
 using System.Linq.Expressions;
 
@@ -34,7 +33,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
 
             return ExpressionUtility.GetSolrSpatialFormule(
                 this.FunctionType,

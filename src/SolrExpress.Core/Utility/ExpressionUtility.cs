@@ -2,6 +2,9 @@
 using SolrExpress.Core.Search.ParameterValue;
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SolrExpress.Core.Utility
 {
@@ -10,6 +13,45 @@ namespace SolrExpress.Core.Utility
     /// </summary>
     public class ExpressionUtility
     {
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        private static PropertyInfo GetPropertyInfoFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            var lambda = (LambdaExpression)expression;
+
+            PropertyInfo propertyInfo;
+            MemberExpression memberExpression;
+
+            switch (lambda.Body.NodeType)
+            {
+                case ExpressionType.Convert:
+                    var unaryExpression = (UnaryExpression)lambda.Body;
+
+                    memberExpression = (MemberExpression)unaryExpression.Operand;
+
+                    propertyInfo = memberExpression.Member as PropertyInfo;
+
+                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
+
+                    return propertyInfo;
+                case ExpressionType.MemberAccess:
+                    memberExpression = (MemberExpression)lambda.Body;
+
+                    propertyInfo = memberExpression.Member as PropertyInfo;
+
+                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
+
+                    return propertyInfo;
+            }
+
+            throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
+        }
+
         /// <summary>
         /// Get the sort type and direction
         /// </summary>
@@ -67,6 +109,59 @@ namespace SolrExpress.Core.Utility
         internal static string GetSolrFilterWithTag(string query, string aliasName)
         {
             return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static string GetFieldNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            var propertyInfo = GetPropertyInfoFromExpression(expression);
+            var solrFieldAttribute = GetSolrFieldAttributeFromPropertyInfo(expression);
+
+            return solrFieldAttribute == null ? propertyInfo.Name : solrFieldAttribute.Name;
+        }
+
+        /// <summary>
+        /// Returns the SolrFieldAttribute associated with the informed property
+        /// </summary>
+        /// <typeparam name="T">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>SolrFieldAttribute associated4 with the informed property, otherwise null</returns>
+        internal static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            var propertyInfo = GetPropertyInfoFromExpression(expression);
+            var attrs = propertyInfo.GetCustomAttributes(true);
+            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static string GetPropertyNameFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            return GetPropertyInfoFromExpression(expression).Name;
+        }
+
+        /// <summary>
+        /// Returns the property name of the indicated expression
+        /// </summary>
+        /// <typeparam name="TDocument">Type of the document used in the query</typeparam>
+        /// <param name="expression">Expression used to find the property name</param>
+        /// <returns>Property name indicated in the expression</returns>
+        internal static Type GetPropertyTypeFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+            where TDocument : IDocument
+        {
+            return GetPropertyInfoFromExpression(expression).PropertyType;
         }
     }
 }

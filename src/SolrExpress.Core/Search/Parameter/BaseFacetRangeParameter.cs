@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 using System;
 using System.Linq.Expressions;
 
@@ -58,7 +57,7 @@ namespace SolrExpress.Core.Search.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute != null && !solrFieldAttribute.Indexed)
             {
@@ -67,7 +66,7 @@ namespace SolrExpress.Core.Search.Parameter
             }
             else
             {
-                var propertyType = this.Expression.GetPropertyTypeFromExpression();
+                var propertyType = ExpressionUtility.GetPropertyTypeFromExpression(this.Expression);
 
                 switch (propertyType.ToString())
                 {
