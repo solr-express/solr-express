@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SolrExpress.Core.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 
-namespace SolrExpress.Core.UnitTests
+namespace SolrExpress.Core.UnitTests.Utility
 {
     public class CheckerTests
     {
