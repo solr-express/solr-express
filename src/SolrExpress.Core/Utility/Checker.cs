@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Utility
         /// </summary>
         /// <param name="condition">Condition to throws exception</param>
         /// <param name="args">Message in the excpetion</param>
-        public static void IsTrue<TException>(bool condition, params object[] args)
+        internal static void IsTrue<TException>(bool condition, params object[] args)
             where TException : Exception
         {
             if (condition)
