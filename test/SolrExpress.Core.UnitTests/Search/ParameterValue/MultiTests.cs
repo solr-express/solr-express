@@ -27,7 +27,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Multi002()
         {
             // Arrange/ Act / Assert
-            Assert.Throws<ArgumentException>(() => new Multi(SolrQueryConditionType.And, new Any("X")));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Multi(SolrQueryConditionType.And, new Any("X")));
         }
 
         /// <summary>
