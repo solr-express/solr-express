@@ -39,7 +39,7 @@ namespace SolrExpress.Core.Extension
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public static ISolrSearch<TDocument> FacetQuery<TDocument>(this ISolrSearch<TDocument> search, string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
+        public static ISolrSearch<TDocument> FacetQuery<TDocument>(this ISolrSearch<TDocument> search, string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType = null, params string[] excludes)
             where TDocument : IDocument
         {
             search.Add(search.GetBuilder().FacetQuery(aliasName, query, sortType, excludes));
@@ -142,7 +142,18 @@ namespace SolrExpress.Core.Extension
         /// Create a query parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
-        public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue value)
+        public static ISolrSearch<TDocument> QueryAll<TDocument>(this ISolrSearch<TDocument> search)
+            where TDocument : IDocument
+        {
+            search.Add(search.GetBuilder().Query(new QueryAll<TDocument>()));
+            return search;
+        }
+
+        /// <summary>
+        /// Create a query parameter
+        /// </summary>
+        /// <param name="value">Parameter to include in the query</param>
+        public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue<TDocument> value)
             where TDocument : IDocument
         {
             search.Add(search.GetBuilder().Query(value));
@@ -276,7 +287,7 @@ namespace SolrExpress.Core.Extension
         /// </summary>
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation. Default is BoostFunctionType.Boost</param>
-        public static ISolrSearch<TDocument> Boost<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue query, BoostFunctionType? boostFunctionType = null)
+        public static ISolrSearch<TDocument> Boost<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue<TDocument> query, BoostFunctionType? boostFunctionType = null)
             where TDocument : IDocument
         {
             search.Add(search.GetBuilder().Boost(query, boostFunctionType ?? BoostFunctionType.Boost));
