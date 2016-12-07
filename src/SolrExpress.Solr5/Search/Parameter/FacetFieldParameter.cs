@@ -11,6 +11,10 @@ namespace SolrExpress.Solr5.Search.Parameter
     public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameter<JObject>
         where TDocument : IDocument
     {
+        public FacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "facet.field"
         /// </summary>
@@ -19,8 +23,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
-            var aliasName = ExpressionUtility.GetPropertyNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(this.Expression);
 
             var array = new List<JProperty>
             {

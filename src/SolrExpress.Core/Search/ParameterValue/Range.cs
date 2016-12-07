@@ -13,6 +13,13 @@ namespace SolrExpress.Core.Search.ParameterValue
         where TDocument : IDocument
         where TValue : struct
     {
+        private IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public Range(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// Create a range solr parameter value
         /// </summary>
@@ -34,7 +41,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             string fromValue;
             string toValue;
@@ -77,8 +84,8 @@ namespace SolrExpress.Core.Search.ParameterValue
         {
             isValid = true;
             errorMessage = string.Empty;
-            
-            var solrFieldAttribute = ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
+
+            var solrFieldAttribute = this._expressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {

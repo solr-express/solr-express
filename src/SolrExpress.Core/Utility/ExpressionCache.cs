@@ -6,7 +6,8 @@ using System.Text.RegularExpressions;
 
 namespace SolrExpress.Core.Utility
 {
-    public class ExpressionCache : IExpressionCache
+    public class ExpressionCache<TDocument> : IExpressionCache<TDocument>
+        where TDocument : IDocument
     {
         private readonly Regex _expressionKeyRegex = new Regex(@"(\w+)\s\=\>\s(Convert\()?\1\.(\w+)\)?", RegexOptions.Compiled);
         private readonly Dictionary<string, Tuple<PropertyInfo, SolrFieldAttribute>> _internalCache = new Dictionary<string, Tuple<PropertyInfo, SolrFieldAttribute>>();
@@ -16,12 +17,14 @@ namespace SolrExpress.Core.Utility
         /// </summary>
         /// <param name="expression">Expression used to get key</param>
         /// <returns>A key from informed expression</returns>
-        private string GetKeyFromExpression<TDocument>(Expression<Func<TDocument, object>> expression)
+        private string GetKeyFromExpression(Expression<Func<TDocument, object>> expression)
         {
-            return this._expressionKeyRegex.Match(expression.ToString()).Groups[3].Value;
+            var groups = this._expressionKeyRegex.Match(expression.ToString()).Groups;
+
+            return $"{groups[0].Value}.{groups[2].Value}";
         }
 
-        bool IExpressionCache.Get<TDocument>(Expression<Func<TDocument, object>> expression, out PropertyInfo propertyInfo, out SolrFieldAttribute solrFieldAttribute)
+        bool IExpressionCache<TDocument>.Get(Expression<Func<TDocument, object>> expression, out PropertyInfo propertyInfo, out SolrFieldAttribute solrFieldAttribute)
         {
             propertyInfo = null;
             solrFieldAttribute = null;
@@ -39,7 +42,7 @@ namespace SolrExpress.Core.Utility
             return false;
         }
 
-        void IExpressionCache.Set<TDocument>(Expression<Func<TDocument, object>> expression, PropertyInfo propertyInfo, SolrFieldAttribute solrFieldAttribute)
+        void IExpressionCache<TDocument>.Set(Expression<Func<TDocument, object>> expression, PropertyInfo propertyInfo, SolrFieldAttribute solrFieldAttribute)
         {
             var key = GetKeyFromExpression(expression);
             var cache = new Tuple<PropertyInfo, SolrFieldAttribute>(propertyInfo, solrFieldAttribute);

@@ -10,6 +10,10 @@ namespace SolrExpress.Solr4.Search.Parameter
     public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameter<List<string>>
         where TDocument : IDocument
     {
+        public FacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
@@ -24,7 +28,7 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
             var formule = ExpressionUtility.GetSolrSpatialFormule(this.FunctionType, fieldName, this.CenterPoint, this.Distance);
             var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, formule);
 

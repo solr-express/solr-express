@@ -10,6 +10,13 @@ namespace SolrExpress.Core.Search.ParameterValue
     public sealed class Spatial<TDocument> : ISearchParameterValue
         where TDocument : IDocument
     {
+        private IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public Spatial(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// Create a spatial filter parameter
         /// </summary>
@@ -33,7 +40,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             return ExpressionUtility.GetSolrSpatialFormule(
                 this.FunctionType,

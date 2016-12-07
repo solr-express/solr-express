@@ -11,6 +11,10 @@ namespace SolrExpress.Solr4.Search.Parameter
     public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameter<List<string>>
       where TDocument : IDocument
     {
+        public FacetRangeParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "facet.range"
         /// </summary>
@@ -22,7 +26,7 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
             var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, fieldName);
 
             container.Add($"facet.range={facetName}");
