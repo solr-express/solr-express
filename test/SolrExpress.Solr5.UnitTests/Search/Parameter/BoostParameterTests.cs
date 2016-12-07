@@ -26,7 +26,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             string actual;
             var jObject = new JObject();
             var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Bf);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
             
             // Act
             parameter.Execute(jObject);
@@ -54,7 +54,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             string actual;
             var jObject = new JObject();
             var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Boost);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
 
             // Act
             parameter.Execute(jObject);
