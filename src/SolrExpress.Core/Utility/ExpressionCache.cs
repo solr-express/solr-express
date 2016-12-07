@@ -21,14 +21,11 @@ namespace SolrExpress.Core.Utility
         {
             var groups = this._expressionKeyRegex.Match(expression.ToString()).Groups;
 
-            return $"{groups[0].Value}.{groups[2].Value}";
+            return groups[3].Value;
         }
 
         bool IExpressionCache<TDocument>.Get(Expression<Func<TDocument, object>> expression, out PropertyInfo propertyInfo, out SolrFieldAttribute solrFieldAttribute)
         {
-            propertyInfo = null;
-            solrFieldAttribute = null;
-
             var key = GetKeyFromExpression(expression);
 
             if (this._internalCache.ContainsKey(key))
@@ -37,8 +34,11 @@ namespace SolrExpress.Core.Utility
 
                 propertyInfo = cache.Item1;
                 solrFieldAttribute = cache.Item2;
+                return true;
             }
 
+            propertyInfo = null;
+            solrFieldAttribute = null;
             return false;
         }
 
