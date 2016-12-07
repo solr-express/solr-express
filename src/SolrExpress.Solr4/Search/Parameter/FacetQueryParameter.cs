@@ -16,6 +16,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
+            this.Query.ExpressionBuilder = this.ExpressionBuilder;
+
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");

@@ -1,6 +1,7 @@
 ﻿using SolrExpress.Core;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
@@ -18,6 +19,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         public void Execute(List<string> container)
         {
             var boostFunction = this.BoostFunctionType.ToString().ToLower();
+
+            this.Query.ExpressionBuilder = this.ExpressionBuilder;
 
             container.Add($"{boostFunction}={this.Query.Execute()}");
         }

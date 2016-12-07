@@ -11,12 +11,12 @@
         /// </summary>
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation</param>
-        IBoostParameter<TDocument> Configure(ISearchParameterValue query, BoostFunctionType boostFunctionType);
+        IBoostParameter<TDocument> Configure(ISearchParameterValue<TDocument> query, BoostFunctionType boostFunctionType);
 
         /// <summary>
         /// Query used to make boost
         /// </summary>
-        ISearchParameterValue Query { get; }
+        ISearchParameterValue<TDocument> Query { get; }
 
         /// <summary>
         /// Boost type used in calculation

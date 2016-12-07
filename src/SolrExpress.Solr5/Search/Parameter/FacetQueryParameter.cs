@@ -17,6 +17,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
+            this.Query.ExpressionBuilder = this.ExpressionBuilder;
+
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
             var array = new List<JProperty>

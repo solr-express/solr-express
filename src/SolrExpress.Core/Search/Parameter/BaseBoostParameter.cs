@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Query used to make boost
         /// </summary>
-        public ISearchParameterValue Query { get; private set; }
+        public ISearchParameterValue<TDocument> Query { get; private set; }
 
         /// <summary>
         /// Boost type used in calculation
@@ -21,11 +21,16 @@ namespace SolrExpress.Core.Search.Parameter
         public BoostFunctionType BoostFunctionType { get; private set; }
 
         /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
+        /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation</param>
-        public IBoostParameter<TDocument> Configure(ISearchParameterValue query, BoostFunctionType boostFunctionType)
+        public IBoostParameter<TDocument> Configure(ISearchParameterValue<TDocument> query, BoostFunctionType boostFunctionType)
         {
             Checker.IsNull(query);
 

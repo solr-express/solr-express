@@ -7,16 +7,9 @@ namespace SolrExpress.Core.Search.ParameterValue
     /// <summary>
     /// Result spatial value
     /// </summary>
-    public sealed class Spatial<TDocument> : ISearchParameterValue
+    public sealed class Spatial<TDocument> : ISearchParameterValue<TDocument>
         where TDocument : IDocument
     {
-        private IExpressionBuilder<TDocument> _expressionBuilder;
-
-        public Spatial(IExpressionBuilder<TDocument> expressionBuilder)
-        {
-            this._expressionBuilder = expressionBuilder;
-        }
-
         /// <summary>
         /// Create a spatial filter parameter
         /// </summary>
@@ -40,7 +33,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this.ExpressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             return ExpressionUtility.GetSolrSpatialFormule(
                 this.FunctionType,
@@ -48,6 +41,11 @@ namespace SolrExpress.Core.Search.ParameterValue
                 this.CenterPoint,
                 this.Distance);
         }
+
+        /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
 
         /// <summary>
         /// Function used in the spatial filter

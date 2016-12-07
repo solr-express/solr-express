@@ -44,7 +44,7 @@ namespace SolrExpress.Core.Search
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetQueryParameter<TDocument> FacetQuery(string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
+        public IFacetQueryParameter<TDocument> FacetQuery(string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType = null, params string[] excludes)
         {
             return this
                 .Engine
@@ -143,7 +143,7 @@ namespace SolrExpress.Core.Search
         /// Create a query parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
-        public IQueryParameter<TDocument> Query(ISearchParameterValue value)
+        public IQueryParameter<TDocument> Query(ISearchParameterValue<TDocument> value)
         {
             return this
                 .Engine
@@ -157,7 +157,7 @@ namespace SolrExpress.Core.Search
         /// <param name="value">Parameter to include in the query</param>
         public IQueryParameter<TDocument> Query(string value)
         {
-            var paramaterValue = new Any(value);
+            var paramaterValue = new Any<TDocument>(value);
 
             return this
                 .Engine
@@ -291,7 +291,7 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation. Default is BoostFunctionType.Boost</param>
-        public IBoostParameter<TDocument> Boost(ISearchParameterValue query, BoostFunctionType? boostFunctionType = null)
+        public IBoostParameter<TDocument> Boost(ISearchParameterValue<TDocument> query, BoostFunctionType? boostFunctionType = null)
         {
             return this
                 .Engine

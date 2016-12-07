@@ -15,6 +15,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
+            this.Value.ExpressionBuilder = this.ExpressionBuilder;
+
             var expression = ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName);
 
             container.Add($"fq={expression}");

@@ -10,11 +10,11 @@
         /// Configure current instance
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
-        IQueryParameter<TDocument> Configure(ISearchParameterValue value);
+        IQueryParameter<TDocument> Configure(ISearchParameterValue<TDocument> value);
 
         /// <summary>
         /// Parameter to include in the query
         /// </summary>
-        ISearchParameterValue Value { get; }
+        ISearchParameterValue<TDocument> Value { get; }
     }
 }

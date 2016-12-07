@@ -41,7 +41,7 @@ namespace Sample.SimpleUse
 
             var select = techProducts
                 .Select()
-                .Query(new QueryAll())
+                .QueryAll()
                 .Limit(3)
                 .FacetField(q => q.Manufacturer)
                 .FacetField(q => q.InStock)

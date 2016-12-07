@@ -9,17 +9,10 @@ namespace SolrExpress.Core.Search.ParameterValue
     /// <summary>
     /// Single value parameter
     /// </summary>
-    public sealed class Range<TDocument, TValue> : ISearchParameterValue, IValidation
+    public sealed class Range<TDocument, TValue> : ISearchParameterValue<TDocument>, IValidation
         where TDocument : IDocument
         where TValue : struct
     {
-        private IExpressionBuilder<TDocument> _expressionBuilder;
-
-        public Range(IExpressionBuilder<TDocument> expressionBuilder)
-        {
-            this._expressionBuilder = expressionBuilder;
-        }
-
         /// <summary>
         /// Create a range solr parameter value
         /// </summary>
@@ -41,7 +34,7 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <returns>Result generated value</returns>
         public string Execute()
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this.ExpressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             string fromValue;
             string toValue;
@@ -85,7 +78,7 @@ namespace SolrExpress.Core.Search.ParameterValue
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this._expressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
+            var solrFieldAttribute = this.ExpressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute == null || solrFieldAttribute.Indexed)
             {
@@ -95,6 +88,11 @@ namespace SolrExpress.Core.Search.ParameterValue
             isValid = false;
             errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInAQueryException;
         }
+
+        /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
 
         /// <summary>
         /// Expression used to find the property name

@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace SolrExpress.Core.Utility
 {
+    /// <summary>
+    /// Signature to build expressions
+    /// </summary>
     public interface IExpressionBuilder<TDocument>
         where TDocument : IDocument
     {
