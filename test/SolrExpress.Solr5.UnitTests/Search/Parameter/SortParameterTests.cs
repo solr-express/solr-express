@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -23,7 +25,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SortParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SortParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, true);
 
             // Act
@@ -43,7 +47,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void SortParameter002()
         {
             // Arrange
-            var parameter = new SortParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SortParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, true));
@@ -60,7 +66,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new SortParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new SortParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Indexed, true);
 
             // Act
@@ -81,7 +89,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new SortParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new SortParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotIndexed, true);
 
             // Act

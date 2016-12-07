@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SolrExpress.Core.Utility
 {
     /// <summary>
     /// Helper class used in cache warmup
     /// </summary>
-    internal class ExpressionCacheWarmup<TDocument>
-        where TDocument : IDocument
+    internal static class ExpressionCacheWarmup
     {
-        private ExpressionUtility _expressionUtility;
-
-        internal ExpressionCacheWarmup(ExpressionUtility expressionUtility)
-        {
-            this._expressionUtility = expressionUtility;
-        }
-
-        internal void Load()
+        internal static void Load<TDocument>(IExpressionBuilder<TDocument> expressionBuilder)
+            where TDocument : IDocument
         {
             var documentParameter = Expression.Parameter(typeof(TDocument), "document");
+#if NETCOREAPP1_0
+            var properties = typeof(TDocument).GetTypeInfo().GetProperties();
+#else
             var properties = typeof(TDocument).GetProperties();
+#endif
 
             foreach (var propertye in properties)
             {
@@ -27,8 +25,7 @@ namespace SolrExpress.Core.Utility
 
                 var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
 
-                this._expressionUtility.GetFieldNameFromExpression(expression);
-                this._expressionUtility.GetSolrFieldAttributeFromPropertyInfo(expression);
+                expressionBuilder.GetFieldNameFromExpression(expression);
             }
         }
     }

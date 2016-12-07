@@ -9,6 +9,10 @@ namespace SolrExpress.Solr5.Search.Parameter
     public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameter<JObject>
         where TDocument : IDocument
     {
+        public FieldsParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
@@ -19,7 +23,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             foreach (var expression in this.Expressions)
             {
-                var value = ExpressionUtility.GetFieldNameFromExpression(expression);
+                var value = this._expressionBuilder.GetFieldNameFromExpression(expression);
 
                 jArray.Add(value);
             }

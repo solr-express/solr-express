@@ -1,9 +1,11 @@
-﻿using Xunit;
+﻿using Moq;
 using SolrExpress.Core;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -19,7 +21,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id);
 
             // Act
@@ -42,7 +46,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();            
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, FacetSortType.CountAsc);
 
             // Act
@@ -66,7 +72,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, FacetSortType.CountDesc);
 
             // Act / Assert
@@ -83,7 +91,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, FacetSortType.IndexDesc);
 
             // Act / Assert
@@ -99,10 +109,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameter005()
         {
             // Arrange
-            var paramater = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => paramater.Configure(null));
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
 
         /// <summary>
@@ -115,7 +127,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, limit: 10);
 
             // Act
@@ -139,7 +153,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, excludes: new[] { "tag1", "tag2" });
 
             // Act
@@ -164,7 +180,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             bool isValid;
             string errorMessage;
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Indexed);
 
             // Act
@@ -186,7 +204,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             bool isValid;
             string errorMessage;
             var container = new List<string>();
-            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FacetFieldParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotIndexed);
 
             // Act

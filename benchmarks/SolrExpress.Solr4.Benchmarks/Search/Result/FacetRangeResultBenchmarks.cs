@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Solr4.Search.Result;
 using System.Collections.Generic;
@@ -22,11 +23,14 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
         [Setup]
         public void Setup()
         {
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+
             this._parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocument>().Configure("facetRange", q=> q.Age, "10", "10", "100")
+                new FacetRangeParameter<TestDocument>(expressionBuilder).Configure("facetRange", q=> q.Age, "10", "10", "100")
             };
 
-            this._facetRangeResult = new FacetRangeResult<TestDocument>();
+            this._facetRangeResult = new FacetRangeResult<TestDocument>(expressionBuilder);
             
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetRangeResultBenchmarks).GetTypeInfo().Assembly;

@@ -9,13 +9,17 @@ namespace SolrExpress.Solr5.Search.Parameter
     public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameter<JObject>
         where TDocument : IDocument
     {
+        public SortParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            var fieldName = ExpressionUtility.GetFieldNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
 

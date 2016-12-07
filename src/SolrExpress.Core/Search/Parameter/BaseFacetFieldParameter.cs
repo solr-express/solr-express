@@ -7,6 +7,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -42,7 +49,7 @@ namespace SolrExpress.Core.Search.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = ExpressionUtility.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
+            var solrFieldAttribute = this._expressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute?.Indexed ?? true)
             {
