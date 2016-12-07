@@ -29,7 +29,7 @@ namespace SolrExpress.Core.Search
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetQueryParameter<TDocument> FacetQuery(string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes);
+        IFacetQueryParameter<TDocument> FacetQuery(string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType = null, params string[] excludes);
 
         /// <summary>
         /// Create a facet range parameter
@@ -82,7 +82,7 @@ namespace SolrExpress.Core.Search
         /// Create a query parameter
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
-        IQueryParameter<TDocument> Query(ISearchParameterValue value);
+        IQueryParameter<TDocument> Query(ISearchParameterValue<TDocument> value);
 
         /// <summary>
         /// Create a query parameter
@@ -157,7 +157,7 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunctionType">Boost type used in calculation. Default is BoostFunctionType.Boost</param>
-        IBoostParameter<TDocument> Boost(ISearchParameterValue query, BoostFunctionType? boostFunctionType = null);
+        IBoostParameter<TDocument> Boost(ISearchParameterValue<TDocument> query, BoostFunctionType? boostFunctionType = null);
 
         /// <summary>
         /// Get current instance of ServiceContainer

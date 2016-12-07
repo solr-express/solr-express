@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Value of the filter
         /// </summary>
-        public ISearchParameterValue Value { get; private set; }
+        public ISearchParameterValue<TDocument> Value { get; private set; }
 
         /// <summary>
         /// Tag name to use in facet excluding list
@@ -21,11 +21,16 @@ namespace SolrExpress.Core.Search.Parameter
         public string TagName { get; private set; }
 
         /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
+        /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of the filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public IFilterParameter<TDocument> Configure(ISearchParameterValue value, string tagName = null)
+        public IFilterParameter<TDocument> Configure(ISearchParameterValue<TDocument> value, string tagName = null)
         {
             Checker.IsNull(value);
 

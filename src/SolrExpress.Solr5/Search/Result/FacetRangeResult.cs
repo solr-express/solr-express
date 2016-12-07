@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
@@ -18,6 +17,13 @@ namespace SolrExpress.Solr5.Search.Result
     public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
+        private IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public FacetRangeResult(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// Get a FacetRange instance basead in the informed JTokenType
         /// </summary>
@@ -63,7 +69,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (facetType == typeof(DateTime))
             {
-                return DateTime.Now - (TimeSpan)GetGapValue(value);
+                return DateTime.Now.Date - (TimeSpan)GetGapValue(value);
             }
 
             return Convert.ToInt32(value);
@@ -128,14 +134,14 @@ namespace SolrExpress.Solr5.Search.Result
 
             var keys = new Dictionary<string, DateTime>
             {
-                ["MILISECOND"] = DateTime.MinValue.AddMilliseconds(1),
-                ["SECOND"] = DateTime.MinValue.AddSeconds(1),
-                ["MINUTE"] = DateTime.MinValue.AddMinutes(1),
-                ["HOUR"] = DateTime.MinValue.AddHours(1),
-                ["DAY"] = DateTime.MinValue.AddDays(1),
-                ["WEAK"] = DateTime.MinValue.AddDays(7),
-                ["MONTH"] = DateTime.MinValue.AddMonths(1),
-                ["YEAR"] = DateTime.MinValue.AddYears(1)
+                ["MILISECOND"] = DateTime.Now.AddMilliseconds(1),
+                ["SECOND"] = DateTime.Now.AddSeconds(1),
+                ["MINUTE"] = DateTime.Now.AddMinutes(1),
+                ["HOUR"] = DateTime.Now.AddHours(1),
+                ["DAY"] = DateTime.Now.AddDays(1),
+                ["WEAK"] = DateTime.Now.AddDays(7),
+                ["MONTH"] = DateTime.Now.AddMonths(1),
+                ["YEAR"] = DateTime.Now.AddYears(1)
             };
 
             var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
@@ -192,7 +198,7 @@ namespace SolrExpress.Solr5.Search.Result
                             ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
                     });
 
-                    var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
+                    var facetType = this._expressionBuilder.GetPropertyTypeFromExpression(facetParameter.Expression);
 
                     var gapValue = this.GetGapValue(facetParameter.Gap);
 

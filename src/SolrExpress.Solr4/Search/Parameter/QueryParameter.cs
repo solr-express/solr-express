@@ -14,6 +14,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
+            this.Value.ExpressionBuilder = this.ExpressionBuilder;
+
             container.Add($"q={this.Value.Execute()}");
         }
     }

@@ -18,7 +18,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Query used to make the facet
         /// </summary>
-        public ISearchParameterValue Query { get; private set; }
+        public ISearchParameterValue<TDocument> Query { get; private set; }
 
         /// <summary>
         /// Sort type of the result of the facet
@@ -29,7 +29,12 @@ namespace SolrExpress.Core.Search.Parameter
         /// List of tags to exclude in facet calculation
         /// </summary>
         public string[] Excludes { get; private set; }
-        
+
+        /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Check for the parameter validation
         /// </summary>
@@ -52,7 +57,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetQueryParameter<TDocument> Configure(string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
+        public IFacetQueryParameter<TDocument> Configure(string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(query);

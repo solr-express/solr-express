@@ -13,13 +13,18 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Parameter to include in the query
         /// </summary>
-        public ISearchParameterValue Value { get; private set; }
-        
+        public ISearchParameterValue<TDocument> Value { get; private set; }
+
+        /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
-        public IQueryParameter<TDocument> Configure(ISearchParameterValue value)
+        public IQueryParameter<TDocument> Configure(ISearchParameterValue<TDocument> value)
         {
             Checker.IsNull(value);
 

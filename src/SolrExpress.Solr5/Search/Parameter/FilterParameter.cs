@@ -15,6 +15,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
+            this.Value.ExpressionBuilder = this.ExpressionBuilder;
+
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
             jArray.Add(ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName));
