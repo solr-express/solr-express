@@ -17,7 +17,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "-tst";
             string actual;
-            var parameter = new Negate(new Any("tst"));
+            var parameter = new Negate<TestDocument>(new Any<TestDocument>("tst"));
 
             // Act
             actual = parameter.Execute();
@@ -35,7 +35,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Negate002()
         {
             // Arrange/ Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new Negate(null));
+            Assert.Throws<ArgumentNullException>(() => new Negate<TestDocument>(null));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"));
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"));
 
             // Act
             parameter.Execute(container);
@@ -44,7 +44,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"), FacetSortType.CountAsc);
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), FacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -68,7 +68,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new QueryAll(), FacetSortType.CountDesc);
+            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.CountDesc);
 
             // Act / Assert
             Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
@@ -85,7 +85,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new QueryAll(), FacetSortType.IndexDesc);
+            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.IndexDesc);
 
             // Act / Assert
             Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
@@ -103,7 +103,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var parameter = new FacetQueryParameter<TestDocument>();
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any("x")));
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any<TestDocument>("x")));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(container);

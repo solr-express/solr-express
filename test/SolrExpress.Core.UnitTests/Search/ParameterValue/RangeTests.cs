@@ -1,6 +1,7 @@
-﻿using Xunit;
-using SolrExpress.Core.Search.ParameterValue;
+﻿using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using System;
+using Xunit;
 
 namespace SolrExpress.Core.UnitTests.Search.ParameterValue
 {
@@ -17,7 +18,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, int>(q => q.Id, null, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -37,7 +41,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO 1]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, int>(q => q.Id, null, 1);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -57,7 +64,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1 TO 10]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, int>(q => q.Id, 1, 10);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -77,7 +87,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1 TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, int>(q => q.Id, 1, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -97,7 +110,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, decimal>(q => q.Id, null, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -117,7 +133,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO 1.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, decimal>(q => q.Id, null, 1.5M);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -137,7 +156,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1.5 TO 10.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, decimal>(q => q.Id, 1.5M, 10.5M);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -157,7 +179,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1.5 TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, decimal>(q => q.Id, 1.5M, null);
+            parameter.ExpressionBuilder = expressionBuilder;            
 
             // Act
             actual = parameter.Execute();
@@ -177,7 +202,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, double>(q => q.Id, null, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -197,7 +225,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO 1.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, double>(q => q.Id, null, 1.5D);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -217,7 +248,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1.5 TO 10.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, double>(q => q.Id, 1.5D, 10.5D);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -237,7 +271,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[1.5 TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, double>(q => q.Id, 1.5D, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -257,7 +294,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, null, null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -277,8 +317,11 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO 2015-09-13T10:00:00Z]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, null, new DateTime(2015, 09, 13, 10, 0, 0));
-
+            parameter.ExpressionBuilder = expressionBuilder;
+            
             // Act
             actual = parameter.Execute();
 
@@ -297,7 +340,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[2000-09-13T10:00:00Z TO 2015-09-13T10:00:00Z]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, new DateTime(2000, 09, 13, 10, 0, 0), new DateTime(2015, 09, 13, 10, 0, 0));
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -317,8 +363,11 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[2000-09-13T10:00:00Z TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, DateTime>(q => q.Id, new DateTime(2000, 09, 13, 10, 0, 0), null);
-
+            parameter.ExpressionBuilder = expressionBuilder;
+            
             // Act
             actual = parameter.Execute();
 
@@ -337,8 +386,11 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, null, null);
-
+            parameter.ExpressionBuilder = expressionBuilder;
+            
             // Act
             actual = parameter.Execute();
 
@@ -357,8 +409,11 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[* TO -10.5,10.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, null, new GeoCoordinate(-10.5M, 10.5M));
-
+            parameter.ExpressionBuilder = expressionBuilder;
+            
             // Act
             actual = parameter.Execute();
 
@@ -377,7 +432,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[-1.5,1.5 TO -10.5,10.5]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), new GeoCoordinate(-10.5M, 10.5M));
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -397,7 +455,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:[-1.5,1.5 TO *]";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Range<TestDocument, GeoCoordinate>(q => q.Id, new GeoCoordinate(-1.5M, 1.5M), null);
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();

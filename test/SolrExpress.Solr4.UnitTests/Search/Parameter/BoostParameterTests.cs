@@ -19,7 +19,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Bf);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
 
             // Act
             parameter.Execute(container);
@@ -40,7 +40,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Boost);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
 
             // Act
             parameter.Execute(container);
