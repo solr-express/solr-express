@@ -1,6 +1,6 @@
 language: csharp
 mono: none
-dotnet: 1.0.0-preview2-003131
+dotnet: 1.0.0-preview3-004056
 solution: SolrExpress.sln
 install:
   - nuget restore solution-name.sln
