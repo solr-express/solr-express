@@ -1,0 +1,9 @@
+language: csharp
+mono: none
+dotnet: 1.0.0-preview2-003131
+solution: SolrExpress.sln
+install:
+  - nuget restore solution-name.sln
+  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release solution-name.sln
