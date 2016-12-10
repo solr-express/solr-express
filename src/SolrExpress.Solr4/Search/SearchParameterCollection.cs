@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Core.Search;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Solr4.Search
 {
@@ -29,9 +29,12 @@ namespace SolrExpress.Solr4.Search
         {
             var list = new List<string>();
 
-            foreach (var item in this._parameters?.OrderBy(q => q.GetType().ToString()))
+            if (this._parameters != null)
             {
-                ((ISearchParameter<List<string>>)item).Execute(list);
+                Parallel.ForEach(this._parameters, item =>
+                {
+                    ((ISearchParameter<List<string>>)item).Execute(list);
+                });
             }
 
             return string.Join("&", list);
