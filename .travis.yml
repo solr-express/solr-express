@@ -1,7 +1,7 @@
 language: csharp
 mono: none
-dist: trusty,
-sudo: required,
+dist: trusty
+sudo: required
 dotnet: 1.0.0-preview3-004056
 solution: SolrExpress.sln
 os: osx
