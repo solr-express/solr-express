@@ -4,6 +4,7 @@ dist: trusty,
 sudo: required,
 dotnet: 1.0.0-preview3-004056
 solution: SolrExpress.sln
+os: osx
 install:
   - nuget restore solution-name.sln
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
