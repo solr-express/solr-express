@@ -1,4 +1,4 @@
-﻿{
+{
   "authors": [ "diego.lb" ],
   "buildOptions": {
     "warningsAsErrors": true,
@@ -27,7 +27,8 @@
     "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
-        "System.Net.Requests": "4.0.11"
+        "System.Net.Requests": "4.0.11",
+        "System.Threading.Tasks.Parallel": "4.3.0"
       }
     },
     "net4": {
@@ -36,6 +37,9 @@
       }
     },
     "net45": {
+      "dependencies": {
+        "System.Threading.Tasks.Parallel": "4.3.0"
+      }
     }
   },
   "packOptions": {

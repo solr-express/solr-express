@@ -5,6 +5,7 @@ using SolrExpress.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Core.Search
 {
@@ -125,7 +126,7 @@ namespace SolrExpress.Core.Search
 
                 this._items.Add(item);
             }
-            
+
             return this;
         }
 
@@ -187,9 +188,9 @@ namespace SolrExpress.Core.Search
             var systemParameter = this.Engine.GetService<ISystemParameter>();
             var parameterCollection = this.Engine.GetService<ISearchParameterCollection>();
 
-            this.Options.GlobalParameters.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
-            this.Options.GlobalQueryInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
-            this.Options.GlobalResultInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
+            Parallel.ForEach(this.Options.GlobalParameters, item => ((ISolrSearch<TDocument>)this).Add(item));
+            Parallel.ForEach(this.Options.GlobalQueryInterceptors, item => ((ISolrSearch<TDocument>)this).Add(item));
+            Parallel.ForEach(this.Options.GlobalResultInterceptors, item => ((ISolrSearch<TDocument>)this).Add(item));
 
             systemParameter.Configure();
             this._items.Add(systemParameter);
@@ -201,13 +202,13 @@ namespace SolrExpress.Core.Search
             parameterCollection.Add(searchParameters);
             var query = parameterCollection.Execute();
 
-            this._items.OfType<ISearchInterceptor>().ToList().ForEach(q => q.Execute(ref query));
+            Parallel.ForEach(this._items.OfType<ISearchInterceptor>(), interceptor => interceptor.Execute(ref query));
 
             var solrConnection = this.Engine.GetService<ISolrConnection>();
             solrConnection.HostAddress = this.Options.HostAddress;
             var json = solrConnection.Get(this._handlerName, query);
 
-            this._items.OfType<IResultInterceptor>().ToList().ForEach(q => q.Execute(ref json));
+            Parallel.ForEach(this._items.OfType<IResultInterceptor>(), interceptor => interceptor.Execute(ref json));
 
             return new SearchResult<TDocument>(searchParameters, this.Engine, json);
         }

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search
 {
@@ -30,9 +30,12 @@ namespace SolrExpress.Solr5.Search
         {
             var jObject = new JObject();
 
-            foreach (var item in this._parameters?.OrderBy(q => q.GetType().ToString()))
+            if (this._parameters != null)
             {
-                ((ISearchParameter<JObject>)item).Execute(jObject);
+                Parallel.ForEach(this._parameters, item =>
+                {
+                    ((ISearchParameter<JObject>)item).Execute(jObject);
+                });
             }
 
             return jObject.ToString();
