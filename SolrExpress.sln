@@ -34,6 +34,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.Ui", "sample\Sample.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18BA4609-5C3C-48B5-BE77-F8B316014E74}"
 	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
 		global.json = global.json
 		NuGet.config = NuGet.config
 		README.md = README.md
