@@ -2,11 +2,12 @@ language: csharp
 mono: none
 dist: trusty
 sudo: required
-dotnet: 1.0.0-preview5-004232
+dotnet: 1.0.0-preview3-004056
 solution: SolrExpress.sln
 os: linux
 install:
-  - nuget restore SolrExpress.sln
+  - nuget # lets get version number
+  - nuget restore SolrExpress.sln -Verbosity detailed
   - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release SolrExpress.sln
