@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.0.6] - 2016-12-13
+
+### Bug fix
+* Wrong dependency injection ([#173](https://github.com/solr-express/solr-express/issues/173))
+
+---
+
 ## [4.0.5] - 2016-12-13
 
 ### Bug fix

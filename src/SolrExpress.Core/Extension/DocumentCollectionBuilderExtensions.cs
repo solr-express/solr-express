@@ -23,8 +23,7 @@ namespace SolrExpress.Core.Extension
 
             builderObj
                 .Engine
-                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
-                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>(new SearchParameterBuilder<TDocument>(documentCollection.Engine))
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
 
             return builderObj;
