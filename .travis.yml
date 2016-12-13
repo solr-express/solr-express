@@ -2,7 +2,7 @@ language: csharp
 mono: none
 dist: trusty
 sudo: required
-dotnet: 1.0.0-preview3-004056
+dotnet: 1.0.0-preview5-004232
 solution: SolrExpress.sln
 os: linux
 install:
