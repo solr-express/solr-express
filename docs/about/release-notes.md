@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.0.5] - 2016-12-13
+
+### Bug fix
+* Inaccessible internal services when configure multiple Documents ([#172](https://github.com/solr-express/solr-express/issues/172))
+
+---
+
 ## [4.0.4] - 2016-12-02
 
 ### Enhancement

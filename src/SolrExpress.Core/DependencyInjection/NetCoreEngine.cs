@@ -1,22 +1,11 @@
 ﻿#if NETCOREAPP1_0
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
 
 namespace SolrExpress.Core.DependencyInjection
 {
     internal class NetCoreEngine : IEngine
     {
-        /// <summary>
-        /// Object used in lock
-        /// </summary>
-        private readonly object _lockObject = new object();
-
-        /// <summary>
-        /// Service provider instance
-        /// </summary>
-        private IServiceProvider _serviceProvider;
-
         /// <summary>
         /// Collection of service descriptors
         /// </summary>
@@ -28,23 +17,6 @@ namespace SolrExpress.Core.DependencyInjection
         public NetCoreEngine()
         {
             this._serviceCollection = new ServiceCollection();
-        }
-
-        /// <summary>
-        /// Get service provider instance
-        /// </summary>
-        /// <returns>Service provider instance</returns>
-        private IServiceProvider GetServiceProvider()
-        {
-            lock (this._lockObject)
-            {
-                if (this._serviceProvider == null)
-                {
-                    this._serviceProvider = this._serviceCollection.BuildServiceProvider();
-                }
-            }
-
-            return _serviceProvider;
         }
 
         /// <summary>
@@ -118,7 +90,9 @@ namespace SolrExpress.Core.DependencyInjection
         /// <returns>Instance of type TService</returns>
         TService IEngine.GetService<TService>()
         {
-            return this.GetServiceProvider().GetRequiredService<TService>();
+            var serviceProvider = this._serviceCollection.BuildServiceProvider();
+
+            return serviceProvider.GetRequiredService<TService>();
         }
     }
 }
