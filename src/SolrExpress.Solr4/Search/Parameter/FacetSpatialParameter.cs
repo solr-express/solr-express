@@ -15,7 +15,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         }
 
         /// <summary>
-        /// Execute the creation of the parameter "sort"
+        /// Execute creation of the parameter "facet field" using spatial formule
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
