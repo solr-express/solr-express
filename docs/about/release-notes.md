@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.0.7] - 2016-12-14
+
+### Bug fix
+* Default parameters conflit with configued parameters ([#175](https://github.com/solr-express/solr-express/issues/175))
+
+---
+
 ## [4.0.6] - 2016-12-13
 
 ### Bug fix
