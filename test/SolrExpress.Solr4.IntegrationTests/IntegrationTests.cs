@@ -634,16 +634,16 @@ namespace SolrExpress.Solr4.IntegrationTests
             var documentList = documents.ToList();
             Assert.Equal(1, documentList.Count);
             Assert.NotEmpty(documentList[0].Id);
-            Assert.NotEmpty(documentList[0].Name);
+            Assert.Null(documentList[0].Name);
             Assert.Null(documentList[0].Manufacturer);
             Assert.Null(documentList[0].ManufacturerId);
             Assert.Null(documentList[0].Categories);
             Assert.Null(documentList[0].Features);
-            Assert.Null(documentList[0].StoredAt);
+            Assert.Equal(default(GeoCoordinate), documentList[0].StoredAt);
             Assert.Equal(0, documentList[0].Price);
             Assert.Equal(0, documentList[0].Popularity);
             Assert.False(documentList[0].InStock);
-            Assert.Equal(DateTime.MinValue, documentList[0].ManufacturedateIn);
+            Assert.Equal(default(DateTime), documentList[0].ManufacturedateIn);
         }
     }
 }

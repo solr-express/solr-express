@@ -26,6 +26,24 @@ namespace SolrExpress.Solr5.Search.Parameter
             }
 
             jObject["params"] = jObj;
+
+            if (jObject["query"] == null)
+            {
+                jObject["query"] = new JValue("*:*");
+            }
+
+            if (jObject["sort"] == null)
+            {
+                jObject["sort"] = new JValue("score desc");
+            }
+
+            if (jObject["fields"] == null)
+            {
+                var jArray = new JArray();
+                jArray.Add("*,score");
+
+                jObject["fields"] = jArray;
+            }
         }
     }
 }

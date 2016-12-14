@@ -16,6 +16,10 @@ namespace SolrExpress.Solr4.Search.Parameter
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
+            this.Parameters.Add("fl", "*,score");
+            this.Parameters.Add("sort", "score desc");
+            this.Parameters.Add("q", "*:*");
+
             foreach (var parameter in this.Parameters)
             {
                 if (!container.Any(q => q.StartsWith($"{parameter.Key}=")))

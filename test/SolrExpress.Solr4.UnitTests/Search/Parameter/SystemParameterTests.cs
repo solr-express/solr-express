@@ -27,10 +27,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             Assert.Equal("wt=json", container[1]);
             Assert.Equal("indent=off", container[2]);
             Assert.Equal("defType=edismax", container[3]);
-            Assert.Equal("fl=*,score", container[4]);
-            Assert.Equal("q.alt=*:*", container[5]);
-            Assert.Equal("sort=score asc", container[6]);
-            Assert.Equal("df=id", container[7]);
+            Assert.Equal("q.alt=*:*", container[4]);
+            Assert.Equal("df=id", container[5]);
+            Assert.Equal("fl=*,score", container[6]);
+            Assert.Equal("sort=score desc", container[7]);
             Assert.Equal("q=*:*", container[8]);
         }
     }

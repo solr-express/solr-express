@@ -25,11 +25,8 @@ namespace SolrExpress.Core.Search.Parameter
                 ["wt"] = "json",
                 ["indent"] = "off",
                 ["defType"] = "edismax",
-                ["fl"] = "*,score",
                 ["q.alt"] = "*:*",
-                ["sort"] = "score asc",
-                ["df"] = "id",
-                ["q"] = "*:*"
+                ["df"] = "id"
             };
 
             return this;

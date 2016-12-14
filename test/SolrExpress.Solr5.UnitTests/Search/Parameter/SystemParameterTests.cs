@@ -27,11 +27,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             Assert.Equal("json", container["params"]["wt"]);
             Assert.Equal("off", container["params"]["indent"]);
             Assert.Equal("edismax", container["params"]["defType"]);
-            Assert.Equal("*,score", container["params"]["fl"]);
             Assert.Equal("*:*", container["params"]["q.alt"]);
-            Assert.Equal("score asc", container["params"]["sort"]);
             Assert.Equal("id", container["params"]["df"]);
-            Assert.Equal("*:*", container["params"]["q"]);
+            Assert.Equal("*,score", container["fields"][0]);
+            Assert.Equal("score desc", container["sort"]);
+            Assert.Equal("*:*", container["query"]);
         }
     }
 }
