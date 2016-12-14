@@ -606,5 +606,44 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.Equal(listAllDocuments[5].Id, documentsPage2.ToList()[0].Id);
             Assert.Equal(listAllDocuments[10].Id, documentsPage3.ToList()[0].Id);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Fields"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest019()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> documents;
+
+            // Act
+            result = documentCollection
+                .Select()
+                .Query(new QueryAll())
+                .Fields(q => q.Id, q => q.Name)
+                .Sort(q => q.Id, false)
+                .Limit(1)
+                .Execute()
+                .Document(out documents);
+
+            // Assert
+            var documentList = documents.ToList();
+            Assert.Equal(1, documentList.Count);
+            Assert.NotEmpty(documentList[0].Id);
+            Assert.NotEmpty(documentList[0].Name);
+            Assert.Null(documentList[0].Manufacturer);
+            Assert.Null(documentList[0].ManufacturerId);
+            Assert.Null(documentList[0].Categories);
+            Assert.Null(documentList[0].Features);
+            Assert.Null(documentList[0].StoredAt);
+            Assert.Equal(0, documentList[0].Price);
+            Assert.Equal(0, documentList[0].Popularity);
+            Assert.False(documentList[0].InStock);
+            Assert.Equal(DateTime.MinValue, documentList[0].ManufacturedateIn);
+        }
     }
 }
