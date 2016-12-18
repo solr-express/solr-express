@@ -105,7 +105,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
 
             var parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/YEAR-1", "NOW/DAY+1")
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/DATE-1", "NOW/DAY+1")
             };
             var result = (IConvertJsonObject)new FacetRangeResult<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
 
@@ -155,7 +155,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             }");
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-            
+
             var parameters = new List<ISearchParameter> {
                 new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDecimal, "10", "10", "100")
             };
@@ -210,7 +210,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
 
             var parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/YEAR-1", "NOW/DAY+1")
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/DATE-1", "NOW/DAY+1DAY")
             };
             var result = (IConvertJsonObject)new FacetRangeResult<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
 
@@ -230,15 +230,15 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.IsType(typeof(FacetRange<DateTime>), element0.Key);
 
             Assert.Null(element0.Key.GetMinimumValue());
-            Assert.Equal(DateTime.Now.Date.AddYears(-1), element0.Key.GetMaximumValue());
+            Assert.Equal(DateTime.Now.Date, ((DateTime)element0.Key.GetMaximumValue()).Date);
             Assert.Equal(30, element0.Value);
 
-            Assert.Equal(DateTime.Parse("2016-01-01T00:00:00.000Z"), element1.Key.GetMinimumValue());
-            Assert.Equal(DateTime.Parse("2016-01-01T00:00:00.000Z").AddDays(10), element1.Key.GetMaximumValue());
+            Assert.Equal(new DateTime(2016, 01, 01), element1.Key.GetMinimumValue());
+            Assert.Equal(new DateTime(2016, 01, 01).AddDays(10), element1.Key.GetMaximumValue());
             Assert.Equal(10, element1.Value);
 
-            Assert.Equal(DateTime.Parse("2018-01-01T00:00:00.000Z"), element2.Key.GetMinimumValue());
-            Assert.Equal(DateTime.Parse("2018-01-01T00:00:00.000Z").AddDays(10), element2.Key.GetMaximumValue());
+            Assert.Equal(new DateTime(2018, 01, 01), element2.Key.GetMinimumValue());
+            Assert.Equal(new DateTime(2018, 01, 01).AddDays(10), element2.Key.GetMaximumValue());
             Assert.Equal(20, element2.Value);
 
             Assert.Null(element3.Key.GetMaximumValue());
