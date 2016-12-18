@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DaleNewman;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
@@ -17,7 +18,11 @@ namespace SolrExpress.Solr5.Search.Result
     public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
-        private IExpressionBuilder<TDocument> _expressionBuilder;
+        private readonly IExpressionBuilder<TDocument> _expressionBuilder;
+        private const string OperatorPattern = @"[/+/-]{1}\d+(YEARS|YEAR|MONTHS|MONTH|DAYS|DAY|DATE|HOURS|HOUR|MINUTES|MINUTE|SECONDS|SECOND)";
+        private const string RoundingPattern = @"/(DAY|DAYS|DATE|HOUR|HOURS|MINUTE|MINUTES|SECOND|SECONDS)";
+        private readonly Regex OperatorRegex = new Regex(OperatorPattern, RegexOptions.Compiled);
+        private readonly Regex RoundingRegex = new Regex(RoundingPattern, RegexOptions.Compiled);
 
         public FacetRangeResult(IExpressionBuilder<TDocument> expressionBuilder)
         {
@@ -69,7 +74,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (facetType == typeof(DateTime))
             {
-                return DateTime.Now.Date - (TimeSpan)GetGapValue(value);
+                return DateMath.Apply(DateTime.Now, (string)GetGapValue(value));
             }
 
             return Convert.ToInt32(value);
@@ -98,7 +103,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (facetType == typeof(DateTime))
             {
-                return ((DateTime)value).Add((TimeSpan)gapValue);
+                return DateMath.Apply((DateTime)value, (string)gapValue);
             }
 
             if (facetType == typeof(long))
@@ -130,23 +135,27 @@ namespace SolrExpress.Solr5.Search.Result
             }
 
             // Assuming than gap is DateTime type
-            var gapNumber = int.Parse(Regex.Replace(gap, "[^0-9]", string.Empty, RegexOptions.IgnoreCase));
-
-            var keys = new Dictionary<string, DateTime>
+            var keys = new Dictionary<string, string>
             {
-                ["MILISECOND"] = DateTime.Now.AddMilliseconds(1),
-                ["SECOND"] = DateTime.Now.AddSeconds(1),
-                ["MINUTE"] = DateTime.Now.AddMinutes(1),
-                ["HOUR"] = DateTime.Now.AddHours(1),
-                ["DAY"] = DateTime.Now.AddDays(1),
-                ["WEAK"] = DateTime.Now.AddDays(7),
-                ["MONTH"] = DateTime.Now.AddMonths(1),
-                ["YEAR"] = DateTime.Now.AddYears(1)
+                ["YEAR"] = "y",
+                ["YEARS"] = "y",
+                ["MONTH"] = "M",
+                ["MONTHS"] = "M",
+                ["DAY"] = "d",
+                ["DAYS"] = "d",
+                ["DATE"] = "now",
+                ["HOUR"] = "h",
+                ["HOURS"] = "h",
+                ["MINUTE"] = "m",
+                ["MINUTES"] = "m",
+                ["SECOND"] = "s",
+                ["SECONDS"] = "s"
             };
 
-            var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
-
-            return new TimeSpan(key.Value.Ticks * gapNumber);
+            var gapReplaced = this.OperatorRegex.Replace(gap, m => m.Groups[0].Value.Replace(
+                    m.Groups[1].Value, keys[m.Groups[1].Value]));
+            return this.RoundingRegex.Replace(gapReplaced, m => m.Groups[0].Value.Replace(
+                    m.Groups[1].Value, keys[m.Groups[1].Value]));
         }
 
         /// <summary>
