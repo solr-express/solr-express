@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Utility
             where TDocument : IDocument
         {
             var documentParameter = Expression.Parameter(typeof(TDocument), "document");
-#if NETCOREAPP1_0
+#if NETCORE
             var properties = typeof(TDocument).GetTypeInfo().GetProperties();
 #else
             var properties = typeof(TDocument).GetProperties();

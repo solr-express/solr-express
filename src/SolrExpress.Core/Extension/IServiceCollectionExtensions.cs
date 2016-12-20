@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP1_0
+﻿#if NETCORE
 using Microsoft.Extensions.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Utility;
