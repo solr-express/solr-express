@@ -38,7 +38,7 @@ namespace SolrExpress.Core {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-#if NETCOREAPP1_0
+#if NETCORE
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource-pt-BR", typeof(Resource_pt_BR).GetTypeInfo().Assembly);
 #else  
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource-pt-BR", typeof(Resource_pt_BR).Assembly);

@@ -27,7 +27,7 @@ namespace DaleNewman
         private const string OperatorPattern = @"[/+/-]{1}\d+[dhMmswy]{1}";
         private const string RoundingPattern = @"/[dhMmswy]{1}";
 
-#if NETCOREAPP1_0
+#if NETCORE
         private static readonly Regex AnchorDate = new Regex(AnchorDatePattern);
         private static readonly Regex Operator = new Regex(OperatorPattern);
         private static readonly Regex Rounding = new Regex(RoundingPattern);

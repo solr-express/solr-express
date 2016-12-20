@@ -17,7 +17,7 @@ namespace SolrExpress.Solr4.Extension
         {
             builder
                 .Engine
-#if NETCOREAPP1_0
+#if NETCORE
                 .AddSingleton<IEngine, NetCoreEngine>((NetCoreEngine)builder.Engine)
 #else
                 .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)

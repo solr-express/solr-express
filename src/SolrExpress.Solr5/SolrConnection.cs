@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-#if NETCOREAPP1_0
+#if NETCORE
 using System.Threading.Tasks;
 #endif
 
@@ -21,7 +21,7 @@ namespace SolrExpress.Solr5
         /// <param name="request">Configured request used in comunication with SOLR</param>
         /// <param name="rawData">Raw data send in request (used in log)</param>
         /// <returns>Result of the request</returns>
-#if NETCOREAPP1_0
+#if NETCORE
         private async Task<string> ExecuteAsync(WebRequest request, string rawData)
         {
             try
@@ -116,7 +116,7 @@ namespace SolrExpress.Solr5
             request.ContentLength = bytes.Length;
 #endif
 
-#if NETCOREAPP1_0
+#if NETCORE
             var taskStream = request.GetRequestStreamAsync();
             taskStream.Wait();
             var stream = taskStream.Result;
@@ -140,7 +140,7 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare("GET-X", handler, data);
 
-#if NETCOREAPP1_0
+#if NETCORE
             var task = this.ExecuteAsync(request, data);
             task.Wait();
 
@@ -160,7 +160,7 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare("POST", handler, data);
 
-#if NETCOREAPP1_0
+#if NETCORE
             var task = this.ExecuteAsync(request, data);
             task.Wait();
 
