@@ -3,13 +3,14 @@
     /// <summary>
     /// Signatures to use in facet limit parameter
     /// </summary>
-    public interface IFacetLimitParameter : ISearchParameter
+    public interface IFacetLimitParameter<TDocument> : ISearchParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
-        IFacetLimitParameter Configure(int value);
+        IFacetLimitParameter<TDocument> Configure(int value);
 
         /// <summary>
         /// Value of limit

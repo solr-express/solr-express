@@ -1,8 +1,10 @@
-﻿using SolrExpress.Core.Utility;
+﻿using System;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseMinimumShouldMatchParameter : IMinimumShouldMatchParameter
+    public abstract class BaseMinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -14,11 +16,13 @@ namespace SolrExpress.Core.Search.Parameter
         /// </summary>
         public string Expression { get; private set; }
 
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        public IMinimumShouldMatchParameter Configure(string expression)
+        public IMinimumShouldMatchParameter<TDocument> Configure(string expression)
         {
             Checker.IsNullOrWhiteSpace(expression);
 

@@ -27,7 +27,7 @@ namespace SolrExpress.Core.Benchmarks.Search
             engine.Setup(q => q.GetService<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
             engine.Setup(q => q.GetService<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
             engine.Setup(q => q.GetService<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
-            engine.Setup(q => q.GetService<ISearchParameterCollection>()).Returns(new Mock<ISearchParameterCollection>().Object);
+            engine.Setup(q => q.GetService<ISearchParameterCollection<TestDocument>>()).Returns(new Mock<ISearchParameterCollection<TestDocument>>().Object);
 
             var options = new DocumentCollectionOptions<TestDocument>();
             var parameters = new List<ISearchItem>();

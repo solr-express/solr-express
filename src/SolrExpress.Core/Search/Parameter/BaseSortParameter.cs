@@ -28,7 +28,9 @@ namespace SolrExpress.Core.Search.Parameter
         /// True to ascendent order, otherwise false
         /// </summary>
         public bool Ascendent { get; private set; }
-        
+
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Configure current instance
         /// </summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in query parameter
     /// </summary>
-    public interface IQueryParameter<TDocument> : ISearchParameter
+    public interface IQueryParameter<TDocument> : ISearchParameter<TDocument>
         where TDocument : IDocument
     {
         /// <summary>

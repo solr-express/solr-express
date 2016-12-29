@@ -40,6 +40,8 @@ namespace SolrExpress.Core.Search.Parameter
         /// </summary>
         public decimal Distance { get; private set; }
 
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Check for the parameter validation
         /// </summary>

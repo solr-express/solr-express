@@ -3,13 +3,14 @@
     /// <summary>
     /// Signatures to use in limit parameter
     /// </summary>
-    public interface ILimitParameter : ISearchParameter
+    public interface ILimitParameter<TDocument> : ISearchParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
-        ILimitParameter Configure(long value);
+        ILimitParameter<TDocument> Configure(long value);
 
         /// <summary>
         /// Value of limit

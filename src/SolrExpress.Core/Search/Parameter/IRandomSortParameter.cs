@@ -3,13 +3,14 @@
     /// <summary>
     /// Signatures to use in sort parameter
     /// </summary>
-    public interface IRandomSortParameter : ISearchParameter
+    public interface IRandomSortParameter<TDocument> : ISearchParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        IRandomSortParameter Configure(bool ascendent);
+        IRandomSortParameter<TDocument> Configure(bool ascendent);
 
         /// <summary>
         /// True to ascendent order, otherwise false

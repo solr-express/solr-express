@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use boost parameter
     /// </summary>
-    public interface IBoostParameter<TDocument> : ISearchParameter
+    public interface IBoostParameter<TDocument> : ISearchParameter<TDocument>
         where TDocument : IDocument
     {
         /// <summary>

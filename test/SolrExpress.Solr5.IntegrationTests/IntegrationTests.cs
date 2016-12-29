@@ -94,7 +94,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Execute();
 
             result.Document(out data);
@@ -120,7 +120,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Filter(q => q.InStock, "true")
                 .Filter(q => q.ManufacturerId, "corsair")
                 .Execute();
@@ -147,7 +147,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .FacetField(q => q.ManufacturerId)
                 .FacetField(q => q.InStock)
                 .Execute();
@@ -176,7 +176,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .FacetQuery("Facet1", new Range<TechProductDocument, decimal>(q => q.Popularity, from: 10))
                 .FacetQuery("Facet2", new Range<TechProductDocument, decimal>(q => q.Popularity, to: 10))
                 .Execute();
@@ -205,7 +205,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
                 .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
                 .Execute();
@@ -234,7 +234,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Execute();
 
             result.Information(out data);
@@ -259,7 +259,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
                 .FacetLimit(1)
                 .Execute();
@@ -287,7 +287,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .FacetField(q => q.ManufacturerId, limit: 10)
                 .Execute();
             result.FacetField(out data);
@@ -412,7 +412,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Sort(q => q.Id, true)
                 .Execute();
             result.Document(out data);
@@ -438,7 +438,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Sort(q => q.Id, false)
                 .Sort(q => q.Name, true)
                 .Execute();
@@ -508,7 +508,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Boost(new Any<TechProductDocument>("inStock"), BoostFunctionType.Boost)
                 .Execute();
             data = result.Get(new InformationResult<TechProductDocument>());
@@ -533,7 +533,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Boost(new Any<TechProductDocument>("inStock"), BoostFunctionType.Bf)
                 .Execute();
             data = result.Get(new InformationResult<TechProductDocument>());
@@ -558,7 +558,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             IEnumerable<TechProductDocument> documentsPage3;
             documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Limit(20)
                 .Execute()
                 .Document(out allDocuments);
@@ -566,21 +566,21 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Act
             documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Page(5, 1)
                 .Execute()
                 .Document(out documentsPage1);
 
             documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Page(5, 2)
                 .Execute()
                 .Document(out documentsPage2);
 
             documentCollection
                 .Select()
-                .Query(new QueryAll<TechProductDocument>())
+                .QueryAll()
                 .Page(5, 3)
                 .Execute()
                 .Document(out documentsPage3);

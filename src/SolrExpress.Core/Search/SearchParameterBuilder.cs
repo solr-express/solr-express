@@ -119,11 +119,11 @@ namespace SolrExpress.Core.Search
         /// Create a limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        public ILimitParameter Limit(int value)
+        public ILimitParameter<TDocument> Limit(int value)
         {
             return this
                 .Engine
-                .GetService<ILimitParameter>()
+                .GetService<ILimitParameter<TDocument>>()
                 .Configure(value);
         }
 
@@ -131,11 +131,11 @@ namespace SolrExpress.Core.Search
         /// Create a offset parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        public IOffsetParameter Offset(int value)
+        public IOffsetParameter<TDocument> Offset(int value)
         {
             return this
                 .Engine
-                .GetService<IOffsetParameter>()
+                .GetService<IOffsetParameter<TDocument>>()
                 .Configure(value);
         }
 
@@ -214,11 +214,11 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <param name="expressions">Expression used to find the property name</param>
-        public IRandomSortParameter RandomSort(bool ascendent)
+        public IRandomSortParameter<TDocument> RandomSort(bool ascendent)
         {
             return this
                 .Engine
-                .GetService<IRandomSortParameter>()
+                .GetService<IRandomSortParameter<TDocument>>()
                 .Configure(ascendent);
         }
 
@@ -226,11 +226,11 @@ namespace SolrExpress.Core.Search
         /// Create a facet limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        public IFacetLimitParameter FacetLimit(int value)
+        public IFacetLimitParameter<TDocument> FacetLimit(int value)
         {
             return this
                 .Engine
-                .GetService<IFacetLimitParameter>()
+                .GetService<IFacetLimitParameter<TDocument>>()
                 .Configure(value);
         }
 
@@ -238,11 +238,11 @@ namespace SolrExpress.Core.Search
         /// Create a minimum should match parameter
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        public IMinimumShouldMatchParameter MinimumShouldMatch(string expression)
+        public IMinimumShouldMatchParameter<TDocument> MinimumShouldMatch(string expression)
         {
             return this
                 .Engine
-                .GetService<IMinimumShouldMatchParameter>()
+                .GetService<IMinimumShouldMatchParameter<TDocument>>()
                 .Configure(expression);
         }
 
@@ -250,11 +250,11 @@ namespace SolrExpress.Core.Search
         /// Create a query field parameter
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        public IQueryFieldParameter QueryField(string expression)
+        public IQueryFieldParameter<TDocument> QueryField(string expression)
         {
             return this
                 .Engine
-                .GetService<IQueryFieldParameter>()
+                .GetService<IQueryFieldParameter<TDocument>>()
                 .Configure(expression);
         }
 
@@ -278,11 +278,11 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="name">Name of the parameter</param>
         /// <param name="value">Value of the parameter</param>
-        public IAnyParameter Any(string name, string value)
+        public IAnyParameter<TDocument> Any(string name, string value)
         {
             return this
                 .Engine
-                .GetService<IAnyParameter>()
+                .GetService<IAnyParameter<TDocument>>()
                 .Configure(name, value);
         }
 
