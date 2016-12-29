@@ -6,7 +6,7 @@ namespace SolrExpress.Core.Search.Parameter
     /// <summary>
     /// Signatures to use in fields parameter
     /// </summary>
-    public interface IFieldsParameter<TDocument> : ISearchParameter
+    public interface IFieldsParameter<TDocument> : ISearchParameter<TDocument>
         where TDocument : IDocument
     {
         /// <summary>

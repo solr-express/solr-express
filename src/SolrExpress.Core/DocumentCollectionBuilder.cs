@@ -27,7 +27,7 @@ namespace SolrExpress.Core
         /// </summary>
         /// <param name="options">Options to be used</param>
         /// <returns>Current instance</returns>
-        public DocumentCollectionBuilder<TDocument> UseOptions(DocumentCollectionOptions options)
+        public DocumentCollectionBuilder<TDocument> UseOptions(DocumentCollectionOptions<TDocument> options)
         {
             var shadowOptions = new DocumentCollectionOptions<TDocument>
             {

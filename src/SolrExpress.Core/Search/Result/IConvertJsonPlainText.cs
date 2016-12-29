@@ -5,13 +5,14 @@ namespace SolrExpress.Core.Search.Result
     /// <summary>
     /// Base interface used to parse the SOLR results when a json string is necessary
     /// </summary>
-    public interface IConvertJsonPlainText
+    public interface IConvertJsonPlainText<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the parse of the JSON string
         /// </summary>
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="jsonPlainText">JSON string used in the parse</param>
-        void Execute(List<ISearchParameter> parameters, string jsonPlainText);
+        void Execute(List<ISearchParameter<TDocument>> parameters, string jsonPlainText);
     }
 }

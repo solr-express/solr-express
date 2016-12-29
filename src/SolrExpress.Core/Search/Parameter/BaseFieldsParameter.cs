@@ -24,7 +24,9 @@ namespace SolrExpress.Core.Search.Parameter
         /// Expression used to find the property name
         /// </summary>
         public Expression<Func<TDocument, object>>[] Expressions { get; private set; }
-        
+
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Check for the parameter validation
         /// </summary>

@@ -1,8 +1,10 @@
-﻿using SolrExpress.Core.Utility;
+﻿using System;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseQueryFieldParameter : IQueryFieldParameter
+    public abstract class BaseQueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -13,18 +15,25 @@ namespace SolrExpress.Core.Search.Parameter
         /// Query used to make the query field
         /// </summary>
         public string Expression { get; private set; }
-        
+
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="expression">Query used to make the query field</param>
-        public IQueryFieldParameter Configure(string expression)
+        public IQueryFieldParameter<TDocument> Configure(string expression)
         {
             Checker.IsNullOrWhiteSpace(expression);
 
             this.Expression = expression;
 
             return this;
+        }
+
+        IQueryFieldParameter<TDocument> IQueryFieldParameter<TDocument>.Configure(string expression)
+        {
+            throw new NotImplementedException();
         }
     }
 }

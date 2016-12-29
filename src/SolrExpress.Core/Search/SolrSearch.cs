@@ -45,9 +45,9 @@ namespace SolrExpress.Core.Search
         /// <param name="item">Search item to validate</param>
         private void ValidateSearchParameter(ISearchItem item)
         {
-            if (item is ISearchParameter)
+            if (item is ISearchParameter<TDocument>)
             {
-                var parameter = (ISearchParameter)item;
+                var parameter = (ISearchParameter<TDocument>)item;
 
                 var multipleInstances = !parameter.AllowMultipleInstances && this._items
                     .Any(q => (q.GetType() == parameter.GetType()));
@@ -58,9 +58,9 @@ namespace SolrExpress.Core.Search
 
                 var mustValidate = this.Options.FailFast && parameterValidation != null;
 
-                if (parameter is IAnyParameter)
+                if (parameter is IAnyParameter<TDocument>)
                 {
-                    mustValidate = mustValidate && this.Options.CheckAnyParameter && parameter is IAnyParameter;
+                    mustValidate = mustValidate && this.Options.CheckAnyParameter && parameter is IAnyParameter<TDocument>;
                 }
 
                 if (mustValidate)
@@ -80,19 +80,19 @@ namespace SolrExpress.Core.Search
         /// </summary>
         private void SetDefaultPaginationParameters()
         {
-            var offsetParameter = (IOffsetParameter)this._items.FirstOrDefault(q => q is IOffsetParameter);
+            var offsetParameter = (IOffsetParameter<TDocument>)this._items.FirstOrDefault(q => q is IOffsetParameter<TDocument>);
 
             if (offsetParameter == null)
             {
-                offsetParameter = this.Engine.GetService<IOffsetParameter>().Configure(0);
+                offsetParameter = this.Engine.GetService<IOffsetParameter<TDocument>>().Configure(0);
                 this._items.Add(offsetParameter);
             }
 
-            var limitParameter = (ILimitParameter)this._items.FirstOrDefault(q => q is ILimitParameter);
+            var limitParameter = (ILimitParameter<TDocument>)this._items.FirstOrDefault(q => q is ILimitParameter<TDocument>);
 
             if (limitParameter == null)
             {
-                limitParameter = this.Engine.GetService<ILimitParameter>().Configure(10);
+                limitParameter = this.Engine.GetService<ILimitParameter<TDocument>>().Configure(10);
                 this._items.Add(limitParameter);
             }
         }
@@ -185,8 +185,8 @@ namespace SolrExpress.Core.Search
         /// <returns>Solr result</returns>
         public ISearchResult<TDocument> Execute()
         {
-            var systemParameter = this.Engine.GetService<ISystemParameter>();
-            var parameterCollection = this.Engine.GetService<ISearchParameterCollection>();
+            var systemParameter = this.Engine.GetService<ISystemParameter<TDocument>>();
+            var parameterCollection = this.Engine.GetService<ISearchParameterCollection<TDocument>>();
 
             Parallel.ForEach(this.Options.GlobalParameters, item => ((ISolrSearch<TDocument>)this).Add(item));
             Parallel.ForEach(this.Options.GlobalQueryInterceptors, item => ((ISolrSearch<TDocument>)this).Add(item));
@@ -197,7 +197,7 @@ namespace SolrExpress.Core.Search
 
             this.SetDefaultPaginationParameters();
 
-            var searchParameters = this._items.OfType<ISearchParameter>().ToList();
+            var searchParameters = this._items.OfType<ISearchParameter<TDocument>>().ToList();
 
             parameterCollection.Add(searchParameters);
             var query = parameterCollection.Execute();

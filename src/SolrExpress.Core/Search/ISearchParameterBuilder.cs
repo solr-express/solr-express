@@ -70,13 +70,13 @@ namespace SolrExpress.Core.Search
         /// Create a limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        ILimitParameter Limit(int value);
+        ILimitParameter<TDocument> Limit(int value);
 
         /// <summary>
         /// Create a offset parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        IOffsetParameter Offset(int value);
+        IOffsetParameter<TDocument> Offset(int value);
 
         /// <summary>
         /// Create a query parameter
@@ -116,25 +116,25 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <param name="expressions">Expression used to find the property name</param>
-        IRandomSortParameter RandomSort(bool ascendent);
+        IRandomSortParameter<TDocument> RandomSort(bool ascendent);
 
         /// <summary>
         /// Create a facet limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>
-        IFacetLimitParameter FacetLimit(int value);
+        IFacetLimitParameter<TDocument> FacetLimit(int value);
 
         /// <summary>
         /// Create a minimum should match parameter
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        IMinimumShouldMatchParameter MinimumShouldMatch(string expression);
+        IMinimumShouldMatchParameter<TDocument> MinimumShouldMatch(string expression);
 
         /// <summary>
         /// Create a query field parameter
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        IQueryFieldParameter QueryField(string expression);
+        IQueryFieldParameter<TDocument> QueryField(string expression);
 
         /// <summary>
         /// Create a query field parameter using spatial notation
@@ -150,7 +150,7 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="name">Name of the parameter</param>
         /// <param name="value">Value of the parameter</param>
-        IAnyParameter Any(string name, string value);
+        IAnyParameter<TDocument> Any(string name, string value);
 
         /// <summary>
         /// Create a boost parameter

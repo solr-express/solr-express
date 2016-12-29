@@ -1,32 +1,29 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core;
 using SolrExpress.Core.Search;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace SolrExpress.Solr5.Search
 {
     /// <summary>
     /// Parameter collection
     /// </summary>
-    public class SearchParameterCollection : ISearchParameterCollection
+    public class SearchParameterCollection<TDocument> : ISearchParameterCollection<TDocument>
+        where TDocument : IDocument
     {
-        private IEnumerable<ISearchParameter> _parameters;
+        private IEnumerable<ISearchParameter<TDocument>> _parameters;
 
-        /// <summary>
-        /// Add a parameter to the query
-        /// </summary>
-        /// <param name="parameters">The parameter to add in the query</param>
-        /// <returns>Itself</returns>
-        public void Add(IEnumerable<ISearchParameter> parameters)
+        IExpressionBuilder<TDocument> ISearchParameterCollection<TDocument>.ExpressionBuilder { get; set; }
+
+        void ISearchParameterCollection<TDocument>.Add(IEnumerable<ISearchParameter<TDocument>> parameters)
         {
             this._parameters = parameters;
         }
 
-        /// <summary>
-        /// Execute parameters and get query instructions
-        /// </summary>
-        /// <returns>Query instructions</returns>
-        public string Execute()
+        string ISearchParameterCollection<TDocument>.Execute()
         {
             var jObject = new JObject();
 
@@ -34,7 +31,11 @@ namespace SolrExpress.Solr5.Search
             {
                 Parallel.ForEach(this._parameters, item =>
                 {
-                    ((ISearchParameter<JObject>)item).Execute(jObject);
+                    lock (jObject)
+                    {
+                        ((ISearchParameter<TDocument, JObject>)item).ExpressionBuilder = ((ISearchParameterCollection<TDocument>)this).ExpressionBuilder;
+                        ((ISearchParameter<TDocument, JObject>)item).Execute(jObject);
+                    }
                 });
             }
 

@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Moq;
+using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Core.Search;
 using SolrExpress.Solr4.Search;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace SolrExpress.Benchmarks.Solr4.Search
 {
     public class ParameterContainerBenchmarks
     {
-        private ISearchParameterCollection _searchParameterCollection;
+        private ISearchParameterCollection<TestDocument> _searchParameterCollection;
 
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
@@ -26,7 +27,7 @@ namespace SolrExpress.Benchmarks.Solr4.Search
 
                 parameters.Add(parameterMock.Object);
             }
-            this._searchParameterCollection = new SearchParameterCollection();
+            this._searchParameterCollection = new SearchParameterCollection<TestDocument>();
             this._searchParameterCollection.Add(parameters);
         }
 

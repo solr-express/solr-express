@@ -12,7 +12,7 @@ namespace SolrExpress.Core.Search.Result
         where TDocument : IDocument
     {
         private readonly string _jsonPlainText;
-        private readonly List<ISearchParameter> _parameters;
+        private readonly List<ISearchParameter<TDocument>> _parameters;
         private JObject _jsonObject;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace SolrExpress.Core.Search.Result
         /// <param name="parameters">List of the parameters arranged in the queryable class</param>
         /// <param name="engine">Services container</param>
         /// <param name="json">Result of the SOLR</param
-        public SearchResult(List<ISearchParameter> parameters, IEngine engine, string json)
+        public SearchResult(List<ISearchParameter<TDocument>> parameters, IEngine engine, string json)
         {
             Checker.IsNull(parameters);
             Checker.IsNull(engine);
@@ -40,7 +40,7 @@ namespace SolrExpress.Core.Search.Result
         public T Get<T>(T result)
             where T : IResult
         {
-            var convertJsonObject = result as IConvertJsonObject;
+            var convertJsonObject = result as IConvertJsonObject<TDocument>;
 
             if (convertJsonObject != null)
             {
@@ -50,7 +50,7 @@ namespace SolrExpress.Core.Search.Result
             }
             else
             {
-                var convertJsonPlainText = result as IConvertJsonPlainText;
+                var convertJsonPlainText = result as IConvertJsonPlainText<TDocument>;
 
                 if (convertJsonPlainText != null)
                 {

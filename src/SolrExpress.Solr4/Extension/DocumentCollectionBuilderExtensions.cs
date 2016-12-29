@@ -51,7 +51,7 @@ namespace SolrExpress.Solr4.Extension
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
                 .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
-                .AddTransient<ISearchParameterCollection, SearchParameterCollection>()
+                .AddTransient<ISearchParameterCollection<TDocument>, SearchParameterCollection<TDocument>>()
                 .AddTransient<ISystemParameter, SystemParameter>();
 
             return builder;
