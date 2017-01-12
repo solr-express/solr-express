@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in offset parameter
     /// </summary>
-    public interface IOffsetParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IOffsetParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in internal use
     /// </summary>
-    public interface ISystemParameter<TDocument> : ISearchParameter<TDocument>
+    public interface ISystemParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

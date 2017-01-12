@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameterExecute<JObject>
       where TDocument : IDocument
     {
         public FacetRangeParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

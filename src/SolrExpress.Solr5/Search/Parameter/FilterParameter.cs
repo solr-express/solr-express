@@ -6,17 +6,20 @@ using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
+        public FilterParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
-            this.Value.ExpressionBuilder = this.ExpressionBuilder;
-
             var jArray = (JArray)jObject["filter"] ?? new JArray();
 
             jArray.Add(ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName));

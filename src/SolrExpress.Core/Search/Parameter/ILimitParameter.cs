@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in limit parameter
     /// </summary>
-    public interface ILimitParameter<TDocument> : ISearchParameter<TDocument>
+    public interface ILimitParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

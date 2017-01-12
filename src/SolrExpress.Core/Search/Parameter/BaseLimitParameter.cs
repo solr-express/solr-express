@@ -1,7 +1,4 @@
-﻿using System;
-using SolrExpress.Core.Utility;
-
-namespace SolrExpress.Core.Search.Parameter
+﻿namespace SolrExpress.Core.Search.Parameter
 {
     public abstract class BaseLimitParameter<TDocument> : ILimitParameter<TDocument>
         where TDocument : IDocument
@@ -10,8 +7,6 @@ namespace SolrExpress.Core.Search.Parameter
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = false;
-
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
 
         /// <summary>
         /// Value of limit
@@ -27,11 +22,6 @@ namespace SolrExpress.Core.Search.Parameter
             this.Value = value;
 
             return this;
-        }
-
-        ILimitParameter<TDocument> ILimitParameter<TDocument>.Configure(long value)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public class RandomSortParameter : BaseRandomSortParameter, ISearchParameter<JObject>
+    public class RandomSortParameter<TDocument> : BaseRandomSortParameter<TDocument>, ISearchParameterExecute<JObject>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute creation of parameter "sort"

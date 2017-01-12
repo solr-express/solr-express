@@ -21,12 +21,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter1 = new FilterQueryParameter<TestDocument>();
-            var parameter2 = new FilterQueryParameter<TestDocument>();
+            var parameter1 = new FilterQueryParameter<TestDocument>(expressionBuilder);
+            var parameter2 = new FilterQueryParameter<TestDocument>(expressionBuilder);
             parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
             parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
-            parameter1.ExpressionBuilder = expressionBuilder;
-            parameter2.ExpressionBuilder = expressionBuilder;
 
             // Act
             parameter1.Execute(container);
@@ -47,7 +45,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FilterQueryParameter002()
         {
             // Arrange
-            var parameter = new FilterQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
@@ -65,9 +65,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FilterQueryParameter<TestDocument>();
+            var parameter = new FilterQueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
-            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             parameter.Execute(container);

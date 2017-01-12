@@ -7,10 +7,10 @@ namespace SolrExpress.Core.Search.Result
     /// <summary>
     /// Statistic data builder
     /// </summary>
-    public sealed class InformationResult<TDocument> : IInformationResult<TDocument>, IConvertJsonObject<TDocument>
+    public sealed class InformationResult<TDocument> : IInformationResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
-        void IConvertJsonObject<TDocument>.Execute(IEnumerable<ISearchParameter<TDocument>> parameters, JObject jsonObject)
+        void IConvertJsonObject.Execute(IEnumerable<ISearchParameter> parameters, JObject jsonObject)
         {
             Checker.IsNull(parameters);
             Checker.IsTrue<UnexpectedJsonFormatException>(jsonObject["response"]?["numFound"] == null || jsonObject["responseHeader"]?["QTime"] == null, new[] { jsonObject.ToString() });

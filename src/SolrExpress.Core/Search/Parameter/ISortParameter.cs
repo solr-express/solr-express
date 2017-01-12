@@ -6,7 +6,7 @@ namespace SolrExpress.Core.Search.Parameter
     /// <summary>
     /// Signatures to use in sort parameter
     /// </summary>
-    public interface ISortParameter<TDocument> : ISearchParameter<TDocument>
+    public interface ISortParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

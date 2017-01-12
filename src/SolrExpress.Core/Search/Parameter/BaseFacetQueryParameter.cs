@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFacetQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -29,12 +36,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// List of tags to exclude in facet calculation
         /// </summary>
         public string[] Excludes { get; private set; }
-
-        /// <summary>
-        /// Expressions builder
-        /// </summary>
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
+        
         /// <summary>
         /// Check for the parameter validation
         /// </summary>
@@ -64,6 +66,7 @@ namespace SolrExpress.Core.Search.Parameter
 
             this.AliasName = aliasName;
             this.Query = query;
+            this.Query.ExpressionBuilder = this._expressionBuilder;
             this.SortType = sortType;
             this.Excludes = excludes;
 

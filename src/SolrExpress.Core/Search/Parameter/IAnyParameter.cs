@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use any parameter
     /// </summary>
-    public interface IAnyParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IAnyParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

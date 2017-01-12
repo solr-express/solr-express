@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in minimum should match parameter
     /// </summary>
-    public interface IMinimumShouldMatchParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IMinimumShouldMatchParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

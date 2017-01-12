@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFilterParameter<TDocument> : IFilterParameter<TDocument>
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFilterParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -21,11 +28,6 @@ namespace SolrExpress.Core.Search.Parameter
         public string TagName { get; private set; }
 
         /// <summary>
-        /// Expressions builder
-        /// </summary>
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
-        /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of the filter</param>
@@ -35,6 +37,7 @@ namespace SolrExpress.Core.Search.Parameter
             Checker.IsNull(value);
 
             this.Value = value;
+            this.Value.ExpressionBuilder = this._expressionBuilder;
             this.TagName = tagName;
 
             return this;

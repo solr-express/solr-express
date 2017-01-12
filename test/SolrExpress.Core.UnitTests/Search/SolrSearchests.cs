@@ -143,7 +143,7 @@ namespace SolrExpress.Core.UnitTests.Search
             // Arrange
             var validate = new Mock<IValidation>();
             var parameter = validate.As<ISearchParameter>();
-            var anyParameter = parameter.As<IAnyParameter>();
+            var anyParameter = parameter.As<IAnyParameter<TestDocument>>();
 
             var providerMock = new Mock<ISolrConnection>();
             var queryable = (ISolrSearch<TestDocument>)new SolrSearch<TestDocument>(new DocumentCollectionOptions<TestDocument>(), this._engine.Object);
@@ -168,7 +168,7 @@ namespace SolrExpress.Core.UnitTests.Search
             // Arrange
             var validate = new Mock<IValidation>();
             var parameter = validate.As<ISearchParameter>();
-            var anyParameter = parameter.As<IAnyParameter>();
+            var anyParameter = parameter.As<IAnyParameter<TestDocument>>();
             var documentCollectionOptions = new DocumentCollectionOptions<TestDocument>
             {
                 FailFast = false
@@ -199,7 +199,7 @@ namespace SolrExpress.Core.UnitTests.Search
             // Arrange
             var validate = new Mock<IValidation>();
             var parameter = validate.As<ISearchParameter>();
-            var anyParameter = parameter.As<IAnyParameter>();
+            var anyParameter = parameter.As<IAnyParameter<TestDocument>>();
             var documentCollectionOptions = new DocumentCollectionOptions<TestDocument>
             {
                 CheckAnyParameter = false

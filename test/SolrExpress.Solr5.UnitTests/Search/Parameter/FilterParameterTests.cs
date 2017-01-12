@@ -29,13 +29,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var jObject = new JObject();
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter1 = new FilterParameter<TestDocument>();
-            var parameter2 = new FilterParameter<TestDocument>();
+            var parameter1 = new FilterParameter<TestDocument>(expressionBuilder);
+            var parameter2 = new FilterParameter<TestDocument>(expressionBuilder);
             parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
             parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
-            parameter1.ExpressionBuilder = expressionBuilder;
-            parameter2.ExpressionBuilder = expressionBuilder;
-
+            
             // Act
             parameter1.Execute(jObject);
             parameter2.Execute(jObject);
@@ -54,7 +52,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FilterParameter002()
         {
             // Arrange
-            var parameter = new FilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
@@ -79,10 +79,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var jObject = new JObject();
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FilterParameter<TestDocument>();
+            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
-            parameter.ExpressionBuilder = expressionBuilder;
-
+            
             // Act
             parameter.Execute(jObject);
             actual = jObject.ToString();

@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Search;
-using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 
 namespace SolrExpress.Solr5.Search
 {
@@ -14,11 +12,9 @@ namespace SolrExpress.Solr5.Search
     public class SearchParameterCollection<TDocument> : ISearchParameterCollection<TDocument>
         where TDocument : IDocument
     {
-        private IEnumerable<ISearchParameter<TDocument>> _parameters;
+        private IEnumerable<ISearchParameter> _parameters;
 
-        IExpressionBuilder<TDocument> ISearchParameterCollection<TDocument>.ExpressionBuilder { get; set; }
-
-        void ISearchParameterCollection<TDocument>.Add(IEnumerable<ISearchParameter<TDocument>> parameters)
+        void ISearchParameterCollection<TDocument>.Add(IEnumerable<ISearchParameter> parameters)
         {
             this._parameters = parameters;
         }
@@ -33,8 +29,7 @@ namespace SolrExpress.Solr5.Search
                 {
                     lock (jObject)
                     {
-                        ((ISearchParameter<TDocument, JObject>)item).ExpressionBuilder = ((ISearchParameterCollection<TDocument>)this).ExpressionBuilder;
-                        ((ISearchParameter<TDocument, JObject>)item).Execute(jObject);
+                        ((ISearchParameterExecute<JObject>)item).Execute(jObject);
                     }
                 });
             }

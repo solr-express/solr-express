@@ -11,7 +11,7 @@ namespace SolrExpress.Core.Search.Result
     internal class InformationBuilder<TDocument>
         where TDocument : IDocument
     {
-        internal static Information Create(IEnumerable<ISearchParameter<TDocument>> parameters, int elapsedTimeInMilliseconds, long documentCount)
+        internal static Information Create(IEnumerable<ISearchParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
             var offsetParameter = (IOffsetParameter<TDocument>)parameters.First(q => q is IOffsetParameter<TDocument>);
             var limitParameter = (ILimitParameter<TDocument>)parameters.First(q => q is ILimitParameter<TDocument>);

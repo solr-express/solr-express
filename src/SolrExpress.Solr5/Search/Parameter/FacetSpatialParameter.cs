@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
         public FacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

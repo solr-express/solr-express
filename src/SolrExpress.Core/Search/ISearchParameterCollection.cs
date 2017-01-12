@@ -14,17 +14,12 @@ namespace SolrExpress.Core.Search
         /// </summary>
         /// <param name="parameters">The parameter to add in the query</param>
         /// <returns>Itself</returns>
-        void Add(IEnumerable<ISearchParameter<TDocument>> parameters);
+        void Add(IEnumerable<ISearchParameter> parameters);
 
         /// <summary>
         /// Execute parameters and get query instructions
         /// </summary>
         /// <returns>Query instructions</returns>
         string Execute();
-
-        /// <summary>
-        /// Expressions builder
-        /// </summary>
-        IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
     }
 }

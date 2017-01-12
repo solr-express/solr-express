@@ -6,7 +6,7 @@ namespace SolrExpress.Core.Search.Parameter
     /// <summary>
     /// Signatures to use infacet field parameter
     /// </summary>
-    public interface IFacetFieldParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IFacetFieldParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

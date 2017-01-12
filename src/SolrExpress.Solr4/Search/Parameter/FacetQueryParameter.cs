@@ -7,17 +7,20 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetQueryParameter<TDocument> : BaseFacetQueryParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FacetQueryParameter<TDocument> : BaseFacetQueryParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
+        public FacetQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
         {
-            this.Query.ExpressionBuilder = this.ExpressionBuilder;
-
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");

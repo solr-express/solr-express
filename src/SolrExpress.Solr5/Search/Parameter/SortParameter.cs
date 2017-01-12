@@ -6,7 +6,7 @@ using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
         public SortParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

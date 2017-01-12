@@ -16,7 +16,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetLimitParameter();
+            var parameter = new FacetLimitParameter<TestDocument>();
             parameter.Configure(10);
 
             // Act

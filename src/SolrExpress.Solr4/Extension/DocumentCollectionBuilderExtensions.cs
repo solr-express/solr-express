@@ -27,21 +27,21 @@ namespace SolrExpress.Solr4.Extension
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
                 .AddSingleton<ISolrConnection, SolrConnection>()
-                .AddTransient<IAnyParameter, AnyParameter>()
+                .AddTransient<IAnyParameter<TDocument>, AnyParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()
-                .AddTransient<IFacetLimitParameter, FacetLimitParameter>()
+                .AddTransient<IFacetLimitParameter<TDocument>, FacetLimitParameter<TDocument>>()
                 .AddTransient<IFacetQueryParameter<TDocument>, FacetQueryParameter<TDocument>>()
                 .AddTransient<IFacetRangeParameter<TDocument>, FacetRangeParameter<TDocument>>()
                 .AddTransient<IFacetSpatialParameter<TDocument>, FacetSpatialParameter<TDocument>>()
                 .AddTransient<IFieldsParameter<TDocument>, FieldListParameter<TDocument>>()
                 .AddTransient<IFilterParameter<TDocument>, FilterQueryParameter<TDocument>>()
-                .AddTransient<ILimitParameter, RowsParameter>()
-                .AddTransient<IMinimumShouldMatchParameter, MinimumShouldMatchParameter>()
-                .AddTransient<IOffsetParameter, StartParameter>()
-                .AddTransient<IQueryFieldParameter, QueryFieldParameter>()
+                .AddTransient<ILimitParameter<TDocument>, RowsParameter<TDocument>>()
+                .AddTransient<IMinimumShouldMatchParameter<TDocument>, MinimumShouldMatchParameter<TDocument>>()
+                .AddTransient<IOffsetParameter<TDocument>, StartParameter<TDocument>>()
+                .AddTransient<IQueryFieldParameter<TDocument>, QueryFieldParameter<TDocument>>()
                 .AddTransient<IQueryParameter<TDocument>, QueryParameter<TDocument>>()
                 .AddTransient<ISortParameter<TDocument>, SortParameter<TDocument>>()
-                .AddTransient<IRandomSortParameter, RandomSortParameter>()
+                .AddTransient<IRandomSortParameter<TDocument>, RandomSortParameter<TDocument>>()
                 .AddTransient<ISpatialFilterParameter<TDocument>, SpatialFilterParameter<TDocument>>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
@@ -52,7 +52,7 @@ namespace SolrExpress.Solr4.Extension
                 .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
                 .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
                 .AddTransient<ISearchParameterCollection<TDocument>, SearchParameterCollection<TDocument>>()
-                .AddTransient<ISystemParameter, SystemParameter>();
+                .AddTransient<ISystemParameter<TDocument>, SystemParameter<TDocument>>();
 
             return builder;
         }

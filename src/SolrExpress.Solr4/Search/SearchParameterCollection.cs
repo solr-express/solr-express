@@ -35,7 +35,7 @@ namespace SolrExpress.Solr4.Search
             {
                 Parallel.ForEach(this._parameters, item =>
                 {
-                    ((ISearchParameter<List<string>>)item).Execute(list);
+                    ((ISearchParameterExecute<List<string>>)item).Execute(list);
                 });
             }
 

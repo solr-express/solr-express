@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseBoostParameter<TDocument> : IBoostParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseBoostParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -21,11 +28,6 @@ namespace SolrExpress.Core.Search.Parameter
         public BoostFunctionType BoostFunctionType { get; private set; }
 
         /// <summary>
-        /// Expressions builder
-        /// </summary>
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
-        /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="query">Query used to make boost</param>
@@ -35,11 +37,12 @@ namespace SolrExpress.Core.Search.Parameter
             Checker.IsNull(query);
 
             this.Query = query;
+            this.Query.ExpressionBuilder = this._expressionBuilder;
             this.BoostFunctionType = boostFunctionType;
 
             return this;
         }
-        
+
         /// <summary>
         /// Check for the parameter validation
         /// </summary>

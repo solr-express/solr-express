@@ -1,5 +1,4 @@
-﻿using System;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Search.Parameter
 {
@@ -15,9 +14,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// Expression used to make the mm parameter
         /// </summary>
         public string Expression { get; private set; }
-
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
+        
         /// <summary>
         /// Configure current instance
         /// </summary>

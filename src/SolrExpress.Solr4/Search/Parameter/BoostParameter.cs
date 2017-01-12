@@ -9,9 +9,14 @@ namespace SolrExpress.Solr4.Search.Parameter
     /// <summary>
     /// Signatures to use boost parameter
     /// </summary>
-    public class BoostParameter<TDocument> : BaseBoostParameter<TDocument>, ISearchParameter<List<string>>
+    public class BoostParameter<TDocument> : BaseBoostParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
+        public BoostParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter
         /// </summary>
@@ -19,9 +24,6 @@ namespace SolrExpress.Solr4.Search.Parameter
         public void Execute(List<string> container)
         {
             var boostFunction = this.BoostFunctionType.ToString().ToLower();
-
-            this.Query.ExpressionBuilder = this.ExpressionBuilder;
-
             container.Add($"{boostFunction}={this.Query.Execute()}");
         }
     }

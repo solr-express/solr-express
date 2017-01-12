@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in filter parameter
     /// </summary>
-    public interface IFilterParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IFilterParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>
