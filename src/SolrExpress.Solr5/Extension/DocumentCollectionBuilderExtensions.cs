@@ -22,10 +22,6 @@ namespace SolrExpress.Solr5.Extension
 #else
                 .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
 #endif
-                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(builder.Options)
-                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
-                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
-                .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>()
                 .AddSingleton<ISolrConnection, SolrConnection>()
                 .AddTransient<IAnyParameter<TDocument>, AnyParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

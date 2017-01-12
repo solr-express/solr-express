@@ -25,8 +25,8 @@
         "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
         "NETStandard.Library": "1.6.0",
         "Newtonsoft.Json": "9.0.1",
-        "System.ComponentModel": "4.3.0",
-        "System.Threading.Tasks.Parallel": "4.3.0"
+        "System.ComponentModel": "4.0.1",
+        "System.Threading.Tasks.Parallel": "4.0.1"
       },
       "buildOptions": {
         "define": [ "NETCORE" ]
@@ -54,5 +54,5 @@
     "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
     "requireLicenseAcceptance": false
   },
-  "version": "4.0.7"
+  "version": "4.1.0-2017-01-12"
 }

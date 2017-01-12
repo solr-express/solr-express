@@ -226,24 +226,24 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             Assert.Equal(1, data.Count);
             Assert.Equal("facetRange", data[0].Name);
-            Assert.Equal(4, data[0].Data.Count);
+            Assert.Equal(4, data[0].Data.Count());
             Assert.IsType(typeof(FacetRange<DateTime>), element0.Key);
 
             Assert.Null(element0.Key.GetMinimumValue());
             Assert.Equal(DateTime.Now.Date, ((DateTime)element0.Key.GetMaximumValue()).Date);
-            Assert.Equal(30, element0.Value);
+            Assert.Equal(30, element0.Quantity);
 
             Assert.Equal(new DateTime(2016, 01, 01), element1.Key.GetMinimumValue());
             Assert.Equal(new DateTime(2016, 01, 01).AddDays(10), element1.Key.GetMaximumValue());
-            Assert.Equal(10, element1.Value);
+            Assert.Equal(10, element1.Quantity);
 
             Assert.Equal(new DateTime(2018, 01, 01), element2.Key.GetMinimumValue());
             Assert.Equal(new DateTime(2018, 01, 01).AddDays(10), element2.Key.GetMaximumValue());
-            Assert.Equal(20, element2.Value);
+            Assert.Equal(20, element2.Quantity);
 
             Assert.Null(element3.Key.GetMaximumValue());
             Assert.Equal(DateTime.Now.Date.AddDays(1), element3.Key.GetMinimumValue());
-            Assert.Equal(40, element3.Value);
+            Assert.Equal(40, element3.Quantity);
         }
     }
 }

@@ -9,7 +9,7 @@ using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Core.Search;
 using System.Linq;
 using SolrExpress.Core.Search.Parameter;
-#if NETCOREAPP1_0
+#if NETCORE
 using Microsoft.Extensions.DependencyInjection;
 #endif
 
@@ -17,7 +17,7 @@ namespace SolrExpress.Solr4.IntegrationTests
 {
     public class IntegrationTests
     {
-#if NETCOREAPP1_0
+#if NETCORE
         private IServiceProvider _serviceProvider;
 #else
         private DocumentCollectionBuilder<TechProductDocument> _documentCollectionBuilder;
@@ -32,7 +32,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 FailFast = false
             };
 
-#if NETCOREAPP1_0
+#if NETCORE
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddSolrExpress<TechProductDocument>(builder => builder
@@ -56,7 +56,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// <returns>Instance of DocumentCollection<TechProductDocument></returns>
         private IDocumentCollection<TechProductDocument> GetDocumentCollection()
         {
-#if NETCOREAPP1_0
+#if NETCORE
             return this._serviceProvider.GetRequiredService<IDocumentCollection<TechProductDocument>>();
 #else
             return this._documentCollectionBuilder.Create();
@@ -158,8 +158,8 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.Equal(2, data.Count());
-            Assert.Equal("ManufacturerId", data.ToList()[0].Name);
-            Assert.Equal("InStock", data.ToList()[1].Name);
+            Assert.True(data.Any(q => q.Name.Equals("ManufacturerId")));
+            Assert.True(data.Any(q => q.Name.Equals("InStock")));
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.Equal(3, data.Count());
-            Assert.Equal("Facet1", data.ToList()[0].Name);
-            Assert.Equal("Facet2", data.ToList()[1].Name);
-            Assert.Equal("Facet3", data.ToList()[2].Name);
+            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
+            Assert.True(data.Any(q => q.Name.Equals("Facet2")));
+            Assert.True(data.Any(q => q.Name.Equals("Facet3")));
         }
 
         /// <summary>
@@ -432,10 +432,10 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Document(out fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
-            Assert.Equal(documentId1, fetchedDocuments.ToList()[0].Id);
-            Assert.Equal(documentId2, fetchedDocuments.ToList()[1].Id);
-            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[0].Name);
-            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[1].Name);
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
         }
 
         /// <summary>
@@ -480,12 +480,12 @@ namespace SolrExpress.Solr4.IntegrationTests
             var documentToAdd1 = new TechProductDocument
             {
                 Id = documentId1,
-                Name = "IntegrationTest013"
+                Name = "IntegrationTest015"
             };
             var documentToAdd2 = new TechProductDocument
             {
                 Id = documentId2,
-                Name = "IntegrationTest013"
+                Name = "IntegrationTest015"
             };
             var update = documentCollection.Update();
 
@@ -501,10 +501,10 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Document(out fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
-            Assert.Equal(documentId1, fetchedDocuments.ToList()[0].Id);
-            Assert.Equal(documentId2, fetchedDocuments.ToList()[1].Id);
-            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[0].Name);
-            Assert.Equal("IntegrationTest013", fetchedDocuments.ToList()[1].Name);
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Act
             result = documentCollection
                 .Select()
-                .Query(new QueryAll())
+                .Query(new QueryAll<TechProductDocument>())
                 .Fields(q => q.Id, q => q.Name)
                 .Sort(q => q.Id, false)
                 .Limit(1)

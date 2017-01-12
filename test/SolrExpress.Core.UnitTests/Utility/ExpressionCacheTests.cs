@@ -47,7 +47,7 @@ namespace SolrExpress.Core.UnitTests.Utility
             PropertyInfo propertyInfoFromGet;
             SolrFieldAttribute solrFieldAttributeFromGet;
 
-#if NETCOREAPP1_0
+#if NETCORE
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetTypeInfo().GetProperty("Stored");
 #else
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetProperty("Stored");
@@ -85,7 +85,7 @@ namespace SolrExpress.Core.UnitTests.Utility
             SolrFieldAttribute solrFieldAttributeFromGet1;
             PropertyInfo propertyInfoFromGet2;
             SolrFieldAttribute solrFieldAttributeFromGet2;
-#if NETCOREAPP1_0
+#if NETCORE
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetTypeInfo().GetProperty("Stored");
 #else
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetProperty("Stored");
@@ -132,7 +132,7 @@ namespace SolrExpress.Core.UnitTests.Utility
             SolrFieldAttribute solrFieldAttributeFromGet1;
             PropertyInfo propertyInfoFromGet2;
             SolrFieldAttribute solrFieldAttributeFromGet2;
-#if NETCOREAPP1_0
+#if NETCORE
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetTypeInfo().GetProperty("Stored");
 #else
             var propertyInfoOriginal = typeof(TestDocumentWithAttribute).GetProperty("Stored");

@@ -188,9 +188,29 @@ namespace SolrExpress.Core.Search
             var systemParameter = this.Engine.GetService<ISystemParameter<TDocument>>();
             var parameterCollection = this.Engine.GetService<ISearchParameterCollection<TDocument>>();
 
-            Parallel.ForEach(this.Options.GlobalParameters, item => ((ISolrSearch<TDocument>)this).Add(item));
-            Parallel.ForEach(this.Options.GlobalQueryInterceptors, item => ((ISolrSearch<TDocument>)this).Add(item));
-            Parallel.ForEach(this.Options.GlobalResultInterceptors, item => ((ISolrSearch<TDocument>)this).Add(item));
+            var sync = new object();
+
+            Parallel.ForEach(this.Options.GlobalParameters, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
+            Parallel.ForEach(this.Options.GlobalQueryInterceptors, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
+            Parallel.ForEach(this.Options.GlobalResultInterceptors, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
 
             systemParameter.Configure();
             this._items.Add(systemParameter);
@@ -202,13 +222,25 @@ namespace SolrExpress.Core.Search
             parameterCollection.Add(searchParameters);
             var query = parameterCollection.Execute();
 
-            Parallel.ForEach(this._items.OfType<ISearchInterceptor>(), interceptor => interceptor.Execute(ref query));
+            Parallel.ForEach(this._items.OfType<ISearchInterceptor>(), interceptor =>
+            {
+                lock (sync)
+                {
+                    interceptor.Execute(ref query);
+                }
+            });
 
             var solrConnection = this.Engine.GetService<ISolrConnection>();
             solrConnection.HostAddress = this.Options.HostAddress;
             var json = solrConnection.Get(this._handlerName, query);
 
-            Parallel.ForEach(this._items.OfType<IResultInterceptor>(), interceptor => interceptor.Execute(ref json));
+            Parallel.ForEach(this._items.OfType<IResultInterceptor>(), interceptor =>
+            {
+                lock (sync)
+                {
+                    interceptor.Execute(ref query);
+                }
+            });
 
             return new SearchResult<TDocument>(searchParameters, this.Engine, json);
         }

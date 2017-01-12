@@ -1,6 +1,7 @@
 ﻿{
   "buildOptions": {
-    "emitEntryPoint": true
+    "emitEntryPoint": true,
+    "preserveCompilationContext": true
   },
   "dependencies": {
     "SolrExpress.Solr5": {
@@ -9,12 +10,14 @@
   },
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": "dnxcore50",
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0"
+          "version": "1.0.1"
         }
+      },
+      "buildOptions": {
+        "define": [ "NETCORE" ]
       }
     },
     "net4": {
@@ -25,6 +28,11 @@
     "net45": {
       "dependencies": {
       }
+    }
+  },
+  "runtimeOptions": {
+    "configProperties": {
+      "System.GC.Server": true
     }
   },
   "version": "4.0.2"

@@ -1,46 +1,27 @@
 ﻿{
   "buildOptions": {
     "warningsAsErrors": true,
-    "keyFile": "../../Key.snk"
+    "keyFile": "../../Key.snk",
+    "define": [ "NETCORE" ]
   },
   "dependencies": {
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.NETCore.App": {
+      "version": "1.0.1",
+      "type": "platform"
+    },
+    "Moq": "4.6.36-alpha",
     "SolrExpress.Core": {
       "target": "project"
     },
     "SolrExpress.Solr5": {
       "target": "project"
-    }
+    },
+    "System.Diagnostics.TraceSource": "4.3.0-preview1-24530-04",
+    "xunit": "2.2.0-beta4-build3444"
   },
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": [
-        "dnxcore50",
-        "portable-net45+win8"
-      ],
-      "dependencies": {
-        "dotnet-test-xunit": "1.0.0-rc2-build10025",
-        "Microsoft.NETCore.App": {
-          "version": "1.0.0",
-          "type": "platform"
-        },
-        "Moq": "4.6.36-alpha",
-        "System.Diagnostics.TraceSource": "4.0.0",
-        "xunit": "2.1.0"
-      }
-    },
-    "net4": {
-      "dependencies": {
-        "Moq": "4.2.1510.2205",
-        "xunit": "1.9.2"
-      }
-    },
-    "net45": {
-      "dependencies": {
-        "Moq": "4.5.3",
-        "System.Runtime": "4.0.0",
-        "System.Threading.Tasks": "4.0.0",
-        "xunit": "2.2.0-beta1-build3239"
-      }
     }
   },
   "testRunner": "xunit"

@@ -1,6 +1,8 @@
 ﻿#if NETCORE
 using Microsoft.Extensions.DependencyInjection;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
+using SolrExpress.Core.Update;
 using SolrExpress.Core.Utility;
 using System;
 
@@ -23,16 +25,23 @@ namespace SolrExpress.Core.Extension
             builder.Invoke(builderObj);
             var documentCollection = builderObj.Create();
 
-            services.TryAddSingleton<IEngine>(q => (NetCoreEngine)documentCollection.Engine);
-
-            services
+            documentCollection
+                .Engine
+                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(documentCollection.Options)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>()
                 .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>()
-                .AddSingleton<ISearchParameterBuilder<TDocument>>(new SearchParameterBuilder<TDocument>(documentCollection.Engine))
-                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(q => documentCollection);
+                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
+                .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>();
 
-            var serviceProvider = services.BuildServiceProvider();
-            var expressionBuilder = serviceProvider.GetService<IExpressionBuilder<TDocument>>();
+            var expressionBuilder = documentCollection.Engine.GetService<IExpressionBuilder<TDocument>>();
+
+            services
+                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(q => documentCollection.Options)
+                .AddSingleton<IEngine>(q => (NetCoreEngine)documentCollection.Engine)
+                .AddSingleton(q => expressionBuilder)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>();
 
             ExpressionCacheWarmup.Load(expressionBuilder);
 

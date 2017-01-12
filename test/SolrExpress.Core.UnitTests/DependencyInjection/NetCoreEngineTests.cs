@@ -14,12 +14,12 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
     {
         public IEngine Engine { get; set; }
 
-        IAnyParameter ISearchParameterBuilder<TDocument>.Any(string name, string value)
+        IAnyParameter<TDocument> ISearchParameterBuilder<TDocument>.Any(string name, string value)
         {
             throw new NotImplementedException();
         }
 
-        IBoostParameter<TDocument> ISearchParameterBuilder<TDocument>.Boost(ISearchParameterValue query, BoostFunctionType? boostFunctionType)
+        IBoostParameter<TDocument> ISearchParameterBuilder<TDocument>.Boost(ISearchParameterValue<TDocument> query, BoostFunctionType? boostFunctionType)
         {
             throw new NotImplementedException();
         }
@@ -29,12 +29,12 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             throw new NotImplementedException();
         }
 
-        IFacetLimitParameter ISearchParameterBuilder<TDocument>.FacetLimit(int value)
+        IFacetLimitParameter<TDocument> ISearchParameterBuilder<TDocument>.FacetLimit(int value)
         {
             throw new NotImplementedException();
         }
 
-        IFacetQueryParameter<TDocument> ISearchParameterBuilder<TDocument>.FacetQuery(string aliasName, ISearchParameterValue query, FacetSortType? sortType, params string[] excludes)
+        IFacetQueryParameter<TDocument> ISearchParameterBuilder<TDocument>.FacetQuery(string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType, params string[] excludes)
         {
             throw new NotImplementedException();
         }
@@ -59,17 +59,17 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             throw new NotImplementedException();
         }
 
-        ILimitParameter ISearchParameterBuilder<TDocument>.Limit(int value)
+        ILimitParameter<TDocument> ISearchParameterBuilder<TDocument>.Limit(int value)
         {
             throw new NotImplementedException();
         }
 
-        IMinimumShouldMatchParameter ISearchParameterBuilder<TDocument>.MinimumShouldMatch(string expression)
+        IMinimumShouldMatchParameter<TDocument> ISearchParameterBuilder<TDocument>.MinimumShouldMatch(string expression)
         {
             throw new NotImplementedException();
         }
 
-        IOffsetParameter ISearchParameterBuilder<TDocument>.Offset(int value)
+        IOffsetParameter<TDocument> ISearchParameterBuilder<TDocument>.Offset(int value)
         {
             throw new NotImplementedException();
         }
@@ -79,7 +79,7 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             throw new NotImplementedException();
         }
 
-        IQueryParameter<TDocument> ISearchParameterBuilder<TDocument>.Query(ISearchParameterValue value)
+        IQueryParameter<TDocument> ISearchParameterBuilder<TDocument>.Query(ISearchParameterValue<TDocument> value)
         {
             throw new NotImplementedException();
         }
@@ -89,12 +89,12 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             throw new NotImplementedException();
         }
 
-        IQueryFieldParameter ISearchParameterBuilder<TDocument>.QueryField(string expression)
+        IQueryFieldParameter<TDocument> ISearchParameterBuilder<TDocument>.QueryField(string expression)
         {
             throw new NotImplementedException();
         }
 
-        IRandomSortParameter ISearchParameterBuilder<TDocument>.RandomSort(bool ascendent)
+        IRandomSortParameter<TDocument> ISearchParameterBuilder<TDocument>.RandomSort(bool ascendent)
         {
             throw new NotImplementedException();
         }
@@ -123,7 +123,6 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
     {
     }
 
-#if NETCOREAPP1_0
     public class NetCoreEngineTests
     {
         /// <summary>
@@ -146,5 +145,4 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             Assert.IsType(typeof(TestSearchParameterBuilder<TestDocument2>), result);
         }
     }
-#endif
 }

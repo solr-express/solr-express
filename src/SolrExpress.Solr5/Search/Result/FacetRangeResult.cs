@@ -231,7 +231,7 @@ namespace SolrExpress.Solr5.Search.Result
 
                     var lastValue = this.CreateFacetRange(facetType);
                     lastValue.SetMinimumValue(this.GetFacetValue(facetType, facetParameter.End));
-                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["after"]["count"].ToObject<long>() });
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = lastValue, Quantity = jProperty.Value["after"]["count"].ToObject<long>() });
 
                     return facet;
                 })
