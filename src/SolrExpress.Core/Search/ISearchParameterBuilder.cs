@@ -67,6 +67,12 @@ namespace SolrExpress.Core.Search
             where TValue : struct;
 
         /// <summary>
+        /// Create a filter parameter
+        /// </summary>
+        /// <param name="value">Value of the filter</param>
+        IFilterParameter<TDocument> Filter(ISearchParameterValue<TDocument> value);
+
+        /// <summary>
         /// Create a limit parameter
         /// </summary>
         /// <param name="value">Value of limit</param>

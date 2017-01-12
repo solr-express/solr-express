@@ -49,6 +49,11 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
             throw new NotImplementedException();
         }
 
+        IFilterParameter<TDocument> ISearchParameterBuilder<TDocument>.Filter(ISearchParameterValue<TDocument> value)
+        {
+            throw new NotImplementedException();
+        }
+
         IFilterParameter<TDocument> ISearchParameterBuilder<TDocument>.Filter(Expression<Func<TDocument, object>> expression, string value, string tagName)
         {
             throw new NotImplementedException();

@@ -100,6 +100,18 @@ namespace SolrExpress.Core.Search
         /// <summary>
         /// Create a filter parameter
         /// </summary>
+        /// <param name="value">Value of the filter</param>
+        public IFilterParameter<TDocument> Filter(ISearchParameterValue<TDocument> value)
+        {
+            return this
+                .Engine
+                .GetService<IFilterParameter<TDocument>>()
+                .Configure(value);
+        }
+
+        /// <summary>
+        /// Create a filter parameter
+        /// </summary>
         /// <param name="expression">Expression used to find the property name</param>
         /// <param name="from">From value in a range filter</param>
         /// <param name="to">To value in a range filter</param>
