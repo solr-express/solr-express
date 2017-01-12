@@ -1,6 +1,7 @@
 ﻿namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseRandomSortParameter : IRandomSortParameter
+    public abstract class BaseRandomSortParameter<TDocument> : IRandomSortParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -16,7 +17,7 @@
         /// Configure current instance
         /// </summary>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public IRandomSortParameter Configure(bool ascendent)
+        public IRandomSortParameter<TDocument> Configure(bool ascendent)
         {
             this.Ascendent = ascendent;
 

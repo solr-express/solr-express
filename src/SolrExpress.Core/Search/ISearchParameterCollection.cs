@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using SolrExpress.Core.Utility;
+using System.Collections.Generic;
 
 namespace SolrExpress.Core.Search
 {
     /// <summary>
     /// Signature used to parameter collection
     /// </summary>
-    public interface ISearchParameterCollection
+    public interface ISearchParameterCollection<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Add a parameter to the query

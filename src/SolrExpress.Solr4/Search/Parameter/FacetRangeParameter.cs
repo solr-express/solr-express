@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -9,9 +8,13 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameterExecute<List<string>>
       where TDocument : IDocument
     {
+        public FacetRangeParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "facet.range"
         /// </summary>
@@ -23,7 +26,7 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
             var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, fieldName);
 
             container.Add($"facet.range={facetName}");

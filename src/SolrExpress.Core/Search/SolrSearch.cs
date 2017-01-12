@@ -5,6 +5,7 @@ using SolrExpress.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Core.Search
 {
@@ -57,9 +58,9 @@ namespace SolrExpress.Core.Search
 
                 var mustValidate = this.Options.FailFast && parameterValidation != null;
 
-                if (parameter is IAnyParameter)
+                if (parameter is IAnyParameter<TDocument>)
                 {
-                    mustValidate = mustValidate && this.Options.CheckAnyParameter && parameter is IAnyParameter;
+                    mustValidate = mustValidate && this.Options.CheckAnyParameter && parameter is IAnyParameter<TDocument>;
                 }
 
                 if (mustValidate)
@@ -79,19 +80,19 @@ namespace SolrExpress.Core.Search
         /// </summary>
         private void SetDefaultPaginationParameters()
         {
-            var offsetParameter = (IOffsetParameter)this._items.FirstOrDefault(q => q is IOffsetParameter);
+            var offsetParameter = (IOffsetParameter<TDocument>)this._items.FirstOrDefault(q => q is IOffsetParameter<TDocument>);
 
             if (offsetParameter == null)
             {
-                offsetParameter = this.Engine.GetService<IOffsetParameter>().Configure(0);
+                offsetParameter = this.Engine.GetService<IOffsetParameter<TDocument>>().Configure(0);
                 this._items.Add(offsetParameter);
             }
 
-            var limitParameter = (ILimitParameter)this._items.FirstOrDefault(q => q is ILimitParameter);
+            var limitParameter = (ILimitParameter<TDocument>)this._items.FirstOrDefault(q => q is ILimitParameter<TDocument>);
 
             if (limitParameter == null)
             {
-                limitParameter = this.Engine.GetService<ILimitParameter>().Configure(10);
+                limitParameter = this.Engine.GetService<ILimitParameter<TDocument>>().Configure(10);
                 this._items.Add(limitParameter);
             }
         }
@@ -125,7 +126,7 @@ namespace SolrExpress.Core.Search
 
                 this._items.Add(item);
             }
-            
+
             return this;
         }
 
@@ -184,12 +185,32 @@ namespace SolrExpress.Core.Search
         /// <returns>Solr result</returns>
         public ISearchResult<TDocument> Execute()
         {
-            var systemParameter = this.Engine.GetService<ISystemParameter>();
-            var parameterCollection = this.Engine.GetService<ISearchParameterCollection>();
+            var systemParameter = this.Engine.GetService<ISystemParameter<TDocument>>();
+            var parameterCollection = this.Engine.GetService<ISearchParameterCollection<TDocument>>();
 
-            this.Options.GlobalParameters.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
-            this.Options.GlobalQueryInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
-            this.Options.GlobalResultInterceptors.ForEach(item => ((ISolrSearch<TDocument>)this).Add(item));
+            var sync = new object();
+
+            Parallel.ForEach(this.Options.GlobalParameters, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
+            Parallel.ForEach(this.Options.GlobalQueryInterceptors, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
+            Parallel.ForEach(this.Options.GlobalResultInterceptors, item =>
+            {
+                lock (sync)
+                {
+                    ((ISolrSearch<TDocument>)this).Add(item);
+                }
+            });
 
             systemParameter.Configure();
             this._items.Add(systemParameter);
@@ -201,13 +222,25 @@ namespace SolrExpress.Core.Search
             parameterCollection.Add(searchParameters);
             var query = parameterCollection.Execute();
 
-            this._items.OfType<ISearchInterceptor>().ToList().ForEach(q => q.Execute(ref query));
+            Parallel.ForEach(this._items.OfType<ISearchInterceptor>(), interceptor =>
+            {
+                lock (sync)
+                {
+                    interceptor.Execute(ref query);
+                }
+            });
 
             var solrConnection = this.Engine.GetService<ISolrConnection>();
             solrConnection.HostAddress = this.Options.HostAddress;
             var json = solrConnection.Get(this._handlerName, query);
 
-            this._items.OfType<IResultInterceptor>().ToList().ForEach(q => q.Execute(ref json));
+            Parallel.ForEach(this._items.OfType<IResultInterceptor>(), interceptor =>
+            {
+                lock (sync)
+                {
+                    interceptor.Execute(ref query);
+                }
+            });
 
             return new SearchResult<TDocument>(searchParameters, this.Engine, json);
         }

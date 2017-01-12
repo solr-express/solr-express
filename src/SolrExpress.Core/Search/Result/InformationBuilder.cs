@@ -8,12 +8,13 @@ namespace SolrExpress.Core.Search.Result
     /// <summary>
     /// Builder class used to manipulate Information
     /// </summary>
-    internal class InformationBuilder
+    internal class InformationBuilder<TDocument>
+        where TDocument : IDocument
     {
         internal static Information Create(IEnumerable<ISearchParameter> parameters, int elapsedTimeInMilliseconds, long documentCount)
         {
-            var offsetParameter = (IOffsetParameter)parameters.First(q => q is IOffsetParameter);
-            var limitParameter = (ILimitParameter)parameters.First(q => q is ILimitParameter);
+            var offsetParameter = (IOffsetParameter<TDocument>)parameters.First(q => q is IOffsetParameter<TDocument>);
+            var limitParameter = (ILimitParameter<TDocument>)parameters.First(q => q is ILimitParameter<TDocument>);
 
             var offset = offsetParameter.Value;
             var limit = limitParameter.Value;

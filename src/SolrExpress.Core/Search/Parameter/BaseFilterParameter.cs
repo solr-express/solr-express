@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFilterParameter<TDocument> : IFilterParameter<TDocument>
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFilterParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -13,7 +20,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Value of the filter
         /// </summary>
-        public ISearchParameterValue Value { get; private set; }
+        public ISearchParameterValue<TDocument> Value { get; private set; }
 
         /// <summary>
         /// Tag name to use in facet excluding list
@@ -25,11 +32,12 @@ namespace SolrExpress.Core.Search.Parameter
         /// </summary>
         /// <param name="value">Value of the filter</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public IFilterParameter<TDocument> Configure(ISearchParameterValue value, string tagName = null)
+        public IFilterParameter<TDocument> Configure(ISearchParameterValue<TDocument> value, string tagName = null)
         {
             Checker.IsNull(value);
 
             this.Value = value;
+            this.Value.ExpressionBuilder = this._expressionBuilder;
             this.TagName = tagName;
 
             return this;

@@ -2,7 +2,6 @@
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
 using SolrExpress.Solr5.Search.Parameter;
-using SolrExpress.Solr5.Search.Result;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -22,8 +21,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             // Arrange
             var parameters = new List<ISearchParameter>
             {
-                new LimitParameter().Configure(10),
-                new OffsetParameter().Configure(1)
+                new LimitParameter<TestDocumentWithAnyPropertyTypes>().Configure(10),
+                new OffsetParameter<TestDocumentWithAnyPropertyTypes>().Configure(1)
             };
             var jsonStr = @"
             {

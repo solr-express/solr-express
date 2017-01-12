@@ -1,15 +1,19 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FieldListParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FieldListParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
+        public FieldListParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "fl"
         /// </summary>
@@ -18,7 +22,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             foreach (var expression in this.Expressions)
             {
-                var fieldName = expression.GetFieldNameFromExpression();
+                var fieldName = this._expressionBuilder.GetFieldNameFromExpression(expression);
 
                 var fieldList = container.FirstOrDefault(q => q.StartsWith("fl="));
 

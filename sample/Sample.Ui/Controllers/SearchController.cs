@@ -26,13 +26,14 @@ namespace Sample.Ui.Controllers
                 {
                     var item = new FacetKeyValue<string>();
                     item.Name = q.Name;
-                    item.Data = new Dictionary<string, long>();
-
-                    foreach (var data in q.Data)
-                    {
-                        var value = string.Format("{0} - {1}", data.Key.GetMinimumValue() ?? "?", data.Key.GetMaximumValue() ?? "?");
-                        item.Data.Add(value, data.Value);
-                    }
+                    item.Data = q
+                        .Data
+                        .Select(q2 => new FacetItemValue<string>()
+                        {
+                            Key = string.Format("{0} - {1}", q2.Key.GetMinimumValue() ?? "?", q2.Key.GetMaximumValue() ?? "?"),
+                            Quantity = q2.Quantity
+                        })
+                        .ToList();
 
                     return item;
                 })

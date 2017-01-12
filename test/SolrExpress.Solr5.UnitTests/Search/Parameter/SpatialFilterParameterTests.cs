@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -26,7 +28,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 
             // Act
@@ -54,7 +58,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Bbox, new GeoCoordinate(-1.1M, -2.2M), 5.5M);
 
             // Act
@@ -76,7 +82,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotIndexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
 
             // Act
@@ -95,7 +103,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void SpatialFilterParameter004()
         {
             // Arrange
-            var parameter = new SpatialFilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, SolrSpatialFunctionType.Bbox, new GeoCoordinate(), 10));
@@ -112,7 +122,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Indexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
 
             // Act
@@ -133,7 +145,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotIndexed, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(), 0);
 
             // Act
@@ -161,7 +175,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new SpatialFilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new SpatialFilterParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Spatial, SolrSpatialFunctionType.Geofilt, new GeoCoordinate(52.9127M, 4.7818799M), 1M);
             
             // Act

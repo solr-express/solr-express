@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Core;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class AnyParameter : BaseAnyParameter, ISearchParameter<JObject>
+    public sealed class AnyParameter<TDocument> : BaseAnyParameter<TDocument>, ISearchParameterExecute<JObject>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the creation of the parameter

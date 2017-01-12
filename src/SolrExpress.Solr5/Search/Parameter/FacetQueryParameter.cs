@@ -8,9 +8,14 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetQueryParameter<TDocument> : BaseFacetQueryParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FacetQueryParameter<TDocument> : BaseFacetQueryParameter<TDocument>, ISearchParameterExecute<JObject>
          where TDocument : IDocument
     {
+        public FacetQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>

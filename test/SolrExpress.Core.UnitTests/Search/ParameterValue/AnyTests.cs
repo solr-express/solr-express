@@ -17,7 +17,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "tst";
             string actual;
-            var parameter = new Any("tst");
+            var parameter = new Any<TestDocument>("tst");
 
             // Act
             actual = parameter.Execute();
@@ -35,7 +35,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Any002()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new Any(null));
+            Assert.Throws<ArgumentNullException>(() => new Any<TestDocument>(null));
         }
     }
 }

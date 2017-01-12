@@ -5,7 +5,8 @@ namespace SolrExpress.Core.Search.ParameterValue
     /// <summary>
     /// Free value parameter
     /// </summary>
-    public sealed class Any : ISearchParameterValue
+    public sealed class Any<TDocument> : ISearchParameterValue<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Create a free solr parameter value
@@ -31,5 +32,10 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// Value of filter
         /// </summary>
         public string Value { get; private set; }
+
+        /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
     }
 }

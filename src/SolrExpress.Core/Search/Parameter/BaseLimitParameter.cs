@@ -1,6 +1,7 @@
 ﻿namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseLimitParameter : ILimitParameter
+    public abstract class BaseLimitParameter<TDocument> : ILimitParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -11,12 +12,12 @@
         /// Value of limit
         /// </summary>
         public long Value { get; private set; }
-        
+
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
-        public ILimitParameter Configure(long value)
+        public ILimitParameter<TDocument> Configure(long value)
         {
             this.Value = value;
 

@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new MinimumShouldMatchParameter();
+            var parameter = new MinimumShouldMatchParameter<TestDocument>();
             parameter.Configure("75%");
 
             // Act
@@ -44,7 +44,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void MinimumShouldMatchParameter002()
         {
             // Arrange
-            var parameter = new MinimumShouldMatchParameter();
+            var parameter = new MinimumShouldMatchParameter<TestDocument>();
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));

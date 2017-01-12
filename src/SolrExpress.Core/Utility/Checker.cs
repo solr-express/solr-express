@@ -13,7 +13,7 @@ namespace SolrExpress.Core.Utility
         /// </summary>
         /// <param name="condition">Condition to throws exception</param>
         /// <param name="args">Message in the excpetion</param>
-        public static void IsTrue<TException>(bool condition, params object[] args)
+        internal static void IsTrue<TException>(bool condition, params object[] args)
             where TException : Exception
         {
             if (condition)
@@ -71,7 +71,7 @@ namespace SolrExpress.Core.Utility
         {
             if (value < minValue)
             {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -83,7 +83,7 @@ namespace SolrExpress.Core.Utility
         {
             if (collection.Count == 0)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentException();
             }
         }
     }

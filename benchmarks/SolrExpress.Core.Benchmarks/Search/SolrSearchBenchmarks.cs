@@ -2,7 +2,6 @@
 using BenchmarkDotNet.Running;
 using Moq;
 using SolrExpress.Benchmarks.Helper;
-using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using System.Collections.Generic;
@@ -24,19 +23,18 @@ namespace SolrExpress.Core.Benchmarks.Search
 
             var engine = new MockEngine();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(solrConnection.Object);
-            engine.Setup(q => q.GetService<IOffsetParameter>()).Returns(new Mock<IOffsetParameter>().Object);
-            engine.Setup(q => q.GetService<ILimitParameter>()).Returns(new Mock<ILimitParameter>().Object);
-            engine.Setup(q => q.GetService<ISystemParameter>()).Returns(new Mock<ISystemParameter>().Object);
-            engine.Setup(q => q.GetService<ISearchParameterCollection>()).Returns(new Mock<ISearchParameterCollection>().Object);
+            engine.Setup(q => q.GetService<IOffsetParameter<TestDocument>>()).Returns(new Mock<IOffsetParameter<TestDocument>>().Object);
+            engine.Setup(q => q.GetService<ILimitParameter<TestDocument>>()).Returns(new Mock<ILimitParameter<TestDocument>>().Object);
+            engine.Setup(q => q.GetService<ISystemParameter<TestDocument>>()).Returns(new Mock<ISystemParameter<TestDocument>>().Object);
+            engine.Setup(q => q.GetService<ISearchParameterCollection<TestDocument>>()).Returns(new Mock<ISearchParameterCollection<TestDocument>>().Object);
 
             var options = new DocumentCollectionOptions<TestDocument>();
             var parameters = new List<ISearchItem>();
 
             for (int i = 0; i < this.ElementsCount; i++)
             {
-                var parameterMock = new Mock<ISearchParameter<object>>();
+                var parameterMock = new Mock<ISearchParameter>();
                 parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
-                parameterMock.Setup(q => q.Execute(It.IsAny<object>()));
 
                 parameters.Add(parameterMock.Object);
             }

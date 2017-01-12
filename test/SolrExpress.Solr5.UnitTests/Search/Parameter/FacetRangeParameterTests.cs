@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -37,7 +39,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", q => q.Id, "1", "10", "20");
 
             // Act
@@ -80,7 +84,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", q => q.Id, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -102,7 +108,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropInteger, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -124,7 +132,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropLong, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -146,7 +156,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropFloat, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -168,7 +180,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropDouble, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -190,7 +204,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropDecimal, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -212,7 +228,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropDateTime, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -234,7 +252,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             bool isValid;
             string errorMessage;
-            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
             parameter.Configure("X", q => q.PropString, "1", "10", "20", FacetSortType.CountDesc);
 
             // Act
@@ -254,7 +274,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetRangeParameter010()
         {
             // Arrange
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, q => q.Id, "", "", ""));
@@ -269,7 +291,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetRangeParameter011()
         {
             // Arrange
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null, "", "", ""));
@@ -284,7 +308,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetRangeParameter012()
         {
             // Arrange
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, null, "", ""));
@@ -299,7 +325,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetRangeParameter013()
         {
             // Arrange
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", null, ""));
@@ -314,7 +342,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetRangeParameter014()
         {
             // Arrange
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", "", null));
@@ -348,7 +378,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
               }
             }").ToString();
             var jObject = new JObject();
-            var parameter = new FacetRangeParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", q => q.Id, "1", "10", "20", excludes: new[] { "tag1", "tag2" });
 
             // Act

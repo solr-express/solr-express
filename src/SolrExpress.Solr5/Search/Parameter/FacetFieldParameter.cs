@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -9,9 +8,13 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
+        public FacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "facet.field"
         /// </summary>
@@ -20,8 +23,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
-            var aliasName = this.Expression.GetPropertyNameFromExpression();
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(this.Expression);
 
             var array = new List<JProperty>
             {

@@ -3,14 +3,15 @@
     /// <summary>
     /// Signatures to use any parameter
     /// </summary>
-    public interface IAnyParameter : ISearchParameter
+    public interface IAnyParameter<TDocument> : ISearchParameter
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="name">Name of the parameter</param>
         /// <param name="value">Value of the parameter</param>
-        IAnyParameter Configure(string name, string value);
+        IAnyParameter<TDocument> Configure(string name, string value);
 
         /// <summary>
         /// Name of the parameter

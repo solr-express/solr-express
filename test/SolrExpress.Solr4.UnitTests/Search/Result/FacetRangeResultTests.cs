@@ -1,6 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Result;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Solr4.Search.Result;
 using System;
@@ -38,10 +40,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
                             ""after"": 9}}}
             }");
 
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+
             var parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropInteger, "10", "10", "100")
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropInteger, "10", "10", "100")
             };
-            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
 
             // Act
             ((IConvertJsonObject)result).Execute(parameters, jObject);
@@ -80,10 +85,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
                         ""after"":9}}}
             }");
 
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+
             var parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/YEAR-1", "NOW/DAY+1")
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDateTime, "+10DAYS", "NOW/YEAR-1", "NOW/DAY+1")
             };
-            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
 
             // Act
             ((IConvertJsonObject)result).Execute(parameters, jObject);
@@ -122,10 +130,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
                         ""after"":9}}}
             }");
 
+            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
+
             var parameters = new List<ISearchParameter> {
-                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>().Configure("facetRange", q=> q.PropDecimal, "10", "10", "100")
+                new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder).Configure("facetRange", q=> q.PropDecimal, "10", "10", "100")
             };
-            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>();
+            var result = new FacetRangeResult<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
 
             // Act
             ((IConvertJsonObject)result).Execute(parameters, jObject);

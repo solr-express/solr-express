@@ -15,7 +15,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Multi001()
         {
             // Arrange/ Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new Multi(SolrQueryConditionType.And, null));
+            Assert.Throws<ArgumentNullException>(() => new Multi<TestDocument>(SolrQueryConditionType.And, null));
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
         public void Multi002()
         {
             // Arrange/ Act / Assert
-            Assert.Throws<ArgumentException>(() => new Multi(SolrQueryConditionType.And, new Any("X")));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Multi<TestDocument>(SolrQueryConditionType.And, new Any<TestDocument>("X")));
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "(value 1 AND value 2)";
             string actual;
-            var parameter = new Multi(SolrQueryConditionType.And, new Any("value 1"), new Any("value 2"));
+            var parameter = new Multi<TestDocument>(SolrQueryConditionType.And, new Any<TestDocument>("value 1"), new Any<TestDocument>("value 2"));
 
             // Act
             actual = parameter.Execute();
@@ -61,7 +61,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "(value 1 OR value 2)";
             string actual;
-            var parameter = new Multi(SolrQueryConditionType.Or, new Any("value 1"), new Any("value 2"));
+            var parameter = new Multi<TestDocument>(SolrQueryConditionType.Or, new Any<TestDocument>("value 1"), new Any<TestDocument>("value 2"));
 
             // Act
             actual = parameter.Execute();

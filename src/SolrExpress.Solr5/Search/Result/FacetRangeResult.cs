@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using DaleNewman;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
@@ -18,6 +18,17 @@ namespace SolrExpress.Solr5.Search.Result
     public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
+        private readonly IExpressionBuilder<TDocument> _expressionBuilder;
+        private const string OperatorPattern = @"[/+/-]{1}\d+(YEARS|YEAR|MONTHS|MONTH|DAYS|DAY|DATE|HOURS|HOUR|MINUTES|MINUTE|SECONDS|SECOND)";
+        private const string RoundingPattern = @"/(DAY|DAYS|DATE|HOUR|HOURS|MINUTE|MINUTES|SECOND|SECONDS)";
+        private readonly Regex OperatorRegex = new Regex(OperatorPattern, RegexOptions.Compiled);
+        private readonly Regex RoundingRegex = new Regex(RoundingPattern, RegexOptions.Compiled);
+
+        public FacetRangeResult(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// Get a FacetRange instance basead in the informed JTokenType
         /// </summary>
@@ -63,7 +74,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (facetType == typeof(DateTime))
             {
-                return DateTime.Now - (TimeSpan)GetGapValue(value);
+                return DateMath.Apply(DateTime.Now, (string)GetGapValue(value));
             }
 
             return Convert.ToInt32(value);
@@ -92,7 +103,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (facetType == typeof(DateTime))
             {
-                return ((DateTime)value).Add((TimeSpan)gapValue);
+                return DateMath.Apply((DateTime)value, (string)gapValue);
             }
 
             if (facetType == typeof(long))
@@ -124,23 +135,27 @@ namespace SolrExpress.Solr5.Search.Result
             }
 
             // Assuming than gap is DateTime type
-            var gapNumber = int.Parse(Regex.Replace(gap, "[^0-9]", string.Empty, RegexOptions.IgnoreCase));
-
-            var keys = new Dictionary<string, DateTime>
+            var keys = new Dictionary<string, string>
             {
-                ["MILISECOND"] = DateTime.MinValue.AddMilliseconds(1),
-                ["SECOND"] = DateTime.MinValue.AddSeconds(1),
-                ["MINUTE"] = DateTime.MinValue.AddMinutes(1),
-                ["HOUR"] = DateTime.MinValue.AddHours(1),
-                ["DAY"] = DateTime.MinValue.AddDays(1),
-                ["WEAK"] = DateTime.MinValue.AddDays(7),
-                ["MONTH"] = DateTime.MinValue.AddMonths(1),
-                ["YEAR"] = DateTime.MinValue.AddYears(1)
+                ["YEAR"] = "y",
+                ["YEARS"] = "y",
+                ["MONTH"] = "M",
+                ["MONTHS"] = "M",
+                ["DAY"] = "d",
+                ["DAYS"] = "d",
+                ["DATE"] = "now",
+                ["HOUR"] = "h",
+                ["HOURS"] = "h",
+                ["MINUTE"] = "m",
+                ["MINUTES"] = "m",
+                ["SECOND"] = "s",
+                ["SECONDS"] = "s"
             };
 
-            var key = keys.FirstOrDefault(q => gap.Contains(q.Key));
-
-            return new TimeSpan(key.Value.Ticks * gapNumber);
+            var gapReplaced = this.OperatorRegex.Replace(gap, m => m.Groups[0].Value.Replace(
+                    m.Groups[1].Value, keys[m.Groups[1].Value]));
+            return this.RoundingRegex.Replace(gapReplaced, m => m.Groups[0].Value.Replace(
+                    m.Groups[1].Value, keys[m.Groups[1].Value]));
         }
 
         /// <summary>
@@ -192,7 +207,7 @@ namespace SolrExpress.Solr5.Search.Result
                             ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
                     });
 
-                    var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
+                    var facetType = this._expressionBuilder.GetPropertyTypeFromExpression(facetParameter.Expression);
 
                     var gapValue = this.GetGapValue(facetParameter.Gap);
 
@@ -216,7 +231,7 @@ namespace SolrExpress.Solr5.Search.Result
 
                     var lastValue = this.CreateFacetRange(facetType);
                     lastValue.SetMinimumValue(this.GetFacetValue(facetType, facetParameter.End));
-                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["after"]["count"].ToObject<long>() });
+                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = lastValue, Quantity = jProperty.Value["after"]["count"].ToObject<long>() });
 
                     return facet;
                 })

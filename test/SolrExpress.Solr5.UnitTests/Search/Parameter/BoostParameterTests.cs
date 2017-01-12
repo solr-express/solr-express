@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using Xunit;
 
@@ -25,8 +26,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Bf);
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
             
             // Act
             parameter.Execute(jObject);
@@ -53,8 +56,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new BoostParameter<TestDocument>();
-            parameter.Configure(new Any("id"), BoostFunctionType.Boost);
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
+            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
 
             // Act
             parameter.Execute(jObject);

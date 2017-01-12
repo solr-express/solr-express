@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.Result;
@@ -18,6 +17,13 @@ namespace SolrExpress.Solr4.Search.Result
     public sealed class FacetRangeResult<TDocument> : IFacetRangeResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
+        private IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public FacetRangeResult(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// Get a FacetRange instance basead in the informed JTokenType
         /// </summary>
@@ -151,8 +157,8 @@ namespace SolrExpress.Solr4.Search.Result
                             (q is IFacetRangeParameter<TDocument>) &&
                             ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
                     });
-
-                    var facetType = facetParameter.Expression.GetPropertyTypeFromExpression();
+                    
+                    var facetType = this._expressionBuilder.GetPropertyTypeFromExpression(facetParameter.Expression);
 
                     var gap = jProperty.Value["gap"].ToObject<string>();
                     var gapValue = this.GetGapValue(gap);

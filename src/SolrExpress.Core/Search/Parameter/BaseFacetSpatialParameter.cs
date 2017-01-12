@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Search.ParameterValue;
+﻿using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Core.Utility;
 using System;
 using System.Linq.Expressions;
@@ -9,6 +8,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -62,7 +68,7 @@ namespace SolrExpress.Core.Search.Parameter
             isValid = true;
             errorMessage = string.Empty;
 
-            var solrFieldAttribute = this.Expression.GetSolrFieldAttributeFromPropertyInfo();
+            var solrFieldAttribute = this._expressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
 
             if (solrFieldAttribute?.Indexed ?? true)
             {

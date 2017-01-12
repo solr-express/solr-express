@@ -45,7 +45,7 @@
       },
       "dependencies": {
         "Microsoft.NETCore.App": {
-          "version": "1.0.0",
+          "version": "1.0.1",
           "type": "platform"
         },
         "Moq": "4.6.36-alpha"

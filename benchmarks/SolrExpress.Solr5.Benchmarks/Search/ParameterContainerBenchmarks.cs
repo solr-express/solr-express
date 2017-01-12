@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Moq;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Core.Search;
 using SolrExpress.Solr5.Search;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace SolrExpress.Benchmarks.Solr5.Search
 {
     public class ParameterContainerBenchmarks
     {
-        private ISearchParameterCollection _parameterContainer;
+        private ISearchParameterCollection<TestDocument> _parameterContainer;
 
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
@@ -22,14 +23,15 @@ namespace SolrExpress.Benchmarks.Solr5.Search
 
             for (int i = 0; i < this.ElementsCount; i++)
             {
-                var parameterMock = new Mock<ISearchParameter<JObject>>();
-                parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
-                parameterMock.Setup(q => q.Execute(It.IsAny<JObject>())).Callback((JObject jObject) => { });
+                var parameter = new Mock<ISearchParameter>();
+                parameter.Setup(q => q.AllowMultipleInstances).Returns(true);
+                var parameterExecute = parameter.As<ISearchParameterExecute<JObject>>();
+                parameterExecute.Setup(q => q.Execute(It.IsAny<JObject>())).Callback((JObject jObject) => { });
 
-                parameters.Add(parameterMock.Object);
+                parameters.Add((ISearchParameter)parameterExecute.Object);
             }
 
-            this._parameterContainer = new SearchParameterCollection();
+            this._parameterContainer = new SearchParameterCollection<TestDocument>();
 
             this._parameterContainer.Add(parameters.ToList());
         }

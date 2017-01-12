@@ -2,7 +2,8 @@
 
 namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseAnyParameter : IAnyParameter, IValidation
+    public abstract class BaseAnyParameter<TDocument> : IAnyParameter<TDocument>, IValidation
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -24,7 +25,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// </summary>
         /// <param name="name">Name of the parameter</param>
         /// <param name="value">Value of the parameter</param>
-        public IAnyParameter Configure(string name, string value)
+        public IAnyParameter<TDocument> Configure(string name, string value)
         {
             this.Name = name;
             this.Value = value;

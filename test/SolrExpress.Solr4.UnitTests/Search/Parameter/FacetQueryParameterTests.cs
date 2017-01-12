@@ -5,6 +5,7 @@ using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -20,8 +21,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"));
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"));
 
             // Act
             parameter.Execute(container);
@@ -43,8 +46,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"), FacetSortType.CountAsc);
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), FacetSortType.CountAsc);
 
             // Act
             parameter.Execute(container);
@@ -67,8 +72,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new QueryAll(), FacetSortType.CountDesc);
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.CountDesc);
 
             // Act / Assert
             Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
@@ -84,8 +91,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new QueryAll(), FacetSortType.IndexDesc);
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.IndexDesc);
 
             // Act / Assert
             Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
@@ -100,10 +109,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetQueryParameter005()
         {
             // Arrange
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any("x")));
+            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any<TestDocument>("x")));
         }
 
         /// <summary>
@@ -114,8 +125,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         [Fact]
         public void FacetQueryParameter006()
         {
-            // Arrange / Act / Assert
-            var parameter = new FacetQueryParameter<TestDocument>();
+            // Arrange
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null));
@@ -131,8 +144,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FacetQueryParameter<TestDocument>();
-            parameter.Configure("X", new Any("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(container);

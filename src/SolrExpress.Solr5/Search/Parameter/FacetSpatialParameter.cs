@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -9,18 +8,22 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
+        public FacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
-        /// Execute the creation of the parameter "sort"
+        /// Execute creation of the parameter "facet field" using spatial formule
         /// </summary>
         /// <param name="jObject">JSON object with parameters to request to SOLR</param>
         public void Execute(JObject jObject)
         {
             var facetObject = (JObject)jObject["facet"] ?? new JObject();
 
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
 
             var formule = ExpressionUtility.GetSolrSpatialFormule(
                 this.FunctionType,

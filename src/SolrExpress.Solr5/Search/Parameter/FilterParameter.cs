@@ -6,9 +6,14 @@ using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
+        public FilterParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>

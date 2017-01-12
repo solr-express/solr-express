@@ -3,11 +3,12 @@
     /// <summary>
     /// Signatures to use in internal use
     /// </summary>
-    public interface ISystemParameter : ISearchParameter
+    public interface ISystemParameter<TDocument> : ISearchParameter
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
-        ISystemParameter Configure();
+        ISystemParameter<TDocument> Configure();
     }
 }

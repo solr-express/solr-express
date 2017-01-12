@@ -2,7 +2,8 @@
 
 namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseQueryFieldParameter : IQueryFieldParameter
+    public abstract class BaseQueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
@@ -18,7 +19,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// Configure current instance
         /// </summary>
         /// <param name="expression">Query used to make the query field</param>
-        public IQueryFieldParameter Configure(string expression)
+        public IQueryFieldParameter<TDocument> Configure(string expression)
         {
             Checker.IsNullOrWhiteSpace(expression);
 

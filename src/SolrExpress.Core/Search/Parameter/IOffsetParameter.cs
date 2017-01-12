@@ -3,14 +3,15 @@
     /// <summary>
     /// Signatures to use in offset parameter
     /// </summary>
-    public interface IOffsetParameter : ISearchParameter
+    public interface IOffsetParameter<TDocument> : ISearchParameter
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Value of limit</param>
         /// <returns></returns>
-        IOffsetParameter Configure(long value);
+        IOffsetParameter<TDocument> Configure(long value);
 
         /// <summary>
         /// Value of limit

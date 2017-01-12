@@ -1,14 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
+        public FieldsParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "sort"
         /// </summary>
@@ -19,7 +23,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             foreach (var expression in this.Expressions)
             {
-                var value = expression.GetFieldNameFromExpression();
+                var value = this._expressionBuilder.GetFieldNameFromExpression(expression);
 
                 jArray.Add(value);
             }

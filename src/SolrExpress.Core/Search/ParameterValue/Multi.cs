@@ -7,14 +7,15 @@ namespace SolrExpress.Core.Search.ParameterValue
     /// <summary>
     /// Multi value parameter
     /// </summary>
-    public sealed class Multi : ISearchParameterValue, IValidation
+    public sealed class Multi<TDocument> : ISearchParameterValue<TDocument>, IValidation
+        where TDocument : IDocument
     {
         /// <summary>
         /// Create a multi solr parameter value
         /// </summary>
         /// <param name="conditionType">Condition type</param>
         /// <param name="values">Value array of filter</param>
-        public Multi(SolrQueryConditionType conditionType, params ISearchParameterValue[] values)
+        public Multi(SolrQueryConditionType conditionType, params ISearchParameterValue<TDocument>[] values)
         {
             Checker.IsNull(values);
             Checker.IsLowerThan(values.Length, 2);
@@ -31,7 +32,11 @@ namespace SolrExpress.Core.Search.ParameterValue
         {
             var expression = string.Join(
                 string.Concat(" ", this.ConditionType.ToString().ToUpper(), " "),
-                this.Values.Select(q => q.Execute()));
+                this.Values.Select(q =>
+                {
+                    q.ExpressionBuilder = this.ExpressionBuilder;
+                    return q.Execute();
+                }));
 
             return $"({expression})";
         }
@@ -65,6 +70,11 @@ namespace SolrExpress.Core.Search.ParameterValue
         }
 
         /// <summary>
+        /// Expressions builder
+        /// </summary>
+        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+
+        /// <summary>
         /// Condition type
         /// </summary>
         public SolrQueryConditionType ConditionType { get; private set; }
@@ -72,6 +82,6 @@ namespace SolrExpress.Core.Search.ParameterValue
         /// <summary>
         /// Value array of filter
         /// </summary>
-        public ISearchParameterValue[] Values { get; private set; }
+        public ISearchParameterValue<TDocument>[] Values { get; private set; }
     }
 }

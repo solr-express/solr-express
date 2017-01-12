@@ -16,7 +16,7 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "*:*";
             string actual;
-            var parameter = new QueryAll();
+            var parameter = new QueryAll<TestDocument>();
 
             // Act
             actual = parameter.Execute();

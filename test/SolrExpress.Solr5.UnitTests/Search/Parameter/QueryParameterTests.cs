@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -23,9 +24,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new QueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
-
+            
             // Act
             parameter.Execute(jObject);
             actual = jObject.ToString();
@@ -43,7 +46,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void QueryParameter002()
         {
             // Arrange
-            var parameter = new QueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));

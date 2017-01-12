@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -26,11 +27,13 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter1 = new FilterParameter<TestDocument>();
-            var parameter2 = new FilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter1 = new FilterParameter<TestDocument>(expressionBuilder);
+            var parameter2 = new FilterParameter<TestDocument>(expressionBuilder);
             parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
             parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
-
+            
             // Act
             parameter1.Execute(jObject);
             parameter2.Execute(jObject);
@@ -49,7 +52,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FilterParameter002()
         {
             // Arrange
-            var parameter = new FilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
@@ -72,9 +77,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FilterParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
-
+            
             // Act
             parameter.Execute(jObject);
             actual = jObject.ToString();

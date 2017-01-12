@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using SolrExpress.Core;
+using SolrExpress.Core.Utility;
+using Moq;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -19,8 +21,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FieldListParameter<TestDocument>();
-            var parameter2 = new FieldListParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter1 = new FieldListParameter<TestDocument>(expressionBuilder);
+            var parameter2 = new FieldListParameter<TestDocument>(expressionBuilder);
             parameter1.Configure(q => q.Id);
             parameter2.Configure(q => q.Score);
 
@@ -44,7 +48,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotStored);
 
             // Act
@@ -65,7 +71,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Stored);
 
             // Act
@@ -85,7 +93,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FieldListParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FieldListParameter<TestDocument>(expressionBuilder);
             parameter.Configure(q => q.Id, q => q.Score);
 
             // Act
@@ -107,7 +117,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             bool actual;
             string dummy;
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Stored, q => q.NotStored);
 
             // Act
@@ -126,7 +138,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FieldListParameter006()
         {
             // Arrange
-            var parameter = new FieldListParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FieldListParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
@@ -135,16 +149,18 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// <summary>
         /// Where   Using a FieldListParameter instance
         /// When    Create the instance with empty collection
-        /// What    Throws ArgumentOutOfRangeException
+        /// What    Throws ArgumentException
         /// </summary>
         [Fact]
         public void FieldListParameter007()
         {
             // Arrange
-            var parameter = new FieldListParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FieldListParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
-            Assert.Throws<ArgumentOutOfRangeException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
+            Assert.Throws<ArgumentException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
         }
 
         /// <summary>
@@ -159,7 +175,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             bool isValid;
             string errorMessage;
             var container = new List<string>();
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.Stored);
 
             // Act
@@ -181,7 +199,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             bool isValid;
             string errorMessage;
             var container = new List<string>();
-            var parameter = new FieldListParameter<TestDocumentWithAttribute>();
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
+            var parameter = new FieldListParameter<TestDocumentWithAttribute>(expressionBuilder);
             parameter.Configure(q => q.NotStored);
 
             // Act

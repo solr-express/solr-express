@@ -3,6 +3,7 @@ using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -18,7 +19,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new QueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
 
             // Act
@@ -38,7 +41,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void QueryParameter002()
         {
             // Arrange
-            var parameter = new QueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));

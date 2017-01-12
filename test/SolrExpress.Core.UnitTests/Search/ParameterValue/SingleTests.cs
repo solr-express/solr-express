@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using SolrExpress.Core.Search.ParameterValue;
 using System;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.UnitTests.Search.ParameterValue
 {
@@ -17,7 +18,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             var expected = "_id_:xpto";
             string actual;
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new Single<TestDocument>(q => q.Id, "xpto");
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             actual = parameter.Execute();
@@ -37,7 +41,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             bool actual;
             string dummy;
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
             var parameter = new Single<TestDocumentWithAttribute>(q => q.NotIndexed, "xpto");
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             parameter.Validate(out actual, out dummy);
@@ -57,7 +64,10 @@ namespace SolrExpress.Core.UnitTests.Search.ParameterValue
             // Arrange
             bool actual;
             string dummy;
+            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
             var parameter = new Single<TestDocumentWithAttribute>(q => q.Indexed, "xpto");
+            parameter.ExpressionBuilder = expressionBuilder;
 
             // Act
             parameter.Validate(out actual, out dummy);

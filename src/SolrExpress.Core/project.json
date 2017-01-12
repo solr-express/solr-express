@@ -19,15 +19,17 @@
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way - Core library",
   "frameworks": {
-    "netcoreapp1.0": {
+    "netstandard1.6": {
       "dependencies": {
         "Microsoft.Extensions.DependencyInjection": "1.0.0",
-        "Microsoft.Extensions.Options": "1.0.0",
+        "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0",
+        "NETStandard.Library": "1.6.0",
         "Newtonsoft.Json": "9.0.1",
-        "System.Console": "4.0.0",
-        "System.Diagnostics.Tools": "4.0.1",
-        "System.IO": "4.1.0",
-        "System.IO.FileSystem": "4.0.1"
+        "System.ComponentModel": "4.0.1",
+        "System.Threading.Tasks.Parallel": "4.0.1"
+      },
+      "buildOptions": {
+        "define": [ "NETCORE" ]
       }
     },
     "net4": {
@@ -52,5 +54,5 @@
     "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
     "requireLicenseAcceptance": false
   },
-  "version": "4.0.7"
+  "version": "4.1.0-2017-01-12"
 }

@@ -19,8 +19,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
         public void InformationBuilder001()
         {
             // Arrange
-            var offsetParameterMock = new Mock<IOffsetParameter>();
-            var limitParameterMock = new Mock<ILimitParameter>();
+            var offsetParameterMock = new Mock<IOffsetParameter<TestDocument>>();
+            var limitParameterMock = new Mock<ILimitParameter<TestDocument>>();
 
             offsetParameterMock.SetupGet(q => q.Value).Returns(0);
             limitParameterMock.SetupGet(q => q.Value).Returns(100);
@@ -32,7 +32,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             };
 
             // Act
-            var statistic = InformationBuilder.Create(list, 1, 200);
+            var statistic = InformationBuilder<TestDocument>.Create(list, 1, 200);
 
             // Assert
             Assert.Equal(200, statistic.DocumentCount);
@@ -55,8 +55,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
         public void InformationBuilder002()
         {
             // Arrange
-            var offsetParameterMock = new Mock<IOffsetParameter>();
-            var limitParameterMock = new Mock<ILimitParameter>();
+            var offsetParameterMock = new Mock<IOffsetParameter<TestDocument>>();
+            var limitParameterMock = new Mock<ILimitParameter<TestDocument>>();
 
             offsetParameterMock.SetupGet(q => q.Value).Returns(0);
             limitParameterMock.SetupGet(q => q.Value).Returns(100);
@@ -68,7 +68,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             };
 
             // Act
-            var statistic = InformationBuilder.Create(list, 1, 201);
+            var statistic = InformationBuilder<TestDocument>.Create(list, 1, 201);
 
             // Assert
             Assert.Equal(201, statistic.DocumentCount);
@@ -91,8 +91,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
         public void InformationBuilder003()
         {
             // Arrange
-            var offsetParameterMock = new Mock<IOffsetParameter>();
-            var limitParameterMock = new Mock<ILimitParameter>();
+            var offsetParameterMock = new Mock<IOffsetParameter<TestDocument>>();
+            var limitParameterMock = new Mock<ILimitParameter<TestDocument>>();
 
             offsetParameterMock.SetupGet(q => q.Value).Returns(0);
             limitParameterMock.SetupGet(q => q.Value).Returns(100);
@@ -104,7 +104,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             };
 
             // Act
-            var statistic = InformationBuilder.Create(list, 1, 0);
+            var statistic = InformationBuilder<TestDocument>.Create(list, 1, 0);
 
             // Assert
             Assert.Equal(0, statistic.DocumentCount);
@@ -127,8 +127,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
         public void InformationBuilder004()
         {
             // Arrange
-            var offsetParameterMock = new Mock<IOffsetParameter>();
-            var limitParameterMock = new Mock<ILimitParameter>();
+            var offsetParameterMock = new Mock<IOffsetParameter<TestDocument>>();
+            var limitParameterMock = new Mock<ILimitParameter<TestDocument>>();
 
             offsetParameterMock.SetupGet(q => q.Value).Returns(100);
             limitParameterMock.SetupGet(q => q.Value).Returns(100);
@@ -140,7 +140,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             };
 
             // Act
-            var statistic = InformationBuilder.Create(list, 1, 200);
+            var statistic = InformationBuilder<TestDocument>.Create(list, 1, 200);
 
             // Assert
             Assert.Equal(200, statistic.DocumentCount);
@@ -163,8 +163,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
         public void InformationBuilder005()
         {
             // Arrange
-            var offsetParameterMock = new Mock<IOffsetParameter>();
-            var limitParameterMock = new Mock<ILimitParameter>();
+            var offsetParameterMock = new Mock<IOffsetParameter<TestDocument>>();
+            var limitParameterMock = new Mock<ILimitParameter<TestDocument>>();
 
             offsetParameterMock.SetupGet(q => q.Value).Returns(200);
             limitParameterMock.SetupGet(q => q.Value).Returns(100);
@@ -176,7 +176,7 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             };
 
             // Act
-            var statistic = InformationBuilder.Create(list, 1, 300);
+            var statistic = InformationBuilder<TestDocument>.Create(list, 1, 300);
 
             // Assert
             Assert.Equal(300, statistic.DocumentCount);

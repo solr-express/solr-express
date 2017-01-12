@@ -6,9 +6,14 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FilterQueryParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FilterQueryParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
+        public FilterQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+            : base(expressionBuilder)
+        {
+        }
+
         /// <summary>
         /// Execute the creation of the parameter "fq"
         /// </summary>

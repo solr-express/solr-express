@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Extension.Internal;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,6 +8,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFieldsParameter<TDocument> : IFieldsParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFieldsParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -31,7 +37,7 @@ namespace SolrExpress.Core.Search.Parameter
 
             var withError = this
                 .Expressions
-                .Select(expression => expression.GetSolrFieldAttributeFromPropertyInfo())
+                .Select(expression => this._expressionBuilder.GetSolrFieldAttributeFromPropertyInfo(expression))
                 .Any(solrFieldAttribute => (!solrFieldAttribute?.Stored) ?? true);
 
             if (!withError)

@@ -10,11 +10,6 @@ namespace SolrExpress.Core.Search.Result
     public sealed class InformationResult<TDocument> : IInformationResult<TDocument>, IConvertJsonObject
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Execute parse of the JSON object in information class
-        /// </summary>
-        /// <param name="parameters">List of the parameters arranged in the queryable class</param>
-        /// <param name="jsonObject">JSON object used in the parse</param>
         void IConvertJsonObject.Execute(IEnumerable<ISearchParameter> parameters, JObject jsonObject)
         {
             Checker.IsNull(parameters);
@@ -23,7 +18,7 @@ namespace SolrExpress.Core.Search.Result
             var qTime = jsonObject["responseHeader"]["QTime"].ToObject<int>();
             var documentCount = jsonObject["response"]["numFound"].ToObject<long>();
 
-            this.Data = InformationBuilder.Create(parameters, qTime, documentCount);
+            this.Data = InformationBuilder<TDocument>.Create(parameters, qTime, documentCount);
         }
 
         /// <summary>

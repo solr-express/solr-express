@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new QueryFieldParameter();
+            var parameter = new QueryFieldParameter<TestDocument>();
             parameter.Configure("id^10 score~2^20");
 
             // Act
@@ -44,7 +44,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void QueryFieldParameter002()
         {
             // Arrange
-            var parameter = new QueryFieldParameter();
+            var parameter = new QueryFieldParameter<TestDocument>();
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));

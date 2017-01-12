@@ -3,13 +3,14 @@
     /// <summary>
     /// Signatures to use in minimum should match parameter
     /// </summary>
-    public interface IMinimumShouldMatchParameter : ISearchParameter
+    public interface IMinimumShouldMatchParameter<TDocument> : ISearchParameter
+        where TDocument : IDocument
     {
         /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="expression">Expression used to make the mm parameter</param>
-        IMinimumShouldMatchParameter Configure(string expression);
+        IMinimumShouldMatchParameter<TDocument> Configure(string expression);
 
         /// <summary>
         /// Expression used to make the mm parameter

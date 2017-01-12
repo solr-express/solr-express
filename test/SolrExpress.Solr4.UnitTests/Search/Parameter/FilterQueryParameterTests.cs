@@ -3,6 +3,7 @@ using SolrExpress.Core.Search.ParameterValue;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;
+using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -18,8 +19,10 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter1 = new FilterQueryParameter<TestDocument>();
-            var parameter2 = new FilterQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter1 = new FilterQueryParameter<TestDocument>(expressionBuilder);
+            var parameter2 = new FilterQueryParameter<TestDocument>(expressionBuilder);
             parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
             parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
 
@@ -42,7 +45,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FilterQueryParameter002()
         {
             // Arrange
-            var parameter = new FilterQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
@@ -58,7 +63,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new FilterQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FilterQueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
 
             // Act

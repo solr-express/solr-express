@@ -1,6 +1,4 @@
 ﻿using SolrExpress.Core.DependencyInjection;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Update;
 
 namespace SolrExpress.Core
 {
@@ -29,7 +27,7 @@ namespace SolrExpress.Core
         /// </summary>
         /// <param name="options">Options to be used</param>
         /// <returns>Current instance</returns>
-        public DocumentCollectionBuilder<TDocument> UseOptions(DocumentCollectionOptions options)
+        public DocumentCollectionBuilder<TDocument> UseOptions(DocumentCollectionOptions<TDocument> options)
         {
             var shadowOptions = new DocumentCollectionOptions<TDocument>
             {

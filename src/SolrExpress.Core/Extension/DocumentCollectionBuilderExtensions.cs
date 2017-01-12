@@ -1,6 +1,7 @@
 ﻿#if NET40 || NET45
 using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
+using SolrExpress.Core.Update;
 using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Extension
@@ -21,10 +22,21 @@ namespace SolrExpress.Core.Extension
             var builderObj = new DocumentCollectionBuilder<TDocument>();
             var documentCollection = builderObj.Create();
 
-            builderObj
+            documentCollection
                 .Engine
-                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>(new SearchParameterBuilder<TDocument>(documentCollection.Engine))
-                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection);
+                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(documentCollection.Options)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>()
+                .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>()
+                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection)
+                .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
+                .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>();
+
+            var expressionBuilder = documentCollection.Engine.GetService<IExpressionBuilder<TDocument>>();
+
+            ExpressionCacheWarmup.Load(expressionBuilder);
 
             return builderObj;
         }

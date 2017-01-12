@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Core;
-using SolrExpress.Core.Extension.Internal;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
@@ -8,10 +7,14 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
-              /// Execute the creation of the parameter "facet.field"
+        public FacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        {
+        }
+
+        /// Execute the creation of the parameter "facet.field"
         /// </summary>
         /// <param name="container">Container to parameters to request to SOLR</param>
         public void Execute(List<string> container)
@@ -21,8 +24,8 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            var aliasName = this.Expression.GetPropertyNameFromExpression();
-            var fieldName = this.Expression.GetFieldNameFromExpression();
+            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(this.Expression);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
             var facetField = this.Excludes.GetSolrFacetWithExcludes(aliasName, fieldName);
 
             container.Add($"facet.field={facetField}");

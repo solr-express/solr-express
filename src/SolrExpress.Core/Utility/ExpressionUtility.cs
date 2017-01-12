@@ -2,13 +2,16 @@
 using SolrExpress.Core.Search.ParameterValue;
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace SolrExpress.Core.Utility
 {
     /// <summary>
     /// Utility class used in expression calculations
     /// </summary>
-    public class ExpressionUtility
+    public static class ExpressionUtility
     {
         /// <summary>
         /// Get the sort type and direction
@@ -16,7 +19,7 @@ namespace SolrExpress.Core.Utility
         /// <param name="solrFacetSortType">Type used in match</param>
         /// <param name="typeName">Type name</param>
         /// <param name="sortName">Sort direction</param>
-        internal static void GetSolrFacetSort(FacetSortType solrFacetSortType, out string typeName, out string sortName)
+        public static void GetSolrFacetSort(FacetSortType solrFacetSortType, out string typeName, out string sortName)
         {
             switch (solrFacetSortType)
             {
@@ -49,7 +52,7 @@ namespace SolrExpress.Core.Utility
         /// <param name="centerPoint">Center point information</param>
         /// <param name="distance">Distance</param>
         /// <returns></returns>
-        internal static string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
+        public static string GetSolrSpatialFormule(SolrSpatialFunctionType functionType, string fieldName, GeoCoordinate centerPoint, decimal distance)
         {
             return string.Format(
                 "{{!{0} sfield={1} pt={2} d={3}}}",
@@ -64,7 +67,7 @@ namespace SolrExpress.Core.Utility
         /// </summary>
         /// <param name="query">Query value</param>
         /// <param name="tagName">Tag name</param>
-        internal static string GetSolrFilterWithTag(string query, string aliasName)
+        public static string GetSolrFilterWithTag(string query, string aliasName)
         {
             return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
         }

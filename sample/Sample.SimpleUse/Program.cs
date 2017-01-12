@@ -1,4 +1,4 @@
-﻿#if NETCOREAPP1_0
+﻿#if NETCORE
 using Microsoft.Extensions.DependencyInjection;
 #endif
 using Newtonsoft.Json;
@@ -43,7 +43,7 @@ namespace Sample.SimpleUse
 
             var select = techProducts
                 .Select()
-                .Query(new QueryAll())
+                .QueryAll()
                 .Limit(3)
                 .FacetField(q => q.Manufacturer)
                 .FacetField(q => q.InStock)

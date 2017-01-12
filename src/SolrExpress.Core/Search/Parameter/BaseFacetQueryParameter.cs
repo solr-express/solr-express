@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseFacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IValidation
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseFacetQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -18,7 +25,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Query used to make the facet
         /// </summary>
-        public ISearchParameterValue Query { get; private set; }
+        public ISearchParameterValue<TDocument> Query { get; private set; }
 
         /// <summary>
         /// Sort type of the result of the facet
@@ -52,13 +59,14 @@ namespace SolrExpress.Core.Search.Parameter
         /// <param name="query">Query used to make the facet</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetQueryParameter<TDocument> Configure(string aliasName, ISearchParameterValue query, FacetSortType? sortType = null, params string[] excludes)
+        public IFacetQueryParameter<TDocument> Configure(string aliasName, ISearchParameterValue<TDocument> query, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(query);
 
             this.AliasName = aliasName;
             this.Query = query;
+            this.Query.ExpressionBuilder = this._expressionBuilder;
             this.SortType = sortType;
             this.Excludes = excludes;
 

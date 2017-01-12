@@ -2,7 +2,8 @@
 
 namespace SolrExpress.Core.Search.Parameter
 {
-    public abstract class BaseSystemParameter : ISystemParameter
+    public abstract class BaseSystemParameter<TDocument> : ISystemParameter<TDocument>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Parameters to add
@@ -17,7 +18,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// <summary>
         /// Configure current instance
         /// </summary>
-        public ISystemParameter Configure()
+        public ISystemParameter<TDocument> Configure()
         {
             this.Parameters = new Dictionary<string, string>
             {
