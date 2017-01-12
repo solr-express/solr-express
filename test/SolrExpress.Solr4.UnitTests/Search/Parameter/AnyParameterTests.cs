@@ -1,6 +1,6 @@
-﻿using Xunit;
-using SolrExpress.Solr4.Search.Parameter;
+﻿using SolrExpress.Solr4.Search.Parameter;
 using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -16,7 +16,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new AnyParameter();
+            var parameter = new AnyParameter<TestDocument>();
             parameter.Configure("x", "y");
 
             // Act

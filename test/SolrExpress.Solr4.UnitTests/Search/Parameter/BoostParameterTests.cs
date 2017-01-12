@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr4.Search.Parameter;
 using System.Collections.Generic;
 using Xunit;
@@ -18,7 +19,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new BoostParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
 
             // Act
@@ -39,7 +42,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new BoostParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
             parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
 
             // Act

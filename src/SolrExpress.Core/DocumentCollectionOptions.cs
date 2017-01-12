@@ -43,6 +43,6 @@ namespace SolrExpress.Core
         /// <summary>
         /// Global parameter used in all queryable intance
         /// </summary>
-        public List<ISearchParameter<TDocument>> GlobalParameters { get; private set; } = new List<ISearchParameter<TDocument>>();
+        public List<ISearchParameter> GlobalParameters { get; private set; } = new List<ISearchParameter>();
     }
 }

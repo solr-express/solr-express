@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in facet query parameter
     /// </summary>
-    public interface IFacetQueryParameter<TDocument> : ISearchParameter<TDocument>
+    public interface IFacetQueryParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
         /// <summary>

@@ -21,7 +21,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new OffsetParameter();
+            var parameter = new OffsetParameter<TestDocument>();
             parameter.Configure(10);
 
             // Act

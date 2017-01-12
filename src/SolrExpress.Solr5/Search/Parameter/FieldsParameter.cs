@@ -6,7 +6,7 @@ using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameter<JObject>
+    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameterExecute<JObject>
         where TDocument : IDocument
     {
         public FieldsParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

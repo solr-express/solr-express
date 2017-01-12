@@ -28,7 +28,7 @@ namespace Sample.Ui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var options = new DocumentCollectionOptions
+            var options = new DocumentCollectionOptions<TechProduct>
             {
                 CheckAnyParameter = true,
                 FailFast = true

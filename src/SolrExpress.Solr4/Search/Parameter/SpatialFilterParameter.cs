@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : BaseSpatialFilterParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class SpatialFilterParameter<TDocument> : BaseSpatialFilterParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
         public SpatialFilterParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

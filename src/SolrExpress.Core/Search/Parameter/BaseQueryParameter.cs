@@ -5,6 +5,13 @@ namespace SolrExpress.Core.Search.Parameter
     public abstract class BaseQueryParameter<TDocument> : IQueryParameter<TDocument>
         where TDocument : IDocument
     {
+        protected IExpressionBuilder<TDocument> _expressionBuilder;
+
+        public BaseQueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+        
         /// <summary>
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
@@ -16,11 +23,6 @@ namespace SolrExpress.Core.Search.Parameter
         public ISearchParameterValue<TDocument> Value { get; private set; }
 
         /// <summary>
-        /// Expressions builder
-        /// </summary>
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
-        /// <summary>
         /// Configure current instance
         /// </summary>
         /// <param name="value">Parameter to include in the query</param>
@@ -29,6 +31,7 @@ namespace SolrExpress.Core.Search.Parameter
             Checker.IsNull(value);
 
             this.Value = value;
+            this.Value.ExpressionBuilder = this._expressionBuilder;
 
             return this;
         }

@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.Search;
+﻿using SolrExpress.Core;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ namespace SolrExpress.Solr4.Search.Parameter
     /// <summary>
     /// Internal use
     /// </summary>
-    internal class SystemParameter : BaseSystemParameter, ISearchParameter<List<string>>
+    internal class SystemParameter<TDocument> : BaseSystemParameter<TDocument>, ISearchParameterExecute<List<string>>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the creation of the parameter

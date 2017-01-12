@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Utility;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SolrExpress.Core.Search.Parameter
 {
@@ -10,8 +9,6 @@ namespace SolrExpress.Core.Search.Parameter
         /// True to indicate multiple instances of the parameter, otherwise false
         /// </summary>
         public bool AllowMultipleInstances { get; } = true;
-
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
 
         /// <summary>
         /// Name of the parameter

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FieldListParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class FieldListParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
         public FieldListParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

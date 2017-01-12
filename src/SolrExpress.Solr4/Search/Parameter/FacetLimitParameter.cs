@@ -1,10 +1,12 @@
-﻿using SolrExpress.Core.Search;
+﻿using SolrExpress.Core;
+using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetLimitParameter : BaseFacetLimitParameter, ISearchParameter<List<string>>
+    public sealed class FacetLimitParameter<TDocument> : BaseFacetLimitParameter<TDocument>, ISearchParameterExecute<List<string>>
+        where TDocument : IDocument
     {
         /// <summary>
         /// Execute the creation of the parameter "rows"

@@ -23,11 +23,12 @@ namespace SolrExpress.Benchmarks.Solr5.Search
 
             for (int i = 0; i < this.ElementsCount; i++)
             {
-                var parameterMock = new Mock<ISearchParameter<JObject>>();
-                parameterMock.Setup(q => q.AllowMultipleInstances).Returns(true);
-                parameterMock.Setup(q => q.Execute(It.IsAny<JObject>())).Callback((JObject jObject) => { });
+                var parameter = new Mock<ISearchParameter>();
+                parameter.Setup(q => q.AllowMultipleInstances).Returns(true);
+                var parameterExecute = parameter.As<ISearchParameterExecute<JObject>>();
+                parameterExecute.Setup(q => q.Execute(It.IsAny<JObject>())).Callback((JObject jObject) => { });
 
-                parameters.Add(parameterMock.Object);
+                parameters.Add((ISearchParameter)parameterExecute.Object);
             }
 
             this._parameterContainer = new SearchParameterCollection<TestDocument>();

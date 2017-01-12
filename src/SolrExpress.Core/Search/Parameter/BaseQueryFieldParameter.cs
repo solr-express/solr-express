@@ -1,5 +1,4 @@
-﻿using System;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Core.Utility;
 
 namespace SolrExpress.Core.Search.Parameter
 {
@@ -15,9 +14,7 @@ namespace SolrExpress.Core.Search.Parameter
         /// Query used to make the query field
         /// </summary>
         public string Expression { get; private set; }
-
-        public IExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-
+        
         /// <summary>
         /// Configure current instance
         /// </summary>
@@ -29,11 +26,6 @@ namespace SolrExpress.Core.Search.Parameter
             this.Expression = expression;
 
             return this;
-        }
-
-        IQueryFieldParameter<TDocument> IQueryFieldParameter<TDocument>.Configure(string expression)
-        {
-            throw new NotImplementedException();
         }
     }
 }

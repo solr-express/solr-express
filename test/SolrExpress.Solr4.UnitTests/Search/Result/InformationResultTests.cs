@@ -22,8 +22,8 @@ namespace SolrExpress.Core.UnitTests.Search.Result
             // Arrange
             var parameters = new List<ISearchParameter>
             {
-                new RowsParameter().Configure(10),
-                new StartParameter().Configure(1)
+                new RowsParameter<TestDocument>().Configure(10),
+                new StartParameter<TestDocument>().Configure(1)
             };            
             var jsonStr = @"
             {

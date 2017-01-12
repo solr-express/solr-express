@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameter<List<string>>
+    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameterExecute<List<string>>
         where TDocument : IDocument
     {
         public SortParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)

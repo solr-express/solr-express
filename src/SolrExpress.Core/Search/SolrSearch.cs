@@ -45,9 +45,9 @@ namespace SolrExpress.Core.Search
         /// <param name="item">Search item to validate</param>
         private void ValidateSearchParameter(ISearchItem item)
         {
-            if (item is ISearchParameter<TDocument>)
+            if (item is ISearchParameter)
             {
-                var parameter = (ISearchParameter<TDocument>)item;
+                var parameter = (ISearchParameter)item;
 
                 var multipleInstances = !parameter.AllowMultipleInstances && this._items
                     .Any(q => (q.GetType() == parameter.GetType()));
@@ -197,7 +197,7 @@ namespace SolrExpress.Core.Search
 
             this.SetDefaultPaginationParameters();
 
-            var searchParameters = this._items.OfType<ISearchParameter<TDocument>>().ToList();
+            var searchParameters = this._items.OfType<ISearchParameter>().ToList();
 
             parameterCollection.Add(searchParameters);
             var query = parameterCollection.Execute();

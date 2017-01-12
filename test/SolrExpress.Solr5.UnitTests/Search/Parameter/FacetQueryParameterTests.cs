@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.ParameterValue;
+using SolrExpress.Core.Utility;
 using SolrExpress.Solr5.Search.Parameter;
 using System;
 using Xunit;
@@ -31,7 +32,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", new Any<TestDocument>("avg('Y')"));
 
             // Act
@@ -67,7 +70,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", new Any<TestDocument>("avg('Y')"), FacetSortType.CountDesc);
 
             // Act
@@ -87,7 +92,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetQueryParameter003()
         {
             // Arrange
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any<TestDocument>("x")));
@@ -102,7 +109,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void FacetQueryParameter004()
         {
             // Arrange
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null));
@@ -130,7 +139,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new FacetQueryParameter<TestDocument>();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
             parameter.Configure("X", new Any<TestDocument>("avg('Y')"), excludes: new[] { "tag1", "tag2" });
 
             // Act

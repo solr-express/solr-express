@@ -23,7 +23,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             string actual;
             var jObject = new JObject();
-            var parameter = new AnyParameter();
+            var parameter = new AnyParameter<TestDocument>();
             parameter.Configure("x", "y");
 
             // Act
