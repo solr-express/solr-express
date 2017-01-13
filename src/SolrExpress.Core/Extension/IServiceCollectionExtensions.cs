@@ -25,16 +25,17 @@ namespace SolrExpress.Core.Extension
             builder.Invoke(builderObj);
             var documentCollection = builderObj.Create();
 
+            var expressionCache = new ExpressionCache<TDocument>();
+            var expressionBuilder = new ExpressionBuilder<TDocument>(expressionCache);
+
             documentCollection
                 .Engine
                 .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(documentCollection.Options)
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
-                .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>()
-                .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>()
+                .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>(expressionCache)
+                .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>(expressionBuilder)
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>();
-
-            var expressionBuilder = documentCollection.Engine.GetService<IExpressionBuilder<TDocument>>();
 
             services
                 .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(q => documentCollection.Options)
