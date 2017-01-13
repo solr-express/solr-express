@@ -157,15 +157,18 @@ namespace SolrExpress.Solr4.Search.Result
                             (q is IFacetRangeParameter<TDocument>) &&
                             ((IFacetRangeParameter<TDocument>)q).AliasName.Equals(facet.Name);
                     });
-                    
+
                     var facetType = this._expressionBuilder.GetPropertyTypeFromExpression(facetParameter.Expression);
 
                     var gap = jProperty.Value["gap"].ToObject<string>();
                     var gapValue = this.GetGapValue(gap);
 
-                    var firstValue = this.CreateFacetRange(facetType);
-                    firstValue.SetMaximumValue(jProperty.Value["start"].ToObject(facetType));
-                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["before"].ToObject<long>() });
+                    if (jProperty.Value["before"] != null)
+                    {
+                        var firstValue = this.CreateFacetRange(facetType);
+                        firstValue.SetMaximumValue(jProperty.Value["start"].ToObject(facetType));
+                        ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = firstValue, Quantity = jProperty.Value["before"].ToObject<long>() });
+                    }
 
                     for (int index = 0; index < jProperty.Value["counts"].Count(); index += 2)
                     {
@@ -176,9 +179,12 @@ namespace SolrExpress.Solr4.Search.Result
                         ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = value, Quantity = jProperty.Value["counts"][index + 1].ToObject<long>() });
                     }
 
-                    var lastValue = this.CreateFacetRange(facetType);
-                    lastValue.SetMinimumValue(jProperty.Value["end"].ToObject(facetType));
-                    ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = lastValue, Quantity = jProperty.Value["after"].ToObject<long>() });
+                    if (jProperty.Value["after"] != null)
+                    {
+                        var lastValue = this.CreateFacetRange(facetType);
+                        lastValue.SetMinimumValue(jProperty.Value["end"].ToObject(facetType));
+                        ((List<FacetItemValue<FacetRange>>)facet.Data).Add(new FacetItemValue<FacetRange> { Key = lastValue, Quantity = jProperty.Value["after"].ToObject<long>() });
+                    }
 
                     return facet;
                 })

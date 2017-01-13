@@ -42,7 +42,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-            parameter.Configure("X", q => q.Id, "1", "10", "20");
+            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true);
 
             // Act
             parameter.Execute(jObject);
@@ -87,7 +87,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-            parameter.Configure("X", q => q.Id, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Execute(jObject);
@@ -111,7 +111,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropInteger, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropInteger, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -135,7 +135,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropLong, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropLong, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -159,7 +159,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropFloat, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropFloat, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -183,7 +183,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropDouble, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropDouble, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -207,7 +207,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropDecimal, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropDecimal, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -231,7 +231,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropDateTime, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropDateTime, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -255,7 +255,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
             var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-            parameter.Configure("X", q => q.PropString, "1", "10", "20", FacetSortType.CountDesc);
+            parameter.Configure("X", q => q.PropString, "1", "10", "20", true, true, FacetSortType.CountDesc);
 
             // Act
             parameter.Validate(out isValid, out errorMessage);
@@ -381,7 +381,89 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expressionCache = new ExpressionCache<TestDocument>();
             var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
             var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-            parameter.Configure("X", q => q.Id, "1", "10", "20", excludes: new[] { "tag1", "tag2" });
+            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true, excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(jObject);
+            var actual = jObject.ToString();
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        // <summary>
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" not calculating before range
+        /// What    Create a valid string
+        /// </summary>
+        [Fact]
+        public void FacetRangeParameter016()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""facet"": {
+                ""X"": {
+                  ""range"": {
+                    ""field"": ""{!ex=tag1,tag2}_id_"",
+                    ""mincount"": 1,
+                    ""gap"": ""1"",
+                    ""start"": ""10"",
+                    ""end"": ""20"",
+                    ""other"": [
+                      ""after""
+                    ]
+                  }
+                }
+              }
+            }").ToString();
+            var jObject = new JObject();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", q => q.Id, "1", "10", "20", false, true, excludes: new[] { "tag1", "tag2" });
+
+            // Act
+            parameter.Execute(jObject);
+            var actual = jObject.ToString();
+
+            // Assert
+            Assert.Equal(expected, actual);
+        }
+
+        // <summary>
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking the method "Execute" not calculating after range
+        /// What    Create a valid string
+        /// </summary>
+        [Fact]
+        public void FacetRangeParameter017()
+        {
+            // Arrange
+            var expected = JObject.Parse(@"
+            {
+              ""facet"": {
+                ""X"": {
+                  ""range"": {
+                    ""field"": ""{!ex=tag1,tag2}_id_"",
+                    ""mincount"": 1,
+                    ""gap"": ""1"",
+                    ""start"": ""10"",
+                    ""end"": ""20"",
+                    ""other"": [
+                      ""before""
+                    ]
+                  }
+                }
+              }
+            }").ToString();
+            var jObject = new JObject();
+            var expressionCache = new ExpressionCache<TestDocument>();
+            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
+            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
+            parameter.Configure("X", q => q.Id, "1", "10", "20", true, false, excludes: new[] { "tag1", "tag2" });
 
             // Act
             parameter.Execute(jObject);

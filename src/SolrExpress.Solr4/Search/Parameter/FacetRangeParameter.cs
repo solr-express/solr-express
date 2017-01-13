@@ -44,8 +44,15 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add($"f.{fieldName}.facet.range.end={Uri.EscapeDataString(this.End)}");
             }
 
-            container.Add($"f.{fieldName}.facet.range.other=before");
-            container.Add($"f.{fieldName}.facet.range.other=after");
+            if (this.CountBefore)
+            {
+                container.Add($"f.{fieldName}.facet.range.other=before");
+            }
+
+            if (this.CountAfter)
+            {
+                container.Add($"f.{fieldName}.facet.range.other=after");
+            }
 
             if (this.SortType.HasValue)
             {

@@ -60,13 +60,16 @@ namespace SolrExpress.Core.Search
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public IFacetRangeParameter<TDocument> FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, FacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public IFacetRangeParameter<TDocument> FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, bool countBefore = false, bool countAfter = false, FacetSortType? sortType = null, params string[] excludes)
         {
             return this
                 .Engine
                 .GetService<IFacetRangeParameter<TDocument>>()
-                .Configure(aliasName, expression, gap, start, end, sortType);
+                .Configure(aliasName, expression, gap, start, end, countBefore, countAfter, sortType, excludes);
         }
 
         /// <summary>

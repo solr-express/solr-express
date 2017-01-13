@@ -53,7 +53,17 @@ namespace SolrExpress.Core.Search.Parameter
         /// List of tags to exclude in facet calculation
         /// </summary>
         public string[] Excludes { get; private set; }
-        
+
+        /// <summary>
+        /// Counts should also be computed for all records with field values lower then lower bound of the first range
+        /// </summary>
+        public bool CountBefore { get; private set; }
+
+        /// <summary>
+        /// Counts should also be computed for all records with field values greater then the upper bound of the last range
+        /// </summary>
+        public bool CountAfter { get; private set; }
+
         /// <summary>
         /// Check for the parameter validation
         /// </summary>
@@ -101,9 +111,11 @@ namespace SolrExpress.Core.Search.Parameter
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, FacetSortType? sortType = null, params string[] excludes)
+        public IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, bool countBefore = false, bool countAfter = false, FacetSortType? sortType = null, params string[] excludes)
         {
             Checker.IsNullOrWhiteSpace(aliasName);
             Checker.IsNull(expression);
@@ -116,6 +128,8 @@ namespace SolrExpress.Core.Search.Parameter
             this.Gap = gap;
             this.Start = start;
             this.End = end;
+            this.CountBefore = countBefore;
+            this.CountAfter = countAfter;
             this.SortType = sortType;
             this.Excludes = excludes;
 

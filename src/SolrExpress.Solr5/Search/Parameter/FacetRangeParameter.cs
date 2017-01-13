@@ -45,7 +45,21 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add(new JProperty("end", this.End));
             }
 
-            array.Add(new JProperty("other", new JArray("before", "after")));
+            if (this.CountBefore || this.CountAfter)
+            {
+                var content = new List<string>();
+                if (this.CountBefore)
+                {
+                    content.Add("before");
+                }
+
+                if (this.CountAfter)
+                {
+                    content.Add("after");
+                }
+
+                array.Add(new JProperty("other", new JArray(content.ToArray())));
+            }
 
             if (this.SortType.HasValue)
             {

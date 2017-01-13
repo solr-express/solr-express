@@ -17,9 +17,11 @@ namespace SolrExpress.Core.Search.Parameter
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, FacetSortType? sortType = null, params string[] excludes);
+        IFacetRangeParameter<TDocument> Configure(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, bool countBefore = false, bool countAfter = false, FacetSortType? sortType = null, params string[] excludes);
 
         /// <summary>
         /// Name of the alias added in the query
@@ -55,5 +57,15 @@ namespace SolrExpress.Core.Search.Parameter
         /// List of tags to exclude in facet calculation
         /// </summary>
         string[] Excludes { get; }
+
+        /// <summary>
+        /// Counts should also be computed for all records with field values lower then lower bound of the first range
+        /// </summary>
+        bool CountBefore { get; }
+
+        /// <summary>
+        /// Counts should also be computed for all records with field values greater then the upper bound of the last range
+        /// </summary>
+        bool CountAfter { get; }
     }
 }

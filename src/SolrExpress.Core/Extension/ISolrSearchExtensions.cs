@@ -54,11 +54,14 @@ namespace SolrExpress.Core.Extension
         /// <param name="gap">Size of each range bucket to make the facet</param>
         /// <param name="start">Lower bound to make the facet</param>
         /// <param name="end">Upper bound to make the facet</param>
+        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
         /// <param name="sortType">Sort type of the result of the facet</param>
-        public static ISolrSearch<TDocument> FacetRange<TDocument>(this ISolrSearch<TDocument> search, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, FacetSortType? sortType = null)
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        public static ISolrSearch<TDocument> FacetRange<TDocument>(this ISolrSearch<TDocument> search, string aliasName, Expression<Func<TDocument, object>> expression, string gap = null, string start = null, string end = null, bool countBefore = false, bool countAfter = false, FacetSortType? sortType = null, params string[] excludes)
             where TDocument : IDocument
         {
-            search.Add(search.GetBuilder().FacetRange(aliasName, expression, gap, start, end, sortType));
+            search.Add(search.GetBuilder().FacetRange(aliasName, expression, gap, start, end, countBefore, countAfter, sortType, excludes));
             return search;
         }
 
@@ -70,6 +73,17 @@ namespace SolrExpress.Core.Extension
             where TDocument : IDocument
         {
             search.Add(search.GetBuilder().Fields(expressions));
+            return search;
+        }
+
+        /// <summary>
+        /// Create a filter parameter
+        /// </summary>
+        /// <param name="value">Value of the filter</param>
+        public static ISolrSearch<TDocument> Filter<TDocument>(this ISolrSearch<TDocument> search, ISearchParameterValue<TDocument> value)
+            where TDocument : IDocument
+        {
+            search.Add(search.GetBuilder().Filter(value));
             return search;
         }
 

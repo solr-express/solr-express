@@ -38,8 +38,8 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
         {
             throw new NotImplementedException();
         }
-
-        IFacetRangeParameter<TDocument> ISearchParameterBuilder<TDocument>.FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, FacetSortType? sortType)
+        
+        IFacetRangeParameter<TDocument> ISearchParameterBuilder<TDocument>.FacetRange(string aliasName, Expression<Func<TDocument, object>> expression, string gap, string start, string end, bool countBefore, bool countAfter, FacetSortType? sortType, params string[] excludes)
         {
             throw new NotImplementedException();
         }
