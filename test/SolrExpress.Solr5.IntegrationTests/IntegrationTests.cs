@@ -206,8 +206,8 @@ namespace SolrExpress.Solr5.IntegrationTests
             result = documentCollection
                 .Select()
                 .QueryAll()
-                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
-                .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10", true, true)
+                .FacetRange("Facet2", q => q.Price, "10", "10", "1000", true, true)
                 .Execute();
 
             result.FacetRange(out data);
@@ -260,7 +260,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             result = documentCollection
                 .Select()
                 .QueryAll()
-                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10", true, true)
                 .FacetLimit(1)
                 .Execute();
             result.FacetRange(out data);

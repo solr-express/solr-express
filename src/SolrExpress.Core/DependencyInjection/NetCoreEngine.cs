@@ -14,9 +14,9 @@ namespace SolrExpress.Core.DependencyInjection
         /// <summary>
         /// Default constructor of class
         /// </summary>
-        public NetCoreEngine()
+        public NetCoreEngine(IServiceCollection serviceCollection)
         {
-            this._serviceCollection = new ServiceCollection();
+            this._serviceCollection = serviceCollection;
         }
 
         /// <summary>

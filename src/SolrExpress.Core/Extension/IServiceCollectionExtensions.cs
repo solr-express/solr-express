@@ -22,9 +22,11 @@ namespace SolrExpress.Core.Extension
             Checker.IsNull(builder);
 
             var builderObj = new DocumentCollectionBuilder<TDocument>();
+            builderObj.Engine = new NetCoreEngine(services);
+
             builder.Invoke(builderObj);
             var documentCollection = builderObj.Create();
-
+            
             var expressionCache = new ExpressionCache<TDocument>();
             var expressionBuilder = new ExpressionBuilder<TDocument>(expressionCache);
 
@@ -34,15 +36,11 @@ namespace SolrExpress.Core.Extension
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>(expressionCache)
                 .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>(expressionBuilder)
+                .AddSingleton<IEngine, NetCoreEngine>((NetCoreEngine)builderObj.Engine)
+                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
+                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection)
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>();
-
-            services
-                .AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(q => documentCollection.Options)
-                .AddSingleton<IEngine>(q => (NetCoreEngine)documentCollection.Engine)
-                .AddSingleton(q => expressionBuilder)
-                .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
-                .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>();
 
             ExpressionCacheWarmup.Load(expressionBuilder);
 

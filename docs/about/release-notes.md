@@ -2,6 +2,19 @@
 
 Notes about releases
 
+## [4.1.0] - 2017-01-13
+
+### Enhancement
+* Better way to find Minimum/Maximum in range facet result in SOLR 5.0 ([#131]https://github.com/solr-express/solr-express/issues/131))
+* Improve performance ([#132]https://github.com/solr-express/solr-express/issues/132) and [#167]https://github.com/solr-express/solr-express/issues/167))
+* Create unit tests to Checker class ([#168]https://github.com/solr-express/solr-express/issues/168))
+* QueryAll in extension class ([#169]https://github.com/solr-express/solr-express/issues/169))
+* Review package references in .Net Standard 1.6 ([#178]https://github.com/solr-express/solr-express/issues/178)) - closes ([#177]https://github.com/solr-express/solr-express/issues/177))
+* Filter using AnyValue in extension class ([#183]https://github.com/solr-express/solr-express/issues/183))
+* Option to not calculate facet range before and after ([#184]https://github.com/solr-express/solr-express/issues/184)) - closes ([#180]https://github.com/solr-express/solr-express/issues/180))
+
+---
+
 ## [4.0.7] - 2016-12-14
 
 ### Bug fix

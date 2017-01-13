@@ -18,7 +18,7 @@ namespace Sample.SimpleUse
         {
             IDocumentCollection<TechProduct> techProducts;
 
-            // Emuling not use of Net Core DI services
+            // Emulating not use of Net Core DI services
 #if NET40 || NET45
             techProducts = new DocumentCollectionBuilder<TechProduct>()
                 .AddSolrExpress()
@@ -26,7 +26,7 @@ namespace Sample.SimpleUse
                 .UseSolr5()
                 .Create();
 #else
-            // Emuling use of Net Core DI services
+            // Emulating use of Net Core DI services
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddSolrExpress<TechProduct>(builder => builder

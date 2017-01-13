@@ -20,6 +20,8 @@ namespace SolrExpress.Core.Extension
             Checker.IsNull(builder);
 
             var builderObj = new DocumentCollectionBuilder<TDocument>();
+            builderObj.Engine = new NetFrameworkEngine();
+
             var documentCollection = builderObj.Create();
 
             var expressionCache = new ExpressionCache<TDocument>();
@@ -31,7 +33,7 @@ namespace SolrExpress.Core.Extension
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddSingleton<IExpressionCache<TDocument>, ExpressionCache<TDocument>>(expressionCache)
                 .AddSingleton<IExpressionBuilder<TDocument>, ExpressionBuilder<TDocument>>(expressionBuilder)
-                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builder.Engine)
+                .AddSingleton<IEngine, NetFrameworkEngine>((NetFrameworkEngine)builderObj.Engine)
                 .AddSingleton<ISearchParameterBuilder<TDocument>, SearchParameterBuilder<TDocument>>()
                 .AddTransient<IDocumentCollection<TDocument>, DocumentCollection<TDocument>>(documentCollection)
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()

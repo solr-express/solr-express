@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Core;
 using System;
 
-namespace Sample.SimpleUse
+namespace Sample.MultipleContext
 {
     public class TechProduct : IDocument
     {

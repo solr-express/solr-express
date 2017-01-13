@@ -9,20 +9,6 @@ namespace SolrExpress.Core
         where TDocument : IDocument
     {
         /// <summary>
-        /// Default constructor of class
-        /// </summary>
-        public DocumentCollectionBuilder()
-        {
-            this.Options = new DocumentCollectionOptions<TDocument>();
-
-#if NET40 || NET45
-            this.Engine = new NetFrameworkEngine();
-#else
-            this.Engine = new NetCoreEngine();
-#endif
-        }
-
-        /// <summary>
         /// Use indicated host address in prepared options
         /// </summary>
         /// <param name="options">Options to be used</param>
@@ -77,6 +63,6 @@ namespace SolrExpress.Core
         /// <summary>
         /// Options to control SOLR Query behavior
         /// </summary>
-        internal DocumentCollectionOptions<TDocument> Options { get; private set; }
+        internal DocumentCollectionOptions<TDocument> Options { get; private set; } = new DocumentCollectionOptions<TDocument>();
     }
 }

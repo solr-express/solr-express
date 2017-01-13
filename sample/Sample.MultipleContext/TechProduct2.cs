@@ -1,9 +1,9 @@
 ﻿using SolrExpress.Core;
 using System;
 
-namespace Sample.SimpleUse
+namespace Sample.MultipleContext
 {
-    public class TechProduct : IDocument
+    public class TechProduct2 : IDocument
     {
         [SolrField("id", Indexed = true, Stored = true)]
         public string Id { get; set; }

@@ -1,4 +1,5 @@
-﻿using SolrExpress.Core.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using SolrExpress.Core.DependencyInjection;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Search.ParameterValue;
@@ -139,7 +140,7 @@ namespace SolrExpress.Core.UnitTests.DependencyInjection
         public void SearchParameterBuilder001()
         {
             // Arrange
-            var engine = (IEngine)new NetCoreEngine();
+            var engine = (IEngine)new NetCoreEngine(new ServiceCollection());
             engine.AddTransient<ISearchParameterBuilder<TestDocument1>, TestSearchParameterBuilder<TestDocument1>>();
             engine.AddTransient<ISearchParameterBuilder<TestDocument2>, TestSearchParameterBuilder<TestDocument2>>();
 
