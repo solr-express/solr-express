@@ -153,9 +153,8 @@ namespace SolrExpress.Core.Extension
         }
 
         /// <summary>
-        /// Create a query parameter
+        /// Create a query parameter with "*:*"
         /// </summary>
-        /// <param name="value">Parameter to include in the query</param>
         public static ISolrSearch<TDocument> QueryAll<TDocument>(this ISolrSearch<TDocument> search)
             where TDocument : IDocument
         {
