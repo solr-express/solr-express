@@ -34,7 +34,8 @@ namespace SolrExpress.Core.Extension
                 .AddTransient<ISolrSearch<TDocument>, SolrSearch<TDocument>>()
                 .AddTransient<ISolrAtomicUpdate<TDocument>, SolrAtomicUpdate<TDocument>>();
 
-            var expressionBuilder = documentCollection.Engine.GetService<IExpressionBuilder<TDocument>>();
+            var expressionCache = new ExpressionCache<TDocument>();
+            var expressionBuilder = new ExpressionBuilder<TDocument>(expressionCache);
 
             ExpressionCacheWarmup.Load(expressionBuilder);
 
