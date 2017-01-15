@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.1.1] - 2017-01-26
+
+### Bug fix
+* DI bugs in full .NET framework ([#186](https://github.com/solr-express/solr-express/issues/186))
+
+---
+
 ## [4.1.0] - 2017-01-13
 
 ### Enhancement

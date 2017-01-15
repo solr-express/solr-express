@@ -14,14 +14,11 @@ namespace SolrExpress.Core
         /// <summary>
         /// Default constructor of class
         /// </summary>
-        /// <param name="options">SolrExpress options</param>
         /// <param name="engine">Services container</param>
-        public DocumentCollection(DocumentCollectionOptions<TDocument> options, IEngine engine)
+        public DocumentCollection(IEngine engine)
         {
-            Checker.IsNull(options);
             Checker.IsNull(engine);
 
-            this.Options = options;
             this.Engine = engine;
         }
 
@@ -39,10 +36,5 @@ namespace SolrExpress.Core
         /// Services container
         /// </summary>
         public IEngine Engine { get; private set; }
-
-        /// <summary>
-        /// SolrExpress options
-        /// </summary>
-        public DocumentCollectionOptions<TDocument> Options { get; private set; }
     }
 }

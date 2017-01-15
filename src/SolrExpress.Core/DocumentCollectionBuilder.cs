@@ -52,7 +52,9 @@ namespace SolrExpress.Core
         internal DocumentCollection<TDocument> Create()
 #endif
         {
-            return new DocumentCollection<TDocument>(this.Options, this.Engine);
+            this.Engine.AddSingleton<DocumentCollectionOptions<TDocument>, DocumentCollectionOptions<TDocument>>(this.Options);
+
+            return new DocumentCollection<TDocument>(this.Engine);
         }
 
         /// <summary>

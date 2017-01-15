@@ -21,11 +21,6 @@ namespace SolrExpress.Core
         ISolrAtomicUpdate<TDocument> Update();
 
         /// <summary>
-        /// SolrExpress options
-        /// </summary>
-        DocumentCollectionOptions<TDocument> Options { get; }
-
-        /// <summary>
         /// Services container
         /// </summary>
         IEngine Engine { get; }

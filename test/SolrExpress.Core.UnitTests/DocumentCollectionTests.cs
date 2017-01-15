@@ -17,7 +17,7 @@ namespace SolrExpress.Core.UnitTests
         public void DocumentCollection001()
         {
             // Arrange / Act / Assert
-            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(null, null));
+            Assert.Throws<ArgumentNullException>(() => new DocumentCollection<TestDocument>(null));
         }
 
         /// <summary>
@@ -32,8 +32,7 @@ namespace SolrExpress.Core.UnitTests
             var engine = new Mock<IEngine>();
             engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Add(null));
@@ -53,8 +52,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => documentCollection.Update().Delete(null));
@@ -74,8 +72,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentException>(() => documentCollection.Update().Add(new TestDocument[] { }));
@@ -95,8 +92,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act / Assert
             Assert.Throws<ArgumentException>(() => documentCollection.Update().Delete(new string[] { }));
@@ -117,8 +113,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act
             documentCollection.Update().Commit();
@@ -142,8 +137,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
             var update = documentCollection.Update().Add(new TestDocument());
 
             // Act
@@ -168,8 +162,7 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
 
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
 
             // Act
             documentCollection.Update().Commit();
@@ -192,9 +185,8 @@ namespace SolrExpress.Core.UnitTests
             engine.Setup(q => q.GetService<ISolrAtomicUpdate<TestDocument>>()).Returns(new SolrAtomicUpdate<TestDocument>(new DocumentCollectionOptions<TestDocument>(), engine.Object));
             engine.Setup(q => q.GetService<IAtomicDelete<TestDocument>>()).Returns(new Mock<IAtomicDelete<TestDocument>>().Object);
             engine.Setup(q => q.GetService<IAtomicUpdate<TestDocument>>()).Returns(new Mock<IAtomicUpdate<TestDocument>>().Object);
-
-            var options = new DocumentCollectionOptions<TestDocument>();
-            var documentCollection = new DocumentCollection<TestDocument>(options, engine.Object);
+            
+            var documentCollection = new DocumentCollection<TestDocument>(engine.Object);
             var update = documentCollection.Update().Delete("");
 
             // Act
