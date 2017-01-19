@@ -3,8 +3,8 @@ using SolrExpress.Core;
 using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Core.Utility;
-using SolrExpress.Solr5.Extension.Internal;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -28,10 +28,16 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", this.Excludes.GetSolrFacetWithExcludes(fieldName))
+                new JProperty("field", fieldName)
             };
 
             array.Add(new JProperty("mincount", 1));
+
+            if (this.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
 
             if (this.SortType.HasValue)
             {

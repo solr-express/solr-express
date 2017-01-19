@@ -630,5 +630,33 @@ namespace SolrExpress.Solr5.IntegrationTests
             Assert.False(documentList[0].InStock);
             Assert.Equal(default(DateTime), documentList[0].ManufacturedateIn);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with exclude
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest020()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+            ISearchResult<TechProductDocument> result;
+            IEnumerable<TechProductDocument> documents;
+
+            // Act
+            result = documentCollection
+                .Select()
+                .QueryAll()
+                .Filter(q => q.Id, "TWINX2048-3200PRO", "sometag1")
+                .Filter(q => q.ManufacturerId, "corsair", "sometag2")
+                .FacetField(q => q.Categories, excludes: new string[] { "sometag1", "sometag2" })
+                .Execute()
+                .Document(out documents);
+
+            // Assert
+            var documentList = documents.ToList();
+            Assert.Equal(1, documentList.Count);
+        }
     }
 }

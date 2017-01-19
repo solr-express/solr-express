@@ -441,7 +441,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.Equal(9, container.Count);
+            Assert.Equal(8, container.Count);
             Assert.Equal("facet=true", container[0]);
             Assert.Equal("facet.range={!key=X}_id_", container[1]);
             Assert.Equal("f._id_.facet.range.gap=1", container[2]);
@@ -471,7 +471,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             parameter.Execute(container);
 
             // Assert
-            Assert.Equal(9, container.Count);
+            Assert.Equal(8, container.Count);
             Assert.Equal("facet=true", container[0]);
             Assert.Equal("facet.range={!key=X}_id_", container[1]);
             Assert.Equal("f._id_.facet.range.gap=1", container[2]);

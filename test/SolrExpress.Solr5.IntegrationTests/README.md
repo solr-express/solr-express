@@ -7,6 +7,7 @@
 2. Start and populate solr executing
 	```powershell
 	cd C:\Temp\solr-5.5.0\bin
+
 	solr start -e techproducts -noprompt
 	```
 3. Test Solr collection accessing http://localhost:8983/solr/#/techproducts
