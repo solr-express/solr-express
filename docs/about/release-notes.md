@@ -2,7 +2,14 @@
 
 Notes about releases
 
-## [4.1.1] - 2017-01-26
+## [4.1.2] - 2017-01-19
+
+### Bug fix
+* Wrong facets exclude tags semantics ([#194](https://github.com/solr-express/solr-express/issues/194))
+
+---
+
+## [4.1.1] - 2017-01-16
 
 ### Bug fix
 * DI bugs in full .NET framework ([#186](https://github.com/solr-express/solr-express/issues/186))
