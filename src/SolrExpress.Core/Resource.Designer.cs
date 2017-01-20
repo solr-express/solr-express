@@ -30,14 +30,17 @@ namespace SolrExpress.Core {
         
         internal Resource() {
         }
-        
+
         /// <summary>
         ///    Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
-            get {
-                if (object.ReferenceEquals(resourceMan, null)) {
+        public static global::System.Resources.ResourceManager ResourceManager
+        {
+            get
+            {
+                if (object.ReferenceEquals(resourceMan, null))
+                {
 #if NETCORE
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SolrExpress.Core.Resource", typeof(Resource).GetTypeInfo().Assembly);
 #else  
@@ -48,7 +51,7 @@ namespace SolrExpress.Core {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///    Overrides the current thread's CurrentUICulture property for all
         ///    resource lookups using this strongly typed resource class.
@@ -191,6 +194,15 @@ namespace SolrExpress.Core {
         public static string UnknownToResolveExpressionException {
             get {
                 return ResourceManager.GetString("UnknownToResolveExpressionException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Security system is an unsupported feature in Solr 4.
+        /// </summary>
+        public static string UnsupportedSecuritySystemException {
+            get {
+                return ResourceManager.GetString("UnsupportedSecuritySystemException", resourceCulture);
             }
         }
         

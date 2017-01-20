@@ -19,6 +19,11 @@ namespace SolrExpress.Core
         public bool CheckAnyParameter { get; set; } = true;
 
         /// <summary>
+        /// Options to security connection
+        /// </summary>
+        public SecurityOptions Security { get; set; } = new SecurityOptions();
+
+        /// <summary>
         /// Global query interceptor used in all queryable intance
         /// </summary>
         public List<ISearchInterceptor> GlobalQueryInterceptors { get; private set; } = new List<ISearchInterceptor>();

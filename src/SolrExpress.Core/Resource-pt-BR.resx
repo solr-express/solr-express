@@ -164,6 +164,9 @@ Mensagem do servidor:
   <data name="UnknownToResolveExpressionException" xml:space="preserve">
     <value>Não existe resolução para a expressão</value>
   </data>
+  <data name="UnsupportedSecuritySystemException" xml:space="preserve">
+    <value>Sistema de segurança é um aspecto não suportado no Solr 4</value>
+  </data>
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Ordenação do tipo descendente é um aspecto não suportado no Solr 4</value>
   </data>

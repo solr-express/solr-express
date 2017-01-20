@@ -98,11 +98,14 @@ namespace SolrExpress.Solr4
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
+        /// <param name="options">Options to security connection</param>
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of the request</returns>
-        public string Get(string handler, string data)
+        public string Get(SecurityOptions options, string handler, string data)
         {
+            Checker.IsTrue<UnsupportedSecuritySystemException>(options.AuthenticationType == AuthenticationType.Basic);
+
             var baseUrl = $"{this.HostAddress}/{handler}?{data}";
 
             var encoding = new UTF8Encoding();
@@ -123,11 +126,14 @@ namespace SolrExpress.Solr4
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
+        /// <param name="options">Options to security connection</param>
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of the request</returns>
-        public string Post(string handler, string data)
+        public string Post(SecurityOptions options, string handler, string data)
         {
+            Checker.IsTrue<UnsupportedSecuritySystemException>(options.AuthenticationType == AuthenticationType.Basic);
+
             var baseUrl = $"{this.HostAddress}/{handler}";
 
             var encoding = new UTF8Encoding();

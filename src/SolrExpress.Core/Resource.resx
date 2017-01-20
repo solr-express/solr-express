@@ -164,6 +164,9 @@ Server message:
   <data name="UnknownToResolveExpressionException" xml:space="preserve">
     <value>Unknown to resolve the expression</value>
   </data>
+  <data name="UnsupportedSecuritySystemException" xml:space="preserve">
+    <value>Security system is an unsupported feature in Solr 4</value>
+  </data>
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Descending sort type is an unsupported feature in Solr 4</value>
   </data>
