@@ -93,13 +93,13 @@ namespace SolrExpress.Core.Update
                 var data = atomicInstruction.Execute();
                 if (!string.IsNullOrWhiteSpace(data))
                 {
-                    solrConnection.Post(RequestHandler.Update, data);
+                    solrConnection.Post(this.Options.Security, RequestHandler.Update, data);
                 }
             }
 
             if (atomicInstructions.Any())
             {
-                solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
+                solrConnection.Post(this.Options.Security, RequestHandler.Update, "{\"commit\":{}}");
             }
 
             this._documentsToAdd = new List<TDocument>();

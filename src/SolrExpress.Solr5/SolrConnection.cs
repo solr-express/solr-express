@@ -98,11 +98,12 @@ namespace SolrExpress.Solr5
         /// <summary>
         /// Prepare request
         /// </summary>
+        /// <param name="options">Options to security connection</param>
         /// <param name="requestMethod">Request method to execute</param>
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>WebRequest read to execute</returns>
-        private WebRequest Prepare(string requestMethod, string handler, string data)
+        private WebRequest Prepare(SecurityOptions options, string requestMethod, string handler, string data)
         {
             var baseUrl = $"{this.HostAddress}/{handler}";
 
@@ -110,6 +111,13 @@ namespace SolrExpress.Solr5
             var bytes = encoding.GetBytes(data);
 
             var request = WebRequest.Create(baseUrl);
+
+            if (options.AuthenticationType == AuthenticationType.Basic)
+            {
+                var encoded = Convert.ToBase64String(Encoding.GetEncoding("ISO-8859-1").GetBytes(options.UserName + ":" + options.Password));
+                request.Headers[HttpRequestHeader.Authorization] = "Basic " + encoded;
+            }
+
             request.Method = requestMethod;
             request.ContentType = "application/json";
 #if NET451
@@ -133,12 +141,13 @@ namespace SolrExpress.Solr5
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
+        /// <param name="options">Options to security connection</param>
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of the request</returns>
-        public string Get(string handler, string data)
+        public string Get(SecurityOptions options, string handler, string data)
         {
-            var request = this.Prepare("GET-X", handler, data);
+            var request = this.Prepare(options, "GET-X", handler, data);
 
 #if NETCORE
             var task = this.ExecuteAsync(request, data);
@@ -153,12 +162,13 @@ namespace SolrExpress.Solr5
         /// <summary>
         /// Execute the informated uri and return the result of the request
         /// </summary>
+        /// <param name="options">Options to security connection</param>
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of the request</returns>
-        public string Post(string handler, string data)
+        public string Post(SecurityOptions options, string handler, string data)
         {
-            var request = this.Prepare("POST", handler, data);
+            var request = this.Prepare(options, "POST", handler, data);
 
 #if NETCORE
             var task = this.ExecuteAsync(request, data);

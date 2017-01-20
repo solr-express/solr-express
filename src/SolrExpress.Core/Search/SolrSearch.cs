@@ -232,7 +232,7 @@ namespace SolrExpress.Core.Search
 
             var solrConnection = this.Engine.GetService<ISolrConnection>();
             solrConnection.HostAddress = this.Options.HostAddress;
-            var json = solrConnection.Get(this._handlerName, query);
+            var json = solrConnection.Get(this.Options.Security, this._handlerName, query);
 
             Parallel.ForEach(this._items.OfType<IResultInterceptor>(), interceptor =>
             {

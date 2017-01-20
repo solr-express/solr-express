@@ -19,7 +19,7 @@ namespace SolrExpress.Core.Benchmarks.Search
         public void Setup()
         {
             var solrConnection = new Mock<ISolrConnection>();
-            solrConnection.Setup(q => q.Get(It.IsAny<string>(), It.IsAny<string>())).Returns("json");
+            solrConnection.Setup(q => q.Get(new SecurityOptions(), It.IsAny<string>(), It.IsAny<string>())).Returns("json");
 
             var engine = new MockEngine();
             engine.Setup(q => q.GetService<ISolrConnection>()).Returns(solrConnection.Object);
