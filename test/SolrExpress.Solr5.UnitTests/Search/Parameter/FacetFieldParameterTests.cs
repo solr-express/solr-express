@@ -43,7 +43,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(actual, expected.ToString());
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(actual, expected.ToString());
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(actual, expected.ToString());
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
@@ -151,8 +151,14 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
               ""facet"": {
                 ""Id"": {
                   ""terms"": {
-                    ""field"": ""{!ex=tag1,tag2}_id_"",
-                    ""mincount"": 1
+                    ""field"": ""_id_"",
+                    ""mincount"": 1,
+                    ""domain"":{
+                        ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                        ]
+                    }
                   }
                 }
               }
@@ -169,7 +175,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             actual = jObject.ToString();
 
             // Assert
-            Assert.Equal(actual, expected.ToString());
+            Assert.Equal(expected.ToString(), actual);
         }
 
         /// <summary>
