@@ -2,6 +2,15 @@
 
 Notes about releases
 
+## [4.2.0] - 2017-01-20
+
+### Enhancement
+* Authentication system ([#181](https://github.com/solr-express/solr-express/issues/181))
+
+** NOTE ** Basic Auth & Kerberos plugins and Rule-based Authorization plugin was added in 5.3
+
+---
+
 ## [4.1.2] - 2017-01-19
 
 ### Bug fix
