@@ -7,7 +7,7 @@ Notes about releases
 ### Enhancement
 * Authentication system ([#181](https://github.com/solr-express/solr-express/issues/181))
 
-** NOTE ** Basic Auth & Kerberos plugins and Rule-based Authorization plugin was added in 5.3
+**NOTE** Basic Auth & Kerberos plugins and Rule-based Authorization plugin was added in 5.3
 
 ---
 
