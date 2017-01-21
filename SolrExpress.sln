@@ -32,6 +32,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tutorials", "tutorials", "{0E6FFAE4-0304-4453-A61D-52D24802E0CF}"
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\migration-from-version4-to-version5.md = docs\tutorials\migration-from-version4-to-version5.md
+		docs\tutorials\use-cases.md = docs\tutorials\use-cases.md
 	EndProjectSection
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress", "src\SolrExpress\SolrExpress.xproj", "{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB}"
@@ -39,6 +40,8 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.CoreClr", "src\SolrExpress.DI.CoreClr\SolrExpress.DI.CoreClr.xproj", "{A34B0A6E-A958-459B-9CFB-EE6310D78F56}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.SimpleInjector", "src\SolrExpress.DI.SimpleInjector\SolrExpress.DI.SimpleInjector.xproj", "{10B006AF-C700-472E-ABF9-26CB69DFBB47}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.SingleContext", "example\SimpleUse.SingleContext\SimpleUse.SingleContext.xproj", "{D0078A76-907E-490F-A38D-779AFEB94860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +69,10 @@ Global
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0078A76-907E-490F-A38D-779AFEB94860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0078A76-907E-490F-A38D-779AFEB94860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0078A76-907E-490F-A38D-779AFEB94860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0078A76-907E-490F-A38D-779AFEB94860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,5 +85,6 @@ Global
 		{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{A34B0A6E-A958-459B-9CFB-EE6310D78F56} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
+		{D0078A76-907E-490F-A38D-779AFEB94860} = {97836803-3E29-4119-ACE3-57B3D068214F}
 	EndGlobalSection
 EndGlobal

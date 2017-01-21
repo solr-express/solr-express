@@ -1,33 +1,53 @@
 # Use cases
 
+# DRAFT
+
+---
+
 ## Parameters
 
 Allows send parameters to Sorl in a controlled and buildable way.
 
 Using **IDocumentCollection\<TechProduct\>** provided by framework via DI and put this in a variable called **techProducts** and invoke mathod **Select()**.
 
-| Goal                                                         | Use                                                                                                                                      | Equivalent in SOLR 4 | Equivalent in SOLR 5                                                                                                       |
-|--------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------|
-| Any parameter with any value                                 | Any("my_parameter", "some_value")                                                                                                        |                      | { "params": { "my_parameter": "some_value" } }                                                                             |
-| Boost using **boost algorithm** using query inStock:true     | Boost(new Single(q => q.InStock, "true"), BoostFunctionType.Boost)                                                                       |                      | { "params": { "boost": "inStock:true" } }                                                                                  |
-| Boost using **bf algorithm** using query inStock:true        | Boost(new Single(q => q.InStock, "true"), BoostFunctionType.Bf)                                                                          |                      | { "params": { "bf": "inStock:true" } }                                                                                     |
-| Facet field using **manu** field                             | FacetField(q => q.Manufacturer)                                                                                                          |                      | { "facet": { "Manufacturer": { "terms": { "field": "manu", "mincount": 1 } } } }                                           |
-| Facet query using GeoSpatial functions                       | FacetQuery("StoreIn1000km", new Spatial(SolrSpatialFunctionType.Geofilt, q => q.StoredAt, new GeoCoordinate(35.0752M, -97.032M), 1000M)) |                      | { "facet": { "StoreIn1000km": { "query": { "q": "{!geofilt sfield=store pt=35.0752,-97.032 d=1000}", "mincount": 1 } } } } |
-| Facet range using **price** field from 10 to 100 with gap=10 | FacetRange("Price", q => q.Price, "10", "10", "100")                                                                                     |                      | { "facet": { "Price": { "range": { "field": "price", "mincount": 1, "gap": "10", "start": "10", "end": "100" } } } }       |
-| Global limit to calculate facet result                       | FacetLimit(10)                                                                                                                           |                      | { "params": { "facet.limit": 10 } }                                                                                        |
-| Return field **id** and **manu** (option#1)                  | Fields(q => q.Id, q => q.Manufacturer)                                                                                                   |                      | { "fields": [ "id", "manu" ] }                                                                                             |
-| Return field **id** and **manu** (option#2)                  | Fields(q => q.Id).Fields(q => q.Manufacturer)                                                                                            |                      | { "fields": [ "id", "manu" ] }                                                                                             |
-| Filter by **id** equals 10                                   | Filter(q => q.Id, "10")                                                                                                                  |                      | { "filter": [ "id:10" ] }                                                                                                  |
-| Get only 5 documents                                         | Limit(5)                                                                                                                                 |                      | { "limit": 5 }                                                                                                             |
-| Use MM = 25%                                                 | MinimumShouldMatch("20%")                                                                                                                |                      | { "params": { "mm": "20%" } }                                                                                              |
-| Ofsset with 10                                               | Offset(10)                                                                                                                               |                      | { "offset": 10 }                                                                                                           |
-| Get all documents                                            | QueryAll()                                                                                                                               |                      | { "query": "*:*" }                                                                                                         |
-| Get documents where Id = 10                                  | Query(q => q.Id, "10")                                                                                                                   |                      | "query": "id:10"                                                                                                           |
-| Get documents where Id = 10 or Id = 20                       | Query("id:10 OR id:20")                                                                                                                  |                      | { "query": "id:10 OR id:20" }                                                                                              |
-| Sort of documents by Id and ascendent                        | Sort(q => q.Id, true)                                                                                                                    |                      | { "sort": "id asc" }                                                                                                       |
-| Randomize sort of documents                                  | RandomSort(true)                                                                                                                         |                      | { "sort": "random asc" }                                                                                                   |
-| Configure Limit and Offset in same time using Page           | Page(10, 2)                                                                                                                              |                      | { "offset": 10, "limit": 10 }                                                                                              |
+### Use mode #1
 
-## Queries
+All parameters have a common mode of use (i.e. Facet field using only field.name).
 
-Allows create simple or complex queries in a controlled, buildable and testable way.
+To use this form, just use IDocumentCollection extension methods
+
+|-------------|-----------------------|
+| Parameter   | Configure using       |
+|-------------|-----------------------|
+| Facet field | FacetField(q => q.Id) |
+
+### Use mode #2
+
+A common case is configure some properties to have a custom behaviour in SOLR searchs (i.e. Facet field with Excludes)
+
+To use this form, just use a mix of IDocumentCollection and IFacetFieldParameter extension methods
+
+|-------------|----------------------------------------------------------------|
+| Parameter   | Configure using                                                |
+|-------------|----------------------------------------------------------------|
+| Facet field | FacetField(q => q.Categories, facet => facet.Excludes("xpto")) |
+
+### Use mode #3
+
+In some cases, it's necessary create a parameter inside a Command and return add this to IDocumentCollection
+
+To use this form, just create a parameter using SolrExpressBuilder class, configure created parameter and append this using Add method.
+
+```
+SolrExpressBuilder builder; // <= Get this from your DI engine
+IDocumentCollection\<TechProduct\> documentCollection; // <= Get this from your DI engine
+
+var facet = builder.Create<IFacetFieldParameter\<TechProduct\>>();
+facet
+	.FieldExpression(q => q.Categories)
+	.Excludes("xpto");
+
+documentCollection
+	.Select()
+	.Add(facet);
+```
