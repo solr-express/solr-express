@@ -22,12 +22,11 @@
       "target": "project"
     }
   },
-  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x",
+  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using native .Net Core mechanism",
   "frameworks": {
     "netstandard1.6": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0",
-        "System.Net.Requests": "4.3.0"
+        "NETStandard.Library": "1.6.0"
       },
       "buildOptions": {
         "define": [ "NETCORE" ]

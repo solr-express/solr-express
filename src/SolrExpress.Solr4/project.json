@@ -18,7 +18,7 @@
     }
   },
   "dependencies": {
-    "SolrExpress.Core": {
+    "SolrExpress": {
       "target": "project"
     }
   },
@@ -47,5 +47,5 @@
     "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
     "requireLicenseAcceptance": false
   },
-  "version": "4.2.0"
+  "version": "5.0.0"
 }
