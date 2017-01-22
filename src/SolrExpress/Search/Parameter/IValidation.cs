@@ -9,7 +9,7 @@
         /// Check for parameter validation
         /// </summary>
         /// <param name="isValid">True if is valid, otherwise false</param>
-        /// <param name="errorMessage">The error message, if applicable</param>
+        /// <param name="errorMessage">Error message, if applicable</param>
         void Validate(out bool isValid, out string errorMessage);
     }
 }

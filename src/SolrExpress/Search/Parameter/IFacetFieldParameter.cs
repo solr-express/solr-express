@@ -10,12 +10,12 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find the property name
+        /// Expression used to find property name
         /// </summary>
         Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
-        /// Sort type of the result of the facet
+        /// Sort type of result of facet
         /// </summary>
         FacetSortType? SortType { get; set; }
 
