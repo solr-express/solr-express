@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in sort parameter
     /// </summary>
-    public interface IRandomSortParameter<TDocument> : ISearchParameter
+    public interface ISortRandomlyParameter<TDocument> : ISearchParameter
         where TDocument : IDocument
     {
     }
