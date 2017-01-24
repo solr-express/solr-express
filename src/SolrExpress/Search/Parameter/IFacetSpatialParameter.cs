@@ -21,7 +21,7 @@ namespace SolrExpress.Search.Parameter
         SpatialFunctionType FunctionType { get; set;}
 
         /// <summary>
-        /// Expression used to find property name
+        /// Expression used to find field name
         /// </summary>
         Expression<Func<TDocument, object>> FieldExpression { get; set;}
 

@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using SolrExpress.Core.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
@@ -37,7 +38,7 @@ namespace SolrExpress.Search
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunction">Boost type used in calculation</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, ISearchQuery<TDocument> query, BoostFunctionType boostFunction)
+        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, ISearchQuery<TDocument> query, BoostFunctionType boostFunction = BoostFunctionType.Boost)
             where TDocument : IDocument
         {
             Checker.IsNull(query);
@@ -57,10 +58,10 @@ namespace SolrExpress.Search
         /// Create a facet field parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
-        /// <param name="fieldExpression">Expression used to find property name</param>
-        /// <param name="facet">Instance of facet ready to configure</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> FacetField<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFacetFieldParameter<TDocument>> facet = null)
+        public static DocumentSearch<TDocument> FacetField<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFacetFieldParameter<TDocument>> instance = null)
             where TDocument : IDocument
         {
             Checker.IsNull(fieldExpression);
@@ -69,7 +70,7 @@ namespace SolrExpress.Search
             IFacetFieldParameter<TDocument> parameter = null;
             parameter.FieldExpression = fieldExpression;
 
-            facet?.Invoke(parameter);
+            instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
 
@@ -100,9 +101,9 @@ namespace SolrExpress.Search
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="aliasName">Name of alias added in query</param>
         /// <param name="query">Query used to make facet</param>
-        /// <param name="facet">Instance of facet ready to configure</param>
+        /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, ISearchQuery<TDocument> query, Action<IFacetQueryParameter<TDocument>> facet = null)
+        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, ISearchQuery<TDocument> query, Action<IFacetQueryParameter<TDocument>> instance = null)
             where TDocument : IDocument
         {
             // TODO: Get from DI Engine
@@ -110,25 +111,132 @@ namespace SolrExpress.Search
             parameter.AliasName = aliasName;
             parameter.Query = query;
 
-            facet?.Invoke(parameter);
+            instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
 
             return documentSearch;
         }
 
+        /// <summary>
+        /// Create a facet range parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="aliasName">Name of alias added in query</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="gap">Size of each range bucket to make facet</param>
+        /// <param name="start">Lower bound to make facet</param>
+        /// <param name="end">Upper bound to make facet</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetRange<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, Expression<Func<TDocument, object>> fieldExpression, string gap, string start, string end, Action<IFacetRangeParameter<TDocument>> instance = null)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IFacetRangeParameter<TDocument> parameter = null;
+            parameter.AliasName = aliasName;
+            parameter.FieldExpression = fieldExpression;
+            parameter.Gap = gap;
+            parameter.Start = start;
+            parameter.End = end;
 
-        ////////////public static DocumentSearch<TDocument> FacetRange<TDocument>(this DocumentSearch<TDocument> documentSearch,
-        ////////////where TDocument : IDocument
-        ////////////public static DocumentSearch<TDocument> FacetSpatial<TDocument>(this DocumentSearch<TDocument> documentSearch,
-        ////////////where TDocument : IDocument
-        ////////////public static DocumentSearch<TDocument> Fields<TDocument>(this DocumentSearch<TDocument> documentSearch,
-        ////////////where TDocument : IDocument
-        ////////////public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, (field, params of T) //common case, equal ID or ID in
-        ////////////where TDocument : IDocument
-        ////////////public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, (field, instancia)
-        ////////////where TDocument : IDocument
+            instance?.Invoke(parameter);
 
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a facet range parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="aliasName">Name of alias added in query</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from center point</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetSpatial<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, Action<IFacetSpatialParameter<TDocument>> instance = null)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IFacetSpatialParameter<TDocument> parameter = null;
+            parameter.AliasName = aliasName;
+            parameter.FieldExpression = fieldExpression;
+            parameter.CenterPoint = centerPoint;
+            parameter.Distance = distance;
+
+            instance?.Invoke(parameter);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a fields parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpressions">Expressions used to find fields name</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Fields<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>>[] fieldExpressions)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IFieldsParameter<TDocument> parameter = null;
+            parameter.FieldExpressions = fieldExpressions;
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a filter parameter in commom case (field equals value, field with value in collection)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Filter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values) //common case, equal ID or ID in
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IFilterParameter<TDocument> parameter = null;
+            // TODO: Configure search
+            ISearchQuery<TDocument> search = null;
+
+            parameter.Query = search;
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a filter parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFilterParameter<TDocument>> instance)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IFilterParameter<TDocument> parameter = null;
+            // TODO: Configure search
+            ISearchQuery<TDocument> search = null;
+
+            parameter.Query = search;
+
+            instance?.Invoke(parameter);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
 
         /// <summary>
         /// Create a limit parameter
@@ -219,16 +327,57 @@ namespace SolrExpress.Search
             return documentSearch;
         }
 
-        ////////public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, (field, params of T) //common case, equal ID or ID in
-        ////////where TDocument : IDocument
-        ////////public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, (field, instancia)
-        ////////where TDocument : IDocument
-        
+        /// <summary>
+        /// Create a query parameter in commom case (field equals value, field with value in collection)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Query<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IQueryParameter<TDocument> parameter = null;
+            // TODO: Configure search
+            ISearchQuery<TDocument> search = null;
+
+            parameter.Value = search;
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IQueryParameter<TDocument>> instance)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            IQueryParameter<TDocument> parameter = null;
+            // TODO: Configure search
+            ISearchQuery<TDocument> search = null;
+
+            parameter.Value = search;
+
+            instance?.Invoke(parameter);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
         /// <summary>
         /// Create a sort parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
-        /// <param name="fieldExpression">Expression used to find property name</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Sort<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, bool ascendent)
@@ -260,7 +409,28 @@ namespace SolrExpress.Search
             return documentSearch;
         }
 
-        //////////public static DocumentSearch<TDocument> SpatialFilter<TDocument>(this DocumentSearch<TDocument> documentSearch,
-        //////////where TDocument : IDocument
+        /// <summary>
+        /// Create a spatial filter parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="functionType">Function used in spatial filter</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from center point</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> SpatialFilter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, SpatialFunctionType functionType = SpatialFunctionType.Bbox)
+            where TDocument : IDocument
+        {
+            // TODO: Get from DI Engine
+            ISpatialFilterParameter<TDocument> parameter = null;
+            parameter.FieldExpression = fieldExpression;
+            parameter.FunctionType = functionType;
+            parameter.CenterPoint = centerPoint;
+            parameter.Distance = distance;
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find property name
+        /// Expression used to find field name
         /// </summary>
         Expression<Func<TDocument, object>> FieldExpression { get; set;}
 

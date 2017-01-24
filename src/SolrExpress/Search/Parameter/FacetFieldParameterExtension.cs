@@ -9,7 +9,7 @@ namespace SolrExpress.Search.Parameter
         /// Configure field expression of informed parameter
         /// </summary>
         /// <param name="parameter">Parameter to congigure</param>
-        /// <param name="fieldExpression">Expression used to find property name</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
         public static IFacetFieldParameter<TDocument> FieldExpression<TDocument>(this IFacetFieldParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
             where TDocument : IDocument
         {
