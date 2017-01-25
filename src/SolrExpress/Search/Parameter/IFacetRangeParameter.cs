@@ -10,48 +10,57 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Name of alias added in query
+        /// Configure name of alias added in query
         /// </summary>
-        string AliasName { get; set;}
+        /// <param name="aliasName"Name of alias added in query></param>
+        IFacetRangeParameter<TDocument> AliasName(string aliasName);
 
         /// <summary>
-        /// Expression used to find field name
+        /// Configure expression used to find field name
         /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set;}
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        IFacetRangeParameter<TDocument> FieldExpression(Expression<Func<TDocument, object>> fieldExpression);
 
         /// <summary>
-        /// Size of each range bucket to make facet
+        /// Configure size of each range bucket to make facet
         /// </summary>
-        string Gap { get; set;}
+        /// <param name="gap">Size of each range bucket to make facet</param>
+        IFacetRangeParameter<TDocument> Gap(string gap);
 
         /// <summary>
-        /// Lower bound to make facet
+        /// Configure lower bound to make facet
         /// </summary>
-        string Start { get; set;}
+        /// <param name="start">Lower bound to make facet</param>
+        IFacetRangeParameter<TDocument> Start(string start);
 
         /// <summary>
-        /// Upper bound to make facet
+        /// Configure upper bound to make facet
         /// </summary>
-        string End { get; set;}
+        /// <param name="end">Upper bound to make facet</param>
+        IFacetRangeParameter<TDocument> End(string end);
 
         /// <summary>
-        /// Sort type of result of facet
+        /// Configure sort type of result of facet
         /// </summary>
-        FacetSortType? SortType { get; set;}
+        /// <param name="sortType">Sort type of result of facet</param>
+        IFacetRangeParameter<TDocument> SortType(FacetSortType sortType);
 
         /// <summary>
-        /// List of tags to exclude in facet calculation
+        /// Configure list of tags to exclude in facet calculation
         /// </summary>
-        string[] Excludes { get; set;}
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        IFacetRangeParameter<TDocument> Excludes(params string[] excludes);
 
         /// <summary>
-        /// Counts should also be computed for all records with field values lower then lower bound of the first range
+        /// Configure counts should also be computed for all records with field values lower then lower bound of the first range
         /// </summary>
-        bool CountBefore { get; set;}
+        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        IFacetRangeParameter<TDocument> CountBefore(bool countBefore);
 
         /// <summary>
-        /// Counts should also be computed for all records with field values greater then the upper bound of the last range
+        /// Configure counts should also be computed for all records with field values greater then the upper bound of the last range
         /// </summary>
-        bool CountAfter { get; set;}
+        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
+        IFacetRangeParameter<TDocument> CountAfter(bool countAfter);
     }
 }

@@ -7,8 +7,9 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Value of limit
+        /// Configure value of limit
         /// </summary>
-        int Value { get; set;}
+        /// <param name="value">Value of limit</param>
+        IFacetLimitParameter<TDocument> Value(long value);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using System;
 
 namespace SimpleUse.SingleContext.Controllers
 {

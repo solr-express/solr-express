@@ -7,8 +7,9 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Query used to make query field
+        /// Configure query used to make query field
         /// </summary>
-        string Expression { get; set;}
+        /// <param name="expression">Query used to make query field</param>
+        IQueryFieldParameter<TDocument> Expression(string expression);
     }
 }

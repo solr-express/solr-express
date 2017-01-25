@@ -7,23 +7,27 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Name of alias added in query
+        /// Configure name of alias added in query
         /// </summary>
-        string AliasName { get; set;}
+        /// <param name="aliasName">Name of alias added in query</param>
+        IFacetQueryParameter<TDocument> AliasName(string aliasName);
 
         /// <summary>
-        /// Query used to make facet
+        /// Configure query used to make facet
         /// </summary>
-        ISearchQuery<TDocument> Query { get; set;}
+        /// <param name="query">Query used to make facet</param>
+        IFacetQueryParameter<TDocument> Query(ISearchQuery<TDocument> query);
 
         /// <summary>
-        /// Sort type of result of facet
+        /// Configure sort type of result of facet
         /// </summary>
-        FacetSortType? SortType { get; set;}
+        /// <param name="sortType">Sort type of result of facet</param>
+        IFacetQueryParameter<TDocument> SortType(FacetSortType sortType);
 
         /// <summary>
-        /// List of tags to exclude in facet calculation
+        /// Configure list of tags to exclude in facet calculation
         /// </summary>
-        string[] Excludes { get; set;}
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        IFacetQueryParameter<TDocument> Excludes(params string[] excludes);
     }
 }

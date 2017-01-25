@@ -7,8 +7,9 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Value of limit
+        /// Configure value of offset
         /// </summary>
-        long Value { get; set;}
+        /// <param name="value">Value of offset</param>
+        IOffsetParameter<TDocument> Value(long value);
     }
 }

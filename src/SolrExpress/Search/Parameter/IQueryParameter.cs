@@ -7,8 +7,9 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Parameter to include in query
+        /// Configure parameter to include in query
         /// </summary>
-        ISearchQuery<TDocument> Value { get; set;}
+        /// <param name="value">Parameter to include in query</param>
+        IQueryParameter<TDocument> Value(ISearchQuery<TDocument> value);
     }
 }

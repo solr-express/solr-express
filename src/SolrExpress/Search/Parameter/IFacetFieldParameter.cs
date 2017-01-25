@@ -10,28 +10,33 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Expression used to find field name
+        /// Configure expression used to find field name
         /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        IFacetFieldParameter<TDocument> FieldExpression(Expression<Func<TDocument, object>> fieldExpression);
 
         /// <summary>
-        /// Sort type of result of facet
+        /// Configure sort type of result of facet
         /// </summary>
-        FacetSortType? SortType { get; set; }
+        /// <param name="sortType">Sort type of result of facet</param>
+        IFacetFieldParameter<TDocument> SortType(FacetSortType sortType);
 
         /// <summary>
-        /// Minimum count of itens in facet's result
+        /// Configure minimum count of itens in facet's result
         /// </summary>
-        int? Minimum { get; set; }
+        /// <param name="minimum">Minimum count of itens in facet's result</param>
+        IFacetFieldParameter<TDocument> Minimum(int minimum);
 
         /// <summary>
-        /// Limit of itens in facet's result
+        /// Configure limit of itens in facet's result
         /// </summary>
-        int? Limit { get; set; }
+        /// <param name="limit">Limit of itens in facet's result</param>
+        IFacetFieldParameter<TDocument> Limit(int limit);
 
         /// <summary>
-        /// List of tags to exclude in facet calculation
+        /// Configure list of tags to exclude in facet calculation
         /// </summary>
-        string[] Excludes { get; set; }
+        /// <param name="excludes">List of tags to exclude in facet calculation</param>
+        IFacetFieldParameter<TDocument> Excludes(params string[] excludes);
     }
 }

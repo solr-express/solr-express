@@ -7,13 +7,15 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Value of filter
+        /// Configure value of filter
         /// </summary>
-        ISearchQuery<TDocument> Query { get; set;}
+        /// <param name="query">Value of filter</param>
+        IFilterParameter<TDocument> Query(ISearchQuery<TDocument> query);
 
         /// <summary>
-        /// Tag name to use in facet excluding list
+        /// Configure tag name to use in facet excluding list
         /// </summary>
-        string TagName { get; set;}
+        /// <param name="tagName">Tag name to use in facet excluding list</param>
+        IFilterParameter<TDocument> TagName(string tagName);
     }
 }
