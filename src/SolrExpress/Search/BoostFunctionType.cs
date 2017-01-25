@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search
 {
     /// <summary>
     /// Boost's type of boost calculation

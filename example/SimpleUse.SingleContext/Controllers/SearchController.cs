@@ -16,7 +16,9 @@ namespace SimpleUse.SingleContext.Controllers
 
 
             DocumentSearch<TechProduct> documentSearch = null;
-            documentSearch.FacetField(q => q.Categories, facet => facet.Excludes("xpto"));
+            documentSearch
+                .FacetField(q => q.Categories, facet => facet.Excludes("xpto"))
+                .Filter(q => q.Categories, 1, 2, 3);
 
             return new string[] { "value1", "value2" };
         }

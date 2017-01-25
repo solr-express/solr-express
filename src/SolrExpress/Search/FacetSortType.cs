@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search
 {
     /// <summary>
     /// Sort's type of facet result

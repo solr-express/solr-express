@@ -199,7 +199,7 @@ namespace SolrExpress.Search
         /// <param name="fieldExpression">Expression used to find field name</param>
         /// <param name="values">Values to find</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Filter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values) //common case, equal ID or ID in
+        public static DocumentSearch<TDocument> Filter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
             where TDocument : IDocument
         {
             // TODO: Get from DI Engine

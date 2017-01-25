@@ -39,4 +39,5 @@ DRAFT
 - **SolrSpatialFunctionType** renamed to **SpatialFunctionType**
 - **SolrExpress.Search.Parameter.IFieldsParameter** rename property **Expressions** to **FieldExpressions**
 - IRandomSortParameter renamed to ISortRandomlyParameter
-- 
+- BoostFunctionType moved to **SolrExpress.Search**
+- FacetSortType moved to **SolrExpress.Search**
