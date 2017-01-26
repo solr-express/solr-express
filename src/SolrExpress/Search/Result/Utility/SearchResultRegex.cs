@@ -6,5 +6,6 @@ namespace SolrExpress.Search.Result.Utility
     {
         internal static Regex InformationResultElapsedTimeragment = new Regex(@"responseHeader\42\:(.|\t|\n)+QTime(.|\t|\n)+?(\d+)", RegexOptions.Compiled);
         internal static Regex InformationResultDocumentCountFragment = new Regex(@"response\42\:(.|\t|\n)+numFound(.|\t|\n)+?(\d+)", RegexOptions.Compiled);
+        internal static Regex DocumentResultFragment = new Regex(@"response\42\:(.|\t|\n)+?docs\42:(.|\t|\n)+?(\[(.|\t|\n)+\])", RegexOptions.Compiled);
     }
 }
