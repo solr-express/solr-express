@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 

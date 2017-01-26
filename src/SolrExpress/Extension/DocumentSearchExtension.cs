@@ -1,10 +1,11 @@
 ﻿using SolrExpress.Core.Search;
+using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Search
+namespace SolrExpress.Extension
 {
     public static class DocumentSearchExtension
     {

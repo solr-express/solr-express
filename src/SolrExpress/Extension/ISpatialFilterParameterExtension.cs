@@ -1,8 +1,9 @@
 ﻿using SolrExpress.Core.Search;
+using SolrExpress.Search.Parameter;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Search.Parameter
+namespace SolrExpress.Extension
 {
     /// <summary>
     /// Extensions to configure in spatial filter parameter

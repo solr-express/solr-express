@@ -1,4 +1,7 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+
+namespace SolrExpress.Extension
 {
     /// <summary>
     /// Extensions to configure boost parameter

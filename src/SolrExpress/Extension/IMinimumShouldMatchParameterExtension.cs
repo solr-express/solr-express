@@ -1,4 +1,6 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using SolrExpress.Search.Parameter;
+
+namespace SolrExpress.Extension
 {
     /// <summary>
     /// Extensions to configure in minimum should match parameter
