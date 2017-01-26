@@ -41,3 +41,11 @@ DRAFT
 - IRandomSortParameter renamed to ISortRandomlyParameter
 - BoostFunctionType moved to **SolrExpress.Search**
 - FacetSortType moved to **SolrExpress.Search**
+- DocumentSearch.SetHandler renamed to Handler
+- Remove ISearchResult interface
+- ISearchParameterExecute to ISearchItemExecution
+- ISearchItemExecution add method AddResultInContainer
+- IValidation to ISearchItemValidation
+- Move ISearchItemValidation to  SolrExpress.Search
+- Rename ISearchParameterCollection to ISearchItemCollection
+- Rename DocumentCollectionOptions to SolrExpressOptions

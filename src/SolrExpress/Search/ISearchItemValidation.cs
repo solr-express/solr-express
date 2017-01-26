@@ -1,9 +1,9 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search
 {
     /// <summary>
     /// Signatures to use in parameter validation
     /// </summary>
-    public interface IValidation
+    public interface ISearchItemValidation
     {
         /// <summary>
         /// Check for parameter validation
