@@ -21,15 +21,22 @@
   "frameworks": {
     "netstandard1.6": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0"
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.1"
       },
       "buildOptions": {
         "define": [ "NETCORE" ]
       }
     },
     "net4": {
+      "dependencies": {
+        "Newtonsoft.Json": "9.0.1"
+      }
     },
     "net45": {
+      "dependencies": {
+        "Newtonsoft.Json": "9.0.1"
+      }
     }
   },
   "packOptions": {
