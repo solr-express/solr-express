@@ -11,27 +11,23 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure expression used to find field name
+        /// Expression used to find field name
         /// </summary>
-        /// <param name="fieldExpression">Expression used to find field name</param>
-        ISpatialFilterParameter<TDocument> FieldExpression(Expression<Func<TDocument, object>> fieldExpression);
+        Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
-        /// Configure function used in spatial filter
+        /// Function used in spatial filter
         /// </summary>
-        /// <param name="functionType">Function used in spatial filter</param>
-        ISpatialFilterParameter<TDocument> FunctionType(SpatialFunctionType functionType);
+        SpatialFunctionType FunctionType { get; set; }
 
         /// <summary>
-        /// Configure center point to spatial filter
+        /// Center point to spatial filter
         /// </summary>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        ISpatialFilterParameter<TDocument> CenterPoint(GeoCoordinate centerPoint);
+        GeoCoordinate CenterPoint { get; set; }
 
         /// <summary>
-        /// Configure distance from center point
+        /// Distance from center point
         /// </summary>
-        /// <param name="distance">Distance from center point</param>
-        ISpatialFilterParameter<TDocument> Distance(decimal distance);
+        decimal Distance { get; set; }
     }
 }

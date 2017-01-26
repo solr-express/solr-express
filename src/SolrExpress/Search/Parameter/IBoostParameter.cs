@@ -7,15 +7,13 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure query used to make boost
+        /// Query used to make boost
         /// </summary>
-        /// <param name="query">Query used to make boost</param>
-        IBoostParameter<TDocument> Query(ISearchQuery<TDocument> query);
+        ISearchQuery<TDocument> Query { get; set; }
 
         /// <summary>
-        /// Configure oost type used in calculation
+        /// Oost type used in calculation
         /// </summary>
-        /// <param name="boostFunctionType">Boost type used in calculation</param>
-        IBoostParameter<TDocument> BoostFunctionType(BoostFunctionType boostFunctionType);
+        BoostFunctionType BoostFunctionType { get; set; }
     }
 }

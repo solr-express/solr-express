@@ -7,15 +7,13 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure name of parameter
+        /// Name of parameter
         /// </summary>
-        /// <param name="name">Name of parameter</param>
-        IAnyParameter<TDocument> Name(string name);
+        string Name { get; set; }
 
         /// <summary>
-        /// Configure value of parameter
+        /// Value of parameter
         /// </summary>
-        /// <param name="value">Value of parameter</param>
-        IAnyParameter<TDocument> Value(string value);
+        string Value { get; set; }
     }
 }

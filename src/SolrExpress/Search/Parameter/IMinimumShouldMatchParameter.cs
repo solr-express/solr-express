@@ -7,9 +7,8 @@
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure value used to make mm parameter
+        /// Value used to make mm parameter
         /// </summary>
-        /// <param name="value">Value used to make mm parameter</param>
-        IMinimumShouldMatchParameter<TDocument> Value(string value);
+        string Value { get; set; }
     }
 }

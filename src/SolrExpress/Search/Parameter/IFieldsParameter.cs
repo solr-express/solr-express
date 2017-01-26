@@ -10,9 +10,8 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure expressions used to find fields name
+        /// Expressions used to find fields name
         /// </summary>
-        /// <param name="fieldExpressions">Expressions used to find fields name</param>
-        IFieldsParameter<TDocument> FieldExpressions(params Expression<Func<TDocument, object>>[] fieldExpressions);
+        Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
     }
 }

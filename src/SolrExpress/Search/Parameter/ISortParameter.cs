@@ -10,15 +10,13 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure expression used to find field name
+        /// Expression used to find field name
         /// </summary>
-        /// <param name="fieldExpression">Expression used to find field name</param>
-        ISortParameter<TDocument> FieldExpression(Expression<Func<TDocument, object>> fieldExpression);
+        Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
-        /// Configure true to ascendent order, otherwise false
+        /// True to ascendent order, otherwise false
         /// </summary>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        ISortParameter<TDocument> Ascendent(bool ascendent);
+        bool Ascendent { get; set; }
     }
 }

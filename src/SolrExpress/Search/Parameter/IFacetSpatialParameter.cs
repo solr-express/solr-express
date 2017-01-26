@@ -11,45 +11,38 @@ namespace SolrExpress.Search.Parameter
         where TDocument : IDocument
     {
         /// <summary>
-        /// Configure name of alias added in query
+        /// Name of alias added in query
         /// </summary>
-        /// <param name="aliasName">Name of alias added in query</param>
-        IFacetSpatialParameter<TDocument> AliasName(string aliasName);
+        string AliasName { get; set; }
 
         /// <summary>
-        /// Configure function used in spatial filter
+        /// Function used in spatial filter
         /// </summary>
-        /// <param name="functionType">Function used in spatial filter</param>
-        IFacetSpatialParameter<TDocument> FunctionType(SpatialFunctionType functionType);
+        SpatialFunctionType FunctionType { get; set; }
 
         /// <summary>
-        /// Configure expression used to find field name
+        /// Expression used to find field name
         /// </summary>
-        /// <param name="fieldExpression">Expression used to find field name</param>
-        IFacetSpatialParameter<TDocument> FieldExpression(Expression<Func<TDocument, object>> fieldExpression);
+        Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
-        /// Configure center point to spatial filter
+        /// Center point to spatial filter
         /// </summary>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        IFacetSpatialParameter<TDocument> CenterPoint(GeoCoordinate centerPoint);
+        GeoCoordinate CenterPoint { get; set; }
 
         /// <summary>
-        /// Configure distance from center point
+        /// Distance from center point
         /// </summary>
-        /// <param name="distance">Distance from center point</param>
-        IFacetSpatialParameter<TDocument> Distance(decimal distance);
+        decimal Distance { get; set; }
 
         /// <summary>
-        /// Configure sort type of result of facet
+        /// Sort type of result of facet
         /// </summary>
-        /// <param name="sortType">Sort type of result of facet</param>
-        IFacetSpatialParameter<TDocument> SortType(FacetSortType sortType);
+        FacetSortType SortType { get; set; }
 
         /// <summary>
-        /// Configure list of tags to exclude in facet calculation
+        /// List of tags to exclude in facet calculation
         /// </summary>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        IFacetSpatialParameter<TDocument> Excludes(params string[] excludes);
+        string[] Excludes { get; set; }
     }
 }
