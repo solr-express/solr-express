@@ -13,8 +13,8 @@ namespace SolrExpress.Search
     public class DocumentSearch<TDocument>
         where TDocument : IDocument
     {
-        private SolrExpressOptions<TDocument> _solrExpressOptions;
-        private ISearchItemCollection<TDocument> _searchItemCollection;
+        private readonly SolrExpressOptions<TDocument> _solrExpressOptions;
+        private readonly ISearchItemCollection<TDocument> _searchItemCollection;
         private string _requestHandler = RequestHandler.Select;
 
         public DocumentSearch(
@@ -147,7 +147,7 @@ namespace SolrExpress.Search
         /// Execute the search in the solr with informed parameters
         /// </summary>
         /// <returns>Solr result</returns>
-        public SearchResult<TDocument> Execute()
+        public SearchResultBuilder<TDocument> Execute()
         {
             this.AddRange(this._solrExpressOptions.GlobalParameters);
             this.AddRange(this._solrExpressOptions.GlobalQueryInterceptors);
@@ -156,10 +156,10 @@ namespace SolrExpress.Search
             this.SetDefaultSystemParameters();
             this.SetDefaultPaginationParameters();
 
-            var json = this._searchItemCollection.Execute(this._requestHandler);
+            var jsonPlainText = this._searchItemCollection.Execute(this._requestHandler);
             var searchParameters = this._searchItemCollection.GetParameters();
 
-            return new SearchResult<TDocument>(searchParameters, json);
+            return new SearchResultBuilder<TDocument>(searchParameters, jsonPlainText);
         }
     }
 }

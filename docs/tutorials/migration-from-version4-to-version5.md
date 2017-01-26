@@ -53,5 +53,4 @@ DRAFT
 - Drop IConvertJsonObject
 - Drop IConvertJsonPlainText
 - Drop UnknownResolveResultBuilderException
-- Merge IInformationResult and Information
 - Drop InformationBuilder
