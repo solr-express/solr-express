@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search.Query
 {
     /// <summary>
     /// Signature to use in solr queries

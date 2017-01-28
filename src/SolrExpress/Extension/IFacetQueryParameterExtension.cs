@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 
 namespace SolrExpress.Extension
 {

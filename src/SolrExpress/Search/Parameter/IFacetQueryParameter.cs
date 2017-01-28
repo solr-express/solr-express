@@ -1,4 +1,6 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using SolrExpress.Search.Query;
+
+namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in facet query parameter
