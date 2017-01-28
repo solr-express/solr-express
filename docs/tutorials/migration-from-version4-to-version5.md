@@ -54,3 +54,6 @@ DRAFT
 - Drop IConvertJsonPlainText
 - Drop UnknownResolveResultBuilderException
 - Drop InformationBuilder
+- Drop interface IAtomicInstruction
+- IAtomicDelete - Rename method Configure to Execute
+- IAtomicUpdate - Rename method Configure to Execute
