@@ -5,7 +5,7 @@ using SolrExpress.Update;
 namespace SolrExpress
 {
     /// <summary>
-    /// Signatures to SOLR document collection
+    /// SOLR document collection
     /// </summary>
     public class DocumentCollection<TDocument>
         where TDocument : IDocument

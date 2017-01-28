@@ -13,19 +13,22 @@ namespace SolrExpress.Search
     public class DocumentSearch<TDocument>
         where TDocument : IDocument
     {
-        private readonly SolrExpressOptions<TDocument> _solrExpressOptions;
+        private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISearchItemCollection<TDocument> _searchItemCollection;
         private string _requestHandler = RequestHandler.Select;
 
         public DocumentSearch(
-            SolrExpressOptions<TDocument> solrExpressOptions,
+            SolrExpressOptions solrExpressOptions,
+            ISolrExpressServiceProvider<TDocument> serviceProvider,
             ISearchItemCollection<TDocument> searchItemCollection)
         {
             Checker.IsNull(solrExpressOptions);
+            Checker.IsNull(serviceProvider);
             Checker.IsNull(searchItemCollection);
 
             this._solrExpressOptions = solrExpressOptions;
             this._searchItemCollection = searchItemCollection;
+            this.ServiceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -76,16 +79,16 @@ namespace SolrExpress.Search
         {
             if (!this._searchItemCollection.Contains<IOffsetParameter<TDocument>>())
             {
-                //TODO: Need DI
-                //var offsetParameter = this.Engine.GetService<IOffsetParameter<TDocument>>().Configure(0);
-                //this._searchItemCollection.Add(offsetParameter);
+                var offsetParameter = this.ServiceProvider.GetService<IOffsetParameter<TDocument>>();
+                offsetParameter.Value = 0;
+                this._searchItemCollection.Add(offsetParameter);
             }
 
             if (!this._searchItemCollection.Contains<ILimitParameter<TDocument>>())
             {
-                //TODO: Need DI
-                //var limitParameter = this.Engine.GetService<ILimitParameter<TDocument>>().Configure(10);
-                //this._searchItemCollection.Add(limitParameter);
+                var limitParameter = this.ServiceProvider.GetService<ILimitParameter<TDocument>>();
+                limitParameter.Value = 10;
+                this._searchItemCollection.Add(limitParameter);
             }
         }
 
@@ -159,7 +162,15 @@ namespace SolrExpress.Search
             var jsonPlainText = this._searchItemCollection.Execute(this._requestHandler);
             var searchParameters = this._searchItemCollection.GetParameters();
 
-            return new SearchResultBuilder<TDocument>(searchParameters, jsonPlainText);
+            var searchResultBuilder = this.ServiceProvider.GetService<SearchResultBuilder<TDocument>>();
+            searchResultBuilder.Configure(searchParameters, jsonPlainText);
+
+            return searchResultBuilder;
         }
+
+        /// <summary>
+        /// Services provider
+        /// </summary>
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
     }
 }

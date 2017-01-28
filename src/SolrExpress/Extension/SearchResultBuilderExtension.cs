@@ -12,8 +12,7 @@ namespace SolrExpress.Extension
         public static SearchResultBuilder<TDocument> Document<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<TDocument> data)
             where TDocument : IDocument
         {
-            //TODO: DI
-            IDocumentResult<TDocument> result = null;
+            var result = searchResult.ServiceProvider.GetService<IDocumentResult<TDocument>>();
 
             data = searchResult.Get(result).Data;
 
@@ -27,8 +26,7 @@ namespace SolrExpress.Extension
         public static SearchResultBuilder<TDocument> FacetField<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<string>> data)
             where TDocument : IDocument
         {
-            //TODO: DI
-            IFacetFieldResult<TDocument> result = null;
+            var result = searchResult.ServiceProvider.GetService<IFacetFieldResult<TDocument>>();
 
             data = searchResult.Get(result).Data;
 
@@ -42,8 +40,7 @@ namespace SolrExpress.Extension
         public static SearchResultBuilder<TDocument> FacetQuery<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IDictionary<string, long> data)
             where TDocument : IDocument
         {
-            //TODO: DI
-            IFacetQueryResult<TDocument> result = null;
+            var result = searchResult.ServiceProvider.GetService<IFacetQueryResult<TDocument>>();
 
             data = searchResult.Get(result).Data;
 
@@ -57,8 +54,7 @@ namespace SolrExpress.Extension
         public static SearchResultBuilder<TDocument> FacetRange<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<FacetRange>> data)
             where TDocument : IDocument
         {
-            //TODO: DI
-            IFacetRangeResult<TDocument> result = null;
+            var result = searchResult.ServiceProvider.GetService<IFacetRangeResult<TDocument>>();
 
             data = searchResult.Get(result).Data;
 
@@ -72,8 +68,7 @@ namespace SolrExpress.Extension
         public static SearchResultBuilder<TDocument> Information<TDocument>(this SearchResultBuilder<TDocument> searchResult, out Information data)
             where TDocument : IDocument
         {
-            //TODO: DI
-            IInformationResult<TDocument> result = null;
+            var result = searchResult.ServiceProvider.GetService<IInformationResult<TDocument>>();
 
             data = searchResult.Get(result).Data;
 

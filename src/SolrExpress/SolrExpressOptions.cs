@@ -1,17 +1,13 @@
 ﻿using SolrExpress.Search.Interceptor;
 using SolrExpress.Search.Parameter;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SolrExpress
 {
     /// <summary>
     /// Options to control SolrExpress behavior
     /// </summary>
-    public class SolrExpressOptions<TDocument>
-        where TDocument : IDocument
+    public class SolrExpressOptions
     {
         /// <summary>
         /// If true, check for possibles fails in the use of the Solr Queriable (using SolrFieldAttribute), otherwise false. Default is true

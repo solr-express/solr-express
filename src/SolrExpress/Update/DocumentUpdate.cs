@@ -7,7 +7,7 @@ namespace SolrExpress.Update
     public class DocumentUpdate<TDocument>
         where TDocument : IDocument
     {
-        private readonly SolrExpressOptions<TDocument> _options;
+        private readonly SolrExpressOptions _options;
         private readonly List<TDocument> _documentsToAdd = new List<TDocument>();
         private readonly List<string> _documentsToDelete = new List<string>();
 
@@ -15,11 +15,15 @@ namespace SolrExpress.Update
         /// Default constructor of class
         /// </summary>
         /// <param name="options">SolrExpress options</param>
-        public DocumentUpdate(SolrExpressOptions<TDocument> options)
+        public DocumentUpdate(
+            SolrExpressOptions options,
+            ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             Checker.IsNull(options);
+            Checker.IsNull(serviceProvider);
 
             this._options = options;
+            this.ServiceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -58,8 +62,7 @@ namespace SolrExpress.Update
         {
             if (this._documentsToAdd.Any())
             {
-                //TODO: DI
-                IAtomicUpdate<TDocument> atomicUpdate = null;
+                var atomicUpdate = this.ServiceProvider.GetService<IAtomicUpdate<TDocument>>();
                 var data = atomicUpdate.Execute(this._documentsToAdd.ToArray());
                 //TODO: Need SOlr connection
                 //solrConnection.Post(this.Options.Security, RequestHandler.Update, data);
@@ -68,8 +71,7 @@ namespace SolrExpress.Update
 
             if (this._documentsToDelete.Any())
             {
-                //TODO: DI
-                IAtomicDelete<TDocument> atomicDelete = null;
+                var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete<TDocument>>();
                 var data = atomicDelete.Execute(this._documentsToDelete.ToArray());
                 //TODO: Need SOlr connection
                 //solrConnection.Post(this.Options.Security, RequestHandler.Update, data);
@@ -79,5 +81,10 @@ namespace SolrExpress.Update
             this._documentsToAdd.Clear();
             this._documentsToDelete.Clear();
         }
+
+        /// <summary>
+        /// Services provider
+        /// </summary>
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
     }
 }

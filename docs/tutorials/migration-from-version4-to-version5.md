@@ -57,3 +57,4 @@ DRAFT
 - Drop interface IAtomicInstruction
 - IAtomicDelete - Rename method Configure to Execute
 - IAtomicUpdate - Rename method Configure to Execute
+- Drop DocumentCollectionBuilder
