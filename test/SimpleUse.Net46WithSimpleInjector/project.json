@@ -1,0 +1,19 @@
+﻿{
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+  "dependencies": {
+    "SimpleInjector": "3.3.2",
+    "SolrExpress.DI.SimpleInjector": {
+      "target": "project"
+    },
+    "SolrExpress.Solr5": {
+      "target": "project"
+    }
+  },
+  "frameworks": {
+    "net46": {
+    }
+  },
+  "version": "1.0.0-*"
+}

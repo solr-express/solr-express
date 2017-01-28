@@ -19,15 +19,6 @@
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way",
   "frameworks": {
-    "netstandard1.6": {
-      "dependencies": {
-        "NETStandard.Library": "1.6.0",
-        "Newtonsoft.Json": "9.0.1"
-      },
-      "buildOptions": {
-        "define": [ "NETCORE" ]
-      }
-    },
     "net4": {
       "dependencies": {
         "Newtonsoft.Json": "9.0.1"
@@ -36,6 +27,20 @@
     "net45": {
       "dependencies": {
         "Newtonsoft.Json": "9.0.1"
+      }
+    },
+    "net46": {
+      "dependencies": {
+        "Newtonsoft.Json": "9.0.1"
+      }
+    },
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "Newtonsoft.Json": "9.0.1"
+      },
+      "buildOptions": {
+        "define": [ "NETCORE" ]
       }
     }
   },

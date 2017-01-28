@@ -6,7 +6,11 @@
     public sealed class SolrExpressBuilder<TDocument>
         where TDocument : IDocument
     {
-        private readonly SolrExpressOptions _options = new SolrExpressOptions();
+        public SolrExpressBuilder(ISolrExpressServiceProvider<TDocument> serviceProvider)
+        {
+            this.Options = new SolrExpressOptions();
+            this.ServiceProvider = serviceProvider;
+        }
 
         /// <summary>
         /// Use indicated options
@@ -15,14 +19,14 @@
         /// <returns>Itself</returns>
         public SolrExpressBuilder<TDocument> UseOptions(SolrExpressOptions options)
         {
-            this._options.CheckAnyParameter = options.CheckAnyParameter;
-            this._options.FailFast = options.FailFast;
-            this._options.Security.AuthenticationType = options.Security.AuthenticationType;
-            this._options.Security.Password = options.Security.Password;
-            this._options.Security.UserName = options.Security.UserName;
-            this._options.GlobalParameters.AddRange(options.GlobalParameters);
-            this._options.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
-            this._options.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
+            this.Options.CheckAnyParameter = options.CheckAnyParameter;
+            this.Options.FailFast = options.FailFast;
+            this.Options.Security.AuthenticationType = options.Security.AuthenticationType;
+            this.Options.Security.Password = options.Security.Password;
+            this.Options.Security.UserName = options.Security.UserName;
+            this.Options.GlobalParameters.AddRange(options.GlobalParameters);
+            this.Options.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
+            this.Options.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
 
             return this;
         }
@@ -34,9 +38,20 @@
         /// <returns>Itself</returns>
         public SolrExpressBuilder<TDocument> UseHostAddress(string hostAddress)
         {
-            this._options.HostAddress = hostAddress;
+            this.Options.HostAddress = hostAddress;
 
             return this;
         }
+
+        /// <summary>
+        /// Options to control SolrExpress behavior
+        /// </summary>
+        internal SolrExpressOptions Options { get; set; }
+
+        /// <summary>
+        /// Services provider
+        /// </summary>
+        internal ISolrExpressServiceProvider<TDocument> ServiceProvider
+        { get; set; }
     }
 }

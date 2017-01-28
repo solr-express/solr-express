@@ -20,7 +20,10 @@
       "version": "1.0.1",
       "type": "platform"
     },
-    "SolrExpress": {
+    "SolrExpress.Solr5": {
+      "target": "project"
+    },
+    "SolrExpress.DI.CoreClr": {
       "target": "project"
     }
   },

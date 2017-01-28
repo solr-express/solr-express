@@ -45,6 +45,8 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.SingleContext", "
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.UnitTests", "test\SolrExpress.UnitTests\SolrExpress.UnitTests.xproj", "{9E18F426-EB06-4F12-BE8A-C5940F5B3680}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.Net46WithSimpleInjector", "test\SimpleUse.Net46WithSimpleInjector\SimpleUse.Net46WithSimpleInjector.xproj", "{A49E5D94-8929-4134-837B-443B89698229}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49E5D94-8929-4134-837B-443B89698229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49E5D94-8929-4134-837B-443B89698229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49E5D94-8929-4134-837B-443B89698229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49E5D94-8929-4134-837B-443B89698229}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,5 +99,6 @@ Global
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{D0078A76-907E-490F-A38D-779AFEB94860} = {97836803-3E29-4119-ACE3-57B3D068214F}
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
+		{A49E5D94-8929-4134-837B-443B89698229} = {97836803-3E29-4119-ACE3-57B3D068214F}
 	EndGlobalSection
 EndGlobal

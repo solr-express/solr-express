@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SolrExpress.DI.CoreClr;
+using SolrExpress.Solr5.Extension;
 
 namespace SimpleUse.SingleContext
 {
@@ -29,7 +27,7 @@ namespace SimpleUse.SingleContext
             Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; set;}
+        public IConfigurationRoot Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
@@ -38,6 +36,10 @@ namespace SimpleUse.SingleContext
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            services.AddSolrExpress<TechProduct>(q => q
+                .UseHostAddress("http://localhost:8983/solr/techproducts")
+                .UseSolr5());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

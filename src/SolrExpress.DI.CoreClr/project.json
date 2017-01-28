@@ -24,17 +24,17 @@
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using native .Net Core mechanism",
   "frameworks": {
-    "netstandard1.6": {
+    "net46": {
       "dependencies": {
-        "NETStandard.Library": "1.6.0"
-      },
-      "buildOptions": {
-        "define": [ "NETCORE" ]
+        "Microsoft.Extensions.DependencyInjection": "1.0.0",
+        "System.Runtime": "4.0.20"
       }
     },
-    "net4": {
-    },
-    "net45": {
+    "netstandard1.6": {
+      "dependencies": {
+        "Microsoft.Extensions.DependencyInjection": "1.0.0",
+        "NETStandard.Library": "1.6.0"
+      }
     }
   },
   "packOptions": {

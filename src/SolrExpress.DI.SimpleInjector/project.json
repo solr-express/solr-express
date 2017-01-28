@@ -18,23 +18,23 @@
     }
   },
   "dependencies": {
+    "SimpleInjector": "3.3.2",
     "SolrExpress": {
       "target": "project"
     }
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using Simple Injector mechanism",
   "frameworks": {
-    "netstandard1.6": {
-      "dependencies": {
-        "NETStandard.Library": "1.6.0"
-      },
-      "buildOptions": {
-        "define": [ "NETCORE" ]
-      }
-    },
     "net4": {
     },
     "net45": {
+    },
+    "net46": {
+    },
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
     }
   },
   "packOptions": {
