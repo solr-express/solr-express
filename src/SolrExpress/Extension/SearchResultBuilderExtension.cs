@@ -21,6 +21,51 @@ namespace SolrExpress.Extension
         }
 
         /// <summary>
+        /// Returns a facet field list
+        /// </summary>
+        /// <param name="data">Facet field list</param>
+        public static SearchResultBuilder<TDocument> FacetField<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<string>> data)
+            where TDocument : IDocument
+        {
+            //TODO: DI
+            IFacetFieldResult<TDocument> result = null;
+
+            data = searchResult.Get(result).Data;
+
+            return searchResult;
+        }
+
+        /// <summary>
+        /// Returns a facet query list
+        /// </summary>
+        /// <param name="data">Facet query list</param>
+        public static SearchResultBuilder<TDocument> FacetQuery<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IDictionary<string, long> data)
+            where TDocument : IDocument
+        {
+            //TODO: DI
+            IFacetQueryResult<TDocument> result = null;
+
+            data = searchResult.Get(result).Data;
+
+            return searchResult;
+        }
+
+        /// <summary>
+        /// Returns a facet range list
+        /// </summary>
+        /// <param name="data">Facet range list</param>
+        public static SearchResultBuilder<TDocument> FacetRange<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<FacetRange>> data)
+            where TDocument : IDocument
+        {
+            //TODO: DI
+            IFacetRangeResult<TDocument> result = null;
+
+            data = searchResult.Get(result).Data;
+
+            return searchResult;
+        }
+
+        /// <summary>
         /// Returns informations about the search
         /// </summary>
         /// <param name="data">Informations about search execution</param>
