@@ -25,8 +25,6 @@
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using Simple Injector mechanism",
   "frameworks": {
-    "net4": {
-    },
     "net45": {
     },
     "net46": {

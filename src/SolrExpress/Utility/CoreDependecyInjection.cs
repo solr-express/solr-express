@@ -20,6 +20,7 @@ namespace SolrExpress.Utility
         {
             serviceProvider
                 .AddSingleton(options)
+                .AddTransient<SolrConnection>()
                 .AddTransient<DocumentSearch<TDocument>>()
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()

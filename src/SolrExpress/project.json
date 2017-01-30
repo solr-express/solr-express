@@ -19,23 +19,21 @@
   },
   "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way",
   "frameworks": {
-    "net4": {
-      "dependencies": {
-        "Newtonsoft.Json": "9.0.1"
-      }
-    },
     "net45": {
       "dependencies": {
+        "Flurl.Http.Signed": "1.1.1",
         "Newtonsoft.Json": "9.0.1"
       }
     },
     "net46": {
       "dependencies": {
+        "Flurl.Http.Signed": "1.1.1",
         "Newtonsoft.Json": "9.0.1"
       }
     },
     "netstandard1.6": {
       "dependencies": {
+        "Flurl.Http.Signed": "1.1.1",
         "NETStandard.Library": "1.6.0",
         "Newtonsoft.Json": "9.0.1"
       },

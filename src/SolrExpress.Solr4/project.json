@@ -33,8 +33,6 @@
         "define": [ "NETCORE" ]
       }
     },
-    "net4": {
-    },
     "net45": {
     },
     "net46": {
