@@ -238,7 +238,7 @@ namespace SolrExpress.Core.Search
             {
                 lock (sync)
                 {
-                    interceptor.Execute(ref query);
+                    interceptor.Execute(ref json);
                 }
             });
 

@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.2.1] - 2017-01-31
+
+### Bug fix
+* Wrong variable used in result Interceptors execution ([#197](https://github.com/solr-express/solr-express/issues/197))
+
+---
+
 ## [4.2.0] - 2017-01-20
 
 ### Enhancement
