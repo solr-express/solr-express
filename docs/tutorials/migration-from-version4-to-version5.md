@@ -39,8 +39,6 @@ DRAFT
 - **SolrSpatialFunctionType** renamed to **SpatialFunctionType**
 - **SolrExpress.Search.Parameter.IFieldsParameter** rename property **Expressions** to **FieldExpressions**
 - IRandomSortParameter renamed to ISortRandomlyParameter
-- BoostFunctionType moved to **SolrExpress.Search**
-- FacetSortType moved to **SolrExpress.Search**
 - DocumentSearch.SetHandler renamed to Handler
 - Rename IResult to ISearchResult (change mean of interface ISearchResult)
 - ISearchParameterExecute to ISearchItemExecution
@@ -62,3 +60,4 @@ DRAFT
 - No more UnexpectedJsonFormatException
 - Change use of SearchResultBuilder, instead of Get method, use Add and Execute (to execute chain)
 - No more support to IResultInterceptor (because now I use JsonReader instead Json string)
+- Merge 

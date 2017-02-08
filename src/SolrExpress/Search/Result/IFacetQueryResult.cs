@@ -9,10 +9,5 @@ namespace SolrExpress.Search.Result
         /// Facet data
         /// </summary>
         IDictionary<string, long> Data { get; set; }
-
-        /// <summary>
-        /// Tag
-        /// </summary>
-        object Tag { get; set; }
     }
 }

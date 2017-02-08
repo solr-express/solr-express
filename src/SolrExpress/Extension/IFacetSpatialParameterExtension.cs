@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Core.Search;
+using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using System;
@@ -9,7 +10,8 @@ namespace SolrExpress.Extension
     /// <summary>
     /// Extensions to configure in facet spatial parameter
     /// </summary>
-    public static class IFacetSpatialParameterExtension
+    public static class IFacetSpatialParameterExtension
+
     {
         /// <summary>
         /// Configure name of alias added in query
