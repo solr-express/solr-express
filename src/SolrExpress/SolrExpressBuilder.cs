@@ -51,7 +51,6 @@
         /// <summary>
         /// Services provider
         /// </summary>
-        internal ISolrExpressServiceProvider<TDocument> ServiceProvider
-        { get; set; }
+        internal ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
     }
 }
