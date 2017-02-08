@@ -1,6 +1,5 @@
-﻿using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Result.Utility;
-using SolrExpress.Utility;
+﻿using Newtonsoft.Json;
+using SolrExpress.Search.Parameter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,42 +12,55 @@ namespace SolrExpress.Search.Result
     public class InformationResult<TDocument> : IInformationResult<TDocument>
         where TDocument : IDocument
     {
+        private bool executed = false;
+        private bool withElapsedTime = false;
+        private bool withDocumentCount = false;
+
+        public InformationResult()
+        {
+            ((IInformationResult<TDocument>)this).Data = new Information();
+        }
+
         Information IInformationResult<TDocument>.Data { get; set; }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, string jsonPlainText)
+        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            var matchElapsedTimeFragment = SearchResultRegex.InformationResultElapsedTimeragment.Match(jsonPlainText);
-            var matchNumFoundFragment = SearchResultRegex.InformationResultDocumentCountFragment.Match(jsonPlainText);
-
-            Checker.IsNull(searchParameters);
-            Checker.IsNullOrWhiteSpace(jsonPlainText);
-            //TODO: Create exception
-            //Checker.IsTrue<UnexpectedJsonFormatException>(matchTimeFragment.Success, new[] { jsonPlainText });
-            //Checker.IsTrue<UnexpectedJsonFormatException>(matchNumFoundFragment.Success, new[] { jsonPlainText });
-
-            var offsetParameter = (IOffsetParameter<TDocument>)searchParameters.First(q => q is IOffsetParameter<TDocument>);
-            var limitParameter = (ILimitParameter<TDocument>)searchParameters.First(q => q is ILimitParameter<TDocument>);
-            var offset = offsetParameter.Value;
-            var limit = limitParameter.Value;
-
-            var elapsedTime = Convert.ToInt32(matchElapsedTimeFragment.Groups[3].Value);
-            var documentCount = Convert.ToInt64(matchNumFoundFragment.Groups[3].Value);
-
-            var data = new Information
+            if (!this.executed)
             {
-                ElapsedTime = TimeSpan.FromMilliseconds(elapsedTime),
-                DocumentCount = documentCount,
-                PageNumber = (offset / limit) + 1,
-                PageSize = limit,
-                PageCount = documentCount > 0 ? (int)Math.Ceiling(documentCount / (double)limit) : 0
-            };
+                if (currentToken == JsonToken.PropertyName && currentPath == "responseHeader.QTime")
+                {
+                    ((IInformationResult<TDocument>)this).Data.ElapsedTime = TimeSpan.FromMilliseconds(jsonReader.ReadAsDouble().Value);
 
-            data.HasPreviousPage = data.PageNumber > 1;
-            data.HasNextPage = data.PageNumber < data.PageCount;
-            data.IsFirstPage = data.PageNumber == 1;
-            data.IsLastPage = data.PageNumber >= data.PageCount;
+                    this.withElapsedTime = true;
+                }
 
-            ((IInformationResult<TDocument>)this).Data = data;
+                if (currentToken == JsonToken.PropertyName && currentPath == "response.numFound")
+                {
+                    jsonReader.Read();
+                    ((IInformationResult<TDocument>)this).Data.DocumentCount = (long)jsonReader.Value;
+
+                    this.withDocumentCount = true;
+                }
+
+                if (this.withElapsedTime && this.withDocumentCount)
+                {
+                    var offsetParameter = (IOffsetParameter<TDocument>)searchParameters.First(q => q is IOffsetParameter<TDocument>);
+                    var limitParameter = (ILimitParameter<TDocument>)searchParameters.First(q => q is ILimitParameter<TDocument>);
+                    var offset = offsetParameter.Value;
+                    var limit = limitParameter.Value;
+
+                    var data = ((IInformationResult<TDocument>)this).Data;
+                    data.PageNumber = (offset / limit) + 1;
+                    data.PageSize = limit;
+                    data.PageCount = data.DocumentCount > 0 ? (int)Math.Ceiling(data.DocumentCount / (double)limit) : 0;
+                    data.HasPreviousPage = data.PageNumber > 1;
+                    data.HasNextPage = data.PageNumber < data.PageCount;
+                    data.IsFirstPage = data.PageNumber == 1;
+                    data.IsLastPage = data.PageNumber >= data.PageCount;
+
+                    this.executed = true;
+                }
+            }
         }
     }
 }

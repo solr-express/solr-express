@@ -159,11 +159,11 @@ namespace SolrExpress.Search
             this.SetDefaultSystemParameters();
             this.SetDefaultPaginationParameters();
 
-            var jsonPlainText = this._searchItemCollection.Execute(this._requestHandler);
+            var jsonReader = this._searchItemCollection.Execute(this._requestHandler);
             var searchParameters = this._searchItemCollection.GetParameters();
 
             var searchResultBuilder = this.ServiceProvider.GetService<SearchResultBuilder<TDocument>>();
-            searchResultBuilder.Configure(searchParameters, jsonPlainText);
+            searchResultBuilder.Configure(searchParameters, jsonReader);
 
             return searchResultBuilder;
         }

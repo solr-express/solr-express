@@ -14,7 +14,9 @@ namespace SolrExpress.Extension
         {
             var result = searchResult.ServiceProvider.GetService<IDocumentResult<TDocument>>();
 
-            data = searchResult.Get(result).Data;
+            // TODO: Review
+            data = null;
+            //data = searchResult.Get(result).Data;
 
             return searchResult;
         }
@@ -28,7 +30,9 @@ namespace SolrExpress.Extension
         {
             var result = searchResult.ServiceProvider.GetService<IFacetFieldResult<TDocument>>();
 
-            data = searchResult.Get(result).Data;
+            // TODO: Review
+            data = null;
+            //data = searchResult.Get(result).Data;
 
             return searchResult;
         }
@@ -42,7 +46,9 @@ namespace SolrExpress.Extension
         {
             var result = searchResult.ServiceProvider.GetService<IFacetQueryResult<TDocument>>();
 
-            data = searchResult.Get(result).Data;
+            // TODO: Review
+            data = null;
+            //data = searchResult.Get(result).Data;
 
             return searchResult;
         }
@@ -56,7 +62,9 @@ namespace SolrExpress.Extension
         {
             var result = searchResult.ServiceProvider.GetService<IFacetRangeResult<TDocument>>();
 
-            data = searchResult.Get(result).Data;
+            // TODO: Review
+            data = null;
+            //data = searchResult.Get(result).Data;
 
             return searchResult;
         }
@@ -70,7 +78,9 @@ namespace SolrExpress.Extension
         {
             var result = searchResult.ServiceProvider.GetService<IInformationResult<TDocument>>();
 
-            data = searchResult.Get(result).Data;
+            // TODO: Review
+            data = null;
+            //data = searchResult.Get(result).Data;
 
             return searchResult;
         }

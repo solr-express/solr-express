@@ -1,42 +1,18 @@
 ﻿using Moq;
+using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Xunit;
 
 namespace SolrExpress.UnitTests.Search.Result
 {
     public class InformationResultTests
     {
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        [InlineData(" ")]
-        public void InformationResultTheory001(string jsonPlainText)
-        {
-            // Arrange
-            var searchParameters = new List<ISearchParameter>();
-            var result = (IInformationResult<TestDocument>)new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => result.Execute(searchParameters, jsonPlainText));
-        }
-
         [Fact]
         public void InformationResultFact001()
-        {
-            // Arrange
-            List<ISearchParameter> searchParameters = null;
-            var jsonPlainText = ".";
-            var result = (IInformationResult<TestDocument>)new InformationResult<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => result.Execute(searchParameters, jsonPlainText));
-        }
-
-        [Fact]
-        public void InformationResultFact002()
         {
             // Arrange
             var jsonPlainText = @"
@@ -52,6 +28,8 @@ namespace SolrExpress.UnitTests.Search.Result
             }
             }";
 
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
             var searchParameters = new List<ISearchParameter>
             {
                 new Mock<IOffsetParameter<TestDocument>>().SetupProperty(q => q.Value, 20).Object,
@@ -61,7 +39,10 @@ namespace SolrExpress.UnitTests.Search.Result
             var result = (IInformationResult<TestDocument>)new InformationResult<TestDocument>();
 
             // Act
-            result.Execute(searchParameters, jsonPlainText);
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
 
             // Assert
             Assert.Equal(222, result.Data.DocumentCount);

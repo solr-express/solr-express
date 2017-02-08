@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using Newtonsoft.Json;
+using SolrExpress.Search.Parameter;
 using System;
 using System.Collections.Generic;
 
@@ -41,6 +42,6 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="requestHandler">Handler to use in SOLR request</param>
         /// <returns>Query instructions</returns>
-        string Execute(string requestHandler);
+        JsonReader Execute(string requestHandler);
     }
 }

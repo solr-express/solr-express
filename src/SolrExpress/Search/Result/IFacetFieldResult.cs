@@ -8,6 +8,6 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Facet data
         /// </summary>
-        IEnumerable<FacetKeyValue<string>> Data { get; }
+        IEnumerable<FacetKeyValue<string>> Data { get; set; }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Result.Utility;
 using SolrExpress.Serialization;
-using SolrExpress.Utility;
 using System.Collections.Generic;
 
 namespace SolrExpress.Search.Result
@@ -14,27 +13,23 @@ namespace SolrExpress.Search.Result
     public sealed class DocumentResult<TDocument> : IDocumentResult<TDocument>
         where TDocument : IDocument
     {
+        private bool executed = false;
+
         IEnumerable<TDocument> IDocumentResult<TDocument>.Data { get; set; }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, string jsonPlainText)
+        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            Checker.IsNull(searchParameters);
-            Checker.IsNullOrWhiteSpace(jsonPlainText);
-
-            var match = SearchResultRegex.DocumentResultFragment.Match(jsonPlainText);
-            // TODO: Create exception
-            //Checker.IsTrue<UnexpectedJsonFormatException>(match.Success, jsonPlainText);
-
-            var settings = new JsonSerializerSettings
+            if (!this.executed && currentToken == JsonToken.StartArray && currentPath == "response.docs")
             {
-                Converters = new List<JsonConverter> {
-                    new GeoCoordinateConverter(),
-                    new DateTimeConverter()
-                },
-                ContractResolver = new CustomContractResolver()
-            };
+                var jsonSerializer = new JsonSerializer();
+                jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+                jsonSerializer.Converters.Add(new DateTimeConverter());
+                jsonSerializer.ContractResolver = new CustomContractResolver();
 
-            ((IDocumentResult<TDocument>)this).Data = JsonConvert.DeserializeObject<List<TDocument>>(match.Groups[3].Value, settings);
+                ((IDocumentResult<TDocument>)this).Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
+
+                this.executed = true;
+            }
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using Newtonsoft.Json;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Xunit;
 
@@ -9,34 +10,8 @@ namespace SolrExpress.UnitTests.Search.Result
 {
     public class DocumentResultTests
     {
-        [Theory]
-        [InlineData("")]
-        [InlineData(null)]
-        [InlineData(" ")]
-        public void InformationResultTheory001(string jsonPlainText)
-        {
-            // Arrange
-            var searchParameters = new List<ISearchParameter>();
-            var result = (IDocumentResult<TechProductDocument>)new DocumentResult<TechProductDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => result.Execute(searchParameters, jsonPlainText));
-        }
-
         [Fact]
         public void InformationResultFact001()
-        {
-            // Arrange
-            List<ISearchParameter> searchParameters = null;
-            var jsonPlainText = ".";
-            var result = (IDocumentResult<TechProductDocument>)new DocumentResult<TechProductDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => result.Execute(searchParameters, jsonPlainText));
-        }
-
-        [Fact]
-        public void InformationResultFact002()
         {
             // Arrange
             var jsonPlainText = @"
@@ -109,12 +84,17 @@ namespace SolrExpress.UnitTests.Search.Result
               }
             }";
 
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
             var searchParameters = new List<ISearchParameter>();
 
             var result = (IDocumentResult<TechProductDocument>)new DocumentResult<TechProductDocument>();
 
             // Act
-            result.Execute(searchParameters, jsonPlainText);
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
 
             // Assert
             var list = result.Data.ToList();

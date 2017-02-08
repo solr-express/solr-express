@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using Newtonsoft.Json;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 
@@ -7,8 +8,9 @@ namespace SolrExpress.Search.Result
     public sealed class SearchResultBuilder<TDocument>
         where TDocument : IDocument
     {
-        private string _jsonPlainText;
+        private JsonReader _jsonReader;
         private List<ISearchParameter> _searchParameters;
+        private List<ISearchResult> _searchResults = new List<ISearchResult>();
 
         public SearchResultBuilder(
             ISolrExpressServiceProvider<TDocument> serviceProvider)
@@ -23,26 +25,44 @@ namespace SolrExpress.Search.Result
         /// </summary>
         /// <param name="searchParameters">Parameters used in search</param>
         /// <param name="jsonPlainText">Result in json plain text</param>
-        internal void Configure(List<ISearchParameter> searchParameters, string jsonPlainText)
+        internal void Configure(List<ISearchParameter> searchParameters, JsonReader jsonReader)
         {
             Checker.IsNull(searchParameters);
-            Checker.IsNullOrWhiteSpace(jsonPlainText);
+            Checker.IsNull(jsonReader);
 
             this._searchParameters = searchParameters;
-            this._jsonPlainText = jsonPlainText;
+            this._jsonReader = jsonReader;
         }
 
         /// <summary>
-        /// Get a instance of the informed type with search
+        /// Add a instance of informed type in search chain
         /// </summary>
         /// <typeparam name="T">Concrete class that implements the ISearchResult interface</typeparam>
         /// <returns>Instance of T ready to be used</returns>
-        public T Get<T>(T result)
+        public SearchResultBuilder<TDocument> Add<T>(T result)
             where T : ISearchResult
         {
-            result.Execute(this._searchParameters, this._jsonPlainText);
+            this._searchResults.Add(result);
 
-            return result;
+            return this;
+        }
+
+        /// <summary>
+        /// Execute chain of search results
+        /// </summary>
+        public void Execute()
+        {
+            while (this._jsonReader.Read())
+            {
+                foreach (var searchResult in this._searchResults)
+                {
+                    searchResult.Execute(
+                        this._searchParameters,
+                        this._jsonReader.TokenType,
+                        this._jsonReader.Path,
+                        this._jsonReader);
+                }
+            }
         }
 
         /// <summary>

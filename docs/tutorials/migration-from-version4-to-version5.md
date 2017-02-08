@@ -59,3 +59,6 @@ DRAFT
 - IAtomicUpdate - Rename method Configure to Execute
 - Drop 
 - No more support to .Net 4.0
+- No more UnexpectedJsonFormatException
+- Change use of SearchResultBuilder, instead of Get method, use Add and Execute (to execute chain)
+- No more support to IResultInterceptor (because now I use JsonReader instead Json string)
