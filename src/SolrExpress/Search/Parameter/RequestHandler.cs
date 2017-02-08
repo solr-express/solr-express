@@ -1,4 +1,4 @@
-﻿namespace SolrExpress
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Default handlers to use in SOLR request

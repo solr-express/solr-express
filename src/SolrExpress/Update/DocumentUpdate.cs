@@ -1,4 +1,5 @@
-﻿using SolrExpress.Utility;
+﻿using SolrExpress.Search.Parameter;
+using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
