@@ -11,7 +11,11 @@ namespace SolrExpress.Update
         string IAtomicUpdate<TDocument>.Execute(params TDocument[] documents)
         {
             Checker.IsNull(documents);
-            Checker.IsEmpty(documents);
+
+            if (documents.Length == 0)
+            {
+                return string.Empty;
+            }
 
             var jsonSerializer = JsonSerializer.Create();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());

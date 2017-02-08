@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Utility;
-using System.Linq;
 
 namespace SolrExpress.Update
 {
@@ -10,11 +9,15 @@ namespace SolrExpress.Update
         string IAtomicDelete<TDocument>.Execute(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
-            Checker.IsEmpty(documentIds);
+
+            if (documentIds.Length == 0)
+            {
+                return string.Empty;
+            }
 
             JProperty jProperty;
 
-            if (documentIds.Count() == 1)
+            if (documentIds.Length == 1)
             {
                 jProperty = new JProperty("delete", documentIds[0]);
             }
