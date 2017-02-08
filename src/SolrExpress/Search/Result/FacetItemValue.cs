@@ -1,20 +1,21 @@
-﻿namespace SolrExpress.Search.Result
+﻿using System.Collections.Generic;
+
+namespace SolrExpress.Search.Result
 {
     /// <summary>
     /// Represents a facet item value
     /// </summary>
-    /// <typeparam name="TKey">Value of the facet</typeparam>
-    public class FacetItemValue<TKey>
+    public abstract class FacetItemValue
     {
-        /// <summary>
-        /// Key of item
-        /// </summary>
-        public TKey Key { get; set; }
-
         /// <summary>
         /// Quantity of item
         /// </summary>
         public long Quantity { get; set; }
+
+        /// <summary>
+        /// Subfacets of item
+        /// </summary>
+        public IEnumerable<FacetKeyValue> Facets { get; set; }
 
         /// <summary>
         /// Tag

@@ -2,12 +2,12 @@
 
 namespace SolrExpress.Search.Result
 {
-    public interface IFacetRangeResult<TDocument> : ISearchResult
+    public interface IFacetsResult<TDocument> : ISearchResult
         where TDocument : IDocument
     {
         /// <summary>
         /// Facet data
         /// </summary>
-        IEnumerable<FacetKeyValue<FacetRange>> Data { get; set; }
+        IEnumerable<FacetKeyValue> Data { get; set; }
     }
 }

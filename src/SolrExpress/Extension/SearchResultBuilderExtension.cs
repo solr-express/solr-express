@@ -25,10 +25,10 @@ namespace SolrExpress.Extension
         /// Returns a facet field list
         /// </summary>
         /// <param name="data">Facet field list</param>
-        public static SearchResultBuilder<TDocument> FacetField<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<string>> data)
+        public static SearchResultBuilder<TDocument> Facets<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue> data)
             where TDocument : IDocument
         {
-            var result = searchResult.ServiceProvider.GetService<IFacetFieldResult<TDocument>>();
+            var result = searchResult.ServiceProvider.GetService<IFacetsResult<TDocument>>();
 
             // TODO: Review
             data = null;
@@ -36,39 +36,7 @@ namespace SolrExpress.Extension
 
             return searchResult;
         }
-
-        /// <summary>
-        /// Returns a facet query list
-        /// </summary>
-        /// <param name="data">Facet query list</param>
-        public static SearchResultBuilder<TDocument> FacetQuery<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IDictionary<string, long> data)
-            where TDocument : IDocument
-        {
-            var result = searchResult.ServiceProvider.GetService<IFacetQueryResult<TDocument>>();
-
-            // TODO: Review
-            data = null;
-            //data = searchResult.Get(result).Data;
-
-            return searchResult;
-        }
-
-        /// <summary>
-        /// Returns a facet range list
-        /// </summary>
-        /// <param name="data">Facet range list</param>
-        public static SearchResultBuilder<TDocument> FacetRange<TDocument>(this SearchResultBuilder<TDocument> searchResult, out IEnumerable<FacetKeyValue<FacetRange>> data)
-            where TDocument : IDocument
-        {
-            var result = searchResult.ServiceProvider.GetService<IFacetRangeResult<TDocument>>();
-
-            // TODO: Review
-            data = null;
-            //data = searchResult.Get(result).Data;
-
-            return searchResult;
-        }
-
+        
         /// <summary>
         /// Returns informations about the search
         /// </summary>
