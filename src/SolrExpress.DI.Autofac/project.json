@@ -1,0 +1,54 @@
+﻿{
+  "authors": [ "diego.lb" ],
+  "buildOptions": {
+    "warningsAsErrors": true,
+    "keyFile": "../../Key.snk"
+  },
+  "configurations": {
+    "Debug": {
+      "buildOptions": {
+        "define": [ "DEBUG", "TRACE" ]
+      }
+    },
+    "Release": {
+      "buildOptions": {
+        "define": [ "RELEASE", "TRACE" ],
+        "optimize": true
+      }
+    }
+  },
+  "dependencies": {
+    "SolrExpress": {
+      "target": "project"
+    }
+  },
+  "description": "A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using Autofac mechanism",
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+        "Autofac": "4.3.0"
+      }
+    },
+    "net46": {
+      "dependencies": {
+        "Autofac": "4.3.0"
+      }
+    },
+    "netstandard1.6": {
+      "dependencies": {
+        "Autofac": "4.3.0",
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  },
+  "packOptions": {
+    "licenseUrl": "https://github.com/solr-express/solr-express/blob/master/LICENSE",
+    "repository": {
+      "url": "https://github.com/solr-express/solr-express",
+      "type": "git"
+    },
+    "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
+    "requireLicenseAcceptance": false
+  },
+  "version": "5.0.0"
+}
