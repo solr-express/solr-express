@@ -1,7 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
-using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
@@ -9,18 +8,22 @@ namespace SolrExpress.Solr4.Search.Parameter
     public class QueryParameter<TDocument> : IQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
+        private string _result;
+
         bool ISearchParameter.AllowMultipleInstances { get; set; }
 
         ISearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {
-            throw new NotImplementedException();
+            container.Add(this._result);
         }
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = ((IQueryParameter<TDocument>)this);
+
+            this._result = $"q={parameter.Value.Execute()}";
         }
     }
 }

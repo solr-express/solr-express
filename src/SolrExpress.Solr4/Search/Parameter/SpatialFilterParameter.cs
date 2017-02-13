@@ -1,6 +1,7 @@
-﻿using SolrExpress.Core.Search;
+﻿using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -10,6 +11,14 @@ namespace SolrExpress.Solr4.Search.Parameter
     public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private string _result;
+
+        public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
         bool ISearchParameter.AllowMultipleInstances { get; set; }
 
         GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
@@ -22,12 +31,16 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {
-            throw new NotImplementedException();
+            container.Add(this._result);
         }
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = ((ISpatialFilterParameter<TDocument>)this);
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            var formule = ParameterUtil.GetSpatialFormule(fieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
+
+            this._result = $"fq={formule}";
         }
     }
 }
