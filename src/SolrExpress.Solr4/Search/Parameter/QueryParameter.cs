@@ -9,9 +9,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         where TDocument : IDocument
     {
         private string _result;
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         ISearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)

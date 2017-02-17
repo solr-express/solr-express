@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -18,9 +19,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         }
 
         string IFacetQueryParameter<TDocument>.AliasName { get; set; }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
 
         ISearchQuery<TDocument> IFacetQueryParameter<TDocument>.Query { get; set; }

@@ -10,8 +10,6 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
         BoostFunctionType IBoostParameter<TDocument>.BoostFunctionType { get; set; }
 
         ISearchQuery<TDocument> IBoostParameter<TDocument>.Query { get; set; }

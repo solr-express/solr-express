@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -17,8 +18,6 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this._expressionBuilder = expressionBuilder;
         }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
 
         string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
 

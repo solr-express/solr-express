@@ -8,9 +8,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         where TDocument : IDocument
     {
         private string _result;
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         long IOffsetParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)

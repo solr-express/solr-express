@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class AnyParameter<TDocument> : IAnyParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
         private string _result;
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
 
         string IAnyParameter<TDocument>.Name { get; set; }
 

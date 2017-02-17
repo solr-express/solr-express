@@ -43,8 +43,7 @@ DRAFT
 - Rename IResult to ISearchResult (change mean of interface ISearchResult)
 - ISearchParameterExecute to ISearchItemExecution
 - ISearchItemExecution add method AddResultInContainer
-- IValidation to ISearchItemValidation
-- Move ISearchItemValidation to  SolrExpress.Search
+- Drop IValidation interface
 - Rename ISearchParameterCollection to ISearchItemCollection
 - Rename DocumentCollectionOptions to SolrExpressOptions
 - Rename SearchResult to SearchResultBuilder

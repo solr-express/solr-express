@@ -5,9 +5,5 @@
     /// </summary>
     public interface ISearchParameter : ISearchItem
     {
-        /// <summary>
-        /// True to indicate multiple instance of parameter, otherwise false
-        /// </summary>
-        bool AllowMultipleInstances { get; set; }
     }
 }

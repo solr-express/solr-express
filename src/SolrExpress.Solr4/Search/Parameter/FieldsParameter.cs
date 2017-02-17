@@ -18,9 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this._expressionBuilder = expressionBuilder;
         }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         Expression<Func<TDocument, object>>[] IFieldsParameter<TDocument>.FieldExpressions { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)

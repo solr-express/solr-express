@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -19,9 +20,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         bool IFacetRangeParameter<TDocument>.CountAfter { get; set; }
 
         bool IFacetRangeParameter<TDocument>.CountBefore { get; set; }

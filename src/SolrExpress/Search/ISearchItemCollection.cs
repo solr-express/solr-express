@@ -33,7 +33,7 @@ namespace SolrExpress.Search
         /// <summary>
         /// Add items to collection
         /// </summary>
-        /// <param name="items">Item to add in collection</param>
+        /// <param name="item">Item to add in collection</param>
         /// <returns>Itself</returns>
         void Add(ISearchItem item);
 

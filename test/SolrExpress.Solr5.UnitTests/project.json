@@ -11,7 +11,7 @@
       "version": "1.0.1"
     },
     "Moq": "4.6.38-alpha",
-    "SolrExpress": {
+    "SolrExpress.Solr5": {
       "target": "project"
     },
     "System.Diagnostics.TraceSource": "4.3.0",

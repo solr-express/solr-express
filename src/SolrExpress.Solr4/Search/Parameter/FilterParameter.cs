@@ -10,9 +10,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         where TDocument : IDocument
     {
         private string _result;
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         ISearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
 
         string IFilterParameter<TDocument>.TagName { get; set; }

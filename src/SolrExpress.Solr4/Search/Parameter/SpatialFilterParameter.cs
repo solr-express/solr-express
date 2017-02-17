@@ -18,9 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this._expressionBuilder = expressionBuilder;
         }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
 
         decimal ISpatialFilterParameter<TDocument>.Distance { get; set; }

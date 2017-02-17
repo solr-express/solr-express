@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -20,9 +21,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         }
 
         string IFacetSpatialParameter<TDocument>.AliasName { get; set; }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         GeoCoordinate IFacetSpatialParameter<TDocument>.CenterPoint { get; set; }
 
         decimal IFacetSpatialParameter<TDocument>.Distance { get; set; }

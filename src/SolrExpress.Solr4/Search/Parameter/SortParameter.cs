@@ -18,9 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this._expressionBuilder = expressionBuilder;
         }
-
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
-
+        
         bool ISortParameter<TDocument>.Ascendent { get; set; }
 
         Expression<Func<TDocument, object>>[] ISortParameter<TDocument>.FieldExpressions { get; set; }
