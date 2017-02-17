@@ -5,7 +5,6 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
@@ -13,7 +12,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         where TDocument : IDocument
     {
         private readonly ExpressionBuilder<TDocument> _expressionBuilder;
-        private readonly StringBuilder _result = new StringBuilder();
+        private readonly List<string> _result = new List<string>();
 
         public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
@@ -47,7 +46,7 @@ namespace SolrExpress.Solr4.Search.Parameter
                 container.Add("facet=true");
             }
 
-            container.Add(this._result.ToString());
+            container.AddRange(this._result);
         }
 
         void ISearchItemExecution<List<string>>.Execute()
@@ -57,7 +56,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             var formule = ParameterUtil.GetSpatialFormule(fieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
             var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, formule);
 
-            this._result.AppendLine($"facet.query={facetName}");
+            this._result.Add($"facet.query={facetName}");
 
             if (parameter.SortType.HasValue)
             {
@@ -69,17 +68,17 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
 
-                this._result.AppendLine($"f.{parameter.AliasName}.facet.sort={typeName}");
+                this._result.Add($"f.{parameter.AliasName}.facet.sort={typeName}");
             }
 
             if (parameter.Minimum.HasValue)
             {
-                this._result.AppendLine($"f.{parameter.AliasName}.facet.mincount={parameter.Minimum.Value}");
+                this._result.Add($"f.{parameter.AliasName}.facet.mincount={parameter.Minimum.Value}");
             }
 
             if (parameter.Limit.HasValue)
             {
-                this._result.AppendLine($"f.{parameter.AliasName}.facet.limit={parameter.Limit.Value}");
+                this._result.Add($"f.{parameter.AliasName}.facet.limit={parameter.Limit.Value}");
             }
         }
     }

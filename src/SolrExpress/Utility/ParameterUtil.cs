@@ -62,10 +62,10 @@ namespace SolrExpress.Utility
         /// <summary>
         /// Get the field with excludes
         /// </summary>
+        /// <param name="excludes">Excludes tags</param>
         /// <param name="aliasName">Alias name</param>
         /// <param name="fieldName">Field name</param>
-        /// <param name="sortName">List of excludes</param>
-        internal static string GetFacetName(this string[] excludes, string aliasName, string fieldName)
+        internal static string GetFacetName( string[] excludes, string aliasName, string fieldName)
         {
             if (excludes != null && excludes.Length > 0)
             {
@@ -79,7 +79,7 @@ namespace SolrExpress.Utility
         /// Get the filter with tag
         /// </summary>
         /// <param name="query">Query value</param>
-        /// <param name="tagName">Tag name</param>
+        /// <param name="aliasName">Alias name</param>
         public static string GetFilterWithTag(string query, string aliasName)
         {
             return !string.IsNullOrWhiteSpace(aliasName) ? $"{{!tag={aliasName}}}{query}" : query;
