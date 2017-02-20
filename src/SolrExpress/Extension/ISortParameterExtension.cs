@@ -14,7 +14,7 @@ namespace SolrExpress.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpressions">Expressions used to find fields names</param>
-        public static ISortParameter<TDocument> FieldExpressions<TDocument>(this ISortParameter<TDocument> parameter, Expression<Func<TDocument, object>>[] fieldExpressions)
+        public static ISortParameter<TDocument> FieldExpressions<TDocument>(this ISortParameter<TDocument> parameter, params Expression<Func<TDocument, object>>[] fieldExpressions)
             where TDocument : IDocument
         {
             parameter.FieldExpressions = fieldExpressions;

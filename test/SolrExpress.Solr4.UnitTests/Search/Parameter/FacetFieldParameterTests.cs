@@ -86,7 +86,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// When    Invoking the method "Validate" using field Indexed=true
         /// What    Valid is true
         /// </summary>
-        [Fact(Skip = "Need review validation logic")]
+        [Fact(Skip = "Needs review in validation logic")]
         public void FacetFieldParameter001()
         {
             //TODO: Need review validation logic
@@ -112,7 +112,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// When    Invoking the method "Validate" using field Indexed=false
         /// What    Valid is true
         /// </summary>
-        [Fact(Skip = "Need review validation logic")]
+        [Fact(Skip = "Needs review in validation logic")]
         public void FacetFieldParameter002()
         {
             //TODO: Need review validation logic
