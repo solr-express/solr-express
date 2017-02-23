@@ -3,17 +3,26 @@ using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-
+    [AllowMultipleInstances]
     public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        string IFacetSpatialParameter<TDocument>.AliasName { get; set; }
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private JProperty _result;
 
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
+        string IFacetSpatialParameter<TDocument>.AliasName { get; set; }
 
         GeoCoordinate IFacetSpatialParameter<TDocument>.CenterPoint { get; set; }
 
@@ -25,16 +34,56 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         SpatialFunctionType IFacetSpatialParameter<TDocument>.FunctionType { get; set; }
 
-        FacetSortType IFacetSpatialParameter<TDocument>.SortType { get; set; }
+        int? IFacetSpatialParameter<TDocument>.Limit { get; set; }
+
+        int? IFacetSpatialParameter<TDocument>.Minimum { get; set; }
+
+        FacetSortType? IFacetSpatialParameter<TDocument>.SortType { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (IFacetSpatialParameter<TDocument>)this;
+
+            var formule = ParameterUtil.GetSpatialFormule(
+                this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression),
+                parameter.FunctionType,
+                parameter.CenterPoint,
+                parameter.Distance);
+
+            var array = new List<JProperty>
+            {
+                new JProperty("q", formule)
+            };
+
+            if (parameter.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
+
+            if (parameter.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+            }
+
+            if (parameter.SortType.HasValue)
+            {
+                string typeName;
+                string sortName;
+
+                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
         }
     }
 }

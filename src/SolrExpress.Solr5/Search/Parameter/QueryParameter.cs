@@ -2,25 +2,25 @@
 using SolrExpress.Search.Query;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
-using System;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     public class QueryParameter<TDocument> : IQueryParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private JProperty _result;
 
         ISearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            container.Add(this._result);
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (IQueryParameter<TDocument>)this;
+            this._result = new JProperty("query", parameter.Value.Execute());
         }
     }
 }

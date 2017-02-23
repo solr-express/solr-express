@@ -1,17 +1,23 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Search;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using System;
 using System.Linq.Expressions;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private JProperty _result;
+
+        public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
 
         GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
 
@@ -23,12 +29,23 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (ISpatialFilterParameter<TDocument>)this;
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+
+            var formule = ParameterUtil.GetSpatialFormule(
+                fieldName,
+                parameter.FunctionType,
+                parameter.CenterPoint,
+                parameter.Distance);
+
+            this._result = new JProperty("fq", formule);
         }
     }
 }

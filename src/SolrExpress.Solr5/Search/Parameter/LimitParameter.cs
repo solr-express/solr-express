@@ -1,25 +1,25 @@
 ﻿using SolrExpress.Search.Parameter;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
-using System;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     public class LimitParameter<TDocument> : ILimitParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private JProperty _result;
 
         long ILimitParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            container.Add(this._result);
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (ILimitParameter<TDocument>)this;
+            this._result = new JProperty("limit", parameter.Value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Result;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Solr5.Search.Result;
 
@@ -12,7 +13,7 @@ namespace SolrExpress.Solr5.Extension
         /// <param name="solrExpressBuilder">Builder to control SolrExpress behavior</param>
         /// <returns>Builder to control SolrExpress behavior</returns>
         public static SolrExpressBuilder<TDocument> UseSolr5<TDocument>(this SolrExpressBuilder<TDocument> solrExpressBuilder)
-            where TDocument: IDocument
+            where TDocument : IDocument
         {
             solrExpressBuilder
                 .ServiceProvider

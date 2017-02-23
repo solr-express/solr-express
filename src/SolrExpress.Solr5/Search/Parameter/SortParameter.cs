@@ -3,13 +3,21 @@ using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using System;
 using System.Linq.Expressions;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private string _result;
+
+        public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
 
         bool ISortParameter<TDocument>.Ascendent { get; set; }
 
@@ -17,12 +25,26 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jValue = (JValue)container["sort"] ?? new JValue((string)null);
+
+            if (jValue.Value != null)
+            {
+                jValue.Value += $", {this._result}";
+            }
+            else
+            {
+                jValue.Value = this._result;
+            }
+
+            container["sort"] = jValue;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (ISortParameter<TDocument>)this;
+
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
         }
     }
 }

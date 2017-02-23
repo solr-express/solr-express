@@ -2,16 +2,26 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        string IFacetRangeParameter<TDocument>.AliasName { get; set; }
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private JProperty _result;
 
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
+
+        string IFacetRangeParameter<TDocument>.AliasName { get; set; }
 
         bool IFacetRangeParameter<TDocument>.CountAfter { get; set; }
 
@@ -25,18 +35,81 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         string IFacetRangeParameter<TDocument>.Gap { get; set; }
 
-        FacetSortType IFacetRangeParameter<TDocument>.SortType { get; set; }
+        int? IFacetRangeParameter<TDocument>.Limit { get; set; }
+
+        int? IFacetRangeParameter<TDocument>.Minimum { get; set; }
+
+        FacetSortType? IFacetRangeParameter<TDocument>.SortType { get; set; }
 
         string IFacetRangeParameter<TDocument>.Start { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (IFacetRangeParameter<TDocument>)this;
+
+            var array = new List<JProperty>
+            {
+                new JProperty("field", this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression))
+            };
+
+            if (parameter.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
+
+            if (parameter.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(parameter.Gap))
+            {
+                array.Add(new JProperty("gap", parameter.Gap));
+            }
+            if (!string.IsNullOrWhiteSpace(parameter.Start))
+            {
+                array.Add(new JProperty("start", parameter.Start));
+            }
+            if (!string.IsNullOrWhiteSpace(parameter.End))
+            {
+                array.Add(new JProperty("end", parameter.End));
+            }
+
+            if (parameter.CountBefore || parameter.CountAfter)
+            {
+                var content = new List<string>();
+                if (parameter.CountBefore)
+                {
+                    content.Add("before");
+                }
+
+                if (parameter.CountAfter)
+                {
+                    content.Add("after");
+                }
+
+                array.Add(new JProperty("other", new JArray(content.ToArray())));
+            }
+
+            if (parameter.SortType.HasValue)
+            {
+                string typeName;
+                string sortName;
+
+                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
         }
     }
 }

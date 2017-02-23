@@ -12,7 +12,7 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Expression used to find field name
         /// </summary>
-        Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
+        Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
         /// True to ascendent order, otherwise false

@@ -16,7 +16,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            this._result = $"sort=random";
+            this._result = "sort=random";
         }
     }
 }

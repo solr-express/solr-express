@@ -18,25 +18,35 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this._expressionBuilder = expressionBuilder;
         }
-        
+
         bool ISortParameter<TDocument>.Ascendent { get; set; }
 
-        Expression<Func<TDocument, object>>[] ISortParameter<TDocument>.FieldExpressions { get; set; }
+        Expression<Func<TDocument, object>> ISortParameter<TDocument>.FieldExpression { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {
-            container.Add(this._result);
+            var value = container.FirstOrDefault(q => q.StartsWith("sort="));
+
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                container.Remove(value);
+
+                value += $", {this._result}";
+            }
+            else
+            {
+                value = this._result;
+            }
+
+            container.Add(value);
         }
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IFieldsParameter<TDocument>)this);
-            var fieldNames = parameter
-                .FieldExpressions
-                .Select(fieldExpression => this._expressionBuilder.GetFieldNameFromExpression(fieldExpression))
-                .ToArray();
+            var parameter = (ISortParameter<TDocument>)this;
 
-            this._result = $"sort={string.Join(",", fieldNames)}";
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
         }
     }
 }

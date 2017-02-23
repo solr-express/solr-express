@@ -1,14 +1,14 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class AnyParameter<TDocument> : IAnyParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private JProperty _result;
 
         string IAnyParameter<TDocument>.Name { get; set; }
 
@@ -16,12 +16,15 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (IAnyParameter<TDocument>)this;
+            this._result = new JProperty(parameter.Name, parameter.Value);
         }
     }
 }

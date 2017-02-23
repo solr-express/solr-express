@@ -4,8 +4,8 @@ using System.Collections;
 namespace SolrExpress.Utility
 {
     // <summary>
-    /// Helper class used to process validations and throws exceptions
-    /// </summary>
+    // Helper class used to process validations and throws exceptions
+    // </summary>
     internal static class Checker
     {
         /// <summary>

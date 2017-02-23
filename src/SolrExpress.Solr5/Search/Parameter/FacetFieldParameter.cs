@@ -1,34 +1,82 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        bool ISearchParameter.AllowMultipleInstances { get; set; }
+        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
+        private JProperty _result;
+
+        public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            this._expressionBuilder = expressionBuilder;
+        }
 
         string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
 
         Expression<Func<TDocument, object>> IFacetFieldParameter<TDocument>.FieldExpression { get; set; }
 
-        int IFacetFieldParameter<TDocument>.Limit { get; set; }
+        int? IFacetFieldParameter<TDocument>.Limit { get; set; }
 
-        int IFacetFieldParameter<TDocument>.Minimum { get; set; }
+        int? IFacetFieldParameter<TDocument>.Minimum { get; set; }
 
-        FacetSortType IFacetFieldParameter<TDocument>.SortType { get; set; }
+        FacetSortType? IFacetFieldParameter<TDocument>.SortType { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
-            throw new NotImplementedException();
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
         }
 
         void ISearchItemExecution<JObject>.Execute()
         {
-            throw new NotImplementedException();
+            var parameter = (IFacetFieldParameter<TDocument>)this;
+
+            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(parameter.FieldExpression);
+
+            var array = new List<JProperty>
+            {
+                new JProperty("field", fieldName)
+            };
+
+            if (parameter.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+            }
+
+            if (parameter.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
+
+            if (parameter.SortType.HasValue)
+            {
+                string typeName;
+                string sortName;
+
+                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+
+                array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            if (parameter.Limit.HasValue)
+            {
+                array.Add(new JProperty("limit", parameter.Limit));
+            }
+
+            this._result = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
     }
 }
