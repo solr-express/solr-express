@@ -5,7 +5,10 @@ using System.IO;
 using System.Net;
 using System.Text;
 #if NETCORE
-using System.Threading.Tasks;
+using Flurl;
+using Flurl.Http;
+using System.Net.Http;
+using Newtonsoft.Json;
 #endif
 
 namespace SolrExpress.Solr5
@@ -15,51 +18,70 @@ namespace SolrExpress.Solr5
     /// </summary>
     public class SolrConnection : ISolrConnection
     {
+#if NETCORE
+        /// <summary>
+        /// Set authentication configurations
+        /// </summary>
+        /// <param name="options">Options to security connection</param>
+        /// <param name="url">Uri to configure</param>
+        private void SetAuthentication(SecurityOptions options, Url url)
+        {
+            switch (options.AuthenticationType)
+            {
+                case AuthenticationType.Basic:
+                    url.WithBasicAuth(options.UserName, options.Password);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Execute the informated uri and return the result of the request
+        /// </summary>
+        /// <param name="options">Options to security connection</param>
+        /// <param name="handler">Handler name used in solr request</param>
+        /// <param name="data">Data to execute</param>
+        /// <returns>Result of the request</returns>
+        public string Get(SecurityOptions options, string handler, string data)
+        {
+            var url = this.HostAddress
+              .AppendPathSegment(handler);
+
+            this.SetAuthentication(options, url);
+
+            return url
+                .SendJsonAsync(HttpMethod.Get, JsonConvert.DeserializeObject(data))
+                .Result
+                .Content
+                .ReadAsStringAsync()
+                .Result;
+        }
+
+        /// <summary>
+        /// Execute the informated uri and return the result of the request
+        /// </summary>
+        /// <param name="options">Options to security connection</param>
+        /// <param name="handler">Handler name used in solr request</param>
+        /// <param name="data">Data to execute</param>
+        /// <returns>Result of the request</returns>
+        public string Post(SecurityOptions options, string handler, string data)
+        {
+            var url = this.HostAddress
+                .AppendPathSegment(handler);
+
+            this.SetAuthentication(options, url);
+
+            return url
+                .PostJsonAsync(data)
+                .ReceiveString()
+                .Result;
+        }
+#else
         /// <summary>
         /// Execute the informated WebRequest and return the result of the request
         /// </summary>
         /// <param name="request">Configured request used in comunication with SOLR</param>
         /// <param name="rawData">Raw data send in request (used in log)</param>
         /// <returns>Result of the request</returns>
-#if NETCORE
-        private async Task<string> ExecuteAsync(WebRequest request, string rawData)
-        {
-            try
-            {
-                var response = await request.GetResponseAsync();
-
-                using (var dataStream = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(dataStream))
-                    {
-                        var content = reader.ReadToEnd();
-
-                        Checker.IsTrue<UnexpectedSolrRequestException>(((HttpWebResponse)response).StatusCode != HttpStatusCode.OK, $"{request.RequestUri}\r\n{rawData}", content);
-
-                        return content;
-                    }
-                }
-            }
-            catch (WebException webException)
-            {
-                var response = webException.Response;
-
-                using (var dataStream = response.GetResponseStream())
-                {
-                    using (var reader = new StreamReader(dataStream))
-                    {
-                        var content = $"{webException.Message}\r\n{reader.ReadToEnd()}";
-
-                        throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", content);
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                throw new UnexpectedSolrRequestException($"{request.RequestUri}\r\n{rawData}", exception.ToString());
-            }
-        }
-#else
         private string Execute(WebRequest request, string rawData)
         {
             try
@@ -93,7 +115,6 @@ namespace SolrExpress.Solr5
                 }
             }
         }
-#endif
 
         /// <summary>
         /// Prepare request
@@ -120,20 +141,10 @@ namespace SolrExpress.Solr5
 
             request.Method = requestMethod;
             request.ContentType = "application/json";
-#if NET451
             request.ContentLength = bytes.Length;
-#endif
-
-#if NETCORE
-            var taskStream = request.GetRequestStreamAsync();
-            taskStream.Wait();
-            var stream = taskStream.Result;
-            stream.Write(bytes, 0, bytes.Length);
-#else
             var stream = request.GetRequestStream();
             stream.Write(bytes, 0, bytes.Length);
             stream.Close();
-#endif
 
             return request;
         }
@@ -149,14 +160,7 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare(options, "GET-X", handler, data);
 
-#if NETCORE
-            var task = this.ExecuteAsync(request, data);
-            task.Wait();
-
-            return task.Result;
-#else
             return this.Execute(request, data);
-#endif
         }
 
         /// <summary>
@@ -170,15 +174,9 @@ namespace SolrExpress.Solr5
         {
             var request = this.Prepare(options, "POST", handler, data);
 
-#if NETCORE
-            var task = this.ExecuteAsync(request, data);
-            task.Wait();
-
-            return task.Result;
-#else
             return this.Execute(request, data);
-#endif
         }
+#endif
 
         /// <summary>
         /// Solr host address

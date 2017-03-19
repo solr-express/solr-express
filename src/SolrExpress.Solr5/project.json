@@ -26,6 +26,7 @@
   "frameworks": {
     "netstandard1.6": {
       "dependencies": {
+        "Flurl.Http.Signed": "1.1.1",
         "NETStandard.Library": "1.6.0",
         "System.Net.Requests": "4.3.0"
       },
@@ -47,5 +48,5 @@
     "tags": [ "SOLR", "C#", ".Net Framework", ".Net Core" ],
     "requireLicenseAcceptance": false
   },
-  "version": "4.2.1"
+  "version": "4.2.2"
 }

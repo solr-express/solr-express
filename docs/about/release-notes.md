@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.2.2] - 2017-03-19
+
+### Bug fix
+- Error 501 when use SolrCloud  (#199, #203)
+
+---
+
 ## [4.2.1] - 2017-01-31
 
 ### Bug fix
