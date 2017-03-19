@@ -64,12 +64,19 @@ namespace SolrExpress
 
             this.SetAuthentication(url);
 
+#if NETCORE
             return url
-                .SendJsonAsync(HttpMethod.Get, data)
+                .SendJsonAsync(HttpMethod.Get, JsonConvert.DeserializeObject(data))
                 .Result
                 .Content
                 .ReadAsStringAsync()
                 .Result;
+#else
+            return url
+                .SetQueryParam("json", data)
+                .GetStringAsync()
+                .Result;
+#endif
         }
 
         /// <summary>
