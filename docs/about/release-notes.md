@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.2.4] - 2017-03-19
+
+### Enhancement
+- Implements #203 in .Net 4.5 framework (#204)
+
+---
+
 ## [4.2.3] - 2017-03-19
 
 ### Enhancement

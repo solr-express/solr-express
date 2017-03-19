@@ -34,7 +34,7 @@ namespace Sample.WebApi.Net46
                     CheckAnyParameter = true,
                     FailFast = true
                 })
-                .UseHostAddress("http://localhost:8983/solr/techproducts")
+                .UseHostAddress("http://localhost:8983/solr/gettingstarted")
                 .UseSolr5()
                 .Create();
 

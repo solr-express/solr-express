@@ -48,12 +48,19 @@ namespace SolrExpress.Solr5
 
             this.SetAuthentication(options, url);
 
+#if NETCORE
             return url
                 .SendJsonAsync(HttpMethod.Get, JsonConvert.DeserializeObject(data))
                 .Result
                 .Content
                 .ReadAsStringAsync()
                 .Result;
+#else
+            return url
+                .SetQueryParam("json", data)
+                .GetStringAsync()
+                .Result;
+#endif
         }
 
         /// <summary>
@@ -178,9 +185,9 @@ namespace SolrExpress.Solr5
         }
 #endif
 
-        /// <summary>
-        /// Solr host address
-        /// </summary>
+            /// <summary>
+            /// Solr host address
+            /// </summary>
         public string HostAddress { get; set; }
     }
 }
