@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
-#if NETCORE
+#if NETCORE || NET45
 using Flurl;
 using Flurl.Http;
 using System.Net.Http;
@@ -18,7 +18,7 @@ namespace SolrExpress.Solr5
     /// </summary>
     public class SolrConnection : ISolrConnection
     {
-#if NETCORE
+#if NETCORE || NET45
         /// <summary>
         /// Set authentication configurations
         /// </summary>
