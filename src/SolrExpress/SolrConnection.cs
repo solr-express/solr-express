@@ -1,5 +1,6 @@
 ﻿using Flurl;
 using Flurl.Http;
+using Newtonsoft.Json;
 using SolrExpress.Utility;
 using System.Net.Http;
 
