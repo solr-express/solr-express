@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System.Collections.Generic;

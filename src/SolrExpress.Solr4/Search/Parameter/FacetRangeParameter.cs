@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FacetRangeTypeAttribute]
+    [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -29,8 +32,8 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
-        Expression<Func<TDocument, object>> IFacetRangeParameter<TDocument>.FieldExpression { get; set; }
-
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
+        
         string IFacetRangeParameter<TDocument>.Gap { get; set; }
 
         int? IFacetRangeParameter<TDocument>.Limit { get; set; }

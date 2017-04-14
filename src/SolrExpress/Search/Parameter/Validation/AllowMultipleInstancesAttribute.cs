@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Search.Parameter
+namespace SolrExpress.Search.Parameter.Validation
 {
     /// <summary>
     /// Indicates possibility to use multiple instance of parameter

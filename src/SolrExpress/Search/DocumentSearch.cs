@@ -1,8 +1,11 @@
 ﻿using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace SolrExpress.Search
 {
@@ -37,41 +40,37 @@ namespace SolrExpress.Search
         /// <param name="item">Search item to validate</param>
         private void ValidateSearchItem(ISearchItem item)
         {
-            // TODO: Review validation logic
+            var searchParameter = item as ISearchParameter;
 
-            //if (!this._solrExpressOptions.FailFast)
-            //{
-            //    return;
-            //}
+            if (!this._solrExpressOptions.FailFast || searchParameter == null)
+            {
+                return;
+            }
 
-            //var searchParameter = (ISearchParameter)item;
-            //if (searchParameter != null)
-            //{
-            //    var multipleInstances = !searchParameter.AllowMultipleInstances &&
-            //        this._searchItemCollection.Contains(searchParameter.GetType());
+            var attributes = searchParameter
+                .GetType()
+#if NETCORE
+                .GetTypeInfo()
+#endif
+                .GetCustomAttributes()
+                .Where(q => q is IValidationAttribute)
+                .ToList();
 
-            //    //TODO: Create exception
-            //    //Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter.GetType().FullName);
-            //}
+            var multipleInstances =
+                !attributes.Any(q => q is AllowMultipleInstancesAttribute) &&
+                this._searchItemCollection.Contains(searchParameter.GetType());
 
-            //var searchItemValidation = item as ISearchItemValidation;
-            //var mustValidate = searchItemValidation != null;
+            //TODO: Create exception
+            //Checker.IsTrue<AllowMultipleInstanceOfParameterTypeException>(multipleInstances, parameter.GetType().FullName);
 
-            //if (item is IAnyParameter<TDocument>)
-            //{
-            //    mustValidate = mustValidate && this._solrExpressOptions.CheckAnyParameter;
-            //}
+            foreach (var attribute in attributes)
+            {
+                string errorMessage;
+                var isValid = ((IValidationAttribute)attribute).IsValid(searchParameter, out errorMessage);
 
-            //if (mustValidate)
-            //{
-            //    bool isValid;
-            //    string errorMessage;
-
-            //    searchItemValidation.Validate(out isValid, out errorMessage);
-
-            //    //TODO: Create exception
-            //    //Checker.IsTrue<InvalidParameterTypeException>(!isValid, searchItemValidation.GetType().FullName, errorMessage);
-            //}
+                //TODO: Create exception
+                //Checker.IsTrue<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
+            }
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
     public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -28,7 +30,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         string[] IFacetSpatialParameter<TDocument>.Excludes { get; set; }
 
-        Expression<Func<TDocument, object>> IFacetSpatialParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         SpatialFunctionType IFacetSpatialParameter<TDocument>.FunctionType { get; set; }
 

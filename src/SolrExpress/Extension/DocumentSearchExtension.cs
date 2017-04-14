@@ -23,7 +23,7 @@ namespace SolrExpress.Extension
             Checker.IsNullOrWhiteSpace(name);
             Checker.IsNullOrWhiteSpace(value);
 
-            var parameter = documentSearch.ServiceProvider.GetService<IAnyParameter<TDocument>>();
+            var parameter = documentSearch.ServiceProvider.GetService<IAnyParameter>();
             parameter.Name(name);
             parameter.Value(value);
 

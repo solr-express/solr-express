@@ -1,15 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
-using Newtonsoft.Json.Linq;
-using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
     public class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -23,7 +25,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
 
-        Expression<Func<TDocument, object>> IFacetFieldParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         int? IFacetFieldParameter<TDocument>.Limit { get; set; }
 

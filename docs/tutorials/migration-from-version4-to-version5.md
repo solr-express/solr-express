@@ -61,3 +61,4 @@ DRAFT
 - No more support to IResultInterceptor (because now I use JsonReader instead Json string)
 - Merge IFacetFieldResult, IFacetQueryResult and IFacetRangeResult into IFacetsResult
 - Move RequestHandler to Search.Parameter
+- Drop InvalidParameterTypeException

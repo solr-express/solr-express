@@ -1,15 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FacetRangeTypeAttribute]
+    [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -31,7 +34,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
-        Expression<Func<TDocument, object>> IFacetRangeParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         string IFacetRangeParameter<TDocument>.Gap { get; set; }
 

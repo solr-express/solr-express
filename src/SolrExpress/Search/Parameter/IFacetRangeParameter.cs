@@ -6,19 +6,14 @@ namespace SolrExpress.Search.Parameter
     /// <summary>
     /// Signatures to use in facet range parameter
     /// </summary>
-    public interface IFacetRangeParameter<TDocument> : ISearchParameter
+    public interface IFacetRangeParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
         /// Name of alias added in query
         /// </summary>
         string AliasName { get; set; }
-
-        /// <summary>
-        /// Expression used to find field name
-        /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
-
+        
         /// <summary>
         /// Size of each range bucket to make facet
         /// </summary>

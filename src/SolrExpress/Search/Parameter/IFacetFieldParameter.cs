@@ -1,19 +1,11 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use facet field parameter
     /// </summary>
-    public interface IFacetFieldParameter<TDocument> : ISearchParameter
+    public interface IFacetFieldParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Expression used to find field name
-        /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
-
         /// <summary>
         /// Sort type of result of facet
         /// </summary>

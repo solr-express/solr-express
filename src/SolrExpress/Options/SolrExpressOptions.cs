@@ -15,7 +15,7 @@ namespace SolrExpress
         public bool FailFast { get; set; } = true;
 
         /// <summary>
-        /// If true, check for possibles misstakes in use of IANyParameter
+        /// If true, check for possibles mistakes in use of IANyParameter
         /// </summary>
         public bool CheckAnyParameter { get; set; } = true;
 

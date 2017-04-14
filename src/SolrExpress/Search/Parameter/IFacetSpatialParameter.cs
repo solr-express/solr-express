@@ -1,13 +1,11 @@
 ﻿using SolrExpress.Core.Search.Parameter;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in facet spatial parameter
     /// </summary>
-    public interface IFacetSpatialParameter<TDocument> : ISearchParameter
+    public interface IFacetSpatialParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -19,11 +17,6 @@ namespace SolrExpress.Search.Parameter
         /// Function used in spatial filter
         /// </summary>
         SpatialFunctionType FunctionType { get; set; }
-
-        /// <summary>
-        /// Expression used to find field name
-        /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         /// <summary>
         /// Center point to spatial filter

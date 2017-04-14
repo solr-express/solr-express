@@ -1,13 +1,15 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
-using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
     public class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -21,7 +23,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         bool ISortParameter<TDocument>.Ascendent { get; set; }
 
-        Expression<Func<TDocument, object>> ISortParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {

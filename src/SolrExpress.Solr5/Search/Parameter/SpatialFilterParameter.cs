@@ -2,12 +2,14 @@
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
-using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [FieldMustBeIndexedTrue]
     public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -23,7 +25,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         decimal ISpatialFilterParameter<TDocument>.Distance { get; set; }
 
-        Expression<Func<TDocument, object>> ISpatialFilterParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         SpatialFunctionType ISpatialFilterParameter<TDocument>.FunctionType { get; set; }
 

@@ -1,20 +1,13 @@
 ﻿using SolrExpress.Core.Search.Parameter;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in spatial filter parameter
     /// </summary>
-    public interface ISpatialFilterParameter<TDocument> : ISearchParameter
+    public interface ISpatialFilterParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Expression used to find field name
-        /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
-
         /// <summary>
         /// Function used in spatial filter
         /// </summary>

@@ -1,12 +1,14 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
-using Newtonsoft.Json.Linq;
-using SolrExpress.Search;
-using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [FieldMustBeStoredTrue]
     public class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -18,7 +20,7 @@ namespace SolrExpress.Solr5.Search.Parameter
             this._expressionBuilder = expressionBuilder;
         }
 
-        Expression<Func<TDocument, object>>[] IFieldsParameter<TDocument>.FieldExpressions { get; set; }
+        Expression<Func<TDocument, object>>[] ISearchParameterFieldExpressions<TDocument>.FieldExpressions { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {

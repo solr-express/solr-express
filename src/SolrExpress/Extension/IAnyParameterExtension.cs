@@ -12,8 +12,7 @@ namespace SolrExpress.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="name">Name of parameter</param>
-        public static IAnyParameter<TDocument> Name<TDocument>(this IAnyParameter<TDocument> parameter, string name)
-            where TDocument : IDocument
+        public static IAnyParameter Name(this IAnyParameter parameter, string name)
         {
             parameter.Name = name;
 
@@ -25,8 +24,7 @@ namespace SolrExpress.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="value">Value of parameter</param>
-        public static IAnyParameter<TDocument> Value<TDocument>(this IAnyParameter<TDocument> parameter, string value)
-            where TDocument : IDocument
+        public static IAnyParameter Value(this IAnyParameter parameter, string value)
         {
             parameter.Value = value;
 

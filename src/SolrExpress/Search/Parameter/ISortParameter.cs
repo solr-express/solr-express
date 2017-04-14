@@ -1,19 +1,11 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in sort parameter
     /// </summary>
-    public interface ISortParameter<TDocument> : ISearchParameter
+    public interface ISortParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
         where TDocument : IDocument
     {
-        /// <summary>
-        /// Expression used to find field name
-        /// </summary>
-        Expression<Func<TDocument, object>> FieldExpression { get; set; }
-
         /// <summary>
         /// True to ascendent order, otherwise false
         /// </summary>

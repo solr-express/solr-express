@@ -9,10 +9,10 @@ namespace SolrExpress.Extension
         /// </summary>
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Not mapped parameter</returns>
-        public static IAnyParameter<TDocument> Any<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
+        public static IAnyParameter Any<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
             where TDocument : IDocument
         {
-            return serviceProvider.GetService<IAnyParameter<TDocument>>();
+            return serviceProvider.GetService<IAnyParameter>();
         }
 
         /// <summary>

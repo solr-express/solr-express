@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Extension
         {
             solrExpressBuilder
                 .ServiceProvider
-                .AddTransient<IAnyParameter<TDocument>, AnyParameter<TDocument>>()
+                .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()
                 .AddTransient<IFacetLimitParameter<TDocument>, FacetLimitParameter<TDocument>>()

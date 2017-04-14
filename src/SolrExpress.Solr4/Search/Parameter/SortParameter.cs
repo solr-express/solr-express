@@ -1,5 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
     public class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
@@ -21,7 +24,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         bool ISortParameter<TDocument>.Ascendent { get; set; }
 
-        Expression<Func<TDocument, object>> ISortParameter<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {
