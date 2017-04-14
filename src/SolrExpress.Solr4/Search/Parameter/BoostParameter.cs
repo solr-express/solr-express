@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         BoostFunctionType IBoostParameter<TDocument>.BoostFunctionType { get; set; }
 
-        ISearchQuery<TDocument> IBoostParameter<TDocument>.Query { get; set; }
+        ISearchQuery IBoostParameter<TDocument>.Query { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {

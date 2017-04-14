@@ -13,7 +13,7 @@ namespace SolrExpress.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="value">Parameter to include in query</param>
-        public static IQueryParameter<TDocument> Value<TDocument>(this IQueryParameter<TDocument> parameter, ISearchQuery<TDocument> value)
+        public static IQueryParameter<TDocument> Value<TDocument>(this IQueryParameter<TDocument> parameter, ISearchQuery value)
             where TDocument : IDocument
         {
             parameter.Value = value;

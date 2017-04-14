@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
         
-        ISearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
+        ISearchQuery IFilterParameter<TDocument>.Query { get; set; }
 
         string IFilterParameter<TDocument>.TagName { get; set; }
 

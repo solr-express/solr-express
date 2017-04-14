@@ -1,9 +1,9 @@
-﻿using SolrExpress.Solr4.Search.Parameter;
-using System.Collections.Generic;
-using SolrExpress.Extension;
+﻿using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
+using System.Collections.Generic;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -22,7 +22,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>();
             var parameter = (ISortParameter<TestDocument>)new SortParameter<TestDocument>(expressionBuilder);
-            parameter.FieldExpressions(q => q.Id);
+            parameter.FieldExpression(q => q.Id);
 
             // Act
             ((ISearchItemExecution<List<string>>)parameter).Execute();

@@ -11,7 +11,7 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Query used to make boost
         /// </summary>
-        ISearchQuery<TDocument> Query { get; set; }
+        ISearchQuery Query { get; set; }
 
         /// <summary>
         /// Oost type used in calculation

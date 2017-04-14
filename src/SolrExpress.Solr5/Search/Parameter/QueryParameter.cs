@@ -10,7 +10,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        ISearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
+        ISearchQuery IQueryParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {

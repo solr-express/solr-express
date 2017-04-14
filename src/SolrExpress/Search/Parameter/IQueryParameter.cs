@@ -11,6 +11,6 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Parameter to include in query
         /// </summary>
-        ISearchQuery<TDocument> Value { get; set; }
+        ISearchQuery Value { get; set; }
     }
 }

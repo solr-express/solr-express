@@ -3,8 +3,7 @@
     /// <summary>
     /// Signature to use in solr queries
     /// </summary>
-    public interface ISearchQuery<TDocument>
-        where TDocument : IDocument
+    public interface ISearchQuery
     {
         /// <summary>
         /// Execute parameter value generator

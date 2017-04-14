@@ -14,7 +14,7 @@ namespace SolrExpress.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Query used to make boost</param>
-        public static IBoostParameter<TDocument> Query<TDocument>(this IBoostParameter<TDocument> parameter, ISearchQuery<TDocument> query)
+        public static IBoostParameter<TDocument> Query<TDocument>(this IBoostParameter<TDocument> parameter, ISearchQuery query)
             where TDocument : IDocument
         {
             parameter.Query = query;
