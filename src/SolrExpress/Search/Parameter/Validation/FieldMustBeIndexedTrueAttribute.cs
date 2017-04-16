@@ -24,7 +24,7 @@ namespace SolrExpress.Search.Parameter.Validation
 
             foreach (var fieldExpression in fieldExpressions)
             {
-                if (!expressionBuilder.IsIndexed(fieldExpression))
+                if (!expressionBuilder.GetData(fieldExpression).IsIndexed)
                 {
                     errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInThisFunctionException;
                     return false;

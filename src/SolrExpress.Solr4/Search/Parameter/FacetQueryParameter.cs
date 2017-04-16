@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;

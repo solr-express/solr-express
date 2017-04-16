@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
@@ -46,7 +46,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var parameter = (ISortParameter<TDocument>)this;
 
-            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName;
             this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
         }
     }

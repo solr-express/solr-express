@@ -30,6 +30,16 @@ namespace SolrExpress
         public SecurityOptions Security { get; set; } = new SecurityOptions();
 
         /// <summary>
+        /// Global prefix name in dynamic field configurations
+        /// </summary>
+        public string GlobalDynamicFieldPrefixName { get; internal set; }
+
+        /// <summary>
+        /// Global suffix name in dynamic field configurations
+        /// </summary>
+        public string GlobalDynamicFieldSuffixName { get; internal set; }
+
+        /// <summary>
         /// Global query interceptor used in all queryable intance
         /// </summary>
         public List<ISearchInterceptor> GlobalQueryInterceptors { get; private set; } = new List<ISearchInterceptor>();

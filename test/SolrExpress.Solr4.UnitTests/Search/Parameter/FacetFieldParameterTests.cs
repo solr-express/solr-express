@@ -1,9 +1,9 @@
-﻿using SolrExpress.Extension;
+﻿using SolrExpress.Builder;
+using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr4.Search.Parameter;
-using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;

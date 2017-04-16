@@ -14,7 +14,7 @@ namespace SolrExpress.Search.Parameter.Validation
 
             var facetRangeParameter = (IFacetRangeParameter<TDocument>)searchParameter;
 
-            var propertyType = facetRangeParameter.ExpressionBuilder.GetPropertyType(facetRangeParameter.FieldExpression);
+            var propertyType = facetRangeParameter.ExpressionBuilder.GetData(facetRangeParameter.FieldExpression).PropertyType;
 
             switch (propertyType.ToString())
             {

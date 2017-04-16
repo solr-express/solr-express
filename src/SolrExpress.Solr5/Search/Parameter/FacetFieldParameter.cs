@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
@@ -45,12 +46,11 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var parameter = (IFacetFieldParameter<TDocument>)this;
 
-            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            var aliasName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetPropertyName(parameter.FieldExpression);
+            var data = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
 
             var array = new List<JProperty>
             {
-                new JProperty("field", fieldName)
+                new JProperty("field", data.FieldName)
             };
 
             if (parameter.Minimum.HasValue)
@@ -79,7 +79,7 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add(new JProperty("limit", parameter.Limit));
             }
 
-            this._result = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            this._result = new JProperty(data.AliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
     }
 }

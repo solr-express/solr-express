@@ -24,7 +24,7 @@ namespace SolrExpress.Search.Parameter.Validation
 
             foreach (var fieldExpression in fieldExpressions)
             {
-                if (!expressionBuilder.IsStored(fieldExpression))
+                if (!expressionBuilder.GetData(fieldExpression).IsStored)
                 {
                     errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInThisFunctionException;
                     return false;

@@ -17,8 +17,23 @@ namespace SolrExpress
         }
 
         /// <summary>
-        /// Name of the field in the SOLR Schema
+        /// Name of field in the SOLR schema
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// If true, field in SOLR schema is configured like dynamic field
+        /// </summary>
+        public bool IsDynamicField { get; set; }
+
+        /// <summary>
+        /// Indicates prefix name in dynamic field configurations
+        /// </summary>
+        public string DynamicFieldPrefixName { get; set; }
+
+        /// <summary>
+        /// Indicates suffix name in dynamic field configurations
+        /// </summary>
+        public string DynamicFieldSuffixName { get; set; }
     }
 }

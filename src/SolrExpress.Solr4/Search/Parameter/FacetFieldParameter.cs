@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Utility;
@@ -48,9 +49,8 @@ namespace SolrExpress.Solr4.Search.Parameter
 
             Checker.IsNull(parameter.FieldExpression);
 
-            var aliasName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetPropertyName(parameter.FieldExpression);
-            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            var facetField = ParameterUtil.GetFacetName(parameter.Excludes, aliasName, fieldName);
+            var data = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
+            var facetField = ParameterUtil.GetFacetName(parameter.Excludes, data.AliasName, data.FieldName);
 
             this._result.Add($"facet.field={facetField}");
 
@@ -63,17 +63,17 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
 
-                this._result.Add($"f.{fieldName}.facet.sort={typeName}");
+                this._result.Add($"f.{data.FieldName}.facet.sort={typeName}");
             }
 
             if (parameter.Minimum.HasValue)
             {
-                this._result.Add($"f.{fieldName}.facet.mincount={parameter.Minimum.Value}");
+                this._result.Add($"f.{data.FieldName}.facet.mincount={parameter.Minimum.Value}");
             }
 
             if (parameter.Limit.HasValue)
             {
-                this._result.Add($"f.{fieldName}.facet.limit={parameter.Limit.Value}");
+                this._result.Add($"f.{data.FieldName}.facet.limit={parameter.Limit.Value}");
             }
         }
     }

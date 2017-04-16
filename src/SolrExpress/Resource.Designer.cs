@@ -69,6 +69,15 @@ namespace SolrExpress {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Expression must be a property reference.
+        /// </summary>
+        public static string ExpressionMustBePropertyException {
+            get {
+                return ResourceManager.GetString("ExpressionMustBePropertyException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to A field must be &quot;indexed=true&quot; to be used in this function.
         /// </summary>
         public static string FieldMustBeIndexedTrueToBeUsedInThisFunctionException {
@@ -120,6 +129,15 @@ namespace SolrExpress {
         public static string SearchParameterIsInvalidException {
             get {
                 return ResourceManager.GetString("SearchParameterIsInvalidException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to Unknown to resolve the expression.
+        /// </summary>
+        public static string UnknownToResolveExpressionException {
+            get {
+                return ResourceManager.GetString("UnknownToResolveExpressionException", resourceCulture);
             }
         }
         

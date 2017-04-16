@@ -21,6 +21,8 @@
         {
             this.Options.CheckAnyParameter = options.CheckAnyParameter;
             this.Options.FailFast = options.FailFast;
+            this.Options.GlobalDynamicFieldPrefixName = options.GlobalDynamicFieldPrefixName;
+            this.Options.GlobalDynamicFieldSuffixName = options.GlobalDynamicFieldSuffixName;
             this.Options.Security.AuthenticationType = options.Security.AuthenticationType;
             this.Options.Security.Password = options.Security.Password;
             this.Options.Security.UserName = options.Security.UserName;

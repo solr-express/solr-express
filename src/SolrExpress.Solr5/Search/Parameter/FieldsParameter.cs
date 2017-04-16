@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
@@ -35,7 +35,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             foreach (var expression in parameter.FieldExpressions)
             {
-                var value = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(expression);
+                var value = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(expression).FieldName;
 
                 jArray.Add(value);
             }

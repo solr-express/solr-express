@@ -120,6 +120,9 @@
   <data name="AllowMultipleInstancesException" xml:space="preserve">
     <value>Parâmetro "{0}" não pode ser adicionado por já existir uma outra instância com o mesmo tipo</value>
   </data>
+  <data name="ExpressionMustBePropertyException" xml:space="preserve">
+    <value>Expressão deve referenciar uma propriedade</value>
+  </data>
   <data name="FieldMustBeIndexedTrueToBeUsedInThisFunctionException" xml:space="preserve">
     <value>O campo deve ser "indexed=true" para ser usado nessa função</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="SearchParameterIsInvalidException" xml:space="preserve">
     <value>Parâmetro "{0}" é inválido
 Mensagem de erro: {1}</value>
+  </data>
+  <data name="UnknownToResolveExpressionException" xml:space="preserve">
+    <value>Unknown to resolve the expression</value>
   </data>
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Ordenação do tipo descendente é um aspecto não suportado no Solr 4</value>

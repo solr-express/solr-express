@@ -1,7 +1,7 @@
-﻿using SolrExpress.Search;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +34,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             var parameter = ((IFieldsParameter<TDocument>)this);
             var fieldNames = parameter
                 .FieldExpressions
-                .Select(fieldExpression => ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
+                .Select(fieldExpression => ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(fieldExpression).FieldName)
                 .ToArray();
 
             this._result = $"fl={string.Join(",", fieldNames)}";

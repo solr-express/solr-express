@@ -120,6 +120,9 @@
   <data name="AllowMultipleInstancesException" xml:space="preserve">
     <value>Parameter "{0}" is not allowed because another instance of the same type was added</value>
   </data>
+  <data name="ExpressionMustBePropertyException" xml:space="preserve">
+    <value>Expression must be a property reference</value>
+  </data>
   <data name="FieldMustBeIndexedTrueToBeUsedInThisFunctionException" xml:space="preserve">
     <value>A field must be "indexed=true" to be used in this function</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="SearchParameterIsInvalidException" xml:space="preserve">
     <value>Parameter "{0}" is invalid
 Error message: {1}</value>
+  </data>
+  <data name="UnknownToResolveExpressionException" xml:space="preserve">
+    <value>Unknown to resolve the expression</value>
   </data>
   <data name="UnsupportedSortTypeException" xml:space="preserve">
     <value>Descending sort type is an unsupported feature in Solr 4</value>

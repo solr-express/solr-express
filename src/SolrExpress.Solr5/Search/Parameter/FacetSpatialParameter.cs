@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
@@ -55,7 +56,7 @@ namespace SolrExpress.Solr5.Search.Parameter
             var parameter = (IFacetSpatialParameter<TDocument>)this;
 
             var formule = ParameterUtil.GetSpatialFormule(
-                ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression),
+                ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName,
                 parameter.FunctionType,
                 parameter.CenterPoint,
                 parameter.Distance);

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
@@ -60,7 +61,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression))
+                new JProperty("field", ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName)
             };
 
             if (parameter.Excludes?.Any() ?? false)
