@@ -13,17 +13,18 @@ namespace SolrExpress.Solr5.Search.Parameter
     public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private JProperty _result;
 
         public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
 
         decimal ISpatialFilterParameter<TDocument>.Distance { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
@@ -39,7 +40,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         void ISearchItemExecution<JObject>.Execute()
         {
             var parameter = (ISpatialFilterParameter<TDocument>)this;
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
 
             var formule = ParameterUtil.GetSpatialFormule(
                 fieldName,

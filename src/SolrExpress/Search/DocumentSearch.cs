@@ -66,7 +66,7 @@ namespace SolrExpress.Search
             foreach (var attribute in attributes)
             {
                 string errorMessage;
-                var isValid = ((IValidationAttribute)attribute).IsValid(searchParameter, out errorMessage);
+                var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out errorMessage);
 
                 //TODO: Create exception
                 //Checker.IsTrue<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);

@@ -9,17 +9,16 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
-    [FacetRangeTypeAttribute]
+    [FacetRangeType]
     [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private readonly List<string> _result = new List<string>();
 
         public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -31,6 +30,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         string IFacetRangeParameter<TDocument>.End { get; set; }
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
         
@@ -57,7 +58,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         void ISearchItemExecution<List<string>>.Execute()
         {
             var parameter = (IFacetRangeParameter<TDocument>)this;
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
             var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, fieldName);
 
             this._result.Add($"facet.range={facetName}");

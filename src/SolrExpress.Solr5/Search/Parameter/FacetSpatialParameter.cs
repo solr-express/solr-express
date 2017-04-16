@@ -16,12 +16,11 @@ namespace SolrExpress.Solr5.Search.Parameter
     public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private JProperty _result;
 
         public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string IFacetSpatialParameter<TDocument>.AliasName { get; set; }
@@ -31,6 +30,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         decimal IFacetSpatialParameter<TDocument>.Distance { get; set; }
 
         string[] IFacetSpatialParameter<TDocument>.Excludes { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
@@ -54,7 +55,7 @@ namespace SolrExpress.Solr5.Search.Parameter
             var parameter = (IFacetSpatialParameter<TDocument>)this;
 
             var formule = ParameterUtil.GetSpatialFormule(
-                this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression),
+                ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression),
                 parameter.FunctionType,
                 parameter.CenterPoint,
                 parameter.Distance);

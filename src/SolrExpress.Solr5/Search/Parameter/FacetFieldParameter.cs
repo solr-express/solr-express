@@ -15,15 +15,16 @@ namespace SolrExpress.Solr5.Search.Parameter
     public class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private JProperty _result;
 
         public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
@@ -44,8 +45,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var parameter = (IFacetFieldParameter<TDocument>)this;
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
-            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(parameter.FieldExpression);
+            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var aliasName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetPropertyName(parameter.FieldExpression);
 
             var array = new List<JProperty>
             {

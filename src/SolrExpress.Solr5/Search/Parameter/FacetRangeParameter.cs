@@ -11,17 +11,16 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
-    [FacetRangeTypeAttribute]
+    [FacetRangeType]
     [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private JProperty _result;
 
         public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -33,6 +32,8 @@ namespace SolrExpress.Solr5.Search.Parameter
         string IFacetRangeParameter<TDocument>.End { get; set; }
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
@@ -59,7 +60,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression))
+                new JProperty("field", ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression))
             };
 
             if (parameter.Excludes?.Any() ?? false)

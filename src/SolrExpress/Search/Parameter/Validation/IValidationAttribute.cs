@@ -11,6 +11,7 @@
         /// <param name="searchParameter">Parameter to verifify</param>
         /// <param name="errorMessage">Detailed error message</param>
         /// <returns>True if parameter is valid, otherwise false</returns>
-        bool IsValid(ISearchParameter searchParameter, out string errorMessage);
+        bool IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
+            where TDocument : IDocument;
     }
 }

@@ -9,7 +9,7 @@ namespace SolrExpress.Search.Parameter.Validation
     [AttributeUsage(AttributeTargets.Class)]
     public class UseAnyThanSpecificParameterRatherAttribute : Attribute, IValidationAttribute
     {
-        bool IValidationAttribute.IsValid(ISearchParameter searchParameter, out string errorMessage)
+        bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
         {
             var specificParameters = new List<string> {
                 "facet.field",

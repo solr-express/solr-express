@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter.Validation
 {
@@ -8,19 +9,28 @@ namespace SolrExpress.Search.Parameter.Validation
     [AttributeUsage(AttributeTargets.Class)]
     public class FieldMustBeStoredTrueAttribute : Attribute, IValidationAttribute
     {
-        bool IValidationAttribute.IsValid(ISearchParameter searchParameter, out string errorMessage)
+        bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
         {
-            // TODO: Need review in ISearchParameterFieldExpressions and ISearchParameterFieldExpression interfaces
+            var searchParameterFieldExpressions = searchParameter as ISearchParameterFieldExpressions<TDocument>;
+            var searchParameterFieldExpression = searchParameter as ISearchParameterFieldExpression<TDocument>;
 
-            //var searchParameterFieldExpressions = searchParameter as ISearchParameterFieldExpressions<TDocument>;
-            //var searchParameterFieldExpression = searchParameter as ISearchParameterFieldExpression<TDocument>;
+            var fieldExpressions =
+                searchParameterFieldExpressions?.FieldExpressions ??
+                new Expression<Func<TDocument, object>>[] { searchParameterFieldExpression.FieldExpression };
 
-            //var solrFieldAttribute = searchParameter.ExpressionBuilder.GetSolrFieldAttributeFromPropertyInfo(this.Expression);
+            var expressionBuilder =
+                searchParameterFieldExpressions?.ExpressionBuilder ??
+                searchParameterFieldExpression.ExpressionBuilder;
 
-            //if (solrFieldAttribute?.Stored ?? true)
-            //{
-            //    return;
-            //}
+            foreach (var fieldExpression in fieldExpressions)
+            {
+                if (!expressionBuilder.IsStored(fieldExpression))
+                {
+                    // TODO: Resource
+                    errorMessage = string.Empty;
+                    return false;
+                }
+            }
 
             errorMessage = string.Empty;
             return true;

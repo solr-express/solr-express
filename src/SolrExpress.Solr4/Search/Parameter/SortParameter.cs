@@ -14,15 +14,16 @@ namespace SolrExpress.Solr4.Search.Parameter
     public class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private string _result;
 
         public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         bool ISortParameter<TDocument>.Ascendent { get; set; }
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
 
@@ -48,7 +49,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             var parameter = (ISortParameter<TDocument>)this;
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(parameter.FieldExpression);
+            var fieldName = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
             this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
         }
     }

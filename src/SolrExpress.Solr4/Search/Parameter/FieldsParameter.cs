@@ -13,14 +13,15 @@ namespace SolrExpress.Solr4.Search.Parameter
     public class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private string _result;
 
         public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            this._expressionBuilder = expressionBuilder;
+            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
-        
+
+        ExpressionBuilder<TDocument> ISearchParameterFieldExpressions<TDocument>.ExpressionBuilder { get; set; }
+
         Expression<Func<TDocument, object>>[] ISearchParameterFieldExpressions<TDocument>.FieldExpressions { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
@@ -33,7 +34,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             var parameter = ((IFieldsParameter<TDocument>)this);
             var fieldNames = parameter
                 .FieldExpressions
-                .Select(fieldExpression => this._expressionBuilder.GetFieldNameFromExpression(fieldExpression))
+                .Select(fieldExpression => ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
                 .ToArray();
 
             this._result = $"fl={string.Join(",", fieldNames)}";

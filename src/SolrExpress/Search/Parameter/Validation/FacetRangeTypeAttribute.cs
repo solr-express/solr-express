@@ -8,29 +8,29 @@ namespace SolrExpress.Search.Parameter.Validation
     [AttributeUsage(AttributeTargets.Class)]
     public class FacetRangeTypeAttribute : Attribute, IValidationAttribute
     {
-        bool IValidationAttribute.IsValid(ISearchParameter searchParameter, out string errorMessage)
+        bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
         {
-            // TODO: Need review in IFacetRangeParameter<TDocument>
+            errorMessage = string.Empty;
 
-            //var propertyType = this._expressionBuilder.GetPropertyTypeFromExpression(this.Expression);
+            var facetRangeParameter = (IFacetRangeParameter<TDocument>)searchParameter;
 
-            //switch (propertyType.ToString())
-            //{
-            //    case "System.Int32":
-            //    case "System.Int64":
-            //    case "System.Single":
-            //    case "System.Double":
-            //    case "System.Decimal":
-            //    case "System.DateTime":
-            //        break;
-            //    default:
-            //        isValid = false;
+            var propertyType = facetRangeParameter.ExpressionBuilder.GetPropertyType(facetRangeParameter.FieldExpression);
 
-            //        errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException;
-            //        break;
-            //}
-
-            throw new NotImplementedException();
+            switch (propertyType.ToString())
+            {
+                case "System.Int32":
+                case "System.Int64":
+                case "System.Single":
+                case "System.Double":
+                case "System.Decimal":
+                case "System.DateTime":
+                    return true;
+                default:
+                    // TODO: Resource
+                    //errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException;
+                    errorMessage = string.Empty;
+                    return false;
+            }
         }
     }
 }
