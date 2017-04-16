@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Interceptor;
+﻿using SolrExpress.Search.Behaviour;
+using SolrExpress.Search.Interceptor;
 using SolrExpress.Search.Parameter;
 using System.Collections.Generic;
 
@@ -53,5 +54,10 @@ namespace SolrExpress
         /// Global parameter used in all queryable intance
         /// </summary>
         public List<ISearchParameter> GlobalParameters { get; private set; } = new List<ISearchParameter>();
+
+        /// <summary>
+        /// Global change behaviour used in all queryable intance
+        /// </summary>
+        public List<IChangeBehaviour> GlobalChangeBehaviours { get; private set; } = new List<IChangeBehaviour>();
     }
 }

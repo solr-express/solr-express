@@ -70,7 +70,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             config.Invoke(parameter);
 
@@ -114,7 +114,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpression(q => q.Id).SortType(FacetSortType.CountDesc);
 
@@ -135,7 +135,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpression(q => q.Id).SortType(FacetSortType.IndexDesc);
 
@@ -156,7 +156,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
 
             // Act

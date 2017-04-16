@@ -47,7 +47,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             var parameter = (ISpatialFilterParameter<TestDocument>)new SpatialFilterParameter<TestDocument>(expressionBuilder);
             config.Invoke(parameter);
 

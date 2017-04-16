@@ -29,6 +29,7 @@
             this.Options.GlobalParameters.AddRange(options.GlobalParameters);
             this.Options.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
             this.Options.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
+            this.Options.GlobalChangeBehaviours.AddRange(options.GlobalChangeBehaviours);
 
             return this;
         }
