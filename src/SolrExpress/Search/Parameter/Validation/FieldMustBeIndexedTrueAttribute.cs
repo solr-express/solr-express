@@ -26,8 +26,7 @@ namespace SolrExpress.Search.Parameter.Validation
             {
                 if (!expressionBuilder.IsIndexed(fieldExpression))
                 {
-                    // TODO: Resource
-                    errorMessage = string.Empty;
+                    errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInThisFunctionException;
                     return false;
                 }
             }

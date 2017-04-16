@@ -26,8 +26,7 @@ namespace SolrExpress.Search.Parameter.Validation
             {
                 if (!expressionBuilder.IsStored(fieldExpression))
                 {
-                    // TODO: Resource
-                    errorMessage = string.Empty;
+                    errorMessage = Resource.FieldMustBeStoredTrueToBeUsedInThisFunctionException;
                     return false;
                 }
             }

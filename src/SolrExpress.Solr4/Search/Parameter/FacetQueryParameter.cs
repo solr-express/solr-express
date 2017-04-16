@@ -53,8 +53,7 @@ namespace SolrExpress.Solr4.Search.Parameter
                 string typeName;
                 string dummy;
 
-                // TODO: Create exception
-                //Checker.IsTrue<UnsupportedSortTypeException>(parameter.SortType.Value == FacetSortType.CountDesc || parameter.SortType.Value == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(parameter.SortType.Value == FacetSortType.CountDesc || parameter.SortType.Value == FacetSortType.IndexDesc);
 
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
 

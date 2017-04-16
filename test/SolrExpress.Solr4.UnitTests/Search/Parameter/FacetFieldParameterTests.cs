@@ -1,10 +1,13 @@
 ﻿using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -83,55 +86,22 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a FacetFieldParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=true
-        /// What    Valid is true
+        /// When    Checking custom attributes of class
+        /// What    Has FieldMustBeIndexedTrueAttribute
         /// </summary>
-        [Fact(Skip = "Needs review in validation logic")]
+        [Fact]
         public void FacetFieldParameter001()
         {
-            //TODO: Need review validation logic
-
-            //// Arrange
-            //bool isValid;
-            //string errorMessage;
-            //var container = new List<string>();
-            //var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            //var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            //var parameter = new FacetFieldParameter<TestDocumentWithAttribute>(expressionBuilder);
-            //parameter.Configure(q => q.Indexed);
-
-            //// Act
-            //parameter.Validate(out isValid, out errorMessage);
-
-            //// Assert
-            //Assert.True(isValid);
-        }
-
-        /// <summary>
-        /// Where   Using a FacetFieldParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=false
-        /// What    Valid is true
-        /// </summary>
-        [Fact(Skip = "Needs review in validation logic")]
-        public void FacetFieldParameter002()
-        {
-            //TODO: Need review validation logic
-
-            //// Arrange
-            //bool isValid;
-            //string errorMessage;
-            //var container = new List<string>();
-            //var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            //var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            //var parameter = new FacetFieldParameter<TestDocumentWithAttribute>(expressionBuilder);
-            //parameter.Configure(q => q.NotIndexed);
-
-            //// Act
-            //parameter.Validate(out isValid, out errorMessage);
-
-            //// Assert
-            //Assert.False(isValid);
-            //Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInAFacetException, errorMessage);
+            // Arrange / Act
+            var hasAttribute = typeof(FacetFieldParameter<TestDocument>)
+                .GetType()
+                .GetTypeInfo()
+                .GetCustomAttributes()
+                .Where(q => q is FieldMustBeIndexedTrueAttribute)
+                .Any();
+            
+            // Assert
+            Assert.True(hasAttribute);
         }
 
         /// <summary>
@@ -139,8 +109,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// When    Invoking the method "Execute" using the sort count desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [Fact(Skip = "Need create exception")]
-        public void FacetFieldParameter003()
+        [Fact]
+        public void FacetFieldParameter002()
         {
             // Arrange
             var container = new List<string>();
@@ -152,8 +122,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).Execute();
             
             // Assert
-            // TODO: Need create exception
-            //Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
+            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
         }
 
         /// <summary>
@@ -161,8 +130,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// When    Invoking the method "Execute" using the sort index desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
-        [Fact(Skip = "Need create exception")]
-        public void FacetFieldParameter004()
+        [Fact]
+        public void FacetFieldParameter003()
         {
             // Arrange
             var container = new List<string>();
@@ -174,8 +143,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).Execute();
 
             // Assert
-            // TODO: Need create exception
-            //Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
+            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
         }
 
         /// <summary>
@@ -184,7 +152,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// What    Throws ArgumentNullException
         /// </summary>
         [Fact]
-        public void FacetFieldParameter005()
+        public void FacetFieldParameter004()
         {
             // Arrange
             var container = new List<string>();

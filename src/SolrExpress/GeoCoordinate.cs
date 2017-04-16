@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using SolrExpress.Utility;
+using System.Globalization;
 
 namespace SolrExpress
 {
@@ -11,9 +12,8 @@ namespace SolrExpress
         /// <param name="longitude">The longitude of the location</param>
         public GeoCoordinate(decimal latitude, decimal longitude)
         {
-            // TODO: Add resource
-            //Checker.IsOutOfRange(latitude, -90, 90, Resource.InvalidLatitudeException);
-            //Checker.IsOutOfRange(longitude, -180, 180, Resource.InvalidLongitudeException);
+            Checker.IsOutOfRange(latitude, -90, 90, Resource.InvalidLatitudeException);
+            Checker.IsOutOfRange(longitude, -180, 180, Resource.InvalidLongitudeException);
 
             this.Latitude = latitude;
             this.Longitude = longitude;

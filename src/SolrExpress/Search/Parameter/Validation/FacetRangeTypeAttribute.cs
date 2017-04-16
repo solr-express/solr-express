@@ -26,9 +26,7 @@ namespace SolrExpress.Search.Parameter.Validation
                 case "System.DateTime":
                     return true;
                 default:
-                    // TODO: Resource
-                    //errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException;
-                    errorMessage = string.Empty;
+                    errorMessage = Resource.FieldMustBeNumericOrDateTimeToBeUsedInFacetRangeException;
                     return false;
             }
         }
