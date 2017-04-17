@@ -1,7 +1,6 @@
-﻿using SolrExpress.Search.Result;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace SolrExpress.Extension
+namespace SolrExpress.Search.Result.Extension
 {
     public static class SearchResultBuilderExtension
     {

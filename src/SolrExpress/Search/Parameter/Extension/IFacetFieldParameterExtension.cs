@@ -1,9 +1,7 @@
-﻿using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Extension
+namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
     /// Extensions to configure facet field parameter

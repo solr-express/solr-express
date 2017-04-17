@@ -1,18 +1,16 @@
-﻿using SolrExpress.Search.Parameter;
-
-namespace SolrExpress.Extension
+﻿namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
-    /// Extensions to configure in facet limit parameter
+    /// Extensions to configure in limit parameter
     /// </summary>
-    public static class IFacetLimitParameterExtension
+    public static class ILimitParameterExtension
     {
         /// <summary>
         /// Configure value of limit
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="value">Value of limit</param>
-        public static IFacetLimitParameter<TDocument> Value<TDocument>(this IFacetLimitParameter<TDocument> parameter, long value)
+        public static ILimitParameter<TDocument> Value<TDocument>(this ILimitParameter<TDocument> parameter, long value)
             where TDocument : IDocument
         {
             parameter.Value = value;

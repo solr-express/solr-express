@@ -1,11 +1,8 @@
-﻿using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+﻿using SolrExpress.Core.Search.Parameter;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Extension
+namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
     /// Extensions to configure in facet spatial parameter

@@ -1,14 +1,14 @@
 ﻿using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+using SolrExpress.Extension;
 using SolrExpress.Search.Query;
+using SolrExpress.Search.Query.Extension;
 using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Extension
+namespace SolrExpress.Search.Parameter.Extension
 {
-    public static class DocumentSearchExtension
+    public static class ParametersExtension
     {
         /// <summary>
         /// Create a not mapped parameter

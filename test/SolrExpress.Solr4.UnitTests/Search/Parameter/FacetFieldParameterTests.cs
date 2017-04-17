@@ -2,6 +2,7 @@
 using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr4.Search.Parameter;
 using System;

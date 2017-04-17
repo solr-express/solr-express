@@ -1,6 +1,4 @@
-﻿using SolrExpress.Search.Query;
-
-namespace SolrExpress.Extension
+﻿namespace SolrExpress.Search.Query.Extension
 {
     /// <summary>
     /// Extensions to configure search queries

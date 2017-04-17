@@ -1,8 +1,8 @@
 ﻿using SolrExpress.Builder;
 using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;

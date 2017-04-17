@@ -2,6 +2,7 @@
 using SolrExpress.Extension;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 
 namespace SimpleUse.SingleContext.Controllers
 {

@@ -1,6 +1,4 @@
-﻿using SolrExpress.Search.Parameter;
-
-namespace SolrExpress.Extension
+﻿namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
     /// Extensions to configure in offset parameter

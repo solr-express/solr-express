@@ -1,9 +1,9 @@
-﻿using Xunit;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Solr4.Search.Parameter;
 using System.Collections.Generic;
-using SolrExpress.Extension;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
