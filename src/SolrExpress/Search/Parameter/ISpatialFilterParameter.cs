@@ -5,7 +5,7 @@ namespace SolrExpress.Search.Parameter
     /// <summary>
     /// Signatures to use in spatial filter parameter
     /// </summary>
-    public interface ISpatialFilterParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
+    public interface ISpatialFilterParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
         where TDocument : IDocument
     {
         /// <summary>

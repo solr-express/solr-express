@@ -11,8 +11,8 @@ namespace SolrExpress.Search.Parameter.Validation
     {
         bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
         {
-            var searchParameterFieldExpressions = searchParameter as ISearchParameterFieldExpressions<TDocument>;
-            var searchParameterFieldExpression = searchParameter as ISearchParameterFieldExpression<TDocument>;
+            var searchParameterFieldExpressions = searchParameter as ISearchItemFieldExpressions<TDocument>;
+            var searchParameterFieldExpression = searchParameter as ISearchItemFieldExpression<TDocument>;
 
             var fieldExpressions =
                 searchParameterFieldExpressions?.FieldExpressions ??

@@ -16,12 +16,12 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
-        ExpressionBuilder<TDocument> ISearchParameterFieldExpressions<TDocument>.ExpressionBuilder { get; set; }
+        ExpressionBuilder<TDocument> ISearchItemFieldExpressions<TDocument>.ExpressionBuilder { get; set; }
 
-        Expression<Func<TDocument, object>>[] ISearchParameterFieldExpressions<TDocument>.FieldExpressions { get; set; }
+        Expression<Func<TDocument, object>>[] ISearchItemFieldExpressions<TDocument>.FieldExpressions { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
@@ -35,7 +35,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             foreach (var expression in parameter.FieldExpressions)
             {
-                var value = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(expression).FieldName;
+                var value = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(expression).FieldName;
 
                 jArray.Add(value);
             }

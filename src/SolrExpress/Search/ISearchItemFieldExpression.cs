@@ -2,9 +2,12 @@
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Search.Parameter
+namespace SolrExpress.Search
 {
-    public interface ISearchParameterFieldExpressions<TDocument>
+    /// <summary>
+    /// Signatures to indicate use of property FieldExpression
+    /// </summary>
+    public interface ISearchItemFieldExpression<TDocument>
         where TDocument : IDocument
     {
         /// <summary>
@@ -13,8 +16,8 @@ namespace SolrExpress.Search.Parameter
         ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
 
         /// <summary>
-        /// Expressions used to find fields name
+        /// Expression used to find field name
         /// </summary>
-        Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
+        Expression<Func<TDocument, object>> FieldExpression { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace SolrExpress.Search.Parameter
     /// <summary>
     /// Signatures to use in facet spatial parameter
     /// </summary>
-    public interface IFacetSpatialParameter<TDocument> : ISearchParameter, ISearchParameterFieldExpression<TDocument>
+    public interface IFacetSpatialParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
         where TDocument : IDocument
     {
         /// <summary>

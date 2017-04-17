@@ -21,7 +21,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -34,9 +34,9 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
-        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
+        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
-        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
 
         string IFacetRangeParameter<TDocument>.Gap { get; set; }
 
@@ -61,7 +61,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName)
+                new JProperty("field", ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName)
             };
 
             if (parameter.Excludes?.Any() ?? false)

@@ -19,7 +19,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -32,9 +32,9 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
-        ExpressionBuilder<TDocument> ISearchParameterFieldExpression<TDocument>.ExpressionBuilder { get; set; }
+        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
-        Expression<Func<TDocument, object>> ISearchParameterFieldExpression<TDocument>.FieldExpression { get; set; }
+        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
 
         string IFacetRangeParameter<TDocument>.Gap { get; set; }
 
@@ -59,7 +59,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         void ISearchItemExecution<List<string>>.Execute()
         {
             var parameter = (IFacetRangeParameter<TDocument>)this;
-            var data = ((ISearchParameterFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
+            var data = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
             var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, data.FieldName);
 
             this._result.Add($"facet.range={facetName}");
