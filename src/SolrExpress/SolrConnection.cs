@@ -2,6 +2,7 @@
 using Flurl.Http;
 using Newtonsoft.Json;
 using SolrExpress.Utility;
+using System.Collections.Generic;
 using System.Net.Http;
 
 namespace SolrExpress
@@ -40,10 +41,11 @@ namespace SolrExpress
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of request</returns>
-        public string Get(string handler, string data)
+        public string Get(string handler, Dictionary<string, string> data)
         {
             var url = this._options.HostAddress
-                .SetQueryParam(handler, data);
+                .AppendPathSegment(handler)
+                .SetQueryParams(data);
 
             this.SetAuthentication(url);
 
@@ -58,7 +60,7 @@ namespace SolrExpress
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of request</returns>
-        public string GetX(string handler, string data)
+        public string GetX(string handler, object data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
@@ -67,14 +69,14 @@ namespace SolrExpress
 
 #if NETCORE
             return url
-                .SendJsonAsync(HttpMethod.Get, JsonConvert.DeserializeObject(data))
+                .SendJsonAsync(HttpMethod.Get, data)
                 .Result
                 .Content
                 .ReadAsStringAsync()
                 .Result;
 #else
             return url
-                .SetQueryParam("json", data)
+                .SetQueryParam("json", JsonConvert.SerializeObject(data))
                 .GetStringAsync()
                 .Result;
 #endif

@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Result;
 using SolrExpress.Update;
@@ -21,10 +22,12 @@ namespace SolrExpress.Utility
         {
             serviceProvider
                 .AddSingleton(options)
+                .AddTransient(serviceProvider)
                 .AddTransient<SolrConnection>()
                 .AddTransient<DocumentSearch<TDocument>>()
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
+                .AddTransient<ExpressionBuilder<TDocument>>()
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();

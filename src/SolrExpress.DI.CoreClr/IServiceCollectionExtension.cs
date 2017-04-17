@@ -21,7 +21,7 @@ namespace SolrExpress.DI.CoreClr
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
 
             serviceCollection
-                .AddSingleton(solrExpressServiceProvider)
+                .AddSingleton<ISolrExpressServiceProvider<TDocument>>(solrExpressServiceProvider)
                 .AddSingleton<DocumentCollection<TDocument>>();
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);

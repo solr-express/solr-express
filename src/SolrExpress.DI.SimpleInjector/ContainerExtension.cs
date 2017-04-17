@@ -20,7 +20,7 @@ namespace SolrExpress.DI.SimpleInjector
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
 
-            container.Register(() => solrExpressServiceProvider, Lifestyle.Singleton);
+            container.Register<ISolrExpressServiceProvider<TDocument>>(() => solrExpressServiceProvider, Lifestyle.Singleton);
             container.Register<DocumentCollection<TDocument>>(Lifestyle.Singleton);
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);

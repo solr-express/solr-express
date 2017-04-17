@@ -1,5 +1,7 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
+using SolrExpress.Solr5.Search;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Solr5.Search.Result;
 
@@ -34,7 +36,8 @@ namespace SolrExpress.Solr5.Extension
                 .AddTransient<ISortParameter<TDocument>, SortParameter<TDocument>>()
                 .AddTransient<ISortRandomlyParameter<TDocument>, SortRandomlyParameter<TDocument>>()
                 .AddTransient<ISpatialFilterParameter<TDocument>, SpatialFilterParameter<TDocument>>()
-                .AddTransient<IFacetsResult<TDocument>, FacetsResult<TDocument>>();
+                .AddTransient<IFacetsResult<TDocument>, FacetsResult<TDocument>>()
+                .AddTransient<ISearchItemCollection<TDocument>, SearchItemCollection<TDocument>>();
 
             return solrExpressBuilder;
         }
