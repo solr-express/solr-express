@@ -261,5 +261,35 @@ namespace SolrExpress.UnitTests.Utility
             // Act / Assert
             Checker.IsEmpty(collection);
         }
+
+        /// <summary>
+        /// Where   Using a Checker class
+        /// When    Invoke IsFalse with false
+        /// What    Throws exception
+        /// </summary>
+        [Fact]
+        public void Checker017()
+        {
+            // Arrange
+            var condition = false;
+
+            // Act / Assert
+            Assert.Throws<Exception>(() => Checker.IsFalse<Exception>(condition));
+        }
+
+        /// <summary>
+        /// Where   Using a Checker class
+        /// When    Invoke IsFalse with true
+        /// What    Not throws exception
+        /// </summary>
+        [Fact]
+        public void Checker018()
+        {
+            // Arrange
+            var condition = true;
+
+            // Act / Assert
+            Checker.IsFalse<Exception>(condition);
+        }
     }
 }

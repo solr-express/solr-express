@@ -9,7 +9,7 @@ namespace SolrExpress.Utility
     internal static class Checker
     {
         /// <summary>
-        /// Throws exception if the condition is true
+        /// Throws exception if condition is true
         /// </summary>
         /// <param name="condition">Condition to throws exception</param>
         /// <param name="args">Message in the excpetion</param>
@@ -17,6 +17,20 @@ namespace SolrExpress.Utility
             where TException : Exception
         {
             if (condition)
+            {
+                throw (TException)Activator.CreateInstance(typeof(TException), args);
+            }
+        }
+
+        /// <summary>
+        /// Throws exception if condition is false
+        /// </summary>
+        /// <param name="condition">Condition to throws exception</param>
+        /// <param name="args">Message in the excpetion</param>
+        internal static void IsFalse<TException>(bool condition, params object[] args)
+            where TException : Exception
+        {
+            if (!condition)
             {
                 throw (TException)Activator.CreateInstance(typeof(TException), args);
             }

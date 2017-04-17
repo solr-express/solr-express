@@ -20,6 +20,9 @@ namespace SolrExpress.Utility
         internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options)
             where TDocument : IDocument
         {
+            var expressionBuilder = new ExpressionBuilder<TDocument>(options);
+            expressionBuilder.ProcessDocument();
+
             serviceProvider
                 .AddSingleton(options)
                 .AddTransient(serviceProvider)
@@ -27,7 +30,7 @@ namespace SolrExpress.Utility
                 .AddTransient<DocumentSearch<TDocument>>()
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
-                .AddTransient<ExpressionBuilder<TDocument>>()
+                .AddTransient(expressionBuilder)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SolrExpress;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Search.Behaviour.Extension;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result;
 using SolrExpress.Search.Result.Extension;
@@ -17,8 +18,7 @@ namespace SimpleUse.NetCore
         {
             var services =
                 new ServiceCollection()
-                .AddSolrExpress<TechProduct>(q => q
-                .UseHostAddress("http://localhost:8983/solr/techproducts")
+                .AddSolrExpress<TechProduct>(q => q.UseHostAddress("http://localhost:8983/solr/techproducts")
                 .UseSolr5());
 
             var serviceProvider = services.BuildServiceProvider();
@@ -31,9 +31,11 @@ namespace SimpleUse.NetCore
 
             documentCollection
                 .Select()
-                .Fields(d => d.Id, d => d.Manufacturer)
-                .FacetField(d => d.Categories)
-                .Filter(d => d.Id, "205325092")
+                .ChangeDynamicFieldBehaviour(q => q.InStock, suffixName: "_xpto")
+                // TODO: Need implementations in Core
+                //.Fields(d => d.Id, d => d.Manufacturer)
+                //.FacetField(d => d.Categories)
+                //.Filter(d => d.Id, "205325092")
                 .Execute()
                 .Information(out information)
                 .Document(out documents)

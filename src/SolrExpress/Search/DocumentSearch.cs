@@ -2,7 +2,6 @@
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -67,7 +66,7 @@ namespace SolrExpress.Search
                 string errorMessage;
                 var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out errorMessage);
 
-                Checker.IsTrue<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
+                Checker.IsFalse<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
             }
         }
 
@@ -97,7 +96,6 @@ namespace SolrExpress.Search
         private void SetDefaultSystemParameters()
         {
             //TODO: https://github.com/solr-express/solr-express/issues/176
-            throw new NotImplementedException();
         }
 
         /// <summary>

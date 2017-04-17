@@ -15,7 +15,7 @@ namespace SolrExpress.Builder
         where TDocument : IDocument
     {
         private readonly SolrExpressOptions _solrExpressOptions;
-        private Dictionary<Expression<Func<TDocument, object>>, FieldData> fieldsData = new Dictionary<Expression<Func<TDocument, object>>, FieldData>();
+        private Dictionary<string, FieldData> fieldsData = new Dictionary<string, FieldData>();
 
         public ExpressionBuilder(SolrExpressOptions solrExpressOptions)
         {
@@ -116,7 +116,7 @@ namespace SolrExpress.Builder
 
                 this.CheckSolrField(ref data);
 
-                this.fieldsData.Add(expression, data);
+                this.fieldsData.Add(propertyInfo.Name, data);
             }
         }
 
@@ -127,7 +127,13 @@ namespace SolrExpress.Builder
         /// <returns>Information about field from indicated expression</returns>
         public FieldData GetData(Expression<Func<TDocument, object>> expression)
         {
-            return this.fieldsData[expression];
+            // TODO: Improve performance
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            return this.fieldsData[propertyInfo.Name];
         }
 
         /// <summary>
@@ -137,9 +143,15 @@ namespace SolrExpress.Builder
         /// <param name="data">Information about field</param>
         public void SetData(Expression<Func<TDocument, object>> expression, FieldData data)
         {
-            this.fieldsData.Remove(expression);
+            // TODO: Improve performance
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
 
-            this.fieldsData.Add(expression, data);
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            this.fieldsData.Remove(propertyInfo.Name);
+
+            this.fieldsData.Add(propertyInfo.Name, data);
         }
     }
 }

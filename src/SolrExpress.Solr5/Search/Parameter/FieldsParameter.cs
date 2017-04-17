@@ -16,7 +16,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((ISearchItemFieldExpressions<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         ExpressionBuilder<TDocument> ISearchItemFieldExpressions<TDocument>.ExpressionBuilder { get; set; }

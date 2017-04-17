@@ -10,6 +10,11 @@ namespace SolrExpress.Search.Behaviour
     public class ChangeDynamicFieldBehaviour<TDocument> : IChangeDynamicFieldBehaviour<TDocument>
         where TDocument : IDocument
     {
+        public ChangeDynamicFieldBehaviour(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+        }
+
         string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldPrefixName { get; set; }
 
         string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldSuffixName { get; set; }

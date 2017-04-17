@@ -69,7 +69,7 @@ namespace SolrExpress.Solr5.Search
 
             changeBehaviours.ForEach(q => q.Execute());
 
-            Parallel.ForEach(searchParameters, item => ((ISearchItemExecution<List<string>>)item).Execute());
+            Parallel.ForEach(searchParameters, item => ((ISearchItemExecution<JObject>)item).Execute());
             searchParameters.ForEach(q => ((ISearchItemExecution<JObject>)q).AddResultInContainer(container));
 
             // TODO: Implements
