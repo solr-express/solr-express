@@ -2,6 +2,9 @@
 
 namespace SolrExpress.Builder
 {
+    /// <summary>
+    /// Field informations about some field
+    /// </summary>
     public class FieldData
     {
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Search;
+using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Result;
 using SolrExpress.Update;
 
@@ -25,7 +26,8 @@ namespace SolrExpress.Utility
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
-                .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>();
+                .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
+                .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>()
         }
     }
 }
