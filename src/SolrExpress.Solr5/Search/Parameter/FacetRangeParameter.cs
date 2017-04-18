@@ -61,7 +61,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             var array = new List<JProperty>
             {
-                new JProperty("field", ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName)
+                new JProperty("field", ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression))
             };
 
             if (parameter.Excludes?.Any() ?? false)

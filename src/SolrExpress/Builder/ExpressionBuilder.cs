@@ -84,6 +84,22 @@ namespace SolrExpress.Builder
         }
 
         /// <summary>
+        /// Returns information about field from indicated expression
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>Information about field from indicated expression</returns>
+        private FieldData GetData(Expression<Func<TDocument, object>> expression)
+        {
+            // TODO: Improve performance
+            PropertyInfo propertyInfo;
+            SolrFieldAttribute solrFieldAttribute;
+
+            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+
+            return this.fieldsData[propertyInfo.Name];
+        }
+
+        /// <summary>
         /// Process TDocument associeted with instance to create internal list of data
         /// </summary>
         internal void ProcessDocument()
@@ -121,37 +137,75 @@ namespace SolrExpress.Builder
         }
 
         /// <summary>
-        /// Returns information about field from indicated expression
+        /// Set prefix name in dynamic field
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
-        /// <returns>Information about field from indicated expression</returns>
-        public FieldData GetData(Expression<Func<TDocument, object>> expression)
+        /// <param name="value">Prefix name in dynamic field</param>
+        public void SetDynamicFieldPrefixName(Expression<Func<TDocument, object>> expression, string value)
         {
-            // TODO: Improve performance
-            PropertyInfo propertyInfo;
-            SolrFieldAttribute solrFieldAttribute;
-
-            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
-
-            return this.fieldsData[propertyInfo.Name];
+            var data = this.GetData(expression);
+            data.DynamicFieldPrefixName = value;
         }
 
         /// <summary>
-        /// Set information about field from indicated expression
+        /// Set suffix name in dynamic field
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
-        /// <param name="data">Information about field</param>
-        public void SetData(Expression<Func<TDocument, object>> expression, FieldData data)
+        /// <param name="value">Suffix name in dynamic field</param>
+        public void SetDynamicFieldSuffixName(Expression<Func<TDocument, object>> expression, string value)
         {
-            // TODO: Improve performance
-            PropertyInfo propertyInfo;
-            SolrFieldAttribute solrFieldAttribute;
+            var data = this.GetData(expression);
+            data.DynamicFieldSuffixName = value;
+        }
 
-            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+        /// <summary>
+        /// Returns type of POCO property from indicated expression
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>Type of POCO property from indicated expression</returns>
+        public Type GetPropertyType(Expression<Func<TDocument, object>> expression)
+        {
+            return this.GetData(expression).PropertyType;
+        }
 
-            this.fieldsData.Remove(propertyInfo.Name);
+        /// <summary>
+        /// Returns name of alias of field in queries
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>Name of alias of field in queries</returns>
+        public string GetAliasName(Expression<Func<TDocument, object>> expression)
+        {
+            return this.GetData(expression).AliasName;
+        }
 
-            this.fieldsData.Add(propertyInfo.Name, data);
+        /// <summary>
+        /// Returns name of field in the SOLR schema
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>Name of field in the SOLR schema</returns>
+        public string GetFieldName(Expression<Func<TDocument, object>> expression)
+        {
+            return this.GetData(expression).FieldName;
+        }
+
+        /// <summary>
+        /// Returns if field can be used in queries to retrieve matching documents
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>If true, value of the field can be used in queries to retrieve matching documents</returns>
+        public bool GetIsIndexed(Expression<Func<TDocument, object>> expression)
+        {
+            return this.GetData(expression).IsIndexed;
+        }
+
+        /// <summary>
+        /// Returns if field can be retrieved by queries
+        /// </summary>
+        /// <param name="expression">Expression used to find property features</param>
+        /// <returns>If true, actual value of the field can be retrieved by queries</returns>
+        public bool GetIsStored(Expression<Func<TDocument, object>> expression)
+        {
+            return this.GetData(expression).IsStored;
         }
     }
 }

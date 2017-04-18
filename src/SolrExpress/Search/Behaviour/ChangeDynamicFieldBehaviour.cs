@@ -26,12 +26,10 @@ namespace SolrExpress.Search.Behaviour
         void IChangeBehaviour.Execute()
         {
             var parameter = ((ISearchItemFieldExpression<TDocument>)this);
-            var fieldData = parameter.ExpressionBuilder.GetData(parameter.FieldExpression);
+            var parameterBehaviour = ((IChangeDynamicFieldBehaviour<TDocument>)this);
 
-            fieldData.DynamicFieldPrefixName = ((IChangeDynamicFieldBehaviour<TDocument>)this).DynamicFieldPrefixName;
-            fieldData.DynamicFieldSuffixName = ((IChangeDynamicFieldBehaviour<TDocument>)this).DynamicFieldSuffixName;
-
-            parameter.ExpressionBuilder.SetData(parameter.FieldExpression, fieldData);
+            parameter.ExpressionBuilder.SetDynamicFieldPrefixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldPrefixName);
+            parameter.ExpressionBuilder.SetDynamicFieldSuffixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldSuffixName);
         }
     }
 }

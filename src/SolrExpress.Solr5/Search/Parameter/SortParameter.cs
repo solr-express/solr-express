@@ -46,7 +46,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var parameter = (ISortParameter<TDocument>)this;
 
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName;
+            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
             this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
         }
     }

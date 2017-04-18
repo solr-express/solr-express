@@ -55,8 +55,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         void ISearchItemExecution<List<string>>.Execute()
         {
             var parameter = (IFacetSpatialParameter<TDocument>)this;
-            var data = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
-            var formule = ParameterUtil.GetSpatialFormule(data.FieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
+            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var formule = ParameterUtil.GetSpatialFormule(fieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
             var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, formule);
 
             this._result.Add($"facet.query={facetName}");

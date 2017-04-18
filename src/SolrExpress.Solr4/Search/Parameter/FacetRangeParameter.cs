@@ -59,32 +59,32 @@ namespace SolrExpress.Solr4.Search.Parameter
         void ISearchItemExecution<List<string>>.Execute()
         {
             var parameter = (IFacetRangeParameter<TDocument>)this;
-            var data = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
-            var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, data.FieldName);
+            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var facetName = ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, fieldName);
 
             this._result.Add($"facet.range={facetName}");
 
             if (!string.IsNullOrWhiteSpace(parameter.Gap))
             {
-                this._result.Add($"f.{data.FieldName}.facet.range.gap={Uri.EscapeDataString(parameter.Gap)}");
+                this._result.Add($"f.{fieldName}.facet.range.gap={Uri.EscapeDataString(parameter.Gap)}");
             }
             if (!string.IsNullOrWhiteSpace(parameter.Start))
             {
-                this._result.Add($"f.{data.FieldName}.facet.range.start={Uri.EscapeDataString(parameter.Start)}");
+                this._result.Add($"f.{fieldName}.facet.range.start={Uri.EscapeDataString(parameter.Start)}");
             }
             if (!string.IsNullOrWhiteSpace(parameter.End))
             {
-                this._result.Add($"f.{data.FieldName}.facet.range.end={Uri.EscapeDataString(parameter.End)}");
+                this._result.Add($"f.{fieldName}.facet.range.end={Uri.EscapeDataString(parameter.End)}");
             }
 
             if (parameter.CountBefore)
             {
-                this._result.Add($"f.{data.FieldName}.facet.range.other=before");
+                this._result.Add($"f.{fieldName}.facet.range.other=before");
             }
 
             if (parameter.CountAfter)
             {
-                this._result.Add($"f.{data.FieldName}.facet.range.other=after");
+                this._result.Add($"f.{fieldName}.facet.range.other=after");
             }
 
             if (parameter.SortType.HasValue)
@@ -96,7 +96,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
 
-                this._result.Add($"f.{data.FieldName}.facet.range.sort={typeName}");
+                this._result.Add($"f.{fieldName}.facet.range.sort={typeName}");
             }
 
             if (parameter.Minimum.HasValue)

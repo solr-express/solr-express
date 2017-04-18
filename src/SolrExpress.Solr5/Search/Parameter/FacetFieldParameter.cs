@@ -46,11 +46,12 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             var parameter = (IFacetFieldParameter<TDocument>)this;
 
-            var data = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression);
+            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var aliasName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetAliasName(parameter.FieldExpression);
 
             var array = new List<JProperty>
             {
-                new JProperty("field", data.FieldName)
+                new JProperty("field", fieldName)
             };
 
             if (parameter.Minimum.HasValue)
@@ -79,7 +80,7 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add(new JProperty("limit", parameter.Limit));
             }
 
-            this._result = new JProperty(data.AliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            this._result = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
     }
 }

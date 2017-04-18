@@ -41,7 +41,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         void ISearchItemExecution<JObject>.Execute()
         {
             var parameter = (ISpatialFilterParameter<TDocument>)this;
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(parameter.FieldExpression).FieldName;
+            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
 
             var formule = ParameterUtil.GetSpatialFormule(
                 fieldName,

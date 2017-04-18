@@ -34,7 +34,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             var parameter = ((IFieldsParameter<TDocument>)this);
             var fieldNames = parameter
                 .FieldExpressions
-                .Select(fieldExpression => ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetData(fieldExpression).FieldName)
+                .Select(fieldExpression => ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
                 .ToArray();
 
             this._result = $"fl={string.Join(",", fieldNames)}";

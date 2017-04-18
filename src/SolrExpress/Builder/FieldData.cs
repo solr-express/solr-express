@@ -5,7 +5,7 @@ namespace SolrExpress.Builder
     /// <summary>
     /// Field informations about some field
     /// </summary>
-    public class FieldData
+    internal class FieldData
     {
         /// <summary>
         /// Name of alias of field in queries
