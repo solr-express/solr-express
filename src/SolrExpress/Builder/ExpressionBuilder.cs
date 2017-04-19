@@ -23,16 +23,13 @@ namespace SolrExpress.Builder
         }
 
         /// <summary>
-        /// Get behaviour informations from indicated expression 
+        /// Get property referenced into indicated expression 
         /// </summary>
-        /// <param name="expression">Expression used to find property features</param>
-        /// <param name="propertyInfo">Informations about POCO property</param>
-        /// <param name="solrFieldAttribute">Solr field attribute associeted with POCO property</param>
-        private void GetInfosFromExpression(Expression<Func<TDocument, object>> expression, out PropertyInfo propertyInfo, out SolrFieldAttribute solrFieldAttribute)
+        /// <param name="expression">Expression used to find property info</param>
+        /// <returns>Property referenced into indicated expression</returns>
+        private PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
         {
-            propertyInfo = null;
-            solrFieldAttribute = null;
-
+            PropertyInfo propertyInfo = null;
             var lambda = (LambdaExpression)expression;
 
             MemberExpression memberExpression;
@@ -59,15 +56,23 @@ namespace SolrExpress.Builder
                     break;
             }
 
-            if (propertyInfo != null)
-            {
-                var attrs = propertyInfo.GetCustomAttributes(true);
-                solrFieldAttribute = (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
-            }
-            else
+            if (propertyInfo == null)
             {
                 throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
             }
+
+            return propertyInfo;
+        }
+
+        /// <summary>
+        /// Get Solr field attribute referenced into indicated property info
+        /// </summary>
+        /// <param name="propertyInfo">PropertyInfo used to find attribute</param>
+        /// <returns>Solr field attribute associeted with POCO property</returns>
+        private SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
+        {
+            var attrs = propertyInfo.GetCustomAttributes(true);
+            return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
         }
 
         /// <summary>
@@ -90,11 +95,7 @@ namespace SolrExpress.Builder
         /// <returns>Information about field from indicated expression</returns>
         private FieldData GetData(Expression<Func<TDocument, object>> expression)
         {
-            // TODO: Improve performance
-            PropertyInfo propertyInfo;
-            SolrFieldAttribute solrFieldAttribute;
-
-            this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+            var propertyInfo = this.GetPropertyInfoFromExpression(expression);
 
             return this.fieldsData[propertyInfo.Name];
         }
@@ -115,10 +116,8 @@ namespace SolrExpress.Builder
             {
                 var nameProperty = Expression.Convert(Expression.Property(documentParameter, propertye.Name), typeof(object));
                 var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
-                PropertyInfo propertyInfo;
-                SolrFieldAttribute solrFieldAttribute;
-
-                this.GetInfosFromExpression(expression, out propertyInfo, out solrFieldAttribute);
+                var propertyInfo = this.GetPropertyInfoFromExpression(expression);
+                var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
 
                 var data = new FieldData
                 {
