@@ -11,7 +11,7 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Value of filter
         /// </summary>
-        ISearchQuery Query { get; set; }
+        SearchQuery Query { get; set; }
 
         /// <summary>
         /// Tag name to use in facet excluding list

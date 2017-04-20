@@ -22,8 +22,8 @@ DRAFT
 - **SolrExpress.Search.Parameter.IFacetQueryParameter** removed method Config. Use extensions instead
 - **SolrExpress.Search.Parameter.IBoostParameter** removed method Config. Use extensions instead
 - **SolrExpress.Search.ISearchParameterValue** moved to **SolrExpress.Search.Parameter**
-- **ISearchParameterValue** renamed to **ISearchQuery**
 - **ISearchParameterValue** removed property ExpressionBuilder. Use extension methods and SearchParameterQueryBuilder instead
+- **ISearchParameterValue** remake to class **SearchQuery**
 - **SolrExpress.Search.Parameter.IFacetSpatialParameter** removed method Config. Use extensions instead
 - **SolrExpress.Search.Parameter.IFieldsParameter** removed method Config. Use extensions instead
 - **SolrExpress.Search.Parameter.IFilterParameter** removed method Config. Use extensions instead

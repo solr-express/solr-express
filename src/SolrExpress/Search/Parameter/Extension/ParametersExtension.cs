@@ -39,7 +39,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="query">Query used to make boost</param>
         /// <param name="boostFunction">Boost type used in calculation</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, ISearchQuery query, BoostFunctionType boostFunction = BoostFunctionType.Boost)
+        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, SearchQuery query, BoostFunctionType boostFunction = BoostFunctionType.Boost)
             where TDocument : IDocument
         {
             Checker.IsNull(query);
@@ -101,7 +101,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="query">Query used to make facet</param>
         /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, ISearchQuery query, Action<IFacetQueryParameter<TDocument>> instance = null)
+        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, SearchQuery query, Action<IFacetQueryParameter<TDocument>> instance = null)
             where TDocument : IDocument
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFacetQueryParameter<TDocument>>();
@@ -197,7 +197,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : IDocument
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<ISearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
             search.Any(values);
 
             parameter.Query(search);
@@ -218,7 +218,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : IDocument
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<ISearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
 
             parameter.Query(search);
 
@@ -325,7 +325,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : IDocument
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<ISearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
             search.Any(values);
 
             parameter.Value(search);
@@ -346,7 +346,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : IDocument
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<ISearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
 
             parameter.Value(search);
 

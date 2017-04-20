@@ -26,7 +26,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Query used to make facet</param>
-        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, ISearchQuery query)
+        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery query)
             where TDocument : IDocument
         {
             parameter.Query = query;

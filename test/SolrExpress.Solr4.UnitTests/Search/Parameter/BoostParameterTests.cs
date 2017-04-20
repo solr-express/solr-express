@@ -10,7 +10,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a AnyParameter instance
-        /// When    Invoking the method "Execute" using happy path configurations
+        /// When    Invoking method "Execute" using happy path configurations
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]

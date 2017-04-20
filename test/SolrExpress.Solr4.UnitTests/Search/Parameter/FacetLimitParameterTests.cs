@@ -10,7 +10,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a FacetLimitParameter instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create correct SOLR instructions
         /// </summary>
         [Fact]

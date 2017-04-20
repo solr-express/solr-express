@@ -10,7 +10,7 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
         
-        ISearchQuery IQueryParameter<TDocument>.Value { get; set; }
+        SearchQuery IQueryParameter<TDocument>.Value { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {

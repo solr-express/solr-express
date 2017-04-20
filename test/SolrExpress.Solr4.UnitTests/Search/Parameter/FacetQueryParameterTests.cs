@@ -13,7 +13,7 @@
 //    {
 //        /// <summary>
 //        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments
+//        /// When    Invoking method "Execute" using the default arguments
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -38,7 +38,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking the method "Execute" using the sort type and direction parameters
+//        /// When    Invoking method "Execute" using the sort type and direction parameters
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -64,7 +64,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking the method "Execute" using the sort count desc
+//        /// When    Invoking method "Execute" using the sort count desc
 //        /// What    Throws UnsupportedSortTypeException exception
 //        /// </summary>
 //        [Fact]
@@ -83,7 +83,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking the method "Execute" using the sort index desc
+//        /// When    Invoking method "Execute" using the sort index desc
 //        /// What    Throws UnsupportedSortTypeException exception
 //        /// </summary>
 //        [Fact]
@@ -136,7 +136,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+//        /// When    Invoking method "Execute" using the default arguments and an excluding list
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]

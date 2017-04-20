@@ -13,7 +13,7 @@
 //    {
 //        /// <summary>
 //        /// Where   Using a FieldListParameter instance
-//        /// When    Invoking the method "Execute" using 2 instances
+//        /// When    Invoking method "Execute" using 2 instances
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -85,7 +85,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FieldListParameter instance
-//        /// When    Invoking the method "Execute" using 1 instance and 2 expressions
+//        /// When    Invoking method "Execute" using 1 instance and 2 expressions
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -165,7 +165,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FieldListParameter instance
-//        /// When    Invoking the method "Validate" using field Stored=true
+//        /// When    Invoking method "Validate" using field Stored=true
 //        /// What    Valid is true
 //        /// </summary>
 //        [Fact]
@@ -189,7 +189,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FieldListParameter instance
-//        /// When    Invoking the method "Validate" using field Stored=false
+//        /// When    Invoking method "Validate" using field Stored=false
 //        /// What    Valid is true
 //        /// </summary>
 //        [Fact]

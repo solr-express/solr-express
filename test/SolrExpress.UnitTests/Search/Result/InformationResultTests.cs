@@ -13,7 +13,7 @@ namespace SolrExpress.UnitTests.Search.Result
     {
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using happy path configurations
+        /// When    Invoking method "Execute" using happy path configurations
         /// What    Create correct Information instance with data provided by SOLR result
         /// </summary>
         [Fact]
@@ -63,7 +63,7 @@ namespace SolrExpress.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using a InformationResult instance
-        /// When    Invoking the method "Execute" using ILimitParameter = 0
+        /// When    Invoking method "Execute" using ILimitParameter = 0
         /// What    Create correct Information instance with data provided by SOLR result
         /// </summary>
         [Fact]

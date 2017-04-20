@@ -11,7 +11,7 @@
 //    {
 //        /// <summary>
 //        /// Where   Using a FilterQueryParameter instance
-//        /// When    Invoking the method "Execute" using 2 instances
+//        /// When    Invoking method "Execute" using 2 instances
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -55,7 +55,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FilterQueryParameter instance
-//        /// When    Invoking the method "Execute" using tag name
+//        /// When    Invoking method "Execute" using tag name
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]

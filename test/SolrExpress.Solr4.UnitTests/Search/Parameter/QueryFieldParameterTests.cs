@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a QueryFieldParameter instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid string
         /// </summary>
         [Fact]

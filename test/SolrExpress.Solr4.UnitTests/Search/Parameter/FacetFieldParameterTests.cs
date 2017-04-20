@@ -62,7 +62,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a FacetFieldParameter instance
-        /// When    Invoking the method "Execute" using happy path configurations
+        /// When    Invoking method "Execute" using happy path configurations
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]
@@ -107,7 +107,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a FacetFieldParameter instance
-        /// When    Invoking the method "Execute" using the sort count desc
+        /// When    Invoking method "Execute" using the sort count desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
         [Fact]
@@ -128,7 +128,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a FacetFieldParameter instance
-        /// When    Invoking the method "Execute" using the sort index desc
+        /// When    Invoking method "Execute" using the sort index desc
         /// What    Throws UnsupportedSortTypeException exception
         /// </summary>
         [Fact]

@@ -8,7 +8,7 @@ namespace SolrExpress.UnitTests.Update
     {
         /// <summary>
         /// Where   Using a AtomicDelete instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [Fact]
@@ -30,7 +30,7 @@ namespace SolrExpress.UnitTests.Update
 
         /// <summary>
         /// Where   Using a AtomicDelete instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid JSON
         /// </summary>
         [Fact]
@@ -52,7 +52,7 @@ namespace SolrExpress.UnitTests.Update
         
         /// <summary>
         /// Where   Using a AtomicDelete instance
-        /// When    Invoking the method "Execute" without any document
+        /// When    Invoking method "Execute" without any document
         /// What    Create a string.empty
         /// </summary>
         [Fact]

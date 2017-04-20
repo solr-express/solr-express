@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid string
         /// </summary>
         [Fact]
@@ -52,7 +52,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=true
+        /// When    Invoking method "Validate" using field Indexed=true
         /// What    Valid is true
         /// </summary>
         [Fact(Skip = "Needs review in validation logic")]
@@ -76,7 +76,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=false
+        /// When    Invoking method "Validate" using field Indexed=false
         /// What    Valid is true
         /// </summary>
         [Fact(Skip = "Needs review in validation logic")]

@@ -24,7 +24,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         
         string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
 
-        ISearchQuery IFacetQueryParameter<TDocument>.Query { get; set; }
+        SearchQuery IFacetQueryParameter<TDocument>.Query { get; set; }
 
         int? IFacetQueryParameter<TDocument>.Limit { get; set; }
 

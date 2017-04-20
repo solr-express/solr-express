@@ -12,7 +12,7 @@
 //    {
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments
+//        /// When    Invoking method "Execute" using the default arguments
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -42,7 +42,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the sort type and direction parameters
+//        /// When    Invoking method "Execute" using the sort type and direction parameters
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -73,7 +73,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type integer and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type integer and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -97,7 +97,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type long and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type long and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -121,7 +121,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type float and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type float and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -145,7 +145,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type double and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type double and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -169,7 +169,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type decimal and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type decimal and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -193,7 +193,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type DateTime and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type DateTime and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -217,7 +217,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type string and with fail fast actived
+//        /// When    Invoking method "Validate" using a field type string and with fail fast actived
 //        /// What    Is valid should be true
 //        /// </summary>
 //        [Fact]
@@ -241,7 +241,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParamete instance
-//        /// When    Invoking the method "Execute" using the sort count desc
+//        /// When    Invoking method "Execute" using the sort count desc
 //        /// What    Throws UnsupportedSortTypeException exception
 //        /// </summary>
 //        [Fact]
@@ -260,7 +260,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParamete instance
-//        /// When    Invoking the method "Execute" using the sort index desc
+//        /// When    Invoking method "Execute" using the sort index desc
 //        /// What    Throws UnsupportedSortTypeException exception
 //        /// </summary>
 //        [Fact]
@@ -364,7 +364,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments and an excluding list
+//        /// When    Invoking method "Execute" using the default arguments and an excluding list
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -394,7 +394,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments
+//        /// When    Invoking method "Execute" using the default arguments
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -424,7 +424,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" not calculating before range
+//        /// When    Invoking method "Execute" not calculating before range
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]
@@ -454,7 +454,7 @@
 
 //        /// <summary>
 //        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" not calculating after range
+//        /// When    Invoking method "Execute" not calculating after range
 //        /// What    Create a valid string
 //        /// </summary>
 //        [Fact]

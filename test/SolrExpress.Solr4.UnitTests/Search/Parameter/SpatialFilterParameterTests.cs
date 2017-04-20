@@ -38,7 +38,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
-        /// When    Invoking the method "Execute" using happy path configurations
+        /// When    Invoking method "Execute" using happy path configurations
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]
@@ -126,7 +126,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=true
+        /// When    Invoking method "Validate" using field Indexed=true
         /// What    Valid is true
         /// </summary>
         [Fact(Skip = "Needs review in validation logic")]
@@ -150,7 +150,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
         /// <summary>
         /// Where   Using a SpatialFilterParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=false
+        /// When    Invoking method "Validate" using field Indexed=false
         /// What    Valid is true
         /// </summary>
         [Fact(Skip = "Needs review in validation logic")]
