@@ -94,7 +94,7 @@ namespace SolrExpress.Search.Query.Extension
         public static SearchQuery NotEqualsTo<TValue>(this SearchQuery searchQuery, TValue value)
         {
             searchQuery
-                .AddValue("-")
+                .AddValue("-", false)
                 .AddParenthesisOpening()
                 .AddValue(value)
                 .AddParenthesisClosure();
@@ -176,7 +176,7 @@ namespace SolrExpress.Search.Query.Extension
         public static SearchQuery And(this SearchQuery searchQuery, Action<SearchQuery> searchQueryExtend)
         {
             searchQuery
-                .AddOperatorOr()
+                .AddOperatorAnd()
                 .AddParenthesisOpening();
 
             searchQueryExtend.Invoke(searchQuery);
@@ -195,7 +195,7 @@ namespace SolrExpress.Search.Query.Extension
         public static SearchQuery Not(this SearchQuery searchQuery, Action<SearchQuery> searchQueryExtend)
         {
             searchQuery
-                .AddValue("-")
+                .AddValue("-", false)
                 .AddParenthesisOpening();
 
             searchQueryExtend.Invoke(searchQuery);
@@ -317,7 +317,7 @@ namespace SolrExpress.Search.Query.Extension
             where TDocument : IDocument
         {
             searchQuery
-                .AddValue("-")
+                .AddValue("-", false)
                 .AddParenthesisOpening()
                 .AddValue(value)
                 .AddParenthesisClosure();
@@ -369,7 +369,7 @@ namespace SolrExpress.Search.Query.Extension
             where TDocument : IDocument
         {
             searchQuery
-                .AddOperatorOr()
+                .AddOperatorAnd()
                 .AddParenthesisOpening();
 
             searchQueryExtend.Invoke(searchQuery);
@@ -389,7 +389,7 @@ namespace SolrExpress.Search.Query.Extension
             where TDocument : IDocument
         {
             searchQuery
-                .AddValue("-")
+                .AddValue("-", false)
                 .AddParenthesisOpening();
 
             searchQueryExtend.Invoke(searchQuery);

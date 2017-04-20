@@ -73,10 +73,11 @@ namespace SolrExpress.Search.Query
         /// Add indicated value into expression stack
         /// </summary>
         /// <param name="value">Value to add into expression stack</param>
+        /// <param name="addQuotesInString">True to add quotes before and after string values, otherwise false</param>
         /// <returns>It self</returns>
-        internal SearchQuery AddValue<T>(T value)
+        internal SearchQuery AddValue<T>(T value, bool addQuotesInString = true)
         {
-            if (value is string)
+            if (value is string && addQuotesInString)
             {
                 this._sb.Append("\"");
                 this._sb.Append(value);

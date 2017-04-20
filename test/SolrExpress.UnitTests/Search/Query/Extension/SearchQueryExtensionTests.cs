@@ -40,7 +40,7 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
             var result = searchQuery.Any(10, 20, 30).Execute();
 
             // Assert
-            Assert.Equal("(10 AND 20 AND 30)", result);
+            Assert.Equal("(10 OR 20 OR 30)", result);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
             var result = searchQuery.Or(q => q.EqualsTo(10)).Execute();
 
             // Assert
-            Assert.Equal("OR (10)", result);
+            Assert.Equal(" OR (10)", result);
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
             var searchQuery = new SearchQuery();
 
             // Act
-            var result = searchQuery.Or(q => q.EqualsTo(10)).Execute();
+            var result = searchQuery.And(q => q.EqualsTo(10)).Execute();
 
             // Assert
-            Assert.Equal("AND (10)", result);
+            Assert.Equal(" AND (10)", result);
 
         }
 
@@ -164,7 +164,7 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
             var searchQuery = new SearchQuery();
 
             // Act
-            var result = searchQuery.Or(q => q.EqualsTo(10)).Execute();
+            var result = searchQuery.Not(q => q.EqualsTo(10)).Execute();
 
             // Assert
             Assert.Equal("-(10)", result);
