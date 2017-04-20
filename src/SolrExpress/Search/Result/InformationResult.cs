@@ -50,13 +50,21 @@ namespace SolrExpress.Search.Result
                     var limit = limitParameter.Value;
 
                     var data = ((IInformationResult<TDocument>)this).Data;
-                    data.PageNumber = (offset / limit) + 1;
-                    data.PageSize = limit;
-                    data.PageCount = data.DocumentCount > 0 ? (int)Math.Ceiling(data.DocumentCount / (double)limit) : 0;
-                    data.HasPreviousPage = data.PageNumber > 1;
-                    data.HasNextPage = data.PageNumber < data.PageCount;
-                    data.IsFirstPage = data.PageNumber == 1;
-                    data.IsLastPage = data.PageNumber >= data.PageCount;
+                    if (limit > 0)
+                    {
+                        data.PageNumber = (offset / limit) + 1;
+                        data.PageSize = limit;
+                        data.PageCount = data.DocumentCount > 0 ? (int)Math.Ceiling(data.DocumentCount / (double)limit) : 0;
+                        data.HasPreviousPage = data.PageNumber > 1;
+                        data.HasNextPage = data.PageNumber < data.PageCount;
+                        data.IsFirstPage = data.PageNumber == 1;
+                        data.IsLastPage = data.PageNumber >= data.PageCount;
+                    }
+                    else
+                    {
+                        data.IsFirstPage = true;
+                        data.IsLastPage = true;
+                    }
 
                     this.executed = true;
                 }
