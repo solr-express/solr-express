@@ -1,19 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32F031EB-53BE-4E6F-A909-82F09B392FBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.xproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5", "src\SolrExpress.Solr5\SolrExpress.Solr5.xproj", "{F548730D-927D-4D59-AA95-1FC1D52F5040}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18BA4609-5C3C-48B5-BE77-F8B316014E74}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		NuGet.config = NuGet.config
 		README.md = README.md
 	EndProjectSection
@@ -35,27 +30,31 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tutorials", "tutorials", "{
 		docs\tutorials\use-cases.md = docs\tutorials\use-cases.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress", "src\SolrExpress\SolrExpress.xproj", "{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.csproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.CoreClr", "src\SolrExpress.DI.CoreClr\SolrExpress.DI.CoreClr.xproj", "{A34B0A6E-A958-459B-9CFB-EE6310D78F56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5", "src\SolrExpress.Solr5\SolrExpress.Solr5.csproj", "{F548730D-927D-4D59-AA95-1FC1D52F5040}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.SimpleInjector", "src\SolrExpress.DI.SimpleInjector\SolrExpress.DI.SimpleInjector.xproj", "{10B006AF-C700-472E-ABF9-26CB69DFBB47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress", "src\SolrExpress\SolrExpress.csproj", "{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.SingleContext", "example\SimpleUse.SingleContext\SimpleUse.SingleContext.xproj", "{D0078A76-907E-490F-A38D-779AFEB94860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.CoreClr", "src\SolrExpress.DI.CoreClr\SolrExpress.DI.CoreClr.csproj", "{A34B0A6E-A958-459B-9CFB-EE6310D78F56}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.UnitTests", "test\SolrExpress.UnitTests\SolrExpress.UnitTests.xproj", "{9E18F426-EB06-4F12-BE8A-C5940F5B3680}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.SimpleInjector", "src\SolrExpress.DI.SimpleInjector\SolrExpress.DI.SimpleInjector.csproj", "{10B006AF-C700-472E-ABF9-26CB69DFBB47}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.Net46WithSimpleInjector", "example\SimpleUse.Net46WithSimpleInjector\SimpleUse.Net46WithSimpleInjector.xproj", "{A49E5D94-8929-4134-837B-443B89698229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.SingleContext", "example\SimpleUse.SingleContext\SimpleUse.SingleContext.csproj", "{D0078A76-907E-490F-A38D-779AFEB94860}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5.UnitTests", "test\SolrExpress.Solr5.UnitTests\SolrExpress.Solr5.UnitTests.xproj", "{11062870-0B49-445F-8BCD-89D315E888F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.UnitTests", "test\SolrExpress.UnitTests\SolrExpress.UnitTests.csproj", "{9E18F426-EB06-4F12-BE8A-C5940F5B3680}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4.UnitTests", "test\SolrExpress.Solr4.UnitTests\SolrExpress.Solr4.UnitTests.xproj", "{27098EBB-5FBB-4E08-BB8F-26BCB1F43C58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.Net46WithSimpleInjector", "example\SimpleUse.Net46WithSimpleInjector\SimpleUse.Net46WithSimpleInjector.csproj", "{A49E5D94-8929-4134-837B-443B89698229}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.Autofac", "src\SolrExpress.DI.Autofac\SolrExpress.DI.Autofac.xproj", "{2A55E4A0-3D4C-4815-9E77-275DCADFC927}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.UnitTests", "test\SolrExpress.Solr5.UnitTests\SolrExpress.Solr5.UnitTests.csproj", "{11062870-0B49-445F-8BCD-89D315E888F7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.DI.Ninject", "src\SolrExpress.DI.Ninject\SolrExpress.DI.Ninject.xproj", "{1C30862A-957B-4EEC-B305-2C67B8A49B4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4.UnitTests", "test\SolrExpress.Solr4.UnitTests\SolrExpress.Solr4.UnitTests.csproj", "{27098EBB-5FBB-4E08-BB8F-26BCB1F43C58}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SimpleUse.NetCore", "example\SimpleUse.NetCore\SimpleUse.NetCore.xproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.Autofac", "src\SolrExpress.DI.Autofac\SolrExpress.DI.Autofac.csproj", "{2A55E4A0-3D4C-4815-9E77-275DCADFC927}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.Ninject", "src\SolrExpress.DI.Ninject\SolrExpress.DI.Ninject.csproj", "{1C30862A-957B-4EEC-B305-2C67B8A49B4E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "example\SimpleUse.NetCore\SimpleUse.NetCore.csproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,10 +119,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{65A451B2-14C5-489B-B26B-7AB5CD1D24E0} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
-		{F548730D-927D-4D59-AA95-1FC1D52F5040} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{D5B8D271-B71A-4F85-973B-F50CDAEA6662} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 		{0E6FFAE4-0304-4453-A61D-52D24802E0CF} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
+		{65A451B2-14C5-489B-B26B-7AB5CD1D24E0} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
+		{F548730D-927D-4D59-AA95-1FC1D52F5040} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{A34B0A6E-A958-459B-9CFB-EE6310D78F56} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
