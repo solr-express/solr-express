@@ -184,7 +184,23 @@ namespace SolrExpress.Builder
         /// <returns>Name of field in the SOLR schema</returns>
         public string GetFieldName(Expression<Func<TDocument, object>> expression)
         {
-            return this.GetData(expression).FieldName;
+            var data = this.GetData(expression);
+            var fieldName = data.FieldName;
+
+            if (data.IsDynamicField)
+            {
+                if (!string.IsNullOrWhiteSpace(data.DynamicFieldPrefixName))
+                {
+                    fieldName = $"{data.DynamicFieldPrefixName}_{fieldName}";
+                }
+
+                if (!string.IsNullOrWhiteSpace(data.DynamicFieldSuffixName))
+                {
+                    fieldName = $"{fieldName}_{data.DynamicFieldSuffixName}";
+                }
+            }
+
+            return fieldName;
         }
 
         /// <summary>
