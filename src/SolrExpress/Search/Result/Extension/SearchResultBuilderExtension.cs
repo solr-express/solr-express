@@ -12,8 +12,8 @@ namespace SolrExpress.Search.Result.Extension
             where TDocument : IDocument
         {
             var result = searchResult.ServiceProvider.GetService<IDocumentResult<TDocument>>();
+            searchResult.Add(result);
 
-            // TODO: Review
             data = null;
             //data = searchResult.Get(result).Data;
 
@@ -28,6 +28,7 @@ namespace SolrExpress.Search.Result.Extension
             where TDocument : IDocument
         {
             var result = searchResult.ServiceProvider.GetService<IFacetsResult<TDocument>>();
+            searchResult.Add(result);
 
             // TODO: Review
             data = null;
@@ -44,6 +45,7 @@ namespace SolrExpress.Search.Result.Extension
             where TDocument : IDocument
         {
             var result = searchResult.ServiceProvider.GetService<IInformationResult<TDocument>>();
+            searchResult.Add(result);
 
             // TODO: Review
             data = null;

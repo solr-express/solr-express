@@ -32,10 +32,9 @@ namespace SimpleUse.NetCore
             documentCollection
                 .Select()
                 .ChangeDynamicFieldBehaviour(q => q.InStock, suffixName: "_xpto")
-                // TODO: Need implementations in Core
-                //.Fields(d => d.Id, d => d.Manufacturer)
-                //.FacetField(d => d.Categories)
-                //.Filter(d => d.Id, "205325092")
+                .Fields(d => d.Id, d => d.Manufacturer)
+                .FacetField(d => d.Categories)
+                .Filter(d => d.Id, "205325092")
                 .Execute()
                 .Information(out information)
                 .Document(out documents)

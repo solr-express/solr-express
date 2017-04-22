@@ -41,11 +41,6 @@ namespace SolrExpress
         public string GlobalDynamicFieldSuffixName { get; internal set; }
 
         /// <summary>
-        /// Global query interceptor used in all queryable intance
-        /// </summary>
-        public List<ISearchInterceptor> GlobalQueryInterceptors { get; private set; } = new List<ISearchInterceptor>();
-
-        /// <summary>
         /// Global result interceptor used in all queryable intance
         /// </summary>
         public List<IResultInterceptor> GlobalResultInterceptors { get; private set; } = new List<IResultInterceptor>();

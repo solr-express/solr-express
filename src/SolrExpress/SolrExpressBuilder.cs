@@ -27,7 +27,6 @@
             this.Options.Security.Password = options.Security.Password;
             this.Options.Security.UserName = options.Security.UserName;
             this.Options.GlobalParameters.AddRange(options.GlobalParameters);
-            this.Options.GlobalQueryInterceptors.AddRange(options.GlobalQueryInterceptors);
             this.Options.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
             this.Options.GlobalChangeBehaviours.AddRange(options.GlobalChangeBehaviours);
 

@@ -150,7 +150,6 @@ namespace SolrExpress.Search
         public SearchResultBuilder<TDocument> Execute()
         {
             this.AddRange(this._solrExpressOptions.GlobalParameters);
-            this.AddRange(this._solrExpressOptions.GlobalQueryInterceptors);
             this.AddRange(this._solrExpressOptions.GlobalResultInterceptors);
             this.AddRange(this._solrExpressOptions.GlobalChangeBehaviours);
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Search.Result
@@ -63,11 +64,18 @@ namespace SolrExpress.Search.Result
                         this._jsonReader);
                 }
             }
+
+            this.OnExecuted?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
         /// Services provider
         /// </summary>
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+
+        /// <summary>
+        /// Delegate called after execute
+        /// </summary>
+        public EventHandler OnExecuted { get; set; }
     }
 }

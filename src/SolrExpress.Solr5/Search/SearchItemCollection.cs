@@ -59,26 +59,18 @@ namespace SolrExpress.Solr5.Search
         {
             var container = new JObject();
 
-            var searchInterceptors = this.GetItems<ISearchInterceptor>();
             var changeBehaviours = this.GetItems<IChangeBehaviour>();
             var searchParameters = this.GetItems<ISearchParameter>();
             var resultInterceptors = this.GetItems<IResultInterceptor>();
-
-            // TODO: Implements
-            //searchInterceptors.ForEach(q => q.Execute);
 
             changeBehaviours.ForEach(q => q.Execute());
 
             Parallel.ForEach(searchParameters, item => ((ISearchItemExecution<JObject>)item).Execute());
             searchParameters.ForEach(q => ((ISearchItemExecution<JObject>)q).AddResultInContainer(container));
 
-            // TODO: Implements
-            //resultInterceptors.ForEach(q => q.Execute);
-
             var json = this._solrConnection.GetX(requestHandler, container);
 
-            // TODO: Implements
-            //resultInterceptors.ForEach(q => q.Execute(json));
+            resultInterceptors.ForEach(q => q.Execute(requestHandler, ref json));
 
             return new JsonTextReader(new StringReader(json));
         }

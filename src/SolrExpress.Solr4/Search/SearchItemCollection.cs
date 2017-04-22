@@ -58,13 +58,9 @@ namespace SolrExpress.Solr4.Search
         {
             var container = new Dictionary<string, string>();
 
-            var searchInterceptors = this.GetItems<ISearchInterceptor>();
             var changeBehaviours = this.GetItems<IChangeBehaviour>();
             var searchParameters = this.GetItems<ISearchParameter>();
             var resultInterceptors = this.GetItems<IResultInterceptor>();
-
-            // TODO: Implements
-            //searchInterceptors.ForEach(q => q.Execute(searchParameters));
 
             changeBehaviours.ForEach(q => q.Execute());
 
@@ -73,8 +69,7 @@ namespace SolrExpress.Solr4.Search
 
             var json = this._solrConnection.Get(requestHandler, container);
 
-            // TODO: Implements
-            //resultInterceptors.ForEach(q => q.Execute(json));
+            resultInterceptors.ForEach(q => q.Execute(requestHandler, ref json));
 
             return new JsonTextReader(new StringReader(json));
         }
