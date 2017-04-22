@@ -22,7 +22,7 @@ namespace SolrExpress.Utility
             where TDocument : IDocument
         {
             var expressionBuilder = new ExpressionBuilder<TDocument>(options);
-            expressionBuilder.ProcessDocument();
+            expressionBuilder.LoadDocument();
 
             serviceProvider
                 .AddSingleton(options)

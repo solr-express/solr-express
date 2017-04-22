@@ -101,9 +101,9 @@ namespace SolrExpress.Builder
         }
 
         /// <summary>
-        /// Process TDocument associeted with instance to create internal list of data
+        /// Load TDocument associeted with instance to create internal list of data
         /// </summary>
-        internal void ProcessDocument()
+        internal void LoadDocument()
         {
             var documentParameter = Expression.Parameter(typeof(TDocument), "document");
             var properties = typeof(TDocument)

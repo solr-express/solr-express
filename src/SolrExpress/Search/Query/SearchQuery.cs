@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace SolrExpress.Search.Query
@@ -10,7 +9,8 @@ namespace SolrExpress.Search.Query
     /// </summary>
     public class SearchQuery
     {
-        private readonly StringBuilder _sb = new StringBuilder();
+        protected readonly StringBuilder _InternalQuery = new StringBuilder();
+        protected string _InternalLinkValue = string.Empty;
 
         /// <summary>
         /// Add operator AND into expression stack
@@ -18,7 +18,9 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddOperatorAnd()
         {
-            this._sb.Append(" AND ");
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+            this._InternalQuery.Append(" AND ");
 
             return this;
         }
@@ -29,7 +31,9 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddOperatorOr()
         {
-            this._sb.Append(" OR ");
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+            this._InternalQuery.Append(" OR ");
 
             return this;
         }
@@ -40,7 +44,9 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddParenthesisOpening()
         {
-            this._sb.Append("(");
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+            this._InternalQuery.Append("(");
 
             return this;
         }
@@ -51,20 +57,9 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddParenthesisClosure()
         {
-            this._sb.Append(")");
-
-            return this;
-        }
-
-        /// <summary>
-        /// Add field name into expression stack
-        /// </summary>
-        /// <param name="fieldExpression">Expressions used to find field name</param>
-        /// <returns>It self</returns>
-        internal SearchQuery AddField<TDocument>(Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
-        {
-            // TODO: Think about ExpressionBuilder and TDocument
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+            this._InternalQuery.Append(")");
 
             return this;
         }
@@ -77,23 +72,26 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddValue<T>(T value, bool addQuotesInString = true)
         {
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+
             if (value is string && addQuotesInString)
             {
-                this._sb.Append("\"");
-                this._sb.Append(value);
-                this._sb.Append("\"");
+                this._InternalQuery.Append("\"");
+                this._InternalQuery.Append(value);
+                this._InternalQuery.Append("\"");
             }
             else if (value is decimal || value is double || value is float)
             {
-                this._sb.Append(((IFormattable)value).ToString("0.#", CultureInfo.InvariantCulture));
+                this._InternalQuery.Append(((IFormattable)value).ToString("G", CultureInfo.InvariantCulture));
             }
             else if (value is DateTime)
             {
-                this._sb.Append(((IFormattable)value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture));
+                this._InternalQuery.Append(((IFormattable)value).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", CultureInfo.InvariantCulture));
             }
             else
             {
-                this._sb.Append(value);
+                this._InternalQuery.Append(value);
             }
 
             return this;
@@ -107,11 +105,14 @@ namespace SolrExpress.Search.Query
         /// <returns>It self</returns>
         internal SearchQuery AddRangeValue<T>(T from, T to)
         {
-            this._sb.Append("[");
+            this._InternalQuery.Append(this._InternalLinkValue);
+            this._InternalLinkValue = string.Empty;
+
+            this._InternalQuery.Append("[");
             this.AddValue(from);
-            this._sb.Append(" TO ");
+            this._InternalQuery.Append(" TO ");
             this.AddValue(to);
-            this._sb.Append("]");
+            this._InternalQuery.Append("]");
 
             return this;
         }
@@ -122,7 +123,7 @@ namespace SolrExpress.Search.Query
         /// <returns>Result generated value</returns>
         internal string Execute()
         {
-            return this._sb.ToString();
+            return this._InternalQuery.ToString();
         }
     }
 }

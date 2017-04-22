@@ -19,6 +19,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
             ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((ISortParameter<TDocument>)this).Ascendent = true;
         }
 
         bool ISortParameter<TDocument>.Ascendent { get; set; }
@@ -39,7 +40,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             }
             else
             {
-                value = this._result;
+                value = $"sort={this._result}";
             }
 
             container.Add(value);

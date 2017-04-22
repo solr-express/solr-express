@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Query;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.UnitTests;
 using Xunit;
@@ -106,13 +107,16 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         public void SearchQueryFact006()
         {
             // Arrange
-            var searchQuery = new SearchQuery<TestDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.Field(q => q.Id).Execute();
 
             // Assert
-            Assert.Equal("_id_:", result);
+            Assert.Equal("_id_", result);
         }
 
         /// <summary>
@@ -180,17 +184,20 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         public void SearchQueryFact100()
         {
             // Arrange
-            var searchQuery = new SearchQuery<TechProductDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery
                 .Field(f => f.Id).EqualsTo(10)
                 .Or(q =>
-                    q.Field(f => f.Name).Any("nam#1", "nam#2", "nam#3"))
+                    q.Field(f => f.Name).Any("name#1", "name#2", "name#3"))
                 .Execute();
 
             // Assert
-            Assert.Equal("id:10 OR (name:(\"nam#1\" OR \"nam#2\" OR \"nam#3\"))", result);
+            Assert.Equal("id:10 OR (name:(\"name#1\" OR \"name#2\" OR \"name#3\"))", result);
         }
 
         /// <summary>
@@ -202,7 +209,10 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         public void SearchQueryFact101()
         {
             // Arrange
-            var searchQuery = new SearchQuery<TechProductDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery
@@ -212,11 +222,11 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
                         q.Field(f => f.Popularity).InRange(10, 20))
                 )
                 .Or(q =>
-                    q.Field(f => f.Name).Any("nam#1", "nam#2", "nam#3"))
+                    q.Field(f => f.Name).Any("name#1", "name#2", "name#3"))
                 .Execute();
 
             // Assert
-            Assert.Equal("(id:10 AND popularity:[10 TO 20]) OR (name:(\"nam#1\" OR \"nam#2\" OR \"nam#3\"))", result);
+            Assert.Equal("(id:10 AND (popularity:[10 TO 20])) OR (name:(\"name#1\" OR \"name#2\" OR \"name#3\"))", result);
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Xunit;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Solr4.Search.Parameter;
 using System.Collections.Generic;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -28,21 +28,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Assert
             Assert.Equal(1, container.Count);
             Assert.Equal("mm=75%", container[0]);
-        }
-
-        /// <summary>
-        /// Where   Using a MinimumShouldMatchParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact(Skip = "Needs review in validation logic")]
-        public void MinimumShouldMatchParameter002()
-        {
-            //// Arrange
-            //var parameter = new MinimumShouldMatchParameter<TestDocument>();
-
-            //// Act / Assert
-            //Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
     }
 }

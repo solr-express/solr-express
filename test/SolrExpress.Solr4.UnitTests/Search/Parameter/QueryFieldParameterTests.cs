@@ -30,20 +30,5 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             Assert.Equal(1, container.Count);
             Assert.Equal("qf=id^10 score~2^20", container[0]);
         }
-
-        /// <summary>
-        /// Where   Using a QueryFieldParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact(Skip = "Needs review in validation logic")]
-        public void QueryFieldParameter002()
-        {
-            //// Arrange
-            //var parameter = new QueryFieldParameter<TestDocument>();
-
-            //// Act / Assert
-            //Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
-        }
     }
 }

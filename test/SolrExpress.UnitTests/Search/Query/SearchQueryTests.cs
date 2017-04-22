@@ -108,10 +108,10 @@ namespace SolrExpress.UnitTests.Search.Query
             var searchQuery = new SearchQuery();
 
             // Act
-            var result = searchQuery.AddValue(new DateTime(1984, 09, 05, 10, 20, 30, 10)).Execute();
+            var result = searchQuery.AddValue(new DateTime(1984, 09, 05, 10, 20, 30)).Execute();
 
             // Assert
-            Assert.Equal("1984-09-05T10:20:30.010Z", result);
+            Assert.Equal("1984-09-05T10:20:30Z", result);
         }
     }
 }

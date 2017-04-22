@@ -7,7 +7,6 @@ using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr4.Search.Parameter;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using Xunit;
 
@@ -35,19 +34,19 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc);
                 };
-                var expected3 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.mincount=1&f._id_.facet.sort=count";
+                var expected3 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config4 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10);
                 };
-                var expected4 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.mincount=1&f._id_.facet.sort=count&f._id_.facet.limit=10";
+                var expected4 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1&f._id_.facet.limit=10";
 
                 Action<IFacetFieldParameter<TestDocument>> config5 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10).Excludes("tag1", "tag2");
                 };
-                var expected5 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.mincount=1&f._id_.facet.sort=count&f._id_.facet.limit=10&facet.field={!ex=tag1,tag2 key=Id}_id_";
+                var expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1&f._id_.facet.limit=10";
 
                 return new[]
                 {
@@ -72,6 +71,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             config.Invoke(parameter);
 
@@ -94,15 +94,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameter001()
         {
             // Arrange / Act
-            var hasAttribute = typeof(FacetFieldParameter<TestDocument>)
+            var fieldMustBeIndexedTrueAttribute = typeof(FacetFieldParameter<TestDocument>)
                 .GetType()
                 .GetTypeInfo()
-                .GetCustomAttributes()
-                .Where(q => q is FieldMustBeIndexedTrueAttribute)
-                .Any();
-            
+                .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
+
             // Assert
-            Assert.True(hasAttribute);
+            Assert.NotNull(fieldMustBeIndexedTrueAttribute);
         }
 
         /// <summary>
@@ -114,16 +112,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameter002()
         {
             // Arrange
-            var container = new List<string>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpression(q => q.Id).SortType(FacetSortType.CountDesc);
 
-            // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            
-            // Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
+            // Act / Assert
+            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>
@@ -135,16 +130,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameter003()
         {
             // Arrange
-            var container = new List<string>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpression(q => q.Id).SortType(FacetSortType.IndexDesc);
 
-            // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-
-            // Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
+            // Act / Assert
+            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>
@@ -156,15 +148,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameter004()
         {
             // Arrange
-            var container = new List<string>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
 
-            // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-
-            // Assert
-            Assert.Throws<ArgumentNullException>(() => ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container));
+            // Act / Assert
+            Assert.Throws<ArgumentNullException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
     }
 }
