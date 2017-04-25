@@ -78,7 +78,7 @@ namespace SolrExpress.Solr5
             this.SetAuthentication(options, url);
 
             return url
-                .PostJsonAsync(data)
+                .PostJsonAsync(JsonConvert.DeserializeObject(data))
                 .ReceiveString()
                 .Result;
         }
