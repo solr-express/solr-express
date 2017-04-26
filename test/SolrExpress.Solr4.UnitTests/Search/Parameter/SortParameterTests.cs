@@ -46,7 +46,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange / Act
             var fieldMustBeIndexedTrueAttribute = typeof(SortParameter<TestDocument>)
-                .GetType()
                 .GetTypeInfo()
                 .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
 

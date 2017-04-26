@@ -74,7 +74,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange / Act
             var fieldMustBeIndexedTrueAttribute = typeof(SpatialFilterParameter<TestDocument>)
-                .GetType()
                 .GetTypeInfo()
                 .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
 

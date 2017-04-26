@@ -95,7 +95,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange / Act
             var fieldMustBeIndexedTrueAttribute = typeof(FacetFieldParameter<TestDocument>)
-                .GetType()
                 .GetTypeInfo()
                 .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
 
