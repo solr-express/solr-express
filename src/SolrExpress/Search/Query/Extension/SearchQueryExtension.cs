@@ -110,43 +110,43 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="valueTo">Value used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery InRange<TValue>(this SearchQuery searchQuery, TValue valueFrom, TValue valueTo)
+            where TValue : struct
         {
             searchQuery
-                .AddRangeValue(valueFrom, valueTo);
+                .AddRangeValue((TValue?)valueFrom, (TValue?)valueTo);
 
             return searchQuery;
         }
 
-        // TODO: Think about nullable ranges
+        /// <summary>
+        /// Create a search query to find someting greater than informed value
+        /// </summary>
+        /// <param name="searchQuery">Search query instance used to make query</param>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public static SearchQuery GreaterThan<TValue>(this SearchQuery searchQuery, TValue value)
+            where TValue : struct
+        {
+            searchQuery
+                .AddRangeValue((TValue?)value, null);
 
-        ///// <summary>
-        ///// Create a search query to find someting greater than informed value
-        ///// </summary>
-        ///// <param name="searchQuery">Search query instance used to make query</param>
-        ///// <param name="value">Value used in search</param>
-        ///// <returns>Search query configured</returns>
-        //public static SearchQuery GreaterThan<TValue>(this SearchQuery searchQuery, TValue value)
-        //{
-        //    //searchQuery
-        //    //    .AddRangeValue(value, null);
+            return searchQuery;
+        }
 
-        //    return searchQuery;
-        //}
+        /// <summary>
+        /// Create a search query to find someting less than informed value
+        /// </summary>
+        /// <param name="searchQuery">Search query instance used to make query</param>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public static SearchQuery LessThan<TValue>(this SearchQuery searchQuery, TValue value)
+            where TValue : struct
+        {
+            searchQuery
+                .AddRangeValue(null, (TValue?)value);
 
-        ///// <summary>
-        ///// Create a search query to find someting less than informed value
-        ///// </summary>
-        ///// <param name="searchQuery">Search query instance used to make query</param>
-        ///// <param name="value">Value used in search</param>
-        ///// <returns>Search query configured</returns>
-        //public static SearchQuery LessThan<TValue>(this SearchQuery searchQuery, TValue value)
-        //{
-        //    searchQuery
-        //        .AddRangeValue(null, value);
-
-        //    return searchQuery;
-        //}
-
+            return searchQuery;
+        }
 
         /// <summary>
         /// Create a search query expression using OR operator
@@ -222,6 +222,7 @@ namespace SolrExpress.Search.Query.Extension
 
             return searchQuery;
         }
+
 
         // TODO: Think about unification
 

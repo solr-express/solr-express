@@ -103,15 +103,34 @@ namespace SolrExpress.Search.Query
         /// <param name="from">Value "from" to add into expression stack</param>
         /// <param name="to">Value "to" to add into expression stack</param>
         /// <returns>It self</returns>
-        internal SearchQuery AddRangeValue<T>(T from, T to)
+        internal SearchQuery AddRangeValue<TValue>(TValue? from, TValue? to)
+            where TValue : struct
         {
             this._InternalQuery.Append(this._InternalLinkValue);
             this._InternalLinkValue = string.Empty;
 
             this._InternalQuery.Append("[");
-            this.AddValue(from);
+
+            if (from.HasValue)
+            {
+                this.AddValue(from.Value);
+            }
+            else
+            {
+                this.AddValue("*", false);
+            }
+
             this._InternalQuery.Append(" TO ");
-            this.AddValue(to);
+
+            if (to.HasValue)
+            {
+                this.AddValue(to.Value);
+            }
+            else
+            {
+                this.AddValue("*", false);
+            }
+
             this._InternalQuery.Append("]");
 
             return this;
