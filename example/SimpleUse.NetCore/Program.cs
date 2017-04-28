@@ -36,10 +36,13 @@ namespace SimpleUse.NetCore
                 .FacetField(d => d.Categories)
                 .Filter(d => d.Id, "205325092")
                 .Execute()
-                .Information(out information)
-                .Document(out documents)
-                .Facets(out facets)
-                .Execute();
+                .ProcessInformation()
+                .ProcessDocument()
+                .ProcessFacets()
+                .Execute()
+                .GetInformation(out information)
+                .GetDocument(out documents)
+                .GetFacets(out facets);
 
             foreach (var document in documents)
             {

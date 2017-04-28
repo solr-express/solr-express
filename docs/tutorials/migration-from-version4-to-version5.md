@@ -63,3 +63,4 @@ DRAFT
 - Move RequestHandler to Search.Parameter
 - Drop InvalidParameterTypeException
 - Rename SimpleLogInConsoleResultInterceptor to SimpleLogInConsole
+- Change in behaviour in SearchResultBuilderExtensions. Now, is necessary Process<SOMETHING>, execute result and Get<SOMETHING> (i.e. ProcessDocument() and GetDocument(out docs))
