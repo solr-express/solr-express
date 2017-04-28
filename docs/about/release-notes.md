@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.2.5] - 2017-04-25
+
+### Bug fix
+- Updating/inserting a document fails (#211) (tks @Baklap4)
+
+---
+
 ## [4.2.4] - 2017-03-19
 
 ### Enhancement
