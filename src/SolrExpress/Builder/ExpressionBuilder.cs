@@ -10,7 +10,6 @@ namespace SolrExpress.Builder
     /// <summary>
     /// Builder expressions class
     /// </summary>
-    /// <typeparam name="TDocument"></typeparam>
     public sealed class ExpressionBuilder<TDocument>
         where TDocument : IDocument
     {

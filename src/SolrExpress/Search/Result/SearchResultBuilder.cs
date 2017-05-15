@@ -5,12 +5,15 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Search.Result
 {
+    /// <summary>
+    /// Result builder
+    /// </summary>
     public sealed class SearchResultBuilder<TDocument>
         where TDocument : IDocument
     {
         private JsonReader _jsonReader;
         private List<ISearchParameter> _searchParameters;
-        private List<ISearchResult> _searchResults = new List<ISearchResult>();
+        private SearchResultCollection<TDocument> _searchResults = new SearchResultCollection<TDocument>();
 
         public SearchResultBuilder(
             ISolrExpressServiceProvider<TDocument> serviceProvider)
@@ -50,11 +53,11 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Execute chain of search results
         /// </summary>
-        public SearchResultBuilder<TDocument> Execute()
+        public SearchResultCollection<TDocument> Execute()
         {
             while (this._jsonReader.Read())
             {
-                foreach (var searchResult in this._searchResults)
+                foreach (var searchResult in this._searchResults.GetList())
                 {
                     searchResult.Execute(
                         this._searchParameters,
@@ -64,7 +67,7 @@ namespace SolrExpress.Search.Result
                 }
             }
 
-            return this;
+            return this._searchResults;
         }
 
         /// <summary>

@@ -57,10 +57,9 @@ DRAFT
 - Drop 
 - No more support to .Net 4.0
 - No more UnexpectedJsonFormatException
-- Change use of SearchResultBuilder, instead of Get method, use Add and Execute (to execute chain)
+- Change use of SearchResultBuilder, instead of Get method, use Add and Execute (to execute chain). Now, is necessary add parameters, execute and get informations from SearchResultCollection instance
 - No more support to ISearchInterceptor
 - Merge IFacetFieldResult, IFacetQueryResult and IFacetRangeResult into IFacetsResult
 - Move RequestHandler to Search.Parameter
 - Drop InvalidParameterTypeException
 - Rename SimpleLogInConsoleResultInterceptor to SimpleLogInConsole
-- Change in behaviour in SearchResultBuilderExtensions. Now, is necessary Process<SOMETHING>, execute result and Get<SOMETHING> (i.e. ProcessDocument() and GetDocument(out docs))

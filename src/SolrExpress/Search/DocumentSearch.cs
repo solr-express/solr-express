@@ -11,7 +11,6 @@ namespace SolrExpress.Search
     /// <summary>
     /// Document search engine
     /// </summary>
-    /// <typeparam name="TDocument"></typeparam>
     public class DocumentSearch<TDocument>
         where TDocument : IDocument
     {

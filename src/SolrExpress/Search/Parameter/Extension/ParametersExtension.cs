@@ -249,7 +249,6 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <summary>
         /// Create a minimum should match
         /// </summary>
-        /// <typeparam name="TDocument"></typeparam>
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="value">Expression used to make mm parameter</param>
         /// <returns>Document search engine</returns>
