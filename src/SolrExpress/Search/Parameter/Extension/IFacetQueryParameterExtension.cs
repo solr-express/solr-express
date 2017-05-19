@@ -59,5 +59,31 @@ namespace SolrExpress.Search.Parameter.Extension
 
             return parameter;
         }
+
+        /// <summary>
+        /// Configure minimum count of itens in facet's result
+        /// </summary>
+        /// <param name="parameter">Parameter to congigure</param>
+        /// <param name="minimum">Minimum count of itens in facet's result</param>
+        public static IFacetQueryParameter<TDocument> Minimum<TDocument>(this IFacetQueryParameter<TDocument> parameter, int minimum)
+            where TDocument : IDocument
+        {
+            parameter.Minimum = minimum;
+
+            return parameter;
+        }
+
+        /// <summary>
+        /// Configure limit of itens in facet's result
+        /// </summary>
+        /// <param name="parameter">Parameter to congigure</param>
+        /// <param name="limit">Limit of itens in facet's result</param>
+        public static IFacetQueryParameter<TDocument> Limit<TDocument>(this IFacetQueryParameter<TDocument> parameter, int limit)
+            where TDocument : IDocument
+        {
+            parameter.Limit = limit;
+
+            return parameter;
+        }
     }
 }

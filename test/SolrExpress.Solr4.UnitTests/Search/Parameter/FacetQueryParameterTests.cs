@@ -1,162 +1,177 @@
-﻿//using Xunit;
-//using SolrExpress.Core;
-//using SolrExpress.Core.Search.Parameter;
-//using SolrExpress.Core.Search.ParameterValue;
-//using SolrExpress.Solr4.Search.Parameter;
-//using System;
-//using System.Collections.Generic;
-//using SolrExpress.Core.Utility;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
+using SolrExpress.Solr4.Search.Parameter;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Xunit;
 
-//namespace SolrExpress.Solr4.UnitTests.Search.Parameter
-//{
-//    public class FacetQueryParameterTests
-//    {
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking method "Execute" using the default arguments
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter001()
-//        {
-//            // Arrange
-//            var container = new List<string>();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", new Any<TestDocument>("avg('Y')"));
+namespace SolrExpress.Solr4.UnitTests.Search.Parameter
+{
+    public class FacetQueryParameterTests
+    {
+        public static IEnumerable<object[]> Data1
+        {
+            get
+            {
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+                expressionBuilder.LoadDocument();
 
-//            // Act
-//            parameter.Execute(container);
+                Action<IFacetQueryParameter<TestDocument>> config1 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                };
+                var expected1 = "facet=true&facet.query=avg('Y')";
 
-//            // Assert
-//            Assert.Equal(3, container.Count);
-//            Assert.Equal("facet=true", container[0]);
-//            Assert.Equal("facet.query={!key=X}avg('Y')", container[1]);
-//            Assert.Equal("f.X.facet.mincount=1", container[2]);
-//        }
+                Action<IFacetQueryParameter<TestDocument>> config2 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                };
+                var expected2 = "facet=true&facet.query={!key=X}avg('Y')";
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking method "Execute" using the sort type and direction parameters
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter002()
-//        {
-//            // Arrange
-//            var container = new List<string>();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), FacetSortType.CountAsc);
+                Action<IFacetQueryParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                };
+                var expected3 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.mincount=1";
 
-//            // Act
-//            parameter.Execute(container);
+                Action<IFacetQueryParameter<TestDocument>> config4 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
+                };
+                var expected4 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1";
 
-//            // Assert
-//            Assert.Equal(4, container.Count);
-//            Assert.Equal("facet=true", container[0]);
-//            Assert.Equal("facet.query={!key=X}avg('Y')", container[1]);
-//            Assert.Equal("f.X.facet.sort=count", container[2]);
-//            Assert.Equal("f.X.facet.mincount=1", container[3]);
-//        }
+                Action<IFacetQueryParameter<TestDocument>> config5 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
+                    facet.Limit = 10;
+                };
+                var expected5 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking method "Execute" using the sort count desc
-//        /// What    Throws UnsupportedSortTypeException exception
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter003()
-//        {
-//            // Arrange
-//            var container = new List<string>();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.CountDesc);
+                Action<IFacetQueryParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
+                    facet.Limit = 10;
+                    facet.Excludes = new string[] { "tag1", "tag2" };
+                };
+                var expected6 = "facet=true&facet.query={!ex=tag1,tag2 key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
 
-//            // Act / Assert
-//            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
-//        }
+                return new[]
+                {
+                    new object[] { config1, expected1 },
+                    new object[] { config2, expected2 },
+                    new object[] { config3, expected3 },
+                    new object[] { config4, expected4 },
+                    new object[] { config5, expected5 },
+                    new object[] { config6, expected6 },
+                };
+            }
+        }
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking method "Execute" using the sort index desc
-//        /// What    Throws UnsupportedSortTypeException exception
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter004()
-//        {
-//            // Arrange
-//            var container = new List<string>();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", new QueryAll<TestDocument>(), FacetSortType.IndexDesc);
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Invoking method "Execute" using happy path configurations
+        /// What    Create correct SOLR instructions
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(Data1))]
+        public void FacetQueryParameterTheory001(Action<IFacetQueryParameter<TestDocument>> config, string expectd)
+        {
+            // Arrange
+            var container = new List<string>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
+            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(expressionBuilder);
+            config.Invoke(parameter);
 
-//            // Act / Assert
-//            Assert.Throws<UnsupportedSortTypeException>(() => parameter.Execute(container));
-//        }
+            // Act
+            ((ISearchItemExecution<List<string>>)parameter).Execute();
+            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter005()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+            // Assert
+            var actual = string.Join("&", container);
 
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, new Any<TestDocument>("x")));
-//        }
+            Assert.Equal(expectd, actual);
+        }
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Create the instance with null in expression
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter006()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
+        public static IEnumerable<object[]> Data2
+        {
+            get
+            {
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+                expressionBuilder.LoadDocument();
+                var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
 
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null));
-//        }
+                Action<IFacetQueryParameter<TestDocument>> config1 = facet =>
+                {
+                    facet.Query = searchQuery.AddValue(".", false);
+                    facet.SortType = FacetSortType.IndexDesc;
+                };
 
-//        /// <summary>
-//        /// Where   Using a FacetQueryParameter instance
-//        /// When    Invoking method "Execute" using the default arguments and an excluding list
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetQueryParameter007()
-//        {
-//            // Arrange
-//            var container = new List<string>();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetQueryParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", new Any<TestDocument>("avg('Y')"), excludes: new[] { "tag1", "tag2" });
+                Action<IFacetQueryParameter<TestDocument>> config2 = facet =>
+                {
+                    facet.Query = searchQuery.AddValue(".", false);
+                    facet.SortType = FacetSortType.CountDesc;
+                };
 
-//            // Act
-//            parameter.Execute(container);
+                return new[]
+                {
+                    new object[] { config1 },
+                    new object[] { config2 },
+                };
+            }
+        }
 
-//            // Assert
-//            Assert.Equal(3, container.Count);
-//            Assert.Equal("facet=true", container[0]);
-//            Assert.Equal("facet.query={!ex=tag1,tag2 key=X}avg('Y')", container[1]);
-//            Assert.Equal("f.X.facet.mincount=1", container[2]);
-//        }
-//    }
-//}
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Invoking method "Execute" using happy path configurations
+        /// What    Throws UnsupportedSortTypeException
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(Data2))]
+        public void FacetQueryParameterTheory002(Action<IFacetQueryParameter<TestDocument>> config)
+        {
+            // Arrange
+            var container = new List<string>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+            expressionBuilder.LoadDocument();
+            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(expressionBuilder);
+            config.Invoke(parameter);
+
+            // Act / Assert
+            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
+        }
+
+        /// <summary>
+        /// Where   Using a FacetQueryParameter instance
+        /// When    Checking custom attributes of class
+        /// What    Has FieldMustBeIndexedTrueAttribute
+        /// </summary>
+        [Fact]
+        public void FacetQueryParameter001()
+        {
+            // Arrange / Act
+            var fieldMustBeIndexedTrueAttribute = typeof(FacetQueryParameter<TestDocument>)
+                .GetTypeInfo()
+                .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
+
+            // Assert
+            Assert.NotNull(fieldMustBeIndexedTrueAttribute);
+        }
+    }
+}

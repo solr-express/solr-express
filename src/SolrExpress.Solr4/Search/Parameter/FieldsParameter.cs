@@ -17,7 +17,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((IFieldsParameter<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
         ExpressionBuilder<TDocument> ISearchItemFieldExpressions<TDocument>.ExpressionBuilder { get; set; }
@@ -34,7 +34,7 @@ namespace SolrExpress.Solr4.Search.Parameter
             var parameter = ((IFieldsParameter<TDocument>)this);
             var fieldNames = parameter
                 .FieldExpressions
-                .Select(fieldExpression => ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
+                .Select(fieldExpression => ((IFieldsParameter<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
                 .ToArray();
 
             this._result = $"fl={string.Join(",", fieldNames)}";

@@ -6,7 +6,8 @@ namespace SolrExpress.Search.Parameter.Extension
     /// <summary>
     /// Extensions to configure in facet range parameter
     /// </summary>
-    public static class IFacetRangeParameterExtension
+    public static class IFacetRangeParameterExtension
+
     {
         /// <summary>
         /// Configure name of alias added in query
@@ -121,6 +122,32 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : IDocument
         {
             parameter.CountAfter = countAfter;
+
+            return parameter;
+        }
+
+        /// <summary>
+        /// Configure minimum count of itens in facet's result
+        /// </summary>
+        /// <param name="parameter">Parameter to congigure</param>
+        /// <param name="minimum">Minimum count of itens in facet's result</param>
+        public static IFacetRangeParameter<TDocument> Minimum<TDocument>(this IFacetRangeParameter<TDocument> parameter, int minimum)
+            where TDocument : IDocument
+        {
+            parameter.Minimum = minimum;
+
+            return parameter;
+        }
+
+        /// <summary>
+        /// Configure limit of itens in facet's result
+        /// </summary>
+        /// <param name="parameter">Parameter to congigure</param>
+        /// <param name="limit">Limit of itens in facet's result</param>
+        public static IFacetRangeParameter<TDocument> Limit<TDocument>(this IFacetRangeParameter<TDocument> parameter, int limit)
+            where TDocument : IDocument
+        {
+            parameter.Limit = limit;
 
             return parameter;
         }

@@ -96,17 +96,17 @@ namespace SolrExpress.Solr4.Search.Parameter
 
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
 
-                this._result.Add($"f.{fieldName}.facet.range.sort={typeName}");
+                this._result.Add($"f.{fieldName}.facet.sort={typeName}");
             }
 
             if (parameter.Minimum.HasValue)
             {
-                this._result.Add($"f.{parameter.AliasName}.facet.mincount={parameter.Minimum.Value}");
+                this._result.Add($"f.{fieldName}.facet.mincount={parameter.Minimum.Value}");
             }
 
             if (parameter.Limit.HasValue)
             {
-                this._result.Add($"f.{parameter.AliasName}.facet.limit={parameter.Limit.Value}");
+                this._result.Add($"f.{fieldName}.facet.limit={parameter.Limit.Value}");
             }
         }
     }

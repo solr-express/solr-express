@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     public class BoostParameterTests
     {
         /// <summary>
-        /// Where   Using a AnyParameter instance
+        /// Where   Using a BoostParameter instance
         /// When    Invoking method "Execute" using happy path configurations
         /// What    Create correct SOLR instructions
         /// </summary>

@@ -65,7 +65,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         }
 
         /// <summary>
-        /// Where   Using a SortParameter instance
+        /// Where   Using a SpatialFilterParameter instance
         /// When    Checking custom attributes of class
         /// What    Has FieldMustBeIndexedTrueAttribute
         /// </summary>

@@ -2,6 +2,8 @@
 using SolrExpress.Search.Parameter;
 using System;
 using System.Globalization;
+using System.Linq;
+using System.Text;
 
 namespace SolrExpress.Utility
 {
@@ -65,14 +67,39 @@ namespace SolrExpress.Utility
         /// <param name="excludes">Excludes tags</param>
         /// <param name="aliasName">Alias name</param>
         /// <param name="fieldName">Field name</param>
-        internal static string GetFacetName( string[] excludes, string aliasName, string fieldName)
+        internal static string GetFacetName(string[] excludes, string aliasName, string fieldName)
         {
-            if (excludes != null && excludes.Length > 0)
+            var sb = new StringBuilder();
+            var needsBraces = (excludes?.Any() ?? false) || !string.IsNullOrWhiteSpace(aliasName);
+
+            if (needsBraces)
             {
-                return $"{{!ex={string.Join(",", excludes)} key={aliasName}}}{fieldName}";
+                sb.Append("{!");
             }
 
-            return $"{{!key={aliasName}}}{fieldName}";
+            if (excludes?.Any() ?? false)
+            {
+                sb.Append($"ex={string.Join(",", excludes)}");
+            }
+
+            if (sb.Length > 2)
+            {
+                sb.Append($" ");
+            }
+
+            if (!string.IsNullOrWhiteSpace(aliasName))
+            {
+                sb.Append($"key={aliasName}");
+            }
+
+            if (needsBraces)
+            {
+                sb.Append("}");
+            }
+
+            sb.Append(fieldName);
+
+            return sb.ToString();
         }
 
         /// <summary>
