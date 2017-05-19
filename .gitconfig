@@ -1,0 +1,9 @@
+###############################################################################
+# Set default behavior to automatically change tab to spaces.
+###############################################################################
+[filter "spabs"]
+	clean = expand --initial -t 4
+	smudge = expand --initial -t 4
+	required
+[merge]
+	renormalize = true
