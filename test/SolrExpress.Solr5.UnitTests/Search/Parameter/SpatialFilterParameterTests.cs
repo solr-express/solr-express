@@ -1,16 +1,17 @@
-﻿using SolrExpress.Builder;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
 using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Solr5.Search.Parameter;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
 
-namespace SolrExpress.Solr4.UnitTests.Search.Parameter
+namespace SolrExpress.Solr5.UnitTests.Search.Parameter
 {
     public class SpatialFilterParameterTests
     {
@@ -22,14 +23,24 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Spatial).FunctionType(SpatialFunctionType.Geofilt).CenterPoint(new GeoCoordinate(-1.23456789M, -2.234567891M)).Distance(5.5M);
                 };
-                var expected1 = "fq={!geofilt sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
+                var expected1 = JObject.Parse(@"
+                {
+                  params:{
+                    fq:""{!geofilt sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}"",
+                  }
+                }");
 
                 Action<ISpatialFilterParameter<TestDocument>> config2 = facet =>
                 {
                     facet.FieldExpression(q => q.Spatial).FunctionType(SpatialFunctionType.Bbox).CenterPoint(new GeoCoordinate(-1.23456789M, -2.234567891M)).Distance(5.5M);
                 };
-                var expected2 = "fq={!bbox sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
-                
+                var expected2 = JObject.Parse(@"
+                {
+                  params:{
+                    fq:""{!bbox sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}"",
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -45,23 +56,21 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// </summary>
         [Theory]
         [MemberData(nameof(Data))]
-        public void SpatialFilterParameterTheory001(Action<ISpatialFilterParameter<TestDocument>> config, string expectd)
+        public void SpatialFilterParameterTheory001(Action<ISpatialFilterParameter<TestDocument>> config, JObject expectd)
         {
             // Arrange
-            var container = new List<string>();
+            var container = new JObject();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
             expressionBuilder.LoadDocument();
             var parameter = (ISpatialFilterParameter<TestDocument>)new SpatialFilterParameter<TestDocument>(expressionBuilder);
             config.Invoke(parameter);
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            var actual = string.Join("&", container);
-
-            Assert.Equal(expectd, actual);
+            Assert.Equal(expectd.ToString(), container.ToString());
         }
 
         /// <summary>

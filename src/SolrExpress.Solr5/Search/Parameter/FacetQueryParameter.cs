@@ -10,6 +10,7 @@ using System.Linq;
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : IDocument
     {
@@ -52,6 +53,11 @@ namespace SolrExpress.Solr5.Search.Parameter
             if (parameter.Minimum.HasValue)
             {
                 array.Add(new JProperty("mincount", parameter.Minimum.Value));
+            }
+
+            if (parameter.Limit.HasValue)
+            {
+                array.Add(new JProperty("limit", parameter.Limit.Value));
             }
 
             if (parameter.SortType.HasValue)
