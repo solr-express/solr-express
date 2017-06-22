@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32F031EB-53BE-4E6F-A909-82F09B392FBA}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,49 +14,48 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B5C485F0-CA4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{825EC129-468B-4AAF-AB49-4A31F7B31294}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Core", "src\SolrExpress.Core\SolrExpress.Core.xproj", "{A933C493-3B4B-4D41-8A5F-5974AC065CAA}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.xproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5", "src\SolrExpress.Solr5\SolrExpress.Solr5.xproj", "{F548730D-927D-4D59-AA95-1FC1D52F5040}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4.IntegrationTests", "test\SolrExpress.Solr4.IntegrationTests\SolrExpress.Solr4.IntegrationTests.xproj", "{8B23BBDD-34D2-4E89-A39E-6BDE2CA9794F}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4.UnitTests", "test\SolrExpress.Solr4.UnitTests\SolrExpress.Solr4.UnitTests.xproj", "{3914BC03-09B4-4692-8E9B-D42B8E720FCF}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5.IntegrationTests", "test\SolrExpress.Solr5.IntegrationTests\SolrExpress.Solr5.IntegrationTests.xproj", "{9D79A0BD-DD53-4CD1-9132-E684EB866F12}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5.UnitTests", "test\SolrExpress.Solr5.UnitTests\SolrExpress.Solr5.UnitTests.xproj", "{88F2DEF0-F484-4E63-8BAE-310673426DDD}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.SimpleUse", "sample\Sample.SimpleUse\Sample.SimpleUse.xproj", "{0D80822E-574F-44A1-9F98-EABEE95CFD10}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.Ui", "sample\Sample.Ui\Sample.Ui.xproj", "{7F1A48D8-87FF-4BC9-B886-E21B7A3A5E5F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{18BA4609-5C3C-48B5-BE77-F8B316014E74}"
 	ProjectSection(SolutionItems) = preProject
 		.travis.yml = .travis.yml
-		global.json = global.json
 		NuGet.config = NuGet.config
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{0A60AC6A-BBA5-4D35-B85C-92B36513C72B}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Benchmarks.Helper", "benchmarks\SolrExpress.Benchmarks.Helper\SolrExpress.Benchmarks.Helper.xproj", "{85C86153-5037-4CE1-BE53-171B33DC4147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Core", "src\SolrExpress.Core\SolrExpress.Core.csproj", "{A933C493-3B4B-4D41-8A5F-5974AC065CAA}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Core.Benchmarks", "benchmarks\SolrExpress.Core.Benchmarks\SolrExpress.Core.Benchmarks.xproj", "{920F3D29-07D8-406F-9CB9-93B1195935E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.csproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr4.Benchmarks", "benchmarks\SolrExpress.Solr4.Benchmarks\SolrExpress.Solr4.Benchmarks.xproj", "{6FC5D633-4FC7-4679-A6DD-E600B9490AB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5", "src\SolrExpress.Solr5\SolrExpress.Solr5.csproj", "{F548730D-927D-4D59-AA95-1FC1D52F5040}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Solr5.Benchmarks", "benchmarks\SolrExpress.Solr5.Benchmarks\SolrExpress.Solr5.Benchmarks.xproj", "{9C8688C7-23BA-4669-BFA8-81BCBA517251}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4.IntegrationTests", "test\SolrExpress.Solr4.IntegrationTests\SolrExpress.Solr4.IntegrationTests.csproj", "{8B23BBDD-34D2-4E89-A39E-6BDE2CA9794F}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Core.UnitTests", "test\SolrExpress.Core.UnitTests\SolrExpress.Core.UnitTests.xproj", "{354FB40B-1454-4985-AD22-2E2837060D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4.UnitTests", "test\SolrExpress.Solr4.UnitTests\SolrExpress.Solr4.UnitTests.csproj", "{3914BC03-09B4-4692-8E9B-D42B8E720FCF}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.MultipleContext", "sample\Sample.MultipleContext\Sample.MultipleContext.xproj", "{DF10BB2B-3C17-4A7B-B6D0-12EF9FA0F067}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.IntegrationTests", "test\SolrExpress.Solr5.IntegrationTests\SolrExpress.Solr5.IntegrationTests.csproj", "{9D79A0BD-DD53-4CD1-9132-E684EB866F12}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sample.WebApi.Net46", "sample\Sample.WebApi.Net46\Sample.WebApi.Net46.xproj", "{CDFE085D-AA14-484A-AC97-FACD514CCE37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.UnitTests", "test\SolrExpress.Solr5.UnitTests\SolrExpress.Solr5.UnitTests.csproj", "{88F2DEF0-F484-4E63-8BAE-310673426DDD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SolrExpress.Benchmarks", "benchmarks\SolrExpress.Benchmarks\SolrExpress.Benchmarks.xproj", "{AA3BF950-40E0-4668-A785-CD0BBE794AF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.SimpleUse", "sample\Sample.SimpleUse\Sample.SimpleUse.csproj", "{0D80822E-574F-44A1-9F98-EABEE95CFD10}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.Ui", "sample\Sample.Ui\Sample.Ui.csproj", "{7F1A48D8-87FF-4BC9-B886-E21B7A3A5E5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks.Helper", "benchmarks\SolrExpress.Benchmarks.Helper\SolrExpress.Benchmarks.Helper.csproj", "{85C86153-5037-4CE1-BE53-171B33DC4147}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Core.Benchmarks", "benchmarks\SolrExpress.Core.Benchmarks\SolrExpress.Core.Benchmarks.csproj", "{920F3D29-07D8-406F-9CB9-93B1195935E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4.Benchmarks", "benchmarks\SolrExpress.Solr4.Benchmarks\SolrExpress.Solr4.Benchmarks.csproj", "{6FC5D633-4FC7-4679-A6DD-E600B9490AB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.Benchmarks", "benchmarks\SolrExpress.Solr5.Benchmarks\SolrExpress.Solr5.Benchmarks.csproj", "{9C8688C7-23BA-4669-BFA8-81BCBA517251}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Core.UnitTests", "test\SolrExpress.Core.UnitTests\SolrExpress.Core.UnitTests.csproj", "{354FB40B-1454-4985-AD22-2E2837060D47}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.MultipleContext", "sample\Sample.MultipleContext\Sample.MultipleContext.csproj", "{DF10BB2B-3C17-4A7B-B6D0-12EF9FA0F067}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.WebApi.Net46", "sample\Sample.WebApi.Net46\Sample.WebApi.Net46.csproj", "{CDFE085D-AA14-484A-AC97-FACD514CCE37}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks", "benchmarks\SolrExpress.Benchmarks\SolrExpress.Benchmarks.csproj", "{AA3BF950-40E0-4668-A785-CD0BBE794AF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
