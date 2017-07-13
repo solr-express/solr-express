@@ -19,7 +19,7 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>4.2.5</Version>
+    <Version>4.2.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
