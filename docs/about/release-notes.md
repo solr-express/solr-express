@@ -2,31 +2,37 @@
 
 Notes about releases
 
+## [4.2.6] - 2017-07-13
+
+### Enhancement
+
+* Updated NewtonSoft.Json and Flurl (tks [@Baklap4](https://github.com/baklap4))
+
 ## [4.2.5] - 2017-04-25
 
 ### Bug fix
-- Updating/inserting a document fails (#211) (tks @Baklap4)
+- Updating/inserting a document fails ([#211](https://github.com/solr-express/solr-express/issues/211)) (tks [@Baklap4](https://github.com/baklap4))
 
 ---
 
 ## [4.2.4] - 2017-03-19
 
 ### Enhancement
-- Implements #203 in .Net 4.5 framework (#204)
+- Implements #203 in .Net 4.5 framework ([#204](https://github.com/solr-express/solr-express/issues/204))
 
 ---
 
 ## [4.2.3] - 2017-03-19
 
 ### Enhancement
-- Implements #203 in .Net 4.5 framework (#204)
+- Implements #203 in .Net 4.5 framework ([#204](https://github.com/solr-express/solr-express/issues/204))
 
 ---
 
 ## [4.2.2] - 2017-03-19
 
 ### Bug fix
-- Error 501 when use SolrCloud  (#199, #203)
+- Error 501 when use SolrCloud  ([#199](https://github.com/solr-express/solr-express/issues/197), [#203](https://github.com/solr-express/solr-express/issues/203))
 
 ---
 
