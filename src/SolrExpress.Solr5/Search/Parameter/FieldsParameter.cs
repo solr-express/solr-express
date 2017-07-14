@@ -35,7 +35,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             foreach (var expression in parameter.FieldExpressions)
             {
-                var value = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(expression);
+                var value = ((IFieldsParameter<TDocument>)this).ExpressionBuilder.GetFieldName(expression);
 
                 jArray.Add(value);
             }
