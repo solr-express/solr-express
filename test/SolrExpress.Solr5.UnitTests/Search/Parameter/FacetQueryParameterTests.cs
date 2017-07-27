@@ -24,53 +24,142 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 Action<IFacetQueryParameter<TestDocument>> config1 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
                 };
-                var expected1 = JObject.Parse("{}");
+                var expected1 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                            ""query"": {
+                                ""q"": ""avg('Y')""
+                            }
+                        }
+                    }
+                }");
 
                 Action<IFacetQueryParameter<TestDocument>> config2 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
+                    facet.Minimum = 1;
                 };
-                var expected2 = JObject.Parse("{}");
+                var expected2 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""mincount"": 1
+                      }
+                    }
+                  }
+                }");
 
                 Action<IFacetQueryParameter<TestDocument>> config3 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
                     facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
                 };
-                var expected3 = JObject.Parse("{}");
+                var expected3 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""mincount"": 1,
+                        ""sort"": {
+                          ""count"": ""asc""
+                        }
+                      }
+                    }
+                  }
+                }");
 
                 Action<IFacetQueryParameter<TestDocument>> config4 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
-                    facet.Minimum = 1;
-                    facet.SortType = FacetSortType.CountAsc;
+                    facet.SortType = FacetSortType.IndexAsc;
                 };
-                var expected4 = JObject.Parse("{}");
+                var expected4 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""sort"": {
+                          ""index"": ""asc""
+                        }
+                      }
+                    }
+                  }
+                }");
 
                 Action<IFacetQueryParameter<TestDocument>> config5 = facet =>
                 {
-                    facet.AliasName = "X";
-                    facet.SortType = FacetSortType.IndexAsc;
-                };
-                var expected5 = JObject.Parse("{}");
-
-                Action<IFacetQueryParameter<TestDocument>> config6 = facet =>
-                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
                     facet.SortType = FacetSortType.CountDesc;
                 };
-                var expected6 = JObject.Parse("{}");
-
-                Action<IFacetQueryParameter<TestDocument>> config7 = facet =>
+                var expected5 = JObject.Parse(@"
                 {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""sort"": {
+                          ""count"": ""desc""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetQueryParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
                     facet.SortType = FacetSortType.IndexDesc;
                 };
-                var expected7 = JObject.Parse("{}");
+                var expected6 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""sort"": {
+                          ""index"": ""desc""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetQueryParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
+                    facet.Limit = 10;
+                };
+                var expected7 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""mincount"": 1,
+                        ""limit"": 10,
+                        ""sort"": {
+                          ""count"": ""asc""
+                        }
+                      }
+                    }
+                  }
+                }");
 
                 Action<IFacetQueryParameter<TestDocument>> config8 = facet =>
                 {
@@ -79,19 +168,29 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     facet.Minimum = 1;
                     facet.SortType = FacetSortType.CountAsc;
                     facet.Limit = 10;
-                };
-                var expected8 = JObject.Parse("{}");
-
-                Action<IFacetQueryParameter<TestDocument>> config9 = facet =>
-                {
-                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
-                    facet.AliasName = "X";
-                    facet.Minimum = 1;
-                    facet.SortType = FacetSortType.CountAsc;
-                    facet.Limit = 10;
                     facet.Excludes = new string[] { "tag1", "tag2" };
                 };
-                var expected9 = JObject.Parse("{}");
+                var expected8 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""domain"": {
+                          ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                          ]
+                        },
+                        ""mincount"": 1,
+                        ""limit"": 10,
+                        ""sort"": {
+                          ""count"": ""asc""
+                        }
+                      }
+                    }
+                  }
+                }");
 
                 return new[]
                 {
@@ -102,8 +201,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config5, expected5 },
                     new object[] { config6, expected6 },
                     new object[] { config7, expected7 },
-                    new object[] { config8, expected8 },
-                    new object[] { config9, expected9 },
+                    new object[] { config8, expected8 }
                 };
             }
         }
