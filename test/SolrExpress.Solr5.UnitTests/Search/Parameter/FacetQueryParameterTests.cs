@@ -14,7 +14,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
 {
     public class FacetQueryParameterTests
     {
-        public static IEnumerable<object[]> Data
+        public static IEnumerable<object[]> Data1
         {
             get
             {
@@ -24,58 +24,23 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 Action<IFacetQueryParameter<TestDocument>> config1 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
-                    facet.AliasName = "X";
                 };
-                var expected1 = JObject.Parse(@"
-                {
-                  ""facet"": {
-                    ""X"": {
-                      ""query"": {
-                        ""q"": ""avg('Y')""
-                      }
-                    }
-                  }
-                }");
+                var expected1 = JObject.Parse("{}");
 
                 Action<IFacetQueryParameter<TestDocument>> config2 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
-                    facet.Minimum = 1;
                 };
-                var expected2 = JObject.Parse(@"
-                {
-                  ""facet"": {
-                    ""X"": {
-                      ""query"": {
-                        ""q"": ""avg('Y')"",
-                        ""mincount"": 1
-                      }
-                    }
-                  }
-                }");
+                var expected2 = JObject.Parse("{}");
 
                 Action<IFacetQueryParameter<TestDocument>> config3 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
                     facet.Minimum = 1;
-                    facet.SortType = FacetSortType.CountAsc;
                 };
-                var expected3 = JObject.Parse(@"
-                {
-                  ""facet"": {
-                    ""X"": {
-                      ""query"": {
-                        ""q"": ""avg('Y')"",
-                        ""mincount"": 1,
-                        ""sort"": {
-                          ""count"": ""asc""
-                        }
-                      }
-                    }
-                  }
-                }");
+                var expected3 = JObject.Parse("{}");
 
                 Action<IFacetQueryParameter<TestDocument>> config4 = facet =>
                 {
@@ -83,25 +48,41 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     facet.AliasName = "X";
                     facet.Minimum = 1;
                     facet.SortType = FacetSortType.CountAsc;
-                    facet.Limit = 10;
                 };
-                var expected4 = JObject.Parse(@"
-                {
-                  ""facet"": {
-                    ""X"": {
-                      ""query"": {
-                        ""q"": ""avg('Y')"",
-                        ""mincount"": 1,
-                        ""limit"": 10,
-                        ""sort"": {
-                          ""count"": ""asc""
-                        }
-                      }
-                    }
-                  }
-                }");
+                var expected4 = JObject.Parse("{}");
 
                 Action<IFacetQueryParameter<TestDocument>> config5 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.SortType = FacetSortType.IndexAsc;
+                };
+                var expected5 = JObject.Parse("{}");
+
+                Action<IFacetQueryParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.SortType = FacetSortType.CountDesc;
+                };
+                var expected6 = JObject.Parse("{}");
+
+                Action<IFacetQueryParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.SortType = FacetSortType.IndexDesc;
+                };
+                var expected7 = JObject.Parse("{}");
+
+                Action<IFacetQueryParameter<TestDocument>> config8 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Minimum = 1;
+                    facet.SortType = FacetSortType.CountAsc;
+                    facet.Limit = 10;
+                };
+                var expected8 = JObject.Parse("{}");
+
+                Action<IFacetQueryParameter<TestDocument>> config9 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
@@ -110,27 +91,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     facet.Limit = 10;
                     facet.Excludes = new string[] { "tag1", "tag2" };
                 };
-                var expected5 = JObject.Parse(@"
-                {
-                  ""facet"": {
-                    ""X"": {
-                      ""query"": {
-                        ""q"": ""avg('Y')"",
-                        ""domain"": {
-                          ""excludeTags"": [
-                            ""tag1"",
-                            ""tag2""
-                          ]
-                        },
-                        ""mincount"": 1,
-                        ""limit"": 10,
-                        ""sort"": {
-                          ""count"": ""asc""
-                        }
-                      }
-                    }
-                  }
-                }");
+                var expected9 = JObject.Parse("{}");
 
                 return new[]
                 {
@@ -138,7 +99,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config2, expected2 },
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
-                    new object[] { config5, expected5 }
+                    new object[] { config5, expected5 },
+                    new object[] { config6, expected6 },
+                    new object[] { config7, expected7 },
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 },
                 };
             }
         }
@@ -149,7 +114,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]
-        [MemberData(nameof(Data))]
+        [MemberData(nameof(Data1))]
         public void FacetQueryParameterTheory001(Action<IFacetQueryParameter<TestDocument>> config, JObject expectd)
         {
             // Arrange
@@ -162,9 +127,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            var actual = string.Join("&", container);
-
-            Assert.Equal(expectd.ToString(), actual.ToString());
+            Assert.Equal(expectd.ToString(), container.ToString());
         }
 
         /// <summary>

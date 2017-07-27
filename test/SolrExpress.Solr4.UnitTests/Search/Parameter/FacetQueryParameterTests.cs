@@ -94,9 +94,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
-            expressionBuilder.LoadDocument();
-            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(expressionBuilder);
+            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>();
             config.Invoke(parameter);
 
             // Act
@@ -148,9 +146,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
-            expressionBuilder.LoadDocument();
-            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(expressionBuilder);
+            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>();
             config.Invoke(parameter);
 
             // Act / Assert

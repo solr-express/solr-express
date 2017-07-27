@@ -1,5 +1,4 @@
-﻿using SolrExpress.Builder;
-using SolrExpress.Search;
+﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
@@ -13,14 +12,8 @@ namespace SolrExpress.Solr4.Search.Parameter
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : IDocument
     {
-        private readonly ExpressionBuilder<TDocument> _expressionBuilder;
         private readonly List<string> _result = new List<string>();
-
-        public FacetQueryParameter(ExpressionBuilder<TDocument> expressionBuilder)
-        {
-            this._expressionBuilder = expressionBuilder;
-        }
-
+        
         string IFacetQueryParameter<TDocument>.AliasName { get; set; }
         
         string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
