@@ -9,7 +9,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Documents list</param>
         public static SearchResultBuilder<TDocument> Document<TDocument>(this SearchResultBuilder<TDocument> searchResult)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResult.ServiceProvider.GetService<IDocumentResult<TDocument>>();
             searchResult.Add(result);
@@ -22,7 +22,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Facet field list</param>
         public static SearchResultBuilder<TDocument> Facets<TDocument>(this SearchResultBuilder<TDocument> searchResult)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResult.ServiceProvider.GetService<IFacetsResult<TDocument>>();
             searchResult.Add(result);
@@ -35,7 +35,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Informations about search execution</param>
         public static SearchResultBuilder<TDocument> Information<TDocument>(this SearchResultBuilder<TDocument> searchResult)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResult.ServiceProvider.GetService<IInformationResult<TDocument>>();
             searchResult.Add(result);

@@ -14,7 +14,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpression">Expressions used to find field name</param>
         public static ISortParameter<TDocument> FieldExpression<TDocument>(this ISortParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FieldExpression = fieldExpression;
 
@@ -27,7 +27,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         public static ISortParameter<TDocument> Ascendent<TDocument>(this ISortParameter<TDocument> parameter, bool ascendent)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Ascendent = ascendent;
 

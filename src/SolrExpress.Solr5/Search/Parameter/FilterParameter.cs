@@ -7,7 +7,7 @@ using SolrExpress.Utility;
 namespace SolrExpress.Solr5.Search.Parameter
 {
     public class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JToken _result;
 

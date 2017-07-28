@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use in query parameter
     /// </summary>
     public interface IQueryParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Parameter to include in query

@@ -63,3 +63,4 @@ DRAFT
 - Move RequestHandler to Search.Parameter
 - Drop InvalidParameterTypeException
 - Rename SimpleLogInConsoleResultInterceptor to SimpleLogInConsole
+- **SolrExpress.IDocument** dropped, use concret class **Document** instead

@@ -8,7 +8,7 @@ namespace SolrExpress
     /// SOLR document collection
     /// </summary>
     public class DocumentCollection<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private ISolrExpressServiceProvider<TDocument> _serviceProvider;
 

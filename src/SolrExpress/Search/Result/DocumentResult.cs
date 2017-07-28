@@ -11,7 +11,7 @@ namespace SolrExpress.Search.Result
     /// </summary>
     /// <typeparam name="TDocument">Type of the document returned in the search</typeparam>
     public sealed class DocumentResult<TDocument> : IDocumentResult<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private bool executed = false;
 

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     public class BoostParameter<TDocument> : IBoostParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
 

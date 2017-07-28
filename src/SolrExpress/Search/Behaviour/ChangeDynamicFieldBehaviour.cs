@@ -8,7 +8,7 @@ namespace SolrExpress.Search.Behaviour
     /// Change behaviour about dynamic field
     /// </summary>
     public class ChangeDynamicFieldBehaviour<TDocument> : IChangeDynamicFieldBehaviour<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         public ChangeDynamicFieldBehaviour(ExpressionBuilder<TDocument> expressionBuilder)
         {

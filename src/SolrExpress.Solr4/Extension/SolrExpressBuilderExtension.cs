@@ -15,7 +15,7 @@ namespace SolrExpress.Solr4.Extension
         /// <param name="solrExpressBuilder">Builder to control SolrExpress behavior</param>
         /// <returns>Builder to control SolrExpress behavior</returns>
         public static SolrExpressBuilder<TDocument> UseSolr5<TDocument>(this SolrExpressBuilder<TDocument> solrExpressBuilder)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             solrExpressBuilder
                 .ServiceProvider

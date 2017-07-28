@@ -10,7 +10,7 @@ namespace SolrExpress.Search.Result
     /// Information about search result
     /// </summary>
     public class InformationResult<TDocument> : IInformationResult<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private bool executed = false;
         private bool withElapsedTime = false;

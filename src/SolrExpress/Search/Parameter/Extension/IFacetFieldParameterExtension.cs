@@ -14,7 +14,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
         public static IFacetFieldParameter<TDocument> FieldExpression<TDocument>(this IFacetFieldParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FieldExpression = fieldExpression;
 
@@ -27,7 +27,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="sortType">Sort type of result of facet</param>
         public static IFacetFieldParameter<TDocument> SortType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetSortType sortType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.SortType = sortType;
 
@@ -40,7 +40,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="parameter">Parameter to congigure</param>
         /// <param name="minimum">Minimum count of itens in facet's result</param>
         public static IFacetFieldParameter<TDocument> Minimum<TDocument>(this IFacetFieldParameter<TDocument> parameter, int minimum)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Minimum = minimum;
 
@@ -53,7 +53,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="limit">Limit of itens in facet's result</param>
         public static IFacetFieldParameter<TDocument> Limit<TDocument>(this IFacetFieldParameter<TDocument> parameter, int limit)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Limit = limit;
 
@@ -66,7 +66,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public static IFacetFieldParameter<TDocument> Excludes<TDocument>(this IFacetFieldParameter<TDocument> parameter, params string[] excludes)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Excludes = excludes;
 

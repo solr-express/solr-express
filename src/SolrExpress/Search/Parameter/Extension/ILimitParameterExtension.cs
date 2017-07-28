@@ -11,7 +11,7 @@
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="value">Value of limit</param>
         public static ILimitParameter<TDocument> Value<TDocument>(this ILimitParameter<TDocument> parameter, long value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Value = value;
 

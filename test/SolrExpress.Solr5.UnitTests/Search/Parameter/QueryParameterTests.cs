@@ -20,7 +20,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void QueryParameter001()
         {
             // Arrange
-            var expected = JObject.Parse("{\"query\": \"_id_:\\\"ITEM01\\\"\"}");
+            var expected = JObject.Parse("{\"query\": \"id:\\\"ITEM01\\\"\"}");
             var container = new JObject();
             var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
             var solrExpressOptions = new SolrExpressOptions();

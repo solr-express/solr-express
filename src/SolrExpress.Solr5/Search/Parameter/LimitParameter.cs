@@ -5,7 +5,7 @@ using SolrExpress.Search;
 namespace SolrExpress.Solr5.Search.Parameter
 {
     public class LimitParameter<TDocument> : ILimitParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JProperty _result;
 

@@ -8,7 +8,7 @@ namespace SolrExpress.Search
     /// Signatures to indicate use of property FieldExpression
     /// </summary>
     public interface ISearchItemFieldExpression<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Build expressions engine

@@ -13,7 +13,7 @@ namespace SolrExpress.Solr4.Search.Parameter
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
     public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly List<string> _result = new List<string>();
 

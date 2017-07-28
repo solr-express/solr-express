@@ -6,7 +6,7 @@ using SolrExpress.Utility;
 namespace SolrExpress.Update
 {
     public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         string IAtomicUpdate<TDocument>.Execute(params TDocument[] documents)
         {

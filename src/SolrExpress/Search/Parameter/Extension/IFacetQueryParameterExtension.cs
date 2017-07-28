@@ -14,7 +14,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="aliasName">Name of alias added in query</param>
         public static IFacetQueryParameter<TDocument> AliasName<TDocument>(this IFacetQueryParameter<TDocument> parameter, string aliasName)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.AliasName = aliasName;
 
@@ -27,7 +27,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Query used to make facet</param>
         public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery query)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Query = query;
 
@@ -40,7 +40,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="sortType">Sort type of result of facet</param>
         public static IFacetQueryParameter<TDocument> SortType<TDocument>(this IFacetQueryParameter<TDocument> parameter, FacetSortType sortType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.SortType = sortType;
 
@@ -53,7 +53,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public static IFacetQueryParameter<TDocument> Excludes<TDocument>(this IFacetQueryParameter<TDocument> parameter, params string[] excludes)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Excludes = excludes;
 
@@ -66,7 +66,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="parameter">Parameter to congigure</param>
         /// <param name="minimum">Minimum count of itens in facet's result</param>
         public static IFacetQueryParameter<TDocument> Minimum<TDocument>(this IFacetQueryParameter<TDocument> parameter, int minimum)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Minimum = minimum;
 
@@ -79,7 +79,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="parameter">Parameter to congigure</param>
         /// <param name="limit">Limit of itens in facet's result</param>
         public static IFacetQueryParameter<TDocument> Limit<TDocument>(this IFacetQueryParameter<TDocument> parameter, int limit)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Limit = limit;
 

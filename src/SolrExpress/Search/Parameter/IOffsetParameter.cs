@@ -4,7 +4,7 @@
     /// Signatures to use in offset parameter
     /// </summary>
     public interface IOffsetParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Value of offset

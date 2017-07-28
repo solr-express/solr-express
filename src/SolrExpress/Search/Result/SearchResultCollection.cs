@@ -7,7 +7,7 @@ namespace SolrExpress.Search.Result
     /// Search result collection
     /// </summary>
     public sealed class SearchResultCollection<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private List<ISearchResult> _internalList = new List<ISearchResult>();
 

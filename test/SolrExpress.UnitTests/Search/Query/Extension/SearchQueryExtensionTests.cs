@@ -101,7 +101,7 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         /// <summary>
         /// Where   Using a SearchQuery instance and SearchQueryExtension methods
         /// When    Invoking method "Field" using value q => q.Id
-        /// What    Create query _id_:
+        /// What    Create query id:
         /// </summary>
         [Fact]
         public void SearchQueryFact006()
@@ -116,7 +116,7 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
             var result = searchQuery.Field(q => q.Id).Execute();
 
             // Assert
-            Assert.Equal("_id_", result);
+            Assert.Equal("id", result);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use in facet range parameter
     /// </summary>
     public interface IFacetRangeParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Name of alias added in query

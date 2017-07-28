@@ -23,8 +23,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""_id_:\""X\"""",
-                ""_score_:\""Y\""""
+                ""id:\""X\"""",
+                ""score:\""Y\""""
               ]
             }");
             var container = new JObject();
@@ -58,7 +58,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""{!tag=tag1}_id_:\""X\""""
+                ""{!tag=tag1}id:\""X\""""
               ]
             }");
             var container = new JObject();

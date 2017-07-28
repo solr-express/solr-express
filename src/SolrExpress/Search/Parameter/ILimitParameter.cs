@@ -4,7 +4,7 @@
     /// Signatures to use in limit parameter
     /// </summary>
     public interface ILimitParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Value of limit

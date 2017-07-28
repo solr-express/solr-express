@@ -10,7 +10,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Documents list</param>
         public static SearchResultCollection<TDocument> GetDocument<TDocument>(this SearchResultCollection<TDocument> searchResultCollection, out IEnumerable<TDocument> data)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResultCollection.GetList().First(q => q is IDocumentResult<TDocument>);
 
@@ -24,7 +24,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Facet field list</param>
         public static SearchResultCollection<TDocument> GetFacets<TDocument>(this SearchResultCollection<TDocument> searchResultCollection, out IEnumerable<FacetKeyValue> data)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResultCollection.GetList().First(q => q is IFacetsResult<TDocument>);
 
@@ -38,7 +38,7 @@ namespace SolrExpress.Search.Result.Extension
         /// </summary>
         /// <param name="data">Informations about search execution</param>
         public static SearchResultCollection<TDocument> GetInformation<TDocument>(this SearchResultCollection<TDocument> searchResultCollection, out Information data)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var result = searchResultCollection.GetList().First(q => q is IInformationResult<TDocument>);
 

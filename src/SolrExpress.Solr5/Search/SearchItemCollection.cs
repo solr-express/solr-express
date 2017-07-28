@@ -16,7 +16,7 @@ namespace SolrExpress.Solr5.Search
     /// Parameter collection especific to SOLR 5
     /// </summary>
     public class SearchItemCollection<TDocument> : ISearchItemCollection<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly List<ISearchItem> _searchItems = new List<ISearchItem>();
         private readonly SolrConnection _solrConnection;

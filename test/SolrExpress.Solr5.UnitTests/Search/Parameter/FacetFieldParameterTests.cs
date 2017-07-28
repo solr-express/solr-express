@@ -27,7 +27,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   ""facet"": {
                     ""Id"": {
                       ""terms"": {
-                        ""field"": ""_id_""
+                        ""field"": ""id""
                       }
                     }
                   }
@@ -42,7 +42,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   ""facet"": {
                     ""Id"": {
                       ""terms"": {
-                        ""field"": ""_id_"",
+                        ""field"": ""id"",
                         ""mincount"": 1
                       }
                     }
@@ -58,7 +58,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   ""facet"": {
                     ""Id"": {
                       ""terms"": {
-                        ""field"": ""_id_"",
+                        ""field"": ""id"",
                         ""mincount"": 1,
                         ""sort"": {
                           ""count"": ""asc""
@@ -77,7 +77,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   ""facet"": {
                     ""Id"": {
                       ""terms"": {
-                        ""field"": ""_id_"",
+                        ""field"": ""id"",
                         ""mincount"": 1,
                         ""sort"": {
                           ""count"": ""asc""
@@ -97,7 +97,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     ""facet"": {
                     ""Id"": {
                         ""terms"": {
-                        ""field"": ""_id_"",
+                        ""field"": ""id"",
                         ""mincount"": 1,
                         ""domain"": {
                             ""excludeTags"": [

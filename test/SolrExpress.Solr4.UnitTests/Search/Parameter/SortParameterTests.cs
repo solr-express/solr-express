@@ -33,7 +33,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("sort=_id_ asc", container[0]);
+            Assert.Equal("sort=id asc", container[0]);
         }
 
         /// <summary>

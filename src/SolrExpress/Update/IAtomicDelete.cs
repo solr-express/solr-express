@@ -4,7 +4,7 @@
     /// Signatures to remove informed documents from SOLR collection
     /// </summary>
     public interface IAtomicDelete<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Remove informed documents from SOLR collection

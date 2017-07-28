@@ -9,7 +9,7 @@ namespace SolrExpress.Search
     /// Signature used to parameter collection
     /// </summary>
     public interface ISearchItemCollection<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Get all parameters in internal list

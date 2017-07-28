@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace SolrExpress.Search
 {
     public interface ISearchItemFieldExpressions<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Build expressions engine

@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 {
     [FieldMustBeIndexedTrue]
     public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
 

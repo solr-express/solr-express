@@ -3,7 +3,7 @@
 namespace SolrExpress.DI.SimpleInjector
 {
     public sealed class SolrExpressServiceProvider<TDocument> : ISolrExpressServiceProvider<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly Container _container = new Container();
 

@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use in facet spatial parameter
     /// </summary>
     public interface IFacetSpatialParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Name of alias added in query

@@ -10,7 +10,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Not mapped parameter</returns>
         public static IAnyParameter Any<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IAnyParameter>();
         }
@@ -21,7 +21,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Boost parameter</returns>
         public static IBoostParameter<TDocument> Boost<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IBoostParameter<TDocument>>();
         }
@@ -32,7 +32,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Facet field parameter</returns>
         public static IFacetFieldParameter<TDocument> FacetField<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFacetFieldParameter<TDocument>>();
         }
@@ -43,7 +43,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Facet limit parameter</returns>
         public static IFacetLimitParameter<TDocument> FacetLimit<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFacetLimitParameter<TDocument>>();
         }
@@ -54,7 +54,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Facet query parameter</returns>
         public static IFacetQueryParameter<TDocument> FacetQuery<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFacetQueryParameter<TDocument>>();
         }
@@ -65,7 +65,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Facet range parameter</returns>
         public static IFacetRangeParameter<TDocument> FacetRange<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFacetRangeParameter<TDocument>>();
         }
@@ -76,7 +76,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Facet range parameter</returns>
         public static IFacetSpatialParameter<TDocument> FacetSpatial<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFacetSpatialParameter<TDocument>>();
         }
@@ -87,7 +87,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Fields parameter</returns>
         public static IFieldsParameter<TDocument> Fields<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFieldsParameter<TDocument>>();
         }
@@ -98,7 +98,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Filter parameter</returns>
         public static IFilterParameter<TDocument> Filter<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IFilterParameter<TDocument>>();
         }
@@ -109,7 +109,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Limit parameter</returns>
         public static ILimitParameter<TDocument> Limit<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<ILimitParameter<TDocument>>();
         }
@@ -120,7 +120,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Minimum should match</returns>
         public static IMinimumShouldMatchParameter<TDocument> MinimumShouldMatch<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IMinimumShouldMatchParameter<TDocument>>();
         }
@@ -131,7 +131,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Offset parameter</returns>
         public static IOffsetParameter<TDocument> Offset<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IOffsetParameter<TDocument>>();
         }
@@ -142,7 +142,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Query field parameter</returns>
         public static IQueryFieldParameter<TDocument> QueryField<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IQueryFieldParameter<TDocument>>();
         }
@@ -153,7 +153,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Query parameter</returns>
         public static IQueryParameter<TDocument> Query<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<IQueryParameter<TDocument>>();
         }
@@ -164,7 +164,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Sort parameter</returns>
         public static ISortParameter<TDocument> Sort<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<ISortParameter<TDocument>>();
         }
@@ -175,7 +175,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Sort parameter configured to do a random sort</returns>
         public static ISortRandomlyParameter<TDocument> SortRandomly<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<ISortRandomlyParameter<TDocument>>();
         }
@@ -186,7 +186,7 @@ namespace SolrExpress.Extension
         /// <param name="serviceProvider">Dependency injection engine</param>
         /// <returns>Spatial filter parameter</returns>
         public static ISpatialFilterParameter<TDocument> SpatialFilter<TDocument>(this ISolrExpressServiceProvider<TDocument> serviceProvider)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             return serviceProvider.GetService<ISpatialFilterParameter<TDocument>>();
         }

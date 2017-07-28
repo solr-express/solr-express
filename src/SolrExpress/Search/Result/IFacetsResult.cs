@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Result
 {
     public interface IFacetsResult<TDocument> : ISearchResult
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Facet data

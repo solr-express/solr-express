@@ -8,7 +8,7 @@ namespace SolrExpress.Search.Query
     /// Solr queries container with TDocument link
     /// </summary>
     public class SearchQuery<TDocument> : SearchQuery
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly ExpressionBuilder<TDocument> _expressionBuilder;
 

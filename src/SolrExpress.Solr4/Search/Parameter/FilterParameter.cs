@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     public class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
         

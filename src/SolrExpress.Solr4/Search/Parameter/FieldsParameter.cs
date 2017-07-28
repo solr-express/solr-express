@@ -11,7 +11,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 {
     [FieldMustBeStoredTrue]
     public class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
 

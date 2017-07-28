@@ -10,7 +10,7 @@ namespace SolrExpress.Solr4.Search.Parameter
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly List<string> _result = new List<string>();
         

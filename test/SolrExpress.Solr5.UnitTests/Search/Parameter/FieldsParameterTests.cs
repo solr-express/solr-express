@@ -26,8 +26,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(@"
             {
               ""fields"": [
-                ""_id_"",
-                ""_score_""
+                ""id"",
+                ""score""
               ]
             }");
             var container = new JObject();

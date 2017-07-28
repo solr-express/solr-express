@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use in facet query parameter
     /// </summary>
     public interface IFacetQueryParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Name of alias added in query

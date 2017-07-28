@@ -10,7 +10,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 {
     [FieldMustBeStoredTrue]
     public class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JProperty _result;
 

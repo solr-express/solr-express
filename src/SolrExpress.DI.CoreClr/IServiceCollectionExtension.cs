@@ -15,7 +15,7 @@ namespace SolrExpress.DI.CoreClr
         /// <param name="serviceCollection">Service collection used in .Net Core DI engine</param>
         /// <returns>Service collection used in .Net Core DI engine</returns>
         public static IServiceCollection AddSolrExpress<TDocument>(this IServiceCollection serviceCollection, Action<SolrExpressBuilder<TDocument>> builder)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);

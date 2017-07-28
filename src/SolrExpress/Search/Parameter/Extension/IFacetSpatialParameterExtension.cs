@@ -16,7 +16,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="aliasName">Name of alias added in query</param>
         public static IFacetSpatialParameter<TDocument> AliasName<TDocument>(this IFacetSpatialParameter<TDocument> parameter, string aliasName)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.AliasName = aliasName;
 
@@ -29,7 +29,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="functionType">Function used in spatial filter</param>
         public static IFacetSpatialParameter<TDocument> FunctionType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SpatialFunctionType functionType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FunctionType = functionType;
 
@@ -42,7 +42,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
         public static IFacetSpatialParameter<TDocument> FieldExpression<TDocument>(this IFacetSpatialParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FieldExpression = fieldExpression;
 
@@ -55,7 +55,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="centerPoint">Center point to spatial filter</param>
         public static IFacetSpatialParameter<TDocument> CenterPoint<TDocument>(this IFacetSpatialParameter<TDocument> parameter, GeoCoordinate centerPoint)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.CenterPoint = centerPoint;
 
@@ -68,7 +68,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="distance">Distance from center point</param>
         public static IFacetSpatialParameter<TDocument> Distance<TDocument>(this IFacetSpatialParameter<TDocument> parameter, decimal distance)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Distance = distance;
 
@@ -81,7 +81,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="sortType">Sort type of result of facet</param>
         public static IFacetSpatialParameter<TDocument> SortType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, FacetSortType sortType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.SortType = sortType;
 
@@ -94,7 +94,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public static IFacetSpatialParameter<TDocument> Excludes<TDocument>(this IFacetSpatialParameter<TDocument> parameter, params string[] excludes)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Excludes = excludes;
 

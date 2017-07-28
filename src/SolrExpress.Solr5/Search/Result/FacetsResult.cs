@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr5.Search.Result
 {
     public class FacetsResult<TDocument> : IFacetsResult<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         IEnumerable<FacetKeyValue> IFacetsResult<TDocument>.Data { get; set; }
 

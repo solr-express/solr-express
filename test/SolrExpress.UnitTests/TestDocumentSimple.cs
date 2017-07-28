@@ -1,9 +1,7 @@
 ﻿namespace SolrExpress.UnitTests
 {
-    public class TestDocumentSimple : IDocument
+    public class TestDocumentSimple : Document
     {
-        public string Id { get; set; }
-
         public string Text { get; set; }
     }
 }

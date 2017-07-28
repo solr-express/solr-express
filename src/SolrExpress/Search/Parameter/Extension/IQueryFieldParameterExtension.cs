@@ -11,7 +11,7 @@
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="expression">Query used to make query field</param>
         public static IQueryFieldParameter<TDocument> Expression<TDocument>(this IQueryFieldParameter<TDocument> parameter, string expression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Expression = expression;
 

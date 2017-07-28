@@ -15,7 +15,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="aliasName"Name of alias added in query></param>
         public static IFacetRangeParameter<TDocument> AliasName<TDocument>(this IFacetRangeParameter<TDocument> parameter, string aliasName)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.AliasName = aliasName;
 
@@ -28,7 +28,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
         public static IFacetRangeParameter<TDocument> FieldExpression<TDocument>(this IFacetRangeParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FieldExpression = fieldExpression;
 
@@ -41,7 +41,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="gap">Size of each range bucket to make facet</param>
         public static IFacetRangeParameter<TDocument> Gap<TDocument>(this IFacetRangeParameter<TDocument> parameter, string gap)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Gap = gap;
 
@@ -54,7 +54,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="start">Lower bound to make facet</param>
         public static IFacetRangeParameter<TDocument> Start<TDocument>(this IFacetRangeParameter<TDocument> parameter, string start)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Start = start;
 
@@ -67,7 +67,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="end">Upper bound to make facet</param>
         public static IFacetRangeParameter<TDocument> End<TDocument>(this IFacetRangeParameter<TDocument> parameter, string end)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.End = end;
 
@@ -80,7 +80,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="sortType">Sort type of result of facet</param>
         public static IFacetRangeParameter<TDocument> SortType<TDocument>(this IFacetRangeParameter<TDocument> parameter, FacetSortType sortType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.SortType = sortType;
 
@@ -93,7 +93,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="excludes">List of tags to exclude in facet calculation</param>
         public static IFacetRangeParameter<TDocument> Excludes<TDocument>(this IFacetRangeParameter<TDocument> parameter, params string[] excludes)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Excludes = excludes;
 
@@ -106,7 +106,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
         public static IFacetRangeParameter<TDocument> CountBefore<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool countBefore)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.CountBefore = countBefore;
 
@@ -119,7 +119,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
         public static IFacetRangeParameter<TDocument> CountAfter<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool countAfter)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.CountAfter = countAfter;
 
@@ -132,7 +132,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="parameter">Parameter to congigure</param>
         /// <param name="minimum">Minimum count of itens in facet's result</param>
         public static IFacetRangeParameter<TDocument> Minimum<TDocument>(this IFacetRangeParameter<TDocument> parameter, int minimum)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Minimum = minimum;
 
@@ -145,7 +145,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="parameter">Parameter to congigure</param>
         /// <param name="limit">Limit of itens in facet's result</param>
         public static IFacetRangeParameter<TDocument> Limit<TDocument>(this IFacetRangeParameter<TDocument> parameter, int limit)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Limit = limit;
 

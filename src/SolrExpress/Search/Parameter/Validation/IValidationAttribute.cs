@@ -12,6 +12,6 @@
         /// <param name="errorMessage">Detailed error message</param>
         /// <returns>True if parameter is valid, otherwise false</returns>
         bool IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
-            where TDocument : IDocument;
+            where TDocument : Document;
     }
 }

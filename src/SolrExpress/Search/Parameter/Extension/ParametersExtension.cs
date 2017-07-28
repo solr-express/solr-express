@@ -18,7 +18,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="value">Value of parameter</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Any<TDocument>(this DocumentSearch<TDocument> documentSearch, string name, string value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             Checker.IsNullOrWhiteSpace(name);
             Checker.IsNullOrWhiteSpace(value);
@@ -40,7 +40,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="boostFunction">Boost type used in calculation</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, SearchQuery query, BoostFunctionType boostFunction = BoostFunctionType.Boost)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             Checker.IsNull(query);
             Checker.IsNull(boostFunction);
@@ -62,7 +62,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> FacetField<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFacetFieldParameter<TDocument>> instance = null)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             Checker.IsNull(fieldExpression);
 
@@ -83,7 +83,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="value">Value of limit</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> FacetLimit<TDocument>(this DocumentSearch<TDocument> documentSearch, int value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFacetLimitParameter<TDocument>>();
             parameter.Value(value);
@@ -102,7 +102,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, SearchQuery query, Action<IFacetQueryParameter<TDocument>> instance = null)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFacetQueryParameter<TDocument>>();
             parameter.AliasName(aliasName);
@@ -127,7 +127,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> FacetRange<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, Expression<Func<TDocument, object>> fieldExpression, string gap, string start, string end, Action<IFacetRangeParameter<TDocument>> instance = null)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFacetRangeParameter<TDocument>>();
             parameter.AliasName(aliasName);
@@ -154,7 +154,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> FacetSpatial<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, Action<IFacetSpatialParameter<TDocument>> instance = null)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFacetSpatialParameter<TDocument>>();
             parameter.AliasName(aliasName);
@@ -176,7 +176,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="fieldExpressions">Expressions used to find fields name</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Fields<TDocument>(this DocumentSearch<TDocument> documentSearch, params Expression<Func<TDocument, object>>[] fieldExpressions)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFieldsParameter<TDocument>>();
             parameter.FieldExpressions(fieldExpressions);
@@ -194,7 +194,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="values">Values to find</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Filter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
@@ -215,7 +215,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFilterParameter<TDocument>> instance)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
@@ -236,7 +236,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="value">Value of limit</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Limit<TDocument>(this DocumentSearch<TDocument> documentSearch, long value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ILimitParameter<TDocument>>();
             parameter.Value(value);
@@ -253,7 +253,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="value">Expression used to make mm parameter</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> MinimumShouldMatch<TDocument>(this DocumentSearch<TDocument> documentSearch, string value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IMinimumShouldMatchParameter<TDocument>>();
             parameter.Value(value);
@@ -270,7 +270,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="value">Value of offset</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Offset<TDocument>(this DocumentSearch<TDocument> documentSearch, long value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IOffsetParameter<TDocument>>();
             parameter.Value(value);
@@ -288,7 +288,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="currentPage">Current page</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Page<TDocument>(this DocumentSearch<TDocument> documentSearch, long itemsPerPage, long currentPage)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             documentSearch.Limit(itemsPerPage);
             documentSearch.Offset((currentPage - 1) * itemsPerPage);
@@ -303,7 +303,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="expression">Query used to make query field</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> QueryField<TDocument>(this DocumentSearch<TDocument> documentSearch, string expression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryFieldParameter<TDocument>>();
             parameter.Expression(expression);
@@ -321,7 +321,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="values">Values to find</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Query<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
@@ -342,7 +342,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IQueryParameter<TDocument>> instance)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
@@ -364,7 +364,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> Sort<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, bool ascendent)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ISortParameter<TDocument>>();
             parameter.FieldExpression(fieldExpression);
@@ -381,7 +381,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="documentSearch">Document search engine</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> SortRandomly<TDocument>(this DocumentSearch<TDocument> documentSearch)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ISortRandomlyParameter<TDocument>>();
 
@@ -400,7 +400,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="distance">Distance from center point</param>
         /// <returns>Document search engine</returns>
         public static DocumentSearch<TDocument> SpatialFilter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, SpatialFunctionType functionType = SpatialFunctionType.Bbox)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ISpatialFilterParameter<TDocument>>();
             parameter.FieldExpression(fieldExpression);

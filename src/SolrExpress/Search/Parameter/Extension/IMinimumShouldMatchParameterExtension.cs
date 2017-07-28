@@ -11,7 +11,7 @@
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="value">Value used to make mm parameter</param>
         public static IMinimumShouldMatchParameter<TDocument> Value<TDocument>(this IMinimumShouldMatchParameter<TDocument> parameter, string value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Value = value;
 

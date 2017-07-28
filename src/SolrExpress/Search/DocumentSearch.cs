@@ -1,5 +1,7 @@
 ﻿using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace SolrExpress.Search
     /// Document search engine
     /// </summary>
     public class DocumentSearch<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISearchItemCollection<TDocument> _searchItemCollection;
@@ -62,18 +64,20 @@ namespace SolrExpress.Search
 
             foreach (var attribute in attributes)
             {
-                string errorMessage;
-                var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out errorMessage);
+                var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out string errorMessage);
 
                 Checker.IsFalse<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
             }
         }
 
         /// <summary>
-        /// Set pagination parameters if necessary
+        /// Set default parameters if necessary
         /// </summary>
-        private void SetDefaultPaginationParameters()
+        private void SetDefaultParameters()
         {
+            var systemParameter = this.ServiceProvider.GetService<ISystemParameter<TDocument>>();
+            this._searchItemCollection.Add(systemParameter);
+
             if (!this._searchItemCollection.Contains<IOffsetParameter<TDocument>>())
             {
                 var offsetParameter = this.ServiceProvider.GetService<IOffsetParameter<TDocument>>();
@@ -87,14 +91,42 @@ namespace SolrExpress.Search
                 limitParameter.Value = 10;
                 this._searchItemCollection.Add(limitParameter);
             }
-        }
 
-        /// <summary>
-        /// Set systemic parameters
-        /// </summary>
-        private void SetDefaultSystemParameters()
-        {
-            //TODO: https://github.com/solr-express/solr-express/issues/176
+            if (!this._searchItemCollection.Contains<ISortParameter<TDocument>>())
+            {
+                var sortParameter = this.ServiceProvider.GetService<ISortParameter<TDocument>>();
+                sortParameter.FieldExpression(q => q.Score);
+                sortParameter.Ascendent = false;
+                this._searchItemCollection.Add(sortParameter);
+            }
+
+            if (!this._searchItemCollection.Contains<IWriteTypeParameter<TDocument>>())
+            {
+                var writeTypeParameter = this.ServiceProvider.GetService<IWriteTypeParameter<TDocument>>();
+                writeTypeParameter.Value = WriteType.Json;
+                this._searchItemCollection.Add(writeTypeParameter);
+            }
+
+            if (!this._searchItemCollection.Contains<IQueryParserParameter<TDocument>>())
+            {
+                var queryParserParameter = this.ServiceProvider.GetService<IQueryParserParameter<TDocument>>();
+                queryParserParameter.Value = QueryParserType.Edismax;
+                this._searchItemCollection.Add(queryParserParameter);
+            }
+
+            if (!this._searchItemCollection.Contains<IStandardQueryParameter<TDocument>>())
+            {
+                var standardQueryParameter = this.ServiceProvider.GetService<IStandardQueryParameter<TDocument>>();
+                standardQueryParameter.Value = new SearchQuery().AddValue("*:*");
+                this._searchItemCollection.Add(standardQueryParameter);
+            }
+
+            if (!this._searchItemCollection.Contains<IDefaultFieldParameter<TDocument>>())
+            {
+                var defaultFieldParameter = this.ServiceProvider.GetService<IDefaultFieldParameter<TDocument>>();
+                defaultFieldParameter.FieldExpression = (q) => q.Id;
+                this._searchItemCollection.Add(defaultFieldParameter);
+            }
         }
 
         /// <summary>
@@ -152,8 +184,7 @@ namespace SolrExpress.Search
             this.AddRange(this._solrExpressOptions.GlobalResultInterceptors);
             this.AddRange(this._solrExpressOptions.GlobalChangeBehaviours);
 
-            this.SetDefaultSystemParameters();
-            this.SetDefaultPaginationParameters();
+            this.SetDefaultParameters();
 
             var jsonReader = this._searchItemCollection.Execute(this._requestHandler);
             var searchParameters = this._searchItemCollection.GetParameters();

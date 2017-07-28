@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use in filter parameter
     /// </summary>
     public interface IFilterParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Value of filter

@@ -17,8 +17,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]
-        [InlineData(BoostFunctionType.Bf, "bf=_id_")]
-        [InlineData(BoostFunctionType.Boost, "boost=_id_")]
+        [InlineData(BoostFunctionType.Bf, "bf=id")]
+        [InlineData(BoostFunctionType.Boost, "boost=id")]
         public void BoostParameterTheory001(BoostFunctionType boostFunctionType, string expected)
         {
             // Arrange

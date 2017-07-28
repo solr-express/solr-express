@@ -15,7 +15,7 @@ namespace SolrExpress.DI.SimpleInjector
         /// <param name="container">Container used in SimpleInjector engine</param>
         /// <returns>Container used in SimpleInjector engine</returns>
         public static Container AddSolrExpress<TDocument>(this Container container, Action<SolrExpressBuilder<TDocument>> builder)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);

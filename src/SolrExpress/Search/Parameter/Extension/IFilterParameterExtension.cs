@@ -13,7 +13,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Value of filter</param>
         public static IFilterParameter<TDocument> Query<TDocument>(this IFilterParameter<TDocument> parameter, SearchQuery query)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Query = query;
 
@@ -26,7 +26,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="tagName">Tag name to use in facet excluding list</param>
         public static IFilterParameter<TDocument> TagName<TDocument>(this IFilterParameter<TDocument> parameter, string tagName)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.TagName = tagName;
 

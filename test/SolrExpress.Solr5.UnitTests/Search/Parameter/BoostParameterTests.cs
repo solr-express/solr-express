@@ -17,8 +17,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         /// What    Create correct SOLR instructions
         /// </summary>
         [Theory]
-        [InlineData(BoostFunctionType.Bf, @"{""params"": {""bf"": ""_id_""}}")]
-        [InlineData(BoostFunctionType.Boost, @"{""params"": {""boost"": ""_id_""}}")]
+        [InlineData(BoostFunctionType.Bf, @"{""params"": {""bf"": ""id""}}")]
+        [InlineData(BoostFunctionType.Boost, @"{""params"": {""boost"": ""id""}}")]
         public void BoostParameterTheory001(BoostFunctionType boostFunctionType, string expectedJson)
         {
             // Arrange

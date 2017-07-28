@@ -19,7 +19,7 @@ namespace SolrExpress.Utility
         /// <param name="options">Options to control SolrExpress behavior</param>
         /// </summary>
         internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var expressionBuilder = new ExpressionBuilder<TDocument>(options);
             expressionBuilder.LoadDocument();

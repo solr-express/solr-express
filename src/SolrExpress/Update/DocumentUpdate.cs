@@ -6,7 +6,7 @@ using System.Linq;
 namespace SolrExpress.Update
 {
     public class DocumentUpdate<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly SolrExpressOptions _options;
         private readonly SolrConnection _solrConnection;

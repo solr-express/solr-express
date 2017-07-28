@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Result
     /// Signature to information about search result
     /// </summary>
     public interface IInformationResult<TDocument> : ISearchResult
-        where TDocument : IDocument
+        where TDocument : Document
     {
         Information Data { get; set; }
     }

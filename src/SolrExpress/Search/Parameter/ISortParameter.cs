@@ -4,7 +4,7 @@
     /// Signatures to use in sort parameter
     /// </summary>
     public interface ISortParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// True to ascendent order, otherwise false

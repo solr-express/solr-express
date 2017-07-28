@@ -16,7 +16,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
         public static ISpatialFilterParameter<TDocument> FieldExpression<TDocument>(this ISpatialFilterParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FieldExpression = fieldExpression;
 
@@ -29,7 +29,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="functionType">Function used in spatial filter</param>
         public static ISpatialFilterParameter<TDocument> FunctionType<TDocument>(this ISpatialFilterParameter<TDocument> parameter, SpatialFunctionType functionType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.FunctionType = functionType;
 
@@ -42,7 +42,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="centerPoint">Center point to spatial filter</param>
         public static ISpatialFilterParameter<TDocument> CenterPoint<TDocument>(this ISpatialFilterParameter<TDocument> parameter, GeoCoordinate centerPoint)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.CenterPoint = centerPoint;
 
@@ -55,7 +55,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="distance">Distance from center point</param>
         public static ISpatialFilterParameter<TDocument> Distance<TDocument>(this ISpatialFilterParameter<TDocument> parameter, decimal distance)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Distance = distance;
 

@@ -23,31 +23,31 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Id);
                 };
-                var expected1 = "facet=true&facet.field={!key=Id}_id_";
+                var expected1 = "facet=true&facet.field={!key=Id}id";
 
                 Action<IFacetFieldParameter<TestDocument>> config2 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1);
                 };
-                var expected2 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.mincount=1";
+                var expected2 = "facet=true&facet.field={!key=Id}id&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config3 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc);
                 };
-                var expected3 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1";
+                var expected3 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config4 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10);
                 };
-                var expected4 = "facet=true&facet.field={!key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1&f._id_.facet.limit=10";
+                var expected4 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 Action<IFacetFieldParameter<TestDocument>> config5 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10).Excludes("tag1", "tag2");
                 };
-                var expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}_id_&f._id_.facet.sort=count&f._id_.facet.mincount=1&f._id_.facet.limit=10";
+                var expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 return new[]
                 {

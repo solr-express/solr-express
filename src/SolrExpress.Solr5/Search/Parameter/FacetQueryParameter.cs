@@ -12,7 +12,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JProperty _result;
         

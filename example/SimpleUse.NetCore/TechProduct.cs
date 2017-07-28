@@ -3,7 +3,7 @@ using System;
 
 namespace SimpleUse.NetCore
 {
-    public class TechProduct : IDocument
+    public class TechProduct : Document
     {
         [SolrField("id")]
         public string Id { get; set; }
@@ -14,7 +14,7 @@ namespace SimpleUse.NetCore
         [SolrField("manu")]
         public string Manufacturer { get; set; }
 
-        [SolrField("manu_id_s")]
+        [SolrField("manuids")]
         public string ManufacturerId { get; set; }
 
         [SolrField("cat")]

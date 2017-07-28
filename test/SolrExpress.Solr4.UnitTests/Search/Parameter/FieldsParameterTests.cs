@@ -40,7 +40,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("fl=_id_,_score_", container[0]);
+            Assert.Equal("fl=id,score", container[0]);
         }
 
         /// <summary>

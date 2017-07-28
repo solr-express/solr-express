@@ -4,7 +4,7 @@ using System;
 namespace SolrExpress.DI.CoreClr
 {
     public sealed class SolrExpressServiceProvider<TDocument> : ISolrExpressServiceProvider<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly IServiceCollection _serviceCollection = new ServiceCollection();
         private IServiceProvider _serviceProvider = null;

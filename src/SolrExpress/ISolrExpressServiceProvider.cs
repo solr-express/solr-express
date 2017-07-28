@@ -4,7 +4,7 @@
     /// Signatures to DI engine
     /// </summary>
     public interface ISolrExpressServiceProvider<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Create a new instance of T using internal DI engine

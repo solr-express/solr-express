@@ -3,7 +3,7 @@
 namespace SolrExpress.DI.Autofac
 {
     public class SolrExpressServiceProvider<TDocument> : ISolrExpressServiceProvider<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly ContainerBuilder _kernel = new ContainerBuilder();
         private IContainer _container = null;

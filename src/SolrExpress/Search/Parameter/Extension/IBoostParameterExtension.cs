@@ -13,7 +13,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Query used to make boost</param>
         public static IBoostParameter<TDocument> Query<TDocument>(this IBoostParameter<TDocument> parameter, SearchQuery query)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.Query = query;
 
@@ -26,7 +26,7 @@ namespace SolrExpress.Search.Parameter.Extension
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="boostFunctionType">Boost type used in calculation</param>
         public static IBoostParameter<TDocument> BoostFunctionType<TDocument>(this IBoostParameter<TDocument> parameter, BoostFunctionType boostFunctionType)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             parameter.BoostFunctionType = boostFunctionType;
 

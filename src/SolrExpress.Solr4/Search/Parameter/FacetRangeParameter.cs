@@ -13,7 +13,7 @@ namespace SolrExpress.Solr4.Search.Parameter
     [FacetRangeType]
     [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly List<string> _result = new List<string>();
 

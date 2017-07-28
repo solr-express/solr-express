@@ -11,7 +11,7 @@ namespace SolrExpress.Builder
     /// Builder expressions class
     /// </summary>
     public sealed class ExpressionBuilder<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
         private Dictionary<string, FieldData> fieldsData = new Dictionary<string, FieldData>();

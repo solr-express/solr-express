@@ -1,6 +1,6 @@
 ﻿namespace SolrExpress.UnitTests
 {
-    public class TestDocumentDynamic : IDocument
+    public class TestDocumentDynamic : Document
     {
         [SolrField("no_dynamic")]
         public string NoDynamic { get; set; }

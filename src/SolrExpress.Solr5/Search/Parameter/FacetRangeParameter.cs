@@ -15,7 +15,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [FacetRangeType]
     [FieldMustBeIndexedTrue]
     public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JProperty _result;
 

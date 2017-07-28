@@ -4,7 +4,7 @@
     /// Signatures to use in fields parameter
     /// </summary>
     public interface IFieldsParameter<TDocument> : ISearchParameter, ISearchItemFieldExpressions<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
     }
 }

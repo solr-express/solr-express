@@ -4,7 +4,7 @@
     /// Builder to control SolrExpress behavior
     /// </summary>
     public sealed class SolrExpressBuilder<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         public SolrExpressBuilder(ISolrExpressServiceProvider<TDocument> serviceProvider)
         {

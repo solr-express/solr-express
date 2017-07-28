@@ -6,7 +6,7 @@ namespace SolrExpress.Search.Parameter
     /// Signatures to use boost parameter
     /// </summary>
     public interface IBoostParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Query used to make boost
@@ -14,7 +14,7 @@ namespace SolrExpress.Search.Parameter
         SearchQuery Query { get; set; }
 
         /// <summary>
-        /// Oost type used in calculation
+        /// Boost type used in calculation
         /// </summary>
         BoostFunctionType BoostFunctionType { get; set; }
     }

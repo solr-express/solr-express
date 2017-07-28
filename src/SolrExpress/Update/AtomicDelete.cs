@@ -4,7 +4,7 @@ using SolrExpress.Utility;
 namespace SolrExpress.Update
 {
     public sealed class AtomicDelete<TDocument> : IAtomicDelete<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         string IAtomicDelete<TDocument>.Execute(params string[] documentIds)
         {

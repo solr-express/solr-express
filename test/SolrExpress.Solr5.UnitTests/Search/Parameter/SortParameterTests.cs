@@ -23,7 +23,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""sort"": ""_id_ desc""
+              ""sort"": ""id desc""
             }");
             var container = new JObject();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());

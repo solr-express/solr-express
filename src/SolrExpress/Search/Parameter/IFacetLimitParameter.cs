@@ -4,7 +4,7 @@
     /// Signatures to use in facet limit parameter
     /// </summary>
     public interface IFacetLimitParameter<TDocument> : ISearchParameter
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Value of limit

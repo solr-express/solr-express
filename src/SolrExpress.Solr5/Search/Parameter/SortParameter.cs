@@ -11,7 +11,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
     public class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<JObject>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
 

@@ -4,7 +4,7 @@
     /// Signatures to add informed documents in SOLR collection
     /// </summary>
     public interface IAtomicUpdate<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Add informed documents in SOLR collection

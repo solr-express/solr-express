@@ -24,7 +24,7 @@
 //              ""facet"": {
 //                ""X"": {
 //                  ""range"": {
-//                    ""field"": ""_id_"",
+//                    ""field"": ""id"",
 //                    ""mincount"": 1,
 //                    ""gap"": ""1"",
 //                    ""start"": ""10"",
@@ -66,7 +66,7 @@
 //              ""facet"": {
 //                ""X"": {
 //                  ""range"": {
-//                    ""field"": ""_id_"",
+//                    ""field"": ""id"",
 //                    ""mincount"": 1,
 //                    ""gap"": ""1"",
 //                    ""start"": ""10"",
@@ -364,7 +364,7 @@
 //              ""facet"": {
 //                ""X"": {
 //                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}_id_"",
+//                    ""field"": ""{!ex=tag1,tag2}id"",
 //                    ""mincount"": 1,
 //                    ""gap"": ""1"",
 //                    ""start"": ""10"",
@@ -406,7 +406,7 @@
 //              ""facet"": {
 //                ""X"": {
 //                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}_id_"",
+//                    ""field"": ""{!ex=tag1,tag2}id"",
 //                    ""mincount"": 1,
 //                    ""gap"": ""1"",
 //                    ""start"": ""10"",
@@ -447,7 +447,7 @@
 //              ""facet"": {
 //                ""X"": {
 //                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}_id_"",
+//                    ""field"": ""{!ex=tag1,tag2}id"",
 //                    ""mincount"": 1,
 //                    ""gap"": ""1"",
 //                    ""start"": ""10"",

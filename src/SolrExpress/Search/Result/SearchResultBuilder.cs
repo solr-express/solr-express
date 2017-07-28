@@ -9,7 +9,7 @@ namespace SolrExpress.Search.Result
     /// Result builder
     /// </summary>
     public sealed class SearchResultBuilder<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private JsonReader _jsonReader;
         private List<ISearchParameter> _searchParameters;

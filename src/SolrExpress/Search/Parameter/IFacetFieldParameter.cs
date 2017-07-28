@@ -4,7 +4,7 @@
     /// Signatures to use facet field parameter
     /// </summary>
     public interface IFacetFieldParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         /// <summary>
         /// Sort type of result of facet

@@ -22,7 +22,7 @@ namespace SolrExpress.UnitTests.Search.Result
                 ""params"": {
                   ""q"": ""*:*"",
                   ""indent"": ""true"",
-                  ""fq"": ""manu_id_s:samsung"",
+                  ""fq"": ""manuids:samsung"",
                   ""wt"": ""json""
                 }
               },
@@ -34,7 +34,7 @@ namespace SolrExpress.UnitTests.Search.Result
                     ""id"": ""SP2514N"",
                     ""name"": ""Samsung SpinPoint P120 SP2514N - hard drive - 250 GB - ATA-133"",
                     ""manu"": ""Samsung Electronics Co. Ltd."",
-                    ""manu_id_s"": ""samsung"",
+                    ""manuids"": ""samsung"",
                     ""cat"": [
                       ""electronics"",
                       ""hard drive""
@@ -59,7 +59,7 @@ namespace SolrExpress.UnitTests.Search.Result
                     ""id"": ""__SP2514N__"",
                     ""name"": ""Samsung SpinPoint P120 SP2514N - hard drive - 250 GB - ATA-133"",
                     ""manu"": ""Samsung Electronics Co. Ltd."",
-                    ""manu_id_s"": ""samsung"",
+                    ""manuids"": ""samsung"",
                     ""cat"": [
                       ""electronics"",
                       ""hard drive""

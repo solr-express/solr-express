@@ -234,7 +234,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="values">Values used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> All<TDocument, TValue>(this SearchQuery<TDocument> searchQuery, params TValue[] values)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery.AddParenthesisOpening();
 
@@ -259,7 +259,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="values">Values used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> Any<TDocument, TValue>(this SearchQuery<TDocument> searchQuery, params TValue[] values)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             if (values.Length > 0)
             {
@@ -287,7 +287,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="value">Value used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> StartsWith<TDocument>(this SearchQuery<TDocument> searchQuery, string value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery.AddValue($"/{value}.*/");
 
@@ -301,7 +301,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="value">Value used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> EqualsTo<TDocument, TValue>(this SearchQuery<TDocument> searchQuery, TValue value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery.AddValue(value);
 
@@ -315,7 +315,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="value">Value used in search</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> NotEqualsTo<TDocument, TValue>(this SearchQuery<TDocument> searchQuery, TValue value)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery
                 .AddValue("-", false)
@@ -333,7 +333,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="fieldExpression">Expressions used to find field name</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> Field<TDocument>(this SearchQuery<TDocument> searchQuery, Expression<Func<TDocument, object>> fieldExpression)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery.AddField(fieldExpression);
 
@@ -347,7 +347,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="searchQueryExtend">Search query used inside group OR</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> Or<TDocument>(this SearchQuery<TDocument> searchQuery, Action<SearchQuery<TDocument>> searchQueryExtend)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery
                 .AddOperatorOr()
@@ -367,7 +367,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="searchQueryExtend">Search query used inside group AND</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> And<TDocument>(this SearchQuery<TDocument> searchQuery, Action<SearchQuery<TDocument>> searchQueryExtend)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery
                 .AddOperatorAnd()
@@ -387,7 +387,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="searchQueryExtend">Search query used inside group AND</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> Not<TDocument>(this SearchQuery<TDocument> searchQuery, Action<SearchQuery<TDocument>> searchQueryExtend)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery
                 .AddValue("-", false)
@@ -407,7 +407,7 @@ namespace SolrExpress.Search.Query.Extension
         /// <param name="searchQueryExtend">Search query used inside group AND</param>
         /// <returns>Search query configured</returns>
         public static SearchQuery<TDocument> Group<TDocument>(this SearchQuery<TDocument> searchQuery, Action<SearchQuery<TDocument>> searchQueryExtend)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             searchQuery
                 .AddParenthesisOpening();

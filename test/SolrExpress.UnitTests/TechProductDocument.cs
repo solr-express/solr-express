@@ -2,18 +2,15 @@
 
 namespace SolrExpress.UnitTests
 {
-    public class TechProductDocument : IDocument
+    public class TechProductDocument : Document
     {
-        [SolrField("id")]
-        public string Id { get; set; }
-
         [SolrField("name")]
         public string Name { get; set; }
 
         [SolrField("manu")]
         public string Manufacturer { get; set; }
 
-        [SolrField("manu_id_s")]
+        [SolrField("manuids")]
         public string ManufacturerId { get; set; }
 
         [SolrField("cat")]

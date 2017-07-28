@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     public class MinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>, ISearchItemExecution<List<string>>
-        where TDocument : IDocument
+        where TDocument : Document
     {
         private string _result;
         

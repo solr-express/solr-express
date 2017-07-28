@@ -15,7 +15,7 @@ namespace SolrExpress.DI.Ninject
         /// <param name="container">Container used in SimpleInjector engine</param>
         /// <returns>Container used in SimpleInjector engine</returns>
         public static IKernel AddSolrExpress<TDocument>(this IKernel container, Action<SolrExpressBuilder<TDocument>> builder)
-            where TDocument : IDocument
+            where TDocument : Document
         {
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
