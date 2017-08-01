@@ -2,6 +2,8 @@
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/solr-express/solr-express/blob/master/LICENSE)
 
+![Travis-CI](https://travis-ci.org/solr-express/solr-express.svg?branch=master)
+
 [![NuGet Solr4](https://img.shields.io/nuget/v/SolrExpress.Solr4.svg?style=flat-square&label=nuget+SolrExpress.Solr4)](https://www.nuget.org/packages/SolrExpress.Solr4/)
 [![NuGet Solr5](https://img.shields.io/nuget/v/SolrExpress.Solr5.svg?style=flat-square&label=nuget+SolrExpress.Solr5)](https://www.nuget.org/packages/SolrExpress.Solr5/)
 
