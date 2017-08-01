@@ -111,9 +111,9 @@ namespace SolrExpress.Builder
 #endif
                 .GetProperties();
 
-            foreach (var propertye in properties)
+            foreach (var property in properties)
             {
-                var nameProperty = Expression.Convert(Expression.Property(documentParameter, propertye.Name), typeof(object));
+                var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
                 var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
                 var propertyInfo = this.GetPropertyInfoFromExpression(expression);
                 var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
