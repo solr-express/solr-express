@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way for Sor 5.x</Description>
+    <Description>A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
+Provider for SOLR 5, full compatibility with the Solr 5.X.
+Implementation using default query handler and mechanism provided by JSON Request API.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
     <TargetFrameworks>netstandard1.6;net45;net46</TargetFrameworks>

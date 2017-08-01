@@ -2,6 +2,6 @@
 using System.Resources;
 using System.Runtime.CompilerServices;
 
-[assembly: AssemblyCompany("Diego Luiz Brum")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyCopyright("")]
 [assembly: NeutralResourcesLanguage("en-US")]

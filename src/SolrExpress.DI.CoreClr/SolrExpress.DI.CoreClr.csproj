@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way. DI using native .Net Core mechanism</Description>
+    <Description>A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
+Provider for native .Net Core Dependency Injection.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>

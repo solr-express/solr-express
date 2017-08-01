@@ -17,18 +17,29 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{0A60AC6A-BBA5-4D35-B85C-92B36513C72B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{622830E6-DFA3-41A7-8D6C-68EA4254E7E4}"
+	ProjectSection(SolutionItems) = preProject
+		docs\index.md = docs\index.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{97836803-3E29-4119-ACE3-57B3D068214F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{D5B8D271-B71A-4F85-973B-F50CDAEA6662}"
 	ProjectSection(SolutionItems) = preProject
+		docs\about\license.md = docs\about\license.md
+		docs\about\packages.md = docs\about\packages.md
 		docs\about\release-notes.md = docs\about\release-notes.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tutorials", "tutorials", "{0E6FFAE4-0304-4453-A61D-52D24802E0CF}"
 	ProjectSection(SolutionItems) = preProject
-		docs\tutorials\migration-from-version4-to-version5.md = docs\tutorials\migration-from-version4-to-version5.md
-		docs\tutorials\use-cases.md = docs\tutorials\use-cases.md
+		docs\tutorials\authentication-and-authorization.md = docs\tutorials\authentication-and-authorization.md
+		docs\tutorials\dynamic-field-behaviours.md = docs\tutorials\dynamic-field-behaviours.md
+		docs\tutorials\facets.md = docs\tutorials\facets.md
+		docs\tutorials\fail-fast.md = docs\tutorials\fail-fast.md
+		docs\tutorials\getting-started.md = docs\tutorials\getting-started.md
+		docs\tutorials\global-settings.md = docs\tutorials\global-settings.md
+		docs\tutorials\queries.md = docs\tutorials\queries.md
+		docs\tutorials\result-interceptors.md = docs\tutorials\result-interceptors.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.csproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
@@ -58,6 +69,16 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "example\SimpleUse.NetCore\SimpleUse.NetCore.csproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Utility", "test\SolrExpress.Utility\SolrExpress.Utility.csproj", "{E325E82D-1522-456D-B1A0-463E8E8FF24E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking changes", "breaking changes", "{A9038E8A-D000-4F70-84B1-0E5A98B56AFA}"
+	ProjectSection(SolutionItems) = preProject
+		docs\breaking changes\version5.md = docs\breaking changes\version5.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA}"
+	ProjectSection(SolutionItems) = preProject
+		docs\benchmarks\version-3.1.2.md = docs\benchmarks\version-3.1.2.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,5 +163,7 @@ Global
 		{1C30862A-957B-4EEC-B305-2C67B8A49B4E} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4} = {97836803-3E29-4119-ACE3-57B3D068214F}
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
+		{A9038E8A-D000-4F70-84B1-0E5A98B56AFA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
+		{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 	EndGlobalSection
 EndGlobal
