@@ -5,6 +5,9 @@
     <AssemblyName>SimpleUse.Net46WithSimpleInjector</AssemblyName>
     <OutputType>Exe</OutputType>
     <PackageId>SimpleUse.Net46WithSimpleInjector</PackageId>
+    <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
