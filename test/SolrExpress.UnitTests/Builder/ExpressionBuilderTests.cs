@@ -1,4 +1,6 @@
-﻿using SolrExpress.Builder;
+﻿using Moq;
+using SolrExpress.Builder;
+using System.Collections.Generic;
 using Xunit;
 
 namespace SolrExpress.UnitTests.Builder
@@ -15,7 +17,25 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions);
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                    ""responseHeader"": {
+                    ""status"": 0,
+                    ""QTime"": 118
+                    },
+                    ""field"": {
+                    ""name"": ""no_dynamic"",
+                    ""type"": ""string"",
+                    ""multiValued"": false,
+                    ""indexed"": true,
+                    ""required"": true,
+                    ""stored"": true
+                    }
+                }");
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -35,7 +55,25 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions);
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                    ""responseHeader"": {
+                    ""status"": 0,
+                    ""QTime"": 118
+                    },
+                    ""field"": {
+                    ""name"": ""dynamic"",
+                    ""type"": ""string"",
+                    ""multiValued"": false,
+                    ""indexed"": true,
+                    ""required"": true,
+                    ""stored"": true
+                    }
+                }");
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -55,7 +93,25 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions);
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                    ""responseHeader"": {
+                    ""status"": 0,
+                    ""QTime"": 118
+                    },
+                    ""field"": {
+                    ""name"": ""dynamic"",
+                    ""type"": ""string"",
+                    ""multiValued"": false,
+                    ""indexed"": true,
+                    ""required"": true,
+                    ""stored"": true
+                    }
+                }");
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -75,7 +131,25 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions);
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                    ""responseHeader"": {
+                    ""status"": 0,
+                    ""QTime"": 118
+                    },
+                    ""field"": {
+                    ""name"": ""dynamic"",
+                    ""type"": ""string"",
+                    ""multiValued"": false,
+                    ""indexed"": true,
+                    ""required"": true,
+                    ""stored"": true
+                    }
+                }");
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -83,6 +157,45 @@ namespace SolrExpress.UnitTests.Builder
 
             // Assert
             Assert.Equal("dynamic_suffix", fieldName);
+        }
+
+        /// <summary>
+        /// Where   Using a ExpressionBuilder class
+        /// When    Invoke CheckSolrField
+        /// What    Set field settings using SOLR field API
+        /// </summary>
+        [Fact]
+        public void ExpressionBuilder005()
+        {
+            // Arrange
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                    ""field"": {
+                        ""indexed"": true,
+                        ""stored"": true
+                    }
+                }");
+
+            var fieldData = new FieldData
+            {
+                AliasName = "id",
+                FieldName = "id",
+                IsIndexed = false,
+                IsStored = false
+            };
+
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+
+            // Act
+            expressionBuilder.CheckSolrField(ref fieldData);
+
+            // Assert
+            Assert.True(fieldData.IsIndexed);
+            Assert.True(fieldData.IsStored);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32F031EB-53BE-4E6F-A909-82F09B392FBA}"
 EndProject
@@ -55,6 +55,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.Ninject", "src\SolrExpress.DI.Ninject\SolrExpress.DI.Ninject.csproj", "{1C30862A-957B-4EEC-B305-2C67B8A49B4E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "example\SimpleUse.NetCore\SimpleUse.NetCore.csproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Utility", "test\SolrExpress.Utility\SolrExpress.Utility.csproj", "{E325E82D-1522-456D-B1A0-463E8E8FF24E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,6 +116,10 @@ Global
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -134,5 +140,6 @@ Global
 		{2A55E4A0-3D4C-4815-9E77-275DCADFC927} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{1C30862A-957B-4EEC-B305-2C67B8A49B4E} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4} = {97836803-3E29-4119-ACE3-57B3D068214F}
+		{E325E82D-1522-456D-B1A0-463E8E8FF24E} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 	EndGlobalSection
 EndGlobal

@@ -4,6 +4,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Utility;
 using System.Collections.Generic;
 using Xunit;
 
@@ -22,8 +23,9 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrExpressOptions);
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             parameter.Value = searchQuery.Field(q=>q.Id).EqualsTo("ITEM01");

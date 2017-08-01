@@ -2,6 +2,7 @@
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.UnitTests;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Core.UnitTests.Search.Query.Extension
@@ -108,7 +109,8 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
 
@@ -185,7 +187,8 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
@@ -210,7 +213,8 @@ namespace SolrExpress.Core.UnitTests.Search.Query.Extension
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 

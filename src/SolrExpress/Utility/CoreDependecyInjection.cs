@@ -21,13 +21,16 @@ namespace SolrExpress.Utility
         internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options)
             where TDocument : Document
         {
-            var expressionBuilder = new ExpressionBuilder<TDocument>(options);
-            expressionBuilder.LoadDocument();
-
             serviceProvider
                 .AddSingleton(options)
                 .AddTransient(serviceProvider)
-                .AddTransient<SolrConnection>()
+                .AddTransient<ISolrConnection, SolrConnection>();
+
+            var solrConnection = serviceProvider.GetService<ISolrConnection>();
+            var expressionBuilder = new ExpressionBuilder<TDocument>(options, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            serviceProvider
                 .AddTransient<DocumentSearch<TDocument>>()
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()

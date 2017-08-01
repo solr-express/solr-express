@@ -5,6 +5,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -32,7 +33,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             var container = new JObject();
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             var parameter = (IFieldsParameter<TestDocument>)new FieldsParameter<TestDocument>(expressionBuilder);

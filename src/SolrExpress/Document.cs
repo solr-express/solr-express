@@ -8,7 +8,7 @@
         [SolrField("id")]
         public string Id { get; set; }
 
-        [SolrField("score")]
+        [SolrField("score", IsMagicField = true)]
         public string Score { get; set; }
     }
 }

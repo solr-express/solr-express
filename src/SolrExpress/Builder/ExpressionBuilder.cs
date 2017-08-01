@@ -1,4 +1,5 @@
-﻿using SolrExpress.Utility;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace SolrExpress.Builder
         where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
+        private readonly ISolrConnection _solrConnection;
         private Dictionary<string, FieldData> fieldsData = new Dictionary<string, FieldData>();
 
-        public ExpressionBuilder(SolrExpressOptions solrExpressOptions)
+        public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection solrConnection)
         {
             this._solrExpressOptions = solrExpressOptions;
+            this._solrConnection = solrConnection;
         }
 
         /// <summary>
@@ -26,7 +29,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property info</param>
         /// <returns>Property referenced into indicated expression</returns>
-        private PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
+        internal PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
         {
             PropertyInfo propertyInfo = null;
             var lambda = (LambdaExpression)expression;
@@ -68,7 +71,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="propertyInfo">PropertyInfo used to find attribute</param>
         /// <returns>Solr field attribute associeted with POCO property</returns>
-        private SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
+        internal SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
         {
             var attrs = propertyInfo.GetCustomAttributes(true);
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
@@ -78,13 +81,13 @@ namespace SolrExpress.Builder
         /// Check informed field in SOLR server
         /// </summary>
         /// <param name="data"></param>
-        private void CheckSolrField(ref FieldData data)
+        internal void CheckSolrField(ref FieldData data)
         {
-            // TODO: Implements
-            // https://github.com/solr-express/solr-express/issues/112
+            var result = this._solrConnection.Get($"schema/fields/{data.FieldName}", null);
+            var jobject = JObject.Parse(result);
 
-            data.IsIndexed = true;
-            data.IsStored = true;
+            data.IsIndexed = jobject["field"]["indexed"].Value<bool>();
+            data.IsStored = jobject["field"]["stored"].Value<bool>();
         }
 
         /// <summary>
@@ -92,7 +95,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>Information about field from indicated expression</returns>
-        private FieldData GetData(Expression<Func<TDocument, object>> expression)
+        internal FieldData GetData(Expression<Func<TDocument, object>> expression)
         {
             var propertyInfo = this.GetPropertyInfoFromExpression(expression);
 

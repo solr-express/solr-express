@@ -3,6 +3,7 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -27,8 +28,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             var container = new JObject();
             var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrExpressOptions);
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             parameter.ExpressionBuilder = expressionBuilder;
             parameter.FieldExpression = (q) => q.Id;

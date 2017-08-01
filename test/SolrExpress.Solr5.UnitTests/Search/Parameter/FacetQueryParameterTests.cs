@@ -5,6 +5,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -18,7 +19,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         {
             get
             {
-                var expressionBuilder = new ExpressionBuilder<TestDocument>(new SolrExpressOptions());
+                var solrOptions = new SolrExpressOptions();
+                var solrConnection = new FakeSolrConnection();
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
                 expressionBuilder.LoadDocument();
 
                 Action<IFacetQueryParameter<TestDocument>> config1 = facet =>

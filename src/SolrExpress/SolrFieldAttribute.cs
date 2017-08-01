@@ -22,6 +22,11 @@ namespace SolrExpress
         public string Name { get; set; }
 
         /// <summary>
+        /// If true, indicates than field is a magic field
+        /// </summary>
+        public bool IsMagicField { get; set; }
+
+        /// <summary>
         /// If true, field in SOLR schema is configured like dynamic field
         /// </summary>
         public bool IsDynamicField { get; set; }

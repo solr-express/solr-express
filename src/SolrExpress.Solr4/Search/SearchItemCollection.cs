@@ -18,9 +18,9 @@ namespace SolrExpress.Solr4.Search
         where TDocument : Document
     {
         private readonly List<ISearchItem> _searchItems = new List<ISearchItem>();
-        private readonly SolrConnection _solrConnection;
+        private readonly ISolrConnection _solrConnection;
 
-        public SearchItemCollection(SolrConnection solrConnection)
+        public SearchItemCollection(ISolrConnection solrConnection)
         {
             this._solrConnection = solrConnection;
         }

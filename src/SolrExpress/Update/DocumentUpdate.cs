@@ -9,7 +9,7 @@ namespace SolrExpress.Update
         where TDocument : Document
     {
         private readonly SolrExpressOptions _options;
-        private readonly SolrConnection _solrConnection;
+        private readonly ISolrConnection _solrConnection;
         private readonly List<TDocument> _documentsToAdd = new List<TDocument>();
         private readonly List<string> _documentsToDelete = new List<string>();
 
@@ -19,7 +19,7 @@ namespace SolrExpress.Update
         /// <param name="options">SolrExpress options</param>
         public DocumentUpdate(
             SolrExpressOptions options,
-            SolrConnection solrConnection,
+            ISolrConnection solrConnection,
             ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             Checker.IsNull(options);

@@ -5,6 +5,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -25,7 +26,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(expectedJson);
             var container = new JObject();
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             var parameter = (IBoostParameter<TestDocument>)new BoostParameter<TestDocument>();

@@ -4,6 +4,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Utility;
 using System.Collections.Generic;
 using Xunit;
 
@@ -22,7 +23,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter1 = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
             parameter1.Query = new SearchQuery<TestDocument>(expressionBuilder).Field(q => q.Id).AddValue("X");
@@ -52,7 +54,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions);
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             var parameter = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();

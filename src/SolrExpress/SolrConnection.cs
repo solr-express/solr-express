@@ -8,9 +8,9 @@ using System.Net.Http;
 namespace SolrExpress
 {
     /// <summary>
-    /// Signatures to SOLR connection
+    /// SOLR connection
     /// </summary>
-    public class SolrConnection
+    public class SolrConnection : ISolrConnection
     {
         private readonly SolrExpressOptions _options;
 
@@ -35,13 +35,7 @@ namespace SolrExpress
             }
         }
 
-        /// <summary>
-        /// Execute a request to informed handler
-        /// </summary>
-        /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="data">Data to execute</param>
-        /// <returns>Result of request</returns>
-        public string Get(string handler, Dictionary<string, string> data)
+        string ISolrConnection.Get(string handler, Dictionary<string, string> data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler)
@@ -54,13 +48,7 @@ namespace SolrExpress
                 .Result;
         }
 
-        /// <summary>
-        /// Execute a request to informed handler
-        /// </summary>
-        /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="data">Data to execute</param>
-        /// <returns>Result of request</returns>
-        public string GetX(string handler, object data)
+        string ISolrConnection.GetX(string handler, object data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
@@ -82,13 +70,7 @@ namespace SolrExpress
 #endif
         }
 
-        /// <summary>
-        /// Execute a request to informed handler
-        /// </summary>
-        /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="data">Data to execute</param>
-        /// <returns>Result of request</returns>
-        public string Post(string handler, string data)
+        string ISolrConnection.Post(string handler, string data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
