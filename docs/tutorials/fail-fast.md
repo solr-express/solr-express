@@ -1,43 +1,40 @@
 # Fail fast
 
-Fail fast feature use **indexed** and **stored** properties of **SolrFieldAttribute** to validate use of fiels and throws exceptions if a not allowed use has made.
+Fail fast feature use **indexed** and **stored** properties of **SolrFieldAttribute** to validate using of fields in some features throwing exception (SearchParameterIsInvalidException) if necesary.
 
-To use this feature, follow bellow steps:
+To use this feature, just active feature in SolrOptions (actived by default)
 
-1. Active featue in SolrOptions (actived by default):
-
-'''
-    // Also, you can use ConfigueOptions
-    var options = new DocumentCollectionOptions
+''' csharp
+    var options = new SolrExpressOptions
     {
-        FailFast = true // <-- This make the magic happens
+        HostAddress = "http://localhost:8983/solr/techproducts",
+		FailFast = true
     };
+
+    services
+		.AddSolrExpress<TechProduct>(builder => builder
+			.UseOptions(options) // <-- Use options with this method
+			.UseSolr5());
 '''
 
-2. Configure SolrFieldAttribute
+Using a collection with 2 fields with follow setting:
 
-```
-public class TechProductDocument : IDocument
-{
-    [SolrFieldAttribute("some_field1", Indexed = false, Stored = true)]
-    public string SomeField1 { get; set; }
+| Field  |Indexed |Stored |
+|--------|--------|-------|
+| Field1 | False  | True  |
+| Field2 | True   | False |
 
-    [SolrFieldAttribute("some_field2", Indexed = true, Stored = false)]
-    public string SomeField2 { get; set; }
-}
-```
+Now, some things will occur when use fields, explinated bellow:
 
-Now, some things will occur when use **SomeField**, see bellow:
-
-|Use case     |Using method      |SomeField1      |SomeField2      |
-|-------------|------------------|----------------|----------------|
-|Faceting     |FacetField        |Throws exception|Works well      |
-|Faceting     |FacetQuery        |Throws exception|Works well      |
-|Faceting     |FacetRange        |Throws exception|Works well      |
-|Filtering    |Filter            |Throws exception|Works well      |
-|Get contents |Fields            |Works well      |Throws exception|
-|Search       |Query             |Throws exception|Works well      |
-|Sorting      |Sort              |Throws exception|Works well      |
+| Use case     | Using method | Field1           | Field2           |
+|--------------|--------------|------------------|------------------|
+| Faceting     | FacetField   | Throws exception | Works well       |
+| Faceting     | FacetQuery   | Throws exception | Works well       |
+| Faceting     | FacetRange   | Throws exception | Works well       |
+| Filtering    | Filter       | Throws exception | Works well       |
+| Get contents | Fields       | Works well       | Throws exception |
+| Search       | Query        | Throws exception | Works well       |
+| Sorting      | Sort         | Throws exception | Works well       |
 
 **NOTE**
 

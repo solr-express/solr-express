@@ -2,6 +2,56 @@
 
 Notes about releases
 
+## [5.0.0] - 2017-08-XX
+
+* A lot of things, see [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for more informations
+
+Thanks people for ideas and contributions:
+* [hheexx](https://github.com/hheexx)
+* [stanuku](https://github.com/stanuku)
+* [UncleZen](https://github.com/UncleZen)
+
+## [4.2.6] - 2017-07-13
+
+### Enhancement
+
+* Updated NewtonSoft.Json and Flurl (tks [@Baklap4](https://github.com/baklap4))
+
+## [4.2.5] - 2017-04-25
+
+### Bug fix
+- Updating/inserting a document fails ([#211](https://github.com/solr-express/solr-express/issues/211)) (tks [@Baklap4](https://github.com/baklap4))
+
+---
+
+## [4.2.4] - 2017-03-19
+
+### Enhancement
+- Implements #203 in .Net 4.5 framework ([#204](https://github.com/solr-express/solr-express/issues/204))
+
+---
+
+## [4.2.3] - 2017-03-19
+
+### Enhancement
+- Implements #203 in .Net 4.5 framework ([#204](https://github.com/solr-express/solr-express/issues/204))
+
+---
+
+## [4.2.2] - 2017-03-19
+
+### Bug fix
+- Error 501 when use SolrCloud  ([#199](https://github.com/solr-express/solr-express/issues/197), [#203](https://github.com/solr-express/solr-express/issues/203))
+
+---
+
+## [4.2.1] - 2017-01-31
+
+### Bug fix
+* Wrong variable used in result Interceptors execution ([#197](https://github.com/solr-express/solr-express/issues/197))
+
+---
+
 ## [4.2.0] - 2017-01-20
 
 ### Enhancement

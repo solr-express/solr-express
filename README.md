@@ -1,11 +1,12 @@
 # Solr Express
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/solr-express/solr-express/blob/master/LICENSE)
+Documentation on getting started with SolrExpress is available at <http://solr-express.readthedocs.io/en/stable//tutorials/getting-started>.
 
-![Travis-CI](https://travis-ci.org/solr-express/solr-express.svg?branch=master)
+Tutorials is available at <http://solr-express.readthedocs.io/en/stable//tutorials/getting-started>.
 
-[![NuGet Solr4](https://img.shields.io/nuget/v/SolrExpress.Solr4.svg?style=flat-square&label=nuget+SolrExpress.Solr4)](https://www.nuget.org/packages/SolrExpress.Solr4/)
-[![NuGet Solr5](https://img.shields.io/nuget/v/SolrExpress.Solr5.svg?style=flat-square&label=nuget+SolrExpress.Solr5)](https://www.nuget.org/packages/SolrExpress.Solr5/)
+And release notes is available at <http://solr-express.readthedocs.io/en/stable//about/release-notes/>.
+
+[![Travis build status](https://img.shields.io/travis/solr-express/solr-express.svg?label=travis-ci&branch=dev&style=flat-square)](https://travis-ci.org/solr-express/solr-express.svg/branches)
 
 ![.Net 4.0](https://img.shields.io/badge/.Net_4.0-Full_Compatibility-green.svg?style=flat-square)
 ![.Net 4.5](https://img.shields.io/badge/.Net_4.5-Full_Compatibility-green.svg?style=flat-square)
@@ -15,19 +16,26 @@
 ![Solr 5.5](https://img.shields.io/badge/Solr_5.5-Full_Compatibility-green.svg?style=flat-square)
 ![Solr 6.0](https://img.shields.io/badge/Solr_6.0-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
 
+## What is?
+
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
-## Useful links
+## Providers
 
-* Documentation
-	* [Overview](http://solr-express.readthedocs.io/en/stable/)
-	* [Getting Started](http://solr-express.readthedocs.io/en/stable/tutorials/getting-started/)
-	* [Tutorials](http://solr-express.readthedocs.io/en/stable/tutorials/)
-	* [Release notes](http://solr-express.readthedocs.io/en/stable/about/release-notes/)
-* NuGet Packages
-	* [SolrExpress.Solr4](https://www.nuget.org/packages/SolrExpress.Solr4/)
-	* [SolrExpress.Solr5](https://www.nuget.org/packages/SolrExpress.Solr5/)
-* Solr
-	* [Solr 4.9](http://archive.apache.org/dist/lucene/solr/4.9.0)
-	* [Solr 5.5](http://archive.apache.org/dist/lucene/solr/5.5.0)
-	* [Solr 6.1](http://archive.apache.org/dist/lucene/solr/6.1.0)
+The source for Solr4 and Solr5 providers are included in this project.
+
+Provider  | Package name        | Stable (`master` branch)
+----------|---------------------|-----------------------------
+Solr4     | `SolrExpress.Solr4` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr4.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr4/)
+Solr5     | `SolrExpress.Solr5` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr5.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr5/)
+
+## Dependency Injectors Containers
+
+The source for Autofac, CoreClr, Ninject and Simple Injector containers are included in this project.
+
+Provider         | Package name                    | Stable (`master` branch)
+-----------------|---------------------------------|-----------------------------
+Autofac          | `SolrExpress.DI.Autofac`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Autofac.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Autofac/)
+Native .Net Core | `SolrExpress.DI.CoreClr`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.CoreClr.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.CoreClr/)
+Ninject          | `SolrExpress.DI.Ninject`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Ninject.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Ninject/)
+Simple Injector  | `SolrExpress.DI.SimpleInjector` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.SimpleInjector.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.SimpleInjector/)

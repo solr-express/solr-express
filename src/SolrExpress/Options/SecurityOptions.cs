@@ -6,7 +6,7 @@
     public class SecurityOptions
     {
         /// <summary>
-        /// Type of authentication type used in process
+        /// Type of authentication used in process
         /// </summary>
         public AuthenticationType AuthenticationType { get; set; }
 
