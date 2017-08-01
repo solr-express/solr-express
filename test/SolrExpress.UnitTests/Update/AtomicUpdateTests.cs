@@ -18,8 +18,8 @@ namespace SolrExpress.UnitTests.Update
             var expected = JArray.Parse(@"
             [
               {
-                ""Id"": ""123456"",
-                ""Text"": ""ymmud""
+                ""text"": ""ymmud"",
+                ""id"": ""123456""
               }
             ]");
             var document = new TestDocumentSimple
@@ -45,14 +45,15 @@ namespace SolrExpress.UnitTests.Update
         public void AtomicUpdate002()
         {
             // Arrange
-            var expected = JArray.Parse(@"[
+            var expected = JArray.Parse(@"
+            [
               {
-                ""Id"": ""123456"",
-                ""Text"": ""ymmud""
+                ""text"": ""ymmud"",
+                ""id"": ""123456""
               },
               {
-                ""Id"": ""654321"",
-                ""Text"": ""ymmud2""
+                ""text"": ""ymmud2"",
+                ""id"": ""654321""
               }
             ]");
             var document1 = new TestDocumentSimple
@@ -83,15 +84,16 @@ namespace SolrExpress.UnitTests.Update
         public void AtomicUpdate003()
         {
             // Arrange
-            var expected = JArray.Parse(@"[
-              {
-                ""Id"": ""123456"",
-                ""Text"": ""ymmud""
-              },
-              {
-                ""Id"": ""654321"",
-                ""Text"": ""ymmud2""
-              }
+            var expected = JArray.Parse(@"
+            [
+                {
+                ""text"": ""ymmud"",
+                ""id"": ""123456""
+                },
+                {
+                ""text"": ""ymmud2"",
+                ""id"": ""654321""
+                }
             ]");
             var document1 = new TestDocumentSimple
             {

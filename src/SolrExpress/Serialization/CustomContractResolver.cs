@@ -21,6 +21,11 @@ namespace SolrExpress.Serialization
             if (solrFieldAttribute != null)
             {
                 property.PropertyName = solrFieldAttribute.Name;
+
+                if (solrFieldAttribute.IsMagicField)
+                {
+                    property.Ignored = true;
+                }
             }
 
             return property;
