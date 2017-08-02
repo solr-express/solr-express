@@ -1,0 +1,653 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using SolrExpress.DI.CoreClr;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
+using SolrExpress.Search.Query.Extension;
+using SolrExpress.Search.Result.Extension;
+using SolrExpress.Solr4.Extension;
+using System;
+using System.Linq;
+using Xunit;
+
+namespace SolrExpress.Solr4.IntegrationTests
+{
+    public class IntegrationTests
+    {
+        private IServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Default constructor of class
+        /// </summary>
+        public IntegrationTests()
+        {
+            var services = new ServiceCollection()
+                .AddSolrExpress<TechProductDocument>(builder => builder
+                    .UseHostAddress("http://localhost:8983/solr/collection1")
+                    .UseSolr4());
+
+            this._serviceProvider = services.BuildServiceProvider();
+        }
+
+        /// <summary>
+        /// Get a flesh instance of DocumentCollection<TechProductDocument> 
+        /// </summary>
+        /// <returns>Instance of DocumentCollection<TechProductDocument></returns>
+        private DocumentCollection<TechProductDocument> GetDocumentCollection()
+        {
+            return this._serviceProvider.GetRequiredService<DocumentCollection<TechProductDocument>>();
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, only creting provider and solr query classes
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest001()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act / Assert
+            documentCollection.Select().Execute();
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest002()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and "Filter" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest003()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .Filter(q => q.InStock, "true")
+                .Filter(q => q.ManufacturerId, "corsair")
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetDocument(out var data);
+
+            // Assert
+            Assert.Equal(3, data.Count());
+            Assert.Equal("TWINX2048-3200PRO", data.ToList()[0].Id);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and "Facet.Field" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest004()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .FacetField(q => q.ManufacturerId)
+                .FacetField(q => q.InStock)
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(2, data.Count());
+            Assert.True(data.Any(q => q.Name.Equals("ManufacturerId")));
+            Assert.True(data.Any(q => q.Name.Equals("InStock")));
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and "Facet.Query" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact(Skip = "Needs facet implementations")]
+        public void IntegrationTest005()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetQuery("Facet1", query => query.Field(q => q.Popularity).GreaterThan(10))
+                .FacetQuery("Facet2", query => query.Field(q => q.Popularity).LessThan(10))
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(2, data.Count());
+            //data.First(q => q.Name.Equals("Facet1"))
+            //Assert.True(data["Facet1"] > 0);
+            //Assert.True(data["Facet2"] > 0);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and "Facet.Range" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest006()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10")
+                .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
+                .FacetRange("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY")
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(3, data.Count());
+            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
+            Assert.True(data.Any(q => q.Name.Equals("Facet2")));
+            Assert.True(data.Any(q => q.Name.Equals("Facet3")));
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Query" and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest007()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Execute()
+                .Information()
+                .Execute()
+                .GetInformation(out var data);
+
+            // Assert
+            Assert.True(data.DocumentCount > 0);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Facet.Field"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact(Skip = "Needs facet implementations")]
+        public void IntegrationTest008()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.ManufacturerId, facet => facet.Limit(1))
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(1, data.Count());
+            Assert.Equal("ManufacturerId", data.ToList()[0].Name);
+            //Assert.Equal(1, data.ToList()[0].Data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding a new document into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [Fact]
+        public void IntegrationTest009()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            var documentId = Guid.NewGuid().ToString("N");
+            var documentToAdd = new TechProductDocument
+            {
+                Id = documentId,
+                Name = "IntegrationTest009"
+            };
+            var update = documentCollection.Update();
+
+            // Act
+            update.Add(documentToAdd);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select()
+                .Query(q => q.Id, documentId)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var fetchedDocuments);
+
+            Assert.Equal(1, fetchedDocuments.Count());
+            Assert.Equal(documentId, fetchedDocuments.ToList()[0].Id);
+            Assert.Equal("IntegrationTest009", fetchedDocuments.ToList()[0].Name);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding a new document into collection and delete this document
+        /// What    Create a communication between software and SOLR and document is deleted from collection
+        /// </summary>
+        [Fact]
+        public void IntegrationTest010()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            var documentId = Guid.NewGuid().ToString("N");
+            var documentToAdd = new TechProductDocument
+            {
+                Id = documentId,
+                Name = "IntegrationTest009"
+            };
+            var update = documentCollection.Update();
+            update.Add(documentToAdd);
+            update.Commit();
+
+            // Act
+            update.Delete(documentId);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select()
+                .Query(q => q.Id, documentId)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var fetchedDocuments);
+
+            Assert.Equal(0, fetchedDocuments.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (once)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest011()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Sort(q => q.Id, true)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest012()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Sort(q => q.Id, false)
+                .Sort(q => q.Name, true)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding 2 new documents into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [Fact]
+        public void IntegrationTest013()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            var documentId1 = Guid.NewGuid().ToString("N");
+            var documentId2 = Guid.NewGuid().ToString("N");
+            var documentToAdd1 = new TechProductDocument
+            {
+                Id = documentId1,
+                Name = "IntegrationTest013"
+            };
+            var documentToAdd2 = new TechProductDocument
+            {
+                Id = documentId2,
+                Name = "IntegrationTest013"
+            };
+            var update = documentCollection.Update();
+
+            // Act
+            update.Add(documentToAdd1, documentToAdd2);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select()
+                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var fetchedDocuments);
+
+            Assert.Equal(2, fetchedDocuments.Count());
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Sort" (twice)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest014()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Sort(q => q.Id, false)
+                .Sort(q => q.Name, true)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context
+        /// When    Adding 2 new documents into collection
+        /// What    Create a communication between software and SOLR and add document in collection
+        /// </summary>
+        [Fact]
+        public void IntegrationTest015()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            var documentId1 = Guid.NewGuid().ToString("N");
+            var documentId2 = Guid.NewGuid().ToString("N");
+            var documentToAdd1 = new TechProductDocument
+            {
+                Id = documentId1,
+                Name = "IntegrationTest015"
+            };
+            var documentToAdd2 = new TechProductDocument
+            {
+                Id = documentId2,
+                Name = "IntegrationTest015"
+            };
+            var update = documentCollection.Update();
+
+            // Act
+            update.Add(documentToAdd1, documentToAdd2);
+            update.Commit();
+
+            // Assert
+            documentCollection
+                .Select()
+                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var fetchedDocuments);
+
+            Assert.Equal(2, fetchedDocuments.Count());
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
+            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest016()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Boost(query => query.Field(q => q.InStock))
+                .Execute()
+                .Document()
+                .Execute()
+                .GetInformation(out var data);
+
+            // Assert
+            Assert.True(data.DocumentCount > 1);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Boost" (type bf) and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest017()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Boost(query => query.Field(q => q.InStock), boost => boost.BoostFunctionType(BoostFunctionType.Bf))
+                .Execute()
+                .Document()
+                .Execute()
+                .GetInformation(out var data);
+
+            // Assert
+            Assert.True(data.DocumentCount > 1);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Offset" and result Information
+        /// When    Invoking the method "Execute"
+        /// What    Create a correct pagination
+        /// </summary>
+        [Fact]
+        public void IntegrationTest018()
+        {
+            // Arrange
+            this.GetDocumentCollection()
+                .Select()
+                .QueryAll()
+                .Limit(20)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var allDocuments);
+
+            // Act
+            this.GetDocumentCollection()
+                .Select()
+                .QueryAll()
+                .Page(5, 1)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var documentsPage1);
+
+            this.GetDocumentCollection()
+                .Select()
+                .QueryAll()
+                .Page(5, 2)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var documentsPage2);
+
+            this.GetDocumentCollection()
+                .Select()
+                .QueryAll()
+                .Page(5, 3)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var documentsPage3);
+
+            // Assert
+            var listAllDocuments = allDocuments.ToList();
+            Assert.Equal(listAllDocuments[0].Id, documentsPage1.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[5].Id, documentsPage2.ToList()[0].Id);
+            Assert.Equal(listAllDocuments[10].Id, documentsPage3.ToList()[0].Id);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Fields"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest019()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Fields(q => q.Id, q => q.Name)
+                .Sort(q => q.Id, false)
+                .Limit(1)
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var documents);
+
+            // Assert
+            var documentList = documents.ToList();
+            Assert.Equal(1, documentList.Count);
+            Assert.NotEmpty(documentList[0].Id);
+            Assert.Null(documentList[0].Name);
+            Assert.Null(documentList[0].Manufacturer);
+            Assert.Null(documentList[0].ManufacturerId);
+            Assert.Null(documentList[0].Categories);
+            Assert.Null(documentList[0].Features);
+            Assert.Equal(default(GeoCoordinate), documentList[0].StoredAt);
+            Assert.Equal(0, documentList[0].Price);
+            Assert.Equal(0, documentList[0].Popularity);
+            Assert.False(documentList[0].InStock);
+            Assert.Equal(default(DateTime), documentList[0].ManufacturedateIn);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with exclude
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest020()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Filter(q => q.Id, "TWINX2048-3200PRO", "sometag1")
+                .Filter(q => q.ManufacturerId, "corsair", "sometag2")
+                .FacetField(q => q.Categories, facet => facet.Excludes("sometag1", "sometag2"))
+                .Execute()
+                .Document()
+                .Execute()
+                .GetDocument(out var documents);
+
+            // Assert
+            var documentList = documents.ToList();
+            Assert.Equal(1, documentList.Count);
+        }
+    }
+}
