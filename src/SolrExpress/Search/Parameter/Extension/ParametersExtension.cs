@@ -37,17 +37,19 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="query">Query used to make boost</param>
-        /// <param name="boostFunction">Boost type used in calculation</param>
+        /// <param name="instance">Instance of boost ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, SearchQuery query, BoostFunctionType boostFunction = BoostFunctionType.Boost)
+        public static DocumentSearch<TDocument> Boost<TDocument>(this DocumentSearch<TDocument> documentSearch, Action<SearchQuery<TDocument>> query, Action<IBoostParameter<TDocument>> instance = null)
             where TDocument : Document
         {
             Checker.IsNull(query);
-            Checker.IsNull(boostFunction);
 
             var parameter = documentSearch.ServiceProvider.GetService<IBoostParameter<TDocument>>();
-            parameter.BoostFunctionType(boostFunction);
-            parameter.Query(query);
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            parameter.Query(search);
+
+            query.Invoke(search);
+            instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
 
@@ -101,12 +103,15 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="query">Query used to make facet</param>
         /// <param name="instance">Instance of facet ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, SearchQuery query, Action<IFacetQueryParameter<TDocument>> instance = null)
+        public static DocumentSearch<TDocument> FacetQuery<TDocument>(this DocumentSearch<TDocument> documentSearch, string aliasName, Action<SearchQuery<TDocument>> query, Action<IFacetQueryParameter<TDocument>> instance = null)
             where TDocument : Document
         {
+            Checker.IsNull(query);
+
             var parameter = documentSearch.ServiceProvider.GetService<IFacetQueryParameter<TDocument>>();
             parameter.AliasName(aliasName);
-            parameter.Query(query);
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            parameter.Query(search);
 
             instance?.Invoke(parameter);
 
@@ -197,7 +202,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
             search.Any(values);
 
             parameter.Query(search);
@@ -212,16 +217,20 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IFilterParameter<TDocument>> instance)
+        public static DocumentSearch<TDocument> Filter<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query, Action<IFilterParameter<TDocument>> instance = null)
             where TDocument : Document
         {
+            Checker.IsNull(query);
+
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
 
             parameter.Query(search);
 
+            query.Invoke(search);
             instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
@@ -324,7 +333,7 @@ namespace SolrExpress.Search.Parameter.Extension
             where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
             search.Any(values);
 
             parameter.Value(search);
@@ -339,17 +348,40 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<IQueryParameter<TDocument>> instance)
+        public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query, Action<IQueryParameter<TDocument>> instance = null)
             where TDocument : Document
         {
+            Checker.IsNull(query);
+
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
-            var search = documentSearch.ServiceProvider.GetService<SearchQuery>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
 
             parameter.Value(search);
 
+            query.Invoke(search);
             instance?.Invoke(parameter);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query parameter to get all (*:*)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryAll<TDocument>(this DocumentSearch<TDocument> documentSearch)
+            where TDocument : Document
+        {
+            var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            search.AddValue<string>("*:*", false);
+
+            parameter.Value(search);
 
             documentSearch.Add(parameter);
 
