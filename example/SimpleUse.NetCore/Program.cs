@@ -21,22 +21,6 @@ namespace SimpleUse.NetCore
                     .UseHostAddress("http://localhost:8983/solr/techproducts")
                     .UseSolr5());
 
-            var options = new SolrExpressOptions
-            {
-                HostAddress = "http://localhost:8983/solr/techproducts",
-                Security = new SecurityOptions
-                {
-                    AuthenticationType = AuthenticationType.Basic,
-                    Password = "<YOUR PASSWORD>",
-                    UserName = "<YOUR USER NAME>"
-                }
-            };
-
-            services = new ServiceCollection()
-                .AddSolrExpress<TechProduct>(builder => builder
-                    .UseOptions(options)
-                    .UseSolr5());
-
             var serviceProvider = services.BuildServiceProvider();
 
             var techProducts = serviceProvider.GetRequiredService<DocumentCollection<TechProduct>>();

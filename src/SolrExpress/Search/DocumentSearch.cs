@@ -117,7 +117,8 @@ namespace SolrExpress.Search
             if (!this._searchItemCollection.Contains<IStandardQueryParameter<TDocument>>())
             {
                 var standardQueryParameter = this.ServiceProvider.GetService<IStandardQueryParameter<TDocument>>();
-                standardQueryParameter.Value = new SearchQuery().AddValue("*:*");
+                var searchQuery = this.ServiceProvider.GetService<SearchQuery<TDocument>>();
+                standardQueryParameter.Value = searchQuery.AddValue("*:*", false);
                 this._searchItemCollection.Add(standardQueryParameter);
             }
 

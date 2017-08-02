@@ -11,7 +11,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JToken _result;
 
-        SearchQuery IFilterParameter<TDocument>.Query { get; set; }
+        SearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
 
         string IFilterParameter<TDocument>.TagName { get; set; }
 

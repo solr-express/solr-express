@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         int? IFacetQueryParameter<TDocument>.Minimum { get; set; }
 
-        SearchQuery IFacetQueryParameter<TDocument>.Query { get; set; }
+        SearchQuery<TDocument> IFacetQueryParameter<TDocument>.Query { get; set; }
 
         FacetSortType? IFacetQueryParameter<TDocument>.SortType { get; set; }
 

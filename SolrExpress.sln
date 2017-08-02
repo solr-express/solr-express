@@ -34,11 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tutorials", "tutorials", "{
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\authentication-and-authorization.md = docs\tutorials\authentication-and-authorization.md
 		docs\tutorials\dynamic-field-behaviours.md = docs\tutorials\dynamic-field-behaviours.md
-		docs\tutorials\facets.md = docs\tutorials\facets.md
 		docs\tutorials\fail-fast.md = docs\tutorials\fail-fast.md
 		docs\tutorials\getting-started.md = docs\tutorials\getting-started.md
 		docs\tutorials\global-settings.md = docs\tutorials\global-settings.md
-		docs\tutorials\queries.md = docs\tutorials\queries.md
 		docs\tutorials\result-interceptors.md = docs\tutorials\result-interceptors.md
 	EndProjectSection
 EndProject
@@ -79,6 +77,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", 
 	ProjectSection(SolutionItems) = preProject
 		docs\benchmarks\version-3.1.2.md = docs\benchmarks\version-3.1.2.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4.IntegrationTests", "test\SolrExpress.Solr4.IntegrationTests\SolrExpress.Solr4.IntegrationTests.csproj", "{5FE572CD-A4FE-468A-9596-EF705F0C24D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.IntegrationTests", "test\SolrExpress.Solr5.IntegrationTests\SolrExpress.Solr5.IntegrationTests.csproj", "{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facets", "facets", "{B51E48B1-BB87-4E96-AAF0-583F78EB40AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "queries", "queries", "{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -142,6 +148,14 @@ Global
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FE572CD-A4FE-468A-9596-EF705F0C24D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FE572CD-A4FE-468A-9596-EF705F0C24D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FE572CD-A4FE-468A-9596-EF705F0C24D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FE572CD-A4FE-468A-9596-EF705F0C24D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,5 +179,9 @@ Global
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{A9038E8A-D000-4F70-84B1-0E5A98B56AFA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 		{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
+		{5FE572CD-A4FE-468A-9596-EF705F0C24D3} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
+		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
+		{B51E48B1-BB87-4E96-AAF0-583F78EB40AA} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
+		{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
 	EndGlobalSection
 EndGlobal

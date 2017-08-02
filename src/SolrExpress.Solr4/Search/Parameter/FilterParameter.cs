@@ -10,8 +10,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         where TDocument : Document
     {
         private string _result;
-        
-        SearchQuery IFilterParameter<TDocument>.Query { get; set; }
+
+        SearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
 
         string IFilterParameter<TDocument>.TagName { get; set; }
 

@@ -11,7 +11,7 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Query used to make boost
         /// </summary>
-        SearchQuery Query { get; set; }
+        SearchQuery<TDocument> Query { get; set; }
 
         /// <summary>
         /// Boost type used in calculation

@@ -12,7 +12,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
 		/// <param name="parameter">Parameter to congigure</param>
         /// <param name="query">Value of filter</param>
-        public static IFilterParameter<TDocument> Query<TDocument>(this IFilterParameter<TDocument> parameter, SearchQuery query)
+        public static IFilterParameter<TDocument> Query<TDocument>(this IFilterParameter<TDocument> parameter, SearchQuery<TDocument> query)
             where TDocument : Document
         {
             parameter.Query = query;

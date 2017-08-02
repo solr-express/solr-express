@@ -1,4 +1,6 @@
-﻿using SolrExpress.Search.Query;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search.Query;
+using SolrExpress.Utility;
 using System;
 using Xunit;
 
@@ -15,7 +17,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact001()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue("some value").Execute();
@@ -33,7 +39,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact002()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue(1).Execute();
@@ -51,7 +61,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact003()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue((decimal)10.12345).Execute();
@@ -69,7 +83,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact004()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue(10.12345).Execute();
@@ -87,7 +105,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact005()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue((float)10.12345).Execute();
@@ -105,7 +127,11 @@ namespace SolrExpress.UnitTests.Search.Query
         public void SearchQueryFact006()
         {
             // Arrange
-            var searchQuery = new SearchQuery();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
             var result = searchQuery.AddValue(new DateTime(1984, 09, 05, 10, 20, 30)).Execute();

@@ -16,7 +16,7 @@ namespace SolrExpress.Search.Parameter
         /// <summary>
         /// Query used to make facet
         /// </summary>
-        SearchQuery Query { get; set; }
+        SearchQuery<TDocument> Query { get; set; }
 
         /// <summary>
         /// Minimum count of itens in facet's result

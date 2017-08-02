@@ -35,7 +35,7 @@ namespace SolrExpress.Utility
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient(expressionBuilder)
-                .AddTransient<SearchQuery>()
+                .AddTransient<SearchQuery<TDocument>>()
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();
