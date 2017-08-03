@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace SolrExpress.Builder
 {
@@ -16,12 +17,43 @@ namespace SolrExpress.Builder
     {
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISolrConnection _solrConnection;
-        private Dictionary<string, FieldData> fieldsData = new Dictionary<string, FieldData>();
+        private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
+        internal Dictionary<string, FieldSchema> _fieldSchemas;
+        internal Dictionary<Regex, FieldSchema> _dynamicFieldSchemas;
 
         public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection solrConnection)
         {
             this._solrExpressOptions = solrExpressOptions;
             this._solrConnection = solrConnection;
+        }
+
+        /// <summary>
+        /// Load schema of all fields in SOLR server
+        /// </summary>
+        internal void LoadSolrSchemaFields()
+        {
+            var allFields = JObject.Parse(this._solrConnection.Get("schema/fields", null));
+            var allDynamicFields = JObject.Parse(this._solrConnection.Get("schema/dynamicfields", null));
+
+            this._fieldSchemas = allFields["fields"]
+                .ToDictionary(
+                    k => k["name"].Value<string>(),
+                    v => new FieldSchema
+                    {
+                        FieldName = v["name"].Value<string>(),
+                        IsIndexed = v["indexed"].Value<bool>(),
+                        IsStored = v["stored"].Value<bool>()
+                    });
+
+            this._dynamicFieldSchemas = allDynamicFields["dynamicFields"]
+                .ToDictionary(
+                    k => new Regex($"^{k["name"].Value<string>().Replace("*", "(.*)")}$", RegexOptions.Compiled),
+                    v => new FieldSchema
+                    {
+                        FieldName = v["name"].Value<string>(),
+                        IsIndexed = v["indexed"]?.Value<bool>() ?? false,
+                        IsStored = v["stored"]?.Value<bool>() ?? false
+                    });
         }
 
         /// <summary>
@@ -78,16 +110,26 @@ namespace SolrExpress.Builder
         }
 
         /// <summary>
-        /// Check informed field in SOLR server
+        /// Get field schema from internal list of field schema
         /// </summary>
-        /// <param name="data"></param>
-        internal void CheckSolrField(ref FieldData data)
+        /// <param name="name">Name of field to find</param>
+        /// <returns>Field schema</returns>
+        internal FieldSchema GetFieldSchema(string name)
         {
-            var result = this._solrConnection.Get($"schema/fields/{data.FieldName}", null);
-            var jobject = JObject.Parse(result);
+            if (this._fieldSchemas.ContainsKey(name))
+            {
+                return this._fieldSchemas[name];
+            }
 
-            data.IsIndexed = jobject["field"]["indexed"].Value<bool>();
-            data.IsStored = jobject["field"]["stored"].Value<bool>();
+            foreach (var item in this._dynamicFieldSchemas)
+            {
+                if (item.Key.IsMatch(name))
+                {
+                    return item.Value;
+                }
+            }
+
+            throw new ArgumentOutOfRangeException();
         }
 
         /// <summary>
@@ -99,7 +141,7 @@ namespace SolrExpress.Builder
         {
             var propertyInfo = this.GetPropertyInfoFromExpression(expression);
 
-            return this.fieldsData[propertyInfo.Name];
+            return this._fieldsData[propertyInfo.Name];
         }
 
         /// <summary>
@@ -114,6 +156,8 @@ namespace SolrExpress.Builder
 #endif
                 .GetProperties();
 
+            this.LoadSolrSchemaFields();
+
             foreach (var property in properties)
             {
                 var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
@@ -126,14 +170,25 @@ namespace SolrExpress.Builder
                     AliasName = propertyInfo.Name,
                     DynamicFieldPrefixName = solrFieldAttribute?.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefixName,
                     DynamicFieldSuffixName = solrFieldAttribute?.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffixName,
-                    FieldName = solrFieldAttribute?.Name ?? propertyInfo.Name,
                     IsDynamicField = solrFieldAttribute?.IsDynamicField ?? false,
                     PropertyType = propertyInfo.PropertyType
                 };
 
-                this.CheckSolrField(ref data);
+                if (solrFieldAttribute.IsMagicField)
+                {
+                    data.FieldSchema = new FieldSchema
+                    {
+                        IsIndexed = true,
+                        IsStored = true,
+                        FieldName = solrFieldAttribute.Name
+                    };
+                }
+                else
+                {
+                    data.FieldSchema = this.GetFieldSchema(solrFieldAttribute.Name);
+                }
 
-                this.fieldsData.Add(propertyInfo.Name, data);
+                this._fieldsData.Add(propertyInfo.Name, data);
             }
         }
 
@@ -187,7 +242,7 @@ namespace SolrExpress.Builder
         public string GetFieldName(Expression<Func<TDocument, object>> expression)
         {
             var data = this.GetData(expression);
-            var fieldName = data.FieldName;
+            var fieldName = data.FieldSchema.FieldName;
 
             if (data.IsDynamicField)
             {
@@ -212,7 +267,7 @@ namespace SolrExpress.Builder
         /// <returns>If true, value of the field can be used in queries to retrieve matching documents</returns>
         public bool GetIsIndexed(Expression<Func<TDocument, object>> expression)
         {
-            return this.GetData(expression).IsIndexed;
+            return this.GetData(expression).FieldSchema.IsIndexed;
         }
 
         /// <summary>
@@ -222,7 +277,7 @@ namespace SolrExpress.Builder
         /// <returns>If true, actual value of the field can be retrieved by queries</returns>
         public bool GetIsStored(Expression<Func<TDocument, object>> expression)
         {
-            return this.GetData(expression).IsStored;
+            return this.GetData(expression).FieldSchema.IsStored;
         }
     }
 }

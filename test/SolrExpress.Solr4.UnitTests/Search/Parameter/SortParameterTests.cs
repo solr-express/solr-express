@@ -24,7 +24,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter = (ISortParameter<TestDocument>)new SortParameter<TestDocument>(expressionBuilder);

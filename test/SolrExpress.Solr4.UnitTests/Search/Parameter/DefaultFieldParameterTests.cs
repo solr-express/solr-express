@@ -22,7 +22,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>();
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             parameter.ExpressionBuilder = expressionBuilder;

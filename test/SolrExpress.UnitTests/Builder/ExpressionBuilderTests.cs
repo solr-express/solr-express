@@ -19,21 +19,32 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
                 .Returns(@"
                 {
-                    ""responseHeader"": {
-                    ""status"": 0,
-                    ""QTime"": 118
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
+                        ""indexed"": true,
+                        ""stored"": true
                     },
-                    ""field"": {
-                    ""name"": ""no_dynamic"",
-                    ""type"": ""string"",
-                    ""multiValued"": false,
-                    ""indexed"": true,
-                    ""required"": true,
-                    ""stored"": true
-                    }
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
+                }");
+
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": []
                 }");
             var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
@@ -57,21 +68,32 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
                 .Returns(@"
                 {
-                    ""responseHeader"": {
-                    ""status"": 0,
-                    ""QTime"": 118
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
+                        ""indexed"": true,
+                        ""stored"": true
                     },
-                    ""field"": {
-                    ""name"": ""dynamic"",
-                    ""type"": ""string"",
-                    ""multiValued"": false,
-                    ""indexed"": true,
-                    ""required"": true,
-                    ""stored"": true
-                    }
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
+                }");
+
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": []
                 }");
             var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
@@ -95,21 +117,32 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
                 .Returns(@"
                 {
-                    ""responseHeader"": {
-                    ""status"": 0,
-                    ""QTime"": 118
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
+                        ""indexed"": true,
+                        ""stored"": true
                     },
-                    ""field"": {
-                    ""name"": ""dynamic"",
-                    ""type"": ""string"",
-                    ""multiValued"": false,
-                    ""indexed"": true,
-                    ""required"": true,
-                    ""stored"": true
-                    }
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
+                }");
+
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": []
                 }");
             var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
@@ -133,21 +166,32 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
                 .Returns(@"
                 {
-                    ""responseHeader"": {
-                    ""status"": 0,
-                    ""QTime"": 118
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
+                        ""indexed"": true,
+                        ""stored"": true
                     },
-                    ""field"": {
-                    ""name"": ""dynamic"",
-                    ""type"": ""string"",
-                    ""multiValued"": false,
-                    ""indexed"": true,
-                    ""required"": true,
-                    ""stored"": true
-                    }
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
+                }");
+
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": []
                 }");
             var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
             expressionBuilder.LoadDocument();
@@ -161,8 +205,8 @@ namespace SolrExpress.UnitTests.Builder
 
         /// <summary>
         /// Where   Using a ExpressionBuilder class
-        /// When    Invoke CheckSolrField
-        /// What    Set field settings using SOLR field API
+        /// When    Invoke GetFieldSchema using a static field
+        /// What    Get field settings using SOLR field API
         /// </summary>
         [Fact]
         public void ExpressionBuilder005()
@@ -171,27 +215,96 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.IsAny<string>(), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
                 .Returns(@"
                 {
-                    ""field"": {
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
                         ""indexed"": true,
                         ""stored"": true
-                    }
+                    },
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
                 }");
 
-            var fieldData = new FieldData
-            {
-                AliasName = "id",
-                FieldName = "id",
-                IsIndexed = false,
-                IsStored = false
-            };
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": []
+                }");
 
             var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            expressionBuilder.LoadSolrSchemaFields();
 
             // Act
-            expressionBuilder.CheckSolrField(ref fieldData);
+            var fieldData = expressionBuilder.GetFieldSchema("id");
+
+            // Assert
+            Assert.True(fieldData.IsIndexed);
+            Assert.True(fieldData.IsStored);
+        }
+
+        /// <summary>
+        /// Where   Using a ExpressionBuilder class
+        /// When    Invoke GetFieldSchema using a dynamic field
+        /// What    Get field settings using SOLR field API
+        /// </summary>
+        [Fact]
+        public void ExpressionBuilder006()
+        {
+            // Arrange
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new Mock<ISolrConnection>();
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+                ""fields"": [
+                    {
+                        ""name"": ""id"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""no_dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    },
+                    {
+                        ""name"": ""dynamic"",
+                        ""indexed"": true,
+                        ""stored"": true
+                    }]
+                }");
+
+            solrConnection
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Returns(@"
+                {
+	                ""dynamicFields"": [{
+
+                        ""name"": ""*_x"",
+                        ""indexed"": true,
+                        ""stored"": true
+
+                    }]
+                }");
+
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            expressionBuilder.LoadSolrSchemaFields();
+
+            // Act
+            var fieldData = expressionBuilder.GetFieldSchema("id_x");
 
             // Assert
             Assert.True(fieldData.IsIndexed);

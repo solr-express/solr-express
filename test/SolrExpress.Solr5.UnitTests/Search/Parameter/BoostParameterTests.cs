@@ -26,7 +26,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(expectedJson);
             var container = new JObject();
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);

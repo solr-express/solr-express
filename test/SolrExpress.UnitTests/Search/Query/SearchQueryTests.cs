@@ -18,7 +18,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
@@ -40,7 +40,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
@@ -62,7 +62,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
@@ -84,7 +84,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
@@ -106,7 +106,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
@@ -128,7 +128,7 @@ namespace SolrExpress.UnitTests.Search.Query
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
-            var solrConnection = new FakeSolrConnection();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
             var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);

@@ -13,29 +13,19 @@ namespace SolrExpress.Builder
         public string AliasName { get; internal set; }
 
         /// <summary>
-        /// Name of field in the SOLR schema
-        /// </summary>
-        public string FieldName { get; internal set; }
-
-        /// <summary>
         /// Type of POCO property
         /// </summary>
         public Type PropertyType { get; internal set; }
 
         /// <summary>
-        /// If true, field in SOLR schema is configured like dynamic field
+        /// Field's schema
+        /// </summary>
+        public FieldSchema FieldSchema { get; internal set; }
+
+        /// <summary>
+        /// If true, field is configured like dynamic field
         /// </summary>
         public bool IsDynamicField { get; internal set; }
-
-        /// <summary>
-        /// If true, value of the field can be used in queries to retrieve matching documents
-        /// </summary>
-        public bool IsIndexed { get; internal set; }
-
-        /// <summary>
-        /// If true, actual value of the field can be retrieved by queries
-        /// </summary>
-        public bool IsStored { get; internal set; }
 
         /// <summary>
         /// Indicates prefix name in dynamic field configurations

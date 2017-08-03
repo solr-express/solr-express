@@ -20,14 +20,14 @@ namespace SolrExpress.DI.CoreClr
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
 
+            builder.Invoke(solrExpressBuilder);
+
             serviceCollection
                 .AddSingleton<ISolrExpressServiceProvider<TDocument>>(solrExpressServiceProvider)
                 .AddSingleton<DocumentCollection<TDocument>>();
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);
-
-            builder.Invoke(solrExpressBuilder);
-
+            
             return serviceCollection;
         }
     }
