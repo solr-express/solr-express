@@ -56,11 +56,14 @@ namespace SolrExpress.Search
                 .Where(q => q is IValidationAttribute)
                 .ToList();
 
-            var multipleInstances =
-                !attributes.Any(q => q is AllowMultipleInstancesAttribute) &&
-                this._searchItemCollection.Contains(searchParameter.GetType());
+            var hasMultipleInstances = this
+                ._searchItemCollection
+                .GetParameters()
+                .Count(q => q.GetType().Equals(searchParameter.GetType())) > 1;
 
-            Checker.IsTrue<AllowMultipleInstancesException>(multipleInstances, searchParameter.GetType().FullName);
+            var allowMultipleInstances = !attributes.Any(q => q is AllowMultipleInstancesAttribute);
+
+            Checker.IsTrue<AllowMultipleInstancesException>(hasMultipleInstances && !allowMultipleInstances, searchParameter.GetType().FullName);
 
             foreach (var attribute in attributes)
             {

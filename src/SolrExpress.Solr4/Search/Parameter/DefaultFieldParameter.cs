@@ -12,6 +12,11 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
+        public DefaultFieldParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        {
+            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+        }
+
         ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get;set; }
         Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get;set; }
 

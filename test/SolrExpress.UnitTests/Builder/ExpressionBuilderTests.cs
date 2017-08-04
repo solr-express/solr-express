@@ -19,7 +19,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -41,7 +41,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": []
@@ -68,7 +68,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -90,7 +90,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": []
@@ -117,7 +117,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -139,7 +139,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": []
@@ -166,7 +166,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -188,7 +188,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": []
@@ -215,7 +215,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -237,7 +237,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": []
@@ -266,7 +266,7 @@ namespace SolrExpress.UnitTests.Builder
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new Mock<ISolrConnection>();
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
                 ""fields"": [
@@ -288,7 +288,7 @@ namespace SolrExpress.UnitTests.Builder
                 }");
 
             solrConnection
-                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<Dictionary<string, string>>()))
+                .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/dynamicfields")), It.IsAny<List<string>>()))
                 .Returns(@"
                 {
 	                ""dynamicFields"": [{

@@ -20,12 +20,12 @@ namespace SolrExpress.DI.Autofac
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
 
+            builder.Invoke(solrExpressBuilder);
+
             container.Register<ISolrExpressServiceProvider<TDocument>>(q => solrExpressServiceProvider).SingleInstance();
             container.RegisterType<DocumentCollection<TDocument>>().SingleInstance();
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);
-
-            builder.Invoke(solrExpressBuilder);
 
             return container;
         }

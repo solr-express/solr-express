@@ -13,7 +13,7 @@ namespace SolrExpress
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of request</returns>
-        string Get(string handler, Dictionary<string, string> data);
+        string Get(string handler, List<string> data);
 
         /// <summary>
         /// Execute a request to informed handler

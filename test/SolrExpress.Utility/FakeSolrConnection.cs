@@ -49,7 +49,7 @@ namespace SolrExpress.Utility
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
         }
 
-        string ISolrConnection.Get(string handler, Dictionary<string, string> data)
+        string ISolrConnection.Get(string handler, List<string> data)
         {
             if (handler.Equals("schema/fields"))
             {

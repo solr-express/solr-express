@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
+    [AllowMultipleInstances]
     public class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {

@@ -3,6 +3,7 @@ using Flurl.Http;
 using Newtonsoft.Json;
 using SolrExpress.Utility;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 
 namespace SolrExpress
@@ -35,11 +36,15 @@ namespace SolrExpress
             }
         }
 
-        string ISolrConnection.Get(string handler, Dictionary<string, string> data)
+        string ISolrConnection.Get(string handler, List<string> data)
         {
             var url = this._options.HostAddress
-                .AppendPathSegment(handler)
-                .SetQueryParams(data);
+                .AppendPathSegment(handler);
+
+            if (data?.Any() ?? false)
+            {
+                url.SetQueryParams(data);
+            }
 
             this.SetAuthentication(url);
 

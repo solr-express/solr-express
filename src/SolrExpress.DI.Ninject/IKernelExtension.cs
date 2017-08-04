@@ -20,12 +20,12 @@ namespace SolrExpress.DI.Ninject
             var solrExpressServiceProvider = new SolrExpressServiceProvider<TDocument>();
             var solrExpressBuilder = new SolrExpressBuilder<TDocument>(solrExpressServiceProvider);
 
+            builder.Invoke(solrExpressBuilder);
+
             container.Bind<ISolrExpressServiceProvider<TDocument>>().ToMethod((context) => solrExpressServiceProvider).InSingletonScope();
             container.Bind<DocumentCollection<TDocument>>().To<DocumentCollection<TDocument>>().InSingletonScope();
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);
-
-            builder.Invoke(solrExpressBuilder);
 
             return container;
         }

@@ -21,11 +21,13 @@ namespace SolrExpress.Solr5.Extension
                 .ServiceProvider
                 .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
+                .AddTransient<IDefaultFieldParameter<TDocument>, DefaultFieldParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()
                 .AddTransient<IFacetLimitParameter<TDocument>, FacetLimitParameter<TDocument>>()
                 .AddTransient<IFacetQueryParameter<TDocument>, FacetQueryParameter<TDocument>>()
                 .AddTransient<IFacetRangeParameter<TDocument>, FacetRangeParameter<TDocument>>()
                 .AddTransient<IFacetSpatialParameter<TDocument>, FacetSpatialParameter<TDocument>>()
+                .AddTransient<IFacetsResult<TDocument>, FacetsResult<TDocument>>()
                 .AddTransient<IFieldsParameter<TDocument>, FieldsParameter<TDocument>>()
                 .AddTransient<IFilterParameter<TDocument>, FilterParameter<TDocument>>()
                 .AddTransient<ILimitParameter<TDocument>, LimitParameter<TDocument>>()
@@ -33,11 +35,14 @@ namespace SolrExpress.Solr5.Extension
                 .AddTransient<IOffsetParameter<TDocument>, OffsetParameter<TDocument>>()
                 .AddTransient<IQueryFieldParameter<TDocument>, QueryFieldParameter<TDocument>>()
                 .AddTransient<IQueryParameter<TDocument>, QueryParameter<TDocument>>()
+                .AddTransient<IQueryParserParameter<TDocument>, QueryParserParameter<TDocument>>()
+                .AddTransient<ISearchItemCollection<TDocument>, SearchItemCollection<TDocument>>()
                 .AddTransient<ISortParameter<TDocument>, SortParameter<TDocument>>()
                 .AddTransient<ISortRandomlyParameter<TDocument>, SortRandomlyParameter<TDocument>>()
                 .AddTransient<ISpatialFilterParameter<TDocument>, SpatialFilterParameter<TDocument>>()
-                .AddTransient<IFacetsResult<TDocument>, FacetsResult<TDocument>>()
-                .AddTransient<ISearchItemCollection<TDocument>, SearchItemCollection<TDocument>>();
+                .AddTransient<IStandardQueryParameter<TDocument>, StandardQueryParameter<TDocument>>()
+                .AddTransient<ISystemParameter<TDocument>, SystemParameter<TDocument>>()
+                .AddTransient<IWriteTypeParameter<TDocument>, WriteTypeParameter<TDocument>>();
 
             return solrExpressBuilder;
         }

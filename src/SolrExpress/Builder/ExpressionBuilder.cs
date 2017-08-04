@@ -125,7 +125,12 @@ namespace SolrExpress.Builder
             {
                 if (item.Key.IsMatch(name))
                 {
-                    return item.Value;
+                    return new FieldSchema
+                    {
+                        FieldName = name,
+                        IsIndexed = item.Value.IsIndexed,
+                        IsStored = item.Value.IsStored
+                    };
                 }
             }
 

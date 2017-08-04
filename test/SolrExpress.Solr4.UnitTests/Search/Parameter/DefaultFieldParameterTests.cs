@@ -20,11 +20,11 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
+            var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
             parameter.ExpressionBuilder = expressionBuilder;
             parameter.FieldExpression = (q) => q.Id;
 

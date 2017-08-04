@@ -23,19 +23,21 @@ namespace SolrExpress.Utility
         {
             serviceProvider
                 .AddSingleton(options)
-                .AddTransient(serviceProvider)
-                .AddTransient<ISolrConnection, SolrConnection>();
+                .AddTransient(serviceProvider);
 
-            var solrConnection = serviceProvider.GetService<ISolrConnection>();
+            var solrConnection = new SolrConnection(options);
             var expressionBuilder = new ExpressionBuilder<TDocument>(options, solrConnection);
             expressionBuilder.LoadDocument();
 
             serviceProvider
+                .AddTransient(expressionBuilder)
                 .AddTransient<DocumentSearch<TDocument>>()
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
-                .AddTransient(expressionBuilder)
                 .AddTransient<SearchQuery<TDocument>>()
+                .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
+                .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
+                .AddTransient<ISolrConnection>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();

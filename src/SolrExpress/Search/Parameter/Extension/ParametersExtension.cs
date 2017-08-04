@@ -203,8 +203,9 @@ namespace SolrExpress.Search.Parameter.Extension
         {
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            search.Field(fieldExpression);
             search.Any(values);
-
+            
             parameter.Query(search);
 
             documentSearch.Add(parameter);
