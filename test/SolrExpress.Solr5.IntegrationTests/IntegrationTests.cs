@@ -22,7 +22,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         {
             var services = new ServiceCollection()
                 .AddSolrExpress<TechProductDocument>(builder => builder
-                    .UseHostAddress("http://localhost:8983/solr/collection1")
+                    .UseHostAddress("http://localhost:8983/solr/techproducts")
                     .UseSolr5());
 
             this._serviceProvider = services.BuildServiceProvider();
@@ -68,9 +68,9 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .QueryAll()
                 .Execute()
-                .Facets()
+                .Document()
                 .Execute()
-                .GetFacets(out var data);
+                .GetDocument(out var data);
 
             // Assert
             Assert.Equal(10, data.Count());
@@ -93,7 +93,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Filter(q => q.InStock, "true")
                 .Filter(q => q.ManufacturerId, "corsair")
                 .Execute()
-                .Facets()
+                .Document()
                 .Execute()
                 .GetDocument(out var data);
 
@@ -107,7 +107,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Needs facet implementations")]
         public void IntegrationTest004()
         {
             // Arrange
@@ -163,7 +163,7 @@ namespace SolrExpress.Solr5.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Needs facet implementations")]
         public void IntegrationTest006()
         {
             // Arrange
@@ -497,7 +497,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Boost(query => query.Field(q => q.InStock))
                 .Execute()
-                .Document()
+                .Information()
                 .Execute()
                 .GetInformation(out var data);
 
@@ -522,7 +522,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Boost(query => query.Field(q => q.InStock), boost => boost.BoostFunctionType(BoostFunctionType.Bf))
                 .Execute()
-                .Document()
+                .Information()
                 .Execute()
                 .GetInformation(out var data);
 

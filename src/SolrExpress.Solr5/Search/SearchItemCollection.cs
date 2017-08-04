@@ -4,10 +4,7 @@ using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Interceptor;
 using SolrExpress.Search.Parameter;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search
@@ -33,10 +30,10 @@ namespace SolrExpress.Solr5.Search
 
             changeBehaviours.ForEach(q => q.Execute());
 
-            Parallel.ForEach(searchParameters, item => ((ISearchItemExecution<List<string>>)item).Execute());
+            Parallel.ForEach(searchParameters, item => ((ISearchItemExecution<JObject>)item).Execute());
 
-            var container = new List<string>();
-            searchParameters.ForEach(q => ((ISearchItemExecution<List<string>>)q).AddResultInContainer(container));
+            var container = new JObject();
+            searchParameters.ForEach(q => ((ISearchItemExecution<JObject>)q).AddResultInContainer(container));
 
             var json = this._solrConnection.GetX(requestHandler, container);
 
