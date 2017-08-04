@@ -12,9 +12,10 @@ And release notes is available at <http://solr-express.readthedocs.io/en/stable/
 ![.Net 4.5](https://img.shields.io/badge/.Net_4.5-Full_Compatibility-green.svg?style=flat-square)
 ![.Net Core](https://img.shields.io/badge/.Net_Core-Full_Compatibility-green.svg?style=flat-square)
 
-![Solr 4.9](https://img.shields.io/badge/Solr_4.9-Full_Compatibility-green.svg?style=flat-square)
-![Solr 5.5](https://img.shields.io/badge/Solr_5.5-Full_Compatibility-green.svg?style=flat-square)
-![Solr 6.0](https://img.shields.io/badge/Solr_6.0-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
+![Solr 4.x](https://img.shields.io/badge/Solr_4.x-Full_Compatibility-green.svg?style=flat-square)
+![Solr 5.x](https://img.shields.io/badge/Solr_5.x-Full_Compatibility-green.svg?style=flat-square)
+![Solr 6.x](https://img.shields.io/badge/Solr_6.x-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
+![Solr 7.x](https://img.shields.io/badge/Solr_7.x-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
 
 ## What is?
 

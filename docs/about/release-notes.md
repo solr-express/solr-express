@@ -4,7 +4,9 @@ Notes about releases
 
 ## [5.0.0] - 2017-08-XX
 
-* A lot of things, see [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for more informations
+### **BREAKING CHANGES**
+* See [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for informations about migrations
+* See [issue](https://github.com/solr-express/solr-express/issues/187) for informations about what, why, how
 
 Thanks people for ideas and contributions:
 * [hheexx](https://github.com/hheexx)
