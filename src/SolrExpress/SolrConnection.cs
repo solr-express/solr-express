@@ -75,15 +75,19 @@ namespace SolrExpress
 #endif
         }
 
-        string ISolrConnection.Post(string handler, string data)
+        string ISolrConnection.PostJson(string handler, string data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
 
             this.SetAuthentication(url);
 
+            var body = new StringContent(data);
+            body.Headers.Remove("Content-Type");
+            body.Headers.Add("Content-Type", "application/json");
+
             return url
-                .PostJsonAsync(data)
+                .SendAsync(HttpMethod.Post, body)
                 .ReceiveString()
                 .Result;
         }

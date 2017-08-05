@@ -35,8 +35,6 @@ namespace SolrExpress.Utility
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<SearchQuery<TDocument>>()
-                .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
-                .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
                 .AddTransient<ISolrConnection>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()

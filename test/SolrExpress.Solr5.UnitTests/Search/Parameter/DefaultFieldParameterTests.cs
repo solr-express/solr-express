@@ -27,11 +27,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 }
             }");
             var container = new JObject();
-            var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
+            var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
             parameter.ExpressionBuilder = expressionBuilder;
             parameter.FieldExpression = (q) => q.Id;
 

@@ -1,8 +1,9 @@
-﻿using Xunit;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Solr5.Update;
 using SolrExpress.Update;
+using Xunit;
 
-namespace SolrExpress.UnitTests.Update
+namespace SolrExpress.Solr5.UnitTests.Update
 {
     public class AtomicDeleteTests
     {
@@ -17,7 +18,8 @@ namespace SolrExpress.UnitTests.Update
             // Arrange
             var expected = JObject.Parse(@"
             {
-                  ""delete"": ""123456""
+                ""delete"": [""123456""],
+                ""commit"": {}
             }");
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
@@ -39,7 +41,8 @@ namespace SolrExpress.UnitTests.Update
             // Arrange
             var expected = JObject.Parse(@"
             {
-                ""delete"": ""(123456 OR 987654)""
+                ""delete"": [""123456"", ""987654""],
+                ""commit"": {}
             }");
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 

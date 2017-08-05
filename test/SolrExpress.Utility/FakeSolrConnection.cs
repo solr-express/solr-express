@@ -108,7 +108,7 @@ namespace SolrExpress.Utility
             throw new NotImplementedException();
         }
 
-        string ISolrConnection.Post(string handler, string data)
+        string ISolrConnection.PostJson(string handler, string data)
         {
             throw new NotImplementedException();
         }

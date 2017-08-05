@@ -33,7 +33,7 @@ namespace SolrExpress.Update
 
         /// <summary>
         /// Add informed documents in SOLR collection
-        /// If a doc with same id exists in collection, the document is updated
+        /// If a doc with same id exists in collection, the document is rewrite
         /// </summary>
         /// <param name="documents">Documents to add</param>
         public DocumentUpdate<TDocument> Add(params TDocument[] documents)
@@ -69,16 +69,14 @@ namespace SolrExpress.Update
             {
                 var atomicUpdate = this.ServiceProvider.GetService<IAtomicUpdate<TDocument>>();
                 var data = atomicUpdate.Execute(this._documentsToAdd.ToArray());
-                this._solrConnection.Post(RequestHandler.Update, data);
-                this._solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
+                this._solrConnection.PostJson(RequestHandler.Update, data);
             }
 
             if (this._documentsToDelete.Any())
             {
                 var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete<TDocument>>();
                 var data = atomicDelete.Execute(this._documentsToDelete.ToArray());
-                this._solrConnection.Post(RequestHandler.Update, data);
-                this._solrConnection.Post(RequestHandler.Update, "{\"commit\":{}}");
+                this._solrConnection.PostJson(RequestHandler.Update, data);
             }
 
             this._documentsToAdd.Clear();

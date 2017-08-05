@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Serialization;
+using SolrExpress.Update;
 using SolrExpress.Utility;
+using System.Text;
 
-namespace SolrExpress.Update
+namespace SolrExpress.Solr4.Update
 {
     public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
         where TDocument : Document
@@ -21,10 +23,24 @@ namespace SolrExpress.Update
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
             jsonSerializer.Converters.Add(new DateTimeConverter());
             jsonSerializer.ContractResolver = new CustomContractResolver();
+            jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
 
-            var jArray = JArray.FromObject(documents, jsonSerializer);
+            var result = new StringBuilder();
+            result.AppendLine("{");
+            
+            foreach (var document in documents)
+            {
+                var json = JObject.FromObject(document, jsonSerializer);
 
-            return jArray.ToString();
+                result.AppendLine("\"add\":{\"doc\":");
+                result.AppendLine(json.ToString());
+                result.AppendLine(",\"overwrite\":true},");
+            }
+
+            result.AppendLine("\"commit\":{}");
+            result.AppendLine("}");
+
+            return result.ToString();
         }
     }
 }

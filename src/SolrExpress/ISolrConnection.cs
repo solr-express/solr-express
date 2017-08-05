@@ -29,6 +29,6 @@ namespace SolrExpress
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of request</returns>
-        string Post(string handler, string data);
+        string PostJson(string handler, string data);
     }
 }

@@ -396,7 +396,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             documentCollection
                 .Select()
-                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document()
                 .Execute()
@@ -467,7 +467,7 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             documentCollection
                 .Select()
-                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document()
                 .Execute()

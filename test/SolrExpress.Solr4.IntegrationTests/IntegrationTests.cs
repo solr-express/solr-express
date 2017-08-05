@@ -288,24 +288,30 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Arrange
             var documentCollection = this.GetDocumentCollection();
 
-            var documentId = Guid.NewGuid().ToString("N");
-            var documentToAdd = new TechProductDocument
+            var documentId1 = Guid.NewGuid().ToString("N");
+            var documentId2 = Guid.NewGuid().ToString("N");
+            var documentToAdd1 = new TechProductDocument
             {
-                Id = documentId,
-                Name = "IntegrationTest009"
+                Id = documentId1,
+                Name = "Some value1"
+            };
+            var documentToAdd2 = new TechProductDocument
+            {
+                Id = documentId2,
+                Name = "Some value2"
             };
             var update = documentCollection.Update();
-            update.Add(documentToAdd);
+            update.Add(documentToAdd1, documentToAdd2);
             update.Commit();
 
             // Act
-            update.Delete(documentId);
+            update.Delete(documentId1, documentId2);
             update.Commit();
 
             // Assert
             documentCollection
                 .Select()
-                .Query(q => q.Id, documentId)
+                .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document()
                 .Execute()
@@ -381,12 +387,12 @@ namespace SolrExpress.Solr4.IntegrationTests
             var documentToAdd1 = new TechProductDocument
             {
                 Id = documentId1,
-                Name = "IntegrationTest013"
+                Name = "Some value1"
             };
             var documentToAdd2 = new TechProductDocument
             {
                 Id = documentId2,
-                Name = "IntegrationTest013"
+                Name = "Some value2"
             };
             var update = documentCollection.Update();
 
@@ -397,7 +403,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Assert
             documentCollection
                 .Select()
-                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
+                .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document()
                 .Execute()
@@ -406,8 +412,8 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.Equal(2, fetchedDocuments.Count());
             Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
             Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest013")));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals(documentToAdd1.Name)));
+            Assert.True(fetchedDocuments.Any(q => q.Name.Equals(documentToAdd2.Name)));
         }
 
         /// <summary>
@@ -437,57 +443,12 @@ namespace SolrExpress.Solr4.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context
-        /// When    Adding 2 new documents into collection
-        /// What    Create a communication between software and SOLR and add document in collection
-        /// </summary>
-        [Fact]
-        public void IntegrationTest015()
-        {
-            // Arrange
-            var documentCollection = this.GetDocumentCollection();
-
-            var documentId1 = Guid.NewGuid().ToString("N");
-            var documentId2 = Guid.NewGuid().ToString("N");
-            var documentToAdd1 = new TechProductDocument
-            {
-                Id = documentId1,
-                Name = "IntegrationTest015"
-            };
-            var documentToAdd2 = new TechProductDocument
-            {
-                Id = documentId2,
-                Name = "IntegrationTest015"
-            };
-            var update = documentCollection.Update();
-
-            // Act
-            update.Add(documentToAdd1, documentToAdd2);
-            update.Commit();
-
-            // Assert
-            documentCollection
-                .Select()
-                .Query(q => q.Id, $"({documentId1} OR {documentId2})")
-                .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var fetchedDocuments);
-
-            Assert.Equal(2, fetchedDocuments.Count());
-            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
-            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals("IntegrationTest015")));
-        }
-
-        /// <summary>
         /// Where   Creating a SOLR context, using parameter "Boost" (type boost) and result Information
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
         [Fact]
-        public void IntegrationTest016()
+        public void IntegrationTest015()
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
@@ -512,7 +473,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// What    Create a communication between software and SOLR
         /// </summary>
         [Fact]
-        public void IntegrationTest017()
+        public void IntegrationTest016()
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
@@ -537,7 +498,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// What    Create a correct pagination
         /// </summary>
         [Fact]
-        public void IntegrationTest018()
+        public void IntegrationTest017()
         {
             // Arrange
             this.GetDocumentCollection()
@@ -590,7 +551,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// What    Create a communication between software and SOLR and populate only requested fields
         /// </summary>
         [Fact]
-        public void IntegrationTest019()
+        public void IntegrationTest018()
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();
@@ -629,7 +590,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// What    Create a communication between software and SOLR and populate only requested fields
         /// </summary>
         [Fact(Skip = "Needs facet implementations")]
-        public void IntegrationTest020()
+        public void IntegrationTest019()
         {
             // Arrange
             var documentCollection = this.GetDocumentCollection();

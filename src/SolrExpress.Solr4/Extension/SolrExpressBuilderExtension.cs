@@ -4,6 +4,8 @@ using SolrExpress.Search.Result;
 using SolrExpress.Solr4.Search;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Solr4.Search.Result;
+using SolrExpress.Solr4.Update;
+using SolrExpress.Update;
 
 namespace SolrExpress.Solr4.Extension
 {
@@ -20,6 +22,8 @@ namespace SolrExpress.Solr4.Extension
             solrExpressBuilder
                 .ServiceProvider
                 .AddTransient<IAnyParameter, AnyParameter>()
+                .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
+                .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
                 .AddTransient<IDefaultFieldParameter<TDocument>, DefaultFieldParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

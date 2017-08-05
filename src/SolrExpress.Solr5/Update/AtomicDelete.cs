@@ -1,7 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Update;
 using SolrExpress.Utility;
 
-namespace SolrExpress.Update
+namespace SolrExpress.Solr5.Update
 {
     public sealed class AtomicDelete<TDocument> : IAtomicDelete<TDocument>
         where TDocument : Document
@@ -15,19 +16,14 @@ namespace SolrExpress.Update
                 return string.Empty;
             }
 
-            JProperty jProperty;
-
-            if (documentIds.Length == 1)
+            var wrapper = new
             {
-                jProperty = new JProperty("delete", documentIds[0]);
-            }
-            else
-            {
-                jProperty = new JProperty("delete", $"({string.Join(" OR ", documentIds)})");
-            }
+                delete = documentIds,
+                commit = new { }
+            };
 
-            var jObject = new JObject(jProperty);
-
+            var jObject = JObject.FromObject(wrapper);
+            
             return jObject.ToString();
         }
     }
