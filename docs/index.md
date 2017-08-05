@@ -12,9 +12,10 @@ And release notes is available at </about/release-notes/>.
 ![.Net 4.5](https://img.shields.io/badge/.Net_4.5-Full_Compatibility-green.svg?style=flat-square)
 ![.Net Core](https://img.shields.io/badge/.Net_Core-Full_Compatibility-green.svg?style=flat-square)
 
-![Solr 4.9](https://img.shields.io/badge/Solr_4.9-Full_Compatibility-green.svg?style=flat-square)
-![Solr 5.5](https://img.shields.io/badge/Solr_5.5-Full_Compatibility-green.svg?style=flat-square)
-![Solr 6.0](https://img.shields.io/badge/Solr_6.0-Features_created_in_Solr_5.x_works_well-orange.svg?style=flat-square)
+![Solr 4+](https://img.shields.io/badge/Solr_4.+-Full_Compatibility-green.svg?style=flat-square)
+![Solr 5.3+](https://img.shields.io/badge/Solr_5.3+-Full_Compatibility-green.svg?style=flat-square)
+![Solr 6+](https://img.shields.io/badge/Solr_6.+-Features_created_in_Solr_5.3_works_well-orange.svg?style=flat-square)
+![Solr 7+](https://img.shields.io/badge/Solr_7.+-Features_created_in_Solr_5.3_works_well-orange.svg?style=flat-square)
 
 ## What is?
 
