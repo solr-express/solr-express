@@ -8,8 +8,13 @@ namespace SolrExpress.Search.Result
     /// <typeparam name="TKey">Value of the facet</typeparam>
     public sealed class FacetKeyValue<TKey> : FacetKeyValue
     {
+        public FacetKeyValue()
+        {
+            this.Data = new List<FacetItemValue<TKey>>();
+        }
+
         /// <summary>
-        /// Data list of facet
+        /// Data of facet
         /// </summary>
         public IEnumerable<FacetItemValue<TKey>> Data { get; set; }
     }
