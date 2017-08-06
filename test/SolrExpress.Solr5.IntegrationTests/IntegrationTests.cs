@@ -260,7 +260,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             update.Add(documentToAdd);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection
@@ -295,11 +295,11 @@ namespace SolrExpress.Solr5.IntegrationTests
             };
             var update = documentCollection.Update();
             update.Add(documentToAdd);
-            update.Commit();
+            update.Execute();
 
             // Act
             update.Delete(documentId);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection
@@ -391,7 +391,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             update.Add(documentToAdd1, documentToAdd2);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection
@@ -462,7 +462,7 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             // Act
             update.Add(documentToAdd1, documentToAdd2);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection

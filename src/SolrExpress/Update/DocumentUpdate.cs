@@ -61,9 +61,9 @@ namespace SolrExpress.Update
         }
 
         /// <summary>
-        /// Commit adds and removes in SOLR collection
+        /// Execute adds and removes in SOLR collection
         /// </summary>
-        public void Commit()
+        public void Execute()
         {
             if (this._documentsToAdd.Any())
             {

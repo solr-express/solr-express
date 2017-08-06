@@ -261,7 +261,7 @@ namespace SolrExpress.Solr4.IntegrationTests
             documentCollection
                 .Update()
                 .Add(documentToAdd)
-                .Commit();
+                .Execute();
 
             // Assert
             documentCollection
@@ -302,11 +302,11 @@ namespace SolrExpress.Solr4.IntegrationTests
             };
             var update = documentCollection.Update();
             update.Add(documentToAdd1, documentToAdd2);
-            update.Commit();
+            update.Execute();
 
             // Act
             update.Delete(documentId1, documentId2);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection
@@ -398,7 +398,7 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Act
             update.Add(documentToAdd1, documentToAdd2);
-            update.Commit();
+            update.Execute();
 
             // Assert
             documentCollection

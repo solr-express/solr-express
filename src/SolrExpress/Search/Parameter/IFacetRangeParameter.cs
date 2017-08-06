@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in facet range parameter

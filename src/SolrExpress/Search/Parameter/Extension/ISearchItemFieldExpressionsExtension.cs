@@ -6,7 +6,8 @@ namespace SolrExpress.Search.Parameter.Extension
     /// <summary>
     /// Extensions to configure FieldExpressions
     /// </summary>
-    public static class ISearchItemFieldExpressionsExtension
+    public static class ISearchItemFieldExpressionsExtension
+
     {
         /// <summary>
         /// Configure expressions used to find fields name

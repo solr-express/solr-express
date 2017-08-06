@@ -55,9 +55,11 @@ namespace SolrExpress.Search.Result
         /// </summary>
         public SearchResultCollection<TDocument> Execute()
         {
+            var searchResults = this._searchResults.GetList();
+
             while (this._jsonReader.Read())
             {
-                foreach (var searchResult in this._searchResults.GetList())
+                foreach (var searchResult in searchResults)
                 {
                     searchResult.Execute(
                         this._searchParameters,
