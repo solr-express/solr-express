@@ -41,15 +41,11 @@ namespace SimpleUse.NetCore
                 .Facets()
                 .Execute();
 
-            IEnumerable<TechProduct> documents;
-            IEnumerable<FacetKeyValue> facets;
-            Information information;
-
             // Get general information about search, documents and facets from search result
             searchResult
-                .GetInformation(out information)
-                .GetDocument(out documents)
-                .GetFacets(out facets);
+                .GetInformation(out var information)
+                .GetDocument(out var documents)
+                .GetFacets(out var facets);
 
             foreach (var document in documents)
             {

@@ -1,9 +1,9 @@
 ﻿namespace SolrExpress.Search.Result
 {
     /// <summary>
-    /// Represents a facet value
+    /// Represents a facet item
     /// </summary>
-    public abstract class FacetKeyValue
+    public abstract class FacetItem
     {
         /// <summary>
         /// Name of facet

@@ -3,19 +3,19 @@
 namespace SolrExpress.Search.Result
 {
     /// <summary>
-    /// Represents a facet value
+    /// Represents a facet item with multiple values
     /// </summary>
     /// <typeparam name="TKey">Value of the facet</typeparam>
-    public sealed class FacetKeyValue<TKey> : FacetKeyValue
+    public sealed class FacetItemMultiValues<TKey> : FacetItem
     {
-        public FacetKeyValue()
+        public FacetItemMultiValues()
         {
-            this.Data = new List<FacetItemValue<TKey>>();
+            this.Data = new List<FacetValue<TKey>>();
         }
 
         /// <summary>
         /// Data of facet
         /// </summary>
-        public IEnumerable<FacetItemValue<TKey>> Data { get; set; }
+        public IEnumerable<FacetValue<TKey>> Data { get; set; }
     }
 }

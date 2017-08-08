@@ -2,6 +2,7 @@
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Result
@@ -9,13 +10,61 @@ namespace SolrExpress.Solr4.Search.Result
     public class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
-        private bool executed = false;
+        IEnumerable<FacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
-        IEnumerable<FacetKeyValue> IFacetsResult<TDocument>.Data { get; set; }
+        private void ExecuteFacetFields(JsonReader jsonReader)
+        {
+            var facetItem = new FacetItemMultiValues<string>()
+            {
+                Name = (string)jsonReader.Value,
+                FacetType = FacetType.Field
+            };
+
+            jsonReader.Read();// Start array
+            jsonReader.Read();// First element
+
+            while (jsonReader.TokenType != JsonToken.EndArray)
+            {
+                if (jsonReader.Path.StartsWith($"facet_counts.facet_fields.{facetItem.Name}"))
+                {
+                    var value = new FacetValue<string>
+                    {
+                        Key = (string)jsonReader.Value,
+                        Quantity = (long)jsonReader.ReadAsInt32()
+                    };
+
+                    ((List<FacetValue<string>>)facetItem.Data).Add(value);
+                }
+
+                jsonReader.Read();
+            }
+
+            ((List<FacetItem>)((IFacetsResult<TDocument>)this).Data).Add(facetItem);
+        }
+
+        private void ExecuteFacetQueries(JsonReader jsonReader)
+        {
+            jsonReader.Read();// Start object
+            jsonReader.Read();// Start property name
+
+            while (jsonReader.TokenType != JsonToken.EndObject)
+            {
+                var facetItem = new FacetItemSingleValue
+                {
+                    Name = (string)jsonReader.Value,
+                    Quantity = (long)jsonReader.ReadAsInt32(),
+                    FacetType = FacetType.Query
+                };
+
+                ((List<FacetItem>)((IFacetsResult<TDocument>)this).Data).Add(facetItem);
+
+                jsonReader.Read();
+            }
+        }
 
         void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            if (!this.executed && currentToken == JsonToken.StartObject && currentPath.StartsWith("facet_counts"))
+            if (currentPath.StartsWith("facet_counts."))
             {
                 var jsonSerializer = new JsonSerializer();
                 jsonSerializer.Converters.Add(new GeoCoordinateConverter());
@@ -24,43 +73,17 @@ namespace SolrExpress.Solr4.Search.Result
 
                 if (((IFacetsResult<TDocument>)this).Data == null)
                 {
-                    ((IFacetsResult<TDocument>)this).Data = new List<FacetKeyValue>();
+                    ((IFacetsResult<TDocument>)this).Data = new List<FacetItem>();
                 }
 
-                while (jsonReader.Read())
+                if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
                 {
-                    if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
-                    {
-                        var keyValue = new FacetKeyValue<string>()
-                        {
-                            Name = (string)jsonReader.Value,
-                            FacetType = FacetType.Field
-                        };
-
-                        jsonReader.Read();// Start array
-                        jsonReader.Read();// First element
-
-                        while (jsonReader.TokenType != JsonToken.EndArray)
-                        {
-                            if (jsonReader.Path.StartsWith($"facet_counts.facet_fields.{keyValue.Name}"))
-                            {
-                                var value = new FacetItemValue<string>
-                                {
-                                    Key = (string)jsonReader.Value,
-                                    Quantity = (long)jsonReader.ReadAsInt32()
-                                };
-
-                                ((List<FacetItemValue<string>>)keyValue.Data).Add(value);
-                            }
-
-                            jsonReader.Read();
-                        }
-
-                        ((List<FacetKeyValue>)((IFacetsResult<TDocument>)this).Data).Add(keyValue);
-                    }
+                    this.ExecuteFacetFields(jsonReader);
                 }
-
-                this.executed = true;
+                if (jsonReader.Path.StartsWith("facet_counts.facet_queries"))
+                {
+                    this.ExecuteFacetQueries(jsonReader);
+                }
             }
         }
     }

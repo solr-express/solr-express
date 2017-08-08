@@ -4,7 +4,7 @@
     /// Represents a facet item value
     /// </summary>
     /// <typeparam name="TKey">Value of the facet</typeparam>
-    public sealed class FacetItemValue<TKey> : FacetItemValue
+    public sealed class FacetValue<TKey> : FacetValue
     {
         /// <summary>
         /// Key of item

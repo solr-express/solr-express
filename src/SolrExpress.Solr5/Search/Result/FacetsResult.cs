@@ -9,7 +9,7 @@ namespace SolrExpress.Solr5.Search.Result
     public class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
-        IEnumerable<FacetKeyValue> IFacetsResult<TDocument>.Data { get; set; }
+        IEnumerable<FacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
         void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {

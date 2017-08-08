@@ -5,7 +5,7 @@ namespace SolrExpress.Search.Result
     /// <summary>
     /// Represents a facet item value
     /// </summary>
-    public abstract class FacetItemValue
+    public abstract class FacetValue
     {
         /// <summary>
         /// Quantity of item
@@ -15,7 +15,7 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Subfacets of item
         /// </summary>
-        public IEnumerable<FacetKeyValue> Facets { get; set; }
+        public IEnumerable<FacetItem> Facets { get; set; }
 
         /// <summary>
         /// Tag
