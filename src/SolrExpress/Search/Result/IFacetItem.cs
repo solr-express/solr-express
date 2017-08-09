@@ -1,23 +1,23 @@
 ﻿namespace SolrExpress.Search.Result
 {
     /// <summary>
-    /// Represents a facet item
+    /// Signatures to represents a facet item
     /// </summary>
-    public abstract class FacetItem
+    public interface IFacetItem
     {
         /// <summary>
         /// Name of facet
         /// </summary>
-        public string Name { get; set; }
+        string Name { get; set; }
 
         /// <summary>
         /// Type of facet
         /// </summary>
-        public FacetType FacetType { get; set; }
+        FacetType FacetType { get; set; }
 
         /// <summary>
         /// Tag
         /// </summary>
-        public object Tag { get; set; }
+        object Tag { get; set; }
     }
 }

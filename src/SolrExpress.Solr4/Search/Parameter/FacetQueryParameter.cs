@@ -8,7 +8,8 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
-    [FieldMustBeIndexedTrue]
+    // TODO: Think about this, no implements ISearchItemFieldExpressions<> or ISearchItemFieldExpression<>
+    //[FieldMustBeIndexedTrue]
     public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {

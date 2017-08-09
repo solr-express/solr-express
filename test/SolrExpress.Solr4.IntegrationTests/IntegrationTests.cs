@@ -107,7 +107,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact(Skip = "Needs facet implementations")]
+        [Fact]
         public void IntegrationTest004()
         {
             // Arrange
@@ -134,7 +134,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact(Skip = "Needs facet implementations")]
+        [Fact]
         public void IntegrationTest005()
         {
             // Arrange
@@ -163,7 +163,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact(Skip = "Needs facet implementations")]
+        [Fact]
         public void IntegrationTest006()
         {
             // Arrange
@@ -217,7 +217,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR
         /// </summary>
-        [Fact(Skip = "Needs facet implementations")]
+        [Fact]
         public void IntegrationTest008()
         {
             // Arrange
@@ -589,7 +589,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR and populate only requested fields
         /// </summary>
-        [Fact(Skip = "Needs facet implementations")]
+        [Fact]
         public void IntegrationTest019()
         {
             // Arrange

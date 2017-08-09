@@ -23,7 +23,7 @@ namespace SolrExpress.Search.Result.Extension
         /// Returns a facet field list
         /// </summary>
         /// <param name="data">Facet field list</param>
-        public static SearchResultCollection<TDocument> GetFacets<TDocument>(this SearchResultCollection<TDocument> searchResultCollection, out IEnumerable<FacetItem> data)
+        public static SearchResultCollection<TDocument> GetFacets<TDocument>(this SearchResultCollection<TDocument> searchResultCollection, out IEnumerable<IFacetItem> data)
             where TDocument : Document
         {
             var result = searchResultCollection.GetList().First(q => q is IFacetsResult<TDocument>);
