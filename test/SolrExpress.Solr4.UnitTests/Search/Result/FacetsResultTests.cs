@@ -195,24 +195,24 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 			            },
 			            ""range4"": {
 				            ""counts"": [
-					            ""1987-08-09T20:55:04.076Z"",
+					            ""1987-08-09T20:55:04.000Z"",
 					            0,
-					            ""1992-08-09T20:55:04.076Z"",
+					            ""1992-08-09T20:55:04.000Z"",
 					            0,
-					            ""1997-08-09T20:55:04.076Z"",
+					            ""1997-08-09T20:55:04.000Z"",
 					            0,
-					            ""2002-08-09T20:55:04.076Z"",
+					            ""2002-08-09T20:55:04.000Z"",
 					            11,
-					            ""2007-08-09T20:55:04.076Z"",
+					            ""2007-08-09T20:55:04.000Z"",
 					            0,
-					            ""2012-08-09T20:55:04.076Z"",
+					            ""2012-08-09T20:55:04.000Z"",
 					            0,
-					            ""2017-08-09T20:55:04.076Z"",
+					            ""2017-08-09T20:55:04.000Z"",
 					            0
 				            ],
 				            ""gap"": ""+5YEARS"",
-				            ""start"": ""1987-08-09T20:55:04.076Z"",
-				            ""end"": ""2022-08-09T20:55:04.076Z""
+				            ""start"": ""1987-08-09T20:55:04.000Z"",
+				            ""end"": ""2022-08-09T20:55:04.000Z""
 			            }
 		            }
 	            }
@@ -346,32 +346,32 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 
             var range4Values = ((FacetItemRange)data[3]).Values.ToList();
 
-            Assert.Equal(DateTime.Parse("1987-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[0]).MinimumValue);
-            Assert.Equal(DateTime.Parse("1987-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[0]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("1987-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[0]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("1992-08-07T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[0]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[0]).Quantity);
 
-            Assert.Equal(DateTime.Parse("1992-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[1]).MinimumValue);
-            Assert.Equal(DateTime.Parse("1992-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[1]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("1992-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[1]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("1997-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[1]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[1]).Quantity);
 
-            Assert.Equal(DateTime.Parse("1997-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[2]).MinimumValue);
-            Assert.Equal(DateTime.Parse("1997-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[2]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("1997-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[2]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("2002-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[2]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[2]).Quantity);
 
-            Assert.Equal(DateTime.Parse("2002-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[3]).MinimumValue);
-            Assert.Equal(DateTime.Parse("2002-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[3]).MaximumValue);
-            Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[3]).Quantity);
+            Assert.Equal(DateTimeOffset.Parse("2002-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[3]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("2007-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[3]).MaximumValue);
+            Assert.Equal(11, ((FacetItemRangeValue<DateTime>)range4Values[3]).Quantity);
 
-            Assert.Equal(DateTime.Parse("2007-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[4]).MinimumValue);
-            Assert.Equal(DateTime.Parse("2007-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[4]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("2007-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[4]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("2012-08-07T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[4]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[4]).Quantity);
 
-            Assert.Equal(DateTime.Parse("2012-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[5]).MinimumValue);
-            Assert.Equal(DateTime.Parse("2012-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[5]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("2012-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[5]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("2017-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[5]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[5]).Quantity);
 
-            Assert.Equal(DateTime.Parse("2017-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[6]).MinimumValue);
-            Assert.Equal(DateTime.Parse("2017-08-09T20:55:04.076Z"), ((FacetItemRangeValue<DateTime>)range4Values[6]).MaximumValue);
+            Assert.Equal(DateTimeOffset.Parse("2017-08-09T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[6]).MinimumValue);
+            Assert.Equal(DateTimeOffset.Parse("2022-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[6]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[6]).Quantity);
         }
     }

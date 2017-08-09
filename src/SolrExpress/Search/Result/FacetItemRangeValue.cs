@@ -69,9 +69,9 @@ namespace SolrExpress.Search.Result
                 else
                 {
                     var minimumDateTime = DateTime.Parse(this.MinimumValue.Value.ToString());
-                    var diff = ((DateTime)gap) - minimumDateTime;
+                    var diff = ((DateTime)gap) - DateTime.MinValue;
 
-                    ((IFacetItemRangeValue)this).SetMinimumValue(minimumDateTime.Add(diff));
+                    ((IFacetItemRangeValue)this).SetMaximumValue(minimumDateTime.Add(diff));
                 }
             }
             else if (((TKey?)gap).HasValue)
