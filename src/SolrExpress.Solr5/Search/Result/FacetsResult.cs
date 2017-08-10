@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
-using System;
+using SolrExpress.Serialization;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr5.Search.Result
@@ -13,7 +13,33 @@ namespace SolrExpress.Solr5.Search.Result
 
         void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            throw new NotImplementedException();
+            if (currentPath.StartsWith("facets."))
+            {
+                var jsonSerializer = new JsonSerializer();
+                jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+                jsonSerializer.Converters.Add(new DateTimeConverter());
+                jsonSerializer.ContractResolver = new CustomContractResolver();
+
+                if (((IFacetsResult<TDocument>)this).Data == null)
+                {
+                    ((IFacetsResult<TDocument>)this).Data = new List<IFacetItem>();
+                }
+
+                var facetItems = ((List<IFacetItem>)((IFacetsResult<TDocument>)this).Data);
+
+                //if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
+                //{
+                //    facetItems.Add(this._processFacetFields.Execute(jsonReader));
+                //}
+                //if (jsonReader.Path.StartsWith("facet_counts.facet_queries"))
+                //{
+                //    facetItems.AddRange(this._processFacetQueries.Execute(jsonReader));
+                //}
+                //if (jsonReader.Path.StartsWith("facet_counts.facet_ranges."))
+                //{
+                //    facetItems.Add(this._processFacetRanges.Execute(searchParameters, jsonReader));
+                //}
+            }
         }
     }
 }
