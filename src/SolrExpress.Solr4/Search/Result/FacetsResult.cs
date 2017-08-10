@@ -71,10 +71,10 @@ namespace SolrExpress.Solr4.Search.Result
         private IFacetRangeParameter<TDocument> GetFacetRangeParameter(List<ISearchParameter> searchParameters, string facetName)
         {
             return (IFacetRangeParameter<TDocument>)searchParameters
-                 .Where(q => q is IFacetRangeParameter<TDocument>)
-                 .FirstOrDefault(q =>
+                 .Where(parameter => parameter is IFacetRangeParameter<TDocument>)
+                 .FirstOrDefault(parameter =>
                  {
-                     var facetRangeParameter = ((IFacetRangeParameter<TDocument>)q);
+                     var facetRangeParameter = ((IFacetRangeParameter<TDocument>)parameter);
 
                      var fieldName = facetRangeParameter
                          .ExpressionBuilder
