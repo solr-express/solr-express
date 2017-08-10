@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
-using SolrExpress.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -271,11 +270,6 @@ namespace SolrExpress.Solr4.Search.Result
         {
             if (currentPath.StartsWith("facet_counts."))
             {
-                var jsonSerializer = new JsonSerializer();
-                jsonSerializer.Converters.Add(new GeoCoordinateConverter());
-                jsonSerializer.Converters.Add(new DateTimeConverter());
-                jsonSerializer.ContractResolver = new CustomContractResolver();
-
                 if (((IFacetsResult<TDocument>)this).Data == null)
                 {
                     ((IFacetsResult<TDocument>)this).Data = new List<IFacetItem>();

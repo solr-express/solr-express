@@ -27,18 +27,28 @@ namespace SolrExpress.Solr5.Search.Result
 
                 var facetItems = ((List<IFacetItem>)((IFacetsResult<TDocument>)this).Data);
 
-                //if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
-                //{
-                //    facetItems.Add(this._processFacetFields.Execute(jsonReader));
-                //}
-                //if (jsonReader.Path.StartsWith("facet_counts.facet_queries"))
-                //{
-                //    facetItems.AddRange(this._processFacetQueries.Execute(jsonReader));
-                //}
-                //if (jsonReader.Path.StartsWith("facet_counts.facet_ranges."))
-                //{
-                //    facetItems.Add(this._processFacetRanges.Execute(searchParameters, jsonReader));
-                //}
+                var facetName = (string)jsonReader.Value;
+                IFacetItem facetItem = null;
+
+                jsonReader.Read();// Starts object
+                jsonReader.Read();// Go to checker element
+
+                // Facet query
+                if ((string)jsonReader.Value == "count")
+                {
+                    facetItem = new FacetItemQuery(facetName, (long)jsonReader.ReadAsInt32());
+                }
+                else // Facet field or facet range
+                {
+                }
+
+                // Closes facet item object
+                while (!(jsonReader.Path.Equals($"facets.{facetName}") && jsonReader.TokenType == JsonToken.EndObject))
+                {
+                    jsonReader.Read();
+                }
+
+                facetItems.Add(facetItem);
             }
         }
     }
