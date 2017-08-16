@@ -35,7 +35,7 @@ namespace SolrExpress.Solr5.UnitTests.Update
             var atomic = (IAtomicUpdate<SimpleTestDocument>)new AtomicUpdate<SimpleTestDocument>();
 
             // Act
-            var actual = JObject.Parse(atomic.Execute(document));
+            var actual = atomic.Execute(document);
 
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
@@ -76,7 +76,7 @@ namespace SolrExpress.Solr5.UnitTests.Update
             var atomic = (IAtomicUpdate<SimpleTestDocument>)new AtomicUpdate<SimpleTestDocument>();
 
             // Act
-            var actual = JObject.Parse(atomic.Execute(document1, document2));
+            var actual = atomic.Execute(document1, document2);
 
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
@@ -91,14 +91,13 @@ namespace SolrExpress.Solr5.UnitTests.Update
         public void AtomicUpdate003()
         {
             // Arrange
-            var expected = string.Empty;
             var atomic = (IAtomicUpdate<SimpleTestDocument>)new AtomicUpdate<SimpleTestDocument>();
 
             // Act
             var actual = atomic.Execute();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual.ToString());
+            Assert.Null(actual);
         }
     }
 }

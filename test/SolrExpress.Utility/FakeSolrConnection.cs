@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,12 +104,7 @@ namespace SolrExpress.Utility
             throw new NotImplementedException();
         }
 
-        string ISolrConnection.GetX(string handler, object data)
-        {
-            throw new NotImplementedException();
-        }
-
-        string ISolrConnection.PostJson(string handler, string data)
+        string ISolrConnection.Post(string handler, JObject data)
         {
             throw new NotImplementedException();
         }

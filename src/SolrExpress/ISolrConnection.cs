@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace SolrExpress
 {
@@ -21,14 +22,6 @@ namespace SolrExpress
         /// <param name="handler">Handler name used in solr request</param>
         /// <param name="data">Data to execute</param>
         /// <returns>Result of request</returns>
-        string GetX(string handler, object data);
-
-        /// <summary>
-        /// Execute a request to informed handler
-        /// </summary>
-        /// <param name="handler">Handler name used in solr request</param>
-        /// <param name="data">Data to execute</param>
-        /// <returns>Result of request</returns>
-        string PostJson(string handler, string data);
+        string Post(string handler, JObject data);
     }
 }

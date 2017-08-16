@@ -24,7 +24,7 @@ namespace SolrExpress.Solr5.UnitTests.Update
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
             // Act
-            var actual = JObject.Parse(atomic.Execute("123456"));
+            var actual = atomic.Execute("123456");
 
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
@@ -47,7 +47,7 @@ namespace SolrExpress.Solr5.UnitTests.Update
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
             // Act
-            var actual = JObject.Parse(atomic.Execute("123456", "987654"));
+            var actual = atomic.Execute("123456", "987654");
 
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
@@ -62,14 +62,13 @@ namespace SolrExpress.Solr5.UnitTests.Update
         public void AtomicDelete003()
         {
             // Arrange
-            var expected = string.Empty;
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
             // Act
             var actual = atomic.Execute();
 
             // Assert
-            Assert.Equal(expected.ToString(), actual.ToString());
+            Assert.Null(actual);
         }
     }
 }

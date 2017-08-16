@@ -69,14 +69,20 @@ namespace SolrExpress.Update
             {
                 var atomicUpdate = this.ServiceProvider.GetService<IAtomicUpdate<TDocument>>();
                 var data = atomicUpdate.Execute(this._documentsToAdd.ToArray());
-                this._solrConnection.PostJson(RequestHandler.Update, data);
+                if (data != null)
+                {
+                    this._solrConnection.Post(RequestHandler.Update, data);
+                }
             }
 
             if (this._documentsToDelete.Any())
             {
                 var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete<TDocument>>();
                 var data = atomicDelete.Execute(this._documentsToDelete.ToArray());
-                this._solrConnection.PostJson(RequestHandler.Update, data);
+                if (data != null)
+                {
+                    this._solrConnection.Post(RequestHandler.Update, data);
+                }
             }
 
             this._documentsToAdd.Clear();

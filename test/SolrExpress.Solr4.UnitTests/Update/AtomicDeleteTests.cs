@@ -24,12 +24,12 @@ namespace SolrExpress.Solr4.UnitTests.Update
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
             // Act
-            var actual = JObject.Parse(atomic.Execute("123456"));
+            var actual = atomic.Execute("123456");
 
             // Assert
             Assert.Equal(expected.ToString(), actual.ToString());
         }
-                
+
         /// <summary>
         /// Where   Using a AtomicDelete instance
         /// When    Invoking method "Execute" without any document
@@ -39,14 +39,13 @@ namespace SolrExpress.Solr4.UnitTests.Update
         public void AtomicDelete002()
         {
             // Arrange
-            var expected = string.Empty;
             var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
 
             // Act
             var actual = atomic.Execute();
 
             // Assert
-            Assert.Equal(expected, actual);
+            Assert.Null(actual);
         }
     }
 }
