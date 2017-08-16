@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 
+// TODO: Change type of property "Key" from string to "TKey"
 namespace SolrExpress.Search.Result
 {
     /// <summary>

@@ -4,7 +4,6 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Solr5.Search.Result;
-using SolrExpress.Solr5.UnitTests;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -294,7 +293,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             // Assert
             var data = result.Data.ToList();
-            Assert.Equal(4, data.Count);
+            Assert.Equal(3, data.Count);
             Assert.Equal("range1", data[0].Name);
             Assert.Equal("range2", data[1].Name);
             Assert.Equal("range4", data[2].Name);
@@ -327,7 +326,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             Assert.Equal(1100, ((FacetItemRangeValue<decimal>)range1Values[5]).MinimumValue);
             Assert.Null(((FacetItemRangeValue<decimal>)range1Values[5]).MaximumValue);
-            Assert.Equal(0, ((FacetItemRangeValue<decimal>)range1Values[5]).Quantity);
+            Assert.Equal(1, ((FacetItemRangeValue<decimal>)range1Values[5]).Quantity);
 
             var range2Values = ((FacetItemRange)data[1]).Values.ToList();
 
@@ -346,32 +345,36 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(7, ((FacetItemRangeValue<int>)range2Values[3]).MinimumValue);
             Assert.Equal(8, ((FacetItemRangeValue<int>)range2Values[3]).MaximumValue);
             Assert.Equal(4, ((FacetItemRangeValue<int>)range2Values[3]).Quantity);
-            
+
             var range4Values = ((FacetItemRange)data[2]).Values.ToList();
 
-            Assert.Equal(DateTimeOffset.Parse("1992-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[0]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("1997-08-09T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[0]).MaximumValue);
+            Assert.Equal(DateTime.Parse("1987-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[0]).MinimumValue);
+            Assert.Equal(DateTime.Parse("1992-08-08T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[0]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[0]).Quantity);
 
-            Assert.Equal(DateTimeOffset.Parse("1997-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[1]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("2002-08-09T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[1]).MaximumValue);
+            Assert.Equal(DateTime.Parse("1992-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[1]).MinimumValue);
+            Assert.Equal(DateTime.Parse("1997-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[1]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[1]).Quantity);
 
-            Assert.Equal(DateTimeOffset.Parse("2002-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[2]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("2007-08-09T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[2]).MaximumValue);
-            Assert.Equal(11, ((FacetItemRangeValue<DateTime>)range4Values[2]).Quantity);
+            Assert.Equal(DateTime.Parse("1997-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[2]).MinimumValue);
+            Assert.Equal(DateTime.Parse("2002-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[2]).MaximumValue);
+            Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[2]).Quantity);
 
-            Assert.Equal(DateTimeOffset.Parse("2007-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[3]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("2012-08-08T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[3]).MaximumValue);
-            Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[3]).Quantity);
+            Assert.Equal(DateTime.Parse("2002-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[3]).MinimumValue);
+            Assert.Equal(DateTime.Parse("2007-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[3]).MaximumValue);
+            Assert.Equal(11, ((FacetItemRangeValue<DateTime>)range4Values[3]).Quantity);
 
-            Assert.Equal(DateTimeOffset.Parse("2012-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[4]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("2017-08-09T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[4]).MaximumValue);
+            Assert.Equal(DateTime.Parse("2007-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[4]).MinimumValue);
+            Assert.Equal(DateTime.Parse("2012-08-08T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[4]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[4]).Quantity);
 
-            Assert.Equal(DateTimeOffset.Parse("2017-08-10T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[5]).MinimumValue);
-            Assert.Equal(DateTimeOffset.Parse("2022-08-09T11:56:40.803Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[5]).MaximumValue);
+            Assert.Equal(DateTime.Parse("2012-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[5]).MinimumValue);
+            Assert.Equal(DateTime.Parse("2017-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[5]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[5]).Quantity);
+
+            Assert.Equal(DateTime.Parse("2017-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[6]).MinimumValue);
+            Assert.Equal(DateTime.Parse("2022-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[6]).MaximumValue);
+            Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[6]).Quantity);
         }
     }
 }

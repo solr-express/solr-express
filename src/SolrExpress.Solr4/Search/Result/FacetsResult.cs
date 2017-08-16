@@ -86,9 +86,9 @@ namespace SolrExpress.Solr4.Search.Result
                  });
         }
 
-        private object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string value)
+        private object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(facetGap))
             {
                 return null;
             }
@@ -96,7 +96,7 @@ namespace SolrExpress.Solr4.Search.Result
             if (typeof(DateTime).Equals(fieldType))
             {
                 // Prepare to DateMath
-                value = value
+                facetGap = facetGap
                     .Replace("YEARS", "y")
                     .Replace("YEAR", "y")
                     .Replace("MONTHS", "M")
@@ -113,7 +113,7 @@ namespace SolrExpress.Solr4.Search.Result
                     .Replace("SECOND", "s");
 
                 var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue.HasValue ? minimumValue.Value : DateTime.MinValue, value);
+                return DateMath.Apply(minimumValue.HasValue ? minimumValue.Value : DateTime.MinValue, facetGap);
             }
 
             if (typeof(decimal).Equals(fieldType)
@@ -122,13 +122,13 @@ namespace SolrExpress.Solr4.Search.Result
             {
                 var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
                 return (minimumValue.HasValue ? minimumValue.Value : decimal.MinValue)
-                    + decimal.Parse(value, CultureInfo.InvariantCulture);
+                    + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
             }
 
             {
                 var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
                 return (minimumValue.HasValue ? minimumValue.Value : int.MinValue)
-                    + int.Parse(value, CultureInfo.InvariantCulture);
+                    + int.Parse(facetGap, CultureInfo.InvariantCulture);
             }
         }
 
