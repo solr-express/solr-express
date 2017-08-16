@@ -27,7 +27,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var jsonPlainText = @"
             {
 	            ""facets"": {
-		            ""field1"": {
+		            ""count"": 37,
+                    ""field1"": {
 			            ""buckets"": [{
 					            ""val"": ""VALUE001"",
 					            ""count"": 10
@@ -127,6 +128,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var jsonPlainText = @"
             {
 	            ""facets"": {
+		            ""count"": 37,
 		            ""query1"": {
 			            ""count"": 10
 		            },
@@ -173,6 +175,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var jsonPlainText = @"
             {
 	            ""facets"": {
+		            ""count"": 37,
 		            ""range1"": {
 			            ""buckets"": [{
 					            ""val"": 100,

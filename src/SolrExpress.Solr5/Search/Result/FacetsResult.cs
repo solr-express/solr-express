@@ -281,6 +281,12 @@ namespace SolrExpress.Solr5.Search.Result
 
                     jsonReader.Read();// Go to first property
 
+                    // Skips "count" property
+                    while (jsonReader.Path.Equals("facets.count"))
+                    {
+                        jsonReader.Read();
+                    }
+
                     while (!jsonReader.Path.Equals("facets") && jsonReader.TokenType != JsonToken.EndObject)
                     {
                         var facetItem = this.GetFacetItem(searchParameters, jsonReader);
