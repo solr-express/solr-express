@@ -13,6 +13,9 @@ namespace SolrExpress.Solr5.Search.Result
     public class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
+        private List<ISearchParameter> _searchParameters;
+        private JsonReader _jsonReader;
+
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
         private ISearchParameter GetSearchParameter(List<ISearchParameter> searchParameters, string facetName)
@@ -83,19 +86,19 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetFieldBuckets(JsonReader jsonReader, string facetName, IFacetItem facetItem)
+        private void ProcessFacetFieldBuckets(string root, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
         {
-            jsonReader.Read();// Starts array
+            this._jsonReader.Read();// Starts array
 
-            while (jsonReader.Path.StartsWith($"facets.{facetName}.buckets["))
+            while (this._jsonReader.Path.StartsWith($"{root}.{facetName}.buckets["))
             {
-                var starterPath = jsonReader.Path;
+                var initialPath = this._jsonReader.Path;
 
-                jsonReader.Read();// "val" property
-                var key = jsonReader.ReadAsString();
+                this._jsonReader.Read();// "val" property
+                var key = this._jsonReader.ReadAsString();
 
-                jsonReader.Read();// "count" property
-                var count = jsonReader.ReadAsInt32();
+                this._jsonReader.Read();// "count" property
+                var count = this._jsonReader.ReadAsInt32();
 
                 var value = new FacetItemFieldValue
                 {
@@ -103,15 +106,35 @@ namespace SolrExpress.Solr5.Search.Result
                     Quantity = (long)count
                 };
 
-                ((List<FacetItemFieldValue>)((FacetItemField)facetItem).Values).Add(value);
+                // Go to next token to verify subfacet
+                this._jsonReader.Read();
 
-                // Closes bucket object
-                while (!jsonReader.Path.Equals(starterPath))
+                // Subfacets
+                if (this._jsonReader.TokenType != JsonToken.EndObject)
                 {
-                    jsonReader.Read();
+                    // Prepare to process subfacets
+                    //this._jsonReader.Read();
+                    //this._jsonReader.Read();
+                    //this._jsonReader.Read();
+
+                    this.GetFacetItems(
+                        initialPath,
+                        this._jsonReader.TokenType,
+                        initialPath,
+                        out var facetItems);
+
+                    value.Facets = facetItems;
                 }
 
-                jsonReader.Read();// Starts next bucket object
+                ((List<FacetItemFieldValue>)((FacetItemField)facetItem).Values).Add(value);
+
+                // Try closes bucket object
+                while (this._jsonReader.TokenType != JsonToken.EndObject)
+                {
+                    this._jsonReader.Read();
+                }
+
+                this._jsonReader.Read();// Starts next bucket object
             }
         }
 
@@ -161,18 +184,18 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetRangeBuckets(JsonReader jsonReader, string facetName, Type fieldType, IFacetRangeParameter<TDocument> facetRangeParameter, IFacetItem facetItem)
+        private void ProcessFacetRangeBuckets(string facetName, Type fieldType, IFacetRangeParameter<TDocument> facetRangeParameter, IFacetItem facetItem)
         {
-            jsonReader.Read();// Starts array
+            this._jsonReader.Read();// Starts array
 
-            while (jsonReader.Path.StartsWith($"facets.{facetName}.buckets["))
+            while (this._jsonReader.Path.StartsWith($"facets.{facetName}.buckets["))
             {
-                var starterPath = jsonReader.Path;
+                var starterPath = this._jsonReader.Path;
 
-                jsonReader.Read();// "val" property
-                var rawMinimumValue = jsonReader.ReadAsString();
-                jsonReader.Read();// "count" property
-                var quantity = (long)jsonReader.ReadAsInt32();
+                this._jsonReader.Read();// "val" property
+                var rawMinimumValue = this._jsonReader.ReadAsString();
+                this._jsonReader.Read();// "count" property
+                var quantity = (long)this._jsonReader.ReadAsInt32();
 
                 var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMinimumValue);
                 var maximumValue = this.GetMaximumValue(fieldType, facetItemRangeValue, facetRangeParameter.Gap);
@@ -183,31 +206,31 @@ namespace SolrExpress.Solr5.Search.Result
                 ((List<IFacetItemRangeValue>)((FacetItemRange)facetItem).Values).Add(facetItemRangeValue);
 
                 // Closes bucket object
-                while (!jsonReader.Path.Equals(starterPath))
+                while (!this._jsonReader.Path.Equals(starterPath))
                 {
-                    jsonReader.Read();
+                    this._jsonReader.Read();
                 }
 
-                jsonReader.Read();// Starts next bucket object
+                this._jsonReader.Read();// Starts next bucket object
             }
 
-            jsonReader.Read();// Ends array
+            this._jsonReader.Read();// Ends array
 
-            if (jsonReader.Path.Equals($"facets.{facetName}.before"))
+            if (this._jsonReader.Path.Equals($"facets.{facetName}.before"))
             {
                 var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMaximumValue: facetRangeParameter.Start);
 
-                jsonReader.Read();// Ends property
-                jsonReader.Read();// "count" property
-                facetItemRangeValue.Quantity = (long)jsonReader.ReadAsInt32();
+                this._jsonReader.Read();// Ends property
+                this._jsonReader.Read();// "count" property
+                facetItemRangeValue.Quantity = (long)this._jsonReader.ReadAsInt32();
 
                 ((List<IFacetItemRangeValue>)((FacetItemRange)facetItem).Values).Insert(0, facetItemRangeValue);
 
-                jsonReader.Read();// Ends property
-                jsonReader.Read();// Ends object
+                this._jsonReader.Read();// Ends property
+                this._jsonReader.Read();// Ends object
             }
 
-            if (jsonReader.Path.Equals($"facets.{facetName}.after"))
+            if (this._jsonReader.Path.Equals($"facets.{facetName}.after"))
             {
                 // TODO: Calculate right value using "Gap" over "Start" until "End" (or "End" if "HardEnd"=true)
                 var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, facetRangeParameter.End);
@@ -215,36 +238,36 @@ namespace SolrExpress.Solr5.Search.Result
 
                 facetItemRangeValue.SetMinimumValue(maximumValue);
 
-                jsonReader.Read();// Ends property
-                jsonReader.Read();// "count" property
-                facetItemRangeValue.Quantity = (long)jsonReader.ReadAsInt32();
+                this._jsonReader.Read();// Ends property
+                this._jsonReader.Read();// "count" property
+                facetItemRangeValue.Quantity = (long)this._jsonReader.ReadAsInt32();
 
                 ((List<IFacetItemRangeValue>)((FacetItemRange)facetItem).Values).Add(facetItemRangeValue);
 
-                jsonReader.Read();// Ends property
-                jsonReader.Read();// Ends object
+                this._jsonReader.Read();// Ends property
+                this._jsonReader.Read();// Ends object
             }
         }
 
-        private IFacetItem GetFacetItem(List<ISearchParameter> searchParameters, JsonReader jsonReader)
+        private IFacetItem GetFacetItem(string root, JsonToken currentToken, string currentPath)
         {
-            var facetName = (string)jsonReader.Value;
+            var facetName = (string)this._jsonReader.Value;
             IFacetItem facetItem = null;
 
-            jsonReader.Read();// Closes property
-            jsonReader.Read();// Go to checker element
+            this._jsonReader.Read();// Closes property
+            this._jsonReader.Read();// Go to checker element
 
             // Facet query
-            if ((string)jsonReader.Value == "count")
+            if ((string)this._jsonReader.Value == "count")
             {
-                facetItem = new FacetItemQuery(facetName, (long)jsonReader.ReadAsInt32());
+                facetItem = new FacetItemQuery(facetName, (long)this._jsonReader.ReadAsInt32());
             }
             else // Facet field or facet range
             {
-                var searchParameter = this.GetSearchParameter(searchParameters, facetName);
+                var searchParameter = this.GetSearchParameter(this._searchParameters, facetName);
                 var facetRangeParameter = (searchParameter as IFacetRangeParameter<TDocument>);
 
-                jsonReader.Read();// Closes buckets property
+                this._jsonReader.Read();// Closes buckets property
 
                 if (facetRangeParameter != null)
                 {
@@ -253,51 +276,60 @@ namespace SolrExpress.Solr5.Search.Result
                         .GetPropertyType(facetRangeParameter.FieldExpression);
 
                     facetItem = new FacetItemRange(facetName);
-                    this.ProcessFacetRangeBuckets(jsonReader, facetName, fieldType, facetRangeParameter, facetItem);
+                    this.ProcessFacetRangeBuckets(facetName, fieldType, facetRangeParameter, facetItem);
                 }
                 else
                 {
                     facetItem = new FacetItemField(facetName);
-                    this.ProcessFacetFieldBuckets(jsonReader, facetName, facetItem);
+                    this.ProcessFacetFieldBuckets(root, currentToken, currentPath, facetName, facetItem);
                 }
             }
 
             // Closes facet item object
-            while (!jsonReader.Path.Equals($"facets.{facetName}") && jsonReader.TokenType != JsonToken.EndObject)
+            while (!this._jsonReader.Path.Equals($"{root}.{facetName}") && this._jsonReader.TokenType != JsonToken.EndObject)
             {
-                jsonReader.Read();
+                this._jsonReader.Read();
             }
 
             return facetItem;
         }
 
+        private void GetFacetItems(string root, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
+        {
+            facetItems = new List<IFacetItem>();
+
+            // Skips "count" property
+            while (this._jsonReader.Path.Equals($"{root}.count"))
+            {
+                this._jsonReader.Read();
+            }
+
+            while (!this._jsonReader.Path.Equals(root) && this._jsonReader.TokenType != JsonToken.EndObject)
+            {
+                var facetItem = this.GetFacetItem(root, currentToken, currentPath);
+
+                ((List<IFacetItem>)facetItems).Add(facetItem);
+
+                this._jsonReader.Read();
+            }
+        }
+
         void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            if (currentToken == JsonToken.StartObject)
+            this._searchParameters = searchParameters;
+            this._jsonReader = jsonReader;
+
+            if (currentToken == JsonToken.StartObject && currentPath.Equals("facets"))
             {
-                if (currentPath.Equals("facets"))
-                {
-                    var facetItems = new List<IFacetItem>();
+                this._jsonReader.Read();// Go to first property
 
-                    jsonReader.Read();// Go to first property
+                this.GetFacetItems(
+                    "facets",
+                    currentToken,
+                    currentPath,
+                    out var facetItems);
 
-                    // Skips "count" property
-                    while (jsonReader.Path.Equals("facets.count"))
-                    {
-                        jsonReader.Read();
-                    }
-
-                    while (!jsonReader.Path.Equals("facets") && jsonReader.TokenType != JsonToken.EndObject)
-                    {
-                        var facetItem = this.GetFacetItem(searchParameters, jsonReader);
-
-                        facetItems.Add(facetItem);
-
-                        jsonReader.Read();
-                    }
-
-                    ((IFacetsResult<TDocument>)this).Data = facetItems;
-                }
+                ((IFacetsResult<TDocument>)this).Data = facetItems;
             }
         }
     }

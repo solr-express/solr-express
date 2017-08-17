@@ -63,20 +63,20 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facetRange1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
-            facetRange1.FieldExpression = (field) => field.Field1;
+            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet1.FieldExpression = (field) => field.Field1;
 
-            var facetRange2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
-            facetRange2.FieldExpression = (field) => field.Field2;
+            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet2.FieldExpression = (field) => field.Field2;
 
-            var facetRange4 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
-            facetRange4.FieldExpression = (field) => field.Field3;
+            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet3.FieldExpression = (field) => field.Field3;
 
             var searchParameters = new List<ISearchParameter>
             {
-                facetRange1,
-                facetRange2,
-                facetRange4
+                facet1,
+                facet2,
+                facet3
             };
 
             var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
@@ -261,29 +261,29 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facetRange1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
-            facetRange1.FieldExpression = (field) => field.Range1;
-            facetRange1.Start = "100";
-            facetRange1.End = "850";
-            facetRange1.Gap = "250";
+            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet1.FieldExpression = (field) => field.Range1;
+            facet1.Start = "100";
+            facet1.End = "850";
+            facet1.Gap = "250";
 
-            var facetRange2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
-            facetRange2.FieldExpression = (field) => field.Range2;
-            facetRange2.Start = "4";
-            facetRange2.End = "7";
-            facetRange2.Gap = "1";
+            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet2.FieldExpression = (field) => field.Range2;
+            facet2.Start = "4";
+            facet2.End = "7";
+            facet2.Gap = "1";
 
-            var facetRange4 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
-            facetRange4.FieldExpression = (field) => field.Range4;
-            facetRange4.Start = "NOW-30YEARS";
-            facetRange4.End = "NOW+1DAY";
-            facetRange4.Gap = "+5YEARS";
+            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet3.FieldExpression = (field) => field.Range4;
+            facet3.Start = "NOW-30YEARS";
+            facet3.End = "NOW+1DAY";
+            facet3.Gap = "+5YEARS";
 
             var searchParameters = new List<ISearchParameter>
             {
-                facetRange1,
-                facetRange2,
-                facetRange4
+                facet1,
+                facet2,
+                facet3
             };
 
             var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
@@ -378,6 +378,123 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(DateTime.Parse("2017-08-10T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[6]).MinimumValue);
             Assert.Equal(DateTime.Parse("2022-08-09T11:56:40.803Z").ToUniversalTime(), ((FacetItemRangeValue<DateTime>)range4Values[6]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[6]).Quantity);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetsResult instance
+        /// When    Invoking the method "Execute" using a JSON with a facet field and subfacet field data
+        /// What    Parse result
+        /// </summary>
+        [Fact]
+        public void FacetFieldResult004()
+        {
+            // Arrange
+            var jsonPlainText = @"
+            {
+                ""facets"": {
+                    ""count"": 51,
+                    ""field1"": {
+                        ""buckets"": [
+                            {
+                                ""val"": ""ROOT.VALUE001"",
+                                ""count"": 10,
+                                ""field2"": {
+                                    ""buckets"": [
+                                        {
+                                            ""val"": ""CHILD001.VALUE001"",
+                                            ""count"": 5
+                                        },
+                                        {
+                                            ""val"": ""CHILD001.VALUE002"",
+                                            ""count"": 5
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                ""val"": ""ROOT.VALUE002"",
+                                ""count"": 20,
+                                ""field2"": {
+                                    ""buckets"": [
+                                        {
+                                            ""val"": ""CHILD002.VALUE001"",
+                                            ""count"": 20
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                }
+            }";
+
+            var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
+
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet2.FieldExpression = (field) => field.Field2;
+
+            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet1.FieldExpression = (field) => field.Field1;
+            facet1.Facets = new List<IFacetParameter> { facet2 };
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facet
+            };
+
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
+            // Act
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
+
+            // Assert
+            var data = result.Data.ToList();
+            Assert.Equal(1, data.Count);
+            Assert.Equal("field1", data[0].Name);
+            Assert.Equal(FacetType.Field, data[0].FacetType);
+
+            var facetValues1 = ((FacetItemField)data[0]).Values;
+
+            Assert.Equal(2, facetValues1.Count());
+
+            var root1 = facetValues1.First(q => q.Key.Equals("ROOT.VALUE001"));
+            var root2 = facetValues1.First(q => q.Key.Equals("ROOT.VALUE002"));
+            Assert.NotNull(root1);
+            Assert.NotNull(root2);
+            Assert.Equal(10, root1.Quantity);
+            Assert.Equal(20, root2.Quantity);
+            Assert.NotNull(root1.Facets);
+            Assert.NotNull(root2.Facets);
+            Assert.Equal(1, root1.Facets.Count());
+            Assert.Equal(1, root2.Facets.Count());
+
+            Assert.Equal("field2", root1.Facets.ToList()[0].Name);
+            Assert.Equal(FacetType.Field, root1.Facets.ToList()[0].FacetType);
+            Assert.Equal("field2", root2.Facets.ToList()[0].Name);
+            Assert.Equal(FacetType.Field, root2.Facets.ToList()[0].FacetType);
+            var facetRootValues1 = ((FacetItemField)root1.Facets.ToList()[0]).Values;
+            var facetRootValues2 = ((FacetItemField)root2.Facets.ToList()[0]).Values;
+            Assert.Equal(2, facetRootValues1.Count());
+            Assert.Equal(1, facetRootValues2.Count());
+
+            var child1_1 = facetRootValues1.First(q => q.Key.Equals("CHILD001.VALUE001"));
+            var child1_2 = facetRootValues1.First(q => q.Key.Equals("CHILD001.VALUE001"));
+            Assert.NotNull(child1_1);
+            Assert.NotNull(child1_2);
+            Assert.Equal(5, child1_1.Quantity);
+            Assert.Equal(5, child1_2.Quantity);
+
+            var child2_1 = facetRootValues2.First(q => q.Key.Equals("CHILD002.VALUE001"));
+            Assert.NotNull(child2_1);
+            Assert.Equal(20, child2_1.Quantity);
         }
     }
 }
