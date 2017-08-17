@@ -192,7 +192,7 @@ namespace SolrExpress.Core.Extension
         public static ISolrSearch<TDocument> Query<TDocument>(this ISolrSearch<TDocument> search, Expression<Func<TDocument, object>> expression, string value)
             where TDocument : IDocument
         {
-            search.Add(search.GetBuilder().Query(value));
+            search.Add(search.GetBuilder().Query(expression, value));
             return search;
         }
 
