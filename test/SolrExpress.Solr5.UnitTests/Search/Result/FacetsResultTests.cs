@@ -444,7 +444,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var searchParameters = new List<ISearchParameter>
             {
-                facet
+                facet1
             };
 
             var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));

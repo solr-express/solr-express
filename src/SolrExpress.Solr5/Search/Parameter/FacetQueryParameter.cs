@@ -29,6 +29,8 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         FacetSortType? IFacetQueryParameter<TDocument>.SortType { get; set; }
 
+        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();

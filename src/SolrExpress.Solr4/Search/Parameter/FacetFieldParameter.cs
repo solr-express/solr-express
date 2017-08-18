@@ -33,6 +33,8 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         FacetSortType? IFacetFieldParameter<TDocument>.SortType { get; set; }
 
+        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))

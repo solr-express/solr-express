@@ -5,7 +5,7 @@ namespace SolrExpress.Search.Parameter
     /// <summary>
     /// Signatures to use in facet query parameter
     /// </summary>
-    public interface IFacetQueryParameter<TDocument> : ISearchParameter
+    public interface IFacetQueryParameter<TDocument> : IFacetParameter
         where TDocument : Document
     {
         /// <summary>

@@ -32,6 +32,8 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
+        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+
         ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
         Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }

@@ -13,12 +13,11 @@ namespace SolrExpress.Solr5.Search.Result
     public class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
-        private List<ISearchParameter> _searchParameters;
         private JsonReader _jsonReader;
 
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
-        private ISearchParameter GetSearchParameter(List<ISearchParameter> searchParameters, string facetName)
+        private IFacetParameter GetFacetParameter(List<IFacetParameter> searchParameters, string facetName)
         {
             return searchParameters
                  .Where(parameter => parameter is IFacetRangeParameter<TDocument> || parameter is IFacetFieldParameter<TDocument>)
@@ -86,7 +85,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetFieldBuckets(string root, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
+        private void ProcessFacetFieldBuckets(string root, IFacetParameter facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
         {
             this._jsonReader.Read();// Starts array
 
@@ -112,13 +111,9 @@ namespace SolrExpress.Solr5.Search.Result
                 // Subfacets
                 if (this._jsonReader.TokenType != JsonToken.EndObject)
                 {
-                    // Prepare to process subfacets
-                    //this._jsonReader.Read();
-                    //this._jsonReader.Read();
-                    //this._jsonReader.Read();
-
                     this.GetFacetItems(
                         initialPath,
+                        facetParameter.Facets.ToList(),
                         this._jsonReader.TokenType,
                         initialPath,
                         out var facetItems);
@@ -249,7 +244,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private IFacetItem GetFacetItem(string root, JsonToken currentToken, string currentPath)
+        private IFacetItem GetFacetItem(string root, List<IFacetParameter> facetParameters, JsonToken currentToken, string currentPath)
         {
             var facetName = (string)this._jsonReader.Value;
             IFacetItem facetItem = null;
@@ -264,8 +259,8 @@ namespace SolrExpress.Solr5.Search.Result
             }
             else // Facet field or facet range
             {
-                var searchParameter = this.GetSearchParameter(this._searchParameters, facetName);
-                var facetRangeParameter = (searchParameter as IFacetRangeParameter<TDocument>);
+                var facetParameter = this.GetFacetParameter(facetParameters, facetName);
+                var facetRangeParameter = (facetParameter as IFacetRangeParameter<TDocument>);
 
                 this._jsonReader.Read();// Closes buckets property
 
@@ -281,7 +276,7 @@ namespace SolrExpress.Solr5.Search.Result
                 else
                 {
                     facetItem = new FacetItemField(facetName);
-                    this.ProcessFacetFieldBuckets(root, currentToken, currentPath, facetName, facetItem);
+                    this.ProcessFacetFieldBuckets(root, facetParameter, currentToken, currentPath, facetName, facetItem);
                 }
             }
 
@@ -294,7 +289,7 @@ namespace SolrExpress.Solr5.Search.Result
             return facetItem;
         }
 
-        private void GetFacetItems(string root, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
+        private void GetFacetItems(string root, List<IFacetParameter> facetParameters, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
         {
             facetItems = new List<IFacetItem>();
 
@@ -306,7 +301,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             while (!this._jsonReader.Path.Equals(root) && this._jsonReader.TokenType != JsonToken.EndObject)
             {
-                var facetItem = this.GetFacetItem(root, currentToken, currentPath);
+                var facetItem = this.GetFacetItem(root, facetParameters, currentToken, currentPath);
 
                 ((List<IFacetItem>)facetItems).Add(facetItem);
 
@@ -316,15 +311,20 @@ namespace SolrExpress.Solr5.Search.Result
 
         void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            this._searchParameters = searchParameters;
             this._jsonReader = jsonReader;
 
             if (currentToken == JsonToken.StartObject && currentPath.Equals("facets"))
             {
                 this._jsonReader.Read();// Go to first property
 
+                var facetParameters = searchParameters
+                    .Select(parameter => (IFacetParameter)parameter)
+                    .Where(parameter => parameter != null)
+                    .ToList();
+
                 this.GetFacetItems(
                     "facets",
+                    facetParameters,
                     currentToken,
                     currentPath,
                     out var facetItems);
