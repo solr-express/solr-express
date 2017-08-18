@@ -418,7 +418,15 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
                                     ""buckets"": [
                                         {
                                             ""val"": ""CHILD002.VALUE001"",
-                                            ""count"": 20
+                                            ""count"": 20,
+                                            ""field3"": {
+                                                ""buckets"": [
+                                                    {
+                                                        ""val"": ""GRANCHILD002.VALUE001"",
+                                                        ""count"": 15
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
@@ -435,8 +443,12 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
+            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            facet3.FieldExpression = (field) => field.Field3;
+
             var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
             facet2.FieldExpression = (field) => field.Field2;
+            facet2.Facets = new List<IFacetParameter> { facet3 };
 
             var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
             facet1.FieldExpression = (field) => field.Field1;
@@ -485,16 +497,25 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(2, facetRootValues1.Count());
             Assert.Equal(1, facetRootValues2.Count());
 
-            var child1_1 = facetRootValues1.First(q => q.Key.Equals("CHILD001.VALUE001"));
-            var child1_2 = facetRootValues1.First(q => q.Key.Equals("CHILD001.VALUE001"));
+            var child1_1 = facetRootValues1.FirstOrDefault(q => q.Key.Equals("CHILD001.VALUE001"));
+            var child1_2 = facetRootValues1.FirstOrDefault(q => q.Key.Equals("CHILD001.VALUE001"));
             Assert.NotNull(child1_1);
             Assert.NotNull(child1_2);
             Assert.Equal(5, child1_1.Quantity);
             Assert.Equal(5, child1_2.Quantity);
 
-            var child2_1 = facetRootValues2.First(q => q.Key.Equals("CHILD002.VALUE001"));
+            var child2_1 = facetRootValues2.FirstOrDefault(q => q.Key.Equals("CHILD002.VALUE001"));
             Assert.NotNull(child2_1);
             Assert.Equal(20, child2_1.Quantity);
+
+            var granchild2_1 = (FacetItemField)child2_1.Facets.FirstOrDefault();
+            Assert.NotNull(granchild2_1);
+            Assert.Equal(FacetType.Field, granchild2_1.FacetType);
+            Assert.Equal("field3", granchild2_1.Name);
+            Assert.NotEmpty(granchild2_1.Values);
+            Assert.Equal(1, granchild2_1.Values.Count());
+            Assert.Equal("GRANCHILD002.VALUE001", granchild2_1.Values.ToList()[0].Key);
+            Assert.Equal(15, granchild2_1.Values.ToList()[0].Quantity);
         }
     }
 }
