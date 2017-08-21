@@ -179,29 +179,47 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetRangeBuckets(string facetName, Type fieldType, IFacetRangeParameter<TDocument> facetRangeParameter, IFacetItem facetItem)
+        private void ProcessFacetRangeBuckets(string root, IFacetRangeParameter<TDocument> facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem, Type fieldType)
         {
             this._jsonReader.Read();// Starts array
 
-            while (this._jsonReader.Path.StartsWith($"facets.{facetName}.buckets["))
+            while (this._jsonReader.Path.StartsWith($"{root}.{facetName}.buckets["))
             {
-                var starterPath = this._jsonReader.Path;
+                var initialPath = this._jsonReader.Path;
 
                 this._jsonReader.Read();// "val" property
                 var rawMinimumValue = this._jsonReader.ReadAsString();
+
                 this._jsonReader.Read();// "count" property
-                var quantity = (long)this._jsonReader.ReadAsInt32();
+                var count = (long)this._jsonReader.ReadAsInt32();
 
-                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = this.GetMaximumValue(fieldType, facetItemRangeValue, facetRangeParameter.Gap);
+                var value = this.GetFacetItemRangeValue(fieldType, rawMinimumValue);
 
-                facetItemRangeValue.SetMaximumValue(maximumValue);
-                facetItemRangeValue.Quantity = quantity;
+                var maximumValue = this.GetMaximumValue(fieldType, value, facetParameter.Gap);
 
-                ((List<IFacetItemRangeValue>)((FacetItemRange)facetItem).Values).Add(facetItemRangeValue);
+                value.SetMaximumValue(maximumValue);
+                value.Quantity = count;
 
-                // Closes bucket object
-                while (!this._jsonReader.Path.Equals(starterPath))
+                // Go to next token to verify subfacet
+                this._jsonReader.Read();
+
+                // Subfacets
+                if (this._jsonReader.TokenType != JsonToken.EndObject)
+                {
+                    this.GetFacetItems(
+                        initialPath,
+                        facetParameter.Facets.ToList(),
+                        this._jsonReader.TokenType,
+                        initialPath,
+                        out var facetItems);
+
+                    value.Facets = facetItems;
+                }
+
+                ((List<IFacetItemRangeValue>)((FacetItemRange)facetItem).Values).Add(value);
+
+                // Try closes bucket object
+                while (this._jsonReader.TokenType != JsonToken.EndObject)
                 {
                     this._jsonReader.Read();
                 }
@@ -211,9 +229,9 @@ namespace SolrExpress.Solr5.Search.Result
 
             this._jsonReader.Read();// Ends array
 
-            if (this._jsonReader.Path.Equals($"facets.{facetName}.before"))
+            if (this._jsonReader.Path.Equals($"{root}.{facetName}.before"))
             {
-                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMaximumValue: facetRangeParameter.Start);
+                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMaximumValue: facetParameter.Start);
 
                 this._jsonReader.Read();// Ends property
                 this._jsonReader.Read();// "count" property
@@ -225,11 +243,11 @@ namespace SolrExpress.Solr5.Search.Result
                 this._jsonReader.Read();// Ends object
             }
 
-            if (this._jsonReader.Path.Equals($"facets.{facetName}.after"))
+            if (this._jsonReader.Path.Equals($"{root}.{facetName}.after"))
             {
                 // TODO: Calculate right value using "Gap" over "Start" until "End" (or "End" if "HardEnd"=true)
-                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, facetRangeParameter.End);
-                var maximumValue = this.GetMaximumValue(fieldType, facetItemRangeValue, facetRangeParameter.Gap);
+                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, facetParameter.End);
+                var maximumValue = this.GetMaximumValue(fieldType, facetItemRangeValue, facetParameter.Gap);
 
                 facetItemRangeValue.SetMinimumValue(maximumValue);
 
@@ -287,7 +305,7 @@ namespace SolrExpress.Solr5.Search.Result
                         .GetPropertyType(facetRangeParameter.FieldExpression);
 
                     facetItem = new FacetItemRange(facetName);
-                    this.ProcessFacetRangeBuckets(facetName, fieldType, facetRangeParameter, facetItem);
+                    this.ProcessFacetRangeBuckets(root, facetRangeParameter, currentToken, currentPath, facetName, facetItem, fieldType);
                 }
                 else
                 {
@@ -334,7 +352,7 @@ namespace SolrExpress.Solr5.Search.Result
                 this._jsonReader.Read();// Go to first property
 
                 var facetParameters = searchParameters
-                    .Select(parameter => (IFacetParameter)parameter)
+                    .Select(parameter => parameter as IFacetParameter)
                     .Where(parameter => parameter != null)
                     .ToList();
 

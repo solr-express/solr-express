@@ -530,7 +530,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
         /// <summary>
         /// Where   Using a FacetsResult instance
-        /// When    Invoking the method "Execute" using a JSON with a facet query and subfacet field data
+        /// When    Invoking the method "Execute" using a JSON with a facet query and subfacet query data
         /// What    Parse result
         /// </summary>
         [Fact]
@@ -640,6 +640,246 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal("queryB1", child2_1.Name);
             Assert.Equal(FacetType.Query, child2_1.FacetType);
             Assert.Equal(5, child2_1.Quantity);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetsResult instance
+        /// When    Invoking the method "Execute" using a JSON with a facet range and subfacet range data
+        /// What    Parse result
+        /// </summary>
+        [Fact]
+        public void FacetFieldResult006()
+        {
+            // Arrange
+            var jsonPlainText = @"
+            {
+	            ""facets"": {
+		            ""count"": 37,
+		            ""range1"": {
+			            ""buckets"": [{
+					            ""val"": 100,
+					            ""count"": 4,
+		                        ""range2"": {
+			                        ""buckets"": [{
+					                        ""val"": 100,
+					                        ""count"": 4
+				                        }
+			                        ],
+			                        ""before"": {
+				                        ""count"": 7
+			                        },
+			                        ""after"": {
+				                        ""count"": 1
+			                        }
+		                        },
+		                        ""range3"": {
+			                        ""buckets"": [{
+					                        ""val"": 100,
+					                        ""count"": 4,
+		                                    ""range2"": {
+			                                    ""buckets"": [{
+					                                    ""val"": 100,
+					                                    ""count"": 4
+				                                    }
+			                                    ]
+		                                    }
+				                        },
+				                        {
+					                        ""val"": 500,
+					                        ""count"": 3
+				                        }
+			                        ],
+		                        }
+				            },
+				            {
+					            ""val"": 300,
+					            ""count"": 3
+				            }
+			            ],
+			            ""before"": {
+				            ""count"": 7
+			            },
+			            ""after"": {
+				            ""count"": 1
+			            }
+		            },
+		            ""range3"": {
+			            ""buckets"": [{
+					            ""val"": 100,
+					            ""count"": 4,
+		                        ""range2"": {
+			                        ""buckets"": [{
+					                        ""val"": 100,
+					                        ""count"": 4
+				                        }
+			                        ],
+			                        ""before"": {
+				                        ""count"": 7
+			                        },
+			                        ""after"": {
+				                        ""count"": 1
+			                        }
+		                        }
+				            },
+				            {
+					            ""val"": 500,
+					            ""count"": 3
+				            }
+			            ]
+		            }
+	            }
+            }";
+
+            var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
+
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet2.FieldExpression = (field) => field.Range2;
+            facet2.Start = "100";
+            facet2.End = "1000";
+            facet2.Gap = "100";
+
+            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet3.FieldExpression = (field) => field.Range3;
+            facet3.Start = "100";
+            facet3.End = "1000";
+            facet3.Gap = "100";
+            facet3.Facets = new List<IFacetParameter> { facet2 };
+
+            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet1.FieldExpression = (field) => field.Range1;
+            facet1.Start = "100";
+            facet1.End = "1000";
+            facet1.Gap = "100";
+            facet1.Facets = new List<IFacetParameter> { facet2, facet3 };
+
+            facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet2.FieldExpression = (field) => field.Range2;
+            facet2.Start = "100";
+            facet2.End = "1000";
+            facet2.Gap = "100";
+
+            facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet3.FieldExpression = (field) => field.Range3;
+            facet3.Start = "100";
+            facet3.End = "1000";
+            facet3.Gap = "100";
+            facet3.Facets = new List<IFacetParameter> { facet2 };
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facet1,
+                facet3
+            };
+
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
+            // Act
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
+
+            // Assert
+            var data = result.Data.ToList();
+            Assert.Equal(2, data.Count);
+            Assert.Equal("range1", data[0].Name);
+            Assert.Equal("range3", data[1].Name);
+
+            Assert.Equal(FacetType.Range, data[0].FacetType);
+            Assert.Equal(FacetType.Range, data[1].FacetType);
+
+            var root1Values = ((FacetItemRange)data[0]).Values.ToList();
+            Assert.Null(((FacetItemRangeValue<decimal>)root1Values[0]).MinimumValue);
+            Assert.Equal(100, ((FacetItemRangeValue<decimal>)root1Values[0]).MaximumValue);
+            Assert.Equal(7, ((FacetItemRangeValue<decimal>)root1Values[0]).Quantity);
+
+            Assert.Equal(100, ((FacetItemRangeValue<decimal>)root1Values[1]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<decimal>)root1Values[1]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<decimal>)root1Values[1]).Quantity);
+
+            Assert.Equal(300, ((FacetItemRangeValue<decimal>)root1Values[2]).MinimumValue);
+            Assert.Equal(400, ((FacetItemRangeValue<decimal>)root1Values[2]).MaximumValue);
+            Assert.Equal(3, ((FacetItemRangeValue<decimal>)root1Values[2]).Quantity);
+
+            Assert.Equal(1100, ((FacetItemRangeValue<decimal>)root1Values[3]).MinimumValue);
+            Assert.Null(((FacetItemRangeValue<decimal>)root1Values[3]).MaximumValue);
+            Assert.Equal(1, ((FacetItemRangeValue<decimal>)root1Values[3]).Quantity);
+
+            Assert.Equal(2, ((FacetItemRangeValue<decimal>)root1Values[1]).Facets.Count());
+
+            var child1_1 = ((FacetItemRangeValue<decimal>)root1Values[1]).Facets.ToList()[0];
+            Assert.Equal(FacetType.Range, child1_1.FacetType);
+            Assert.Equal("range2", child1_1.Name);
+
+            var child1_1Values = ((FacetItemRange)child1_1).Values.ToList();
+            Assert.Null(((FacetItemRangeValue<int>)child1_1Values[0]).MinimumValue);
+            Assert.Equal(100, ((FacetItemRangeValue<int>)child1_1Values[0]).MaximumValue);
+            Assert.Equal(7, ((FacetItemRangeValue<int>)child1_1Values[0]).Quantity);
+
+            Assert.Equal(100, ((FacetItemRangeValue<int>)child1_1Values[1]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<int>)child1_1Values[1]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<int>)child1_1Values[1]).Quantity);
+
+            Assert.Equal(1100, ((FacetItemRangeValue<int>)child1_1Values[2]).MinimumValue);
+            Assert.Null(((FacetItemRangeValue<int>)child1_1Values[2]).MaximumValue);
+            Assert.Equal(1, ((FacetItemRangeValue<int>)child1_1Values[2]).Quantity);
+
+            var child1_2 = ((FacetItemRangeValue<decimal>)root1Values[1]).Facets.ToList()[1];
+            Assert.Equal(FacetType.Range, child1_2.FacetType);
+            Assert.Equal("range3", child1_2.Name);
+
+            var child1_2Values = ((FacetItemRange)child1_2).Values.ToList();
+            Assert.Equal(100, ((FacetItemRangeValue<int>)child1_2Values[0]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<int>)child1_2Values[0]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<int>)child1_2Values[0]).Quantity);
+
+            Assert.Equal(500, ((FacetItemRangeValue<int>)child1_2Values[1]).MinimumValue);
+            Assert.Equal(600, ((FacetItemRangeValue<int>)child1_2Values[1]).MaximumValue);
+            Assert.Equal(3, ((FacetItemRangeValue<int>)child1_2Values[1]).Quantity);
+            
+            Assert.Equal(1, ((FacetItemRange)child1_2).Values.ToList()[0].Facets.Count());
+
+            var granchild1_2_1 = ((FacetItemRange)child1_2).Values.ToList()[0].Facets.ToList()[0];
+            Assert.Equal(FacetType.Range, granchild1_2_1.FacetType);
+            Assert.Equal("range2", granchild1_2_1.Name);
+
+            var granchild1_2_1Values = ((FacetItemRange)granchild1_2_1).Values.ToList();
+            Assert.Equal(100, ((FacetItemRangeValue<int>)granchild1_2_1Values[0]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<int>)granchild1_2_1Values[0]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<int>)granchild1_2_1Values[0]).Quantity);
+
+            var root2Values = ((FacetItemRange)data[1]).Values.ToList();
+            Assert.Equal(100, ((FacetItemRangeValue<int>)root2Values[0]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<int>)root2Values[0]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<int>)root2Values[0]).Quantity);
+
+            Assert.Equal(500, ((FacetItemRangeValue<int>)root2Values[1]).MinimumValue);
+            Assert.Equal(600, ((FacetItemRangeValue<int>)root2Values[1]).MaximumValue);
+            Assert.Equal(3, ((FacetItemRangeValue<int>)root2Values[1]).Quantity);
+
+            Assert.Equal(1, ((FacetItemRangeValue<int>)root2Values[0]).Facets.Count());
+
+            var child2_1 = ((FacetItemRangeValue<int>)root2Values[0]).Facets.ToList()[0];
+            Assert.Equal(FacetType.Range, child2_1.FacetType);
+            Assert.Equal("range2", child2_1.Name);
+
+            var child2_1Values = ((FacetItemRange)child2_1).Values.ToList();
+            Assert.Null(((FacetItemRangeValue<int>)child2_1Values[0]).MinimumValue);
+            Assert.Equal(100, ((FacetItemRangeValue<int>)child2_1Values[0]).MaximumValue);
+            Assert.Equal(7, ((FacetItemRangeValue<int>)child2_1Values[0]).Quantity);
+
+            Assert.Equal(100, ((FacetItemRangeValue<int>)child2_1Values[1]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<int>)child2_1Values[1]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<int>)child2_1Values[1]).Quantity);
+
+            Assert.Equal(1100, ((FacetItemRangeValue<int>)child2_1Values[2]).MinimumValue);
+            Assert.Null(((FacetItemRangeValue<int>)child2_1Values[2]).MaximumValue);
+            Assert.Equal(1, ((FacetItemRangeValue<int>)child2_1Values[2]).Quantity);
         }
     }
 }
