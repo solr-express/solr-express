@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [4.2.7] - 2017-08-13
+
+### Bug fix
+- Query extension does not generate correct value ([#216](https://github.com/solr-express/solr-express/issues/216)) (tks [@ca0abinary](https://github.com/ca0abinary) and PR ([#217](https://github.com/solr-express/solr-express/pull/217))
+
+---
+
 ## [4.2.6] - 2017-07-13
 
 ### Enhancement
