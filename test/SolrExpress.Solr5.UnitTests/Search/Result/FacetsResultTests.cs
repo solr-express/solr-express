@@ -140,7 +140,17 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
 
-            var searchParameters = new List<ISearchParameter>();
+            var facet1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facet1.AliasName = "query1";
+
+            var facet2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facet2.AliasName = "query2";
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facet1,
+                facet2
+            };
 
             var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
 
@@ -516,6 +526,120 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(1, granchild2_1.Values.Count());
             Assert.Equal("GRANCHILD002.VALUE001", granchild2_1.Values.ToList()[0].Key);
             Assert.Equal(15, granchild2_1.Values.ToList()[0].Quantity);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetsResult instance
+        /// When    Invoking the method "Execute" using a JSON with a facet query and subfacet field data
+        /// What    Parse result
+        /// </summary>
+        [Fact]
+        public void FacetFieldResult005()
+        {
+            // Arrange
+            var jsonPlainText = @"
+            {
+	            ""facets"": {
+		            ""count"": 37,
+		            ""queryA"": {
+			            ""count"": 20,
+		                ""queryA1"": {
+			                ""count"": 10
+		                },
+		                ""queryA2"": {
+			                ""count"": 10,
+		                    ""queryA21"": {
+			                    ""count"": 5
+		                    }
+		                }
+		            },
+		            ""queryB"": {
+			            ""count"": 30,
+		                ""queryB1"": {
+			                ""count"": 5
+		                }
+		            }
+	            }
+            }";
+
+            var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
+
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            var facetA1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetA1.AliasName = "queryA1";
+
+            var facetA21 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetA21.AliasName = "queryA21";
+
+            var facetA2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetA2.AliasName = "queryA2";
+            facetA2.Facets = new List<IFacetParameter> { facetA21 };
+
+            var facetA = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetA.AliasName = "queryA";
+            facetA.Facets = new List<IFacetParameter> { facetA1, facetA2 };
+
+            var facetB1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetB1.AliasName = "queryB1";
+
+            var facetB = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            facetB.AliasName = "queryB";
+            facetB.Facets = new List<IFacetParameter> { facetB1 };
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facetA,
+                facetB
+            };
+
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
+            // Act
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
+
+            // Assert
+            var data = result.Data.ToList();
+            Assert.Equal(2, data.Count);
+            Assert.Equal("queryA", data[0].Name);
+            Assert.Equal("queryB", data[1].Name);
+            Assert.Equal(FacetType.Query, data[0].FacetType);
+            Assert.Equal(FacetType.Query, data[1].FacetType);
+            Assert.Equal(20, ((FacetItemQuery)data[0]).Quantity);
+            Assert.Equal(30, ((FacetItemQuery)data[1]).Quantity);
+
+            Assert.NotNull(((FacetItemQuery)data[0]).Facets);
+            Assert.NotNull(((FacetItemQuery)data[1]).Facets);
+            Assert.Equal(2, ((FacetItemQuery)data[0]).Facets.Count());
+            Assert.Equal(1, ((FacetItemQuery)data[1]).Facets.Count());
+
+            var child1_1 = (FacetItemQuery)((FacetItemQuery)data[0]).Facets.ToList()[0];
+            Assert.Equal("queryA1", child1_1.Name);
+            Assert.Equal(FacetType.Query, child1_1.FacetType);
+            Assert.Equal(10, child1_1.Quantity);
+
+            var child1_2 = (FacetItemQuery)((FacetItemQuery)data[0]).Facets.ToList()[1];
+            Assert.Equal("queryA2", child1_2.Name);
+            Assert.Equal(FacetType.Query, child1_2.FacetType);
+            Assert.Equal(10, child1_2.Quantity);
+            Assert.NotNull(child1_2.Facets);
+            Assert.Equal(1, child1_2.Facets.Count());
+
+            var granchild1_2_2 = (FacetItemQuery)child1_2.Facets.ToList()[0];
+            Assert.Equal("queryA21", granchild1_2_2.Name);
+            Assert.Equal(FacetType.Query, granchild1_2_2.FacetType);
+            Assert.Equal(5, granchild1_2_2.Quantity);
+
+            var child2_1 = (FacetItemQuery)((FacetItemQuery)data[1]).Facets.ToList()[0];
+            Assert.Equal("queryB1", child2_1.Name);
+            Assert.Equal(FacetType.Query, child2_1.FacetType);
+            Assert.Equal(5, child2_1.Quantity);
         }
     }
 }
