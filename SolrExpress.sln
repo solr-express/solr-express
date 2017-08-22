@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{32F031EB-53BE-4E6F-A909-82F09B392FBA}"
 EndProject
@@ -68,11 +68,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Utility", "test\SolrExpress.Utility\SolrExpress.Utility.csproj", "{E325E82D-1522-456D-B1A0-463E8E8FF24E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking changes", "breaking changes", "{A9038E8A-D000-4F70-84B1-0E5A98B56AFA}"
-	ProjectSection(SolutionItems) = preProject
-		docs\breaking changes\version5.md = docs\breaking changes\version5.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA}"
 	ProjectSection(SolutionItems) = preProject
 		docs\benchmarks\version-3.1.2.md = docs\benchmarks\version-3.1.2.md
@@ -85,6 +80,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facets", "facets", "{B51E48B1-BB87-4E96-AAF0-583F78EB40AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "queries", "queries", "{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breaking-changes", "{A69F328C-DC28-473D-8869-76D67A4C4D9A}"
+	ProjectSection(SolutionItems) = preProject
+		docs\breaking-changes\version5.md = docs\breaking-changes\version5.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,11 +177,14 @@ Global
 		{1C30862A-957B-4EEC-B305-2C67B8A49B4E} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{372F8EC7-4E47-4FD4-AA6A-325104F30CD4} = {97836803-3E29-4119-ACE3-57B3D068214F}
 		{E325E82D-1522-456D-B1A0-463E8E8FF24E} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
-		{A9038E8A-D000-4F70-84B1-0E5A98B56AFA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 		{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 		{5FE572CD-A4FE-468A-9596-EF705F0C24D3} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{B51E48B1-BB87-4E96-AAF0-583F78EB40AA} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
 		{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
+		{A69F328C-DC28-473D-8869-76D67A4C4D9A} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F014A41C-6377-4A52-819A-C1E84839BF38}
 	EndGlobalSection
 EndGlobal

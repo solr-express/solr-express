@@ -31,18 +31,41 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 
 ### Follow interfaces was removed:
 
+* IAnyParameter (use concret class **AnyParameter** instead) *(change in your project)*
 * IAtomicInstruction
+* IBoostParameter (use concret class **BoostParameter** instead) *(change in your project)*
 * IConvertJsonObject
 * IConvertJsonPlainText
+* IDefaultFieldParameter (use concret class **DefaultFieldParameter** instead) *(change in your project)*
 * IDocument (use concret class **Document** instead) *(change in your project)*
 * IDocumentCollection\<TDocument\> (use concret class **DocumentCollection\<TDocument\>** instead) *(change in your project)*
+* IFacetFieldParameter (use concret class **FacetFieldParameter** instead) *(change in your project)*
 * IFacetFieldResult (use interface **IFacetsResult** instead) *(change in your project)*
+* IFacetLimitParameter (use concret class **FacetLimitParameter** instead) *(change in your project)*
+* IFacetParameter (use concret class **FacetParameter** instead) *(change in your project)*
+* IFacetQueryParameter (use concret class **FacetQueryParameter** instead) *(change in your project)*
 * IFacetQueryResult (use interface **IFacetsResult** instead) *(change in your project)*
+* IFacetRangeParameter (use concret class **FacetRangeParameter** instead) *(change in your project)*
 * IFacetRangeResult (use interface **IFacetsResult** instead) *(change in your project)*
+* IFacetSpatialParameter (use concret class **FacetSpatialParameter** instead) *(change in your project)*
+* IFieldsParameter (use concret class **FieldsParameter** instead) *(change in your project)*
+* IFilterParameter (use concret class **FilterParameter** instead) *(change in your project)*
+* ILimitParameter (use concret class **LimitParameter** instead) *(change in your project)*
+* IMinimumShouldMatchParameter (use concret class **MinimumShouldMatchParameter** instead) *(change in your project)*
+* IOffsetParameter (use concret class **OffsetParameter** instead) *(change in your project)*
+* IQueryFieldParameter (use concret class **QueryFieldParameter** instead) *(change in your project)*
+* IQueryParameter (use concret class **QueryParameter** instead) *(change in your project)*
+* IQueryParserParameter (use concret class **QueryParserParameter** instead) *(change in your project)*
+* ISearchParameter (use concret class **SearchParameter** instead) *(change in your project)*
 * ISearchParameterValue (use concret class **SearchQuery** instead) *(change in your project)*
 * ISolrAtomicUpdate (use concret class **DocumentUpdate** instead) *(change in your project)*
 * ISolrSearch (use concret class **DocumentSearch** instead) *(change in your project)*
+* ISortParameter (use concret class **SortParameter** instead) *(change in your project)*
+* ISpatialFilterParameter (use concret class **SpatialFilterParameter** instead) *(change in your project)*
+* IStandardQueryParameter (use concret class **StandardQueryParameter** instead) *(change in your project)*
+* ISystemParameter (use concret class **SystemParameter** instead) *(change in your project)*
 * IValidation
+* IWriteTypeParameter (use concret class **WriteTypeParameter** instead) *(change in your project)*
 
 ### Follow classes was removed:
 
