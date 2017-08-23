@@ -63,13 +63,13 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet1.FieldExpression = (field) => field.Field1;
 
-            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet2.FieldExpression = (field) => field.Field2;
 
-            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet3.FieldExpression = (field) => field.Field3;
 
             var searchParameters = new List<ISearchParameter>
@@ -140,10 +140,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
 
-            var facet1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facet1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facet1.AliasName = "query1";
 
-            var facet2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facet2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facet2.AliasName = "query2";
 
             var searchParameters = new List<ISearchParameter>
@@ -271,19 +271,19 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet1.FieldExpression = (field) => field.Range1;
             facet1.Start = "100";
             facet1.End = "850";
             facet1.Gap = "250";
 
-            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet2.FieldExpression = (field) => field.Range2;
             facet2.Start = "4";
             facet2.End = "7";
             facet2.Gap = "1";
 
-            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet3.FieldExpression = (field) => field.Range4;
             facet3.Start = "NOW-30YEARS";
             facet3.End = "NOW+1DAY";
@@ -453,16 +453,16 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet3.FieldExpression = (field) => field.Field3;
 
-            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet2.FieldExpression = (field) => field.Field2;
-            facet2.Facets = new List<IFacetParameter> { facet3 };
+            facet2.Facets = new List<IFacetParameter<TestFacetDocument>> { facet3 };
 
-            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder);
+            var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
             facet1.FieldExpression = (field) => field.Field1;
-            facet1.Facets = new List<IFacetParameter> { facet2 };
+            facet1.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2 };
 
             var searchParameters = new List<ISearchParameter>
             {
@@ -569,26 +569,26 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facetA1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetA1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetA1.AliasName = "queryA1";
 
-            var facetA21 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetA21 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetA21.AliasName = "queryA21";
 
-            var facetA2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetA2 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetA2.AliasName = "queryA2";
-            facetA2.Facets = new List<IFacetParameter> { facetA21 };
+            facetA2.Facets = new List<IFacetParameter<TestFacetDocument>> { facetA21 };
 
-            var facetA = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetA = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetA.AliasName = "queryA";
-            facetA.Facets = new List<IFacetParameter> { facetA1, facetA2 };
+            facetA.Facets = new List<IFacetParameter<TestFacetDocument>> { facetA1, facetA2 };
 
-            var facetB1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetB1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetB1.AliasName = "queryB1";
 
-            var facetB = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>();
+            var facetB = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
             facetB.AliasName = "queryB";
-            facetB.Facets = new List<IFacetParameter> { facetB1 };
+            facetB.Facets = new List<IFacetParameter<TestFacetDocument>> { facetB1 };
 
             var searchParameters = new List<ISearchParameter>
             {
@@ -737,38 +737,38 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet2.FieldExpression = (field) => field.Range2;
             facet2.Start = "100";
             facet2.End = "1000";
             facet2.Gap = "100";
 
-            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet3.FieldExpression = (field) => field.Range3;
             facet3.Start = "100";
             facet3.End = "1000";
             facet3.Gap = "100";
-            facet3.Facets = new List<IFacetParameter> { facet2 };
+            facet3.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2 };
 
-            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet1.FieldExpression = (field) => field.Range1;
             facet1.Start = "100";
             facet1.End = "1000";
             facet1.Gap = "100";
-            facet1.Facets = new List<IFacetParameter> { facet2, facet3 };
+            facet1.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2, facet3 };
 
-            facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet2.FieldExpression = (field) => field.Range2;
             facet2.Start = "100";
             facet2.End = "1000";
             facet2.Gap = "100";
 
-            facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder);
+            facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
             facet3.FieldExpression = (field) => field.Range3;
             facet3.Start = "100";
             facet3.End = "1000";
             facet3.Gap = "100";
-            facet3.Facets = new List<IFacetParameter> { facet2 };
+            facet3.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2 };
 
             var searchParameters = new List<ISearchParameter>
             {
@@ -841,7 +841,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(500, ((FacetItemRangeValue<int>)child1_2Values[1]).MinimumValue);
             Assert.Equal(600, ((FacetItemRangeValue<int>)child1_2Values[1]).MaximumValue);
             Assert.Equal(3, ((FacetItemRangeValue<int>)child1_2Values[1]).Quantity);
-            
+
             Assert.Equal(1, ((FacetItemRange)child1_2).Values.ToList()[0].Facets.Count());
 
             var granchild1_2_1 = ((FacetItemRange)child1_2).Values.ToList()[0].Facets.ToList()[0];

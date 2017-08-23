@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in facet range parameter
     /// </summary>
-    public interface IFacetRangeParameter<TDocument> : IFacetParameter, ISearchItemFieldExpression<TDocument>
+    public interface IFacetRangeParameter<TDocument> : IFacetParameter<TDocument>, ISearchItemFieldExpression<TDocument>
         where TDocument : Document
     {
         /// <summary>

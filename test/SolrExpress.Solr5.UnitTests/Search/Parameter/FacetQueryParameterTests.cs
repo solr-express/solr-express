@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
@@ -195,6 +197,31 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   }
                 }");
 
+                Action<IFacetQueryParameter<TestDocument>> config9 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+
+                    facet.FacetQuery("Y", query => query.AddValue("avg('X')", false));
+                };
+                var expected9 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""facet"": {
+                          ""Y"": {
+                            ""query"": {
+                              ""q"": ""avg('X')""
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -204,7 +231,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config5, expected5 },
                     new object[] { config6, expected6 },
                     new object[] { config7, expected7 },
-                    new object[] { config8, expected8 }
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 }
                 };
             }
         }
@@ -220,7 +248,14 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new JObject();
-            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>();
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<IFacetQueryParameter<TestDocument>>())
+                .Returns(new FacetQueryParameter<TestDocument>(serviceProvider.Object));
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(null));
+            var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(serviceProvider.Object);
             config.Invoke(parameter);
 
             // Act

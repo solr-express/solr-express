@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Search.Result
 
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
-        private IFacetParameter GetFacetParameter(List<IFacetParameter> searchParameters, string facetName)
+        private IFacetParameter<TDocument> GetFacetParameter(IList<IFacetParameter<TDocument>> searchParameters, string facetName)
         {
             return searchParameters
                  .FirstOrDefault(parameter =>
@@ -30,10 +30,15 @@ namespace SolrExpress.Solr5.Search.Result
                         ?.ExpressionBuilder
                         .GetFieldName(searchItemFieldExpression.FieldExpression);
 
+                     var aliasName = searchItemFieldExpression
+                        ?.ExpressionBuilder
+                        .GetAliasName(searchItemFieldExpression.FieldExpression);
+
                      return
-                         facetName.Equals(facetQueryParameter?.AliasName) ||
-                         facetName.Equals(facetRangeParameter?.AliasName) ||
-                         facetName.Equals(fieldName);
+                        facetName.Equals(facetRangeParameter?.AliasName) ||
+                        facetName.Equals(facetQueryParameter?.AliasName) ||
+                        facetName.Equals(aliasName) ||
+                        facetName.Equals(fieldName);
                  });
         }
 
@@ -131,7 +136,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetFieldBuckets(string root, IFacetParameter facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
+        private void ProcessFacetFieldBuckets(string root, IFacetParameter<TDocument> facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
         {
             this._jsonReader.Read();// Starts array
 
@@ -159,7 +164,7 @@ namespace SolrExpress.Solr5.Search.Result
                 {
                     this.GetFacetItems(
                         initialPath,
-                        facetParameter.Facets.ToList(),
+                        facetParameter.Facets,
                         this._jsonReader.TokenType,
                         initialPath,
                         out var facetItems);
@@ -208,7 +213,7 @@ namespace SolrExpress.Solr5.Search.Result
                 {
                     this.GetFacetItems(
                         initialPath,
-                        facetParameter.Facets.ToList(),
+                        facetParameter.Facets,
                         this._jsonReader.TokenType,
                         initialPath,
                         out var facetItems);
@@ -262,7 +267,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private IFacetItem GetFacetItem(string root, List<IFacetParameter> facetParameters, JsonToken currentToken, string currentPath)
+        private IFacetItem GetFacetItem(string root, IList<IFacetParameter<TDocument>> facetParameters, JsonToken currentToken, string currentPath)
         {
             var initialPath = this._jsonReader.Path;
             var facetName = (string)this._jsonReader.Value;
@@ -323,7 +328,7 @@ namespace SolrExpress.Solr5.Search.Result
             return facetItem;
         }
 
-        private void GetFacetItems(string root, List<IFacetParameter> facetParameters, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
+        private void GetFacetItems(string root, IList<IFacetParameter<TDocument>> facetParameters, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
         {
             facetItems = new List<IFacetItem>();
 
@@ -352,7 +357,7 @@ namespace SolrExpress.Solr5.Search.Result
                 this._jsonReader.Read();// Go to first property
 
                 var facetParameters = searchParameters
-                    .Select(parameter => parameter as IFacetParameter)
+                    .Select(parameter => parameter as IFacetParameter<TDocument>)
                     .Where(parameter => parameter != null)
                     .ToList();
 

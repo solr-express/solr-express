@@ -19,9 +19,10 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -48,7 +49,9 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         string IFacetRangeParameter<TDocument>.Start { get; set; }
 
-        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
+
+        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {

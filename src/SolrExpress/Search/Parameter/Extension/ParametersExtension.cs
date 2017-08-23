@@ -79,23 +79,6 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
-        /// Create a facet limit parameter
-        /// </summary>
-        /// <param name="documentSearch">Document search engine</param>
-        /// <param name="value">Value of limit</param>
-        /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> FacetLimit<TDocument>(this DocumentSearch<TDocument> documentSearch, int value)
-            where TDocument : Document
-        {
-            var parameter = documentSearch.ServiceProvider.GetService<IFacetLimitParameter<TDocument>>();
-            parameter.Value(value);
-
-            documentSearch.Add(parameter);
-
-            return documentSearch;
-        }
-
-        /// <summary>
         /// Create a facet query parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -111,6 +94,7 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<IFacetQueryParameter<TDocument>>();
             parameter.AliasName(aliasName);
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            query.Invoke(search);
             parameter.Query(search);
 
             instance?.Invoke(parameter);
@@ -142,6 +126,23 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.End(end);
 
             instance?.Invoke(parameter);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a facet limit parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="value">Value of limit</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetLimit<TDocument>(this DocumentSearch<TDocument> documentSearch, int value)
+            where TDocument : Document
+        {
+            var parameter = documentSearch.ServiceProvider.GetService<IFacetLimitParameter<TDocument>>();
+            parameter.Value(value);
 
             documentSearch.Add(parameter);
 

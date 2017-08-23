@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
 using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
@@ -96,24 +97,48 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected5 = JObject.Parse(@"
                 {
                     ""facet"": {
-                    ""Id"": {
-                        ""terms"": {
-                        ""field"": ""id"",
-                        ""mincount"": 1,
-                        ""domain"": {
-                            ""excludeTags"": [
-                            ""tag1"",
-                            ""tag2""
-                            ]
-                        },
-                        ""sort"": {
-                            ""count"": ""asc""
-                        },
-                        ""limit"": 10
+                        ""Id"": {
+                            ""terms"": {
+                            ""field"": ""id"",
+                            ""mincount"": 1,
+                            ""domain"": {
+                                ""excludeTags"": [
+                                ""tag1"",
+                                ""tag2""
+                                ]
+                            },
+                            ""sort"": {
+                                ""count"": ""asc""
+                            },
+                            ""limit"": 10
+                            }
                         }
                     }
-                    }
                 }");
+
+                Action<IFacetFieldParameter<TestDocument>> config6 = facet =>
+                {
+                    facet
+                        .FieldExpression(q => q.Id)
+                        .FacetField(q => q.Id);
+                };
+                var expected6 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                          ""facet"": {
+                            ""Id"": {
+                              ""terms"": {
+                                ""field"": ""id""
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }");
 
                 return new[]
                 {
@@ -122,6 +147,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
                     new object[] { config5, expected5 },
+                    new object[] { config6, expected6 }
                 };
             }
         }
@@ -141,7 +167,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder);
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<IFacetFieldParameter<TestDocument>>())
+                .Returns(new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object));
+            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
             config.Invoke(parameter);
 
             // Act
@@ -149,9 +179,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            var actual = string.Join("&", container);
-
-            Assert.Equal(expectd.ToString(), actual.ToString());
+            Assert.Equal(expectd.ToString(), container.ToString());
         }
 
         /// <summary>

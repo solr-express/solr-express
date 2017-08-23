@@ -3,6 +3,7 @@ using SolrExpress.DI.CoreClr;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Query.Extension;
+using SolrExpress.Search.Result;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;
 using System;
@@ -236,7 +237,6 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(1, data.Count());
             Assert.Equal("ManufacturerId", data.ToList()[0].Name);
-            //Assert.Equal(1, data.ToList()[0].Data.Count());
         }
 
         /// <summary>
@@ -648,6 +648,39 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             var documentList = documents.ToList();
             Assert.Equal(1, documentList.Count);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Facet.Field" and a subfacet "Facet.FIeld"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest021()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.ManufacturerId, facet =>
+                {
+                    facet
+                        .Limit(1)
+                        .FacetField(q => q.InStock);
+                })
+                .Execute()
+                .Facets()
+                .Execute()
+                .GetFacets(out var data);
+
+            // Assert
+            Assert.Equal(1, data.Count());
+            var facetField = (FacetItemField)data.ToList()[0];
+            Assert.Equal("ManufacturerId", facetField.Name);
+            Assert.Equal("InStock", facetField.Values.ToList()[0].Facets.ToList()[0].Name);
         }
     }
 }

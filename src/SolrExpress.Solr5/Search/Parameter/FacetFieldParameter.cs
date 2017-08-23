@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -18,9 +19,10 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
         }
 
         string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
@@ -35,7 +37,9 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         FacetSortType? IFacetFieldParameter<TDocument>.SortType { get; set; }
 
-        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
+
+        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
 
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
@@ -80,6 +84,20 @@ namespace SolrExpress.Solr5.Search.Parameter
             if (parameter.Limit.HasValue)
             {
                 array.Add(new JProperty("limit", parameter.Limit));
+            }
+
+            if (parameter.Facets?.Any() ?? false)
+            {
+                Parallel.ForEach(parameter.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
+
+                var subfacets = new JObject();
+
+                foreach (var item in parameter.Facets)
+                {
+                    ((ISearchItemExecution<JObject>)item).AddResultInContainer(subfacets);
+                }
+
+                array.Add((JProperty)subfacets.First);
             }
 
             this._result = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));

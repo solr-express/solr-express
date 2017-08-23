@@ -17,9 +17,10 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private readonly List<string> _result = new List<string>();
 
-        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
         }
 
         string IFacetRangeParameter<TDocument>.AliasName { get; set; }
@@ -32,7 +33,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
 
-        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
 
         ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
@@ -47,6 +48,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         FacetSortType? IFacetRangeParameter<TDocument>.SortType { get; set; }
 
         string IFacetRangeParameter<TDocument>.Start { get; set; }
+
+        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
 
         void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
         {

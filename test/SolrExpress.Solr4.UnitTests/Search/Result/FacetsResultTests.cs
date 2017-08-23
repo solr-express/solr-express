@@ -225,16 +225,16 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
             var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrConnection);
             expressionBuilder.LoadDocument();
 
-            var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder);
+            var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
             facetRange1.FieldExpression = (field) => field.Range1;
 
-            var facetRange2 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder);
+            var facetRange2 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
             facetRange2.FieldExpression = (field) => field.Range2;
 
-            var facetRange3 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder);
+            var facetRange3 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
             facetRange3.FieldExpression = (field) => field.Range3;
 
-            var facetRange4 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder);
+            var facetRange4 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
             facetRange4.FieldExpression = (field) => field.Range4;
 
             var searchParameters = new List<ISearchParameter>

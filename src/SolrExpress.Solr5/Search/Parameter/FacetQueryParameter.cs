@@ -6,6 +6,7 @@ using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -16,7 +17,12 @@ namespace SolrExpress.Solr5.Search.Parameter
         where TDocument : Document
     {
         private JProperty _result;
-        
+
+        public FacetQueryParameter(ISolrExpressServiceProvider<TDocument> serviceProvider)
+        {
+            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+        }
+
         string IFacetQueryParameter<TDocument>.AliasName { get; set; }
 
         string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
@@ -29,8 +35,10 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         FacetSortType? IFacetQueryParameter<TDocument>.SortType { get; set; }
 
-        IEnumerable<IFacetParameter> IFacetParameter.Facets { get; set; }
+        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
 
+        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
+        
         void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();
@@ -71,6 +79,20 @@ namespace SolrExpress.Solr5.Search.Parameter
                 ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
+            }
+
+            if (parameter.Facets?.Any() ?? false)
+            {
+                Parallel.ForEach(parameter.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
+
+                var subfacets = new JObject();
+
+                foreach (var item in parameter.Facets)
+                {
+                    ((ISearchItemExecution<JObject>)item).AddResultInContainer(subfacets);
+                }
+
+                array.Add((JProperty)subfacets.First);
             }
 
             this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
