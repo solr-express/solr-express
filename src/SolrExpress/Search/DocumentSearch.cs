@@ -61,7 +61,7 @@ namespace SolrExpress.Search
             var hasMultipleInstances = this
                 ._searchItemCollection
                 .GetSearchParameters()
-                .Count(q => q.GetType().Equals(searchParameter.GetType())) > 1;
+                ?.Count(q => q.GetType().Equals(searchParameter.GetType())) > 1;
 
             var allowMultipleInstances = !attributes.Any(q => q is AllowMultipleInstancesAttribute);
 
