@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Result;
 using System;
 using System.Collections.Generic;
 
@@ -12,16 +13,23 @@ namespace SolrExpress.Search
         where TDocument : Document
     {
         /// <summary>
+        /// Get all results in internal list
+        /// </summary>
+        /// <returns>Results in internal list</returns>
+        List<ISearchResult<TDocument>> GetSearchResults();
+
+        /// <summary>
         /// Get all parameters in internal list
         /// </summary>
         /// <returns>Parameters in internal list</returns>
-        List<ISearchParameter> GetParameters();
+        List<ISearchParameter> GetSearchParameters();
 
         /// <summary>
         /// Check if collection contains informed type
         /// </summary>
         /// <returns>True if contains informed type, otherwise false</returns>
-        bool Contains<ISearchItem>();
+        bool Contains<TSearchItem>()
+            where TSearchItem : ISearchItem;
 
         /// <summary>
         /// Check if collection contains informed type

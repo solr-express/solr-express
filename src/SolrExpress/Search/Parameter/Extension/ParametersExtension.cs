@@ -2,6 +2,7 @@
 using SolrExpress.Extension;
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
+using SolrExpress.Search.Result;
 using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
@@ -75,6 +76,12 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            if (!documentSearch.Contains<IFacetsResult<TDocument>>())
+            {
+                var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
+                documentSearch.Add(facetsResult);
+            }
+
             return documentSearch;
         }
 
@@ -100,6 +107,12 @@ namespace SolrExpress.Search.Parameter.Extension
             instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
+
+            if (!documentSearch.Contains<IFacetsResult<TDocument>>())
+            {
+                var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
+                documentSearch.Add(facetsResult);
+            }
 
             return documentSearch;
         }
@@ -128,6 +141,12 @@ namespace SolrExpress.Search.Parameter.Extension
             instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
+
+            if (!documentSearch.Contains<IFacetsResult<TDocument>>())
+            {
+                var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
+                documentSearch.Add(facetsResult);
+            }
 
             return documentSearch;
         }
@@ -172,6 +191,12 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            if (!documentSearch.Contains<IFacetsResult<TDocument>>())
+            {
+                var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
+                documentSearch.Add(facetsResult);
+            }
+
             return documentSearch;
         }
 
@@ -206,7 +231,7 @@ namespace SolrExpress.Search.Parameter.Extension
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
             search.Field(fieldExpression);
             search.Any(values);
-            
+
             parameter.Query(search);
 
             documentSearch.Add(parameter);

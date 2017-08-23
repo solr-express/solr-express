@@ -68,7 +68,7 @@ namespace SolrExpress.Solr4.Search.Result
             return facetItemQueries.ToArray();
         }
 
-        private IFacetRangeParameter<TDocument> GetFacetRangeParameter(List<ISearchParameter> searchParameters, string facetName)
+        private IFacetRangeParameter<TDocument> GetFacetRangeParameter(IList<ISearchParameter> searchParameters, string facetName)
         {
             return (IFacetRangeParameter<TDocument>)searchParameters
                  .Where(parameter => parameter is IFacetRangeParameter<TDocument>)
@@ -185,7 +185,7 @@ namespace SolrExpress.Solr4.Search.Result
         /// </summary>
         /// <param name="searchParameters"></param>
         /// <param name="jsonReader"></param>
-        private FacetItemRange ProcessFacetRanges(List<ISearchParameter> searchParameters, JsonReader jsonReader)
+        private FacetItemRange ProcessFacetRanges(IList<ISearchParameter> searchParameters, JsonReader jsonReader)
         {
             var facetName = (string)jsonReader.Value;
             var facetRangeParameter = this.GetFacetRangeParameter(searchParameters, facetName);
@@ -266,7 +266,7 @@ namespace SolrExpress.Solr4.Search.Result
             return facetItem;
         }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
             if (currentPath.StartsWith("facet_counts."))
             {

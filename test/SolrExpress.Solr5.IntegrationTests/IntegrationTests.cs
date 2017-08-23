@@ -69,9 +69,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .QueryAll()
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var data);
+                .Document(out var data);
 
             // Assert
             Assert.Equal(10, data.Count());
@@ -94,9 +92,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Filter(q => q.InStock, "true")
                 .Filter(q => q.ManufacturerId, "corsair")
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var data);
+                .Document(out var data);
 
             // Assert
             Assert.Equal(3, data.Count());
@@ -120,9 +116,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .FacetField(q => q.ManufacturerId)
                 .FacetField(q => q.InStock)
                 .Execute()
-                .Facets()
-                .Execute()
-                .GetFacets(out var data);
+                .Facets(out var data);
 
             // Assert
             Assert.Equal(2, data.Count());
@@ -148,15 +142,10 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .FacetQuery("Facet1", query => query.Field(q => q.Popularity).GreaterThan(10))
                 .FacetQuery("Facet2", query => query.Field(q => q.Popularity).LessThan(10))
                 .Execute()
-                .Facets()
-                .Execute()
-                .GetFacets(out var data);
+                .Facets(out var data);
 
             // Assert
             Assert.Equal(2, data.Count());
-            //data.First(q => q.Name.Equals("Facet1"))
-            //Assert.True(data["Facet1"] > 0);
-            //Assert.True(data["Facet2"] > 0);
         }
 
         /// <summary>
@@ -178,9 +167,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .FacetRange("Facet2", q => q.Price, "10", "10", "1000")
                 .FacetRange("Facet3", q => q.ManufacturedateIn, "+10DAYS", "NOW-30YEARS", "NOW+1DAY")
                 .Execute()
-                .Facets()
-                .Execute()
-                .GetFacets(out var data);
+                .Facets(out var data);
 
             // Assert
             Assert.Equal(3, data.Count());
@@ -205,9 +192,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .QueryAll()
                 .Execute()
-                .Information()
-                .Execute()
-                .GetInformation(out var data);
+                .Information(out var data);
 
             // Assert
             Assert.True(data.DocumentCount > 0);
@@ -230,9 +215,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .FacetField(q => q.ManufacturerId, facet => facet.Limit(1))
                 .Execute()
-                .Facets()
-                .Execute()
-                .GetFacets(out var data);
+                .Facets(out var data);
 
             // Assert
             Assert.Equal(1, data.Count());
@@ -267,9 +250,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .Query(q => q.Id, documentId)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var fetchedDocuments);
+                .Document(out var fetchedDocuments);
 
             Assert.Equal(1, fetchedDocuments.Count());
             Assert.Equal(documentId, fetchedDocuments.ToList()[0].Id);
@@ -306,9 +287,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .Query(q => q.Id, documentId)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var fetchedDocuments);
+                .Document(out var fetchedDocuments);
 
             Assert.Equal(0, fetchedDocuments.Count());
         }
@@ -330,9 +309,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Sort(q => q.Id, true)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var data);
+                .Document(out var data);
 
             // Assert
             Assert.Equal(10, data.Count());
@@ -356,9 +333,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Sort(q => q.Id, false)
                 .Sort(q => q.Name, true)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var data);
+                .Document(out var data);
 
             // Assert
             Assert.Equal(10, data.Count());
@@ -398,9 +373,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var fetchedDocuments);
+                .Document(out var fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
             Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
@@ -427,9 +400,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Sort(q => q.Id, false)
                 .Sort(q => q.Name, true)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var data);
+                .Document(out var data);
 
             // Assert
             Assert.Equal(10, data.Count());
@@ -469,9 +440,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Select()
                 .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var fetchedDocuments);
+                .Document(out var fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
             Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
@@ -497,9 +466,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Boost(query => query.Field(q => q.InStock))
                 .Execute()
-                .Information()
-                .Execute()
-                .GetInformation(out var data);
+                .Information(out var data);
 
             // Assert
             Assert.True(data.DocumentCount > 1);
@@ -522,9 +489,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Boost(query => query.Field(q => q.InStock), boost => boost.BoostFunctionType(BoostFunctionType.Bf))
                 .Execute()
-                .Information()
-                .Execute()
-                .GetInformation(out var data);
+                .Information(out var data);
 
             // Assert
             Assert.True(data.DocumentCount > 1);
@@ -544,9 +509,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Limit(20)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var allDocuments);
+                .Document(out var allDocuments);
 
             // Act
             this.GetDocumentCollection()
@@ -554,27 +517,21 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .QueryAll()
                 .Page(5, 1)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var documentsPage1);
+                .Document(out var documentsPage1);
 
             this.GetDocumentCollection()
                 .Select()
                 .QueryAll()
                 .Page(5, 2)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var documentsPage2);
+                .Document(out var documentsPage2);
 
             this.GetDocumentCollection()
                 .Select()
                 .QueryAll()
                 .Page(5, 3)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var documentsPage3);
+                .Document(out var documentsPage3);
 
             // Assert
             var listAllDocuments = allDocuments.ToList();
@@ -602,9 +559,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Sort(q => q.Id, false)
                 .Limit(1)
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var documents);
+                .Document(out var documents);
 
             // Assert
             var documentList = documents.ToList();
@@ -641,9 +596,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Filter(q => q.ManufacturerId, "corsair", "sometag2")
                 .FacetField(q => q.Categories, facet => facet.Excludes("sometag1", "sometag2"))
                 .Execute()
-                .Document()
-                .Execute()
-                .GetDocument(out var documents);
+                .Document(out var documents);
 
             // Assert
             var documentList = documents.ToList();
@@ -672,9 +625,7 @@ namespace SolrExpress.Solr5.IntegrationTests
                         .FacetField(q => q.InStock);
                 })
                 .Execute()
-                .Facets()
-                .Execute()
-                .GetFacets(out var data);
+                .Facets(out var data);
 
             // Assert
             Assert.Equal(1, data.Count());

@@ -23,7 +23,7 @@ namespace SolrExpress.Search.Result
 
         Information IInformationResult<TDocument>.Data { get; set; }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
             if (!this.executed)
             {

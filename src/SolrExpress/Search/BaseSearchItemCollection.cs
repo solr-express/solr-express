@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +40,19 @@ namespace SolrExpress.Search
             return this._searchItems.Any(q => q.GetType().Equals(searchItemType));
         }
 
-        bool ISearchItemCollection<TDocument>.Contains<ISearchItem>()
+        bool ISearchItemCollection<TDocument>.Contains<TSearchItem>()
         {
-            return this._searchItems.Any(q => q is ISearchItem);
+            return this._searchItems.Any(q => q is TSearchItem);
         }
 
-        List<ISearchParameter> ISearchItemCollection<TDocument>.GetParameters()
+        List<ISearchParameter> ISearchItemCollection<TDocument>.GetSearchParameters()
         {
             return this.GetItems<ISearchParameter>();
+        }
+
+        List<ISearchResult<TDocument>> ISearchItemCollection<TDocument>.GetSearchResults()
+        {
+            return this.GetItems<ISearchResult<TDocument>>();
         }
 
         public abstract JsonReader Execute(string requestHandler);

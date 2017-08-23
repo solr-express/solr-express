@@ -348,7 +348,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
             this._jsonReader = jsonReader;
 

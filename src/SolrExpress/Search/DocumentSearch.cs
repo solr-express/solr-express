@@ -20,6 +20,7 @@ namespace SolrExpress.Search
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISearchItemCollection<TDocument> _searchItemCollection;
         private string _requestHandler = RequestHandler.Select;
+        internal ISolrExpressServiceProvider<TDocument> ServiceProvider;
 
         public DocumentSearch(
             SolrExpressOptions solrExpressOptions,
@@ -59,7 +60,7 @@ namespace SolrExpress.Search
 
             var hasMultipleInstances = this
                 ._searchItemCollection
-                .GetParameters()
+                .GetSearchParameters()
                 .Count(q => q.GetType().Equals(searchParameter.GetType())) > 1;
 
             var allowMultipleInstances = !attributes.Any(q => q is AllowMultipleInstancesAttribute);
@@ -77,7 +78,7 @@ namespace SolrExpress.Search
         /// <summary>
         /// Set default parameters if necessary
         /// </summary>
-        private void SetDefaultParameters()
+        private void SetDefaultSearchParameters()
         {
             var systemParameter = this.ServiceProvider.GetService<ISystemParameter<TDocument>>();
             this._searchItemCollection.Add(systemParameter);
@@ -135,6 +136,34 @@ namespace SolrExpress.Search
         }
 
         /// <summary>
+        /// Set default results if necessary
+        /// </summary>
+        private void SetDefaultSearchResults()
+        {
+            if (!this._searchItemCollection.Contains<IDocumentResult<TDocument>>())
+            {
+                var documentResult = this.ServiceProvider.GetService<IDocumentResult<TDocument>>();
+                this._searchItemCollection.Add(documentResult);
+            }
+
+            if (!this._searchItemCollection.Contains<IInformationResult<TDocument>>())
+            {
+                var informationResult = this.ServiceProvider.GetService<IInformationResult<TDocument>>();
+                this._searchItemCollection.Add(informationResult);
+            }
+        }
+
+        /// <summary>
+        /// Check if collection contains informed type
+        /// </summary>
+        /// <returns>True if contains informed type, otherwise false</returns>
+        public bool Contains<TSearchItem>()
+            where TSearchItem : ISearchItem
+        {
+            return this._searchItemCollection.Contains<TSearchItem>();
+        }
+
+        /// <summary>
         /// Add an item to search
         /// </summary>
         /// <param name="item">Parameter to add in the query</param>
@@ -180,29 +209,26 @@ namespace SolrExpress.Search
         }
 
         /// <summary>
-        /// Execute the search in the solr with informed parameters
+        /// Execute search in the solr with informed parameters
         /// </summary>
         /// <returns>Solr result</returns>
-        public SearchResultBuilder<TDocument> Execute()
+        public IList<ISearchResult<TDocument>> Execute()
         {
             this.AddRange(this._solrExpressOptions.GlobalParameters);
             this.AddRange(this._solrExpressOptions.GlobalResultInterceptors);
             this.AddRange(this._solrExpressOptions.GlobalChangeBehaviours);
 
-            this.SetDefaultParameters();
+            this.SetDefaultSearchParameters();
+            this.SetDefaultSearchResults();
 
             var jsonReader = this._searchItemCollection.Execute(this._requestHandler);
-            var searchParameters = this._searchItemCollection.GetParameters();
+            var searchParameters = this._searchItemCollection.GetSearchParameters();
+            var searchresults = this._searchItemCollection.GetSearchResults();
 
             var searchResultBuilder = this.ServiceProvider.GetService<SearchResultBuilder<TDocument>>();
-            searchResultBuilder.Configure(searchParameters, jsonReader);
+            searchResultBuilder.Configure(jsonReader, searchParameters, searchresults);
 
-            return searchResultBuilder;
+            return searchResultBuilder.Execute();
         }
-
-        /// <summary>
-        /// Services provider
-        /// </summary>
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
     }
 }

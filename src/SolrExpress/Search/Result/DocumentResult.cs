@@ -17,7 +17,7 @@ namespace SolrExpress.Search.Result
 
         IEnumerable<TDocument> IDocumentResult<TDocument>.Data { get; set; }
 
-        void ISearchResult.Execute(List<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
             if (!this.executed && currentToken == JsonToken.StartArray && currentPath == "response.docs")
             {

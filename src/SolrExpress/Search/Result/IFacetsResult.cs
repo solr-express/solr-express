@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Search.Result
 {
-    public interface IFacetsResult<TDocument> : ISearchResult
+    public interface IFacetsResult<TDocument> : ISearchResult<TDocument>
         where TDocument : Document
     {
         /// <summary>

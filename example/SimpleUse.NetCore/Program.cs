@@ -26,7 +26,7 @@ namespace SimpleUse.NetCore
             var techProducts = serviceProvider.GetRequiredService<DocumentCollection<TechProduct>>();
 
             // Initial search settings (configure to result facet field Categories and filter by field id using value "205325092")
-            var searchResultBuilder = techProducts
+            var searchResults = techProducts
                 .Select()
                 .ChangeDynamicFieldBehaviour(q => q.InStock, suffixName: "_xpto")
                 .Fields(d => d.Id, d => d.Manufacturer)
@@ -34,18 +34,11 @@ namespace SimpleUse.NetCore
                 .Filter(d => d.Id, "205325092")
                 .Execute();
 
-            // Indicate to process general information about search, documents and facets from search result
-            var searchResult = searchResultBuilder
-                .Information()
-                .Document()
-                .Facets()
-                .Execute();
-
             // Get general information about search, documents and facets from search result
-            searchResult
-                .GetInformation(out var information)
-                .GetDocument(out var documents)
-                .GetFacets(out var facets);
+            searchResults
+                .Information(out var information)
+                .Document(out var documents)
+                .Facets(out var facets);
 
             foreach (var document in documents)
             {

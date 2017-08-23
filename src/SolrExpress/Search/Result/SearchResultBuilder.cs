@@ -8,58 +8,43 @@ namespace SolrExpress.Search.Result
     /// <summary>
     /// Result builder
     /// </summary>
-    public sealed class SearchResultBuilder<TDocument>
+    internal sealed class SearchResultBuilder<TDocument>
         where TDocument : Document
     {
         private JsonReader _jsonReader;
-        private List<ISearchParameter> _searchParameters;
-        private SearchResultCollection<TDocument> _searchResults = new SearchResultCollection<TDocument>();
-
-        public SearchResultBuilder(
-            ISolrExpressServiceProvider<TDocument> serviceProvider)
-        {
-            Checker.IsNull(serviceProvider);
-
-            this.ServiceProvider = serviceProvider;
-        }
+        private IList<ISearchParameter> _searchParameters;
+        private IList<ISearchResult<TDocument>> _searchResults;
 
         /// <summary>
         /// Configure parameters and json plain text to be used in builders
         /// </summary>
-        /// <param name="searchParameters">Parameters used in search</param>
         /// <param name="jsonPlainText">Result in json plain text</param>
-        internal void Configure(List<ISearchParameter> searchParameters, JsonReader jsonReader)
+        /// <param name="searchParameters">Parameters used in search</param>
+        /// <param name="searchResults">Result parsers used in search result</param>
+        internal void Configure
+        (
+            JsonReader jsonReader,
+            IList<ISearchParameter> searchParameters,
+            IList<ISearchResult<TDocument>> searchResults
+        )
         {
-            Checker.IsNull(searchParameters);
             Checker.IsNull(jsonReader);
+            Checker.IsNull(searchParameters);
+            Checker.IsNull(searchResults);
 
-            this._searchParameters = searchParameters;
             this._jsonReader = jsonReader;
-        }
-
-        /// <summary>
-        /// Add a instance of informed type in search chain
-        /// </summary>
-        /// <typeparam name="T">Concrete class that implements the ISearchResult interface</typeparam>
-        /// <returns>Instance of T ready to be used</returns>
-        public SearchResultBuilder<TDocument> Add<T>(T result)
-            where T : ISearchResult
-        {
-            this._searchResults.Add(result);
-
-            return this;
+            this._searchParameters = searchParameters;
+            this._searchResults = searchResults;
         }
 
         /// <summary>
         /// Execute chain of search results
         /// </summary>
-        public SearchResultCollection<TDocument> Execute()
+        public IList<ISearchResult<TDocument>> Execute()
         {
-            var searchResults = this._searchResults.GetList();
-
             while (this._jsonReader.Read())
             {
-                foreach (var searchResult in searchResults)
+                foreach (var searchResult in this._searchResults)
                 {
                     searchResult.Execute(
                         this._searchParameters,
@@ -71,10 +56,5 @@ namespace SolrExpress.Search.Result
 
             return this._searchResults;
         }
-
-        /// <summary>
-        /// Services provider
-        /// </summary>
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
     }
 }
