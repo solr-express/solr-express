@@ -15,9 +15,9 @@ namespace SolrExpress.Search.Behaviour
             ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
         }
 
-        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldPrefixName { get; set; }
+        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldPrefix { get; set; }
 
-        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldSuffixName { get; set; }
+        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldSuffix { get; set; }
 
         ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
 
@@ -28,8 +28,8 @@ namespace SolrExpress.Search.Behaviour
             var parameter = ((ISearchItemFieldExpression<TDocument>)this);
             var parameterBehaviour = ((IChangeDynamicFieldBehaviour<TDocument>)this);
 
-            parameter.ExpressionBuilder.SetDynamicFieldPrefixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldPrefixName);
-            parameter.ExpressionBuilder.SetDynamicFieldSuffixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldSuffixName);
+            parameter.ExpressionBuilder.SetDynamicFieldPrefixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldPrefix);
+            parameter.ExpressionBuilder.SetDynamicFieldSuffixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldSuffix);
         }
     }
 }

@@ -9,11 +9,11 @@
         /// <summary>
         /// Indicates prefix name in dynamic field configurations
         /// </summary>
-        string DynamicFieldPrefixName { get; set; }
+        string DynamicFieldPrefix { get; set; }
 
         /// <summary>
         /// Indicates suffix name in dynamic field configurations
         /// </summary>
-        string DynamicFieldSuffixName { get; set; }
+        string DynamicFieldSuffix { get; set; }
     }
 }

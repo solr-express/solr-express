@@ -173,8 +173,8 @@ namespace SolrExpress.Builder
                 var data = new FieldData
                 {
                     AliasName = propertyInfo.Name,
-                    DynamicFieldPrefixName = solrFieldAttribute?.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefixName,
-                    DynamicFieldSuffixName = solrFieldAttribute?.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffixName,
+                    DynamicFieldPrefixName = solrFieldAttribute?.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = solrFieldAttribute?.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
                     IsDynamicField = solrFieldAttribute?.IsDynamicField ?? false,
                     PropertyType = propertyInfo.PropertyType
                 };

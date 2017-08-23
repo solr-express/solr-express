@@ -33,12 +33,12 @@ namespace SolrExpress
         /// <summary>
         /// Global prefix name in dynamic field configurations
         /// </summary>
-        public string GlobalDynamicFieldPrefixName { get; internal set; }
+        public string GlobalDynamicFieldPrefix { get; set; }
 
         /// <summary>
         /// Global suffix name in dynamic field configurations
         /// </summary>
-        public string GlobalDynamicFieldSuffixName { get; internal set; }
+        public string GlobalDynamicFieldSuffix { get; set; }
 
         /// <summary>
         /// Global result interceptor used in all queryable intance
