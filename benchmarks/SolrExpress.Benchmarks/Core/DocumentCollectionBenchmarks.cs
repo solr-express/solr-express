@@ -8,8 +8,7 @@ namespace SolrExpress.Benchmarks.Core
     {
         private DocumentSearch<TestDocument> _documentSearch;
 
-        //[Params(10, 100, 500, 1000)]
-        [Params(10)]
+        [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
 
 #if CORE
