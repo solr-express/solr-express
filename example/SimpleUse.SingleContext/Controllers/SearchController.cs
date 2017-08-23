@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SolrExpress.Extension;
 using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Parameter.Extension;
+using SolrExpress.Search.Behaviour.Extension;
 
 namespace SimpleUse.SingleContext.Controllers
 {
@@ -12,15 +10,10 @@ namespace SimpleUse.SingleContext.Controllers
         [HttpGet]
         public object Get()
         {
-            IFacetFieldParameter<TechProduct> parameter = null;
-
-            parameter.FieldExpression(q => q.Categories);
-
-
             DocumentSearch<TechProduct> documentSearch = null;
             documentSearch
-                .FacetField(q => q.Categories, facet => facet.Excludes("xpto"))
-                .Filter(q => q.Categories, 1, 2, 3);
+                .ChangeDynamicFieldBehaviour(q => q.Manufacturer, prefixName: "", suffixName: "")
+                .Execute();
 
             return new string[] { "value1", "value2" };
         }

@@ -1,11 +1,19 @@
 # Authentication and Authorization
 
-To use this authentication to connect with SOLR server, just active feature in SolrOptions
+## Feature
+
+Use authentication to connect with SOLR server
+
+## How to
+
+1. You need activate this feature in SOLR server, to do this, follow steps in **[SOLR wiki](https://cwiki.apache.org/confluence/display/solr/Authentication+and+Authorization+Plugins)**
+
+2. Change your **SolrExpressOptions** and set **SecurityOptions**, like below:
 
 ''' csharp
     var options = new SolrExpressOptions
     {
-        HostAddress = "http://localhost:8983/solr/techproducts",
+        // ... Other settings
         Security = new SecurityOptions
         {
             AuthenticationType = AuthenticationType.Basic,
@@ -16,10 +24,7 @@ To use this authentication to connect with SOLR server, just active feature in S
 
     services
 		.AddSolrExpress<TechProduct>(builder => builder
-			.UseOptions(options) // <-- Use options with this method
-			.UseSolr5());
+			.UseOptions(options) // <-- Use options
+			// ...  Other settings
+			);
 '''
-
-**NOTE**
-
-See more in **[SOLR wiki](https://cwiki.apache.org/confluence/display/solr/Authentication+and+Authorization+Plugins)**;

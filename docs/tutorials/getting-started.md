@@ -7,9 +7,6 @@ To start to use SolrExpress, just follow follow steps:
 ''' csharp
 public class TechProductDocument : Document
 {
-    [SolrField("id")]
-    public string Id { get; set; }
-
     [SolrField("manu")]
     public string Manufacturer { get; set; }
 
@@ -40,18 +37,11 @@ public void ConfigureServices(SomeDIContainer services)
 public void MyAmazingSearch(DocumentCollection<TechProduct> techProducts)
 {
     // Initial search settings (configure to result facet field Categories and filter by field id using value "205325092")
-    var searchResultBuilder = techProducts
+    var searchResult = techProducts
         .Select()
         .Fields(d => d.Id, d => d.Manufacturer)
         .FacetField(d => d.Categories)
         .Filter(d => d.Id, "205325092")
-        .Execute();
-
-    // Indicate to process general information about search, documents and facets from search result
-    var searchResult = searchResultBuilder
-        .Information()
-        .Document()
-        .Facets()
         .Execute();
 
     IEnumerable<TechProduct> documents;

@@ -1,30 +1,17 @@
 # Fail fast
 
-Fail fast feature use **indexed** and **stored** properties of **SolrFieldAttribute** to validate using of fields in some features throwing exception (SearchParameterIsInvalidException) if necesary.
+## Feature
 
-To use this feature, just active feature in SolrOptions (actived by default)
+Throw **SearchParameterIsInvalidException** when developer use a field in wrong way
 
-''' csharp
-    var options = new SolrExpressOptions
-    {
-        HostAddress = "http://localhost:8983/solr/techproducts",
-		FailFast = true
-    };
-
-    services
-		.AddSolrExpress<TechProduct>(builder => builder
-			.UseOptions(options) // <-- Use options with this method
-			.UseSolr5());
-'''
-
-Using a collection with 2 fields with follow setting:
+Using a collection with 2 fields with follow settings:
 
 | Field  |Indexed |Stored |
 |--------|--------|-------|
 | Field1 | False  | True  |
 | Field2 | True   | False |
 
-Now, some things will occur when use fields, explinated bellow:
+Use cases:
 
 | Use case     | Using method | Field1           | Field2           |
 |--------------|--------------|------------------|------------------|
@@ -39,3 +26,23 @@ Now, some things will occur when use fields, explinated bellow:
 **NOTE**
 
 See more in **[field options by use case](http://wiki.apache.org/solr/FieldOptionsByUseCase)**;
+
+## How to
+
+**This feature is actived by default**
+
+To active/inactive this feature, change your **SolrExpressOptions** and set **FailFast**, like below:
+
+''' csharp
+    var options = new SolrExpressOptions
+    {
+        // ... Other settings
+		FailFast = true
+    };
+
+    services
+		.AddSolrExpress<TechProduct>(builder => builder
+			.UseOptions(options) // <-- Use options
+			// ...  Other settings
+			);
+'''

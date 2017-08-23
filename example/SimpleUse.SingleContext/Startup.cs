@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SolrExpress;
 using SolrExpress.DI.CoreClr;
 using SolrExpress.Solr5.Extension;
 
@@ -36,6 +37,12 @@ namespace SimpleUse.SingleContext
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddMvc();
+
+            var options = new SolrExpressOptions
+            {
+                GlobalDynamicFieldPrefix = "my_prefix_",
+                GlobalDynamicFieldSuffix = "my_suffix_"
+            };
 
             services.AddSolrExpress<TechProduct>(q => q
                 .UseHostAddress("http://localhost:8983/solr/techproducts")
