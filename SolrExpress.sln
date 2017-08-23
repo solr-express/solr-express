@@ -86,6 +86,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breakin
 		docs\breaking-changes\version5.md = docs\breaking-changes\version5.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks", "benchmarks\SolrExpress.Benchmarks\SolrExpress.Benchmarks.csproj", "{C21CBC59-600E-44A4-B767-6E5B0567AE40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,6 +158,10 @@ Global
 		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C21CBC59-600E-44A4-B767-6E5B0567AE40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C21CBC59-600E-44A4-B767-6E5B0567AE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C21CBC59-600E-44A4-B767-6E5B0567AE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C21CBC59-600E-44A4-B767-6E5B0567AE40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -183,6 +189,7 @@ Global
 		{B51E48B1-BB87-4E96-AAF0-583F78EB40AA} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
 		{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
 		{A69F328C-DC28-473D-8869-76D67A4C4D9A} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
+		{C21CBC59-600E-44A4-B767-6E5B0567AE40} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F014A41C-6377-4A52-819A-C1E84839BF38}
