@@ -1,6 +1,6 @@
 ﻿using SimpleInjector;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     public sealed class SolrExpressServiceProvider<TDocument> : ISolrExpressServiceProvider<TDocument>
         where TDocument : Document

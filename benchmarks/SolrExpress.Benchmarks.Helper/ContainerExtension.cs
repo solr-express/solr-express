@@ -7,7 +7,7 @@ using SolrExpress.Search.Result;
 using SolrExpress.Update;
 using System;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     /// <summary>
     /// Configure SolrExpress DI using SimpleInjector engine

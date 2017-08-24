@@ -1,10 +1,11 @@
 ﻿using BenchmarkDotNet.Attributes;
 using SimpleInjector;
+using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Search;
 
 namespace SolrExpress.Benchmarks.Core
 {
-    public class DocumentCollectionBenchmarks
+    public class DocumentSearchBenchmarks
     {
         private DocumentSearch<TestDocument> _documentSearch;
 
@@ -38,7 +39,7 @@ namespace SolrExpress.Benchmarks.Core
             }
         }
 
-        [Benchmark]
+        [Benchmark(Description = "DocumentSearch")]
         public void Execute()
         {
             this._documentSearch.Execute();

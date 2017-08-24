@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net46;netcoreapp1.1</TargetFrameworks>
+    <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.3" />
+    <PackageReference Include="System.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.3" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Search\Result\DocumentResultBenchmarks10.json" />
+    <None Remove="Search\Result\DocumentResultBenchmarks100.json" />
+    <None Remove="Search\Result\DocumentResultBenchmarks1000.json" />
+    <None Remove="Search\Result\DocumentResultBenchmarks500.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Field10.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Field100.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Field1000.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Field500.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Query10.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Query100.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Query1000.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Query500.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Range10.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Range100.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Range1000.json" />
+    <None Remove="Search\Result\FacetsResultBenchmarks_Range500.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Search\Result\DocumentResultBenchmarks10.json" />
+    <EmbeddedResource Include="Search\Result\DocumentResultBenchmarks100.json" />
+    <EmbeddedResource Include="Search\Result\DocumentResultBenchmarks1000.json" />
+    <EmbeddedResource Include="Search\Result\DocumentResultBenchmarks500.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Field10.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Field100.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Field1000.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Field500.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Query10.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Query100.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Query1000.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Query500.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Range10.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Range100.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Range1000.json" />
+    <EmbeddedResource Include="Search\Result\FacetsResultBenchmarks_Range500.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SolrExpress.Solr5\SolrExpress.Solr5.csproj" />
+    <ProjectReference Include="..\SolrExpress.Benchmarks.Helper\SolrExpress.Benchmarks.Helper.csproj" />
+  </ItemGroup>
+
+</Project>

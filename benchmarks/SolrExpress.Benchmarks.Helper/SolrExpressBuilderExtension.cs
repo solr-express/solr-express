@@ -1,5 +1,6 @@
 ﻿using Moq;
 using Newtonsoft.Json;
+using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
@@ -7,7 +8,7 @@ using SolrExpress.Update;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     public static class SolrExpressBuilderExtension
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     public class TestDocument : Document
     {

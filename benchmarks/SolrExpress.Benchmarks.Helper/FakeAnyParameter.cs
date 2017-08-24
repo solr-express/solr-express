@@ -1,6 +1,6 @@
 ﻿using SolrExpress.Search.Parameter;
 
-namespace SolrExpress.Benchmarks
+namespace SolrExpress.Benchmarks.Helper
 {
     public class FakeAnyParameter : IAnyParameter
     {
