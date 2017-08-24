@@ -14,7 +14,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [AllowMultipleInstances]
     [FacetRangeType]
     [FieldMustBeIndexedTrue]
-    public class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;

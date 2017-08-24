@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
-    public class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;

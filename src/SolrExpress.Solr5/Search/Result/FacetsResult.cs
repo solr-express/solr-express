@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr5.Search.Result
 {
-    public class FacetsResult<TDocument> : IFacetsResult<TDocument>
+    public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
         private JsonReader _jsonReader;

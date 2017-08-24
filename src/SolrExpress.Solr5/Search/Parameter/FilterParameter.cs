@@ -8,7 +8,7 @@ using SolrExpress.Utility;
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
-    public class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JToken _result;

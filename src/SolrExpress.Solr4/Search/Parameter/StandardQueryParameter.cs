@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public class StandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class StandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;

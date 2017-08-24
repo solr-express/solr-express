@@ -5,7 +5,7 @@ using SolrExpress.Search.Query;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public class StandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class StandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;

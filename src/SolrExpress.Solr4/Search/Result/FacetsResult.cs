@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Result
 {
-    public class FacetsResult<TDocument> : IFacetsResult<TDocument>
+    public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }

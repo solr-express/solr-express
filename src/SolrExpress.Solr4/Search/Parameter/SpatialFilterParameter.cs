@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [FieldMustBeIndexedTrue]
-    public class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;

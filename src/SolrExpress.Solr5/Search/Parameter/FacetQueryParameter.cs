@@ -13,7 +13,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [AllowMultipleInstances]
     // TODO: Think about this, no implements ISearchItemFieldExpressions<> or ISearchItemFieldExpression<>
     //[FieldMustBeIndexedTrue]
-    public class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;

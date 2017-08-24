@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public class LimitParameter<TDocument> : ILimitParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class LimitParameter<TDocument> : ILimitParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;

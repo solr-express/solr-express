@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.Search
     /// <summary>
     /// Parameter collection especific to SOLR 4
     /// </summary>
-    public class SearchItemCollection<TDocument> : BaseSearchItemCollection<TDocument>
+    public sealed class SearchItemCollection<TDocument> : BaseSearchItemCollection<TDocument>
         where TDocument : Document
     {
         private readonly ISolrConnection _solrConnection;

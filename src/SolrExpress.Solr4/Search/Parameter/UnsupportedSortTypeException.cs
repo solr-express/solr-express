@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public class UnsupportedSortTypeException : Exception
+    public sealed class UnsupportedSortTypeException : Exception
     {
         public UnsupportedSortTypeException() : base(Resource.UnsupportedSortTypeException)
         {

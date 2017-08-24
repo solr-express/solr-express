@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [FieldMustBeStoredTrue]
-    public class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;

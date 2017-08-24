@@ -4,7 +4,7 @@ using SolrExpress.Search;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public class MinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class MinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
