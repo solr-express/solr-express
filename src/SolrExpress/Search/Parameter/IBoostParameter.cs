@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use boost parameter
+    /// Boost parameter
     /// </summary>
     public interface IBoostParameter<TDocument> : ISearchParameter
         where TDocument : Document

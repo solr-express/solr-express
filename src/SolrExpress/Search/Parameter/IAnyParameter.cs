@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use any parameter
+    /// Any parameter
     /// </summary>
     public interface IAnyParameter : ISearchParameter
     {

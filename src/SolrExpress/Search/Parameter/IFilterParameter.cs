@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in filter parameter
+    /// Filter parameter
     /// </summary>
     public interface IFilterParameter<TDocument> : ISearchParameter
         where TDocument : Document

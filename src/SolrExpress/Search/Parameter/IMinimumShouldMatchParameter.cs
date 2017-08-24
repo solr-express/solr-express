@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in minimum should match parameter
+    /// Minimum should match parameter
     /// </summary>
     public interface IMinimumShouldMatchParameter<TDocument> : ISearchParameter
         where TDocument : Document

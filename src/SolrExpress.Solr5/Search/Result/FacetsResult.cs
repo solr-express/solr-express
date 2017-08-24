@@ -262,7 +262,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private IFacetItem GetFacetItem(string root, IList<IFacetParameter<TDocument>> facetParameters)
+        private IFacetItem GetFacetItem(string root, IEnumerable<IFacetParameter<TDocument>> facetParameters)
         {
             var initialPath = this._jsonReader.Path;
             var facetName = (string)this._jsonReader.Value;

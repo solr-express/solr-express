@@ -3,7 +3,7 @@
 namespace SolrExpress.Update
 {
     /// <summary>
-    /// Signatures to remove informed documents from SOLR collection
+    /// Atomic delete informed documents from SOLR collection
     /// </summary>
     public interface IAtomicDelete<TDocument>
         where TDocument : Document

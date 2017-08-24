@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in query field parameter
+    /// Query field parameter
     /// </summary>
     public interface IQueryFieldParameter<TDocument> : ISearchParameter
         where TDocument : Document

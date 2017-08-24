@@ -183,7 +183,7 @@ namespace SolrExpress.Solr4.Search.Result
         /// </summary>
         /// <param name="searchParameters"></param>
         /// <param name="jsonReader"></param>
-        private static FacetItemRange ProcessFacetRanges(IList<ISearchParameter> searchParameters, JsonReader jsonReader)
+        private static FacetItemRange ProcessFacetRanges(IEnumerable<ISearchParameter> searchParameters, JsonReader jsonReader)
         {
             var facetName = (string)jsonReader.Value;
             var facetRangeParameter = GetFacetRangeParameter(searchParameters, facetName);

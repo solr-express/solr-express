@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in facet limit parameter
+    /// Facet limit parameter
     /// </summary>
     public interface IFacetLimitParameter<TDocument> : ISearchParameter
         where TDocument : Document

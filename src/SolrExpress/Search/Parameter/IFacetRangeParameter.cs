@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in facet range parameter
+    /// Facet range parameter
     /// </summary>
     public interface IFacetRangeParameter<TDocument> : IFacetParameter<TDocument>, ISearchItemFieldExpression<TDocument>
         where TDocument : Document

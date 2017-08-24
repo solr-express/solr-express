@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in search parameter
+    /// Search parameter
     /// </summary>
     public interface ISearchParameter : ISearchItem
     {

@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search
 {
     /// <summary>
-    /// Signatures to use in solr item execution
+    /// Solr item execution
     /// </summary>
     public interface ISearchItemExecution<in TContainer>
     {

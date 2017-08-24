@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use standard query parameter
+    /// Standard query parameter
     /// </summary>
     public interface IStandardQueryParameter<TDocument> : ISearchParameter
         where TDocument : Document

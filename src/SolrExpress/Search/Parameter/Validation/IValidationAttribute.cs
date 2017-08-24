@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter.Validation
 {
     /// <summary>
-    /// Signatures to validate parameters
+    /// Validate parameters
     /// </summary>
     public interface IValidationAttribute
     {

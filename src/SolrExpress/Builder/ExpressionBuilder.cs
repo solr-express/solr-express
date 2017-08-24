@@ -19,8 +19,8 @@ namespace SolrExpress.Builder
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISolrConnection _solrConnection;
         private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
-        internal Dictionary<string, FieldSchema> _fieldSchemas;
-        internal Dictionary<Regex, FieldSchema> _dynamicFieldSchemas;
+        internal Dictionary<string, FieldSchema> FieldSchemas;
+        internal Dictionary<Regex, FieldSchema> DynamicFieldSchemas;
 
         public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection solrConnection)
         {
@@ -36,7 +36,7 @@ namespace SolrExpress.Builder
             var allFields = JObject.Parse(this._solrConnection.Get("schema/fields", null));
             var allDynamicFields = JObject.Parse(this._solrConnection.Get("schema/dynamicfields", null));
 
-            this._fieldSchemas = allFields["fields"]
+            this.FieldSchemas = allFields["fields"]
                 .ToDictionary(
                     k => k["name"].Value<string>(),
                     v => new FieldSchema
@@ -46,7 +46,7 @@ namespace SolrExpress.Builder
                         IsStored = v["stored"].Value<bool>()
                     });
 
-            this._dynamicFieldSchemas = allDynamicFields["dynamicFields"]
+            this.DynamicFieldSchemas = allDynamicFields["dynamicFields"]
                 .ToDictionary(
                     k => new Regex($"^{k["name"].Value<string>().Replace("*", "(.*)")}$", RegexOptions.Compiled),
                     v => new FieldSchema
@@ -118,12 +118,12 @@ namespace SolrExpress.Builder
         /// <returns>Field schema</returns>
         internal FieldSchema GetFieldSchema(string name)
         {
-            if (this._fieldSchemas.ContainsKey(name))
+            if (this.FieldSchemas.ContainsKey(name))
             {
-                return this._fieldSchemas[name];
+                return this.FieldSchemas[name];
             }
 
-            foreach (var item in this._dynamicFieldSchemas)
+            foreach (var item in this.DynamicFieldSchemas)
             {
                 if (item.Key.IsMatch(name))
                 {

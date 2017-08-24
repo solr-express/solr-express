@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use write type parameter
+    /// Write type parameter
     /// </summary>
     public interface IWriteTypeParameter<TDocument> : ISearchParameter
         where TDocument : Document

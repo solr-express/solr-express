@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in sort parameter
+    /// Sort parameter
     /// </summary>
     public interface ISortParameter<TDocument> : ISearchParameter, ISearchItemFieldExpression<TDocument>
         where TDocument : Document

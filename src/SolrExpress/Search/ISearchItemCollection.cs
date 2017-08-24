@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace SolrExpress.Search
 {
     /// <summary>
-    /// Signature used to parameter collection
+    /// Parameter collection
     /// </summary>
     public interface ISearchItemCollection<TDocument>
         where TDocument : Document

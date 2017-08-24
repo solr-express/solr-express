@@ -10,31 +10,31 @@ namespace SolrExpress.Builder
         /// <summary>
         /// Name of alias of field in queries
         /// </summary>
-        public string AliasName { get; internal set; }
+        internal string AliasName { get; set; }
 
         /// <summary>
         /// Type of POCO property
         /// </summary>
-        public Type PropertyType { get; internal set; }
+        internal Type PropertyType { get; set; }
 
         /// <summary>
         /// Field's schema
         /// </summary>
-        public FieldSchema FieldSchema { get; internal set; }
+        internal FieldSchema FieldSchema { get; set; }
 
         /// <summary>
         /// If true, field is configured like dynamic field
         /// </summary>
-        public bool IsDynamicField { get; internal set; }
+        internal bool IsDynamicField { get; set; }
 
         /// <summary>
         /// Indicates prefix name in dynamic field configurations
         /// </summary>
-        public string DynamicFieldPrefixName { get; internal set; }
+        internal string DynamicFieldPrefixName { get; set; }
 
         /// <summary>
         /// Indicates suffix name in dynamic field configurations
         /// </summary>
-        public string DynamicFieldSuffixName { get; internal set; }
+        internal string DynamicFieldSuffixName { get; set; }
     }
 }

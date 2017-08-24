@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in limit parameter
+    /// Limit parameter
     /// </summary>
     public interface ILimitParameter<TDocument> : ISearchParameter
         where TDocument : Document

@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in facet query parameter
+    /// Facet query parameter
     /// </summary>
     public interface IFacetQueryParameter<TDocument> : IFacetParameter<TDocument>
         where TDocument : Document

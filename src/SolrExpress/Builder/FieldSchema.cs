@@ -8,16 +8,16 @@
         /// <summary>
         /// If true, value of the field can be used in queries to retrieve matching documents
         /// </summary>
-        public bool IsIndexed { get; internal set; }
+        internal bool IsIndexed { get; set; }
 
         /// <summary>
         /// If true, actual value of the field can be retrieved by queries
         /// </summary>
-        public bool IsStored { get; internal set; }
+        internal bool IsStored { get; set; }
 
         /// <summary>
         /// Name of field in the SOLR schema
         /// </summary>
-        public string FieldName { get; internal set; }
+        internal string FieldName { get; set; }
     }
 }

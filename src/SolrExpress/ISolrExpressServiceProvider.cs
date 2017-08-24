@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress
 {
     /// <summary>
-    /// Signatures to DI engine
+    /// DI engine
     /// </summary>
     public interface ISolrExpressServiceProvider<TDocument>
         where TDocument : Document
@@ -27,9 +27,9 @@
         /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
-        ISolrExpressServiceProvider<TDocument> AddSingleton<TService, UImplementation>(UImplementation implementationInstance = null)
+        ISolrExpressServiceProvider<TDocument> AddSingleton<TService, TImplementation>(TImplementation implementationInstance = null)
             where TService : class
-            where UImplementation : class, TService;
+            where TImplementation : class, TService;
 
         /// <summary>
         /// Adds a transient service of the type specified in TService with an implementation type specified in TImplementation to the specified DI container
@@ -45,8 +45,8 @@
         /// <typeparam name="TService">The type of the service to add</typeparam>
         /// <typeparam name="TImplementation">The type of the implementation to use</typeparam>
         /// <returns>This</returns>
-        ISolrExpressServiceProvider<TDocument> AddTransient<TService, UImplementation>(UImplementation implementationInstance = null)
+        ISolrExpressServiceProvider<TDocument> AddTransient<TService, TImplementation>(TImplementation implementationInstance = null)
             where TService : class
-            where UImplementation : class, TService;
+            where TImplementation : class, TService;
     }
 }

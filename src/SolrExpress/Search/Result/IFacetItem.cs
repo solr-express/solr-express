@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Result
 {
     /// <summary>
-    /// Signatures to represents a facet item
+    /// Represents a facet item
     /// </summary>
     public interface IFacetItem
     {

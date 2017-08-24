@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
-    /// Signatures to use in offset parameter
+    /// Offset parameter
     /// </summary>
     public interface IOffsetParameter<TDocument> : ISearchParameter
         where TDocument : Document

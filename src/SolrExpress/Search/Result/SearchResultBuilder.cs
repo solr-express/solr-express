@@ -18,7 +18,7 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Configure parameters and json plain text to be used in builders
         /// </summary>
-        /// <param name="jsonPlainText">Result in json plain text</param>
+        /// <param name="jsonReader">Result in json reader</param>
         /// <param name="searchParameters">Parameters used in search</param>
         /// <param name="searchResults">Result parsers used in search result</param>
         internal void Configure

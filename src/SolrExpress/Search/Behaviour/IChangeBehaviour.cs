@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Behaviour
 {
     /// <summary>
-    /// Signatures to change behaviour of search item
+    /// Change behaviour of search item
     /// </summary>
     public interface IChangeBehaviour : ISearchItem
     {

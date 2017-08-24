@@ -15,7 +15,7 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Create a new instance of FacetItemRangeValue
         /// </summary>
-        /// <param name="maximumValue">Minimum value of range</param>
+        /// <param name="minimumValue">Minimum value of range</param>
         /// <param name="maximumValue">Maximum value of range</param>
         public FacetItemRangeValue(TKey? minimumValue = null, TKey? maximumValue = null)
         {
