@@ -1,9 +1,9 @@
-﻿using SolrExpress.Search.Behaviour;
+﻿using System.Collections.Generic;
+using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Interceptor;
 using SolrExpress.Search.Parameter;
-using System.Collections.Generic;
 
-namespace SolrExpress
+namespace SolrExpress.Options
 {
     /// <summary>
     /// Options to control SolrExpress behavior
@@ -43,16 +43,16 @@ namespace SolrExpress
         /// <summary>
         /// Global result interceptor used in all queryable intance
         /// </summary>
-        public List<IResultInterceptor> GlobalResultInterceptors { get; private set; } = new List<IResultInterceptor>();
+        public List<IResultInterceptor> GlobalResultInterceptors => new List<IResultInterceptor>();
 
         /// <summary>
         /// Global parameter used in all queryable intance
         /// </summary>
-        public List<ISearchParameter> GlobalParameters { get; private set; } = new List<ISearchParameter>();
+        public List<ISearchParameter> GlobalParameters => new List<ISearchParameter>();
 
         /// <summary>
         /// Global change behaviour used in all queryable intance
         /// </summary>
-        public List<IChangeBehaviour> GlobalChangeBehaviours { get; private set; } = new List<IChangeBehaviour>();
+        public List<IChangeBehaviour> GlobalChangeBehaviours => new List<IChangeBehaviour>();
     }
 }

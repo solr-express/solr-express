@@ -21,7 +21,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IBoostParameter<TDocument>)this);
+            var parameter = (IBoostParameter<TDocument>)this;
             var boostFunction = parameter.BoostFunctionType.ToString().ToLower();
 
             this._result = $"{boostFunction}={parameter.Query.Execute()}";

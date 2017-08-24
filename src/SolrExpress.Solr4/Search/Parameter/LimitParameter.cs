@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((ILimitParameter<TDocument>)this);
+            var parameter = (ILimitParameter<TDocument>)this;
 
             this._result = $"rows={parameter.Value}";
         }

@@ -4,11 +4,9 @@ using SolrExpress;
 using SolrExpress.DI.CoreClr;
 using SolrExpress.Search.Behaviour.Extension;
 using SolrExpress.Search.Parameter.Extension;
-using SolrExpress.Search.Result;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;
 using System;
-using System.Collections.Generic;
 
 namespace SimpleUse.NetCore
 {

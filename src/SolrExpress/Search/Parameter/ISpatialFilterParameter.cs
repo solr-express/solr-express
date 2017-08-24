@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Search.Parameter;
-
-namespace SolrExpress.Search.Parameter
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Signatures to use in spatial filter parameter

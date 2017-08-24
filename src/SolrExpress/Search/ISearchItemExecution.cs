@@ -3,7 +3,7 @@
     /// <summary>
     /// Signatures to use in solr item execution
     /// </summary>
-    public interface ISearchItemExecution<TContainer>
+    public interface ISearchItemExecution<in TContainer>
     {
         /// <summary>
         /// Execute search item

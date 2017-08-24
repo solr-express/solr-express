@@ -6,7 +6,7 @@ namespace SolrExpress.DI.Autofac
         where TDocument : Document
     {
         private readonly ContainerBuilder _kernel = new ContainerBuilder();
-        private IContainer _container = null;
+        private IContainer _container;
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService>(TService implementationInstance)
         {

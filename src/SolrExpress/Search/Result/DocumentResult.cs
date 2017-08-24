@@ -13,23 +13,25 @@ namespace SolrExpress.Search.Result
     public sealed class DocumentResult<TDocument> : IDocumentResult<TDocument>
         where TDocument : Document
     {
-        private bool executed = false;
+        private bool executed;
 
         IEnumerable<TDocument> IDocumentResult<TDocument>.Data { get; set; }
 
         void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            if (!this.executed && currentToken == JsonToken.StartArray && currentPath == "response.docs")
+            if (this.executed || currentToken != JsonToken.StartArray || currentPath != "response.docs")
             {
-                var jsonSerializer = new JsonSerializer();
-                jsonSerializer.Converters.Add(new GeoCoordinateConverter());
-                jsonSerializer.Converters.Add(new DateTimeConverter());
-                jsonSerializer.ContractResolver = new CustomContractResolver();
-
-                ((IDocumentResult<TDocument>)this).Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
-
-                this.executed = true;
+                return;
             }
+
+            var jsonSerializer = new JsonSerializer();
+            jsonSerializer.Converters.Add(new GeoCoordinateConverter());
+            jsonSerializer.Converters.Add(new DateTimeConverter());
+            jsonSerializer.ContractResolver = new CustomContractResolver();
+
+            ((IDocumentResult<TDocument>)this).Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
+
+            this.executed = true;
         }
     }
 }

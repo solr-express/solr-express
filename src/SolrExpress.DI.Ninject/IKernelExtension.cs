@@ -22,7 +22,7 @@ namespace SolrExpress.DI.Ninject
 
             builder.Invoke(solrExpressBuilder);
 
-            container.Bind<ISolrExpressServiceProvider<TDocument>>().ToMethod((context) => solrExpressServiceProvider).InSingletonScope();
+            container.Bind<ISolrExpressServiceProvider<TDocument>>().ToMethod(context => solrExpressServiceProvider).InSingletonScope();
             container.Bind<DocumentCollection<TDocument>>().To<DocumentCollection<TDocument>>().InSingletonScope();
 
             CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);

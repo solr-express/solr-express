@@ -28,7 +28,7 @@ namespace SolrExpress.Search.Parameter.Validation
 
             errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, ((IAnyParameter)searchParameter).Name);
 
-            return !(specificParameters.Contains(((IAnyParameter)searchParameter).Name.ToLowerInvariant()));
+            return !specificParameters.Contains(((IAnyParameter)searchParameter).Name.ToLowerInvariant());
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Search.Parameter;
+﻿using SolrExpress.Search.Parameter;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -53,12 +52,12 @@ namespace SolrExpress.Utility
         /// <returns>Spatial formule</returns>
         internal static string GetSpatialFormule(string fieldName, SpatialFunctionType functionType, GeoCoordinate centerPoint, decimal distance)
         {
-            return string.Format(
-                "{{!{0} sfield={1} pt={2} d={3}}}",
-                functionType.ToString().ToLower(),
-                fieldName,
-                $"{centerPoint.Latitude.ToString("G", CultureInfo.InvariantCulture)},{centerPoint.Longitude.ToString("G", CultureInfo.InvariantCulture)}",
-                distance.ToString("G", CultureInfo.InvariantCulture));
+            var functionTypeStr = functionType.ToString().ToLower();
+            var latitude = centerPoint.Latitude.ToString("G", CultureInfo.InvariantCulture);
+            var longitude = centerPoint.Longitude.ToString("G", CultureInfo.InvariantCulture);
+            var distanceStr = distance.ToString("G", CultureInfo.InvariantCulture);
+
+            return $"{{!{functionTypeStr} sfield={fieldName} pt={latitude},{longitude} d={distanceStr}}}";
         }
 
         /// <summary>
@@ -84,7 +83,7 @@ namespace SolrExpress.Utility
 
             if (sb.Length > 2)
             {
-                sb.Append($" ");
+                sb.Append(" ");
             }
 
             if (!string.IsNullOrWhiteSpace(aliasName))

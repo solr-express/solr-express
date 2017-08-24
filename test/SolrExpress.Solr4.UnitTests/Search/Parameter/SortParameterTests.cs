@@ -7,6 +7,7 @@ using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter

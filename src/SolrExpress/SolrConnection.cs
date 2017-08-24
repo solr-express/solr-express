@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using SolrExpress.Options;
 
 namespace SolrExpress
 {
@@ -27,6 +28,7 @@ namespace SolrExpress
         /// <param name="url">Uri to configure</param>
         private void SetAuthentication(Url url)
         {
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (this._options.Security.AuthenticationType)
             {
                 case AuthenticationType.Basic:

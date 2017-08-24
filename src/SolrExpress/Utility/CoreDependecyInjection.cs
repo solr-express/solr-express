@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Query;
@@ -17,7 +18,6 @@ namespace SolrExpress.Utility
         /// </summary>
         /// <param name="serviceProvider">DI engine to be configured</param>
         /// <param name="options">Options to control SolrExpress behavior</param>
-        /// </summary>
         internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options)
             where TDocument : Document
         {

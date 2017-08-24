@@ -1,4 +1,4 @@
-﻿namespace SolrExpress.Core.Search.Parameter
+﻿namespace SolrExpress.Search.Parameter
 {
     /// <summary>
     /// Types of functions used in spatial thingys

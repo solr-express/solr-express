@@ -7,6 +7,7 @@ using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Utility;
 using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter

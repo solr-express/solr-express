@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Builder;
-using SolrExpress.Core.Search.Parameter;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
@@ -38,7 +37,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((ISpatialFilterParameter<TDocument>)this);
+            var parameter = (ISpatialFilterParameter<TDocument>)this;
             var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
             var formule = ParameterUtil.GetSpatialFormule(fieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
 

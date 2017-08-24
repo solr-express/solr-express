@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
+using System.Linq;
 
 namespace SolrExpress.Search.Parameter.Validation
 {
@@ -16,19 +16,16 @@ namespace SolrExpress.Search.Parameter.Validation
 
             var fieldExpressions =
                 searchParameterFieldExpressions?.FieldExpressions ??
-                new Expression<Func<TDocument, object>>[] { searchParameterFieldExpression.FieldExpression };
+                new[] { searchParameterFieldExpression?.FieldExpression };
 
             var expressionBuilder =
                 searchParameterFieldExpressions?.ExpressionBuilder ??
-                searchParameterFieldExpression.ExpressionBuilder;
+                searchParameterFieldExpression?.ExpressionBuilder;
 
-            foreach (var fieldExpression in fieldExpressions)
+            if (fieldExpressions.Any(fieldExpression => !expressionBuilder?.GetIsIndexed(fieldExpression) ?? false))
             {
-                if (!expressionBuilder.GetIsIndexed(fieldExpression))
-                {
-                    errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInThisFunctionException;
-                    return false;
-                }
+                errorMessage = Resource.FieldMustBeIndexedTrueToBeUsedInThisFunctionException;
+                return false;
             }
 
             errorMessage = string.Empty;

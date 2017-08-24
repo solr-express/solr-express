@@ -1,6 +1,7 @@
 ﻿using Moq;
 using SolrExpress.Builder;
 using System.Collections.Generic;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.UnitTests.Builder

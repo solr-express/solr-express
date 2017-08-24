@@ -37,7 +37,7 @@ namespace SolrExpress.Search
 
         bool ISearchItemCollection<TDocument>.Contains(Type searchItemType)
         {
-            return this._searchItems.Any(q => q.GetType().Equals(searchItemType));
+            return this._searchItems.Any(q => q.GetType() == searchItemType);
         }
 
         bool ISearchItemCollection<TDocument>.Contains<TSearchItem>()

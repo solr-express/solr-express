@@ -21,6 +21,7 @@
 using System;
 using System.Text.RegularExpressions;
 
+// ReSharper disable once CheckNamespace
 namespace DaleNewman
 {
 
@@ -85,7 +86,7 @@ namespace DaleNewman
                 }
                 else
                 {
-                    value = value.TrimEnd(new[] { '|' });
+                    value = value.TrimEnd('|');
                     if (!DateTime.TryParse(value, out date))
                     {
                         result = DateTime.MinValue;
@@ -164,6 +165,7 @@ namespace DaleNewman
 
         public static DateTime Apply(DateTime input, string math)
         {
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (Match match in Operator.Matches(math))
             {
                 input = ApplyOperator(input, match.Value);

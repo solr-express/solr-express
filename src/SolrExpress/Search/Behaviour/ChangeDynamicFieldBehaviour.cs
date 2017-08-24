@@ -25,8 +25,8 @@ namespace SolrExpress.Search.Behaviour
 
         void IChangeBehaviour.Execute()
         {
-            var parameter = ((ISearchItemFieldExpression<TDocument>)this);
-            var parameterBehaviour = ((IChangeDynamicFieldBehaviour<TDocument>)this);
+            var parameter = (ISearchItemFieldExpression<TDocument>)this;
+            var parameterBehaviour = (IChangeDynamicFieldBehaviour<TDocument>)this;
 
             parameter.ExpressionBuilder.SetDynamicFieldPrefixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldPrefix);
             parameter.ExpressionBuilder.SetDynamicFieldSuffixName(parameter.FieldExpression, parameterBehaviour.DynamicFieldSuffix);

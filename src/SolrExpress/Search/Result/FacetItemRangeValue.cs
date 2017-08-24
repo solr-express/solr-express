@@ -10,7 +10,7 @@ namespace SolrExpress.Search.Result
     public class FacetItemRangeValue<TKey> : IFacetItemRangeValue
         where TKey : struct, IComparable
     {
-        private Func<TKey, TKey, TKey> _addGenericValues;
+        private readonly Func<TKey, TKey, TKey> _addGenericValues;
 
         /// <summary>
         /// Create a new instance of FacetItemRangeValue
@@ -22,20 +22,22 @@ namespace SolrExpress.Search.Result
             this.MinimumValue = minimumValue;
             this.MaximumValue = maximumValue;
 
-            if (!typeof(DateTime).Equals(typeof(TKey)))
+            if (typeof(DateTime) == typeof(TKey))
             {
-                // Declare the parameters
-                var paramA = Expression.Parameter(typeof(TKey), "a");
-                var paramB = Expression.Parameter(typeof(TKey), "b");
-
-                // Add the parameters together
-                var body = Expression.Add(paramA, paramB);
-
-                // Compile it
-                this._addGenericValues = Expression
-                    .Lambda<Func<TKey, TKey, TKey>>(body, paramA, paramB)
-                    .Compile();
+                return;
             }
+
+            // Declare parameters
+            var paramA = Expression.Parameter(typeof(TKey), "a");
+            var paramB = Expression.Parameter(typeof(TKey), "b");
+
+            // Add the parameters together
+            var body = Expression.Add(paramA, paramB);
+
+            // Compile it
+            this._addGenericValues = Expression
+                .Lambda<Func<TKey, TKey, TKey>>(body, paramA, paramB)
+                .Compile();
         }
 
         /// <summary>
@@ -62,21 +64,21 @@ namespace SolrExpress.Search.Result
         {
             if (this.MinimumValue.HasValue)
             {
-                if (!typeof(DateTime).Equals(typeof(TKey)))
+                if (typeof(DateTime) == typeof(TKey))
                 {
-                    this.MaximumValue = this._addGenericValues(this.MinimumValue.Value, ((TKey?)gap).Value);
+                    var minimumDateTime = DateTime.Parse(this.MinimumValue.Value.ToString());
+                    var diff = (DateTime)gap - DateTime.MinValue;
+
+                    ((IFacetItemRangeValue)this).SetMaximumValue(minimumDateTime.Add(diff));
                 }
                 else
                 {
-                    var minimumDateTime = DateTime.Parse(this.MinimumValue.Value.ToString());
-                    var diff = ((DateTime)gap) - DateTime.MinValue;
-
-                    ((IFacetItemRangeValue)this).SetMaximumValue(minimumDateTime.Add(diff));
+                    this.MaximumValue = this._addGenericValues(this.MinimumValue.Value, ((TKey?)gap).Value);
                 }
             }
             else if (((TKey?)gap).HasValue)
             {
-                this.MaximumValue = ((TKey?)gap);
+                this.MaximumValue = (TKey?)gap;
             }
         }
 

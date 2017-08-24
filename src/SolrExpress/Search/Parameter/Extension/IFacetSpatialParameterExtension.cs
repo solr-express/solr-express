@@ -1,5 +1,4 @@
-﻿using SolrExpress.Core.Search.Parameter;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter.Extension

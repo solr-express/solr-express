@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Search.Result
 
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
-        private IFacetParameter<TDocument> GetFacetParameter(IList<IFacetParameter<TDocument>> searchParameters, string facetName)
+        private static IFacetParameter<TDocument> GetFacetParameter(IList<IFacetParameter<TDocument>> searchParameters, string facetName)
         {
             return searchParameters
                  .FirstOrDefault(parameter =>
@@ -42,9 +42,9 @@ namespace SolrExpress.Solr5.Search.Result
                  });
         }
 
-        private object GetParsedRangeValue(Type fieldType, string value = null)
+        private static object GetParsedRangeValue(Type fieldType, string value = null)
         {
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
                 if (!string.IsNullOrWhiteSpace(value) && DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var typedValue))
                 {
@@ -53,9 +53,9 @@ namespace SolrExpress.Solr5.Search.Result
 
                 return null;
             }
-            else if (typeof(decimal).Equals(fieldType)
-                || typeof(float).Equals(fieldType)
-                || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+                || typeof(float) == fieldType
+                || typeof(double) == fieldType)
             {
                 return string.IsNullOrWhiteSpace(value) ? (decimal?)null : decimal.Parse(value, CultureInfo.InvariantCulture);
             }
@@ -63,41 +63,41 @@ namespace SolrExpress.Solr5.Search.Result
             return string.IsNullOrWhiteSpace(value) ? (int?)null : int.Parse(value);
         }
 
-        private IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
+        private static IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
         {
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
-                var minimumValue = (DateTime?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (DateTime?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<DateTime>(minimumValue, maximumValue);
             }
-            else if (typeof(decimal).Equals(fieldType)
-                || typeof(float).Equals(fieldType)
-                || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+                || typeof(float) == fieldType
+                || typeof(double) == fieldType)
             {
-                var minimumValue = (decimal?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (decimal?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (decimal?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (decimal?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<decimal>(minimumValue, maximumValue);
             }
             else
             {
-                var minimumValue = (int?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (int?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (int?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (int?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<int>(minimumValue, maximumValue);
             }
         }
 
-        private object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
+        private static object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
         {
             if (string.IsNullOrWhiteSpace(facetGap))
             {
                 return null;
             }
 
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
                 // Prepare to DateMath
                 facetGap = facetGap
@@ -117,26 +117,24 @@ namespace SolrExpress.Solr5.Search.Result
                     .Replace("SECOND", "s");
 
                 var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue.HasValue ? minimumValue.Value : DateTime.MinValue, facetGap);
+                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
             }
 
-            if (typeof(decimal).Equals(fieldType)
-               || typeof(float).Equals(fieldType)
-               || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+               || typeof(float) == fieldType
+               || typeof(double) == fieldType)
             {
                 var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue.HasValue ? minimumValue.Value : decimal.MinValue)
-                    + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
+                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
             }
 
             {
                 var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue.HasValue ? minimumValue.Value : int.MinValue)
-                    + int.Parse(facetGap, CultureInfo.InvariantCulture);
+                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
             }
         }
 
-        private void ProcessFacetFieldBuckets(string root, IFacetParameter<TDocument> facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem)
+        private void ProcessFacetFieldBuckets(string root, IFacetParameter<TDocument> facetParameter, string facetName, IFacetItem facetItem)
         {
             this._jsonReader.Read();// Starts array
 
@@ -165,8 +163,6 @@ namespace SolrExpress.Solr5.Search.Result
                     this.GetFacetItems(
                         initialPath,
                         facetParameter.Facets,
-                        this._jsonReader.TokenType,
-                        initialPath,
                         out var facetItems);
 
                     value.Facets = facetItems;
@@ -184,7 +180,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private void ProcessFacetRangeBuckets(string root, IFacetRangeParameter<TDocument> facetParameter, JsonToken currentToken, string currentPath, string facetName, IFacetItem facetItem, Type fieldType)
+        private void ProcessFacetRangeBuckets(string root, IFacetRangeParameter<TDocument> facetParameter, string facetName, IFacetItem facetItem, Type fieldType)
         {
             this._jsonReader.Read();// Starts array
 
@@ -198,9 +194,9 @@ namespace SolrExpress.Solr5.Search.Result
                 this._jsonReader.Read();// "count" property
                 var count = (long)this._jsonReader.ReadAsInt32();
 
-                var value = this.GetFacetItemRangeValue(fieldType, rawMinimumValue);
+                var value = GetFacetItemRangeValue(fieldType, rawMinimumValue);
 
-                var maximumValue = this.GetMaximumValue(fieldType, value, facetParameter.Gap);
+                var maximumValue = GetMaximumValue(fieldType, value, facetParameter.Gap);
 
                 value.SetMaximumValue(maximumValue);
                 value.Quantity = count;
@@ -214,8 +210,6 @@ namespace SolrExpress.Solr5.Search.Result
                     this.GetFacetItems(
                         initialPath,
                         facetParameter.Facets,
-                        this._jsonReader.TokenType,
-                        initialPath,
                         out var facetItems);
 
                     value.Facets = facetItems;
@@ -236,7 +230,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             if (this._jsonReader.Path.Equals($"{root}.{facetName}.before"))
             {
-                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, rawMaximumValue: facetParameter.Start);
+                var facetItemRangeValue = GetFacetItemRangeValue(fieldType, rawMaximumValue: facetParameter.Start);
 
                 this._jsonReader.Read();// Ends property
                 this._jsonReader.Read();// "count" property
@@ -248,11 +242,12 @@ namespace SolrExpress.Solr5.Search.Result
                 this._jsonReader.Read();// Ends object
             }
 
+            // ReSharper disable once InvertIf
             if (this._jsonReader.Path.Equals($"{root}.{facetName}.after"))
             {
                 // TODO: Calculate right value using "Gap" over "Start" until "End" (or "End" if "HardEnd"=true)
-                var facetItemRangeValue = this.GetFacetItemRangeValue(fieldType, facetParameter.End);
-                var maximumValue = this.GetMaximumValue(fieldType, facetItemRangeValue, facetParameter.Gap);
+                var facetItemRangeValue = GetFacetItemRangeValue(fieldType, facetParameter.End);
+                var maximumValue = GetMaximumValue(fieldType, facetItemRangeValue, facetParameter.Gap);
 
                 facetItemRangeValue.SetMinimumValue(maximumValue);
 
@@ -267,12 +262,12 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        private IFacetItem GetFacetItem(string root, IList<IFacetParameter<TDocument>> facetParameters, JsonToken currentToken, string currentPath)
+        private IFacetItem GetFacetItem(string root, IList<IFacetParameter<TDocument>> facetParameters)
         {
             var initialPath = this._jsonReader.Path;
             var facetName = (string)this._jsonReader.Value;
-            var facetParameter = this.GetFacetParameter(facetParameters, facetName);
-            IFacetItem facetItem = null;
+            var facetParameter = GetFacetParameter(facetParameters, facetName);
+            IFacetItem facetItem;
 
             this._jsonReader.Read();// Closes property
             this._jsonReader.Read();// Go to checker element
@@ -290,8 +285,6 @@ namespace SolrExpress.Solr5.Search.Result
                     this.GetFacetItems(
                         initialPath,
                         facetParameter.Facets.ToList(),
-                        this._jsonReader.TokenType,
-                        initialPath,
                         out var facetItems);
 
                     ((FacetItemQuery)facetItem).Facets = facetItems;
@@ -299,7 +292,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
             else // Facet field or facet range
             {
-                var facetRangeParameter = (facetParameter as IFacetRangeParameter<TDocument>);
+                var facetRangeParameter = facetParameter as IFacetRangeParameter<TDocument>;
 
                 this._jsonReader.Read();// Closes buckets property
 
@@ -310,12 +303,12 @@ namespace SolrExpress.Solr5.Search.Result
                         .GetPropertyType(facetRangeParameter.FieldExpression);
 
                     facetItem = new FacetItemRange(facetName);
-                    this.ProcessFacetRangeBuckets(root, facetRangeParameter, currentToken, currentPath, facetName, facetItem, fieldType);
+                    this.ProcessFacetRangeBuckets(root, facetRangeParameter, facetName, facetItem, fieldType);
                 }
                 else
                 {
                     facetItem = new FacetItemField(facetName);
-                    this.ProcessFacetFieldBuckets(root, facetParameter, currentToken, currentPath, facetName, facetItem);
+                    this.ProcessFacetFieldBuckets(root, facetParameter, facetName, facetItem);
                 }
             }
 
@@ -328,7 +321,7 @@ namespace SolrExpress.Solr5.Search.Result
             return facetItem;
         }
 
-        private void GetFacetItems(string root, IList<IFacetParameter<TDocument>> facetParameters, JsonToken currentToken, string currentPath, out IEnumerable<IFacetItem> facetItems)
+        private void GetFacetItems(string root, IList<IFacetParameter<TDocument>> facetParameters, out IEnumerable<IFacetItem> facetItems)
         {
             facetItems = new List<IFacetItem>();
 
@@ -340,7 +333,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             while (!this._jsonReader.Path.Equals(root) && this._jsonReader.TokenType != JsonToken.EndObject)
             {
-                var facetItem = this.GetFacetItem(root, facetParameters, currentToken, currentPath);
+                var facetItem = this.GetFacetItem(root, facetParameters);
 
                 ((List<IFacetItem>)facetItems).Add(facetItem);
 
@@ -352,24 +345,24 @@ namespace SolrExpress.Solr5.Search.Result
         {
             this._jsonReader = jsonReader;
 
-            if (currentToken == JsonToken.StartObject && currentPath.Equals("facets"))
+            if (currentToken != JsonToken.StartObject || !currentPath.Equals("facets"))
             {
-                this._jsonReader.Read();// Go to first property
-
-                var facetParameters = searchParameters
-                    .Select(parameter => parameter as IFacetParameter<TDocument>)
-                    .Where(parameter => parameter != null)
-                    .ToList();
-
-                this.GetFacetItems(
-                    "facets",
-                    facetParameters,
-                    currentToken,
-                    currentPath,
-                    out var facetItems);
-
-                ((IFacetsResult<TDocument>)this).Data = facetItems;
+                return;
             }
+
+            this._jsonReader.Read();// Go to first property
+
+            var facetParameters = searchParameters
+                .Select(parameter => parameter as IFacetParameter<TDocument>)
+                .Where(parameter => parameter != null)
+                .ToList();
+
+            this.GetFacetItems(
+                "facets",
+                facetParameters,
+                out var facetItems);
+
+            ((IFacetsResult<TDocument>)this).Data = facetItems;
         }
     }
 }

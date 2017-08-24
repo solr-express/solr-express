@@ -1,6 +1,4 @@
-﻿using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Extension;
-using SolrExpress.Search.Query;
+﻿using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
@@ -76,6 +74,7 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            // ReSharper disable once InvertIf
             if (!documentSearch.Contains<IFacetsResult<TDocument>>())
             {
                 var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
@@ -108,6 +107,7 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            // ReSharper disable once InvertIf
             if (!documentSearch.Contains<IFacetsResult<TDocument>>())
             {
                 var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
@@ -142,6 +142,7 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            // ReSharper disable once InvertIf
             if (!documentSearch.Contains<IFacetsResult<TDocument>>())
             {
                 var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
@@ -191,6 +192,7 @@ namespace SolrExpress.Search.Parameter.Extension
 
             documentSearch.Add(parameter);
 
+            // ReSharper disable once InvertIf
             if (!documentSearch.Contains<IFacetsResult<TDocument>>())
             {
                 var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
@@ -406,7 +408,7 @@ namespace SolrExpress.Search.Parameter.Extension
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
-            search.AddValue<string>("*:*", false);
+            search.AddValue("*:*", false);
 
             parameter.Value(search);
 

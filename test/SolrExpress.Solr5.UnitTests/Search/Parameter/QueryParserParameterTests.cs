@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;

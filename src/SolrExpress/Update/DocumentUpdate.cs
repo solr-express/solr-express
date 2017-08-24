@@ -8,7 +8,6 @@ namespace SolrExpress.Update
     public class DocumentUpdate<TDocument>
         where TDocument : Document
     {
-        private readonly SolrExpressOptions _options;
         private readonly ISolrConnection _solrConnection;
         private readonly List<TDocument> _documentsToAdd = new List<TDocument>();
         private readonly List<string> _documentsToDelete = new List<string>();
@@ -16,17 +15,13 @@ namespace SolrExpress.Update
         /// <summary>
         /// Default constructor of class
         /// </summary>
-        /// <param name="options">SolrExpress options</param>
         public DocumentUpdate(
-            SolrExpressOptions options,
             ISolrConnection solrConnection,
             ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            Checker.IsNull(options);
             Checker.IsNull(solrConnection);
             Checker.IsNull(serviceProvider);
 
-            this._options = options;
             this._solrConnection = solrConnection;
             this.ServiceProvider = serviceProvider;
         }

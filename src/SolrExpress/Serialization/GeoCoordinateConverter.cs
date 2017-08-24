@@ -8,7 +8,7 @@ namespace SolrExpress.Serialization
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(GeoCoordinate));
+            return objectType == typeof(GeoCoordinate);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

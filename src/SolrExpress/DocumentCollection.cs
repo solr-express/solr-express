@@ -10,7 +10,7 @@ namespace SolrExpress
     public class DocumentCollection<TDocument>
         where TDocument : Document
     {
-        private ISolrExpressServiceProvider<TDocument> _serviceProvider;
+        private readonly ISolrExpressServiceProvider<TDocument> _serviceProvider;
 
         public DocumentCollection(ISolrExpressServiceProvider<TDocument> serviceProvider)
         {

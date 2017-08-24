@@ -7,7 +7,7 @@ namespace SolrExpress.Serialization
     {
         public override bool CanConvert(Type objectType)
         {
-            return (objectType == typeof(DateTime));
+            return objectType == typeof(DateTime);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

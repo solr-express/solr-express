@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Options;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -68,6 +69,7 @@ namespace SolrExpress.Builder
 
             MemberExpression memberExpression;
 
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (lambda.Body.NodeType)
             {
                 case ExpressionType.Convert:
@@ -170,12 +172,17 @@ namespace SolrExpress.Builder
                 var propertyInfo = this.GetPropertyInfoFromExpression(expression);
                 var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
 
+                if (solrFieldAttribute == null)
+                {
+                    continue;
+                }
+
                 var data = new FieldData
                 {
                     AliasName = propertyInfo.Name,
-                    DynamicFieldPrefixName = solrFieldAttribute?.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
-                    DynamicFieldSuffixName = solrFieldAttribute?.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
-                    IsDynamicField = solrFieldAttribute?.IsDynamicField ?? false,
+                    DynamicFieldPrefixName = solrFieldAttribute.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = solrFieldAttribute.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
+                    IsDynamicField = solrFieldAttribute.IsDynamicField,
                     PropertyType = propertyInfo.PropertyType
                 };
 
@@ -249,6 +256,7 @@ namespace SolrExpress.Builder
             var data = this.GetData(expression);
             var fieldName = data.FieldSchema.FieldName;
 
+            // ReSharper disable once InvertIf
             if (data.IsDynamicField)
             {
                 if (!string.IsNullOrWhiteSpace(data.DynamicFieldPrefixName))

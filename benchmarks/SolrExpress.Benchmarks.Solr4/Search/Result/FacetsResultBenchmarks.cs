@@ -9,6 +9,7 @@ using SolrExpress.Solr4.Search.Result;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using SolrExpress.Options;
 
 namespace SolrExpress.Benchmarks.Solr4.Search.Result
 {
@@ -37,7 +38,7 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
             expressionBuilder.LoadDocument();
 
             var facetRange1 = (IFacetRangeParameter<TestDocument>)new FacetRangeParameter<TestDocument>(expressionBuilder, null);
-            facetRange1.FieldExpression = (field) => field.Age;
+            facetRange1.FieldExpression = field => field.Age;
             facetRange1.AliasName = "facetRange";
 
             this._searchParameters = new List<ISearchParameter>

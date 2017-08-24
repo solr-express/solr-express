@@ -7,6 +7,7 @@ using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using SolrExpress.Options;
 
 //TODO: Add unit tests
 namespace SolrExpress.Search
@@ -61,7 +62,7 @@ namespace SolrExpress.Search
             var hasMultipleInstances = this
                 ._searchItemCollection
                 .GetSearchParameters()
-                ?.Count(q => q.GetType().Equals(searchParameter.GetType())) > 1;
+                ?.Count(q => q.GetType() == searchParameter.GetType()) > 1;
 
             var allowMultipleInstances = !attributes.Any(q => q is AllowMultipleInstancesAttribute);
 
@@ -127,10 +128,11 @@ namespace SolrExpress.Search
                 this._searchItemCollection.Add(standardQueryParameter);
             }
 
+            // ReSharper disable once InvertIf
             if (!this._searchItemCollection.Contains<IDefaultFieldParameter<TDocument>>())
             {
                 var defaultFieldParameter = this.ServiceProvider.GetService<IDefaultFieldParameter<TDocument>>();
-                defaultFieldParameter.FieldExpression = (q) => q.Id;
+                defaultFieldParameter.FieldExpression = q => q.Id;
                 this._searchItemCollection.Add(defaultFieldParameter);
             }
         }
@@ -146,6 +148,7 @@ namespace SolrExpress.Search
                 this._searchItemCollection.Add(documentResult);
             }
 
+            // ReSharper disable once InvertIf
             if (!this._searchItemCollection.Contains<IInformationResult<TDocument>>())
             {
                 var informationResult = this.ServiceProvider.GetService<IInformationResult<TDocument>>();

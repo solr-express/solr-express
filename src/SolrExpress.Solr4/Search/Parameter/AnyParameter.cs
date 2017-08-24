@@ -22,7 +22,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IAnyParameter)this);
+            var parameter = (IAnyParameter)this;
 
             this._result = $"{parameter.Name}={parameter.Value}";
         }

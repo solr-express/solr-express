@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Result
@@ -226,16 +227,16 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
             expressionBuilder.LoadDocument();
 
             var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
-            facetRange1.FieldExpression = (field) => field.Range1;
+            facetRange1.FieldExpression = field => field.Range1;
 
             var facetRange2 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
-            facetRange2.FieldExpression = (field) => field.Range2;
+            facetRange2.FieldExpression = field => field.Range2;
 
             var facetRange3 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
-            facetRange3.FieldExpression = (field) => field.Range3;
+            facetRange3.FieldExpression = field => field.Range3;
 
             var facetRange4 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
-            facetRange4.FieldExpression = (field) => field.Range4;
+            facetRange4.FieldExpression = field => field.Range4;
 
             var searchParameters = new List<ISearchParameter>
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using SolrExpress.Options;
 
 namespace SolrExpress.Search.Interceptor
 {
@@ -25,7 +26,7 @@ namespace SolrExpress.Search.Interceptor
         private string GetLogContent(string requestHandler, string json)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"[SimpleLogInConsole] {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.zzz")}");
+            sb.AppendLine($"[SimpleLogInConsole] {DateTime.Now:yyyy-MM-dd HH:mm:ss.zzz}");
             sb.AppendLine($"{this._solrExpressOptions.HostAddress}/{requestHandler}");
             sb.AppendLine(new string('-', 50));
             sb.AppendLine(json);

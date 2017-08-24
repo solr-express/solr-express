@@ -2,6 +2,7 @@
 using SolrExpress.Search.Parameter;
 using SolrExpress.Solr4.Search.Parameter;
 using System.Collections.Generic;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter

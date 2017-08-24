@@ -18,14 +18,11 @@ namespace SolrExpress.Serialization
 #endif
             var property = base.CreateProperty(member, memberSerialization);
 
+            // ReSharper disable once InvertIf
             if (solrFieldAttribute != null)
             {
                 property.PropertyName = solrFieldAttribute.Name;
-
-                if (solrFieldAttribute.IsMagicField)
-                {
-                    property.Ignored = true;
-                }
+                property.Ignored = !solrFieldAttribute.IsMagicField;
             }
 
             return property;

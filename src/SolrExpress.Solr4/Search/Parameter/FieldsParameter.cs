@@ -31,7 +31,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IFieldsParameter<TDocument>)this);
+            var parameter = (IFieldsParameter<TDocument>)this;
             var fieldNames = parameter
                 .FieldExpressions
                 .Select(fieldExpression => ((IFieldsParameter<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))

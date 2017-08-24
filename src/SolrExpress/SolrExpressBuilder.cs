@@ -1,4 +1,6 @@
-﻿namespace SolrExpress
+﻿using SolrExpress.Options;
+
+namespace SolrExpress
 {
     /// <summary>
     /// Builder to control SolrExpress behavior

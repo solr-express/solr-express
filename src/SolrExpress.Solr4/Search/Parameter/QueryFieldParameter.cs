@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IQueryFieldParameter<TDocument>)this);
+            var parameter = (IQueryFieldParameter<TDocument>)this;
 
             this._result = $"qf={parameter.Expression}";
         }

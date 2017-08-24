@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IOffsetParameter<TDocument>)this);
+            var parameter = (IOffsetParameter<TDocument>)this;
 
             this._result = $"start={parameter.Value}";
         }

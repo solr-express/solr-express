@@ -7,7 +7,7 @@ namespace SolrExpress.DI.CoreClr
         where TDocument : Document
     {
         private readonly IServiceCollection _serviceCollection = new ServiceCollection();
-        private IServiceProvider _serviceProvider = null;
+        private IServiceProvider _serviceProvider;
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService>(TService implementationInstance)
         {

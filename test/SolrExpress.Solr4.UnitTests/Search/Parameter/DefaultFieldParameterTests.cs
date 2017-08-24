@@ -4,6 +4,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System.Collections.Generic;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -26,7 +27,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             expressionBuilder.LoadDocument();
             var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
             parameter.ExpressionBuilder = expressionBuilder;
-            parameter.FieldExpression = (q) => q.Id;
+            parameter.FieldExpression = q => q.Id;
 
             // Act
             ((ISearchItemExecution<List<string>>)parameter).Execute();

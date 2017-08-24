@@ -8,6 +8,7 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -70,7 +71,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.Minimum = 1;
                     facet.SortType = FacetSortType.CountAsc;
                     facet.Limit = 10;
-                    facet.Excludes = new string[] { "tag1", "tag2" };
+                    facet.Excludes = new[] { "tag1", "tag2" };
                 };
                 var expected6 = "facet=true&facet.query={!ex=tag1,tag2 key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
 

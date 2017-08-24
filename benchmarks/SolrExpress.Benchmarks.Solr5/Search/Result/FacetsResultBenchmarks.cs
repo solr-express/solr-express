@@ -9,6 +9,7 @@ using SolrExpress.Solr5.Search.Result;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using SolrExpress.Options;
 
 namespace SolrExpress.Benchmarks.Solr5.Search.Result
 {
@@ -37,42 +38,42 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
             expressionBuilder.LoadDocument();
 
             var facetField1 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField1.FieldExpression = (field) => field.About;
+            facetField1.FieldExpression = field => field.About;
             var facetField2 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField2.FieldExpression = (field) => field.Address;
+            facetField2.FieldExpression = field => field.Address;
             var facetField3 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField3.FieldExpression = (field) => field.Age;
+            facetField3.FieldExpression = field => field.Age;
             var facetField4 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField4.FieldExpression = (field) => field.Balance;
+            facetField4.FieldExpression = field => field.Balance;
             var facetField5 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField5.FieldExpression = (field) => field.Company;
+            facetField5.FieldExpression = field => field.Company;
             var facetField6 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField6.FieldExpression = (field) => field.Email;
+            facetField6.FieldExpression = field => field.Email;
             var facetField7 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField7.FieldExpression = (field) => field.EyeColor;
+            facetField7.FieldExpression = field => field.EyeColor;
             var facetField8 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField8.FieldExpression = (field) => field.FavoriteFruit;
+            facetField8.FieldExpression = field => field.FavoriteFruit;
             var facetField9 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField9.FieldExpression = (field) => field.Gender;
+            facetField9.FieldExpression = field => field.Gender;
             var facetField10 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField10.FieldExpression = (field) => field.Greeting;
+            facetField10.FieldExpression = field => field.Greeting;
             var facetField11 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField11.FieldExpression = (field) => field.IsActive;
+            facetField11.FieldExpression = field => field.IsActive;
             var facetField12 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField12.FieldExpression = (field) => field.Latitude;
+            facetField12.FieldExpression = field => field.Latitude;
             var facetField13 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField13.FieldExpression = (field) => field.Longitude;
+            facetField13.FieldExpression = field => field.Longitude;
             var facetField14 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField14.FieldExpression = (field) => field.Name;
+            facetField14.FieldExpression = field => field.Name;
             var facetField15 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField15.FieldExpression = (field) => field.Phone;
+            facetField15.FieldExpression = field => field.Phone;
             var facetField16 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField16.FieldExpression = (field) => field.Registered;
+            facetField16.FieldExpression = field => field.Registered;
             var facetField17 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
-            facetField17.FieldExpression = (field) => field.Score;
+            facetField17.FieldExpression = field => field.Score;
 
             var facetRange1 = (IFacetRangeParameter<TestDocument>)new FacetRangeParameter<TestDocument>(expressionBuilder, null);
-            facetRange1.FieldExpression = (field) => field.Age;
+            facetRange1.FieldExpression = field => field.Age;
             facetRange1.AliasName = "facetRange";
 
             this._searchParameters = new List<ISearchParameter>

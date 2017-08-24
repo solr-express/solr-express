@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;
@@ -33,7 +34,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             expressionBuilder.LoadDocument();
             var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
             parameter.ExpressionBuilder = expressionBuilder;
-            parameter.FieldExpression = (q) => q.Id;
+            parameter.FieldExpression = q => q.Id;
 
             // Act
             ((ISearchItemExecution<JObject>)parameter).Execute();

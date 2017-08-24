@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SolrExpress;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Options;
 using SolrExpress.Solr5.Extension;
 
 namespace SimpleUse.SingleContext

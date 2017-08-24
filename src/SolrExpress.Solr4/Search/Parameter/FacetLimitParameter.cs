@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IFacetLimitParameter<TDocument>)this);
+            var parameter = (IFacetLimitParameter<TDocument>)this;
 
             this._result = $"facet.limit={parameter.Value}";
         }

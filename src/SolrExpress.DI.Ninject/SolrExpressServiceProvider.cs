@@ -9,28 +9,28 @@ namespace SolrExpress.DI.Ninject
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService>(TService implementationInstance)
         {
-            this._kernel.Bind<TService>().ToMethod((context) => implementationInstance).InSingletonScope();
+            this._kernel.Bind<TService>().ToMethod(context => implementationInstance).InSingletonScope();
 
             return this;
         }
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService, UImplementation>(UImplementation implementationInstance)
         {
-            this._kernel.Bind<TService>().ToMethod((context) => implementationInstance).InSingletonScope();
+            this._kernel.Bind<TService>().ToMethod(context => implementationInstance).InSingletonScope();
 
             return this;
         }
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddTransient<TService>(TService implementationInstance)
         {
-            this._kernel.Bind<TService>().ToMethod((context) => implementationInstance).InTransientScope();
+            this._kernel.Bind<TService>().ToMethod(context => implementationInstance).InTransientScope();
 
             return this;
         }
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddTransient<TService, UImplementation>(UImplementation implementationInstance)
         {
-            this._kernel.Bind<TService>().ToMethod((context) => implementationInstance).InTransientScope();
+            this._kernel.Bind<TService>().ToMethod(context => implementationInstance).InTransientScope();
 
             return this;
         }

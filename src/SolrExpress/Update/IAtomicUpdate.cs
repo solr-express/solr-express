@@ -5,7 +5,7 @@ namespace SolrExpress.Update
     /// <summary>
     /// Signatures to add informed documents in SOLR collection
     /// </summary>
-    public interface IAtomicUpdate<TDocument>
+    public interface IAtomicUpdate<in TDocument>
         where TDocument : Document
     {
         /// <summary>

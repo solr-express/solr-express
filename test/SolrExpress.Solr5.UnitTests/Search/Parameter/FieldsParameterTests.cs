@@ -9,6 +9,7 @@ using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter

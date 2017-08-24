@@ -11,6 +11,7 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -173,7 +174,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     facet.Minimum = 1;
                     facet.SortType = FacetSortType.CountAsc;
                     facet.Limit = 10;
-                    facet.Excludes = new string[] { "tag1", "tag2" };
+                    facet.Excludes = new[] { "tag1", "tag2" };
                 };
                 var expected8 = JObject.Parse(@"
                 {

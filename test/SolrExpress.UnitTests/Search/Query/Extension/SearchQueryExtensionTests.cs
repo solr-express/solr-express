@@ -1,7 +1,7 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search.Query;
 using SolrExpress.Search.Query.Extension;
-using SolrExpress.UnitTests;
 using SolrExpress.Utility;
 using Xunit;
 

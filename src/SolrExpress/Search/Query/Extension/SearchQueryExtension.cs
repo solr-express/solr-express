@@ -19,7 +19,7 @@ namespace SolrExpress.Search.Query.Extension
         {
             searchQuery.AddParenthesisOpening();
 
-            for (int index = 0; index < values.Length - 1; index++)
+            for (var index = 0; index < values.Length - 1; index++)
             {
                 searchQuery
                     .AddValue(values[index])
@@ -42,21 +42,23 @@ namespace SolrExpress.Search.Query.Extension
         public static SearchQuery<TDocument> Any<TDocument, TValue>(this SearchQuery<TDocument> searchQuery, params TValue[] values)
             where TDocument : Document
         {
-            if (values.Length > 0)
+            if (values.Length == 0)
             {
-                searchQuery.AddParenthesisOpening();
-
-                for (int index = 0; index < values.Length - 1; index++)
-                {
-                    searchQuery
-                        .AddValue(values[index])
-                        .AddOperatorOr();
-                }
-
-                searchQuery
-                    .AddValue(values[values.Length - 1])
-                    .AddParenthesisClosure();
+                return searchQuery;
             }
+
+            searchQuery.AddParenthesisOpening();
+
+            for (var index = 0; index < values.Length - 1; index++)
+            {
+                searchQuery
+                    .AddValue(values[index])
+                    .AddOperatorOr();
+            }
+
+            searchQuery
+                .AddValue(values[values.Length - 1])
+                .AddParenthesisClosure();
 
             return searchQuery;
         }
@@ -118,8 +120,7 @@ namespace SolrExpress.Search.Query.Extension
             where TDocument : Document
             where TValue : struct
         {
-            searchQuery
-                .AddRangeValue((TValue?)valueFrom, (TValue?)valueTo);
+            searchQuery.AddRangeValue(valueFrom, (TValue?)valueTo);
 
             return searchQuery;
         }

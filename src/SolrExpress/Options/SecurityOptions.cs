@@ -1,4 +1,4 @@
-﻿namespace SolrExpress
+﻿namespace SolrExpress.Options
 {
     /// <summary>
     /// Security access options

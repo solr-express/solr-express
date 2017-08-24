@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Result
@@ -64,13 +65,13 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             expressionBuilder.LoadDocument();
 
             var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet1.FieldExpression = (field) => field.Field1;
+            facet1.FieldExpression = field => field.Field1;
 
             var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet2.FieldExpression = (field) => field.Field2;
+            facet2.FieldExpression = field => field.Field2;
 
             var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet3.FieldExpression = (field) => field.Field3;
+            facet3.FieldExpression = field => field.Field3;
 
             var searchParameters = new List<ISearchParameter>
             {
@@ -272,19 +273,19 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             expressionBuilder.LoadDocument();
 
             var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet1.FieldExpression = (field) => field.Range1;
+            facet1.FieldExpression = field => field.Range1;
             facet1.Start = "100";
             facet1.End = "850";
             facet1.Gap = "250";
 
             var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet2.FieldExpression = (field) => field.Range2;
+            facet2.FieldExpression = field => field.Range2;
             facet2.Start = "4";
             facet2.End = "7";
             facet2.Gap = "1";
 
             var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet3.FieldExpression = (field) => field.Range4;
+            facet3.FieldExpression = field => field.Range4;
             facet3.Start = "NOW-30YEARS";
             facet3.End = "NOW+1DAY";
             facet3.Gap = "+5YEARS";
@@ -454,14 +455,14 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             expressionBuilder.LoadDocument();
 
             var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet3.FieldExpression = (field) => field.Field3;
+            facet3.FieldExpression = field => field.Field3;
 
             var facet2 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet2.FieldExpression = (field) => field.Field2;
+            facet2.FieldExpression = field => field.Field2;
             facet2.Facets = new List<IFacetParameter<TestFacetDocument>> { facet3 };
 
             var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
-            facet1.FieldExpression = (field) => field.Field1;
+            facet1.FieldExpression = field => field.Field1;
             facet1.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2 };
 
             var searchParameters = new List<ISearchParameter>
@@ -738,33 +739,33 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             expressionBuilder.LoadDocument();
 
             var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet2.FieldExpression = (field) => field.Range2;
+            facet2.FieldExpression = field => field.Range2;
             facet2.Start = "100";
             facet2.End = "1000";
             facet2.Gap = "100";
 
             var facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet3.FieldExpression = (field) => field.Range3;
+            facet3.FieldExpression = field => field.Range3;
             facet3.Start = "100";
             facet3.End = "1000";
             facet3.Gap = "100";
             facet3.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2 };
 
             var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet1.FieldExpression = (field) => field.Range1;
+            facet1.FieldExpression = field => field.Range1;
             facet1.Start = "100";
             facet1.End = "1000";
             facet1.Gap = "100";
             facet1.Facets = new List<IFacetParameter<TestFacetDocument>> { facet2, facet3 };
 
             facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet2.FieldExpression = (field) => field.Range2;
+            facet2.FieldExpression = field => field.Range2;
             facet2.Start = "100";
             facet2.End = "1000";
             facet2.Gap = "100";
 
             facet3 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
-            facet3.FieldExpression = (field) => field.Range3;
+            facet3.FieldExpression = field => field.Range3;
             facet3.Start = "100";
             facet3.End = "1000";
             facet3.Gap = "100";

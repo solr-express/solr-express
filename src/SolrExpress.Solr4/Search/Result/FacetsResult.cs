@@ -17,7 +17,7 @@ namespace SolrExpress.Solr4.Search.Result
         /// <summary>
         /// Execute processing of facet fields
         /// </summary>
-        private FacetItemField ProcessFacetFields(JsonReader jsonReader)
+        private static FacetItemField ProcessFacetFields(JsonReader jsonReader)
         {
             var facetName = (string)jsonReader.Value;
             var facetItem = new FacetItemField(facetName);
@@ -47,7 +47,7 @@ namespace SolrExpress.Solr4.Search.Result
         /// <summary>
         /// Execute processing facet queries
         /// </summary>
-        private FacetItemQuery[] ProcessFacetQueries(JsonReader jsonReader)
+        private static FacetItemQuery[] ProcessFacetQueries(JsonReader jsonReader)
         {
             var facetItemQueries = new List<FacetItemQuery>();
 
@@ -68,13 +68,13 @@ namespace SolrExpress.Solr4.Search.Result
             return facetItemQueries.ToArray();
         }
 
-        private IFacetRangeParameter<TDocument> GetFacetRangeParameter(IList<ISearchParameter> searchParameters, string facetName)
+        private static IFacetRangeParameter<TDocument> GetFacetRangeParameter(IList<ISearchParameter> searchParameters, string facetName)
         {
             return (IFacetRangeParameter<TDocument>)searchParameters
                  .Where(parameter => parameter is IFacetRangeParameter<TDocument>)
                  .FirstOrDefault(parameter =>
                  {
-                     var facetRangeParameter = ((IFacetRangeParameter<TDocument>)parameter);
+                     var facetRangeParameter = (IFacetRangeParameter<TDocument>)parameter;
 
                      var fieldName = facetRangeParameter
                          .ExpressionBuilder
@@ -86,14 +86,14 @@ namespace SolrExpress.Solr4.Search.Result
                  });
         }
 
-        private object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
+        private static object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
         {
             if (string.IsNullOrWhiteSpace(facetGap))
             {
                 return null;
             }
 
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
                 // Prepare to DateMath
                 facetGap = facetGap
@@ -113,28 +113,26 @@ namespace SolrExpress.Solr4.Search.Result
                     .Replace("SECOND", "s");
 
                 var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue.HasValue ? minimumValue.Value : DateTime.MinValue, facetGap);
+                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
             }
 
-            if (typeof(decimal).Equals(fieldType)
-               || typeof(float).Equals(fieldType)
-               || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+               || typeof(float) == fieldType
+               || typeof(double) == fieldType)
             {
                 var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue.HasValue ? minimumValue.Value : decimal.MinValue)
-                    + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
+                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
             }
 
             {
                 var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue.HasValue ? minimumValue.Value : int.MinValue)
-                    + int.Parse(facetGap, CultureInfo.InvariantCulture);
+                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
             }
         }
 
-        private object GetParsedRangeValue(Type fieldType, string value = null)
+        private static object GetParsedRangeValue(Type fieldType, string value = null)
         {
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
                 if (!string.IsNullOrWhiteSpace(value) && DateTime.TryParse(value, out var typedValue))
                 {
@@ -143,9 +141,9 @@ namespace SolrExpress.Solr4.Search.Result
 
                 return null;
             }
-            else if (typeof(decimal).Equals(fieldType)
-                || typeof(float).Equals(fieldType)
-                || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+                || typeof(float) == fieldType
+                || typeof(double) == fieldType)
             {
                 return string.IsNullOrWhiteSpace(value) ? (decimal?)null : decimal.Parse(value, CultureInfo.InvariantCulture);
             }
@@ -153,28 +151,28 @@ namespace SolrExpress.Solr4.Search.Result
             return string.IsNullOrWhiteSpace(value) ? (int?)null : int.Parse(value);
         }
 
-        private IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
+        private static IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
         {
-            if (typeof(DateTime).Equals(fieldType))
+            if (typeof(DateTime) == fieldType)
             {
-                var minimumValue = (DateTime?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (DateTime?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<DateTime>(minimumValue, maximumValue);
             }
-            else if (typeof(decimal).Equals(fieldType)
-                || typeof(float).Equals(fieldType)
-                || typeof(double).Equals(fieldType))
+            if (typeof(decimal) == fieldType
+                || typeof(float) == fieldType
+                || typeof(double) == fieldType)
             {
-                var minimumValue = (decimal?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (decimal?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (decimal?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (decimal?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<decimal>(minimumValue, maximumValue);
             }
             else
             {
-                var minimumValue = (int?)this.GetParsedRangeValue(fieldType, rawMinimumValue);
-                var maximumValue = (int?)this.GetParsedRangeValue(fieldType, rawMaximumValue);
+                var minimumValue = (int?)GetParsedRangeValue(fieldType, rawMinimumValue);
+                var maximumValue = (int?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<int>(minimumValue, maximumValue);
             }
@@ -185,10 +183,10 @@ namespace SolrExpress.Solr4.Search.Result
         /// </summary>
         /// <param name="searchParameters"></param>
         /// <param name="jsonReader"></param>
-        private FacetItemRange ProcessFacetRanges(IList<ISearchParameter> searchParameters, JsonReader jsonReader)
+        private static FacetItemRange ProcessFacetRanges(IList<ISearchParameter> searchParameters, JsonReader jsonReader)
         {
             var facetName = (string)jsonReader.Value;
-            var facetRangeParameter = this.GetFacetRangeParameter(searchParameters, facetName);
+            var facetRangeParameter = GetFacetRangeParameter(searchParameters, facetName);
             var fieldType = facetRangeParameter
                 .ExpressionBuilder
                 .GetPropertyType(facetRangeParameter.FieldExpression);
@@ -208,7 +206,7 @@ namespace SolrExpress.Solr4.Search.Result
             {
                 if (jsonReader.Path.StartsWith($"facet_counts.facet_ranges.{facetName}.counts["))
                 {
-                    var rangeValue = this.GetFacetItemRangeValue(fieldType, jsonReader.Value.ToString());
+                    var rangeValue = GetFacetItemRangeValue(fieldType, jsonReader.Value.ToString());
                     rangeValue.Quantity = (long)jsonReader.ReadAsInt32();
 
                     ((List<IFacetItemRangeValue>)facetItem.Values).Add(rangeValue);
@@ -242,22 +240,24 @@ namespace SolrExpress.Solr4.Search.Result
                 ((List<IFacetItemRangeValue>)facetItem.Values)
                     .ForEach(item =>
                     {
-                        var maximumValue = this.GetMaximumValue(fieldType, item, gapValue);
+                        var maximumValue = GetMaximumValue(fieldType, item, gapValue);
                         item.SetMaximumValue(maximumValue);
                     });
             }
 
             if (!string.IsNullOrWhiteSpace(startValue) && quantityBefore.HasValue)
             {
-                var rangeValue = this.GetFacetItemRangeValue(fieldType, rawMaximumValue: startValue);
+                var rangeValue = GetFacetItemRangeValue(fieldType, rawMaximumValue: startValue);
                 rangeValue.Quantity = quantityBefore.Value;
 
                 ((List<IFacetItemRangeValue>)facetItem.Values).Insert(0, rangeValue);
             }
 
+            // ReSharper disable once InvertIf
+
             if (!string.IsNullOrWhiteSpace(endValue) && quantityAfter.HasValue)
             {
-                var rangeValue = this.GetFacetItemRangeValue(fieldType, endValue);
+                var rangeValue = GetFacetItemRangeValue(fieldType, endValue);
                 rangeValue.Quantity = quantityAfter.Value;
 
                 ((List<IFacetItemRangeValue>)facetItem.Values).Add(rangeValue);
@@ -268,27 +268,29 @@ namespace SolrExpress.Solr4.Search.Result
 
         void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            if (currentPath.StartsWith("facet_counts."))
+            if (!currentPath.StartsWith("facet_counts."))
             {
-                if (((IFacetsResult<TDocument>)this).Data == null)
-                {
-                    ((IFacetsResult<TDocument>)this).Data = new List<IFacetItem>();
-                }
+                return;
+            }
 
-                var facetItems = ((List<IFacetItem>)((IFacetsResult<TDocument>)this).Data);
+            if (((IFacetsResult<TDocument>)this).Data == null)
+            {
+                ((IFacetsResult<TDocument>)this).Data = new List<IFacetItem>();
+            }
 
-                if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
-                {
-                    facetItems.Add(this.ProcessFacetFields(jsonReader));
-                }
-                if (jsonReader.Path.StartsWith("facet_counts.facet_queries"))
-                {
-                    facetItems.AddRange(this.ProcessFacetQueries(jsonReader));
-                }
-                if (jsonReader.Path.StartsWith("facet_counts.facet_ranges."))
-                {
-                    facetItems.Add(this.ProcessFacetRanges(searchParameters, jsonReader));
-                }
+            var facetItems = (List<IFacetItem>)((IFacetsResult<TDocument>)this).Data;
+
+            if (jsonReader.Path.StartsWith("facet_counts.facet_fields."))
+            {
+                facetItems.Add(ProcessFacetFields(jsonReader));
+            }
+            if (jsonReader.Path.StartsWith("facet_counts.facet_queries"))
+            {
+                facetItems.AddRange(ProcessFacetQueries(jsonReader));
+            }
+            if (jsonReader.Path.StartsWith("facet_counts.facet_ranges."))
+            {
+                facetItems.Add(ProcessFacetRanges(searchParameters, jsonReader));
             }
         }
     }

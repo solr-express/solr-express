@@ -15,7 +15,7 @@ namespace SimpleUse.SingleContext.Controllers
                 .ChangeDynamicFieldBehaviour(q => q.Manufacturer, prefixName: "", suffixName: "")
                 .Execute();
 
-            return new string[] { "value1", "value2" };
+            return new[] { "value1", "value2" };
         }
     }
 }

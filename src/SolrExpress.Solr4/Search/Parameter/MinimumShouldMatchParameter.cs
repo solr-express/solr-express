@@ -18,7 +18,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         void ISearchItemExecution<List<string>>.Execute()
         {
-            var parameter = ((IMinimumShouldMatchParameter<TDocument>)this);
+            var parameter = (IMinimumShouldMatchParameter<TDocument>)this;
 
             this._result = $"mm={parameter.Value}";
         }

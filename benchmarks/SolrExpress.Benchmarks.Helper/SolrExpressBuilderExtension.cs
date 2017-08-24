@@ -1,6 +1,5 @@
 ﻿using Moq;
 using Newtonsoft.Json;
-using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
