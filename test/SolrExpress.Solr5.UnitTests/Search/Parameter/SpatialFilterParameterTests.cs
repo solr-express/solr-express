@@ -45,7 +45,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 return new[]
                 {
                     new object[] { config1, expected1 },
-                    new object[] { config2, expected2 },
+                    new object[] { config2, expected2 }
                 };
             }
         }

@@ -37,7 +37,6 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             var parameter = (IFieldsParameter<TestDocument>)new FieldsParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpressions = new Expression<Func<TestDocument, object>>[] {
                 q => q.Id,

@@ -20,7 +20,7 @@ namespace SolrExpress.UnitTests.Search.Result
         public void InformationResultFact001()
         {
             // Arrange
-            var jsonPlainText = @"
+            const string jsonPlainText = @"
             {
               ""responseHeader"": {
                 ""status"": 0,
@@ -70,7 +70,7 @@ namespace SolrExpress.UnitTests.Search.Result
         public void InformationResultFact002()
         {
             // Arrange
-            var jsonPlainText = @"
+            const string jsonPlainText = @"
             {
               ""responseHeader"": {
                 ""status"": 0,

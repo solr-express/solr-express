@@ -17,7 +17,7 @@ namespace SolrExpress.Solr5.Search.Result
 
         IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
 
-        private static IFacetParameter<TDocument> GetFacetParameter(IList<IFacetParameter<TDocument>> searchParameters, string facetName)
+        private static IFacetParameter<TDocument> GetFacetParameter(IEnumerable<IFacetParameter<TDocument>> searchParameters, string facetName)
         {
             return searchParameters
                  .FirstOrDefault(parameter =>

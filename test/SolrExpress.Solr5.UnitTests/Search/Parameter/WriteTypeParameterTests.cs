@@ -27,7 +27,6 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             var container = new JObject();
             var parameter = (IWriteTypeParameter<TestDocument>)new WriteTypeParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
             parameter.Value = WriteType.Json;
 
             // Act

@@ -24,31 +24,31 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Id);
                 };
-                var expected1 = "facet=true&facet.field={!key=Id}id";
+                const string expected1 = "facet=true&facet.field={!key=Id}id";
 
                 Action<IFacetFieldParameter<TestDocument>> config2 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1);
                 };
-                var expected2 = "facet=true&facet.field={!key=Id}id&f.id.facet.mincount=1";
+                const string expected2 = "facet=true&facet.field={!key=Id}id&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config3 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc);
                 };
-                var expected3 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1";
+                const string expected3 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config4 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10);
                 };
-                var expected4 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
+                const string expected4 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 Action<IFacetFieldParameter<TestDocument>> config5 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10).Excludes("tag1", "tag2");
                 };
-                var expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
+                const string expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 return new[]
                 {
@@ -56,7 +56,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     new object[] { config2, expected2 },
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
-                    new object[] { config5, expected5 },
+                    new object[] { config5, expected5 }
                 };
             }
         }
@@ -97,7 +97,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 var solrConnection = new FakeSolrConnection<TestDocument>();
                 var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
                 expressionBuilder.LoadDocument();
-                var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
 
                 Action<IFacetFieldParameter<TestDocument>> config1 = facet =>
                 {
@@ -114,7 +113,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 },
+                    new object[] { config2 }
                 };
             }
         }
@@ -129,7 +128,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetFieldParameterTheory002(Action<IFacetFieldParameter<TestDocument>> config)
         {
             // Arrange
-            var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);

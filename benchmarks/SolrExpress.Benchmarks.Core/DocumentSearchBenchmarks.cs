@@ -27,12 +27,12 @@ namespace SolrExpress.Benchmarks.Core
                 .GetInstance<DocumentCollection<TestDocument>>()
                 .Select();
 
-            for (int i = 0; i < this.ElementsCount; i++)
+            for (var i = 0; i < this.ElementsCount; i++)
             {
                 var anyParameter = new FakeAnyParameter
                 {
                     Name = $"Name{i}",
-                    Value = $"Value{i}",
+                    Value = $"Value{i}"
                 };
 
                 this._documentSearch.Add(anyParameter);

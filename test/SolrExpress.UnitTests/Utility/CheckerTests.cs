@@ -17,7 +17,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker001()
         {
             // Arrange
-            var condition = true;
+            const bool condition = true;
 
             // Act / Assert
             Assert.Throws<Exception>(() => Checker.IsTrue<Exception>(condition));
@@ -32,7 +32,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker002()
         {
             // Arrange
-            var condition = false;
+            const bool condition = false;
 
             // Act / Assert
             Checker.IsTrue<Exception>(condition);
@@ -77,7 +77,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker005()
         {
             // Arrange
-            var value = (string)null;
+            const string value = (string)null;
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => Checker.IsNullOrWhiteSpace(value));
@@ -92,7 +92,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker006()
         {
             // Arrange
-            var value = "";
+            const string value = "";
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => Checker.IsNullOrWhiteSpace(value));
@@ -107,7 +107,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker007()
         {
             // Arrange
-            var value = " ";
+            const string value = " ";
 
             // Act / Assert
             Assert.Throws<ArgumentNullException>(() => Checker.IsNullOrWhiteSpace(value));
@@ -122,7 +122,7 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker008()
         {
             // Arrange
-            var value = ".";
+            const string value = ".";
 
             // Act / Assert
             Checker.IsNullOrWhiteSpace(value);
@@ -137,10 +137,10 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker009()
         {
             // Arrange
-            decimal value = 10M;
-            decimal minValue = 11M;
-            decimal maxValue = 20M;
-            string erroMessage = "test";
+            const decimal value = 10M;
+            const decimal minValue = 11M;
+            const decimal maxValue = 20M;
+            const string erroMessage = "test";
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => Checker.IsOutOfRange(value, minValue, maxValue, erroMessage));
@@ -155,10 +155,10 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker010()
         {
             // Arrange
-            decimal value = 10M;
-            decimal minValue = 10M;
-            decimal maxValue = 20M;
-            string erroMessage = "test";
+            var value = 10M;
+            var minValue = 10M;
+            var maxValue = 20M;
+            var erroMessage = "test";
 
             // Act / Assert
             Checker.IsOutOfRange(value, minValue, maxValue, erroMessage);
@@ -173,10 +173,10 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker011()
         {
             // Arrange
-            decimal value = 21M;
-            decimal minValue = 10M;
-            decimal maxValue = 20M;
-            string erroMessage = "test";
+            var value = 21M;
+            var minValue = 10M;
+            var maxValue = 20M;
+            var erroMessage = "test";
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => Checker.IsOutOfRange(value, minValue, maxValue, erroMessage));
@@ -191,10 +191,10 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker012()
         {
             // Arrange
-            decimal value = 20M;
-            decimal minValue = 10M;
-            decimal maxValue = 20M;
-            string erroMessage = "test";
+            var value = 20M;
+            var minValue = 10M;
+            var maxValue = 20M;
+            var erroMessage = "test";
 
             // Act / Assert
             Checker.IsOutOfRange(value, minValue, maxValue, erroMessage);
@@ -209,8 +209,8 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker013()
         {
             // Arrange
-            decimal value = 10M;
-            decimal minValue = 11M;
+            var value = 10M;
+            var minValue = 11M;
 
             // Act / Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => Checker.IsLowerThan(value, minValue));
@@ -225,8 +225,8 @@ namespace SolrExpress.UnitTests.Utility
         public void Checker014()
         {
             // Arrange
-            decimal value = 10M;
-            decimal minValue = 10M;
+            var value = 10M;
+            var minValue = 10M;
 
             // Act / Assert
             Checker.IsLowerThan(value, minValue);

@@ -20,7 +20,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = (IWriteTypeParameter<TestDocument>)new WriteTypeParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
             parameter.Value = WriteType.Json;
 
             // Act

@@ -98,7 +98,7 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
                 facetRange1
             };
 
-            for (int i = 0; i < this.ElementsCount; i++)
+            for (var i = 0; i < this.ElementsCount; i++)
             {
                 var facetQuery = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(null);
                 facetQuery.AliasName = $"VaLUE{i}";

@@ -13,7 +13,7 @@ namespace SolrExpress.Solr4.IntegrationTests
 {
     public class IntegrationTests
     {
-        private IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         /// <summary>
         /// Default constructor of class

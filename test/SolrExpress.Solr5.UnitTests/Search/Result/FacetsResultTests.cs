@@ -25,7 +25,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
         public void FacetFieldResult001()
         {
             // Arrange
-            var jsonPlainText = @"
+            const string jsonPlainText = @"
             {
 	            ""facets"": {
 		            ""count"": 37,

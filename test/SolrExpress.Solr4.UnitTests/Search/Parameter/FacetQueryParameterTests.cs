@@ -28,14 +28,14 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                 };
-                var expected1 = "facet=true&facet.query=avg('Y')";
+                const string expected1 = "facet=true&facet.query=avg('Y')";
 
                 Action<IFacetQueryParameter<TestDocument>> config2 = facet =>
                 {
                     facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
                     facet.AliasName = "X";
                 };
-                var expected2 = "facet=true&facet.query={!key=X}avg('Y')";
+                const string expected2 = "facet=true&facet.query={!key=X}avg('Y')";
 
                 Action<IFacetQueryParameter<TestDocument>> config3 = facet =>
                 {
@@ -43,7 +43,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.AliasName = "X";
                     facet.Minimum = 1;
                 };
-                var expected3 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.mincount=1";
+                const string expected3 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.mincount=1";
 
                 Action<IFacetQueryParameter<TestDocument>> config4 = facet =>
                 {
@@ -52,7 +52,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.Minimum = 1;
                     facet.SortType = FacetSortType.CountAsc;
                 };
-                var expected4 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1";
+                const string expected4 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1";
 
                 Action<IFacetQueryParameter<TestDocument>> config5 = facet =>
                 {
@@ -62,7 +62,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.SortType = FacetSortType.CountAsc;
                     facet.Limit = 10;
                 };
-                var expected5 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
+                const string expected5 = "facet=true&facet.query={!key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
 
                 Action<IFacetQueryParameter<TestDocument>> config6 = facet =>
                 {
@@ -73,7 +73,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.Limit = 10;
                     facet.Excludes = new[] { "tag1", "tag2" };
                 };
-                var expected6 = "facet=true&facet.query={!ex=tag1,tag2 key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
+                const string expected6 = "facet=true&facet.query={!ex=tag1,tag2 key=X}avg('Y')&f.X.facet.sort=count&f.X.facet.mincount=1&f.X.facet.limit=10";
 
                 return new[]
                 {
@@ -82,7 +82,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
                     new object[] { config5, expected5 },
-                    new object[] { config6, expected6 },
+                    new object[] { config6, expected6 }
                 };
             }
         }
@@ -136,7 +136,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 },
+                    new object[] { config2 }
                 };
             }
         }
@@ -151,7 +151,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         public void FacetQueryParameterTheory002(Action<IFacetQueryParameter<TestDocument>> config)
         {
             // Arrange
-            var container = new List<string>();
             var parameter = (IFacetQueryParameter<TestDocument>)new FacetQueryParameter<TestDocument>(null);
             config.Invoke(parameter);
 

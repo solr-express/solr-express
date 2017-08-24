@@ -23,18 +23,18 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Spatial).FunctionType(SpatialFunctionType.Geofilt).CenterPoint(new GeoCoordinate(-1.23456789M, -2.234567891M)).Distance(5.5M);
                 };
-                var expected1 = "fq={!geofilt sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
+                const string expected1 = "fq={!geofilt sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
 
                 Action<ISpatialFilterParameter<TestDocument>> config2 = facet =>
                 {
                     facet.FieldExpression(q => q.Spatial).FunctionType(SpatialFunctionType.Bbox).CenterPoint(new GeoCoordinate(-1.23456789M, -2.234567891M)).Distance(5.5M);
                 };
-                var expected2 = "fq={!bbox sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
+                const string expected2 = "fq={!bbox sfield=_spatial_ pt=-1.23456789,-2.234567891 d=5.5}";
                 
                 return new[]
                 {
                     new object[] { config1, expected1 },
-                    new object[] { config2, expected2 },
+                    new object[] { config2, expected2 }
                 };
             }
         }

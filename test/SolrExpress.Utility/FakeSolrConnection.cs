@@ -11,13 +11,14 @@ namespace SolrExpress.Utility
     public class FakeSolrConnection<TDocument> : ISolrConnection
         where TDocument : Document
     {
-        private PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
+        private static PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
         {
             PropertyInfo propertyInfo = null;
             var lambda = (LambdaExpression)expression;
 
             MemberExpression memberExpression;
 
+            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (lambda.Body.NodeType)
             {
                 case ExpressionType.Convert:
@@ -44,7 +45,7 @@ namespace SolrExpress.Utility
             return propertyInfo;
         }
 
-        private SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
+        private static SolrFieldAttribute GetSolrFieldAttributeFromPropertyInfo(PropertyInfo propertyInfo)
         {
             var attrs = propertyInfo.GetCustomAttributes(true);
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
@@ -67,8 +68,8 @@ namespace SolrExpress.Utility
                     {
                         var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
                         var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
-                        var propertyInfo = this.GetPropertyInfoFromExpression(expression);
-                        var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
+                        var propertyInfo = GetPropertyInfoFromExpression(expression);
+                        var solrFieldAttribute = GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
 
                         return new
                         {
@@ -80,7 +81,7 @@ namespace SolrExpress.Utility
 
                 var wrapper = new
                 {
-                    fields = fields
+                    fields
                 };
 
                 return JsonConvert.SerializeObject(wrapper);

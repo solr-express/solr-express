@@ -27,7 +27,6 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             }");
             var container = new JObject();
             var parameter = (IQueryParserParameter<TestDocument>)new QueryParserParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
             parameter.Value = QueryParserType.Dismax;
 
             // Act

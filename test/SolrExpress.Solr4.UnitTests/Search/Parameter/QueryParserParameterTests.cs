@@ -20,7 +20,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var container = new List<string>();
             var parameter = (IQueryParserParameter<TestDocument>)new QueryParserParameter<TestDocument>();
-            var solrExpressOptions = new SolrExpressOptions();
             parameter.Value = QueryParserType.Dismax;
 
             // Act

@@ -25,7 +25,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
         public void FacetFieldResult001()
         {
             // Arrange
-            var jsonPlainText = @"
+            const string jsonPlainText = @"
             {
 	            ""facet_counts"": {
 		            ""facet_fields"": {
@@ -93,7 +93,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
         public void FacetFieldResult002()
         {
             // Arrange
-            var jsonPlainText = @"
+            const string jsonPlainText = @"
             {
 	            ""facet_counts"": {
 		            ""facet_queries"": {
