@@ -11,21 +11,19 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        string IAnyParameter.Name { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
 
-        string IAnyParameter.Value { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IAnyParameter)this;
-            this._result = new JProperty(parameter.Name, parameter.Value);
+            this._result = new JProperty(this.Name, this.Value);
         }
     }
 }

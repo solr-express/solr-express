@@ -35,6 +35,6 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Values of field
         /// </summary>
-        public IEnumerable<IFacetItemRangeValue> Values { get; set; } = new List<IFacetItemRangeValue>();
+        public IEnumerable<IFacetItemRangeValue> Values { get; } = new List<IFacetItemRangeValue>();
     }
 }

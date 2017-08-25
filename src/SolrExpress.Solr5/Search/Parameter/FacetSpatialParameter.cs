@@ -20,73 +20,59 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        string IFacetSpatialParameter<TDocument>.AliasName { get; set; }
+        public string AliasName { get; set; }
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
 
-        GeoCoordinate IFacetSpatialParameter<TDocument>.CenterPoint { get; set; }
-
-        decimal IFacetSpatialParameter<TDocument>.Distance { get; set; }
-
-        string[] IFacetSpatialParameter<TDocument>.Excludes { get; set; }
-
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        SpatialFunctionType IFacetSpatialParameter<TDocument>.FunctionType { get; set; }
-
-        int? IFacetSpatialParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetSpatialParameter<TDocument>.Minimum { get; set; }
-
-        FacetSortType? IFacetSpatialParameter<TDocument>.SortType { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();
             jObj.Add(this._result);
             container["facet"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetSpatialParameter<TDocument>)this;
-
             var formule = ParameterUtil.GetSpatialFormule(
-                ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression),
-                parameter.FunctionType,
-                parameter.CenterPoint,
-                parameter.Distance);
+                this.ExpressionBuilder.GetFieldName(this.FieldExpression),
+                this.FunctionType,
+                this.CenterPoint,
+                this.Distance);
 
             var array = new List<JProperty>
             {
                 new JProperty("q", formule)
             };
 
-            if (parameter.Excludes?.Any() ?? false)
+            if (this.Excludes?.Any() ?? false)
             {
-                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
                 array.Add(new JProperty("domain", excludeValue));
             }
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+                array.Add(new JProperty("mincount", this.Minimum.Value));
             }
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            this._result = new JProperty(this.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
         }
     }
 }

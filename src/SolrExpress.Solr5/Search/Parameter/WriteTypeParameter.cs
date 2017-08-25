@@ -9,19 +9,18 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        WriteType IWriteTypeParameter<TDocument>.Value { get;set; }
+        public WriteType Value { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IWriteTypeParameter<TDocument>)this;
-            this._result = new JProperty("wt", parameter.Value.ToString().ToLower());
+            this._result = new JProperty("wt", this.Value.ToString().ToLower());
         }
     }
 }

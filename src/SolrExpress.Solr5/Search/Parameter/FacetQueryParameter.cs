@@ -20,74 +20,62 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FacetQueryParameter(ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+            this.ServiceProvider = serviceProvider;
         }
 
-        string IFacetQueryParameter<TDocument>.AliasName { get; set; }
+        public string AliasName { get; set; }
+        public string[] Excludes { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
 
-        string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
-
-        int? IFacetQueryParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetQueryParameter<TDocument>.Minimum { get; set; }
-
-        SearchQuery<TDocument> IFacetQueryParameter<TDocument>.Query { get; set; }
-
-        FacetSortType? IFacetQueryParameter<TDocument>.SortType { get; set; }
-
-        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
-
-        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
-        
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();
             jObj.Add(this._result);
             container["facet"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetQueryParameter<TDocument>)this;
-
             var array = new List<JProperty>
             {
-                new JProperty("q", parameter.Query.Execute())
+                new JProperty("q", this.Query.Execute())
             };
 
-            if (parameter.Excludes?.Any() ?? false)
+            if (this.Excludes?.Any() ?? false)
             {
-                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
                 array.Add(new JProperty("domain", excludeValue));
             }
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+                array.Add(new JProperty("mincount", this.Minimum.Value));
             }
 
-            if (parameter.Limit.HasValue)
+            if (this.Limit.HasValue)
             {
-                array.Add(new JProperty("limit", parameter.Limit.Value));
+                array.Add(new JProperty("limit", this.Limit.Value));
             }
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            if (parameter.Facets?.Any() ?? false)
+            if (this.Facets?.Any() ?? false)
             {
-                Parallel.ForEach(parameter.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
+                Parallel.ForEach(this.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
 
                 var subfacets = new JObject();
 
-                foreach (var item in parameter.Facets)
+                foreach (var item in this.Facets)
                 {
                     ((ISearchItemExecution<JObject>)item).AddResultInContainer(subfacets);
                 }
@@ -95,7 +83,7 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add((JProperty)subfacets.First);
             }
 
-            this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
+            this._result = new JProperty(this.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
         }
     }
 }

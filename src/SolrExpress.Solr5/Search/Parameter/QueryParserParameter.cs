@@ -9,19 +9,18 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        QueryParserType IQueryParserParameter<TDocument>.Value { get; set; }
+        public QueryParserType Value { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IQueryParserParameter<TDocument>)this;
-            this._result = new JProperty("defType", parameter.Value.ToString().ToLower());
+            this._result = new JProperty("defType", this.Value.ToString().ToLower());
         }
     }
 }

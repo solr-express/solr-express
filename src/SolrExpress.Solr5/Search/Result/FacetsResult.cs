@@ -15,7 +15,7 @@ namespace SolrExpress.Solr5.Search.Result
     {
         private JsonReader _jsonReader;
 
-        IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
+        public IEnumerable<IFacetItem> Data { get; private set; }
 
         private static IFacetParameter<TDocument> GetFacetParameter(IEnumerable<IFacetParameter<TDocument>> searchParameters, string facetName)
         {
@@ -362,7 +362,7 @@ namespace SolrExpress.Solr5.Search.Result
                 facetParameters,
                 out var facetItems);
 
-            ((IFacetsResult<TDocument>)this).Data = facetItems;
+            this.Data = facetItems;
         }
     }
 }

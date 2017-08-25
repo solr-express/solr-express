@@ -8,16 +8,16 @@
         /// <summary>
         /// Name of facet
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// Type of facet
         /// </summary>
-        FacetType FacetType { get; set; }
+        FacetType FacetType { get; }
 
         /// <summary>
         /// Tag
         /// </summary>
-        object Tag { get; set; }
+        object Tag { get; }
     }
 }

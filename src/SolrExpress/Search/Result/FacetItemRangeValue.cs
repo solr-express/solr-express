@@ -40,27 +40,7 @@ namespace SolrExpress.Search.Result
                 .Compile();
         }
 
-        /// <summary>
-        /// Minimum value of range
-        /// </summary>
-        public TKey? MinimumValue { get; set; }
-
-        /// <summary>
-        /// Maximum value of range
-        /// </summary>
-        public TKey? MaximumValue { get; set; }
-
-        /// <summary>
-        /// Quantity of item
-        /// </summary>
-        public long Quantity { get; set; }
-
-        /// <summary>
-        /// Subfacets of item
-        /// </summary>
-        public IEnumerable<IFacetItem> Facets { get; set; }
-
-        void IFacetItemRangeValue.CalculateMaximumValueUsingGap(object gap)
+        public void CalculateMaximumValueUsingGap(object gap)
         {
             if (this.MinimumValue.HasValue)
             {
@@ -69,7 +49,7 @@ namespace SolrExpress.Search.Result
                     var minimumDateTime = DateTime.Parse(this.MinimumValue.Value.ToString());
                     var diff = (DateTime)gap - DateTime.MinValue;
 
-                    ((IFacetItemRangeValue)this).SetMaximumValue(minimumDateTime.Add(diff));
+                    this.SetMaximumValue(minimumDateTime.Add(diff));
                 }
                 else
                 {
@@ -82,14 +62,19 @@ namespace SolrExpress.Search.Result
             }
         }
 
-        void IFacetItemRangeValue.SetMaximumValue(object value)
+        public void SetMaximumValue(object value)
         {
             this.MaximumValue = (TKey?)value;
         }
 
-        void IFacetItemRangeValue.SetMinimumValue(object value)
+        public void SetMinimumValue(object value)
         {
             this.MinimumValue = (TKey?)value;
         }
+
+        public TKey? MinimumValue { get; set; }
+        public TKey? MaximumValue { get; set; }
+        public long Quantity { get; set; }
+        public IEnumerable<IFacetItem> Facets { get; set; }
     }
 }

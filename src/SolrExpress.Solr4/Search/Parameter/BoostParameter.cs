@@ -10,21 +10,18 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        BoostFunctionType IBoostParameter<TDocument>.BoostFunctionType { get; set; }
+        public BoostFunctionType BoostFunctionType { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
 
-        SearchQuery<TDocument> IBoostParameter<TDocument>.Query { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IBoostParameter<TDocument>)this;
-            var boostFunction = parameter.BoostFunctionType.ToString().ToLower();
-
-            this._result = $"{boostFunction}={parameter.Query.Execute()}";
+            var boostFunction = this.BoostFunctionType.ToString().ToLower();
+            this._result = $"{boostFunction}={this.Query.Execute()}";
         }
     }
 }

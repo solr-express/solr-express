@@ -17,26 +17,19 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public FacetQueryParameter(ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+            this.ServiceProvider = serviceProvider;
         }
 
-        string IFacetQueryParameter<TDocument>.AliasName { get; set; }
-
-        string[] IFacetQueryParameter<TDocument>.Excludes { get; set; }
-
-        SearchQuery<TDocument> IFacetQueryParameter<TDocument>.Query { get; set; }
-
-        int? IFacetQueryParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetQueryParameter<TDocument>.Minimum { get; set; }
-
-        FacetSortType? IFacetQueryParameter<TDocument>.SortType { get; set; }
-
-        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
-
-        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
+        public string AliasName { get; set; }
+        public string[] Excludes { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
         
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))
             {
@@ -46,33 +39,29 @@ namespace SolrExpress.Solr4.Search.Parameter
             container.AddRange(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetQueryParameter<TDocument>)this;
-            var query = parameter.Query.Execute();
+            var query = this.Query.Execute();
 
-            this._result.Add($"facet.query={ParameterUtil.GetFacetName(parameter.Excludes, parameter.AliasName, query)}");
+            this._result.Add($"facet.query={ParameterUtil.GetFacetName(this.Excludes, this.AliasName, query)}");
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string dummy;
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                Checker.IsTrue<UnsupportedSortTypeException>(parameter.SortType.Value == FacetSortType.CountDesc || parameter.SortType.Value == FacetSortType.IndexDesc);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
-
-                this._result.Add($"f.{parameter.AliasName}.facet.sort={typeName}");
+                this._result.Add($"f.{this.AliasName}.facet.sort={typeName}");
             }
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                this._result.Add($"f.{parameter.AliasName}.facet.mincount={parameter.Minimum.Value}");
+                this._result.Add($"f.{this.AliasName}.facet.mincount={this.Minimum.Value}");
             }
 
-            if (parameter.Limit.HasValue)
+            if (this.Limit.HasValue)
             {
-                this._result.Add($"f.{parameter.AliasName}.facet.limit={parameter.Limit.Value}");
+                this._result.Add($"f.{this.AliasName}.facet.limit={this.Limit.Value}");
             }
         }
     }

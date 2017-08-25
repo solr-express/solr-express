@@ -2,7 +2,6 @@
 using SolrExpress.DI.CoreClr;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
-using SolrExpress.Search.Query.Extension;
 using SolrExpress.Search.Result;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;

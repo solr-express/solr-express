@@ -9,12 +9,12 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
             this._result = new JProperty("sort", "random");
         }

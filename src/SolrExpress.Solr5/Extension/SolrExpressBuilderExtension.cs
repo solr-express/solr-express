@@ -23,7 +23,7 @@ namespace SolrExpress.Solr5.Extension
                 .ServiceProvider
                 .AddTransient<IAnyParameter, AnyParameter>()
                 .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
-                .AddTransient<IAtomicDelete<TDocument>, AtomicDelete<TDocument>>()
+                .AddTransient<IAtomicDelete, AtomicDelete<TDocument>>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
                 .AddTransient<IDefaultFieldParameter<TDocument>, DefaultFieldParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()

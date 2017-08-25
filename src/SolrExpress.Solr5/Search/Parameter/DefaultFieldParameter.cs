@@ -14,23 +14,22 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public DefaultFieldParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IDefaultFieldParameter<TDocument>)this;
-            var fieldName = parameter.ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
             this._result = new JProperty("df", fieldName);
         }
     }

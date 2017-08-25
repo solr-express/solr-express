@@ -10,19 +10,18 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        SearchQuery<TDocument> IStandardQueryParameter<TDocument>.Value { get;set; }
+        public SearchQuery<TDocument> Value { get;set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IStandardQueryParameter<TDocument>)this;
-            this._result = new JProperty("q.alt", parameter.Value.Execute());
+            this._result = new JProperty("q.alt", this.Value.Execute());
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Flurl;
 using Flurl.Http;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Options;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using SolrExpress.Options;
 
 namespace SolrExpress
 {
@@ -37,7 +37,7 @@ namespace SolrExpress
             }
         }
 
-        string ISolrConnection.Get(string handler, List<string> data)
+        public string Get(string handler, List<string> data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
@@ -54,7 +54,7 @@ namespace SolrExpress
                 .Result;
         }
 
-        string ISolrConnection.Post(string handler, JObject data)
+        public string Post(string handler, JObject data)
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);

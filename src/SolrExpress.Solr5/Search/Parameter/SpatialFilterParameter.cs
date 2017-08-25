@@ -17,36 +17,31 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
 
-        decimal ISpatialFilterParameter<TDocument>.Distance { get; set; }
-
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        SpatialFunctionType ISpatialFilterParameter<TDocument>.FunctionType { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (ISpatialFilterParameter<TDocument>)this;
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
 
             var formule = ParameterUtil.GetSpatialFormule(
                 fieldName,
-                parameter.FunctionType,
-                parameter.CenterPoint,
-                parameter.Distance);
+                this.FunctionType,
+                this.CenterPoint,
+                this.Distance);
 
             this._result = new JProperty("fq", formule);
         }

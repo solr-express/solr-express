@@ -9,18 +9,16 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
         
-        string IQueryFieldParameter<TDocument>.Expression { get; set; }
+        public string Expression { get; set; }
 
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IQueryFieldParameter<TDocument>)this;
-
-            this._result = $"qf={parameter.Expression}";
+            this._result = $"qf={this.Expression}";
         }
     }
 }

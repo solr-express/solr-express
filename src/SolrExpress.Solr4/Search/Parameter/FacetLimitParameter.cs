@@ -9,18 +9,16 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
         
-        long IFacetLimitParameter<TDocument>.Value { get; set; }
+        public long Value { get; set; }
 
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetLimitParameter<TDocument>)this;
-
-            this._result = $"facet.limit={parameter.Value}";
+            this._result = $"facet.limit={this.Value}";
         }
     }
 }

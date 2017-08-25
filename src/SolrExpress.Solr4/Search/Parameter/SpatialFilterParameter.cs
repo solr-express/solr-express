@@ -17,29 +17,24 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
-        
-        GeoCoordinate ISpatialFilterParameter<TDocument>.CenterPoint { get; set; }
 
-        decimal ISpatialFilterParameter<TDocument>.Distance { get; set; }
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
 
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        SpatialFunctionType ISpatialFilterParameter<TDocument>.FunctionType { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (ISpatialFilterParameter<TDocument>)this;
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            var formule = ParameterUtil.GetSpatialFormule(fieldName, parameter.FunctionType, parameter.CenterPoint, parameter.Distance);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var formule = ParameterUtil.GetSpatialFormule(fieldName, this.FunctionType, this.CenterPoint, this.Distance);
 
             this._result = $"fq={formule}";
         }

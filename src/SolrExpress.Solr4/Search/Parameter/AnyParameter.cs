@@ -11,20 +11,17 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        string IAnyParameter.Name { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
 
-        string IAnyParameter.Value { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IAnyParameter)this;
-
-            this._result = $"{parameter.Name}={parameter.Value}";
+            this._result = $"{this.Name}={this.Value}";
         }
     }
 }

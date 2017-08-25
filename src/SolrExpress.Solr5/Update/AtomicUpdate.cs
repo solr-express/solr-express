@@ -9,7 +9,7 @@ namespace SolrExpress.Solr5.Update
     public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
         where TDocument : Document
     {
-        JObject IAtomicUpdate<TDocument>.Execute(params TDocument[] documents)
+        public JObject Execute(params TDocument[] documents)
         {
             Checker.IsNull(documents);
 

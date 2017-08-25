@@ -12,18 +12,15 @@ namespace SolrExpress.Search.Behaviour
     {
         public ChangeDynamicFieldBehaviour(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldPrefix { get; set; }
+        public string DynamicFieldPrefix { get; set; }
+        public string DynamicFieldSuffix { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
-        string IChangeDynamicFieldBehaviour<TDocument>.DynamicFieldSuffix { get; set; }
-
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        void IChangeBehaviour.Execute()
+        public void Execute()
         {
             var parameter = (ISearchItemFieldExpression<TDocument>)this;
             var parameterBehaviour = (IChangeDynamicFieldBehaviour<TDocument>)this;

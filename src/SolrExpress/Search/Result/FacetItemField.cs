@@ -35,6 +35,6 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Values of field
         /// </summary>
-        public IEnumerable<FacetItemFieldValue> Values { get; set; } = new List<FacetItemFieldValue>();
+        public IEnumerable<FacetItemFieldValue> Values { get; } = new List<FacetItemFieldValue>();
     }
 }

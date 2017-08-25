@@ -10,7 +10,6 @@ namespace SolrExpress
     {
         public SolrExpressBuilder(ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            this.Options = new SolrExpressOptions();
             this.ServiceProvider = serviceProvider;
         }
 
@@ -50,7 +49,7 @@ namespace SolrExpress
         /// <summary>
         /// Options to control SolrExpress behavior
         /// </summary>
-        internal SolrExpressOptions Options { get; set; }
+        internal SolrExpressOptions Options => new SolrExpressOptions();
 
         /// <summary>
         /// Services provider

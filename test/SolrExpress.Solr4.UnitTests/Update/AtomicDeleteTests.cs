@@ -21,7 +21,7 @@ namespace SolrExpress.Solr4.UnitTests.Update
                 ""delete"": ""123456"",
                 ""commit"": {}
             }");
-            var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
+            var atomic = (IAtomicDelete)new AtomicDelete();
 
             // Act
             var actual = atomic.Execute("123456");
@@ -39,7 +39,7 @@ namespace SolrExpress.Solr4.UnitTests.Update
         public void AtomicDelete002()
         {
             // Arrange
-            var atomic = (IAtomicDelete<TestDocument>)new AtomicDelete<TestDocument>();
+            var atomic = (IAtomicDelete)new AtomicDelete();
 
             // Act
             var actual = atomic.Execute();

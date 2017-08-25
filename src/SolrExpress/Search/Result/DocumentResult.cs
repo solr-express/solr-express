@@ -13,13 +13,13 @@ namespace SolrExpress.Search.Result
     public sealed class DocumentResult<TDocument> : IDocumentResult<TDocument>
         where TDocument : Document
     {
-        private bool executed;
+        private bool _executed;
 
-        IEnumerable<TDocument> IDocumentResult<TDocument>.Data { get; set; }
+        public IEnumerable<TDocument> Data { get; private set; }
 
-        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        public void Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            if (this.executed || currentToken != JsonToken.StartArray || currentPath != "response.docs")
+            if (this._executed || currentToken != JsonToken.StartArray || currentPath != "response.docs")
             {
                 return;
             }
@@ -29,9 +29,9 @@ namespace SolrExpress.Search.Result
             jsonSerializer.Converters.Add(new DateTimeConverter());
             jsonSerializer.ContractResolver = new CustomContractResolver();
 
-            ((IDocumentResult<TDocument>)this).Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
+            this.Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
 
-            this.executed = true;
+            this._executed = true;
         }
     }
 }

@@ -26,7 +26,6 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
-            parameter.ExpressionBuilder = expressionBuilder;
             parameter.FieldExpression = q => q.Id;
 
             // Act

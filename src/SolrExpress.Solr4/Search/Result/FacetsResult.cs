@@ -12,7 +12,7 @@ namespace SolrExpress.Solr4.Search.Result
     public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
-        IEnumerable<IFacetItem> IFacetsResult<TDocument>.Data { get; set; }
+        public IEnumerable<IFacetItem> Data { get; private set; }
 
         /// <summary>
         /// Execute processing of facet fields
@@ -273,10 +273,7 @@ namespace SolrExpress.Solr4.Search.Result
                 return;
             }
 
-            if (((IFacetsResult<TDocument>)this).Data == null)
-            {
-                ((IFacetsResult<TDocument>)this).Data = new List<IFacetItem>();
-            }
+            this.Data = this.Data ?? new List<IFacetItem>();
 
             var facetItems = (List<IFacetItem>)((IFacetsResult<TDocument>)this).Data;
 

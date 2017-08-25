@@ -9,17 +9,16 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        long IOffsetParameter<TDocument>.Value { get; set; }
+        public long Value { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IOffsetParameter<TDocument>)this;
-            this._result = new JProperty("offset", parameter.Value);
+            this._result = new JProperty("offset", this.Value);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace SolrExpress.Search.Result
         /// <summary>
         /// Documents of search
         /// </summary>
-        IEnumerable<TDocument> Data { get; set; }
+        IEnumerable<TDocument> Data { get; }
     }
 }

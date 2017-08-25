@@ -13,21 +13,19 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JToken _result;
 
-        SearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+        public string TagName { get; set; }
 
-        string IFilterParameter<TDocument>.TagName { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jArray = (JArray)container["filter"] ?? new JArray();
             jArray.Add(this._result);
             container["filter"] = jArray;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFilterParameter<TDocument>)this;
-            this._result = ParameterUtil.GetFilterWithTag(parameter.Query.Execute(), parameter.TagName);
+            this._result = ParameterUtil.GetFilterWithTag(this.Query.Execute(), this.TagName);
         }
     }
 }

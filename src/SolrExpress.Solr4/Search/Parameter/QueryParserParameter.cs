@@ -9,17 +9,16 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        QueryParserType IQueryParserParameter<TDocument>.Value { get; set; }
+        public QueryParserType Value { get; set; }
 
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IQueryParserParameter<TDocument>)this;
-            this._result = $"defType={parameter.Value.ToString().ToLower()}";
+            this._result = $"defType={this.Value.ToString().ToLower()}";
         }
     }
 }

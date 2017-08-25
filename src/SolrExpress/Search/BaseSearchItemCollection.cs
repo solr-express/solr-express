@@ -30,27 +30,28 @@ namespace SolrExpress.Search
                 .ToList();
         }
 
-        void ISearchItemCollection<TDocument>.Add(ISearchItem item)
+        public void Add(ISearchItem item)
         {
             this._searchItems.Add(item);
         }
 
-        bool ISearchItemCollection<TDocument>.Contains(Type searchItemType)
+        public bool Contains(Type searchItemType)
         {
             return this._searchItems.Any(q => q.GetType() == searchItemType);
         }
 
-        bool ISearchItemCollection<TDocument>.Contains<TSearchItem>()
+        public bool Contains<TSearchItem>()
+            where TSearchItem : ISearchItem
         {
             return this._searchItems.Any(q => q is TSearchItem);
         }
 
-        List<ISearchParameter> ISearchItemCollection<TDocument>.GetSearchParameters()
+        public List<ISearchParameter> GetSearchParameters()
         {
             return this.GetItems<ISearchParameter>();
         }
 
-        List<ISearchResult<TDocument>> ISearchItemCollection<TDocument>.GetSearchResults()
+        public List<ISearchResult<TDocument>> GetSearchResults()
         {
             return this.GetItems<ISearchResult<TDocument>>();
         }

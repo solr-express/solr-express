@@ -5,8 +5,7 @@ namespace SolrExpress.Update
     /// <summary>
     /// Atomic delete informed documents from SOLR collection
     /// </summary>
-    public interface IAtomicDelete<TDocument>
-        where TDocument : Document
+    public interface IAtomicDelete
     {
         /// <summary>
         /// Remove informed documents from SOLR collection

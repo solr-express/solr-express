@@ -17,24 +17,22 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpressions<TDocument>)this).ExpressionBuilder = expressionBuilder;
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        ExpressionBuilder<TDocument> ISearchItemFieldExpressions<TDocument>.ExpressionBuilder { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
 
-        Expression<Func<TDocument, object>>[] ISearchItemFieldExpressions<TDocument>.FieldExpressions { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IFieldsParameter<TDocument>)this;
-            var fieldNames = parameter
+            var fieldNames = this
                 .FieldExpressions
-                .Select(fieldExpression => ((IFieldsParameter<TDocument>)this).ExpressionBuilder.GetFieldName(fieldExpression))
+                .Select(fieldExpression => this.ExpressionBuilder.GetFieldName(fieldExpression))
                 .ToArray();
 
             this._result = $"fl={string.Join(",", fieldNames)}";

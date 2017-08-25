@@ -4,7 +4,6 @@ using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
-using SolrExpress.Search.Query.Extension;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Utility;
 using Xunit;

@@ -21,78 +21,66 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
-            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
 
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        int? IFacetFieldParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetFieldParameter<TDocument>.Minimum { get; set; }
-
-        FacetSortType? IFacetFieldParameter<TDocument>.SortType { get; set; }
-
-        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
-
-        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();
             jObj.Add(this._result);
             container["facet"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetFieldParameter<TDocument>)this;
-
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            var aliasName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetAliasName(parameter.FieldExpression);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var aliasName = this.ExpressionBuilder.GetAliasName(this.FieldExpression);
 
             var array = new List<JProperty>
             {
                 new JProperty("field", fieldName)
             };
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+                array.Add(new JProperty("mincount", this.Minimum.Value));
             }
 
-            if (parameter.Excludes?.Any() ?? false)
+            if (this.Excludes?.Any() ?? false)
             {
-                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
                 array.Add(new JProperty("domain", excludeValue));
             }
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            if (parameter.Limit.HasValue)
+            if (this.Limit.HasValue)
             {
-                array.Add(new JProperty("limit", parameter.Limit));
+                array.Add(new JProperty("limit", this.Limit));
             }
 
-            if (parameter.Facets?.Any() ?? false)
+            if (this.Facets?.Any() ?? false)
             {
-                Parallel.ForEach(parameter.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
+                Parallel.ForEach(this.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
 
                 var subfacets = new JObject();
 
-                foreach (var item in parameter.Facets)
+                foreach (var item in this.Facets)
                 {
                     ((ISearchItemExecution<JObject>)item).AddResultInContainer(subfacets);
                 }

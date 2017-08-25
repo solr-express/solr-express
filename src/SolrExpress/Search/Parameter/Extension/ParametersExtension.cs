@@ -1,5 +1,4 @@
 ﻿using SolrExpress.Search.Query;
-using SolrExpress.Search.Query.Extension;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
 using System;

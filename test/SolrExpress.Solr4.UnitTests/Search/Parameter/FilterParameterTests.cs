@@ -1,12 +1,11 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
-using SolrExpress.Search.Query.Extension;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System.Collections.Generic;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter

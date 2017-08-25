@@ -87,14 +87,14 @@ namespace SolrExpress.Search
             if (!this._searchItemCollection.Contains<IOffsetParameter<TDocument>>())
             {
                 var offsetParameter = this.ServiceProvider.GetService<IOffsetParameter<TDocument>>();
-                offsetParameter.Value = 0;
+                offsetParameter.Value(0);
                 this._searchItemCollection.Add(offsetParameter);
             }
 
             if (!this._searchItemCollection.Contains<ILimitParameter<TDocument>>())
             {
                 var limitParameter = this.ServiceProvider.GetService<ILimitParameter<TDocument>>();
-                limitParameter.Value = 10;
+                limitParameter.Value(10);
                 this._searchItemCollection.Add(limitParameter);
             }
 
@@ -102,21 +102,21 @@ namespace SolrExpress.Search
             {
                 var sortParameter = this.ServiceProvider.GetService<ISortParameter<TDocument>>();
                 sortParameter.FieldExpression(q => q.Score);
-                sortParameter.Ascendent = false;
+                sortParameter.Ascendent(false);
                 this._searchItemCollection.Add(sortParameter);
             }
 
             if (!this._searchItemCollection.Contains<IWriteTypeParameter<TDocument>>())
             {
                 var writeTypeParameter = this.ServiceProvider.GetService<IWriteTypeParameter<TDocument>>();
-                writeTypeParameter.Value = WriteType.Json;
+                writeTypeParameter.Value(WriteType.Json);
                 this._searchItemCollection.Add(writeTypeParameter);
             }
 
             if (!this._searchItemCollection.Contains<IQueryParserParameter<TDocument>>())
             {
                 var queryParserParameter = this.ServiceProvider.GetService<IQueryParserParameter<TDocument>>();
-                queryParserParameter.Value = QueryParserType.Edismax;
+                queryParserParameter.Value(QueryParserType.Edismax);
                 this._searchItemCollection.Add(queryParserParameter);
             }
 
@@ -124,7 +124,7 @@ namespace SolrExpress.Search
             {
                 var standardQueryParameter = this.ServiceProvider.GetService<IStandardQueryParameter<TDocument>>();
                 var searchQuery = this.ServiceProvider.GetService<SearchQuery<TDocument>>();
-                standardQueryParameter.Value = searchQuery.AddValue("*:*", false);
+                standardQueryParameter.Value(searchQuery.AddValue("*:*", false));
                 this._searchItemCollection.Add(standardQueryParameter);
             }
 

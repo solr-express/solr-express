@@ -1,6 +1,6 @@
-﻿using SolrExpress.Search.Parameter;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -9,19 +9,18 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        long IFacetLimitParameter<TDocument>.Value { get; set; }
+        public long Value { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._result);
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetLimitParameter<TDocument>)this;
-            this._result = new JProperty("facet.limit", parameter.Value);
+            this._result = new JProperty("facet.limit", this.Value);
         }
     }
 }

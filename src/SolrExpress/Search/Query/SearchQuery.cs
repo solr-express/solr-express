@@ -167,5 +167,197 @@ namespace SolrExpress.Search.Query
         {
             return this._internalQuery.ToString();
         }
+
+        /// <summary>
+        /// Create a search query to find all informed values (conditional AND)
+        /// </summary>
+        /// <param name="values">Values used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> All<TValue>(params TValue[] values)
+        {
+            this.AddParenthesisOpening();
+
+            for (var index = 0; index < values.Length - 1; index++)
+            {
+                this
+                    .AddValue(values[index])
+                    .AddOperatorAnd();
+            }
+
+            this
+                .AddValue(values[values.Length - 1])
+                .AddParenthesisClosure();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Create a search query to find all informed values (conditional OR)
+        /// </summary>
+        /// <param name="values">Values used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Any<TValue>(params TValue[] values)
+        {
+            if (values.Length == 0)
+            {
+                return this;
+            }
+
+            this.AddParenthesisOpening();
+
+            for (var index = 0; index < values.Length - 1; index++)
+            {
+                this
+                    .AddValue(values[index])
+                    .AddOperatorOr();
+            }
+
+            this
+                .AddValue(values[values.Length - 1])
+                .AddParenthesisClosure();
+
+            return this;
+        }
+
+        /// <summary>
+        /// Create a search query to find something starts with informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> StartsWith(string value)
+        {
+            return this.AddValue($"/{value}.*/");
+        }
+
+        /// <summary>
+        /// Create a search query to find exact informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> EqualsTo<TValue>(TValue value)
+        {
+            return this.AddValue(value);
+        }
+
+        /// <summary>
+        /// Create a search query to find negate informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> NotEqualsTo<TValue>(TValue value)
+        {
+            return this
+                .AddValue("-", false)
+                .AddParenthesisOpening()
+                .AddValue(value)
+                .AddParenthesisClosure();
+        }
+
+        /// <summary>
+        /// Create a search query to find someting in informed range
+        /// </summary>
+        /// <param name="valueFrom">Value used in search</param>
+        /// <param name="valueTo">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> InRange<TValue>(TValue valueFrom, TValue valueTo)
+            where TValue : struct
+        {
+            return this.AddRangeValue(valueFrom, (TValue?)valueTo);
+        }
+
+        /// <summary>
+        /// Create a search query to find someting greater than informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> GreaterThan<TValue>(TValue value)
+            where TValue : struct
+        {
+            return this.AddRangeValue((TValue?)value, null);
+        }
+
+        /// <summary>
+        /// Create a search query to find someting less than informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> LessThan<TValue>(TValue value)
+            where TValue : struct
+        {
+            return this.AddRangeValue(null, (TValue?)value);
+        }
+
+        /// <summary>
+        /// Create a search query expression using OR operator
+        /// </summary>
+        /// <param name="searchQueryExtend">Search query used inside group OR</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Or(Action<SearchQuery<TDocument>> searchQueryExtend)
+        {
+            this
+                .AddOperatorOr()
+                .AddParenthesisOpening();
+
+            searchQueryExtend.Invoke(this);
+
+            return this.AddParenthesisClosure();
+        }
+
+        /// <summary>
+        /// Create a search query expression using OR operator
+        /// </summary>
+        /// <param name="searchQueryExtend">Search query used inside group AND</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> And(Action<SearchQuery<TDocument>> searchQueryExtend)
+        {
+            this
+                .AddOperatorAnd()
+                .AddParenthesisOpening();
+
+            searchQueryExtend.Invoke(this);
+
+            return this.AddParenthesisClosure();
+        }
+
+        /// <summary>
+        /// Create a search query expression using NOT group
+        /// </summary>
+        /// <param name="searchQueryExtend">Search query used inside group AND</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Not(Action<SearchQuery<TDocument>> searchQueryExtend)
+        {
+            this
+                .AddValue("-", false)
+                .AddParenthesisOpening();
+
+            searchQueryExtend.Invoke(this);
+
+            return this.AddParenthesisClosure();
+        }
+
+        /// <summary>
+        /// Create a search query expression using isolating in a group
+        /// </summary>
+        /// <param name="searchQueryExtend">Search query used inside group AND</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Group(Action<SearchQuery<TDocument>> searchQueryExtend)
+        {
+            this
+                .AddParenthesisOpening();
+
+            searchQueryExtend.Invoke(this);
+
+            return this.AddParenthesisClosure();
+        }
+
+        /// <summary>
+        /// Create a search query using field name from expression
+        /// </summary>
+        /// <param name="fieldExpression">Expressions used to find field name</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Field(Expression<Func<TDocument, object>> fieldExpression)
+        {
+            return this.AddField(fieldExpression);
+        }
     }
 }

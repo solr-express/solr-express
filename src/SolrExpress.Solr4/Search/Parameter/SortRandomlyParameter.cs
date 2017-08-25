@@ -9,12 +9,12 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
         
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
             this._result = "sort=random";
         }

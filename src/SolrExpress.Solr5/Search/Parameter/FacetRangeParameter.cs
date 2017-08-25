@@ -21,87 +21,72 @@ namespace SolrExpress.Solr5.Search.Parameter
 
         public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
-            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        string IFacetRangeParameter<TDocument>.AliasName { get; set; }
+        public string AliasName { get; set; }
+        public bool CountAfter { get; set; }
+        public bool CountBefore { get; set; }
+        public string End { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public string Gap { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public string Start { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
 
-        bool IFacetRangeParameter<TDocument>.CountAfter { get; set; }
-
-        bool IFacetRangeParameter<TDocument>.CountBefore { get; set; }
-
-        string IFacetRangeParameter<TDocument>.End { get; set; }
-
-        string[] IFacetRangeParameter<TDocument>.Excludes { get; set; }
-
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        string IFacetRangeParameter<TDocument>.Gap { get; set; }
-
-        int? IFacetRangeParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetRangeParameter<TDocument>.Minimum { get; set; }
-
-        FacetSortType? IFacetRangeParameter<TDocument>.SortType { get; set; }
-
-        string IFacetRangeParameter<TDocument>.Start { get; set; }
-
-        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
-
-        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
-
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["facet"] ?? new JObject();
             jObj.Add(this._result);
             container["facet"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetRangeParameter<TDocument>)this;
-
             var array = new List<JProperty>
             {
-                new JProperty("field", ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression))
+                new JProperty("field", this.ExpressionBuilder.GetFieldName(this.FieldExpression))
             };
 
-            if (parameter.Excludes?.Any() ?? false)
+            if (this.Excludes?.Any() ?? false)
             {
-                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(parameter.Excludes)));
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
                 array.Add(new JProperty("domain", excludeValue));
             }
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                array.Add(new JProperty("mincount", parameter.Minimum.Value));
+                array.Add(new JProperty("mincount", this.Minimum.Value));
             }
 
-            if (!string.IsNullOrWhiteSpace(parameter.Gap))
+            if (!string.IsNullOrWhiteSpace(this.Gap))
             {
-                array.Add(new JProperty("gap", parameter.Gap));
+                array.Add(new JProperty("gap", this.Gap));
             }
-            if (!string.IsNullOrWhiteSpace(parameter.Start))
+            if (!string.IsNullOrWhiteSpace(this.Start))
             {
-                array.Add(new JProperty("start", parameter.Start));
+                array.Add(new JProperty("start", this.Start));
             }
-            if (!string.IsNullOrWhiteSpace(parameter.End))
+            if (!string.IsNullOrWhiteSpace(this.End))
             {
-                array.Add(new JProperty("end", parameter.End));
+                array.Add(new JProperty("end", this.End));
             }
 
-            if (parameter.CountBefore || parameter.CountAfter)
+            if (this.CountBefore || this.CountAfter)
             {
                 var content = new List<string>();
-                if (parameter.CountBefore)
+                if (this.CountBefore)
                 {
                     content.Add("before");
                 }
 
-                if (parameter.CountAfter)
+                if (this.CountAfter)
                 {
                     content.Add("after");
                 }
@@ -109,17 +94,14 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add(new JProperty("other", new JArray(content.ToArray())));
             }
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            this._result = new JProperty(parameter.AliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
+            this._result = new JProperty(this.AliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
         }
     }
 }

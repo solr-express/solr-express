@@ -9,6 +9,6 @@
         /// <summary>
         /// Search result data
         /// </summary>
-        Information Data { get; set; }
+        Information Data { get; }
     }
 }

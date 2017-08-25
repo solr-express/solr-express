@@ -12,48 +12,43 @@ namespace SolrExpress.Search.Result
     public class InformationResult<TDocument> : IInformationResult<TDocument>
         where TDocument : Document
     {
-        private bool executed;
-        private bool withElapsedTime;
-        private bool withDocumentCount;
+        private bool _executed;
+        private bool _withElapsedTime;
+        private bool _withDocumentCount;
 
-        public InformationResult()
+        public Information Data => new Information();
+
+        public void Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
-            ((IInformationResult<TDocument>)this).Data = new Information();
-        }
-
-        Information IInformationResult<TDocument>.Data { get; set; }
-
-        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
-        {
-            if (this.executed)
+            if (this._executed)
             {
                 return;
             }
 
             if (currentToken == JsonToken.PropertyName && currentPath == "responseHeader.QTime")
             {
-                ((IInformationResult<TDocument>)this).Data.ElapsedTime = TimeSpan.FromMilliseconds(jsonReader.ReadAsDouble().Value);
+                this.Data.ElapsedTime = TimeSpan.FromMilliseconds(jsonReader.ReadAsDouble().Value);
 
-                this.withElapsedTime = true;
+                this._withElapsedTime = true;
             }
 
             if (currentToken == JsonToken.PropertyName && currentPath == "response.numFound")
             {
                 jsonReader.Read();
-                ((IInformationResult<TDocument>)this).Data.DocumentCount = (long)jsonReader.Value;
+                this.Data.DocumentCount = (long)jsonReader.Value;
 
-                this.withDocumentCount = true;
+                this._withDocumentCount = true;
             }
 
             // ReSharper disable once InvertIf
-            if (this.withElapsedTime && this.withDocumentCount)
+            if (this._withElapsedTime && this._withDocumentCount)
             {
                 var offsetParameter = (IOffsetParameter<TDocument>)searchParameters.First(q => q is IOffsetParameter<TDocument>);
                 var limitParameter = (ILimitParameter<TDocument>)searchParameters.First(q => q is ILimitParameter<TDocument>);
                 var offset = offsetParameter.Value;
                 var limit = limitParameter.Value;
 
-                var data = ((IInformationResult<TDocument>)this).Data;
+                var data = this.Data;
                 if (limit > 0)
                 {
                     data.PageNumber = offset / limit + 1;
@@ -70,7 +65,7 @@ namespace SolrExpress.Search.Result
                     data.IsLastPage = true;
                 }
 
-                this.executed = true;
+                this._executed = true;
             }
         }
     }

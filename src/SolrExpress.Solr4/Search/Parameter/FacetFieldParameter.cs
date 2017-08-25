@@ -18,27 +18,20 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
-            ((IFacetParameter<TDocument>)this).ServiceProvider = serviceProvider;
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        string[] IFacetFieldParameter<TDocument>.Excludes { get; set; }
-
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        int? IFacetFieldParameter<TDocument>.Limit { get; set; }
-
-        int? IFacetFieldParameter<TDocument>.Minimum { get; set; }
-
-        FacetSortType? IFacetFieldParameter<TDocument>.SortType { get; set; }
-
-        ISolrExpressServiceProvider<TDocument> IFacetParameter<TDocument>.ServiceProvider { get; set; }
-
-        IList<IFacetParameter<TDocument>> IFacetParameter<TDocument>.Facets { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
         
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))
             {
@@ -48,38 +41,34 @@ namespace SolrExpress.Solr4.Search.Parameter
             container.AddRange(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IFacetFieldParameter<TDocument>)this;
+            Checker.IsNull(this.FieldExpression);
 
-            Checker.IsNull(parameter.FieldExpression);
-
-            var aliasName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetAliasName(parameter.FieldExpression);
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            var facetField = ParameterUtil.GetFacetName(parameter.Excludes, aliasName, fieldName);
+            var aliasName = this.ExpressionBuilder.GetAliasName(this.FieldExpression);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var facetField = ParameterUtil.GetFacetName(this.Excludes, aliasName, fieldName);
 
             this._result.Add($"facet.field={facetField}");
 
-            if (parameter.SortType.HasValue)
+            if (this.SortType.HasValue)
             {
-                string typeName;
-                string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(parameter.SortType == FacetSortType.CountDesc || parameter.SortType == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType == FacetSortType.CountDesc || this.SortType == FacetSortType.IndexDesc);
 
-                ParameterUtil.GetFacetSort(parameter.SortType.Value, out typeName, out dummy);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 
                 this._result.Add($"f.{fieldName}.facet.sort={typeName}");
             }
 
-            if (parameter.Minimum.HasValue)
+            if (this.Minimum.HasValue)
             {
-                this._result.Add($"f.{fieldName}.facet.mincount={parameter.Minimum.Value}");
+                this._result.Add($"f.{fieldName}.facet.mincount={this.Minimum.Value}");
             }
 
-            if (parameter.Limit.HasValue)
+            if (this.Limit.HasValue)
             {
-                this._result.Add($"f.{fieldName}.facet.limit={parameter.Limit.Value}");
+                this._result.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
             }
         }
     }

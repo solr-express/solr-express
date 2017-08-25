@@ -9,7 +9,8 @@ namespace SolrExpress.Search.Parameter.Validation
     [AttributeUsage(AttributeTargets.Class)]
     public class FieldMustBeStoredTrueAttribute : Attribute, IValidationAttribute
     {
-        bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
+        public bool IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
+            where TDocument : Document
         {
             var searchParameterFieldExpressions = searchParameter as ISearchItemFieldExpressions<TDocument>;
             var searchParameterFieldExpression = searchParameter as ISearchItemFieldExpression<TDocument>;

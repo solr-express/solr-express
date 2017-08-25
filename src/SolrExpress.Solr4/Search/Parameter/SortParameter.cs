@@ -18,17 +18,15 @@ namespace SolrExpress.Solr4.Search.Parameter
 
         public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
-            ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder = expressionBuilder;
-            ((ISortParameter<TDocument>)this).Ascendent = true;
+            this.ExpressionBuilder = expressionBuilder;
+            this.Ascendent = true;
         }
 
-        bool ISortParameter<TDocument>.Ascendent { get; set; }
+        public bool Ascendent { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
-        ExpressionBuilder<TDocument> ISearchItemFieldExpression<TDocument>.ExpressionBuilder { get; set; }
-
-        Expression<Func<TDocument, object>> ISearchItemFieldExpression<TDocument>.FieldExpression { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             var value = container.FirstOrDefault(q => q.StartsWith("sort="));
 
@@ -46,12 +44,10 @@ namespace SolrExpress.Solr4.Search.Parameter
             container.Add(value);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (ISortParameter<TDocument>)this;
-
-            var fieldName = ((ISearchItemFieldExpression<TDocument>)this).ExpressionBuilder.GetFieldName(parameter.FieldExpression);
-            this._result = $"{fieldName} {(parameter.Ascendent ? "asc" : "desc")}";
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            this._result = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
         }
     }
 }

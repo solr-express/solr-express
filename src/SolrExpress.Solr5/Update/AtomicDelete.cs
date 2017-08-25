@@ -4,10 +4,10 @@ using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Update
 {
-    public sealed class AtomicDelete<TDocument> : IAtomicDelete<TDocument>
+    public sealed class AtomicDelete<TDocument> : IAtomicDelete
         where TDocument : Document
     {
-        JObject IAtomicDelete<TDocument>.Execute(params string[] documentIds)
+        public JObject Execute(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
 

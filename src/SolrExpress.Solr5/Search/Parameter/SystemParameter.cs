@@ -10,7 +10,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         private JProperty _parameter1;
         private JProperty _parameter2;
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             var jObj = (JObject)container["params"] ?? new JObject();
             jObj.Add(this._parameter1);
@@ -18,7 +18,7 @@ namespace SolrExpress.Solr5.Search.Parameter
             container["params"] = jObj;
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
             this._parameter1 = new JProperty("echoParams", "none");
             this._parameter2 = new JProperty("indent", "off");

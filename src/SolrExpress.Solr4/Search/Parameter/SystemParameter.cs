@@ -9,12 +9,12 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private readonly List<string> _result = new List<string>();
 
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.AddRange(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
             this._result.Add("echoParams=none");
             this._result.Add("indent=off");

@@ -10,18 +10,16 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        SearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
+        public SearchQuery<TDocument> Value { get; set; }
 
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IQueryParameter<TDocument>)this;
-
-            this._result = $"q={parameter.Value.Execute()}";
+            this._result = $"q={this.Value.Execute()}";
         }
     }
 }

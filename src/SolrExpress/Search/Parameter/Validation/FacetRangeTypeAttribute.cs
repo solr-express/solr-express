@@ -8,7 +8,8 @@ namespace SolrExpress.Search.Parameter.Validation
     [AttributeUsage(AttributeTargets.Class)]
     public class FacetRangeTypeAttribute : Attribute, IValidationAttribute
     {
-        bool IValidationAttribute.IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
+        public bool IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
+            where TDocument : Document
         {
             errorMessage = string.Empty;
 

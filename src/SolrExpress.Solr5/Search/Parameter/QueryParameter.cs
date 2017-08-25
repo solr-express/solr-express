@@ -1,7 +1,7 @@
-﻿using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Query;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
@@ -10,17 +10,16 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        SearchQuery<TDocument> IQueryParameter<TDocument>.Value { get; set; }
+        public SearchQuery<TDocument> Value { get; set; }
 
-        void ISearchItemExecution<JObject>.AddResultInContainer(JObject container)
+        public void AddResultInContainer(JObject container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<JObject>.Execute()
+        public void Execute()
         {
-            var parameter = (IQueryParameter<TDocument>)this;
-            this._result = new JProperty("query", parameter.Value.Execute());
+            this._result = new JProperty("query", this.Value.Execute());
         }
     }
 }

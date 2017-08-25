@@ -72,7 +72,7 @@ namespace SolrExpress.Update
 
             if (this._documentsToDelete.Any())
             {
-                var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete<TDocument>>();
+                var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete>();
                 var data = atomicDelete.Execute(this._documentsToDelete.ToArray());
                 if (data != null)
                 {

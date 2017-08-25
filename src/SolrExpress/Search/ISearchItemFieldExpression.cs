@@ -13,7 +13,7 @@ namespace SolrExpress.Search
         /// <summary>
         /// Build expressions engine
         /// </summary>
-        ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        ExpressionBuilder<TDocument> ExpressionBuilder { get; }
 
         /// <summary>
         /// Expression used to find field name

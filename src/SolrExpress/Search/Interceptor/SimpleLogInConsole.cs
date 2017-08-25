@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SolrExpress.Options;
+using System;
 using System.Diagnostics;
 using System.Text;
-using SolrExpress.Options;
 
 namespace SolrExpress.Search.Interceptor
 {
@@ -35,7 +35,7 @@ namespace SolrExpress.Search.Interceptor
             return sb.ToString();
         }
 
-        void IResultInterceptor.Execute(string requestHandler, ref string json)
+        public void Execute(string requestHandler, ref string json)
         {
             var logContent = this.GetLogContent(requestHandler, json);
 

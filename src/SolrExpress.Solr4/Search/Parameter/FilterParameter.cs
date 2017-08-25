@@ -11,19 +11,17 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private string _result;
 
-        SearchQuery<TDocument> IFilterParameter<TDocument>.Query { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+        public string TagName { get; set; }
 
-        string IFilterParameter<TDocument>.TagName { get; set; }
-
-        void ISearchItemExecution<List<string>>.AddResultInContainer(List<string> container)
+        public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);
         }
 
-        void ISearchItemExecution<List<string>>.Execute()
+        public void Execute()
         {
-            var parameter = (IFilterParameter<TDocument>)this;
-            var expression = ParameterUtil.GetFilterWithTag(parameter.Query.Execute(), parameter.TagName);
+            var expression = ParameterUtil.GetFilterWithTag(this.Query.Execute(), this.TagName);
 
             this._result = $"fq={expression}";
         }
