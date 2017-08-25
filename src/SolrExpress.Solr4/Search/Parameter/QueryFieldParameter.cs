@@ -1,20 +1,24 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class QueryFieldParameter<TDocument> : BaseQueryFieldParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    public sealed class QueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        /// <summary>
-        /// Execute the creation of the parameter "query field"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        private string _result;
+        
+        public string Expression { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
-            container.Add($"qf={this.Expression}");
+            container.Add(this._result);
+        }
+
+        public void Execute()
+        {
+            this._result = $"qf={this.Expression}";
         }
     }
 }

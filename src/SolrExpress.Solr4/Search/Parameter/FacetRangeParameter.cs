@@ -1,72 +1,101 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
-using SolrExpress.Solr4.Extension.Internal;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameterExecute<List<string>>
-      where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FacetRangeType]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public FacetRangeParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private readonly List<string> _result = new List<string>();
+
+        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "facet.range"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public string AliasName { get; set; }
+        public bool CountAfter { get; set; }
+        public bool CountBefore { get; set; }
+        public string End { get; set; }
+        public string[] Excludes { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public string Gap { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public string Start { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-            var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, fieldName);
+            container.AddRange(this._result);
+        }
 
-            container.Add($"facet.range={facetName}");
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var facetName = ParameterUtil.GetFacetName(this.Excludes, this.AliasName, fieldName);
+
+            this._result.Add($"facet.range={facetName}");
 
             if (!string.IsNullOrWhiteSpace(this.Gap))
             {
-                container.Add($"f.{fieldName}.facet.range.gap={Uri.EscapeDataString(this.Gap)}");
+                this._result.Add($"f.{fieldName}.facet.range.gap={Uri.EscapeDataString(this.Gap)}");
             }
             if (!string.IsNullOrWhiteSpace(this.Start))
             {
-                container.Add($"f.{fieldName}.facet.range.start={Uri.EscapeDataString(this.Start)}");
+                this._result.Add($"f.{fieldName}.facet.range.start={Uri.EscapeDataString(this.Start)}");
             }
             if (!string.IsNullOrWhiteSpace(this.End))
             {
-                container.Add($"f.{fieldName}.facet.range.end={Uri.EscapeDataString(this.End)}");
+                this._result.Add($"f.{fieldName}.facet.range.end={Uri.EscapeDataString(this.End)}");
             }
 
             if (this.CountBefore)
             {
-                container.Add($"f.{fieldName}.facet.range.other=before");
+                this._result.Add($"f.{fieldName}.facet.range.other=before");
             }
 
             if (this.CountAfter)
             {
-                container.Add($"f.{fieldName}.facet.range.other=after");
+                this._result.Add($"f.{fieldName}.facet.range.other=after");
             }
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string dummy;
-
                 Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 
-                container.Add($"f.{fieldName}.facet.range.sort={typeName}");
+                this._result.Add($"f.{fieldName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{fieldName}.facet.mincount=1");
+            if (this.Minimum.HasValue)
+            {
+                this._result.Add($"f.{fieldName}.facet.mincount={this.Minimum.Value}");
+            }
+
+            if (this.Limit.HasValue)
+            {
+                this._result.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
+            }
         }
     }
 }

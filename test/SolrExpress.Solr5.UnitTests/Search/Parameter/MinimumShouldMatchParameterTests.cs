@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;
-using System;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -9,8 +10,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a MinimumShouldMatchParameter instance
-        /// When    Invoking the method "Execute"
-        /// What    Create a valid JSON
+        /// When    Invoking method "Execute"
+        /// What    Create a valid string
         /// </summary>
         [Fact]
         public void MinimumShouldMatchParameter001()
@@ -18,36 +19,20 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             var expected = JObject.Parse(@"
             {
-              params:{
-                mm:""75%""
+              ""params"": {
+                ""mm"": ""75%""
               }
             }");
-            string actual;
-            var jObject = new JObject();
-            var parameter = new MinimumShouldMatchParameter<TestDocument>();
-            parameter.Configure("75%");
+            var container = new JObject();
+            var parameter = (IMinimumShouldMatchParameter<TestDocument>)new MinimumShouldMatchParameter<TestDocument>();
+            parameter.Value = "75%";
 
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
-        }
-
-        /// <summary>
-        /// Where   Using a MinimumShouldMatchParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void MinimumShouldMatchParameter002()
-        {
-            // Arrange
-            var parameter = new MinimumShouldMatchParameter<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

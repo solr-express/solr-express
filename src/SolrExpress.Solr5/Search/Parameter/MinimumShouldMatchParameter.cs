@@ -1,25 +1,26 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class MinimumShouldMatchParameter<TDocument> : BaseMinimumShouldMatchParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    public sealed class MinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        /// <summary>
-        /// Execute the creation of the parameter "query field"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        private JProperty _result;
+
+        public string Value { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var jObj = (JObject)jObject["params"] ?? new JObject();
-            var jProperty = new JProperty("mm", this.Expression);
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
+        }
 
-            jObj.Add(jProperty);
-
-            jObject["params"] = jObj;
+        public void Execute()
+        {
+            this._result = new JProperty("mm", this.Value);
         }
     }
 }

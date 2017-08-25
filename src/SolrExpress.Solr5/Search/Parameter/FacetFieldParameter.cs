@@ -1,37 +1,60 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public FacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private JProperty _result;
+
+        public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "facet.field"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
-        {
-            var facetObject = (JObject)jObject["facet"] ?? new JObject();
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(this.Expression);
+        public void AddResultInContainer(JObject container)
+        {
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
+        }
+
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var aliasName = this.ExpressionBuilder.GetAliasName(this.FieldExpression);
 
             var array = new List<JProperty>
             {
                 new JProperty("field", fieldName)
             };
 
-            array.Add(new JProperty("mincount", 1));
+            if (this.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", this.Minimum.Value));
+            }
 
             if (this.Excludes?.Any() ?? false)
             {
@@ -41,10 +64,7 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
@@ -54,11 +74,21 @@ namespace SolrExpress.Solr5.Search.Parameter
                 array.Add(new JProperty("limit", this.Limit));
             }
 
-            var value = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
+            if (this.Facets?.Any() ?? false)
+            {
+                Parallel.ForEach(this.Facets, item => ((ISearchItemExecution<JObject>)item).Execute());
 
-            facetObject.Add(value);
+                var subfacets = new JObject();
 
-            jObject["facet"] = facetObject;
+                foreach (var item in this.Facets)
+                {
+                    ((ISearchItemExecution<JObject>)item).AddResultInContainer(subfacets);
+                }
+
+                array.Add((JProperty)subfacets.First);
+            }
+
+            this._result = new JProperty(aliasName, new JObject(new JProperty("terms", new JObject(array.ToArray()))));
         }
     }
 }

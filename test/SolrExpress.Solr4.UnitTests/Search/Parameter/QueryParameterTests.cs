@@ -1,9 +1,12 @@
-﻿using Xunit;
-using SolrExpress.Core.Search.ParameterValue;
+﻿using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr4.Search.Parameter;
-using System;
+using SolrExpress.Utility;
 using System.Collections.Generic;
-using SolrExpress.Core.Utility;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -11,7 +14,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a QueryParameter instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid string
         /// </summary>
         [Fact]
@@ -19,34 +22,21 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
+            var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            parameter.Value = searchQuery.Field(q=>q.Id).EqualsTo("ITEM01");
 
             // Act
-            parameter.Execute(container);
+            ((ISearchItemExecution<List<string>>)parameter).Execute();
+            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("q=_id_:ITEM01", container[0]);
-        }
-
-        /// <summary>
-        /// Where   Using a QueryParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void QueryParameter002()
-        {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
-        }
+            Assert.Equal("q=id:\"ITEM01\"", container[0]);
+        }        
     }
 }

@@ -1,43 +1,53 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public SortParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private string _result;
+
+        public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
+            this.Ascendent = true;
         }
 
-        /// <summary>
-        /// Execute creation of parameter "sort"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public bool Ascendent { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var value = container.FirstOrDefault(q => q.StartsWith("sort="));
 
-            var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
-
-            var sort = container.FirstOrDefault(q => q.StartsWith("sort="));
-
-            if (!string.IsNullOrWhiteSpace(sort))
+            if (!string.IsNullOrWhiteSpace(value))
             {
-                container.Remove(sort);
+                container.Remove(value);
 
-                sort = $"{sort},{value}";
+                value += $", {this._result}";
             }
             else
             {
-                sort = $"sort={value}";
+                value = $"sort={this._result}";
             }
 
-            container.Add(sort);
+            container.Add(value);
+        }
+
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            this._result = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
         }
     }
 }

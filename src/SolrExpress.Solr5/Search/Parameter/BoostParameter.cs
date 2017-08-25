@@ -1,35 +1,30 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    /// <summary>
-    /// Signatures to use boost parameter
-    /// </summary>
-    public class BoostParameter<TDocument> : BaseBoostParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    public sealed class BoostParameter<TDocument> : IBoostParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public BoostParameter(IExpressionBuilder<TDocument> expressionBuilder)
-            : base(expressionBuilder)
+        private JProperty _result;
+
+        public BoostFunctionType BoostFunctionType { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public void Execute()
         {
-            var jObj = (JObject)jObject["params"] ?? new JObject();
-
             var boostFunction = this.BoostFunctionType.ToString().ToLower();
 
-            jObj.Add(new JProperty(boostFunction, this.Query.Execute()));
-
-            jObject["params"] = jObj;
+            this._result = new JProperty(boostFunction, this.Query.Execute());
         }
     }
 }

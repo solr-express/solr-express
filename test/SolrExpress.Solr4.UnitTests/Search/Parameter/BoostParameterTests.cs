@@ -1,7 +1,10 @@
-﻿using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Search.ParameterValue;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr4.Search.Parameter;
+using SolrExpress.Utility;
 using System.Collections.Generic;
 using Xunit;
 
@@ -11,48 +14,32 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a BoostParameter instance
-        /// When    Invoking the method "Execute" using BF function
-        /// What    Create a valid string
+        /// When    Invoking method "Execute" using happy path configurations
+        /// What    Create correct SOLR instructions
         /// </summary>
-        [Fact]
-        public void BoostParameter001()
+        [Theory]
+        [InlineData(BoostFunctionType.Bf, "bf=id")]
+        [InlineData(BoostFunctionType.Boost, "boost=id")]
+        public void BoostParameterTheory001(BoostFunctionType boostFunctionType, string expected)
         {
             // Arrange
             var container = new List<string>();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            var parameter = (IBoostParameter<TestDocument>)new BoostParameter<TestDocument>();
+            parameter.BoostFunctionType = boostFunctionType;
+            parameter.Query = searchQuery.Field(q => q.Id);
 
             // Act
-            parameter.Execute(container);
+            ((ISearchItemExecution<List<string>>)parameter).Execute();
+            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
             Assert.Equal(1, container.Count);
-            Assert.Equal("bf=id", container[0]);
-        }
-
-        /// <summary>
-        /// Where   Using a BoostParameter instance
-        /// When    Invoking the method "Execute" using Boost function
-        /// What    Create a valid string
-        /// </summary>
-        [Fact]
-        public void BoostParameter002()
-        {
-            // Arrange
-            var container = new List<string>();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
-
-            // Act
-            parameter.Execute(container);
-
-            // Assert
-            Assert.Equal(1, container.Count);
-            Assert.Equal("boost=id", container[0]);
+            Assert.Equal(expected, container[0]);
         }
     }
 }

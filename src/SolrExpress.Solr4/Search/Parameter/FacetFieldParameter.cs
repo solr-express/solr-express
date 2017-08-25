@@ -1,52 +1,74 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
-using SolrExpress.Solr4.Extension.Internal;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public FacetFieldParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private readonly List<string> _result = new List<string>();
+
+        public FacetFieldParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        /// Execute the creation of the parameter "facet.field"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        
+        public void AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var aliasName = this._expressionBuilder.GetPropertyNameFromExpression(this.Expression);
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-            var facetField = this.Excludes.GetSolrFacetWithExcludes(aliasName, fieldName);
+            container.AddRange(this._result);
+        }
 
-            container.Add($"facet.field={facetField}");
+        public void Execute()
+        {
+            Checker.IsNull(this.FieldExpression);
+
+            var aliasName = this.ExpressionBuilder.GetAliasName(this.FieldExpression);
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var facetField = ParameterUtil.GetFacetName(this.Excludes, aliasName, fieldName);
+
+            this._result.Add($"facet.field={facetField}");
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string dummy;
 
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType == FacetSortType.CountDesc || this.SortType == FacetSortType.IndexDesc);
 
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 
-                container.Add($"f.{fieldName}.facet.sort={typeName}");
+                this._result.Add($"f.{fieldName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{fieldName}.facet.mincount=1");
+            if (this.Minimum.HasValue)
+            {
+                this._result.Add($"f.{fieldName}.facet.mincount={this.Minimum.Value}");
+            }
 
             if (this.Limit.HasValue)
             {
-                container.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
+                this._result.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
             }
         }
     }

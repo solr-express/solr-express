@@ -1,24 +1,29 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class AnyParameter<TDocument> : BaseAnyParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [UseAnyThanSpecificParameterRather]
+    public sealed class AnyParameter : IAnyParameter, ISearchItemExecution<JObject>
     {
-        /// <summary>
-        /// Execute the creation of the parameter
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        private JProperty _result;
+
+        public string Name { get; set; }
+        public string Value { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var jObj = (JObject)jObject["params"] ?? new JObject();
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
+        }
 
-            jObj.Add(new JProperty(this.Name, this.Value));
-
-            jObject["params"] = jObj;
+        public void Execute()
+        {
+            this._result = new JProperty(this.Name, this.Value);
         }
     }
 }

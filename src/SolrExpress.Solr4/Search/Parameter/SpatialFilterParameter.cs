@@ -1,29 +1,42 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : BaseSpatialFilterParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    [FieldMustBeIndexedTrue]
+    public sealed class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public SpatialFilterParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private string _result;
+
+        public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            container.Add(this._result);
+        }
 
-            var formule = ExpressionUtility.GetSolrSpatialFormule(this.FunctionType, fieldName, this.CenterPoint, this.Distance);
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var formule = ParameterUtil.GetSpatialFormule(fieldName, this.FunctionType, this.CenterPoint, this.Distance);
 
-            container.Add($"fq={formule}");
+            this._result = $"fq={formule}";
         }
     }
 }

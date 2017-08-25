@@ -1,34 +1,44 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [FieldMustBeStoredTrue]
+    public sealed class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public FieldsParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private JProperty _result;
+
+        public FieldsParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
-        {
-            var jArray = (JArray)jObject["fields"] ?? new JArray();
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
 
-            foreach (var expression in this.Expressions)
+        public void AddResultInContainer(JObject container)
+        {
+            container.Add(this._result);
+        }
+
+        public void Execute()
+        {
+            var jArray = new JArray();
+
+            foreach (var expression in this.FieldExpressions)
             {
-                var value = this._expressionBuilder.GetFieldNameFromExpression(expression);
+                var value = this.ExpressionBuilder.GetFieldName(expression);
 
                 jArray.Add(value);
             }
 
-            jObject["fields"] = jArray;
+            this._result = new JProperty("fields", jArray);
         }
     }
 }

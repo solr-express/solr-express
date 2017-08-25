@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>SimpleUse.NetCore</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>SimpleUse.NetCore</PackageId>
+    <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SolrExpress.DI.CoreClr\SolrExpress.DI.CoreClr.csproj" />
+    <ProjectReference Include="..\..\src\SolrExpress.Solr5\SolrExpress.Solr5.csproj" />
+  </ItemGroup>
+
+</Project>

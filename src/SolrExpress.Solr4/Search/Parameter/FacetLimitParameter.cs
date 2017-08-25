@@ -1,20 +1,24 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetLimitParameter<TDocument> : BaseFacetLimitParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    public sealed class FacetLimitParameter<TDocument> : IFacetLimitParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        /// <summary>
-        /// Execute the creation of the parameter "rows"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        private string _result;
+        
+        public long Value { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
-            container.Add($"facet.limit={this.Value}");
+            container.Add(this._result);
+        }
+
+        public void Execute()
+        {
+            this._result = $"facet.limit={this.Value}";
         }
     }
 }

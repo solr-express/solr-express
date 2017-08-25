@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;
 using Xunit;
 
@@ -21,17 +23,16 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 ""facet.limit"":10
               }
             }");
-            string actual;
-            var jObject = new JObject();
-            var parameter = new FacetLimitParameter<TestDocument>();
-            parameter.Configure(10);
+            var container = new JObject();
+            var parameter = (IFacetLimitParameter<TestDocument>)new FacetLimitParameter<TestDocument>();
+            parameter.Value = 10;
 
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

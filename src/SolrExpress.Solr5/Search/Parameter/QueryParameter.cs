@@ -1,26 +1,25 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class QueryParameter<TDocument> : BaseQueryParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    public sealed class QueryParameter<TDocument> : IQueryParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public QueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
-            : base(expressionBuilder)
+        private JProperty _result;
+
+        public SearchQuery<TDocument> Value { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
+            container.Add(this._result);
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "limit"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public void Execute()
         {
-            jObject["query"] = new JValue(this.Value.Execute());
+            this._result = new JProperty("query", this.Value.Execute());
         }
     }
 }

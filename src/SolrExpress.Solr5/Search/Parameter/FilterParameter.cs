@@ -1,30 +1,31 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public FilterParameter(IExpressionBuilder<TDocument> expressionBuilder)
-            : base(expressionBuilder)
+        private JToken _result;
+
+        public SearchQuery<TDocument> Query { get; set; }
+        public string TagName { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
+            var jArray = (JArray)container["filter"] ?? new JArray();
+            jArray.Add(this._result);
+            container["filter"] = jArray;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public void Execute()
         {
-            var jArray = (JArray)jObject["filter"] ?? new JArray();
-
-            jArray.Add(ExpressionUtility.GetSolrFilterWithTag(this.Value.Execute(), this.TagName));
-
-            jObject["filter"] = jArray;
+            this._result = ParameterUtil.GetFilterWithTag(this.Query.Execute(), this.TagName);
         }
     }
 }

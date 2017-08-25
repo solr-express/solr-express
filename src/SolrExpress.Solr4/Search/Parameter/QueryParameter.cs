@@ -1,26 +1,25 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class QueryParameter<TDocument> : BaseQueryParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    public sealed class QueryParameter<TDocument> : IQueryParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public QueryParameter(IExpressionBuilder<TDocument> expressionBuilder)
-            : base(expressionBuilder)
+        private string _result;
+
+        public SearchQuery<TDocument> Value { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
+            container.Add(this._result);
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "limit"
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public void Execute()
         {
-            container.Add($"q={this.Value.Execute()}");
+            this._result = $"q={this.Value.Execute()}";
         }
     }
 }

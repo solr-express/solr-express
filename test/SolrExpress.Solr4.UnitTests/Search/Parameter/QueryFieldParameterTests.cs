@@ -1,7 +1,9 @@
-﻿using Xunit;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Solr4.Search.Parameter;
-using System;
 using System.Collections.Generic;
+using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
 {
@@ -9,7 +11,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a QueryFieldParameter instance
-        /// When    Invoking the method "Execute"
+        /// When    Invoking method "Execute"
         /// What    Create a valid string
         /// </summary>
         [Fact]
@@ -17,30 +19,16 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = new QueryFieldParameter<TestDocument>();
-            parameter.Configure("id^10 score~2^20");
+            var parameter = (IQueryFieldParameter<TestDocument>)new QueryFieldParameter<TestDocument>();
+            parameter.Expression("id^10 score~2^20");
 
             // Act
-            parameter.Execute(container);
+            ((ISearchItemExecution<List<string>>)parameter).Execute();
+            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
             Assert.Equal(1, container.Count);
             Assert.Equal("qf=id^10 score~2^20", container[0]);
-        }
-
-        /// <summary>
-        /// Where   Using a QueryFieldParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void QueryFieldParameter002()
-        {
-            // Arrange
-            var parameter = new QueryFieldParameter<TestDocument>();
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
         }
     }
 }

@@ -1,13 +1,17 @@
 language: csharp
-mono: none
-dist: trusty
-sudo: required
-dotnet: 1.0.0-preview3-004056
 solution: SolrExpress.sln
 os: linux
-install:
-  - nuget # lets get version number
-  - nuget restore SolrExpress.sln -Verbosity detailed
-  - nuget install xunit.runners -Version 1.9.2 -OutputDirectory testrunner
+dist: trusty
+sudo: false
+dotnet: 1.1.0
+mono: none
+env:
+  global:
+    - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+    - DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
 script:
-  - xbuild /p:Configuration=Release SolrExpress.sln
+  - dotnet restore
+  - dotnet test ./test/SolrExpress.UnitTests/SolrExpress.UnitTests.csproj --verbosity minimal --framework "netcoreapp1.1" --configuration release
+  - dotnet test ./test/SolrExpress.Solr4.UnitTests/SolrExpress.Solr4.UnitTests.csproj --verbosity minimal --framework "netcoreapp1.1" --configuration release
+  - dotnet test ./test/SolrExpress.Solr5.UnitTests/SolrExpress.Solr5.UnitTests.csproj --verbosity minimal --framework "netcoreapp1.1" --configuration release

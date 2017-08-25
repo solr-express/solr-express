@@ -2,12 +2,16 @@
 
 Notes about releases
 
-## [4.2.7] - 2017-08-13
+## [5.0.0-BETA1] - 2017-08-25
 
-### Bug fix
-- Query extension does not generate correct value ([#216](https://github.com/solr-express/solr-express/issues/216)) (tks [@ca0abinary](https://github.com/ca0abinary) and PR ([#217](https://github.com/solr-express/solr-express/pull/217))
+### **BREAKING CHANGES**
+* See [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for informations about migrations
+* See [issue](https://github.com/solr-express/solr-express/issues/187) for informations about what, why, how
 
----
+Thanks people for ideas and contributions:
+* [hheexx](https://github.com/hheexx)
+* [stanuku](https://github.com/stanuku)
+* [UncleZen](https://github.com/UncleZen)
 
 ## [4.2.6] - 2017-07-13
 

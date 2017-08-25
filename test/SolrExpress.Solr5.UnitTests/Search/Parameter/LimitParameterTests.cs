@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Solr5.Search.Parameter;
 using Xunit;
 
@@ -8,8 +10,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a LimitParameter instance
-        /// When    Invoking the method "Execute"
-        /// What    Create a valid JSON
+        /// When    Invoking method "Execute"
+        /// What    Create correct SOLR instructions
         /// </summary>
         [Fact]
         public void LimitParameter001()
@@ -17,19 +19,18 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""offset"": 10
+                ""limit"": 10
             }");
-            string actual;
-            var jObject = new JObject();
-            var parameter = new OffsetParameter<TestDocument>();
-            parameter.Configure(10);
+            var container = new JObject();
+            var parameter = (ILimitParameter<TestDocument>)new LimitParameter<TestDocument>();
+            parameter.Value = 10;
 
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

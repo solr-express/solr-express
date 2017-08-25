@@ -1,40 +1,49 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public SortParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private string _result;
+
+        public SortParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public bool Ascendent { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-
-            var jValue = (JValue)jObject["sort"] ?? new JValue((string)null);
-
-            var value = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
+            var jValue = (JValue)container["sort"] ?? new JValue((string)null);
 
             if (jValue.Value != null)
             {
-                jValue.Value += $", {value}";
+                jValue.Value += $", {this._result}";
             }
             else
             {
-                jValue.Value = value;
+                jValue.Value = this._result;
             }
 
-            jObject["sort"] = jValue;
+            container["sort"] = jValue;
+        }
+
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            this._result = $"{fieldName} {(this.Ascendent ? "asc" : "desc")}";
         }
     }
 }

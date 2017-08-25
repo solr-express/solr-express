@@ -1,36 +1,69 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
-using SolrExpress.Solr5.Extension.Internal;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchParameterExecute<JObject>
-      where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FacetRangeType]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public FacetRangeParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private JProperty _result;
+
+        public FacetRangeParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
+            this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public string AliasName { get; set; }
+        public bool CountAfter { get; set; }
+        public bool CountBefore { get; set; }
+        public string End { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public string Gap { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+        public string Start { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var facetObject = (JObject)jObject["facet"] ?? new JObject();
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
+        }
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-
+        public void Execute()
+        {
             var array = new List<JProperty>
             {
-                new JProperty("field", this.Excludes.GetSolrFacetWithExcludes(fieldName))
+                new JProperty("field", this.ExpressionBuilder.GetFieldName(this.FieldExpression))
             };
 
-            array.Add(new JProperty("mincount", 1));
+            if (this.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
+
+            if (this.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", this.Minimum.Value));
+            }
 
             if (!string.IsNullOrWhiteSpace(this.Gap))
             {
@@ -63,19 +96,12 @@ namespace SolrExpress.Solr5.Search.Parameter
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            var value = new JProperty(this.AliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
-
-            facetObject.Add(value);
-
-            jObject["facet"] = facetObject;
+            this._result = new JProperty(this.AliasName, new JObject(new JProperty("range", new JObject(array.ToArray()))));
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Search.ParameterValue;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
-using System;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -10,84 +13,72 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     public class FilterParameterTests
     {
         /// <summary>
-        /// Where   Using a FilterParameter instance
-        /// When    Invoking the method "Execute" using 2 instances
-        /// What    Create a valid JSON
+        /// Where   Using a FilterQueryParameter instance
+        /// When    Invoking method "Execute" using 2 instances
+        /// What    Create a valid string
         /// </summary>
         [Fact]
-        public void FilterParameter001()
+        public void FilterQueryParameter001()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""_id_:X"",
-                ""_score_:Y""
+                ""id:\""X\"""",
+                ""score:\""Y\""""
               ]
             }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter1 = new FilterParameter<TestDocument>(expressionBuilder);
-            var parameter2 = new FilterParameter<TestDocument>(expressionBuilder);
-            parameter1.Configure(new Single<TestDocument>(q => q.Id, "X"));
-            parameter2.Configure(new Single<TestDocument>(q => q.Score, "Y"));
-            
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var parameter1 = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            parameter1.Query = new SearchQuery<TestDocument>(expressionBuilder).Field(q => q.Id).AddValue("X");
+            var parameter2 = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            parameter2.Query = new SearchQuery<TestDocument>(expressionBuilder).Field(q => q.Score).AddValue("Y");
+
             // Act
-            parameter1.Execute(jObject);
-            parameter2.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter1).Execute();
+            ((ISearchItemExecution<JObject>)parameter1).AddResultInContainer(container);
+            ((ISearchItemExecution<JObject>)parameter2).Execute();
+            ((ISearchItemExecution<JObject>)parameter2).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
 
         /// <summary>
-        /// Where   Using a FilterParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
+        /// Where   Using a FilterQueryParameter instance
+        /// When    Invoking method "Execute" using tag name
+        /// What    Create a valid string
         /// </summary>
         [Fact]
-        public void FilterParameter002()
-        {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
-        }
-
-        /// <summary>
-        /// Where   Using a FilterParameter instance
-        /// When    Invoking the method "Execute" using tag name
-        /// What    Create a valid JSON
-        /// </summary>
-        [Fact]
-        public void FilterParameter003()
+        public void FilterQueryParameter002()
         {
             // Arrange
             var expected = JObject.Parse(@"
             {
               ""filter"": [
-                ""{!tag=tag1}_id_:X""
+                ""{!tag=tag1}id:\""X\""""
               ]
             }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FilterParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Single<TestDocument>(q => q.Id, "X"), "tag1");
-            
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            var parameter = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            parameter.Query = searchQuery.Field(q => q.Id).AddValue("X");
+            parameter.TagName = "tag1";
+
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

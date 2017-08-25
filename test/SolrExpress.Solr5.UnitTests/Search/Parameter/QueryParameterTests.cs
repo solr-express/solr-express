@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Search.ParameterValue;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
-using System;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -18,40 +21,22 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         public void QueryParameter001()
         {
             // Arrange
-            var expected = JObject.Parse(@"
-            {
-              ""query"": ""_id_:ITEM01""
-            }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Single<TestDocument>(q => q.Id, "ITEM01"));
-            
+            var expected = JObject.Parse("{\"query\": \"id:\\\"ITEM01\\\"\"}");
+            var container = new JObject();
+            var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            parameter.Value = searchQuery.Field(q => q.Id).EqualsTo("ITEM01");
+
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
-        }
-
-        /// <summary>
-        /// Where   Using a QueryParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void QueryParameter002()
-        {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new QueryParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

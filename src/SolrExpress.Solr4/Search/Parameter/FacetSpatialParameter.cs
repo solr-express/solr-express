@@ -1,52 +1,73 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
-using SolrExpress.Solr4.Extension.Internal;
+﻿using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public FacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private readonly List<string> _result = new List<string>();
+
+        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute creation of the parameter "facet field" using spatial formule
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
-        {
-            Checker.IsNullOrWhiteSpace(this.AliasName);
-            Checker.IsNull(this.Expression);
+        public string AliasName { get; set; }
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
 
+        public void AddResultInContainer(List<string> container)
+        {
             if (!container.Contains("facet=true"))
             {
                 container.Add("facet=true");
             }
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-            var formule = ExpressionUtility.GetSolrSpatialFormule(this.FunctionType, fieldName, this.CenterPoint, this.Distance);
-            var facetName = this.Excludes.GetSolrFacetWithExcludes(this.AliasName, formule);
+            container.AddRange(this._result);
+        }
 
-            container.Add($"facet.query={facetName}");
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+            var formule = ParameterUtil.GetSpatialFormule(fieldName, this.FunctionType, this.CenterPoint, this.Distance);
+            var facetName = ParameterUtil.GetFacetName(this.Excludes, this.AliasName, formule);
+
+            this._result.Add($"facet.query={facetName}");
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string dummy;
-
                 Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out dummy);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 
-                container.Add($"f.{this.AliasName}.facet.sort={typeName}");
+                this._result.Add($"f.{this.AliasName}.facet.sort={typeName}");
             }
 
-            container.Add($"f.{this.AliasName}.facet.mincount=1");
+            if (this.Minimum.HasValue)
+            {
+                this._result.Add($"f.{this.AliasName}.facet.mincount={this.Minimum.Value}");
+            }
+
+            if (this.Limit.HasValue)
+            {
+                this._result.Add($"f.{this.AliasName}.facet.limit={this.Limit.Value}");
+            }
         }
     }
 }

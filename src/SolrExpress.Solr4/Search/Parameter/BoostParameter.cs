@@ -1,30 +1,27 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    /// <summary>
-    /// Signatures to use boost parameter
-    /// </summary>
-    public class BoostParameter<TDocument> : BaseBoostParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    public sealed class BoostParameter<TDocument> : IBoostParameter<TDocument>, ISearchItemExecution<List<string>>
+        where TDocument : Document
     {
-        public BoostParameter(IExpressionBuilder<TDocument> expressionBuilder)
-            : base(expressionBuilder)
+        private string _result;
+
+        public BoostFunctionType BoostFunctionType { get; set; }
+        public SearchQuery<TDocument> Query { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
+            container.Add(this._result);
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        public void Execute()
         {
             var boostFunction = this.BoostFunctionType.ToString().ToLower();
-            container.Add($"{boostFunction}={this.Query.Execute()}");
+            this._result = $"{boostFunction}={this.Query.Execute()}";
         }
     }
 }

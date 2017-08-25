@@ -1,8 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Search.ParameterValue;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -11,62 +14,33 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a BoostParameter instance
-        /// When    Invoking the method "Execute" using BF function
-        /// What    Create a valid string
+        /// When    Invoking method "Execute" using happy path configurations
+        /// What    Create correct SOLR instructions
         /// </summary>
-        [Fact]
-        public void BoostParameter001()
+        [Theory]
+        [InlineData(BoostFunctionType.Bf, @"{""params"": {""bf"": ""id""}}")]
+        [InlineData(BoostFunctionType.Boost, @"{""params"": {""boost"": ""id""}}")]
+        public void BoostParameterTheory001(BoostFunctionType boostFunctionType, string expectedJson)
         {
             // Arrange
-            var expected = JObject.Parse(@"
-            {
-                ""params"": {
-                ""bf"": ""id""
-                }
-            }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Bf);
-            
-            // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
-
-            // Assert
-            Assert.Equal(actual, expected.ToString());
-        }
-
-        /// <summary>
-        /// Where   Using a BoostParameter instance
-        /// When    Invoking the method "Execute" using Boost function
-        /// What    Create a valid string
-        /// </summary>
-        [Fact]
-        public void BoostParameter002()
-        {
-            // Arrange
-            var expected = JObject.Parse(@"
-            {
-                ""params"": {
-                ""boost"": ""id""
-                }
-            }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new BoostParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(new Any<TestDocument>("id"), BoostFunctionType.Boost);
+            var expected = JObject.Parse(expectedJson);
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            var parameter = (IBoostParameter<TestDocument>)new BoostParameter<TestDocument>();
+            parameter.BoostFunctionType = boostFunctionType;
+            parameter.Query = searchQuery.Field(q => q.Id);
 
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(actual, expected.ToString());
+            Assert.Equal(1, container.Count);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
     }
 }

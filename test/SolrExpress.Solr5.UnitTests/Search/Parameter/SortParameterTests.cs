@@ -1,9 +1,13 @@
-﻿using Moq;
-using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Utility;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
+using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Solr5.Search.Parameter;
-using System;
+using SolrExpress.Utility;
+using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -12,8 +16,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Execute"
-        /// What    Create a valid JSON
+        /// When    Invoking method "Execute"
+        /// What    Create a valid string
         /// </summary>
         [Fact]
         public void SortParameter001()
@@ -21,85 +25,39 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Arrange
             var expected = JObject.Parse(@"
             {
-              ""sort"": ""_id_ asc""
+              ""sort"": ""id desc""
             }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new SortParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(q => q.Id, true);
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var parameter = (ISortParameter<TestDocument>)new SortParameter<TestDocument>(expressionBuilder);
+            parameter.FieldExpression(q => q.Id);
 
             // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
 
         /// <summary>
         /// Where   Using a SortParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
+        /// When    Checking custom attributes of class
+        /// What    Has FieldMustBeIndexedTrueAttribute
         /// </summary>
         [Fact]
         public void SortParameter002()
         {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new SortParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, true));
-        }
-
-        /// <summary>
-        /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=true
-        /// What    Valid is true
-        /// </summary>
-        [Fact]
-        public void SortParameter003()
-        {
-            // Arrange
-            bool isValid;
-            string errorMessage;
-            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            var parameter = new SortParameter<TestDocumentWithAttribute>(expressionBuilder);
-            parameter.Configure(q => q.Indexed, true);
-
-            // Act
-            parameter.Validate(out isValid, out errorMessage);
+            // Arrange / Act
+            var fieldMustBeIndexedTrueAttribute = typeof(SortParameter<TestDocument>)
+                .GetTypeInfo()
+                .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
 
             // Assert
-            Assert.True(isValid);
-        }
-
-        /// <summary>
-        /// Where   Using a SortParameter instance
-        /// When    Invoking the method "Validate" using field Indexed=false
-        /// What    Valid is true
-        /// </summary>
-        [Fact]
-        public void SortParameter004()
-        {
-            // Arrange
-            bool isValid;
-            string errorMessage;
-            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            var parameter = new SortParameter<TestDocumentWithAttribute>(expressionBuilder);
-            parameter.Configure(q => q.NotIndexed, true);
-
-            // Act
-            parameter.Validate(out isValid, out errorMessage);
-
-            // Assert
-            Assert.False(isValid);
-            Assert.Equal(Resource.FieldMustBeIndexedTrueToBeUsedInASortException, errorMessage);
+            Assert.NotNull(fieldMustBeIndexedTrueAttribute);
         }
     }
 }

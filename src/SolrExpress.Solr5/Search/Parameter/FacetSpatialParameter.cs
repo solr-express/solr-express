@@ -1,58 +1,78 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
-using SolrExpress.Solr5.Extension.Internal;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetSpatialParameter<TDocument> : BaseFacetSpatialParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [FieldMustBeIndexedTrue]
+    public sealed class FacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public FacetSpatialParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private JProperty _result;
+
+        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute creation of the parameter "facet field" using spatial formule
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public string AliasName { get; set; }
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public string[] Excludes { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
+        public int? Limit { get; set; }
+        public int? Minimum { get; set; }
+        public FacetSortType? SortType { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var facetObject = (JObject)jObject["facet"] ?? new JObject();
+            var jObj = (JObject)container["facet"] ?? new JObject();
+            jObj.Add(this._result);
+            container["facet"] = jObj;
+        }
 
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
-
-            var formule = ExpressionUtility.GetSolrSpatialFormule(
+        public void Execute()
+        {
+            var formule = ParameterUtil.GetSpatialFormule(
+                this.ExpressionBuilder.GetFieldName(this.FieldExpression),
                 this.FunctionType,
-                fieldName,
                 this.CenterPoint,
                 this.Distance);
 
             var array = new List<JProperty>
             {
-                new JProperty("q", this.Excludes.GetSolrFacetWithExcludes(formule))
+                new JProperty("q", formule)
             };
 
-            array.Add(new JProperty("mincount", 1));
+            if (this.Excludes?.Any() ?? false)
+            {
+                var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
+                array.Add(new JProperty("domain", excludeValue));
+            }
+
+            if (this.Minimum.HasValue)
+            {
+                array.Add(new JProperty("mincount", this.Minimum.Value));
+            }
 
             if (this.SortType.HasValue)
             {
-                string typeName;
-                string sortName;
-
-                ExpressionUtility.GetSolrFacetSort(this.SortType.Value, out typeName, out sortName);
+                ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string sortName);
 
                 array.Add(new JProperty("sort", new JObject(new JProperty(typeName, sortName))));
             }
 
-            var jProperty = new JProperty(this.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
-
-            facetObject.Add(jProperty);
-
-            jObject["facet"] = facetObject;
+            this._result = new JProperty(this.AliasName, new JObject(new JProperty("query", new JObject(array.ToArray()))));
         }
     }
 }

@@ -1,20 +1,24 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class OffsetParameter<TDocument> : BaseOffsetParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    public sealed class OffsetParameter<TDocument> : IOffsetParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        /// <summary>
-        /// Execute the creation of the parameter "offset"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        private JProperty _result;
+
+        public long Value { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            jObject["offset"] = new JValue(this.Value);
+            container.Add(this._result);
+        }
+
+        public void Execute()
+        {
+            this._result = new JProperty("offset", this.Value);
         }
     }
 }

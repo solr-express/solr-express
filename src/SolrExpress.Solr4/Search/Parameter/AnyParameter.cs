@@ -1,20 +1,27 @@
-﻿using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
+﻿using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class AnyParameter<TDocument> : BaseAnyParameter<TDocument>, ISearchParameterExecute<List<string>>
-        where TDocument : IDocument
+    [AllowMultipleInstances]
+    [UseAnyThanSpecificParameterRather]
+    public sealed class AnyParameter : IAnyParameter, ISearchItemExecution<List<string>>
     {
-        /// <summary>
-        /// Execute the creation of the parameter
-        /// </summary>
-        /// <param name="container">Container to parameters to request to SOLR</param>
-        public void Execute(List<string> container)
+        private string _result;
+
+        public string Name { get; set; }
+        public string Value { get; set; }
+
+        public void AddResultInContainer(List<string> container)
         {
-            container.Add($"{this.Name}={this.Value}");
+            container.Add(this._result);
+        }
+
+        public void Execute()
+        {
+            this._result = $"{this.Name}={this.Value}";
         }
     }
 }

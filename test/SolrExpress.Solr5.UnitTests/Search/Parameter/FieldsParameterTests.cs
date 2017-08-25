@@ -1,10 +1,15 @@
-﻿using Moq;
-using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Utility;
+﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
+using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -13,8 +18,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
     {
         /// <summary>
         /// Where   Using a FieldsParameter instance
-        /// When    Invoking the method "Execute" using 2 instances
-        /// What    Create a valid JSON
+        /// When    Invoking method "Execute" using 2 instances
+        /// What    Create a valid string
         /// </summary>
         [Fact]
         public void FieldsParameter001()
@@ -23,161 +28,44 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var expected = JObject.Parse(@"
             {
               ""fields"": [
-                ""_id_"",
-                ""_score_""
+                ""id"",
+                ""score""
               ]
             }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter1 = new FieldsParameter<TestDocument>(expressionBuilder);
-            var parameter2 = new FieldsParameter<TestDocument>(expressionBuilder);
-            parameter1.Configure(q => q.Id);
-            parameter2.Configure(q => q.Score);
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var parameter = (IFieldsParameter<TestDocument>)new FieldsParameter<TestDocument>(expressionBuilder);
+            parameter.FieldExpressions = new Expression<Func<TestDocument, object>>[] {
+                q => q.Id,
+                q => q.Score
+            };
 
             // Act
-            parameter1.Execute(jObject);
-            parameter2.Execute(jObject);
-            actual = jObject.ToString();
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
+            Assert.Equal(expected.ToString(), container.ToString());
         }
 
         /// <summary>
         /// Where   Using a FieldsParameter instance
-        /// When    Invoking the method "Execute" using 1 instance and 2 expressions
-        /// What    Create a valid string
+        /// When    Checking custom attributes of class
+        /// What    Has FieldMustBeStoredTrueAttribute
         /// </summary>
         [Fact]
         public void FieldsParameter002()
         {
-            // Arrange
-            var expected = JObject.Parse(@"
-            {
-              ""fields"": [
-                ""_id_"",
-                ""_score_""
-              ]
-            }");
-            string actual;
-            var jObject = new JObject();
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FieldsParameter<TestDocument>(expressionBuilder);
-            parameter.Configure(q => q.Id, q => q.Score);
-
-            // Act
-            parameter.Execute(jObject);
-            actual = jObject.ToString();
+            // Arrange / Act
+            var fieldMustBeIndexedTrueAttribute = typeof(FieldsParameter<TestDocument>)
+                .GetTypeInfo()
+                .GetCustomAttribute<FieldMustBeStoredTrueAttribute>(true);
 
             // Assert
-            Assert.Equal(expected.ToString(), actual);
-        }
-
-        /// <summary>
-        /// Where   Using a FieldsParameter instance
-        /// When    Create the instance with an expression using a field indicated with "index=false" and invoke Validate method
-        /// What    Returns valid=false
-        /// </summary>
-        [Fact]
-        public void FieldsParameter003()
-        {
-            // Arrange
-            bool actual;
-            string dummy;
-            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(expressionBuilder);
-            parameter.Configure(q => q.Stored, q => q.NotStored);
-
-            // Act
-            parameter.Validate(out actual, out dummy);
-
-            // Assert
-            Assert.False(actual);
-        }
-
-        /// <summary>
-        /// Where   Using a FieldListParameter instance
-        /// When    Create the instance with null
-        /// What    Throws ArgumentNullException
-        /// </summary>
-        [Fact]
-        public void FieldsParameter004()
-        {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FieldsParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null));
-        }
-
-        /// <summary>
-        /// Where   Using a FieldListParameter instance
-        /// When    Create the instance with empty collection
-        /// What    Throws ArgumentException
-        /// </summary>
-        [Fact]
-        public void FieldsParameter005()
-        {
-            // Arrange
-            var expressionCache = new ExpressionCache<TestDocument>();
-            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-            var parameter = new FieldsParameter<TestDocument>(expressionBuilder);
-
-            // Act / Assert
-            Assert.Throws<ArgumentException>(() => parameter.Configure(new Expression<Func<TestDocument, object>>[] { }));
-        }
-
-        /// <summary>
-        /// Where   Using a FieldsParameter instance
-        /// When    Invoking the method "Validate" using field Store=true
-        /// What    Valid is true
-        /// </summary>
-        [Fact]
-        public void FieldsParameter006()
-        {
-            // Arrange
-            bool isValid;
-            string errorMessage;
-            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(expressionBuilder);
-            parameter.Configure(q => q.Stored);
-
-            // Act
-            parameter.Validate(out isValid, out errorMessage);
-
-            // Assert
-            Assert.True(isValid);
-        }
-
-        /// <summary>
-        /// Where   Using a FieldsParameter instance
-        /// When    Invoking the method "Validate" using field Store=false
-        /// What    Valid is true
-        /// </summary>
-        [Fact]
-        public void FieldsParameter007()
-        {
-            // Arrange
-            bool isValid;
-            string errorMessage;
-            var expressionCache = new ExpressionCache<TestDocumentWithAttribute>();
-            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAttribute>)new ExpressionBuilder<TestDocumentWithAttribute>(expressionCache);
-            var parameter = new FieldsParameter<TestDocumentWithAttribute>(expressionBuilder);
-            parameter.Configure(q => q.NotStored);
-
-            // Act
-            parameter.Validate(out isValid, out errorMessage);
-
-            // Assert
-            Assert.False(isValid);
-            Assert.Equal(Resource.FieldMustBeStoredTrueToBeUsedInFieldsException, errorMessage);
+            Assert.NotNull(fieldMustBeIndexedTrueAttribute);
         }
     }
 }

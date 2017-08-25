@@ -1,37 +1,49 @@
 ﻿using Newtonsoft.Json.Linq;
-using SolrExpress.Core;
-using SolrExpress.Core.Search;
-using SolrExpress.Core.Search.Parameter;
-using SolrExpress.Core.Utility;
+using SolrExpress.Builder;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Utility;
+using System;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class SpatialFilterParameter<TDocument> : BaseSpatialFilterParameter<TDocument>, ISearchParameterExecute<JObject>
-        where TDocument : IDocument
+    [FieldMustBeIndexedTrue]
+    public sealed class SpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, ISearchItemExecution<JObject>
+        where TDocument : Document
     {
-        public SpatialFilterParameter(IExpressionBuilder<TDocument> expressionBuilder) : base(expressionBuilder)
+        private JProperty _result;
+
+        public SpatialFilterParameter(ExpressionBuilder<TDocument> expressionBuilder)
         {
+            this.ExpressionBuilder = expressionBuilder;
         }
 
-        /// <summary>
-        /// Execute the creation of the parameter "sort"
-        /// </summary>
-        /// <param name="jObject">JSON object with parameters to request to SOLR</param>
-        public void Execute(JObject jObject)
+        public GeoCoordinate CenterPoint { get; set; }
+        public decimal Distance { get; set; }
+        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
+        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
+        public SpatialFunctionType FunctionType { get; set; }
+
+        public void AddResultInContainer(JObject container)
         {
-            var fieldName = this._expressionBuilder.GetFieldNameFromExpression(this.Expression);
+            var jObj = (JObject)container["params"] ?? new JObject();
+            jObj.Add(this._result);
+            container["params"] = jObj;
+        }
 
-            var jObj = (JObject)jObject["params"] ?? new JObject();
+        public void Execute()
+        {
+            var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
 
-            var formule = ExpressionUtility.GetSolrSpatialFormule(
-                this.FunctionType,
+            var formule = ParameterUtil.GetSpatialFormule(
                 fieldName,
+                this.FunctionType,
                 this.CenterPoint,
                 this.Distance);
 
-            jObj.Add(new JProperty("fq", formule));
-
-            jObject["params"] = jObj;
+            this._result = new JProperty("fq", formule);
         }
     }
 }
