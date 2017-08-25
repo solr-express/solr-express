@@ -35,7 +35,7 @@ namespace SolrExpress.Benchmarks.Helper
                 .ServiceProvider
                 .AddTransient<IAnyParameter, FakeAnyParameter>()
                 .AddTransient<IAtomicUpdate<TDocument>>(new Mock<IAtomicUpdate<TDocument>>().Object)
-                .AddTransient<IAtomicDelete<TDocument>>(new Mock<IAtomicDelete<TDocument>>().Object)
+                .AddTransient<IAtomicDelete>(new Mock<IAtomicDelete>().Object)
                 .AddTransient<IBoostParameter<TDocument>>(new Mock<IBoostParameter<TDocument>>().Object)
                 .AddTransient<IDefaultFieldParameter<TDocument>>(new Mock<IDefaultFieldParameter<TDocument>>().Object)
                 .AddTransient<IFacetFieldParameter<TDocument>>(new Mock<IFacetFieldParameter<TDocument>>().Object)

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Solr4.Search.Parameter;
@@ -9,14 +10,14 @@ using SolrExpress.Solr4.Search.Result;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using SolrExpress.Options;
+using System.Text;
 
 namespace SolrExpress.Benchmarks.Solr4.Search.Result
 {
     public class FacetsResultBenchmarks
     {
         private List<ISearchParameter> _searchParameters;
-        private string _jsonPlainText;
+        private Stream _jsonStream;
         private IFacetsResult<TestDocument> _result;
 
         [Params("Field", "Range", "Query")]
@@ -50,7 +51,8 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(FacetsResultBenchmarks).GetTypeInfo().Assembly;
-            this._jsonPlainText = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr4.Search.Result.FacetsResultBenchmarks_{this.FacetTypes}{this.ElementsCount}.json");
+            var jsonPlainText = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr4.Search.Result.FacetsResultBenchmarks_{this.FacetTypes}{this.ElementsCount}.json");
+            this._jsonStream = new MemoryStream(Encoding.GetEncoding(0).GetBytes(jsonPlainText));
         }
 
         /// <summary>
@@ -61,7 +63,7 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
         [Benchmark(Description = "Solr4.Search.Result.FacetsResult")]
         public void Execute()
         {
-            var jsonReader = new JsonTextReader(new StringReader(this._jsonPlainText));
+            var jsonReader = new JsonTextReader(new StreamReader(this._jsonStream));
 
             while (jsonReader.Read())
             {

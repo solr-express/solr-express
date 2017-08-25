@@ -18,13 +18,13 @@ namespace SolrExpress.Benchmarks
                 .With(StatisticColumn.AllStatistics)
                 .With(ExecutionValidator.FailOnError)
                 //.With(Job.Dry);
-                .With(Job.Default.With(Runtime.Core))
+                //.With(Job.Default.With(Runtime.Core))
                 .With(Job.Default.With(Runtime.Clr));
 
             BenchmarkRunner.Run<Core.DocumentSearchBenchmarks>(config);
 
-            BenchmarkRunner.Run<Solr4.Search.Result.DocumentResultBenchmarks>(config);
-            BenchmarkRunner.Run<Solr4.Search.Result.FacetsResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Search.Result.DocumentResultBenchmarks>(config);
+            //BenchmarkRunner.Run<Solr4.Search.Result.FacetsResultBenchmarks>(config);
 
             BenchmarkRunner.Run<Solr5.Search.Result.DocumentResultBenchmarks>(config);
             BenchmarkRunner.Run<Solr5.Search.Result.FacetsResultBenchmarks>(config);

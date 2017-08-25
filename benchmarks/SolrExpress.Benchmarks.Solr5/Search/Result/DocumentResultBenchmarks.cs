@@ -6,13 +6,14 @@ using SolrExpress.Search.Result;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace SolrExpress.Benchmarks.Solr5.Search.Result
 {
     public class DocumentResultBenchmarks
     {
         private List<ISearchParameter> _searchParameters;
-        private string _jsonPlainText;
+        private Stream _jsonStream;
         private IDocumentResult<TestDocument> _result;
 
         [Params(10, 100, 500, 1000)]
@@ -31,20 +32,21 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(DocumentResultBenchmarks).GetTypeInfo().Assembly;
-            this._jsonPlainText = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr5.Search.Result.DocumentResultBenchmarks{this.ElementsCount}.json");
+            var jsonPlainText = EmbeddedResourceHelper.GetByName(assembly, $"SolrExpress.Benchmarks.Solr5.Search.Result.DocumentResultBenchmarks{this.ElementsCount}.json");
+            this._jsonStream = new MemoryStream(Encoding.GetEncoding(0).GetBytes(jsonPlainText));
         }
 
         [Benchmark(Description = "Solr5.Search.Result.DocumentResult")]
         public void Execute()
         {
-            var jsonReader = new JsonTextReader(new StringReader(this._jsonPlainText));
+            var jsonReader = new JsonTextReader(new StreamReader(this._jsonStream));
 
             while (jsonReader.Read())
             {
                 this._result.Execute(
                     this._searchParameters,
-                    jsonReader.TokenType, 
-                    jsonReader.Path, 
+                    jsonReader.TokenType,
+                    jsonReader.Path,
                     jsonReader);
             }
         }
