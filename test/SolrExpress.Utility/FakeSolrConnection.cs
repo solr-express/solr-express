@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -51,7 +52,7 @@ namespace SolrExpress.Utility
             return (SolrFieldAttribute)attrs.FirstOrDefault(q => q is SolrFieldAttribute);
         }
 
-        string ISolrConnection.Get(string handler, List<string> data)
+        public string Get(string handler, List<string> data)
         {
             if (handler.Equals("schema/fields"))
             {
@@ -59,7 +60,7 @@ namespace SolrExpress.Utility
 #if NETCORE
                 .GetTypeInfo()
 #endif
-                .GetProperties();
+                    .GetProperties();
 
                 var documentParameter = Expression.Parameter(typeof(TDocument), "document");
 
@@ -105,7 +106,17 @@ namespace SolrExpress.Utility
             throw new NotImplementedException();
         }
 
-        string ISolrConnection.Post(string handler, JObject data)
+        public Stream GetStream(string handler, List<string> data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Post(string handler, JObject data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Stream PostStream(string handler, JObject data)
         {
             throw new NotImplementedException();
         }

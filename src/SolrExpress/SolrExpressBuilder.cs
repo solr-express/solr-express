@@ -49,7 +49,7 @@ namespace SolrExpress
         /// <summary>
         /// Options to control SolrExpress behavior
         /// </summary>
-        internal SolrExpressOptions Options => new SolrExpressOptions();
+        internal SolrExpressOptions Options { get; } = new SolrExpressOptions();
 
         /// <summary>
         /// Services provider

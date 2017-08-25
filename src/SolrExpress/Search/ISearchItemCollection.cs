@@ -39,11 +39,18 @@ namespace SolrExpress.Search
         bool Contains(Type searchItemType);
 
         /// <summary>
-        /// Add items to collection
+        /// Add item to collection
         /// </summary>
         /// <param name="item">Item to add in collection</param>
         /// <returns>Itself</returns>
         void Add(ISearchItem item);
+
+        /// <summary>
+        /// Add items to collection
+        /// </summary>
+        /// <param name="items">Items to add in collection</param>
+        /// <returns>Itself</returns>
+        void AddRange(IEnumerable<ISearchItem> items);
 
         /// <summary>
         /// Execute items and get query instructions

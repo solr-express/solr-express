@@ -1,4 +1,5 @@
-﻿using SolrExpress.Search.Parameter;
+﻿using SolrExpress.Options;
+using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
 using SolrExpress.Search.Query;
@@ -7,7 +8,6 @@ using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using SolrExpress.Options;
 
 //TODO: Add unit tests
 namespace SolrExpress.Search
@@ -191,9 +191,15 @@ namespace SolrExpress.Search
         {
             Checker.IsNull(items);
 
-            foreach (var item in items)
+            if (items.Any())
             {
-                this.Add(item);
+                foreach (var item in items)
+                {
+                    Checker.IsNull(item);
+                    this.ValidateSearchItem(item);
+                }
+
+                this._searchItemCollection.AddRange(items);
             }
 
             return this;
@@ -231,7 +237,11 @@ namespace SolrExpress.Search
             var searchResultBuilder = this.ServiceProvider.GetService<SearchResultBuilder<TDocument>>();
             searchResultBuilder.Configure(jsonReader, searchParameters, searchresults);
 
-            return searchResultBuilder.Execute();
+            var searchResult = searchResultBuilder.Execute();
+
+            jsonReader.Close();
+
+            return searchResult;
         }
     }
 }

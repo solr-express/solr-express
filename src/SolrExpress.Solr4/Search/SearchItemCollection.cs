@@ -5,6 +5,7 @@ using SolrExpress.Search.Interceptor;
 using SolrExpress.Search.Parameter;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SolrExpress.Solr4.Search
@@ -35,11 +36,15 @@ namespace SolrExpress.Solr4.Search
             var container = new List<string>();
             searchParameters.ForEach(q => ((ISearchItemExecution<List<string>>)q).AddResultInContainer(container));
 
-            var json = this._solrConnection.Get(requestHandler, container);
+            if (resultInterceptors.Any())
+            {
+                var jsonPlainText = this._solrConnection.Get(requestHandler, container);
+                resultInterceptors.ForEach(q => q.Execute(requestHandler, ref jsonPlainText));
+                return new JsonTextReader(new StringReader(jsonPlainText));
+            }
 
-            resultInterceptors.ForEach(q => q.Execute(requestHandler, ref json));
-
-            return new JsonTextReader(new StringReader(json));
+            var jsonStream = this._solrConnection.GetStream(requestHandler, container);
+            return new JsonTextReader(new StreamReader(jsonStream));
         }
     }
 }
