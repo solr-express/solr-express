@@ -28,7 +28,7 @@ namespace SolrExpress.Options
         /// <summary>
         /// Options to security connection
         /// </summary>
-        public SecurityOptions Security { get; set; } = new SecurityOptions();
+        public SecurityOptions Security { get; } = new SecurityOptions();
 
         /// <summary>
         /// Global prefix name in dynamic field configurations
@@ -43,16 +43,16 @@ namespace SolrExpress.Options
         /// <summary>
         /// Global result interceptor used in all queryable intance
         /// </summary>
-        public List<IResultInterceptor> GlobalResultInterceptors => new List<IResultInterceptor>();
+        public List<IResultInterceptor> GlobalResultInterceptors { get; } = new List<IResultInterceptor>();
 
         /// <summary>
         /// Global parameter used in all queryable intance
         /// </summary>
-        public List<ISearchParameter> GlobalParameters => new List<ISearchParameter>();
+        public List<ISearchParameter> GlobalParameters { get; } = new List<ISearchParameter>();
 
         /// <summary>
         /// Global change behaviour used in all queryable intance
         /// </summary>
-        public List<IChangeBehaviour> GlobalChangeBehaviours => new List<IChangeBehaviour>();
+        public List<IChangeBehaviour> GlobalChangeBehaviours { get; } = new List<IChangeBehaviour>();
     }
 }

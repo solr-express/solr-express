@@ -16,7 +16,7 @@ namespace SolrExpress.Search.Result
         private bool _withElapsedTime;
         private bool _withDocumentCount;
 
-        public Information Data => new Information();
+        public Information Data { get; } = new Information();
 
         public void Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
