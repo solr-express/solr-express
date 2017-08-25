@@ -2,7 +2,7 @@
 
 Notes about releases
 
-## [5.0.0] - 2017-08-XX
+## [5.0.0-BETA1] - 2017-08-25
 
 ### **BREAKING CHANGES**
 * See [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for informations about migrations
