@@ -1,11 +1,8 @@
 ﻿using Moq;
-using Newtonsoft.Json;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Update;
-using System.Collections.Generic;
-using System.IO;
 
 namespace SolrExpress.Benchmarks.Helper
 {
@@ -19,18 +16,6 @@ namespace SolrExpress.Benchmarks.Helper
         public static SolrExpressBuilder<TDocument> UseSolrFake<TDocument>(this SolrExpressBuilder<TDocument> solrExpressBuilder)
             where TDocument : Document
         {
-            var searchItemCollection = new Mock<ISearchItemCollection<TDocument>>();
-            searchItemCollection
-                .Setup(q => q.Execute(It.IsAny<string>()))
-                .Returns(new JsonTextReader(new StringReader("{}")));
-            searchItemCollection
-                .Setup(q => q.GetSearchParameters())
-                .Returns(new List<ISearchParameter>());
-            searchItemCollection
-                .Setup(q => q.GetSearchResults())
-                .Returns(new List<ISearchResult<TDocument>>());
-
-
             solrExpressBuilder
                 .ServiceProvider
                 .AddTransient<IAnyParameter, FakeAnyParameter>()
@@ -52,7 +37,7 @@ namespace SolrExpress.Benchmarks.Helper
                 .AddTransient<IQueryFieldParameter<TDocument>>(new Mock<IQueryFieldParameter<TDocument>>().Object)
                 .AddTransient<IQueryParameter<TDocument>>(new Mock<IQueryParameter<TDocument>>().Object)
                 .AddTransient<IQueryParserParameter<TDocument>>(new Mock<IQueryParserParameter<TDocument>>().Object)
-                .AddTransient<ISearchItemCollection<TDocument>>(searchItemCollection.Object)
+                .AddTransient<ISearchItemCollection<TDocument>>(new FakeSearchItemCollection<TDocument>())
                 .AddTransient<ISortParameter<TDocument>>(new Mock<ISortParameter<TDocument>>().Object)
                 .AddTransient<ISortRandomlyParameter<TDocument>>(new Mock<ISortRandomlyParameter<TDocument>>().Object)
                 .AddTransient<ISpatialFilterParameter<TDocument>>(new Mock<ISpatialFilterParameter<TDocument>>().Object)
