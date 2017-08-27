@@ -44,16 +44,11 @@ To start to use SolrExpress, just follow follow steps:
 			.Filter(d => d.Id, "205325092")
 			.Execute();
 
-		IEnumerable<TechProduct> documents;
-		IEnumerable<FacetKeyValue> facets;
-		Information information;
-
-		// Get general information about search, documents and facets from search result
-		searchResult
-			.GetInformation(out information)
-			.GetDocument(out documents)
-			.GetFacets(out facets);
-
+        // Get general information about search, documents and facets from search result
+        searchResult
+            .Information(out var information)
+            .Document(out var documents)
+            .Facets(out var facets);
 	}
 ```
 
