@@ -15,6 +15,10 @@ ECHO BUILD PACKAGES
 dotnet pack src/SolrExpress/SolrExpress.csproj --configuration release --output ..\..
 dotnet pack src/SolrExpress.Solr4/SolrExpress.Solr4.csproj --configuration release --output ..\..
 dotnet pack src/SolrExpress.Solr5/SolrExpress.Solr5.csproj --configuration release --output ..\..
+dotnet pack src/SolrExpress.DI.Autofac/SolrExpress.DI.Autofac.csproj --configuration release --output ..\..
+dotnet pack src/SolrExpress.DI.CoreClr/SolrExpress.DI.CoreClr.csproj --configuration release --output ..\..
+dotnet pack src/SolrExpress.DI.Ninject/SolrExpress.DI.Ninject.csproj --configuration release --output ..\..
+dotnet pack src/SolrExpress.DI.SimpleInjector/SolrExpress.DI.SimpleInjector.csproj --configuration release --output ..\..
 
 pause
 

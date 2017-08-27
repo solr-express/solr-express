@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{622830E6-D
 		docs\index.md = docs\index.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{97836803-3E29-4119-ACE3-57B3D068214F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{97836803-3E29-4119-ACE3-57B3D068214F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{D5B8D271-B71A-4F85-973B-F50CDAEA6662}"
 	ProjectSection(SolutionItems) = preProject
@@ -50,11 +50,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.CoreClr", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.SimpleInjector", "src\SolrExpress.DI.SimpleInjector\SolrExpress.DI.SimpleInjector.csproj", "{10B006AF-C700-472E-ABF9-26CB69DFBB47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.SingleContext", "example\SimpleUse.SingleContext\SimpleUse.SingleContext.csproj", "{D0078A76-907E-490F-A38D-779AFEB94860}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.UnitTests", "test\SolrExpress.UnitTests\SolrExpress.UnitTests.csproj", "{9E18F426-EB06-4F12-BE8A-C5940F5B3680}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.Net46WithSimpleInjector", "example\SimpleUse.Net46WithSimpleInjector\SimpleUse.Net46WithSimpleInjector.csproj", "{A49E5D94-8929-4134-837B-443B89698229}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.Net46WithSimpleInjector", "sample\SimpleUse.Net46WithSimpleInjector\SimpleUse.Net46WithSimpleInjector.csproj", "{A49E5D94-8929-4134-837B-443B89698229}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.UnitTests", "test\SolrExpress.Solr5.UnitTests\SolrExpress.Solr5.UnitTests.csproj", "{11062870-0B49-445F-8BCD-89D315E888F7}"
 EndProject
@@ -64,7 +62,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.Autofac", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.DI.Ninject", "src\SolrExpress.DI.Ninject\SolrExpress.DI.Ninject.csproj", "{1C30862A-957B-4EEC-B305-2C67B8A49B4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "example\SimpleUse.NetCore\SimpleUse.NetCore.csproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleUse.NetCore", "sample\SimpleUse.NetCore\SimpleUse.NetCore.csproj", "{372F8EC7-4E47-4FD4-AA6A-325104F30CD4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Utility", "test\SolrExpress.Utility\SolrExpress.Utility.csproj", "{E325E82D-1522-456D-B1A0-463E8E8FF24E}"
 EndProject
@@ -88,13 +86,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breakin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks", "benchmarks\SolrExpress.Benchmarks\SolrExpress.Benchmarks.csproj", "{C21CBC59-600E-44A4-B767-6E5B0567AE40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Benchmarks.Helper", "benchmarks\SolrExpress.Benchmarks.Helper\SolrExpress.Benchmarks.Helper.csproj", "{1F2B8D42-1666-4B24-832E-7B4F877D560E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks.Helper", "benchmarks\SolrExpress.Benchmarks.Helper\SolrExpress.Benchmarks.Helper.csproj", "{1F2B8D42-1666-4B24-832E-7B4F877D560E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Benchmarks.Core", "benchmarks\SolrExpress.Benchmarks.Core\SolrExpress.Benchmarks.Core.csproj", "{A17824F3-B5E5-43AC-9C31-9EDE071E9118}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks.Core", "benchmarks\SolrExpress.Benchmarks.Core\SolrExpress.Benchmarks.Core.csproj", "{A17824F3-B5E5-43AC-9C31-9EDE071E9118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Benchmarks.Solr4", "benchmarks\SolrExpress.Benchmarks.Solr4\SolrExpress.Benchmarks.Solr4.csproj", "{A20B0B92-DB87-40B6-838E-2999472DF40D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks.Solr4", "benchmarks\SolrExpress.Benchmarks.Solr4\SolrExpress.Benchmarks.Solr4.csproj", "{A20B0B92-DB87-40B6-838E-2999472DF40D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolrExpress.Benchmarks.Solr5", "benchmarks\SolrExpress.Benchmarks.Solr5\SolrExpress.Benchmarks.Solr5.csproj", "{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks.Solr5", "benchmarks\SolrExpress.Benchmarks.Solr5\SolrExpress.Benchmarks.Solr5.csproj", "{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleUse.MultiContext", "sample\SimpleUse.MultiContext\SimpleUse.MultiContext.csproj", "{EE8E473E-603A-44BF-9B93-B51CC0EF0855}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,10 +122,6 @@ Global
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0078A76-907E-490F-A38D-779AFEB94860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0078A76-907E-490F-A38D-779AFEB94860}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0078A76-907E-490F-A38D-779AFEB94860}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0078A76-907E-490F-A38D-779AFEB94860}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -186,6 +182,10 @@ Global
 		{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE8E473E-603A-44BF-9B93-B51CC0EF0855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE8E473E-603A-44BF-9B93-B51CC0EF0855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE8E473E-603A-44BF-9B93-B51CC0EF0855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE8E473E-603A-44BF-9B93-B51CC0EF0855}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,7 +198,6 @@ Global
 		{7A7E3ED4-DA8A-4D63-92D1-AB1B03B5C4FB} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{A34B0A6E-A958-459B-9CFB-EE6310D78F56} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
 		{10B006AF-C700-472E-ABF9-26CB69DFBB47} = {B5C485F0-CA40-4A37-82CE-C6A7F7E895DF}
-		{D0078A76-907E-490F-A38D-779AFEB94860} = {97836803-3E29-4119-ACE3-57B3D068214F}
 		{9E18F426-EB06-4F12-BE8A-C5940F5B3680} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{A49E5D94-8929-4134-837B-443B89698229} = {97836803-3E29-4119-ACE3-57B3D068214F}
 		{11062870-0B49-445F-8BCD-89D315E888F7} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
@@ -218,6 +217,7 @@ Global
 		{A17824F3-B5E5-43AC-9C31-9EDE071E9118} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 		{A20B0B92-DB87-40B6-838E-2999472DF40D} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 		{8F4BE44B-8E32-41EB-A98B-CD1DCE4E4490} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
+		{EE8E473E-603A-44BF-9B93-B51CC0EF0855} = {97836803-3E29-4119-ACE3-57B3D068214F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F014A41C-6377-4A52-819A-C1E84839BF38}
