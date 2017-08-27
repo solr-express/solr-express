@@ -33,7 +33,7 @@ See more in **[field options by use case](http://wiki.apache.org/solr/FieldOptio
 
 To active/inactive this feature, change your **SolrExpressOptions** and set **FailFast**, like below:
 
-''' csharp
+```csharp
     var options = new SolrExpressOptions
     {
         // ... Other settings
@@ -45,4 +45,4 @@ To active/inactive this feature, change your **SolrExpressOptions** and set **Fa
 			.UseOptions(options) // <-- Use options
 			// ...  Other settings
 			);
-'''
+```
