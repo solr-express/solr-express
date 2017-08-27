@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using SolrExpress;
 using SolrExpress.DI.CoreClr;
-using SolrExpress.Search.Behaviour.Extension;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;
@@ -23,27 +22,28 @@ namespace SimpleUse.NetCore
 
             var techProducts = serviceProvider.GetRequiredService<DocumentCollection<TechProduct>>();
 
-            // Initial search settings (configure to result facet field Categories and filter by field id using value "205325092")
-            var searchResults = techProducts
+            techProducts
                 .Select()
-                .ChangeDynamicFieldBehaviour(q => q.InStock, suffixName: "_xpto")
                 .Fields(d => d.Id, d => d.Manufacturer)
                 .FacetField(d => d.Categories)
-                .Filter(d => d.Id, "205325092")
-                .Execute();
-
-            // Get general information about search, documents and facets from search result
-            searchResults
+                .Execute()
                 .Information(out var information)
                 .Document(out var documents)
                 .Facets(out var facets);
 
-            foreach (var document in documents)
-            {
-                Console.WriteLine(JsonConvert.SerializeObject(document));
+            Console.WriteLine("Informations");
+            Console.WriteLine(JsonConvert.SerializeObject(information, Formatting.Indented));
+            Console.WriteLine(new string('-', 50));
 
-                Console.WriteLine(new string('-', 50));
-            }
+            Console.WriteLine("Documents");
+            Console.WriteLine(JsonConvert.SerializeObject(documents, Formatting.Indented));
+            Console.WriteLine(new string('-', 50));
+
+            Console.WriteLine("Facets");
+            Console.WriteLine(JsonConvert.SerializeObject(facets, Formatting.Indented));
+            Console.WriteLine(new string('-', 50));
+
+            Console.Read();
         }
     }
 }

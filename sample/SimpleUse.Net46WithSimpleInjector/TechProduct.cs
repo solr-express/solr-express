@@ -11,7 +11,7 @@ namespace SimpleUse.Net46WithSimpleInjector
         [SolrField("manu")]
         public string Manufacturer { get; set; }
 
-        [SolrField("manuids")]
+        [SolrField("manu_id_s")]
         public string ManufacturerId { get; set; }
 
         [SolrField("cat")]

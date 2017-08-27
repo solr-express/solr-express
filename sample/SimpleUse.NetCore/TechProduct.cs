@@ -1,7 +1,7 @@
 ﻿using SolrExpress;
 using System;
 
-namespace SimpleUse.SingleContext
+namespace SimpleUse.NetCore
 {
     public class TechProduct : Document
     {
@@ -10,8 +10,8 @@ namespace SimpleUse.SingleContext
 
         [SolrField("manu")]
         public string Manufacturer { get; set; }
-
-        [SolrField("manuids")]
+        
+        [SolrField("manu_id_s")]
         public string ManufacturerId { get; set; }
 
         [SolrField("cat")]
