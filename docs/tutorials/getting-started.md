@@ -4,7 +4,7 @@ To start to use SolrExpress, just follow follow steps:
 
 1. Create a class to represent your collection, extend **Document** class and use attributes to indicate Solr fields.
 
-	```csharp
+```csharp
 	public class TechProductDocument : Document
 	{
 		[SolrField("manu")]
@@ -13,13 +13,13 @@ To start to use SolrExpress, just follow follow steps:
 		[SolrField("store")]
 		public GeoCoordinate StoredAt { get; set; }
 	}
-	```
+```
 
 3. Choose your favorite Dependency Injection provider (SolrExpress.DI.Autofac, SolrExpress.DI.CoreClr, SolrExpress.DI.Ninject or SolrExpress.DI.SimpleInject) and add reference to package
 4. Add reference to correct Solr provider (SolrExpress.Solr4 or SolrExpress.Solr5)
 5. Configure SolrExpress setting Solr host address for **each** collection
 
-	```csharp
+```csharp
 	public void ConfigureServices(SomeDIContainer services)
 	{
 		services
@@ -29,11 +29,11 @@ To start to use SolrExpress, just follow follow steps:
 				// This extension is from SolrExpress.Solr5
 				.UseSolr5()); // Or UseSolr4 from SolrExpress.Solr4
 	}
-	```
+```
 
 6. Configue search parameters, execute, read results and enjoy :)
 
-	```
+```csharp
 	public void MyAmazingSearch(DocumentCollection<TechProduct> techProducts)
 	{
 		// Initial search settings (configure to result facet field Categories and filter by field id using value "205325092")
@@ -55,7 +55,7 @@ To start to use SolrExpress, just follow follow steps:
 			.GetFacets(out facets);
 
 	}
-	```
+```
 
 **NOTES**
 

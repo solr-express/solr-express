@@ -10,21 +10,21 @@ Use authentication to connect with SOLR server
 
 2. Change your **SolrExpressOptions** and set **SecurityOptions**, like below:
 
-	```csharp
-		var options = new SolrExpressOptions
+```csharp
+	var options = new SolrExpressOptions
+	{
+		// ... Other settings
+		Security = new SecurityOptions
 		{
-			// ... Other settings
-			Security = new SecurityOptions
-			{
-				AuthenticationType = AuthenticationType.Basic,
-				Password = "<YOUR PASSWORD>",
-				UserName = "<YOUR USER NAME>"
-			}
-		};
+			AuthenticationType = AuthenticationType.Basic,
+			Password = "<YOUR PASSWORD>",
+			UserName = "<YOUR USER NAME>"
+		}
+	};
 
-		services
-			.AddSolrExpress<TechProduct>(builder => builder
-				.UseOptions(options) // <-- Use options
-				// ...  Other settings
-				);
-	```
+	services
+		.AddSolrExpress<TechProduct>(builder => builder
+			.UseOptions(options) // <-- Use options
+			// ...  Other settings
+			);
+```
