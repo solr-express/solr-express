@@ -1,8 +1,8 @@
 # Solr Express
 
-Documentation on getting started with SolrExpress is available at <http://solr-express.readthedocs.io/en/stable//tutorials/getting-started>.
+Documentation on getting started with SolrExpress is available at <http://solr-express.readthedocs.io/en/stable/tutorials/getting-started>.
 
-Tutorials is available at <http://solr-express.readthedocs.io/en/stable//tutorials/getting-started>.
+Tutorials is available at <http://solr-express.readthedocs.io/en/stable/tutorials/getting-started>.
 
 And release notes is available at <http://solr-express.readthedocs.io/en/stable/about/release-notes>.
 

@@ -76,12 +76,23 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr5.IntegrationTests", "test\SolrExpress.Solr5.IntegrationTests\SolrExpress.Solr5.IntegrationTests.csproj", "{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facets", "facets", "{B51E48B1-BB87-4E96-AAF0-583F78EB40AA}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tutorials\facets\field.md = docs\tutorials\facets\field.md
+		docs\tutorials\facets\nested.md = docs\tutorials\facets\nested.md
+		docs\tutorials\facets\query.md.md = docs\tutorials\facets\query.md.md
+		docs\tutorials\facets\range.md = docs\tutorials\facets\range.md
+		docs\tutorials\facets\spatial.md = docs\tutorials\facets\spatial.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "queries", "queries", "{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2}"
+	ProjectSection(SolutionItems) = preProject
+		docs\tutorials\queries\nested.md = docs\tutorials\queries\nested.md
+		docs\tutorials\queries\simple.md = docs\tutorials\queries\simple.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breaking-changes", "{A69F328C-DC28-473D-8869-76D67A4C4D9A}"
 	ProjectSection(SolutionItems) = preProject
-		docs\breaking-changes\version5.md = docs\breaking-changes\version5.md
+		docs\breaking-changes\version-5.md = docs\breaking-changes\version-5.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Benchmarks", "benchmarks\SolrExpress.Benchmarks\SolrExpress.Benchmarks.csproj", "{C21CBC59-600E-44A4-B767-6E5B0567AE40}"

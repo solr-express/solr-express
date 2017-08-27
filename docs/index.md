@@ -1,10 +1,10 @@
 # Solr Express
 
-Documentation on getting started with SolrExpress is available at </tutorials/getting-started>.
+Documentation on getting started with SolrExpress is available at <http://solr-express.readthedocs.io/en/stable/tutorials/getting-started>.
 
-Tutorials is available at </tutorials/getting-started>.
+Tutorials is available at <http://solr-express.readthedocs.io/en/stable/tutorials/getting-started>.
 
-And release notes is available at </about/release-notes/>.
+And release notes is available at <http://solr-express.readthedocs.io/en/stable/about/release-notes>.
 
 [![Travis build status](https://img.shields.io/travis/solr-express/solr-express.svg?label=travis-ci&branch=dev&style=flat-square)](https://travis-ci.org/solr-express/solr-express.svg/branches)
 
