@@ -34,15 +34,13 @@ See more in **[field options by use case](http://wiki.apache.org/solr/FieldOptio
 To active/inactive this feature, change your **SolrExpressOptions** and set **FailFast**, like below:
 
 ```csharp
-    var options = new SolrExpressOptions
-    {
-        // ... Other settings
-		FailFast = true
-    };
-
-    services
+	services
 		.AddSolrExpress<TechProduct>(builder => builder
-			.UseOptions(options) // <-- Use options
+			.UseOptions(options =>
+            {
+				// ... Other settings
+				options.FailFast = true
+            })
 			// ...  Other settings
 			);
 ```

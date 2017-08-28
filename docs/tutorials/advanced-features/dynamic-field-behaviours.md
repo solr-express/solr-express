@@ -17,17 +17,16 @@ Useful when use a unified collection and isolate your tenant by a prefix/suffix 
     2.1.1. Set global settings
 
 ```csharp
-    var options = new SolrExpressOptions
-    {
-        GlobalDynamicFieldPrefix = "my_prefix_",
-        GlobalDynamicFieldSuffix = "_my_suffix"
-    };
-    
-    services
-    	.AddSolrExpress<TechProduct>(builder => builder
-    		.UseOptions(options) // <-- Use options
-    		// ...  Other settings
-    		);
+	services
+		.AddSolrExpress<TechProduct>(builder => builder
+			.UseOptions(options =>
+            {
+				// ... Other settings
+				options.GlobalDynamicFieldPrefix = "my_prefix_",
+				options.GlobalDynamicFieldSuffix = "_my_suffix"
+            })
+			// ...  Other settings
+			);
 ```
 
     2.1.2. Optionally, set global settings for specific field
