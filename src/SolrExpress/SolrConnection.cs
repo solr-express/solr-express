@@ -27,14 +27,14 @@ namespace SolrExpress
         /// Set authentication configurations
         /// </summary>
         /// <param name="url">Uri to configure</param>
-        private void SetAuthentication(Url url)
+        private IFlurlClient SetAuthentication(Url url)
         {
-            // ReSharper disable once SwitchStatementMissingSomeCases
             switch (this._options.Security.AuthenticationType)
             {
                 case AuthenticationType.Basic:
-                    url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
-                    break;
+                    return url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
+                default:
+                    return new FlurlClient(url, true);
             }
         }
 
@@ -45,12 +45,11 @@ namespace SolrExpress
 
             if (data?.Any() ?? false)
             {
-                url.SetQueryParams(data);
+                url = url.SetQueryParams(data);
             }
-
-            this.SetAuthentication(url);
-
-            return url
+            
+            return this
+                .SetAuthentication(url)
                 .GetStringAsync()
                 .Result;
         }
@@ -62,12 +61,11 @@ namespace SolrExpress
 
             if (data?.Any() ?? false)
             {
-                url.SetQueryParams(data);
+                url = url.SetQueryParams(data);
             }
 
-            this.SetAuthentication(url);
-
-            return url
+            return this
+                .SetAuthentication(url)
                 .GetStreamAsync()
                 .Result;
         }
@@ -76,10 +74,9 @@ namespace SolrExpress
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
-
-            this.SetAuthentication(url);
-
-            return url
+            
+            return this
+                .SetAuthentication(url)
                 .PostJsonAsync(data)
                 .ReceiveString()
                 .Result;
@@ -90,9 +87,8 @@ namespace SolrExpress
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
 
-            this.SetAuthentication(url);
-
-            return url
+            return this
+                .SetAuthentication(url)
                 .PostJsonAsync(data)
                 .ReceiveStream()
                 .Result;
