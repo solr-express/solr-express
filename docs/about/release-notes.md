@@ -2,6 +2,10 @@
 
 Notes about releases
 
+## [5.0.0-BETA2] - 2017-08-28
+
+* Minor bug fixes and docs updates
+
 ## [5.0.0-BETA1] - 2017-08-25
 
 ### **BREAKING CHANGES**
