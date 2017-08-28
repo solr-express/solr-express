@@ -75,15 +75,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facets", "facets", "{B51E48
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\facets\field.md = docs\tutorials\facets\field.md
 		docs\tutorials\facets\nested.md = docs\tutorials\facets\nested.md
-		docs\tutorials\facets\query.md.md = docs\tutorials\facets\query.md.md
+		docs\tutorials\facets\query.md = docs\tutorials\facets\query.md
 		docs\tutorials\facets\range.md = docs\tutorials\facets\range.md
 		docs\tutorials\facets\spatial.md = docs\tutorials\facets\spatial.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "queries", "queries", "{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2}"
-	ProjectSection(SolutionItems) = preProject
-		docs\tutorials\queries\nested.md = docs\tutorials\queries\nested.md
-		docs\tutorials\queries\simple.md = docs\tutorials\queries\simple.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breaking-changes", "{A69F328C-DC28-473D-8869-76D67A4C4D9A}"
@@ -114,6 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic-features", "basic-fea
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\basic-features\fail-fast.md = docs\tutorials\basic-features\fail-fast.md
 		docs\tutorials\basic-features\global-settings.md = docs\tutorials\basic-features\global-settings.md
+		docs\tutorials\basic-features\queries.md = docs\tutorials\basic-features\queries.md
 	EndProjectSection
 EndProject
 Global
@@ -230,7 +225,6 @@ Global
 		{5FE572CD-A4FE-468A-9596-EF705F0C24D3} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{A86B4CA6-AE1D-49AC-B0A8-685B2BAEF2B7} = {32F031EB-53BE-4E6F-A909-82F09B392FBA}
 		{B51E48B1-BB87-4E96-AAF0-583F78EB40AA} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
-		{68F0C39C-DFCE-4F8F-8A8B-A8A3AB6215E2} = {0E6FFAE4-0304-4453-A61D-52D24802E0CF}
 		{A69F328C-DC28-473D-8869-76D67A4C4D9A} = {622830E6-DFA3-41A7-8D6C-68EA4254E7E4}
 		{C21CBC59-600E-44A4-B767-6E5B0567AE40} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}
 		{1F2B8D42-1666-4B24-832E-7B4F877D560E} = {0A60AC6A-BBA5-4D35-B85C-92B36513C72B}

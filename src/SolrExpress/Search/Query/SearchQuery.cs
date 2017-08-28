@@ -192,7 +192,7 @@ namespace SolrExpress.Search.Query
         }
 
         /// <summary>
-        /// Create a search query to find all informed values (conditional OR)
+        /// Create a search query to find some of informed values (conditional OR)
         /// </summary>
         /// <param name="values">Values used in search</param>
         /// <returns>Search query configured</returns>
@@ -336,7 +336,7 @@ namespace SolrExpress.Search.Query
         }
 
         /// <summary>
-        /// Create a search query expression using isolating in a group
+        /// Create a search query expression isolating in a group
         /// </summary>
         /// <param name="searchQueryExtend">Search query used inside group AND</param>
         /// <returns>Search query configured</returns>
