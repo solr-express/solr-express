@@ -1,4 +1,5 @@
-﻿using SolrExpress.Options;
+﻿using System;
+using SolrExpress.Options;
 
 namespace SolrExpress
 {
@@ -16,20 +17,11 @@ namespace SolrExpress
         /// <summary>
         /// Use indicated options
         /// </summary>
-        /// <param name="options">Options to be used</param>
+        /// <param name="configureOptions">Action used to configure the options</param>
         /// <returns>Itself</returns>
-        public SolrExpressBuilder<TDocument> UseOptions(SolrExpressOptions options)
+        public SolrExpressBuilder<TDocument> UseOptions(Action<SolrExpressOptions> configureOptions)
         {
-            this.Options.CheckAnyParameter = options.CheckAnyParameter;
-            this.Options.FailFast = options.FailFast;
-            this.Options.GlobalDynamicFieldPrefix = options.GlobalDynamicFieldPrefix;
-            this.Options.GlobalDynamicFieldSuffix = options.GlobalDynamicFieldSuffix;
-            this.Options.Security.AuthenticationType = options.Security.AuthenticationType;
-            this.Options.Security.Password = options.Security.Password;
-            this.Options.Security.UserName = options.Security.UserName;
-            this.Options.GlobalParameters.AddRange(options.GlobalParameters);
-            this.Options.GlobalResultInterceptors.AddRange(options.GlobalResultInterceptors);
-            this.Options.GlobalChangeBehaviours.AddRange(options.GlobalChangeBehaviours);
+            configureOptions.Invoke(this.Options);
 
             return this;
         }
