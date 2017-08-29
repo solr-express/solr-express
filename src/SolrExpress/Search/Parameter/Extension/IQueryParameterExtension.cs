@@ -3,7 +3,7 @@
 namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
-    /// Extensions to configure in query parameter
+    /// Extensions to configure parameter
     /// </summary>
     public static class IQueryParameterExtension
     {

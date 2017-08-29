@@ -32,6 +32,8 @@ For bug reports please provide the *STEPS TO REPRODUCE* and if possible a *MINIM
 - Using .net version: <!-- net4.5, net4.6, netcoreapp1.1, netcoreapp2.0  -->
 - Using SolrExpress package: <!-- SolrExpress.Solr4, SolrExpress.Solr4 -->
 - Using SolrExpress package version: X.Y.Z
+- Using SolrExpress.DI package: <!-- Autofac, Native .Net Core, Ninject, Simple Injector -->
+- Using SolrExpress.DI package version: X.Y.Z
 
 ## Other
 <!-- References or some information -->

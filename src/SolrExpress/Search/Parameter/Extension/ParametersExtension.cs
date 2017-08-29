@@ -472,5 +472,50 @@ namespace SolrExpress.Search.Parameter.Extension
 
             return documentSearch;
         }
+
+        /// <summary>
+        /// Create a local parameter in commom case (a simple query)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="name">Name of parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> LocalParameter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, string name, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query)
+            where TDocument : Document
+        {
+            var parameter = documentSearch.ServiceProvider.GetService<ILocalParameter<TDocument>>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            search.Field(fieldExpression);
+
+            query.Invoke(search);
+
+            parameter.Name(name);
+            parameter.Query(search);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a local parameter in commom case (a plain value)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="name">Name of parameter</param>
+        /// <param name="value">Plain value to include in query</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> LocalParameter<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, string name, string value)
+            where TDocument : Document
+        {
+            var parameter = documentSearch.ServiceProvider.GetService<ILocalParameter<TDocument>>();
+
+            parameter.Name(name);
+            parameter.Value(value);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
     }
 }

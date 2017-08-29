@@ -1,7 +1,7 @@
 ﻿namespace SolrExpress.Search.Parameter.Extension
 {
     /// <summary>
-    /// Extensions to configure in query field parameter
+    /// Extensions to configure field parameter
     /// </summary>
     public static class IQueryFieldParameterExtension
     {
