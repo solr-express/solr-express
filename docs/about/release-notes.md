@@ -4,7 +4,7 @@ Notes about releases
 
 ## [5.0.0] - 2017-08-28
 
-* Minor bug fixes and docs updates
+* Minor bug fixes and docs updates, closes #218 and #221
 
 ## [5.0.0-BETA2] - 2017-08-28
 
