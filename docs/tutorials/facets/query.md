@@ -63,7 +63,7 @@ Create a facet query
 
 | Use case                                     | How to                                                                                                     |
 |----------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| Sort type of result of facet                 | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet =>facet.SortType = FacetSortType.CountAsc)   |
-| Minimum count of itens in facet's result     | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet =>facet.Minimum = 2)                         |
-| Limit of itens in facet's result             | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet =>facet.Limit = 10)                          |
-| List of tags to exclude in facet calculation | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet =>facet.Excludes = new[] { "tag1", "tag2" }) |
+| Sort type of result of facet                 | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.SortType = FacetSortType.CountAsc)   |
+| Minimum count of itens in facet's result     | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.Minimum = 2)                         |
+| Limit of itens in facet's result             | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.Limit = 10)                          |
+| List of tags to exclude in facet calculation | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.Excludes = new[] { "tag1", "tag2" }) |

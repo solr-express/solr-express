@@ -21,7 +21,7 @@ Implementation using default query handler and mechanism provided by request par
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.0.0-BETA1</Version>
+    <Version>5.0.0-BETA2</Version>
   </PropertyGroup>
 
   <ItemGroup>
