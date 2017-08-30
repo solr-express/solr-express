@@ -8,7 +8,7 @@
         /// <summary>
         /// Configure query parser type used in SOLR's search
         /// </summary>
-		/// <param name="parameter">Parameter to congigure</param>
+		/// <param name="parameter">Parameter to configure</param>
         /// <param name="value">Query parser type used in SOLR's search</param>
         public static IQueryParserParameter<TDocument> Value<TDocument>(this IQueryParserParameter<TDocument> parameter, QueryParserType value)
             where TDocument : Document

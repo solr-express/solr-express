@@ -8,7 +8,7 @@
         /// <summary>
         /// Configure value of limit
         /// </summary>
-		/// <param name="parameter">Parameter to congigure</param>
+		/// <param name="parameter">Parameter to configure</param>
         /// <param name="value">Value of limit</param>
         public static ILimitParameter<TDocument> Value<TDocument>(this ILimitParameter<TDocument> parameter, long value)
             where TDocument : Document

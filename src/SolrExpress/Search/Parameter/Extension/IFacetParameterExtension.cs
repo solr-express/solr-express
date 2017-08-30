@@ -95,6 +95,5 @@ namespace SolrExpress.Search.Parameter.Extension
 
             return subFacetParameter;
         }
-
     }
 }
