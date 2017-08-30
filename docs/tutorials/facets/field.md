@@ -59,9 +59,14 @@ Create a facet field
 
 ## Settings
 
-| Use case                                     | How to                                                                          |
-|----------------------------------------------|---------------------------------------------------------------------------------|
-| Sort type of result of facet                 | .FacetField(q => q.InStock, facet => facet.SortType = FacetSortType.CountAsc)   |
-| Minimum count of itens in facet's result     | .FacetField(q => q.InStock, facet => facet.Minimum = 2)                         |
-| Limit of itens in facet's result             | .FacetField(q => q.InStock, facet => facet.Limit = 10)                          |
-| List of tags to exclude in facet calculation | .FacetField(q => q.InStock, facet => facet.Excludes = new[] { "tag1", "tag2" }) |
+| Use case                                                                                       | How to                                                                                            |
+|------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| Sort type of result of facet                                                                   | .FacetField(q => q.InStock, facet => facet.SortType(FacetSortType.CountAsc))                      |
+| Minimum count of itens in facet's result                                                       | .FacetField(q => q.InStock, facet => facet.Minimum(2))                                            |
+| Limit of itens in facet's result                                                               | .FacetField(q => q.InStock, facet => facet.Limit(10))                                             |
+| List of tags to exclude in facet calculation                                                   | .FacetField(q => q.InStock, facet => facet.Excludes(new[] { "tag1", "tag2" }))                    |
+| Specify a filter or list of filters to be intersected with the incoming domain before faceting | .FacetField(q => q.InStock, facet => facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
+
+** NOTE **
+
+Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)

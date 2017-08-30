@@ -223,6 +223,26 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   }
                 }");
 
+                Action<IFacetQueryParameter<TestDocument>> config10 = facet =>
+                {
+                    facet.Query = new SearchQuery<TestDocument>(expressionBuilder).AddValue("avg('Y')", false);
+                    facet.AliasName = "X";
+                    facet.Filter = new SearchQuery<TestDocument>(expressionBuilder).AddField(q => q.Id).EqualsTo(10);
+                };
+                var expected10 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""query"": {
+                        ""q"": ""avg('Y')"",
+                        ""domain"": {
+                          ""filter"":""id:10""
+                        }
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -233,7 +253,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config6, expected6 },
                     new object[] { config7, expected7 },
                     new object[] { config8, expected8 },
-                    new object[] { config9, expected9 }
+                    new object[] { config9, expected9 },
+                    new object[] { config10, expected10 }
                 };
             }
         }

@@ -1,4 +1,6 @@
-﻿using SolrExpress.Builder;
+﻿using Moq;
+using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
@@ -9,7 +11,6 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -110,10 +111,17 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.SortType(FacetSortType.CountDesc);
                 };
 
+                Action<IFacetFieldParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Filter(filter => filter.Field(q => q.Id).EqualsTo(10));
+                };
+
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 }
+                    new object[] { config2 },
+                    new object[] { config3 }
                 };
             }
         }
@@ -132,11 +140,15 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(expressionBuilder));
+            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
             config.Invoke(parameter);
 
             // Act / Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
+            Assert.Throws<UnsupportedFeatureException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>

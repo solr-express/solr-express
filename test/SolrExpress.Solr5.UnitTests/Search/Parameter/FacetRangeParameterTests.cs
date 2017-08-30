@@ -1,476 +1,285 @@
-﻿//using Moq;
-//using Newtonsoft.Json.Linq;
-//using SolrExpress.Core.Search.Parameter;
-//using SolrExpress.Core.Utility;
-//using SolrExpress.Solr5.Search.Parameter;
-//using System;
-//using Xunit;
+﻿using Moq;
+using Newtonsoft.Json.Linq;
+using SolrExpress.Builder;
+using SolrExpress.Options;
+using SolrExpress.Search;
+using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
+using SolrExpress.Solr5.Search.Parameter;
+using SolrExpress.Utility;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using Xunit;
 
-//namespace SolrExpress.Solr5.UnitTests.Search.Parameter
-//{
-//    public class FacetRangeParameterTests
-//    {
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments
-//        /// What    Create a valid JSON
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter001()
-//        {
-//            // Arrange
-//            var expected = JObject.Parse(@"
-//            {
-//              ""facet"": {
-//                ""X"": {
-//                  ""range"": {
-//                    ""field"": ""id"",
-//                    ""mincount"": 1,
-//                    ""gap"": ""1"",
-//                    ""start"": ""10"",
-//                    ""end"": ""20"",
-//                    ""other"": [
-//                      ""before"",
-//                      ""after""
-//                    ]
-//                  }
-//                }
-//              }
-//            }");
-//            string actual;
-//            var jObject = new JObject();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true);
+namespace SolrExpress.Solr5.UnitTests.Search.Parameter
+{
+    public class FacetRangeParameterTests
+    {
+        public static IEnumerable<object[]> Data1
+        {
+            get
+            {
+                var solrOptions = new SolrExpressOptions();
+                var solrConnection = new FakeSolrConnection<TestDocument>();
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+                expressionBuilder.LoadDocument();
 
-//            // Act
-//            parameter.Execute(jObject);
-//            actual = jObject.ToString();
+                Action<IFacetRangeParameter<TestDocument>> config1 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.CountBefore = true;
+                    facet.CountAfter = true;
+                };
+                var expected1 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""other"": [
+                          ""before"",
+                          ""after""
+                        ]
+                      }
+                    }
+                  }
+                }");
 
-//            // Assert
-//            Assert.Equal(expected.ToString(), actual);
-//        }
+                Action<IFacetRangeParameter<TestDocument>> config2 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.CountBefore = true;
+                    facet.CountAfter = true;
+                    facet.SortType = FacetSortType.CountDesc;
+                };
+                var expected2 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""other"": [
+                          ""before"",
+                          ""after""
+                        ],
+                        ""sort"": {
+                          ""count"": ""desc""
+                        }
+                      }
+                    }
+                  }
+                }");
 
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the sort type and direction parameters
-//        /// What    Create a valid JSON
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter002()
-//        {
-//            // Arrange
-//            var expected = JObject.Parse(@"
-//            {
-//              ""facet"": {
-//                ""X"": {
-//                  ""range"": {
-//                    ""field"": ""id"",
-//                    ""mincount"": 1,
-//                    ""gap"": ""1"",
-//                    ""start"": ""10"",
-//                    ""end"": ""20"",
-//                    ""other"": [
-//                      ""before"",
-//                      ""after""
-//                    ],
-//                    ""sort"": {
-//                      ""count"": ""desc""
-//                    }
-//                  }
-//                }
-//              }
-//            }");
-//            string actual;
-//            var jObject = new JObject();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true, FacetSortType.CountDesc);
+                Action<IFacetRangeParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.CountBefore = true;
+                    facet.CountAfter = true;
+                    facet.Excludes = new[] { "tag1", "tag2" };
+                };
+                var expected3 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                          ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                          ]
+                        },
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""other"": [
+                          ""before"",
+                          ""after""
+                        ]
+                      }
+                    }
+                  }
+                }");
 
-//            // Act
-//            parameter.Execute(jObject);
-//            actual = jObject.ToString();
+                Action<IFacetRangeParameter<TestDocument>> config4 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.CountBefore = false;
+                    facet.CountAfter = true;
+                    facet.Excludes = new[] { "tag1", "tag2" };
+                };
+                var expected4 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                          ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                          ]
+                        },
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""other"": [
+                          ""after""
+                        ]
+                      }
+                    }
+                  }
+                }");
 
-//            // Assert
-//            Assert.Equal(expected.ToString(), actual);
-//        }
+                Action<IFacetRangeParameter<TestDocument>> config5 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.CountBefore = true;
+                    facet.CountAfter = false;
+                    facet.Excludes = new[] { "tag1", "tag2" };
+                };
+                var expected5 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                          ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                          ]
+                        },
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""other"": [
+                          ""before""
+                        ]
+                      }
+                    }
+                  }
+                }");
 
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type integer and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter003()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropInteger, "1", "10", "20", true, true, FacetSortType.CountDesc);
+                Action<IFacetRangeParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.Filter = new SearchQuery<TestDocument>(expressionBuilder).AddField(q => q.Id).EqualsTo(10);
+                    facet.Excludes = new[] { "tag1", "tag2" };
+                };
+                var expected6 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                          ""excludeTags"": [
+                            ""tag1"",
+                            ""tag2""
+                          ],
+                          ""filter"": ""id:10""
+                        },
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20""
+                      }
+                    }
+                  }
+                }");
 
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
+                return new[]
+                {
+                    new object[] { config1, expected1 },
+                    new object[] { config2, expected2 },
+                    new object[] { config3, expected3 },
+                    new object[] { config4, expected4 },
+                    new object[] { config5, expected5 },
+                    new object[] { config6, expected6 }
+                };
+            }
+        }
 
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Invoking method "Execute" using happy path configurations
+        /// What    Create correct SOLR instructions
+        /// </summary>
+        [Theory]
+        [MemberData(nameof(Data1))]
+        public void FacetRangeParameterTheory001(Action<IFacetRangeParameter<TestDocument>> config, JObject expectd)
+        {
+            // Arrange
+            var container = new JObject();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<IFacetRangeParameter<TestDocument>>())
+                .Returns(new FacetRangeParameter<TestDocument>(expressionBuilder, serviceProvider.Object));
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(null));
+            var parameter = (IFacetRangeParameter<TestDocument>)new FacetRangeParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
+            config.Invoke(parameter);
 
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type long and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter004()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropLong, "1", "10", "20", true, true, FacetSortType.CountDesc);
+            // Act
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
+            // Assert
+            Assert.Equal(expectd.ToString(), container.ToString());
+        }
 
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
+        /// <summary>
+        /// Where   Using a FacetRangeParameter instance
+        /// When    Checking custom attributes of class
+        /// What    Has FieldMustBeIndexedTrueAttribute
+        /// </summary>
+        [Fact]
+        public void FacetRangeParameter001()
+        {
+            // Arrange / Act
+            var fieldMustBeIndexedTrueAttribute = typeof(FacetRangeParameter<TestDocument>)
+                .GetTypeInfo()
+                .GetCustomAttribute<FieldMustBeIndexedTrueAttribute>(true);
 
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type float and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter005()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropFloat, "1", "10", "20", true, true, FacetSortType.CountDesc);
-
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
-
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type double and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter006()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropDouble, "1", "10", "20", true, true, FacetSortType.CountDesc);
-
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
-
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type decimal and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter007()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropDecimal, "1", "10", "20", true, true, FacetSortType.CountDesc);
-
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
-
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type DateTime and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter008()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropDateTime, "1", "10", "20", true, true, FacetSortType.CountDesc);
-
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
-
-//            // Assert
-//            Assert.True(isValid);
-//            Assert.True(string.IsNullOrWhiteSpace(errorMessage));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Validate" using a field type string and with fail fast actived
-//        /// What    Is valid should be true
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter009()
-//        {
-//            // Arrange
-//            bool isValid;
-//            string errorMessage;
-//            var expressionCache = new ExpressionCache<TestDocumentWithAnyPropertyTypes>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocumentWithAnyPropertyTypes>)new ExpressionBuilder<TestDocumentWithAnyPropertyTypes>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocumentWithAnyPropertyTypes>(expressionBuilder);
-//            parameter.Configure("X", q => q.PropString, "1", "10", "20", true, true, FacetSortType.CountDesc);
-
-//            // Act
-//            parameter.Validate(out isValid, out errorMessage);
-
-//            // Assert
-//            Assert.False(isValid);
-//            Assert.False(string.IsNullOrWhiteSpace(errorMessage));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParamete instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter010()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure(null, q => q.Id, "", "", ""));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParamete instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter011()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", null, "", "", ""));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParamete instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter012()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, null, "", ""));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParamete instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter013()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", null, ""));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParamete instance
-//        /// When    Create the instance with null in alias name
-//        /// What    Throws ArgumentNullException
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter014()
-//        {
-//            // Arrange
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-
-//            // Act / Assert
-//            Assert.Throws<ArgumentNullException>(() => parameter.Configure("x", q => q.Id, "", "", null));
-//        }
-
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" using the default arguments and an excluding list
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter015()
-//        {
-//            // Arrange
-//            var expected = JObject.Parse(@"
-//            {
-//              ""facet"": {
-//                ""X"": {
-//                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}id"",
-//                    ""mincount"": 1,
-//                    ""gap"": ""1"",
-//                    ""start"": ""10"",
-//                    ""end"": ""20"",
-//                    ""other"": [
-//                      ""before"",
-//                      ""after""
-//                    ]
-//                  }
-//                }
-//              }
-//            }").ToString();
-//            var jObject = new JObject();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", q => q.Id, "1", "10", "20", true, true, excludes: new[] { "tag1", "tag2" });
-
-//            // Act
-//            parameter.Execute(jObject);
-//            var actual = jObject.ToString();
-
-//            // Assert
-//            Assert.Equal(expected, actual);
-//        }
-
-//        // <summary>
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" not calculating before range
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter016()
-//        {
-//            // Arrange
-//            var expected = JObject.Parse(@"
-//            {
-//              ""facet"": {
-//                ""X"": {
-//                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}id"",
-//                    ""mincount"": 1,
-//                    ""gap"": ""1"",
-//                    ""start"": ""10"",
-//                    ""end"": ""20"",
-//                    ""other"": [
-//                      ""after""
-//                    ]
-//                  }
-//                }
-//              }
-//            }").ToString();
-//            var jObject = new JObject();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", q => q.Id, "1", "10", "20", false, true, excludes: new[] { "tag1", "tag2" });
-
-//            // Act
-//            parameter.Execute(jObject);
-//            var actual = jObject.ToString();
-
-//            // Assert
-//            Assert.Equal(expected, actual);
-//        }
-
-//        // <summary>
-//        /// <summary>
-//        /// Where   Using a FacetRangeParameter instance
-//        /// When    Invoking the method "Execute" not calculating after range
-//        /// What    Create a valid string
-//        /// </summary>
-//        [Fact]
-//        public void FacetRangeParameter017()
-//        {
-//            // Arrange
-//            var expected = JObject.Parse(@"
-//            {
-//              ""facet"": {
-//                ""X"": {
-//                  ""range"": {
-//                    ""field"": ""{!ex=tag1,tag2}id"",
-//                    ""mincount"": 1,
-//                    ""gap"": ""1"",
-//                    ""start"": ""10"",
-//                    ""end"": ""20"",
-//                    ""other"": [
-//                      ""before""
-//                    ]
-//                  }
-//                }
-//              }
-//            }").ToString();
-//            var jObject = new JObject();
-//            var expressionCache = new ExpressionCache<TestDocument>();
-//            var expressionBuilder = (IExpressionBuilder<TestDocument>)new ExpressionBuilder<TestDocument>(expressionCache);
-//            var parameter = new FacetRangeParameter<TestDocument>(expressionBuilder);
-//            parameter.Configure("X", q => q.Id, "1", "10", "20", true, false, excludes: new[] { "tag1", "tag2" });
-
-//            // Act
-//            parameter.Execute(jObject);
-//            var actual = jObject.ToString();
-
-//            // Assert
-//            Assert.Equal(expected, actual);
-//        }
-//    }
-//}
+            // Assert
+            Assert.NotNull(fieldMustBeIndexedTrueAttribute);
+        }
+    }
+}

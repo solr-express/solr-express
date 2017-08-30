@@ -632,5 +632,29 @@ namespace SolrExpress.Solr5.IntegrationTests
             Assert.Equal("ManufacturerId", facetField.Name);
             Assert.Equal("InStock", facetField.Values.ToList()[0].Facets.ToList()[0].Name);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using facets with "filter"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest022()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .FacetField(q => q.InStock, facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .FacetQuery("facetQuery", q => q.Field(f => f.Features), facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .FacetRange("facetRange", q => q.Price, "1", "10", "100", facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .Execute()
+                .Facets(out var data);
+
+            // Assert
+            Assert.Equal(3, data.Count());
+        }
     }
 }

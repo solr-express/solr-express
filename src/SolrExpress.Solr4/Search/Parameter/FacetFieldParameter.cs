@@ -2,6 +2,7 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace SolrExpress.Solr4.Search.Parameter
         public FacetSortType? SortType { get; set; }
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
         public IList<IFacetParameter<TDocument>> Facets { get; set; }
-        
+        public SearchQuery<TDocument> Filter { get; set; }
+
         public void AddResultInContainer(List<string> container)
         {
             if (!container.Contains("facet=true"))
@@ -44,6 +46,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         public void Execute()
         {
             Checker.IsNull(this.FieldExpression);
+            Checker.IsTrue<UnsupportedFeatureException>(this.Filter != null);
 
             var aliasName = this.ExpressionBuilder.GetAliasName(this.FieldExpression);
             var fieldName = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
@@ -53,8 +56,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
             if (this.SortType.HasValue)
             {
-
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType == FacetSortType.CountDesc || this.SortType == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedFeatureException>(this.SortType == FacetSortType.CountDesc || this.SortType == FacetSortType.IndexDesc);
 
                 ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 

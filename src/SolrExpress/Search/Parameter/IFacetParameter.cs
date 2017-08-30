@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SolrExpress.Search.Query;
+using System.Collections.Generic;
 
 namespace SolrExpress.Search.Parameter
 {
@@ -17,5 +18,30 @@ namespace SolrExpress.Search.Parameter
         /// List of subfacets
         /// </summary>
         IList<IFacetParameter<TDocument>> Facets { get; set; }
+
+        /// <summary>
+        /// Specify a filter or list of filters to be intersected with the incoming domain before faceting
+        /// </summary>
+        SearchQuery<TDocument> Filter { get; set; }
+
+        /// <summary>
+        /// Sort type of result of facet
+        /// </summary>
+        FacetSortType? SortType { get; set; }
+
+        /// <summary>
+        /// Minimum count of itens in facet's result
+        /// </summary>
+        int? Minimum { get; set; }
+
+        /// <summary>
+        /// Limit of itens in facet's result
+        /// </summary>
+        int? Limit { get; set; }
+
+        /// <summary>
+        /// List of tags to exclude in facet calculation
+        /// </summary>
+        string[] Excludes { get; set; }
     }
 }
