@@ -69,6 +69,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 };
                 const string expected8 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fcs";
 
+                Action<IFacetFieldParameter<TestDocument>> config9 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).Prefix("xpto");
+                };
+                const string expected9 = "facet=true&facet.field={!key=Id}id&f.id.facet.prefix=xpto";
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -78,7 +84,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     new object[] { config5, expected5 },
                     new object[] { config6, expected6 },
                     new object[] { config7, expected7 },
-                    new object[] { config8, expected8 }
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 }
                 };
             }
         }

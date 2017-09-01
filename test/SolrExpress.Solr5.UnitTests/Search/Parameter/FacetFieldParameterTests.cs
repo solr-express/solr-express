@@ -223,6 +223,25 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   }
                 }");
 
+                Action<IFacetFieldParameter<TestDocument>> config11 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Prefix("xpto");
+                };
+                var expected11 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""prefix"":""xpto""
+                        }
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -234,7 +253,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config7, expected7 },
                     new object[] { config8, expected8 },
                     new object[] { config9, expected9 },
-                    new object[] { config10, expected10 }
+                    new object[] { config10, expected10 },
+                    new object[] { config11, expected11 }
                 };
             }
         }

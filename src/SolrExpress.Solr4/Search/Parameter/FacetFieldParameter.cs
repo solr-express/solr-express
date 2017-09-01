@@ -33,6 +33,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         public IList<IFacetParameter<TDocument>> Facets { get; set; }
         public SearchQuery<TDocument> Filter { get; set; }
         public FacetMethodType? MethodType { get; set; }
+        public string Prefix { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
@@ -91,6 +92,11 @@ namespace SolrExpress.Solr4.Search.Parameter
                 }
 
                 this._result.Add($"f.{fieldName}.facet.method={methodName}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.Prefix))
+            {
+                this._result.Add($"f.{fieldName}.facet.prefix={this.Prefix}");
             }
         }
     }

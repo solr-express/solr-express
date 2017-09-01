@@ -10,5 +10,10 @@
         /// Method type to how to facet the field
         /// </summary>
         FacetMethodType? MethodType { get; set; }
+
+        /// <summary>
+        /// Prefix to only produce buckets for terms starting with the specified value
+        /// </summary>
+        string Prefix { get; set; }
     }
 }

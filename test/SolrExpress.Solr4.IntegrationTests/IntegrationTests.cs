@@ -611,5 +611,28 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Assert
             Assert.Equal(3, facets.Count());
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with facet prefix
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest021()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.Categories, facet => facet.Prefix("c"))
+                .Execute()
+                .Facets(out var facets);
+
+            // Assert
+            Assert.Equal(1, facets.Count());
+        }
     }
 }
