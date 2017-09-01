@@ -66,7 +66,9 @@ Create a facet field
 | Limit of itens in facet's result                                                               | .FacetField(q => q.InStock, facet => facet.Limit(10))                                             |
 | List of tags to exclude in facet calculation                                                   | .FacetField(q => q.InStock, facet => facet.Excludes(new[] { "tag1", "tag2" }))                    |
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting | .FacetField(q => q.InStock, facet => facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
+| Method type to how to facet the field                                                          | .FacetField(q => q.InStock, facet => facet.MethodType(FacetSortType.UninvertedField))             |
 
 ** NOTE **
 
 Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
+Learn more about [facets](http://yonik.com/json-facet-api/#Terms_Facet)

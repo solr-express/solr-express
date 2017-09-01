@@ -10,6 +10,7 @@ namespace SolrExpress.Solr4.Update
         public JObject Execute(params string[] documentIds)
         {
             Checker.IsNull(documentIds);
+            Checker.IsTrue<UnsupportedFeatureException>(documentIds.Length > 1);
 
             if (documentIds.Length == 0)
             {

@@ -35,6 +35,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         public IList<IFacetParameter<TDocument>> Facets { get; set; }
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
         public SearchQuery<TDocument> Filter { get; set; }
+        public FacetMethodType? MethodType { get; set; }
 
         public void AddResultInContainer(JObject container)
         {
@@ -69,6 +70,26 @@ namespace SolrExpress.Solr5.Search.Parameter
                 var filter = new JProperty("filter", this.Filter.Execute());
                 domain = domain ?? new JProperty("domain", new JObject());
                 ((JObject)domain.Value).Add(filter);
+            }
+            if (this.MethodType.HasValue)
+            {
+                var methodName = string.Empty;
+                switch (this.MethodType.Value)
+                {
+                    case FacetMethodType.UninvertedField:
+                        methodName = "method:uif";
+                        break;
+                    case FacetMethodType.DocValues:
+                        methodName = "method:dv";
+                        break;
+                    case FacetMethodType.Stream:
+                        methodName = "method:stream";
+                        break;
+                }
+
+                var method = new JProperty("method", methodName);
+                domain = domain ?? new JProperty("domain", new JObject());
+                ((JObject)domain.Value).Add(method);
             }
             if (domain != null)
             {

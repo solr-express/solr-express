@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SolrExpress.Solr4.Search.Parameter
+namespace SolrExpress.Solr4
 {
     public sealed class UnsupportedFeatureException : Exception
     {

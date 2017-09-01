@@ -92,5 +92,18 @@ namespace SolrExpress.Search.Parameter.Extension
 
             return parameter;
         }
+
+        /// <summary>
+        /// Configure method type to how to facet the field
+        /// </summary>
+        /// <param name="parameter">Parameter to configure</param>
+        /// <param name="methodType">Method type to how to facet the field</param>
+        public static IFacetFieldParameter<TDocument> MethodType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetMethodType methodType)
+            where TDocument : Document
+        {
+            parameter.MethodType = methodType;
+
+            return parameter;
+        }
     }
 }

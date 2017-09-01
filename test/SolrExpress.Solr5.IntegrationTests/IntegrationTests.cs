@@ -656,5 +656,30 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(3, data.Count());
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with facet method
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest023()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.Categories, facet => facet.MethodType(FacetMethodType.DocValues))
+                .FacetField(q => q.Features, facet => facet.MethodType(FacetMethodType.Stream))
+                .FacetField(q => q.Manufacturer, facet => facet.MethodType(FacetMethodType.UninvertedField))
+                .Execute()
+                .Facets(out var facets);
+
+            // Assert
+            Assert.Equal(3, facets.Count());
+        }
     }
 }

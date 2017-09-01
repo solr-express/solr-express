@@ -166,6 +166,63 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   }
                 }");
 
+                Action<IFacetFieldParameter<TestDocument>> config8 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.DocValues);
+                };
+                var expected8 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:dv""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config9 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.Stream);
+                };
+                var expected9 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:stream""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config10 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.UninvertedField);
+                };
+                var expected10 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:uif""
+                        }
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -174,7 +231,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config4, expected4 },
                     new object[] { config5, expected5 },
                     new object[] { config6, expected6 },
-                    new object[] { config7, expected7 }
+                    new object[] { config7, expected7 },
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 },
+                    new object[] { config10, expected10 }
                 };
             }
         }

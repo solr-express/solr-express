@@ -51,13 +51,34 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 };
                 const string expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
+                Action<IFacetFieldParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.DocValues);
+                };
+                const string expected6 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=enum";
+
+                Action<IFacetFieldParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.UninvertedField);
+                };
+                const string expected7 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fc";
+
+                Action<IFacetFieldParameter<TestDocument>> config8 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.Stream);
+                };
+                const string expected8 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fcs";
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
                     new object[] { config2, expected2 },
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
-                    new object[] { config5, expected5 }
+                    new object[] { config5, expected5 },
+                    new object[] { config6, expected6 },
+                    new object[] { config7, expected7 },
+                    new object[] { config8, expected8 }
                 };
             }
         }

@@ -32,6 +32,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
         public IList<IFacetParameter<TDocument>> Facets { get; set; }
         public SearchQuery<TDocument> Filter { get; set; }
+        public FacetMethodType? MethodType { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
@@ -71,6 +72,25 @@ namespace SolrExpress.Solr4.Search.Parameter
             if (this.Limit.HasValue)
             {
                 this._result.Add($"f.{fieldName}.facet.limit={this.Limit.Value}");
+            }
+
+            if (this.MethodType.HasValue)
+            {
+                var methodName = string.Empty;
+                switch (this.MethodType.Value)
+                {
+                    case FacetMethodType.UninvertedField:
+                        methodName = "fc";
+                        break;
+                    case FacetMethodType.DocValues:
+                        methodName = "enum";
+                        break;
+                    case FacetMethodType.Stream:
+                        methodName = "fcs";
+                        break;
+                }
+
+                this._result.Add($"f.{fieldName}.facet.method={methodName}");
             }
         }
     }

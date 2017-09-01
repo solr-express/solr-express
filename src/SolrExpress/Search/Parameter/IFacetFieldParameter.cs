@@ -6,5 +6,9 @@
     public interface IFacetFieldParameter<TDocument> : IFacetParameter<TDocument>, ISearchItemFieldExpression<TDocument>
         where TDocument : Document
     {
+        /// <summary>
+        /// Method type to how to facet the field
+        /// </summary>
+        FacetMethodType? MethodType { get; set; }
     }
 }

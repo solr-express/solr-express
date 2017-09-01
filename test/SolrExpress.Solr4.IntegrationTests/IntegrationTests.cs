@@ -283,13 +283,26 @@ namespace SolrExpress.Solr4.IntegrationTests
                 Id = documentId2,
                 Name = "Some value2"
             };
-            var update = documentCollection.Update();
-            update.Add(documentToAdd1, documentToAdd2);
-            update.Execute();
+            documentCollection
+                .Update()
+                .Add(documentToAdd1)
+                .Execute();
+
+            documentCollection
+                .Update()
+                .Add(documentToAdd2)
+                .Execute();
 
             // Act
-            update.Delete(documentId1, documentId2);
-            update.Execute();
+            documentCollection
+                .Update()
+                .Delete(documentId1)
+                .Execute();
+
+            documentCollection
+                .Update()
+                .Delete(documentId2)
+                .Execute();
 
             // Assert
             documentCollection
@@ -371,11 +384,16 @@ namespace SolrExpress.Solr4.IntegrationTests
                 Id = documentId2,
                 Name = "Some value2"
             };
-            var update = documentCollection.Update();
-
             // Act
-            update.Add(documentToAdd1, documentToAdd2);
-            update.Execute();
+            documentCollection
+                .Update()
+                .Add(documentToAdd1)
+                .Execute();
+
+            documentCollection
+                .Update()
+                .Add(documentToAdd2)
+                .Execute();
 
             // Assert
             documentCollection
@@ -544,7 +562,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         }
 
         /// <summary>
-        /// Where   Creating a SOLR context, using parameter "FacetField" with exclude
+        /// Where   Creating a SOLR context, using parameter "FacetField" with excludes
         /// When    Invoking the method "Execute"
         /// What    Create a communication between software and SOLR and populate only requested fields
         /// </summary>
@@ -567,6 +585,31 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Assert
             var documentList = documents.ToList();
             Assert.Equal(1, documentList.Count);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with facet method
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest020()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.Categories, facet => facet.MethodType(FacetMethodType.DocValues))
+                .FacetField(q => q.Features, facet => facet.MethodType(FacetMethodType.Stream))
+                .FacetField(q => q.Manufacturer, facet => facet.MethodType(FacetMethodType.UninvertedField))
+                .Execute()
+                .Facets(out var facets);
+
+            // Assert
+            Assert.Equal(3, facets.Count());
         }
     }
 }
