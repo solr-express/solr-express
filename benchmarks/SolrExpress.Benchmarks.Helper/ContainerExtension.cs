@@ -41,7 +41,6 @@ namespace SolrExpress.Benchmarks.Helper
                 .AddTransient<SearchQuery<TDocument>>()
                 .AddTransient<ISolrConnection>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
-                .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();
 
             return container;

@@ -2,12 +2,13 @@
 using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
+using SolrExpress.Solr4.Search.Result;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
 
-namespace SolrExpress.UnitTests.Search.Result
+namespace SolrExpress.Solr4.UnitTests.Search.Result
 {
     public class InformationResultTests
     {

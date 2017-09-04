@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SolrExpress.Search.Result
+namespace SolrExpress.Solr4.Search.Result
 {
     /// <summary>
     /// Information about search result
@@ -61,6 +62,11 @@ namespace SolrExpress.Search.Result
                 }
                 else
                 {
+                    data.PageNumber = 0;
+                    data.PageSize = 0;
+                    data.PageCount = 0;
+                    data.HasPreviousPage = false;
+                    data.HasNextPage = false;
                     data.IsFirstPage = true;
                     data.IsLastPage = true;
                 }

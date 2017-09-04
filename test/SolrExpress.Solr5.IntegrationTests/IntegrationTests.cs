@@ -704,5 +704,29 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(1, facets.Count());
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "CursorMark"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest025()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Sort(q => q.Id, true)
+                .CursorMark("*")
+                .Execute()
+                .Information(out var information);
+
+            // Assert
+            Assert.NotNull(information.NextCursorMark);
+        }
     }
 }
