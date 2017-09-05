@@ -634,5 +634,29 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Assert
             Assert.Equal(1, facets.Count());
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Facet.Range" (with HardEnd)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest022()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10", facet => facet.HardEnd(true))
+                .Execute()
+                .Facets(out var data);
+
+            // Assert
+            Assert.Equal(1, data.Count());
+            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
+        }
     }
 }
