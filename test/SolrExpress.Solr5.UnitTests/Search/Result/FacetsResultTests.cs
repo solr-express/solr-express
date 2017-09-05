@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Solr5.Search.Parameter;
@@ -9,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Result
@@ -881,6 +881,92 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(1100, ((FacetItemRangeValue<int>)child2_1Values[2]).MinimumValue);
             Assert.Null(((FacetItemRangeValue<int>)child2_1Values[2]).MaximumValue);
             Assert.Equal(1, ((FacetItemRangeValue<int>)child2_1Values[2]).Quantity);
+        }
+
+        /// <summary>
+        /// Where   Using a FacetsResult instance
+        /// When    Invoking the method "Execute" using a JSON with a facet range data (using hardend in facet creation)
+        /// What    Parse result
+        /// </summary>
+        [Fact]
+        public void FacetFieldResult007()
+        {
+            // Arrange
+            var jsonPlainText = @"
+            {
+	            ""facets"": {
+		            ""count"": 37,
+		            ""range1"": {
+			            ""buckets"": [{
+					            ""val"": 200,
+					            ""count"": 4
+				            },
+				            {
+					            ""val"": 300,
+					            ""count"": 3
+				            }
+			            ],
+			            ""before"": {
+				            ""count"": 7
+			            },
+			            ""after"": {
+				            ""count"": 1
+			            }
+		            }
+	            }
+            }";
+            
+            var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
+
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
+            facet1.FieldExpression = field => field.Range1;
+            facet1.Start = "200";
+            facet1.End = "350";
+            facet1.Gap = "100";
+            facet1.HardEnd = true;
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facet1
+            };
+
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
+            // Act
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
+
+            // Assert
+            var data = result.Data.ToList();
+            Assert.Equal(1, data.Count);
+            Assert.Equal("range1", data[0].Name);
+
+            Assert.Equal(FacetType.Range, data[0].FacetType);
+
+            var range1Values = ((FacetItemRange)data[0]).Values.ToList();
+
+            Assert.Null(((FacetItemRangeValue<decimal>)range1Values[0]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<decimal>)range1Values[0]).MaximumValue);
+            Assert.Equal(7, ((FacetItemRangeValue<decimal>)range1Values[0]).Quantity);
+
+            Assert.Equal(200, ((FacetItemRangeValue<decimal>)range1Values[1]).MinimumValue);
+            Assert.Equal(300, ((FacetItemRangeValue<decimal>)range1Values[1]).MaximumValue);
+            Assert.Equal(4, ((FacetItemRangeValue<decimal>)range1Values[1]).Quantity);
+
+            Assert.Equal(300, ((FacetItemRangeValue<decimal>)range1Values[2]).MinimumValue);
+            Assert.Equal(350, ((FacetItemRangeValue<decimal>)range1Values[2]).MaximumValue);
+            Assert.Equal(3, ((FacetItemRangeValue<decimal>)range1Values[2]).Quantity);
+
+            Assert.Equal(350, ((FacetItemRangeValue<decimal>)range1Values[3]).MinimumValue);
+            Assert.Null(((FacetItemRangeValue<decimal>)range1Values[3]).MaximumValue);
+            Assert.Equal(1, ((FacetItemRangeValue<decimal>)range1Values[3]).Quantity);
         }
     }
 }

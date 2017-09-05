@@ -145,7 +145,7 @@ Error message: {1}</value>
   <data name="UnknownToResolveExpressionException" xml:space="preserve">
     <value>Unknown to resolve the expression</value>
   </data>
-  <data name="UnsupportedSortTypeException" xml:space="preserve">
+  <data name="UnsupportedFeatureException" xml:space="preserve">
     <value>Descending sort type is an unsupported feature in Solr 4</value>
   </data>
   <data name="UseSpecificParameterRatherThanAnyException" xml:space="preserve">

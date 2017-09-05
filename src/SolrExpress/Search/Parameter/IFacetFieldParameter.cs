@@ -7,23 +7,13 @@
         where TDocument : Document
     {
         /// <summary>
-        /// Sort type of result of facet
+        /// Method type to how to facet the field
         /// </summary>
-        FacetSortType? SortType { get; set; }
+        FacetMethodType? MethodType { get; set; }
 
         /// <summary>
-        /// Minimum count of itens in facet's result
+        /// Prefix to only produce buckets for terms starting with the specified value
         /// </summary>
-        int? Minimum { get; set; }
-
-        /// <summary>
-        /// Limit of itens in facet's result
-        /// </summary>
-        int? Limit { get; set; }
-
-        /// <summary>
-        /// List of tags to exclude in facet calculation
-        /// </summary>
-        string[] Excludes { get; set; }
+        string Prefix { get; set; }
     }
 }

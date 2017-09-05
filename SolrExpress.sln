@@ -108,6 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic-features", "basic-fea
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\basic-features\fail-fast.md = docs\tutorials\basic-features\fail-fast.md
 		docs\tutorials\basic-features\global-settings.md = docs\tutorials\basic-features\global-settings.md
+		docs\tutorials\basic-features\local-parameter.md = docs\tutorials\basic-features\local-parameter.md
 		docs\tutorials\basic-features\queries.md = docs\tutorials\basic-features\queries.md
 	EndProjectSection
 EndProject

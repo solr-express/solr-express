@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
@@ -8,7 +9,6 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -133,10 +133,17 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.SortType = FacetSortType.CountDesc;
                 };
 
+                Action<IFacetQueryParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.Query = searchQuery.AddValue(".", false);
+                    facet.Filter = new SearchQuery<TestDocument>(expressionBuilder);
+                };
+
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 }
+                    new object[] { config2 },
+                    new object[] { config3 }
                 };
             }
         }
@@ -155,7 +162,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             config.Invoke(parameter);
 
             // Act / Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
+            Assert.Throws<UnsupportedFeatureException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>

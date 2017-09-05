@@ -375,5 +375,88 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
             Assert.Equal(DateTimeOffset.Parse("2022-08-08T20:55:04.000Z").DateTime, ((FacetItemRangeValue<DateTime>)range4Values[6]).MaximumValue);
             Assert.Equal(0, ((FacetItemRangeValue<DateTime>)range4Values[6]).Quantity);
         }
+
+        /// <summary>
+        /// Where   Using a FacetsResult instance
+        /// When    Invoking the method "Execute" using a JSON with a facet range data (using hardend in facet creation)
+        /// What    Parse result
+        /// </summary>
+        [Fact]
+        public void FacetFieldResult004()
+        {
+            // Arrange
+            var jsonPlainText = @"
+            {
+	            ""facet_counts"": {
+		            ""facet_ranges"": {
+			            ""range1"": {
+				            ""counts"": [
+					            ""200.0"",
+					            2,
+					            ""300.0"",
+					            0
+				            ],
+				            ""gap"": 100,
+				            ""start"": 200,
+				            ""end"": 350,
+				            ""before"": 55,
+				            ""after"": 1
+			            }
+		            }
+	            }
+            }";
+
+            var result = (IFacetsResult<TestRangeDocument>)new FacetsResult<TestRangeDocument>();
+
+            var solrExpressOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestRangeDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+
+            var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
+            facetRange1.FieldExpression = field => field.Range1;
+            facetRange1.Start = "200";
+            facetRange1.End = "350";
+            facetRange1.Gap = "100";
+            facetRange1.HardEnd = true;
+
+            var searchParameters = new List<ISearchParameter>
+            {
+                facetRange1
+            };
+
+            var jsonReader = new JsonTextReader(new StringReader(jsonPlainText));
+
+            // Act
+            while (jsonReader.Read())
+            {
+                result.Execute(searchParameters, jsonReader.TokenType, jsonReader.Path, jsonReader);
+            }
+
+            // Assert
+            var data = result.Data.ToList();
+            Assert.Equal(1, data.Count);
+            Assert.Equal("range1", data[0].Name);
+
+            Assert.Equal(FacetType.Range, data[0].FacetType);
+
+            var range1Values = ((FacetItemRange)data[0]).Values.ToList();
+
+            Assert.Null(((FacetItemRangeValue<decimal>)range1Values[0]).MinimumValue);
+            Assert.Equal(200, ((FacetItemRangeValue<decimal>)range1Values[0]).MaximumValue);
+            Assert.Equal(55, ((FacetItemRangeValue<decimal>)range1Values[0]).Quantity);
+
+            Assert.Equal(200, ((FacetItemRangeValue<decimal>)range1Values[1]).MinimumValue);
+            Assert.Equal(300, ((FacetItemRangeValue<decimal>)range1Values[1]).MaximumValue);
+            Assert.Equal(2, ((FacetItemRangeValue<decimal>)range1Values[1]).Quantity);
+
+            Assert.Equal(300, ((FacetItemRangeValue<decimal>)range1Values[2]).MinimumValue);
+            Assert.Equal(350, ((FacetItemRangeValue<decimal>)range1Values[2]).MaximumValue);
+            Assert.Equal(0, ((FacetItemRangeValue<decimal>)range1Values[2]).Quantity);
+
+            Assert.Equal(350, ((FacetItemRangeValue<decimal>)range1Values[3]).MinimumValue);
+            Assert.Null(((FacetItemRangeValue<decimal>)range1Values[3]).MaximumValue);
+            Assert.Equal(1, ((FacetItemRangeValue<decimal>)range1Values[3]).Quantity);
+        }
     }
 }

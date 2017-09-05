@@ -1,16 +1,17 @@
 ﻿using Moq;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr5.UnitTests.Search.Parameter
@@ -21,6 +22,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
         {
             get
             {
+                var solrOptions = new SolrExpressOptions();
+                var solrConnection = new FakeSolrConnection<TestDocument>();
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+                expressionBuilder.LoadDocument();
+
                 Action<IFacetFieldParameter<TestDocument>> config1 = facet =>
                 {
                     facet.FieldExpression(q => q.Id);
@@ -141,6 +147,101 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     }
                   }");
 
+                Action<IFacetFieldParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Filter(filter => filter.Field(q => q.Id).EqualsTo(10));
+                };
+                var expected7 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""filter"":""id:10""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config8 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.DocValues);
+                };
+                var expected8 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:dv""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config9 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.Stream);
+                };
+                var expected9 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:stream""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config10 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.MethodType(FacetMethodType.UninvertedField);
+                };
+                var expected10 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""method"":""method:uif""
+                        }
+                      }
+                    }
+                  }
+                }");
+
+                Action<IFacetFieldParameter<TestDocument>> config11 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Prefix("xpto");
+                };
+                var expected11 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""Id"": {
+                      ""terms"": {
+                        ""field"": ""id"",
+                        ""domain"": {
+                        ""prefix"":""xpto""
+                        }
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -148,7 +249,12 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
                     new object[] { config5, expected5 },
-                    new object[] { config6, expected6 }
+                    new object[] { config6, expected6 },
+                    new object[] { config7, expected7 },
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 },
+                    new object[] { config10, expected10 },
+                    new object[] { config11, expected11 }
                 };
             }
         }
@@ -172,6 +278,9 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             serviceProvider
                 .Setup(q => q.GetService<IFacetFieldParameter<TestDocument>>())
                 .Returns(new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object));
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(expressionBuilder));
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
             config.Invoke(parameter);
 

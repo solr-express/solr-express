@@ -8,7 +8,7 @@
         /// <summary>
         /// Configure value used to make mm parameter
         /// </summary>
-		/// <param name="parameter">Parameter to congigure</param>
+		/// <param name="parameter">Parameter to configure</param>
         /// <param name="value">Value used to make mm parameter</param>
         public static IMinimumShouldMatchParameter<TDocument> Value<TDocument>(this IMinimumShouldMatchParameter<TDocument> parameter, string value)
             where TDocument : Document

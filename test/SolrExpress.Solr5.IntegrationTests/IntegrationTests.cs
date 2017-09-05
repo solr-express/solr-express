@@ -632,5 +632,125 @@ namespace SolrExpress.Solr5.IntegrationTests
             Assert.Equal("ManufacturerId", facetField.Name);
             Assert.Equal("InStock", facetField.Values.ToList()[0].Facets.ToList()[0].Name);
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using facets with "filter"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest022()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .FacetField(q => q.InStock, facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .FacetQuery("facetQuery", q => q.Field(f => f.Features), facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .FacetRange("facetRange", q => q.Price, "1", "10", "100", facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10)))
+                .Execute()
+                .Facets(out var data);
+
+            // Assert
+            Assert.Equal(3, data.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with facet method
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest023()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.Categories, facet => facet.MethodType(FacetMethodType.DocValues))
+                .FacetField(q => q.Features, facet => facet.MethodType(FacetMethodType.Stream))
+                .FacetField(q => q.Manufacturer, facet => facet.MethodType(FacetMethodType.UninvertedField))
+                .Execute()
+                .Facets(out var facets);
+
+            // Assert
+            Assert.Equal(3, facets.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "FacetField" with facet prefix
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest024()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetField(q => q.Categories, facet => facet.Prefix("c"))
+                .Execute()
+                .Facets(out var facets);
+
+            // Assert
+            Assert.Equal(1, facets.Count());
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "CursorMark"
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR and populate only requested fields
+        /// </summary>
+        [Fact]
+        public void IntegrationTest025()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .Sort(q => q.Id, true)
+                .CursorMark("*")
+                .Execute()
+                .Information(out var information);
+
+            // Assert
+            Assert.NotNull(information.NextCursorMark);
+        }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Facet.Range" (with HardEnd)
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest026()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .FacetRange("Facet1", q => q.Popularity, "1", "1", "10", facet => facet.HardEnd(true))
+                .Execute()
+                .Facets(out var data);
+
+            // Assert
+            Assert.Equal(1, data.Count());
+            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
+        }
     }
 }

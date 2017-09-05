@@ -1,4 +1,6 @@
-﻿using SolrExpress.Builder;
+﻿using Moq;
+using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
@@ -9,7 +11,6 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -85,7 +86,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.FieldExpression(q => q.Id).AliasName("Id").Minimum(1).SortType(FacetSortType.CountAsc).Limit(10).Excludes("tag1", "tag2").CountAfter(true).CountBefore(true).Gap("1").Start("10").End("20");
                 };
                 var expected11 = "facet=true&facet.range={!ex=tag1,tag2 key=Id}id&f.id.facet.range.gap=1&f.id.facet.range.start=10&f.id.facet.range.end=20&f.id.facet.range.other=before&f.id.facet.range.other=after&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
-                
+
+                Action<IFacetRangeParameter<TestDocument>> config12 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).HardEnd(true);
+                };
+                const string expected12 = "facet=true&facet.range=id&f.id.facet.range.hardend=true";
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -98,7 +105,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     new object[] { config8, expected8 },
                     new object[] { config9, expected9 },
                     new object[] { config10, expected10 },
-                    new object[] { config11, expected11 }
+                    new object[] { config11, expected11 },
+                    new object[] { config12, expected12 }
                 };
             }
         }
@@ -152,10 +160,17 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.SortType(FacetSortType.CountDesc);
                 };
 
+                Action<IFacetRangeParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Filter(filter => filter.Field(q => q.Id).EqualsTo(10));
+                };
+
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 }
+                    new object[] { config2 },
+                    new object[] { config3 }
                 };
             }
         }
@@ -174,11 +189,15 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IFacetRangeParameter<TestDocument>)new FacetRangeParameter<TestDocument>(expressionBuilder, null);
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(expressionBuilder));
+            var parameter = (IFacetRangeParameter<TestDocument>)new FacetRangeParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
             config.Invoke(parameter);
 
             // Act / Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
+            Assert.Throws<UnsupportedFeatureException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>

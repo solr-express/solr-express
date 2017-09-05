@@ -144,9 +144,9 @@ namespace SolrExpress {
         /// <summary>
         ///    Looks up a localized string similar to Descending sort type is an unsupported feature in Solr 4.
         /// </summary>
-        public static string UnsupportedSortTypeException {
+        public static string UnsupportedFeatureException {
             get {
-                return ResourceManager.GetString("UnsupportedSortTypeException", resourceCulture);
+                return ResourceManager.GetString("UnsupportedFeatureException", resourceCulture);
             }
         }
         

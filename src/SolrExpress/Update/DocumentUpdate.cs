@@ -35,7 +35,7 @@ namespace SolrExpress.Update
         {
             Checker.IsNull(documents);
             Checker.IsEmpty(documents);
-
+            
             this._documentsToAdd.AddRange(documents);
 
             return this;

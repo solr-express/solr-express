@@ -130,6 +130,22 @@ namespace SolrExpress.Solr4.Search.Result
             }
         }
 
+        private static bool FirstGreaterThanSecond(Type fieldType, object value1, object value2)
+        {
+            if (typeof(DateTime) == fieldType)
+            {
+                return ((DateTime)value1) > ((DateTime)value2);
+            }
+            if (typeof(decimal) == fieldType
+                || typeof(float) == fieldType
+                || typeof(double) == fieldType)
+            {
+                return ((decimal)value1) > ((decimal)value2);
+            }
+
+            return ((int)value1) > ((int)value2);
+        }
+
         private static object GetParsedRangeValue(Type fieldType, string value = null)
         {
             if (typeof(DateTime) == fieldType)
@@ -245,22 +261,35 @@ namespace SolrExpress.Solr4.Search.Result
                     });
             }
 
+            if (!string.IsNullOrWhiteSpace(endValue))
+            {
+                var values = ((List<IFacetItemRangeValue>)facetItem.Values);
+                if (facetRangeParameter.HardEnd && values.Any())
+                {
+                    var item = values[values.Count - 1];
+                    var value = GetParsedRangeValue(fieldType, facetRangeParameter.End);
+                    if (FirstGreaterThanSecond(fieldType, item.GetMaximumValue(), value))
+                    {
+                        item.SetMaximumValue(value);
+                    }
+                }
+
+                if (quantityAfter.HasValue)
+                {
+                    var rangeValue = GetFacetItemRangeValue(fieldType, endValue);
+                    rangeValue.Quantity = quantityAfter.Value;
+
+                    ((List<IFacetItemRangeValue>)facetItem.Values).Add(rangeValue);
+                }
+            }
+
+            // ReSharper disable once InvertIf
             if (!string.IsNullOrWhiteSpace(startValue) && quantityBefore.HasValue)
             {
                 var rangeValue = GetFacetItemRangeValue(fieldType, rawMaximumValue: startValue);
                 rangeValue.Quantity = quantityBefore.Value;
 
                 ((List<IFacetItemRangeValue>)facetItem.Values).Insert(0, rangeValue);
-            }
-
-            // ReSharper disable once InvertIf
-
-            if (!string.IsNullOrWhiteSpace(endValue) && quantityAfter.HasValue)
-            {
-                var rangeValue = GetFacetItemRangeValue(fieldType, endValue);
-                rangeValue.Quantity = quantityAfter.Value;
-
-                ((List<IFacetItemRangeValue>)facetItem.Values).Add(rangeValue);
             }
 
             return facetItem;

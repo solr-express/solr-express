@@ -1,4 +1,6 @@
-﻿using SolrExpress.Builder;
+﻿using Moq;
+using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
@@ -9,7 +11,6 @@ using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -50,13 +51,41 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 };
                 const string expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
+                Action<IFacetFieldParameter<TestDocument>> config6 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.DocValues);
+                };
+                const string expected6 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=enum";
+
+                Action<IFacetFieldParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.UninvertedField);
+                };
+                const string expected7 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fc";
+
+                Action<IFacetFieldParameter<TestDocument>> config8 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.Stream);
+                };
+                const string expected8 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fcs";
+
+                Action<IFacetFieldParameter<TestDocument>> config9 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).Prefix("xpto");
+                };
+                const string expected9 = "facet=true&facet.field={!key=Id}id&f.id.facet.prefix=xpto";
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
                     new object[] { config2, expected2 },
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
-                    new object[] { config5, expected5 }
+                    new object[] { config5, expected5 },
+                    new object[] { config6, expected6 },
+                    new object[] { config7, expected7 },
+                    new object[] { config8, expected8 },
+                    new object[] { config9, expected9 }
                 };
             }
         }
@@ -110,10 +139,17 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     facet.SortType(FacetSortType.CountDesc);
                 };
 
+                Action<IFacetFieldParameter<TestDocument>> config3 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id);
+                    facet.Filter(filter => filter.Field(q => q.Id).EqualsTo(10));
+                };
+
                 return new[]
                 {
                     new object[] { config1 },
-                    new object[] { config2 }
+                    new object[] { config2 },
+                    new object[] { config3 }
                 };
             }
         }
@@ -132,11 +168,15 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
+            var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
+            serviceProvider
+                .Setup(q => q.GetService<SearchQuery<TestDocument>>())
+                .Returns(new SearchQuery<TestDocument>(expressionBuilder));
+            var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, serviceProvider.Object);
             config.Invoke(parameter);
 
             // Act / Assert
-            Assert.Throws<UnsupportedSortTypeException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
+            Assert.Throws<UnsupportedFeatureException>(() => ((ISearchItemExecution<List<string>>)parameter).Execute());
         }
 
         /// <summary>

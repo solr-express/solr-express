@@ -3,6 +3,7 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,10 @@ namespace SolrExpress.Solr5.Search.Parameter
     {
         private JProperty _result;
 
-        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
         public string AliasName { get; set; }
@@ -33,6 +35,9 @@ namespace SolrExpress.Solr5.Search.Parameter
         public int? Limit { get; set; }
         public int? Minimum { get; set; }
         public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        public SearchQuery<TDocument> Filter { get; set; }
 
         public void AddResultInContainer(JObject container)
         {
@@ -54,10 +59,21 @@ namespace SolrExpress.Solr5.Search.Parameter
                 new JProperty("q", formule)
             };
 
+            JProperty domain = null;
             if (this.Excludes?.Any() ?? false)
             {
                 var excludeValue = new JObject(new JProperty("excludeTags", new JArray(this.Excludes)));
-                array.Add(new JProperty("domain", excludeValue));
+                domain = new JProperty("domain", excludeValue);
+            }
+            if (this.Filter != null)
+            {
+                var filter = new JProperty("filter", this.Filter.Execute());
+                domain = domain ?? new JProperty("domain", new JObject());
+                ((JObject)domain.Value).Add(filter);
+            }
+            if (domain != null)
+            {
+                array.Add(domain);
             }
 
             if (this.Minimum.HasValue)

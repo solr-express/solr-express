@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using SolrExpress.Serialization;
 using SolrExpress.Update;
 using SolrExpress.Utility;
+using System.Linq;
 using System.Text;
 
 namespace SolrExpress.Solr4.Update
@@ -13,6 +14,7 @@ namespace SolrExpress.Solr4.Update
         public JObject Execute(params TDocument[] documents)
         {
             Checker.IsNull(documents);
+            Checker.IsTrue<UnsupportedFeatureException>(documents.Count() > 1);
 
             if (documents.Length == 0)
             {

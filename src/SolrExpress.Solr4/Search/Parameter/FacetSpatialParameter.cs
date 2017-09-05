@@ -2,6 +2,7 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
+using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,10 @@ namespace SolrExpress.Solr4.Search.Parameter
     {
         private readonly List<string> _result = new List<string>();
 
-        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder)
+        public FacetSpatialParameter(ExpressionBuilder<TDocument> expressionBuilder, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             this.ExpressionBuilder = expressionBuilder;
+            this.ServiceProvider = serviceProvider;
         }
 
         public string AliasName { get; set; }
@@ -31,6 +33,9 @@ namespace SolrExpress.Solr4.Search.Parameter
         public int? Limit { get; set; }
         public int? Minimum { get; set; }
         public FacetSortType? SortType { get; set; }
+        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        public IList<IFacetParameter<TDocument>> Facets { get; set; }
+        public SearchQuery<TDocument> Filter { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
@@ -52,7 +57,7 @@ namespace SolrExpress.Solr4.Search.Parameter
 
             if (this.SortType.HasValue)
             {
-                Checker.IsTrue<UnsupportedSortTypeException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
+                Checker.IsTrue<UnsupportedFeatureException>(this.SortType.Value == FacetSortType.CountDesc || this.SortType.Value == FacetSortType.IndexDesc);
 
                 ParameterUtil.GetFacetSort(this.SortType.Value, out string typeName, out string dummy);
 

@@ -22,9 +22,10 @@ namespace SolrExpress.Solr5.Extension
             solrExpressBuilder
                 .ServiceProvider
                 .AddTransient<IAnyParameter, AnyParameter>()
-                .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
                 .AddTransient<IAtomicDelete, AtomicDelete<TDocument>>()
+                .AddTransient<IAtomicUpdate<TDocument>, AtomicUpdate<TDocument>>()
                 .AddTransient<IBoostParameter<TDocument>, BoostParameter<TDocument>>()
+                .AddTransient<ICursorMarkParameter, CursorMarkParameter>()
                 .AddTransient<IDefaultFieldParameter<TDocument>, DefaultFieldParameter<TDocument>>()
                 .AddTransient<IFacetFieldParameter<TDocument>, FacetFieldParameter<TDocument>>()
                 .AddTransient<IFacetLimitParameter<TDocument>, FacetLimitParameter<TDocument>>()
@@ -34,6 +35,7 @@ namespace SolrExpress.Solr5.Extension
                 .AddTransient<IFacetsResult<TDocument>, FacetsResult<TDocument>>()
                 .AddTransient<IFieldsParameter<TDocument>, FieldsParameter<TDocument>>()
                 .AddTransient<IFilterParameter<TDocument>, FilterParameter<TDocument>>()
+                .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<ILimitParameter<TDocument>, LimitParameter<TDocument>>()
                 .AddTransient<IMinimumShouldMatchParameter<TDocument>, MinimumShouldMatchParameter<TDocument>>()
                 .AddTransient<IOffsetParameter<TDocument>, OffsetParameter<TDocument>>()

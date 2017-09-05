@@ -62,11 +62,17 @@ Create a facet range
 
 ## Settings
 
-| Use case                                                                                                        | How to                                                                                                       |
-|-----------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| Sort type of result of facet                                                                                    | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.SortType = FacetSortType.CountAsc)   |
-| Minimum count of itens in facet's result                                                                        | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Minimum = 2)                         |
-| Limit of itens in facet's result                                                                                | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Limit = 10)                          |
-| List of tags to exclude in facet calculation                                                                    | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Excludes = new[] { "tag1", "tag2" }) |
-| Counts should also be computed for all records with field values lower then lower bound of the first range      | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountBefore = true)                  |
-| Counts should also be computed for all records with field values greater then the upper bound of the last range | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountAfter = true)                   |
+| Use case                                                                                                        | How to                                                                                                                |
+|-----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| Sort type of result of facet                                                                                    | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.SortType(FacetSortType.CountAsc))             |
+| Minimum count of itens in facet's result                                                                        | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Minimum(2))                                   |
+| Limit of itens in facet's result                                                                                | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Limit(10))                                    |
+| List of tags to exclude in facet calculation                                                                    | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Excludes(new[] { "tag1", "tag2" }))           |
+| Counts should also be computed for all records with field values lower then lower bound of the first range      | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountBefore(true))                            |
+| Counts should also be computed for all records with field values greater then the upper bound of the last range | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountAfter(true))                             |
+| Specify a filter or list of filters to be intersected with the incoming domain before faceting                  | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
+| Specify if last bucket will end at “end” even if it is less than “gap” wide                                     | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.HardEnd(true))                                |
+
+** NOTE **
+
+Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
