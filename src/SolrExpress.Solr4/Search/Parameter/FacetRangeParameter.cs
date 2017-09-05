@@ -39,6 +39,7 @@ namespace SolrExpress.Solr4.Search.Parameter
         public string Start { get; set; }
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
         public SearchQuery<TDocument> Filter { get; set; }
+        public bool HardEnd { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
@@ -80,6 +81,11 @@ namespace SolrExpress.Solr4.Search.Parameter
             if (this.CountAfter)
             {
                 this._result.Add($"f.{fieldName}.facet.range.other=after");
+            }
+
+            if (this.HardEnd)
+            {
+                this._result.Add($"f.{fieldName}.facet.range.hardend=true");
             }
 
             if (this.SortType.HasValue)

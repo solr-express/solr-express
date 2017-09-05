@@ -72,6 +72,16 @@ namespace SolrExpress.Search.Result
             this.MinimumValue = (TKey?)value;
         }
 
+        public object GetMinimumValue()
+        {
+            return this.MinimumValue;
+        }
+
+        public object GetMaximumValue()
+        {
+            return this.MaximumValue;
+        }
+
         public TKey? MinimumValue { get; set; }
         public TKey? MaximumValue { get; set; }
         public long Quantity { get; set; }

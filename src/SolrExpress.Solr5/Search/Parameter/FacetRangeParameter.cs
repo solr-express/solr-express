@@ -41,6 +41,7 @@ namespace SolrExpress.Solr5.Search.Parameter
         public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
         public IList<IFacetParameter<TDocument>> Facets { get; set; }
         public SearchQuery<TDocument> Filter { get; set; }
+        public bool HardEnd { get; set; }
 
         public void AddResultInContainer(JObject container)
         {
@@ -82,13 +83,20 @@ namespace SolrExpress.Solr5.Search.Parameter
             {
                 array.Add(new JProperty("gap", this.Gap));
             }
+
             if (!string.IsNullOrWhiteSpace(this.Start))
             {
                 array.Add(new JProperty("start", this.Start));
             }
+
             if (!string.IsNullOrWhiteSpace(this.End))
             {
                 array.Add(new JProperty("end", this.End));
+            }
+
+            if (this.HardEnd)
+            {
+                array.Add(new JProperty("hardend", true));
             }
 
             if (this.CountBefore || this.CountAfter)

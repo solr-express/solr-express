@@ -87,6 +87,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 };
                 var expected11 = "facet=true&facet.range={!ex=tag1,tag2 key=Id}id&f.id.facet.range.gap=1&f.id.facet.range.start=10&f.id.facet.range.end=20&f.id.facet.range.other=before&f.id.facet.range.other=after&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
+                Action<IFacetRangeParameter<TestDocument>> config12 = facet =>
+                {
+                    facet.FieldExpression(q => q.Id).HardEnd(true);
+                };
+                const string expected12 = "facet=true&facet.range=id&f.id.facet.range.hardend=true";
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -99,7 +105,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                     new object[] { config8, expected8 },
                     new object[] { config9, expected9 },
                     new object[] { config10, expected10 },
-                    new object[] { config11, expected11 }
+                    new object[] { config11, expected11 },
+                    new object[] { config12, expected12 }
                 };
             }
         }

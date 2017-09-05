@@ -220,6 +220,30 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                   }
                 }");
 
+                Action<IFacetRangeParameter<TestDocument>> config7 = facet =>
+                {
+                    facet.AliasName = "X";
+                    facet.FieldExpression = q => q.Id;
+                    facet.Start = "10";
+                    facet.End = "20";
+                    facet.Gap = "1";
+                    facet.HardEnd = true;
+                };
+                var expected7 = JObject.Parse(@"
+                {
+                  ""facet"": {
+                    ""X"": {
+                      ""range"": {
+                        ""field"": ""id"",
+                        ""gap"": ""1"",
+                        ""start"": ""10"",
+                        ""end"": ""20"",
+                        ""hardend"": true
+                      }
+                    }
+                  }
+                }");
+
                 return new[]
                 {
                     new object[] { config1, expected1 },
@@ -227,7 +251,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                     new object[] { config3, expected3 },
                     new object[] { config4, expected4 },
                     new object[] { config5, expected5 },
-                    new object[] { config6, expected6 }
+                    new object[] { config6, expected6 },
+                    new object[] { config7, expected7 }
                 };
             }
         }

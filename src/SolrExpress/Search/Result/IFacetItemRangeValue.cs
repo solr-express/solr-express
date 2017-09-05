@@ -28,6 +28,16 @@ namespace SolrExpress.Search.Result
         void SetMaximumValue(object value);
 
         /// <summary>
+        /// Get minimum value of range
+        /// </summary>
+        object GetMinimumValue();
+
+        /// <summary>
+        /// Get maximum value of range
+        /// </summary>
+        object GetMaximumValue();
+
+        /// <summary>
         /// Calculate maximum value of range using informed gap
         /// </summary>
         void CalculateMaximumValueUsingGap(object gap);

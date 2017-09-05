@@ -35,5 +35,10 @@
         /// Counts should also be computed for all records with field values greater then the upper bound of the last range
         /// </summary>
         bool CountAfter { get; set; }
+
+        /// <summary>
+        /// True to last bucket will end at “end” even if it is less than “gap” wide
+        /// </summary>
+        bool HardEnd { get; set; }
     }
 }
