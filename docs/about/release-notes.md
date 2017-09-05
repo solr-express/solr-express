@@ -2,9 +2,20 @@
 
 Notes about releases
 
+## [5.0.1] - 2017-09-05
+
+### Enhancement
+
+* Support to .Net Core 2.0 ([#230](https://github.com/solr-express/solr-express/issues/230))
+* Support for define local parameters ([#222](https://github.com/solr-express/solr-express/issues/230))
+* Paging using deep page options ([#223](https://github.com/solr-express/solr-express/issues/223))
+* Facet filter ([#225](https://github.com/solr-express/solr-express/issues/225))
+* Facet hardend ([#229](https://github.com/solr-express/solr-express/issues/229))
+* Facet prefix and method ([#227](https://github.com/solr-express/solr-express/issues/227) and [#228](https://github.com/solr-express/solr-express/issues/228))
+
 ## [5.0.0] - 2017-08-28
 
-* Minor bug fixes and docs updates, closes #218 and #221
+* Minor bug fixes and docs updates, closes ([#218](https://github.com/solr-express/solr-express/issues/218)) and ([#221](https://github.com/solr-express/solr-express/issues/221))
 
 ## [5.0.0-BETA2] - 2017-08-28
 
