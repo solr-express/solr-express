@@ -37,6 +37,7 @@ namespace SolrExpress.Solr4.Extension
                 .AddTransient<IFilterParameter<TDocument>, FilterParameter<TDocument>>()
                 .AddTransient<IInformationResult<TDocument>, InformationResult<TDocument>>()
                 .AddTransient<ILimitParameter<TDocument>, LimitParameter<TDocument>>()
+                .AddTransient<ILocalParameter<TDocument>, LocalParameter<TDocument>>()
                 .AddTransient<IMinimumShouldMatchParameter<TDocument>, MinimumShouldMatchParameter<TDocument>>()
                 .AddTransient<IOffsetParameter<TDocument>, OffsetParameter<TDocument>>()
                 .AddTransient<IQueryFieldParameter<TDocument>, QueryFieldParameter<TDocument>>()

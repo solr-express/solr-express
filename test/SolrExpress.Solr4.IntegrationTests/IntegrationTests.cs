@@ -658,5 +658,28 @@ namespace SolrExpress.Solr4.IntegrationTests
             Assert.Equal(1, data.Count());
             Assert.True(data.Any(q => q.Name.Equals("Facet1")));
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter LocalParameter
+        /// When    Invoking the method "Execute"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest023()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .QueryAll()
+                .LocalParameter("parameter1", "my parameter")
+                .Execute()
+                .Document(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
     }
 }

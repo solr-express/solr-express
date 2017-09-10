@@ -21,7 +21,7 @@ Provider for Simple injector Dependency Injection.</Description>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.0.1</Version>
+    <Version>5.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
