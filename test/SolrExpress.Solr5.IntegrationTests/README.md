@@ -2,7 +2,7 @@
 1. Install Solr (5.5.0)
 	1. Access http://archive.apache.org/dist/lucene/solr/5.5.0/
 	2. Download solr-5.5.0.zip file
-	3. Unzip file in C:\Temp (or other folder of your preference)
+	3. Unzip file in C:\Temp (or another folder of your preference)
 	4. Make sure than all requirements of SOLR system was installed in computer (basically, Java JRE 1.7+)
 2. Start and populate solr executing
 	```powershell

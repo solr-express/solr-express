@@ -775,5 +775,27 @@ namespace SolrExpress.Solr5.IntegrationTests
             // Assert
             Assert.Equal(10, data.Count());
         }
+
+        /// <summary>
+        /// Where   Creating a SOLR context, using parameter "Filter"
+        /// When    Invoking the method "StartsWith"
+        /// What    Create a communication between software and SOLR
+        /// </summary>
+        [Fact]
+        public void IntegrationTest028()
+        {
+            // Arrange
+            var documentCollection = this.GetDocumentCollection();
+
+            // Act
+            documentCollection
+                .Select()
+                .Filter(x => x.Categories, query => query.StartsWith("e"))
+                .Execute()
+                .Document(out var data);
+
+            // Assert
+            Assert.Equal(10, data.Count());
+        }
     }
 }
