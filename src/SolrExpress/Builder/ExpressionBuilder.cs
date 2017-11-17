@@ -42,8 +42,8 @@ namespace SolrExpress.Builder
                     v => new FieldSchema
                     {
                         FieldName = v["name"].Value<string>(),
-                        IsIndexed = v["indexed"]?.Value<bool>() ?? false,
-                        IsStored = v["stored"]?.Value<bool>() ?? false
+                        IsIndexed = v["indexed"]?.Value<bool>() ?? true,
+                        IsStored = v["stored"]?.Value<bool>() ?? true
                     });
 
             this.DynamicFieldSchemas = allDynamicFields["dynamicFields"]
@@ -52,8 +52,8 @@ namespace SolrExpress.Builder
                     v => new FieldSchema
                     {
                         FieldName = v["name"].Value<string>(),
-                        IsIndexed = v["indexed"]?.Value<bool>() ?? false,
-                        IsStored = v["stored"]?.Value<bool>() ?? false
+                        IsIndexed = v["indexed"]?.Value<bool>() ?? true,
+                        IsStored = v["stored"]?.Value<bool>() ?? true
                     });
         }
 
