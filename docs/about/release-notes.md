@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [5.1.2] - 2017-11-17
+
+### Bug fix
+* Prevent exceptions when use SchemaLess ([#237](https://github.com/solr-express/solr-express/issues/237)) and ([#241](https://github.com/solr-express/solr-express/issues/241))
+* FieldExpression parameter is not being used in some extension methods ([#239](https://github.com/solr-express/solr-express/issues/239))
+* Wrong quotation marks addition in *StartsWith* method ([#240](https://github.com/solr-express/solr-express/issues/240))
+
 ## [5.1.1] - 2017-09-10
 
 ### Bug fix

@@ -19,7 +19,7 @@ Provider for Ninject Dependency Injection.</Description>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>5.1.1</Version>
+    <Version>5.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
