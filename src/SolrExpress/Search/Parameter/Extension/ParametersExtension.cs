@@ -256,6 +256,7 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
 
+            search.AddField(fieldExpression);
             parameter.Query(search);
 
             query.Invoke(search);
@@ -362,6 +363,7 @@ namespace SolrExpress.Search.Parameter.Extension
         {
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
+            search.AddField(fieldExpression);
             search.Any(values);
 
             parameter.Value(search);
@@ -387,6 +389,7 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
 
+            search.AddField(fieldExpression);
             parameter.Value(search);
 
             query.Invoke(search);
