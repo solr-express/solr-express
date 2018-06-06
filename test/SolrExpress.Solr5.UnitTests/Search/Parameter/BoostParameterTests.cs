@@ -39,7 +39,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal(expected.ToString(), container.ToString());
         }
     }

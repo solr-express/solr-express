@@ -8,6 +8,7 @@ Notes about releases
 
 ### Enhancement
 * Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
+* Update packages references ([#249](https://github.com/solr-express/solr-express/issues/249))
 
 ## [5.1.2] - 2017-11-17
 

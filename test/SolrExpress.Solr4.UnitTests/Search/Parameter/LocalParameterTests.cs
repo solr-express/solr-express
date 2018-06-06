@@ -35,7 +35,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal("myLocalParameter=id:\"ITEM01\"", container[0]);
         }
 
@@ -58,7 +58,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal("myLocalParameter=some value", container[0]);
         }
     }

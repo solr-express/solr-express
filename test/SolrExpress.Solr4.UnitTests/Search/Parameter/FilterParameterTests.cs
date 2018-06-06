@@ -67,7 +67,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal("fq={!tag=tag1}id:\"X\"", container[0]);
         }
     }

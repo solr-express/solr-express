@@ -27,7 +27,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal("qf=id^10 score~2^20", container[0]);
         }
     }
