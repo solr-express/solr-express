@@ -256,7 +256,7 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<IFilterParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
 
-            search.AddField(fieldExpression);
+            search.Field(fieldExpression);
             parameter.Query(search);
 
             query.Invoke(search);
@@ -364,6 +364,26 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
             search.AddField(fieldExpression);
+            search.Any(values);
+
+            parameter.Value(search);
+
+            documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query parameter in commom case (value to be processed using QueryField)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> Query<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, params TValue[] values)
+            where TDocument : Document
+        {
+            var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
+            var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
             search.Any(values);
 
             parameter.Value(search);

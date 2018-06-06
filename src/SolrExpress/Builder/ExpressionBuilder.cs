@@ -57,15 +57,37 @@ namespace SolrExpress.Builder
                     });
         }
 
+        private Expression RemoveConvert(Expression expression)
+        {
+            while (expression != null
+                   && (expression.NodeType == ExpressionType.Convert
+                       || expression.NodeType == ExpressionType.ConvertChecked))
+            {
+                expression = RemoveConvert(((UnaryExpression)expression).Operand);
+            }
+
+            return expression;
+        }
+
+        public Expression GetRootExpression(Expression expression)
+        {
+            while (expression is MemberExpression memberExpression)
+            {
+                expression = memberExpression.Expression;
+            }
+
+            return expression;
+        }
+
         /// <summary>
         /// Get property referenced into indicated expression 
         /// </summary>
         /// <param name="expression">Expression used to find property info</param>
         /// <returns>Property referenced into indicated expression</returns>
-        internal PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
+        internal PropertyInfo GetPropertyInfoFromExpression(Expression expression)
         {
             PropertyInfo propertyInfo = null;
-            var lambda = (LambdaExpression)expression;
+            var lambda = (LambdaExpression)this.GetRootExpression(expression);
 
             MemberExpression memberExpression;
 

@@ -2,14 +2,16 @@
 
 Notes about releases
 
-## [5.x] - 2018-06-06
+## [5.2.0] - 2018-06-XX
 
 ### Bug fix
 * Fix DI exceptions in .Net 4.7.1 ([#250](https://github.com/solr-express/solr-express/issues/250))
+* Wrong exception ([#251](https://github.com/solr-express/solr-express/issues/251))
 
 ### Enhancement
 * Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
 * Update packages references ([#249](https://github.com/solr-express/solr-express/issues/249))
+* Implemented a new *Query* extension ([#252](https://github.com/solr-express/solr-express/issues/252))
 
 ## [5.1.2] - 2017-11-17
 
