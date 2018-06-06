@@ -5,7 +5,7 @@
 Provider for Autofac Dependency Injection.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
-    <TargetFrameworks>net45;net46;netstandard1.6;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net46;net471;netstandard1.6;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>SolrExpress.DI.Autofac</AssemblyName>
     <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
@@ -35,6 +35,12 @@ Provider for Autofac Dependency Injection.</Description>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <PackageReference Include="Autofac" Version="4.6.1" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
     <PackageReference Include="Autofac" Version="4.6.1" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />

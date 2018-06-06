@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [5.x] - 2018-06-06
+
+### Bug fix
+
+### Enhancement
+* Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
+
 ## [5.1.2] - 2017-11-17
 
 ### Bug fix
