@@ -6,6 +6,7 @@ namespace SolrExpress.DI.CoreClr
     public sealed class SolrExpressServiceProvider<TDocument> : ISolrExpressServiceProvider<TDocument>
         where TDocument : Document
     {
+        private readonly object _lockObject = new object();
         private readonly IServiceCollection _serviceCollection = new ServiceCollection();
         private IServiceProvider _serviceProvider;
 
@@ -67,7 +68,13 @@ namespace SolrExpress.DI.CoreClr
 
         TService ISolrExpressServiceProvider<TDocument>.GetService<TService>()
         {
-            this._serviceProvider = this._serviceProvider ?? this._serviceCollection.BuildServiceProvider();
+            if (this._serviceProvider == null)
+            {
+                lock (_lockObject)
+                {
+                    this._serviceProvider = this._serviceCollection.BuildServiceProvider();
+                }
+            }
 
             return this._serviceProvider.GetService<TService>();
         }
