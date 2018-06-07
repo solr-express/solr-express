@@ -446,7 +446,7 @@ namespace SolrExpress.Search.Parameter.Extension
         /// <param name="fieldExpression">Expressions used to find field name</param>
         /// <param name="ascendent">True to ascendent order, otherwise false</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Sort<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, bool ascendent)
+        public static DocumentSearch<TDocument> Sort<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, bool ascendent = true)
             where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ISortParameter<TDocument>>();
