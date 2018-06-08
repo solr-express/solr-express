@@ -7,6 +7,7 @@ Notes about releases
 ### Bug fix
 * Fix DI exceptions in .Net 4.7.1 ([#250](https://github.com/solr-express/solr-express/issues/250))
 * Wrong exception ([#251](https://github.com/solr-express/solr-express/issues/251))
+* Wrong convertions when using *DateTime?* or *GeoCoordinate?* ([#255](https://github.com/solr-express/solr-express/issues/255))
 
 ### Enhancement
 * Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
