@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Search.Extension;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result.Extension;

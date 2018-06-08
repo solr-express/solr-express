@@ -13,6 +13,10 @@ Notes about releases
 * Update packages references ([#249](https://github.com/solr-express/solr-express/issues/249))
 * Implemented a new *Query* extension ([#252](https://github.com/solr-express/solr-express/issues/252))
 * Change parameter  *ascendent* of extension **ParametersExtension.Sort** to default true ([#253](https://github.com/solr-express/solr-express/issues/253))
+* New extensions ***SomeThing*If** ([#254](https://github.com/solr-express/solr-express/issues/254))
+
+### **BREAKING CHANGES**
+* Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access *DocumentSearch<TDocument>* extensions
 
 ## [5.1.2] - 2017-11-17
 

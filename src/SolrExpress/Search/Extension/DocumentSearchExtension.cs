@@ -1,12 +1,14 @@
-﻿using SolrExpress.Search.Query;
+﻿using SolrExpress.Search.Parameter;
+using SolrExpress.Search.Parameter.Extension;
+using SolrExpress.Search.Query;
 using SolrExpress.Search.Result;
 using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
-namespace SolrExpress.Search.Parameter.Extension
+namespace SolrExpress.Search.Extension
 {
-    public static class ParametersExtension
+    public static class DocumentSearchExtension
     {
         /// <summary>
         /// Create a not mapped parameter
@@ -31,6 +33,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a not mapped parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="name">Name of parameter</param>
+        /// <param name="value">Value of parameter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> AnyIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string name, string value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Any(name, value);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a boost parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -50,6 +73,27 @@ namespace SolrExpress.Search.Parameter.Extension
             instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a boost parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="query">Query used to make boost</param>
+        /// <param name="instance">Instance of boost ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> BoostIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Action<SearchQuery<TDocument>> query, Action<IBoostParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Boost(query, instance);
+            }
 
             return documentSearch;
         }
@@ -84,6 +128,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a facet field parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="instance">Instance of facet ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetFieldIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, Action<IFacetFieldParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.FacetField(fieldExpression, instance);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a facet query parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -111,6 +176,28 @@ namespace SolrExpress.Search.Parameter.Extension
             {
                 var facetsResult = documentSearch.ServiceProvider.GetService<IFacetsResult<TDocument>>();
                 documentSearch.Add(facetsResult);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a facet query parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="aliasName">Name of alias added in query</param>
+        /// <param name="query">Query used to make facet</param>
+        /// <param name="instance">Instance of facet ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetQueryIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string aliasName, Action<SearchQuery<TDocument>> query, Action<IFacetQueryParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.FacetQuery(aliasName, query, instance);
             }
 
             return documentSearch;
@@ -152,6 +239,31 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a facet range parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="aliasName">Name of alias added in query</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="gap">Size of each range bucket to make facet</param>
+        /// <param name="start">Lower bound to make facet</param>
+        /// <param name="end">Upper bound to make facet</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetRangeIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string aliasName, Expression<Func<TDocument, object>> fieldExpression, string gap, string start, string end, Action<IFacetRangeParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.FacetRange(aliasName, fieldExpression, gap, start, end, instance);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a facet limit parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -164,6 +276,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Value(value);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a facet limit parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="value">Value of limit</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetLimitIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, int value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.FacetLimit(value);
+            }
 
             return documentSearch;
         }
@@ -202,6 +334,30 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a facet range parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="aliasName">Name of alias added in query</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from center point</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FacetSpatialIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string aliasName, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, Action<IFacetSpatialParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.FacetSpatial(aliasName, fieldExpression, centerPoint, distance, instance);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a fields parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -214,6 +370,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.FieldExpressions(fieldExpressions);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a fields parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpressions">Expressions used to find fields name</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FieldsIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, params Expression<Func<TDocument, object>>[] fieldExpressions)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Fields(fieldExpressions);
+            }
 
             return documentSearch;
         }
@@ -236,6 +412,27 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Query(search);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a filter parameter in commom case (field equals value, field with value in collection)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FilterIf<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Filter(fieldExpression, values);
+            }
 
             return documentSearch;
         }
@@ -268,6 +465,28 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a filter parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> FilterIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query, Action<IFilterParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Filter(fieldExpression, query, instance);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a limit parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -280,6 +499,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Value(value);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a limit parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="value">Value of limit</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> LimitIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, long value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Limit(value);
+            }
 
             return documentSearch;
         }
@@ -302,6 +541,26 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a minimum should match
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="value">Expression used to make mm parameter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> MinimumShouldMatchIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.MinimumShouldMatch(value);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a offset parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -314,6 +573,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Value(value);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a offset parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="value">Value of offset</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> OffsetIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, long value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Offset(value);
+            }
 
             return documentSearch;
         }
@@ -335,6 +614,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a limit and a offset parameters
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="itemsPerPage">Quantity of items in one page</param>
+        /// <param name="currentPage">Current page</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> PageIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, long itemsPerPage, long currentPage)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Page(itemsPerPage, currentPage);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a query field parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -347,6 +647,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Expression(expression);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query field parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="expression">Query used to make query field</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryFieldIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string expression)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.QueryField(expression);
+            }
 
             return documentSearch;
         }
@@ -374,6 +694,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a query parameter in commom case (field equals value, field with value in collection)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryIf<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, params TValue[] values)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Query(fieldExpression, values);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a query parameter in commom case (value to be processed using QueryField)
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -389,6 +730,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Value(search);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query parameter in commom case (value to be processed using QueryField)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="values">Values to find</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryIf<TDocument, TValue>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, params TValue[] values)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Query(values);
+            }
 
             return documentSearch;
         }
@@ -421,6 +782,28 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a query parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
+        /// <param name="instance">Instance of parameter ready to configure</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query, Action<IQueryParameter<TDocument>> instance = null)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Query(fieldExpression, query, instance);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a query parameter to get all (*:*)
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -435,6 +818,25 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Value(search);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a query parameter to get all (*:*)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> QueryAllIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.QueryAll();
+            }
 
             return documentSearch;
         }
@@ -459,6 +861,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a sort parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expressions used to find field name</param>
+        /// <param name="ascendent">True to ascendent order, otherwise false</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> SortIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, bool ascendent = true)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.Sort(fieldExpression, ascendent);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a sort parameter configured to do a random sort
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -469,6 +892,25 @@ namespace SolrExpress.Search.Parameter.Extension
             var parameter = documentSearch.ServiceProvider.GetService<ISortRandomlyParameter<TDocument>>();
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a sort parameter configured to do a random sort
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> SortRandomlyIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.SortRandomly();
+            }
 
             return documentSearch;
         }
@@ -492,6 +934,29 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.Distance(distance);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a spatial filter parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="functionType">Function used in spatial filter</param>
+        /// <param name="centerPoint">Center point to spatial filter</param>
+        /// <param name="distance">Distance from center point</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> SpatialFilterIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, Expression<Func<TDocument, object>> fieldExpression, GeoCoordinate centerPoint, decimal distance, SpatialFunctionType functionType = SpatialFunctionType.Bbox)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.SpatialFilter(fieldExpression, centerPoint, distance, functionType);
+            }
 
             return documentSearch;
         }
@@ -522,6 +987,28 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a local parameter in commom case (a simple query)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="name">Name of parameter</param>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="query">Query used to make filter</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> LocalParameterIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string name, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.LocalParameter(name, fieldExpression, query);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a local parameter in commom case (a plain value)
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -542,6 +1029,27 @@ namespace SolrExpress.Search.Parameter.Extension
         }
 
         /// <summary>
+        /// Create a local parameter in commom case (a plain value)
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="name">Name of parameter</param>
+        /// <param name="value">Plain value to include in query</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> LocalParameterIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string name, string value)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.LocalParameter(name, value);
+            }
+
+            return documentSearch;
+        }
+
+        /// <summary>
         /// Create a cursor mark parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
@@ -555,6 +1063,26 @@ namespace SolrExpress.Search.Parameter.Extension
             parameter.CursorMark(cursorMark);
 
             documentSearch.Add(parameter);
+
+            return documentSearch;
+        }
+
+        /// <summary>
+        /// Create a cursor mark parameter
+        /// </summary>
+        /// <param name="documentSearch">Document search engine</param>
+        /// <param name="conditional">Conditional to add parameter</param>
+        /// <param name="cursorMark">Mark used to paging through the results</param>
+        /// <returns>Document search engine</returns>
+        public static DocumentSearch<TDocument> CursorMarkIf<TDocument>(this DocumentSearch<TDocument> documentSearch, Func<bool> conditional, string cursorMark)
+            where TDocument : Document
+        {
+            Checker.IsNull(conditional);
+
+            if (conditional.Invoke())
+            {
+                documentSearch.CursorMark(cursorMark);
+            }
 
             return documentSearch;
         }
