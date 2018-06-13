@@ -27,7 +27,10 @@ namespace SolrExpress.Utility
 
             var solrConnection = new SolrConnection(options);
             var expressionBuilder = new ExpressionBuilder<TDocument>(options, solrConnection);
-            expressionBuilder.LoadDocument();
+            if (!options.LazyInfraValidation)
+            {
+                expressionBuilder.LoadDocument();
+            }
 
             serviceProvider
                 .AddTransient(expressionBuilder)

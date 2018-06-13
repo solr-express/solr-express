@@ -19,6 +19,9 @@ Notes about releases
 * Change parameter  *ascendent* of extension **ParametersExtension.Sort** to default true ([#253](https://github.com/solr-express/solr-express/issues/253))
 * New extensions ***SomeThing*If** ([#254](https://github.com/solr-express/solr-express/issues/254))
 
+### Testability
+* Make possible start SolrExpress without Solr ([#259](https://github.com/solr-express/solr-express/issues/259))
+
 ### **BREAKING CHANGES**
 * Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access *DocumentSearch<TDocument>* extensions
 

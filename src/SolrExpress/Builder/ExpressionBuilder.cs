@@ -19,6 +19,7 @@ namespace SolrExpress.Builder
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISolrConnection _solrConnection;
         private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
+        private bool _isDocumentLoaded;
         internal Dictionary<string, FieldSchema> FieldSchemas;
         internal Dictionary<Regex, FieldSchema> DynamicFieldSchemas;
 
@@ -168,6 +169,11 @@ namespace SolrExpress.Builder
         /// <returns>Information about field from indicated expression</returns>
         internal FieldData GetData(Expression<Func<TDocument, object>> expression)
         {
+            if (!this._isDocumentLoaded)
+            {
+                this.LoadDocument();
+            }
+
             var propertyInfo = this.GetPropertyInfoFromExpression(expression);
 
             return this._fieldsData[propertyInfo.Name];
@@ -224,6 +230,8 @@ namespace SolrExpress.Builder
 
                 this._fieldsData.Add(propertyInfo.Name, data);
             }
+
+            this._isDocumentLoaded = true;
         }
 
         /// <summary>

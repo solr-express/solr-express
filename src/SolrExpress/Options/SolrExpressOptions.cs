@@ -11,6 +11,11 @@ namespace SolrExpress.Options
     public class SolrExpressOptions
     {
         /// <summary>
+        /// If true, check Solr connection and load informations about document, otherwise false. Default is false
+        /// </summary>
+        public bool LazyInfraValidation { get; set; } = false;
+
+        /// <summary>
         /// If true, check for possibles fails in the use of the Solr Queriable (using SolrFieldAttribute), otherwise false. Default is true
         /// </summary>
         public bool FailFast { get; set; } = true;
@@ -31,7 +36,7 @@ namespace SolrExpress.Options
         public bool SetDefaultField { get; set; } = true;
 
         /// <summary>
-        /// If true, check for possibles mistakes in use of IANyParameter
+        /// If true, check for possibles mistakes in use of IAnyParameter. Default is true
         /// </summary>
         public bool CheckAnyParameter { get; set; } = true;
 
