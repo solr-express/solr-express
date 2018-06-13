@@ -2,7 +2,7 @@
 
 Notes about releases
 
-## [5.2.0] - 2018-06-XX
+## [5.2.0] - 2018-06-13
 
 ### Bug fix
 * Fix DI exceptions in .Net 4.7.1 ([#250](https://github.com/solr-express/solr-express/issues/250))
