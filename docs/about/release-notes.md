@@ -9,6 +9,7 @@ Notes about releases
 * Wrong exception ([#251](https://github.com/solr-express/solr-express/issues/251))
 * Wrong convertions when using *DateTime?* or *GeoCoordinate?* ([#255](https://github.com/solr-express/solr-express/issues/255))
 * Wrong validation when use *Nullable<DateTime>* in *FacetRange* ([#256](https://github.com/solr-express/solr-express/issues/256))
+* Set null instead throw exception ([#257](https://github.com/solr-express/solr-express/issues/257))
 
 ### Enhancement
 * Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
