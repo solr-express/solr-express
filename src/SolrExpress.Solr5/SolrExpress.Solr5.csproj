@@ -6,7 +6,7 @@ Provider for SOLR 5, full compatibility with the Solr 5.X.
 Implementation using default query handler and mechanism provided by JSON Request API.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
-    <TargetFrameworks>netstandard1.6;netcoreapp2.0;net45;net46</TargetFrameworks>
+    <TargetFrameworks>net45;net46;net471;netstandard1.6;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>SolrExpress.Solr5</AssemblyName>
     <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
@@ -22,7 +22,7 @@ Implementation using default query handler and mechanism provided by JSON Reques
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.1.2</Version>
+    <Version>5.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +31,21 @@ Implementation using default query handler and mechanism provided by JSON Reques
 
   <ItemGroup>
     <ProjectReference Include="..\SolrExpress\SolrExpress.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
@@ -43,11 +58,6 @@ Implementation using default query handler and mechanism provided by JSON Reques
     <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
@@ -55,10 +65,5 @@ Implementation using default query handler and mechanism provided by JSON Reques
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
 
 </Project>

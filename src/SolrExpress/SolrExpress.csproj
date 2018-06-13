@@ -4,7 +4,7 @@
     <Description>A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
-    <TargetFrameworks>net45;net46;netstandard1.6;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net46;net471;netstandard1.6;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>SolrExpress</AssemblyName>
     <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
@@ -20,19 +20,26 @@
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.1.2</Version>
+    <Version>5.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <PackageReference Include="Flurl.Http.Signed" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <PackageReference Include="Flurl.Http.Signed" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <PackageReference Include="Flurl.Http.Signed" Version="1.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
@@ -47,12 +54,12 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <PackageReference Include="Flurl.Http.Signed" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <PackageReference Include="Flurl.Http.Signed" Version="1.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
 </Project>

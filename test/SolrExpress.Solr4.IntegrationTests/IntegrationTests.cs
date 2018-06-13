@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Search.Extension;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result.Extension;
@@ -118,8 +119,8 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.Equal(2, data.Count());
-            Assert.True(data.Any(q => q.Name.Equals("ManufacturerId")));
-            Assert.True(data.Any(q => q.Name.Equals("InStock")));
+            Assert.Contains(data, q => q.Name.Equals("ManufacturerId"));
+            Assert.Contains(data, q => q.Name.Equals("InStock"));
         }
 
         /// <summary>
@@ -172,9 +173,9 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.Equal(3, data.Count());
-            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
-            Assert.True(data.Any(q => q.Name.Equals("Facet2")));
-            Assert.True(data.Any(q => q.Name.Equals("Facet3")));
+            Assert.Contains(data, q => q.Name.Equals("Facet1"));
+            Assert.Contains(data, q => q.Name.Equals("Facet2"));
+            Assert.Contains(data, q => q.Name.Equals("Facet3"));
         }
 
         /// <summary>
@@ -219,7 +220,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Facets(out var data);
 
             // Assert
-            Assert.Equal(1, data.Count());
+            Assert.Single(data);
             Assert.Equal("ManufacturerId", data.ToList()[0].Name);
             //Assert.Equal(1, data.ToList()[0].Data.Count());
         }
@@ -254,8 +255,8 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Filter(q => q.Id, documentId)
                 .Execute()
                 .Document(out var data);
-
-            Assert.Equal(1, data.Count());
+            
+            Assert.Single(data);
             Assert.Equal(documentId, data.ToList()[0].Id);
             Assert.Equal("IntegrationTest009", data.ToList()[0].Name);
         }
@@ -310,8 +311,8 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document(out var fetchedDocuments);
-
-            Assert.Equal(0, fetchedDocuments.Count());
+            
+            Assert.Single(fetchedDocuments);
         }
 
         /// <summary>
@@ -403,10 +404,10 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Document(out var fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
-            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId1)));
-            Assert.True(fetchedDocuments.Any(q => q.Id.Equals(documentId2)));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals(documentToAdd1.Name)));
-            Assert.True(fetchedDocuments.Any(q => q.Name.Equals(documentToAdd2.Name)));
+            Assert.Contains(fetchedDocuments, q => q.Id.Equals(documentId1));
+            Assert.Contains(fetchedDocuments, q => q.Id.Equals(documentId2));
+            Assert.Contains(fetchedDocuments, q => q.Name.Equals(documentToAdd1.Name));
+            Assert.Contains(fetchedDocuments, q => q.Name.Equals(documentToAdd2.Name));
         }
 
         /// <summary>
@@ -547,7 +548,7 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             var documentList = documents.ToList();
-            Assert.Equal(1, documentList.Count);
+            Assert.Single(documentList);
             Assert.NotEmpty(documentList[0].Id);
             Assert.Null(documentList[0].Name);
             Assert.Null(documentList[0].Manufacturer);
@@ -584,7 +585,7 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             var documentList = documents.ToList();
-            Assert.Equal(1, documentList.Count);
+            Assert.Single(documentList);
         }
 
         /// <summary>
@@ -632,7 +633,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Facets(out var facets);
 
             // Assert
-            Assert.Equal(1, facets.Count());
+            Assert.Single(facets);
         }
 
         /// <summary>
@@ -655,8 +656,8 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Facets(out var data);
 
             // Assert
-            Assert.Equal(1, data.Count());
-            Assert.True(data.Any(q => q.Name.Equals("Facet1")));
+            Assert.Single(data);
+            Assert.Contains(data, q => q.Name.Equals("Facet1"));
         }
 
         /// <summary>

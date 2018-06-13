@@ -28,15 +28,42 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
-            parameter.Value = searchQuery.Field(q=>q.Id).EqualsTo("ITEM01");
+            parameter.Value = searchQuery.Field(q => q.Id).EqualsTo("ITEM01");
 
             // Act
             ((ISearchItemExecution<List<string>>)parameter).Execute();
             ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
 
             // Assert
-            Assert.Equal(1, container.Count);
+            Assert.Single(container);
             Assert.Equal("q=id:\"ITEM01\"", container[0]);
-        }        
+        }
+
+        /// <summary>
+        /// Where   Using a QueryParameter instance
+        /// When    Invoking method "Execute"
+        /// What    Create a valid string
+        /// </summary>
+        [Fact]
+        public void QueryParameter002()
+        {
+            // Arrange
+            var container = new List<string>();
+            var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            parameter.Value = searchQuery.EqualsTo("ITEM01");
+
+            // Act
+            ((ISearchItemExecution<List<string>>)parameter).Execute();
+            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+
+            // Assert
+            Assert.Single(container);
+            Assert.Equal("q=\"ITEM01\"", container[0]);
+        }
     }
 }

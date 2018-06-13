@@ -5,7 +5,7 @@
 Provider for Autofac Dependency Injection.</Description>
     <VersionPrefix>5.0.0</VersionPrefix>
     <Authors>diego.lb</Authors>
-    <TargetFrameworks>net45;net46;netstandard1.6;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net46;net471;netstandard1.6;netcoreapp2.0</TargetFrameworks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyName>SolrExpress.DI.Autofac</AssemblyName>
     <AssemblyOriginatorKeyFile>../../Key.snk</AssemblyOriginatorKeyFile>
@@ -21,7 +21,7 @@ Provider for Autofac Dependency Injection.</Description>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>5.1.2</Version>
+    <Version>5.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,23 +29,29 @@ Provider for Autofac Dependency Injection.</Description>
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <PackageReference Include="Autofac" Version="4.6.1" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <PackageReference Include="Autofac" Version="4.6.1" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <PackageReference Include="Autofac" Version="4.8.1" />
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
-    <PackageReference Include="Autofac" Version="4.6.1" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
-    <PackageReference Include="Autofac" Version="4.6.1" />
+    <PackageReference Include="Autofac" Version="4.8.1" />
   </ItemGroup>
 
 </Project>

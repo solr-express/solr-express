@@ -19,6 +19,7 @@ namespace SolrExpress.Builder
         private readonly SolrExpressOptions _solrExpressOptions;
         private readonly ISolrConnection _solrConnection;
         private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
+        private bool _isDocumentLoaded;
         internal Dictionary<string, FieldSchema> FieldSchemas;
         internal Dictionary<Regex, FieldSchema> DynamicFieldSchemas;
 
@@ -57,15 +58,37 @@ namespace SolrExpress.Builder
                     });
         }
 
+        private Expression RemoveConvert(Expression expression)
+        {
+            while (expression != null
+                   && (expression.NodeType == ExpressionType.Convert
+                       || expression.NodeType == ExpressionType.ConvertChecked))
+            {
+                expression = RemoveConvert(((UnaryExpression)expression).Operand);
+            }
+
+            return expression;
+        }
+
+        public Expression GetRootExpression(Expression expression)
+        {
+            while (expression is MemberExpression memberExpression)
+            {
+                expression = memberExpression.Expression;
+            }
+
+            return expression;
+        }
+
         /// <summary>
         /// Get property referenced into indicated expression 
         /// </summary>
         /// <param name="expression">Expression used to find property info</param>
         /// <returns>Property referenced into indicated expression</returns>
-        internal PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
+        internal PropertyInfo GetPropertyInfoFromExpression(Expression expression)
         {
             PropertyInfo propertyInfo = null;
-            var lambda = (LambdaExpression)expression;
+            var lambda = (LambdaExpression)this.GetRootExpression(expression);
 
             MemberExpression memberExpression;
 
@@ -146,6 +169,11 @@ namespace SolrExpress.Builder
         /// <returns>Information about field from indicated expression</returns>
         internal FieldData GetData(Expression<Func<TDocument, object>> expression)
         {
+            if (!this._isDocumentLoaded)
+            {
+                this.LoadDocument();
+            }
+
             var propertyInfo = this.GetPropertyInfoFromExpression(expression);
 
             return this._fieldsData[propertyInfo.Name];
@@ -202,6 +230,8 @@ namespace SolrExpress.Builder
 
                 this._fieldsData.Add(propertyInfo.Name, data);
             }
+
+            this._isDocumentLoaded = true;
         }
 
         /// <summary>

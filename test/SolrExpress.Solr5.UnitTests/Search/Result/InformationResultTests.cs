@@ -53,10 +53,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             // Assert
             Assert.Equal(222, result.Data.DocumentCount);
             Assert.Equal(TimeSpan.FromMilliseconds(111), result.Data.ElapsedTime);
-            Assert.Equal(true, result.Data.HasNextPage);
-            Assert.Equal(true, result.Data.HasPreviousPage);
-            Assert.Equal(false, result.Data.IsFirstPage);
-            Assert.Equal(false, result.Data.IsLastPage);
+            Assert.True(result.Data.HasNextPage);
+            Assert.True(result.Data.HasPreviousPage);
+            Assert.False(result.Data.IsFirstPage);
+            Assert.False(result.Data.IsLastPage);
             Assert.Equal(23, result.Data.PageCount);
             Assert.Equal(3, result.Data.PageNumber);
             Assert.Equal(10, result.Data.PageSize);
@@ -104,10 +104,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             // Assert
             Assert.Equal(0, result.Data.DocumentCount);
             Assert.Equal(TimeSpan.FromMilliseconds(111), result.Data.ElapsedTime);
-            Assert.Equal(false, result.Data.HasNextPage);
-            Assert.Equal(false, result.Data.HasPreviousPage);
-            Assert.Equal(true, result.Data.IsFirstPage);
-            Assert.Equal(true, result.Data.IsLastPage);
+            Assert.False(result.Data.HasNextPage);
+            Assert.False(result.Data.HasPreviousPage);
+            Assert.True(result.Data.IsFirstPage);
+            Assert.True(result.Data.IsLastPage);
             Assert.Equal(0, result.Data.PageCount);
             Assert.Equal(0, result.Data.PageNumber);
             Assert.Equal(0, result.Data.PageSize);
@@ -157,10 +157,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             // Assert
             Assert.Equal(222, result.Data.DocumentCount);
             Assert.Equal(TimeSpan.FromMilliseconds(111), result.Data.ElapsedTime);
-            Assert.Equal(true, result.Data.HasNextPage);
+            Assert.True(result.Data.HasNextPage);
             Assert.Null(result.Data.HasPreviousPage);
             Assert.Null(result.Data.IsFirstPage);
-            Assert.Equal(false, result.Data.IsLastPage);
+            Assert.False(result.Data.IsLastPage);
             Assert.Null(result.Data.PageCount);
             Assert.Null(result.Data.PageNumber);
             Assert.Equal(10, result.Data.PageSize);
@@ -210,10 +210,10 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             // Assert
             Assert.Equal(222, result.Data.DocumentCount);
             Assert.Equal(TimeSpan.FromMilliseconds(111), result.Data.ElapsedTime);
-            Assert.Equal(false, result.Data.HasNextPage);
+            Assert.False(result.Data.HasNextPage);
             Assert.Null(result.Data.HasPreviousPage);
             Assert.Null(result.Data.IsFirstPage);
-            Assert.Equal(true, result.Data.IsLastPage);
+            Assert.True(result.Data.IsLastPage);
             Assert.Null(result.Data.PageCount);
             Assert.Null(result.Data.PageNumber);
             Assert.Equal(10, result.Data.PageSize);

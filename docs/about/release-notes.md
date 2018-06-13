@@ -2,6 +2,29 @@
 
 Notes about releases
 
+## [5.2.0] - 2018-06-13
+
+### Bug fix
+* Fix DI exceptions in .Net 4.7.1 ([#250](https://github.com/solr-express/solr-express/issues/250))
+* Wrong exception ([#251](https://github.com/solr-express/solr-express/issues/251))
+* Wrong convertions when using *DateTime?* or *GeoCoordinate?* ([#255](https://github.com/solr-express/solr-express/issues/255))
+* Wrong validation when use *Nullable<DateTime>* in *FacetRange* ([#256](https://github.com/solr-express/solr-express/issues/256))
+* Set null instead throw exception ([#257](https://github.com/solr-express/solr-express/issues/257))
+* Wrong parse when use *Nullable<DateTime>* in *FacetRange* ([#258](https://github.com/solr-express/solr-express/issues/258))
+
+### Enhancement
+* Support to .Net 4.7.1 ([#248](https://github.com/solr-express/solr-express/issues/248))
+* Update packages references ([#249](https://github.com/solr-express/solr-express/issues/249))
+* Implemented a new *Query* extension ([#252](https://github.com/solr-express/solr-express/issues/252))
+* Change parameter  *ascendent* of extension **ParametersExtension.Sort** to default true ([#253](https://github.com/solr-express/solr-express/issues/253))
+* New extensions ***SomeThing*If** ([#254](https://github.com/solr-express/solr-express/issues/254))
+
+### Testability
+* Make possible start SolrExpress without Solr ([#259](https://github.com/solr-express/solr-express/issues/259))
+
+### **BREAKING CHANGES**
+* Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access *DocumentSearch<TDocument>* extensions
+
 ## [5.1.2] - 2017-11-17
 
 ### Bug fix
