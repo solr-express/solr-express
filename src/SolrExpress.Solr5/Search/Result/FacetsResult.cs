@@ -13,10 +13,10 @@ namespace SolrExpress.Solr5.Search.Result
     public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
         where TDocument : Document
     {
+        private static Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+        private static Type[] _notIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
         private JsonReader _jsonReader;
-
-        public IEnumerable<IFacetItem> Data { get; private set; }
-
+        
         private static IFacetParameter<TDocument> GetFacetParameter(IEnumerable<IFacetParameter<TDocument>> searchParameters, string facetName)
         {
             return searchParameters
@@ -44,7 +44,7 @@ namespace SolrExpress.Solr5.Search.Result
 
         private static object GetParsedRangeValue(Type fieldType, string value = null)
         {
-            if (typeof(DateTime) == fieldType)
+            if (_dateTypes.Contains(fieldType))
             {
                 if (!string.IsNullOrWhiteSpace(value) && DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var typedValue))
                 {
@@ -53,9 +53,7 @@ namespace SolrExpress.Solr5.Search.Result
 
                 return null;
             }
-            if (typeof(decimal) == fieldType
-                || typeof(float) == fieldType
-                || typeof(double) == fieldType)
+            if (_notIntTypes.Contains(fieldType))
             {
                 return string.IsNullOrWhiteSpace(value) ? (decimal?)null : decimal.Parse(value, CultureInfo.InvariantCulture);
             }
@@ -65,16 +63,14 @@ namespace SolrExpress.Solr5.Search.Result
 
         private static IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
         {
-            if (typeof(DateTime) == fieldType)
+            if (_dateTypes.Contains(fieldType))
             {
                 var minimumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMinimumValue);
                 var maximumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<DateTime>(minimumValue, maximumValue);
             }
-            if (typeof(decimal) == fieldType
-                || typeof(float) == fieldType
-                || typeof(double) == fieldType)
+            if (_notIntTypes.Contains(fieldType))
             {
                 var minimumValue = (decimal?)GetParsedRangeValue(fieldType, rawMinimumValue);
                 var maximumValue = (decimal?)GetParsedRangeValue(fieldType, rawMaximumValue);
@@ -97,7 +93,7 @@ namespace SolrExpress.Solr5.Search.Result
                 return null;
             }
 
-            if (typeof(DateTime) == fieldType)
+            if (_dateTypes.Contains(fieldType))
             {
                 // Prepare to DateMath
                 facetGap = facetGap
@@ -120,9 +116,7 @@ namespace SolrExpress.Solr5.Search.Result
                 return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
             }
 
-            if (typeof(decimal) == fieldType
-               || typeof(float) == fieldType
-               || typeof(double) == fieldType)
+            if (_notIntTypes.Contains(fieldType))
             {
                 var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
                 return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
@@ -374,7 +368,7 @@ namespace SolrExpress.Solr5.Search.Result
             }
         }
 
-        void ISearchResult<TDocument>.Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
+        public void Execute(IList<ISearchParameter> searchParameters, JsonToken currentToken, string currentPath, JsonReader jsonReader)
         {
             this._jsonReader = jsonReader;
 
@@ -397,5 +391,7 @@ namespace SolrExpress.Solr5.Search.Result
 
             this.Data = facetItems;
         }
+
+        public IEnumerable<IFacetItem> Data { get; private set; }
     }
 }
