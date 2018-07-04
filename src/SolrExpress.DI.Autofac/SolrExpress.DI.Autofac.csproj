@@ -19,7 +19,7 @@ Provider for Autofac Dependency Injection.</Description>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <Version>5.3.0</Version>
+    <Version>5.3.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

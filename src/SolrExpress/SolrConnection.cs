@@ -27,15 +27,23 @@ namespace SolrExpress
         /// Set authentication configurations
         /// </summary>
         /// <param name="url">Uri to configure</param>
+#if NETCOREAPP2_1
+        private IFlurlRequest SetAuthentication(Url url)
+#else
         private IFlurlClient SetAuthentication(Url url)
+#endif
         {
             switch (this._options.Security.AuthenticationType)
             {
                 case AuthenticationType.Basic:
                     return url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
-                default:
-                    return new FlurlClient(url, true);
             }
+
+#if NETCOREAPP2_1
+            return new FlurlRequest(url);
+#else
+            return new FlurlClient(url, true);
+#endif
         }
 
         public string Get(string handler, List<string> data)
@@ -47,7 +55,7 @@ namespace SolrExpress
             {
                 url = url.SetQueryParams(data);
             }
-            
+
             return this
                 .SetAuthentication(url)
                 .GetStringAsync()
@@ -74,7 +82,7 @@ namespace SolrExpress
         {
             var url = this._options.HostAddress
                 .AppendPathSegment(handler);
-            
+
             return this
                 .SetAuthentication(url)
                 .PostJsonAsync(data)
