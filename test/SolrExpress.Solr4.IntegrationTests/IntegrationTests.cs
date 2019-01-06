@@ -300,11 +300,6 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Delete(documentId1)
                 .Execute();
 
-            documentCollection
-                .Update()
-                .Delete(documentId2)
-                .Execute();
-
             // Assert
             documentCollection
                 .Select()
