@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="4.7.99" />
-    <PackageReference Include="SimpleInjector" Version="4.0.8" />
+    <PackageReference Include="SimpleInjector" Version="4.4.3" />
   </ItemGroup>
 
   <ItemGroup>
