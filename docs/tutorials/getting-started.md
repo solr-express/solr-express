@@ -34,6 +34,8 @@ To start to use SolrExpress, just follow follow steps:
 6. Configue search parameters, execute, read results and enjoy :)
 
 ```csharp
+	using SolrExpress.Search.Parameter.Extension;
+
 	public void MyAmazingSearch(DocumentCollection<TechProduct> techProducts)
 	{
 		// Initial search settings (configure to result facet field Categories and filter by field id using value "205325092")

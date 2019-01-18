@@ -226,7 +226,7 @@ namespace SolrExpress.Search.Query
         /// <returns>Search query configured</returns>
         public SearchQuery<TDocument> StartsWith(string value)
         {
-            return this.AddValue($"/{value}.*/");
+            return this.AddValue($"/{value}.*/", false);
         }
 
         /// <summary>

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SolrExpress;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Search.Extension;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;

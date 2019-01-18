@@ -101,20 +101,20 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var facetValues1 = ((FacetItemField)data[0]).Values;
             Assert.Equal(2, facetValues1.Count());
-            Assert.True(facetValues1.Any(q => q.Key.Equals("VALUE001")));
+            Assert.Contains(facetValues1, q => q.Key.Equals("VALUE001"));
             Assert.Equal(10, facetValues1.First(q => q.Key.Equals("VALUE001")).Quantity);
-            Assert.True(facetValues1.Any(q => q.Key.Equals("VALUE002")));
+            Assert.Contains(facetValues1, q => q.Key.Equals("VALUE002"));
             Assert.Equal(20, facetValues1.First(q => q.Key.Equals("VALUE002")).Quantity);
 
             var facetValues2 = ((FacetItemField)data[1]).Values;
             Assert.Equal(2, facetValues2.Count());
-            Assert.True(facetValues2.Any(q => q.Key.Equals("VALUE001")));
+            Assert.Contains(facetValues2, q => q.Key.Equals("VALUE001"));
             Assert.Equal(10, facetValues2.First(q => q.Key.Equals("VALUE001")).Quantity);
-            Assert.True(facetValues2.Any(q => q.Key.Equals("VALUE002")));
+            Assert.Contains(facetValues2, q => q.Key.Equals("VALUE002"));
             Assert.Equal(20, facetValues2.First(q => q.Key.Equals("VALUE002")).Quantity);
 
             var facetValues3 = ((FacetItemField)data[2]).Values;
-            Assert.Equal(0, facetValues3.Count());
+            Assert.Empty(facetValues3);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             // Assert
             var data = result.Data.ToList();
-            Assert.Equal(1, data.Count);
+            Assert.Single(data);
             Assert.Equal("field1", data[0].Name);
             Assert.Equal(FacetType.Field, data[0].FacetType);
 
@@ -496,8 +496,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(20, root2.Quantity);
             Assert.NotNull(root1.Facets);
             Assert.NotNull(root2.Facets);
-            Assert.Equal(1, root1.Facets.Count());
-            Assert.Equal(1, root2.Facets.Count());
+            Assert.Single(root1.Facets);
+            Assert.Single(root2.Facets);
 
             Assert.Equal("field2", root1.Facets.ToList()[0].Name);
             Assert.Equal(FacetType.Field, root1.Facets.ToList()[0].FacetType);
@@ -506,7 +506,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             var facetRootValues1 = ((FacetItemField)root1.Facets.ToList()[0]).Values;
             var facetRootValues2 = ((FacetItemField)root2.Facets.ToList()[0]).Values;
             Assert.Equal(2, facetRootValues1.Count());
-            Assert.Equal(1, facetRootValues2.Count());
+            Assert.Single(facetRootValues2);
 
             var child1_1 = facetRootValues1.FirstOrDefault(q => q.Key.Equals("CHILD001.VALUE001"));
             var child1_2 = facetRootValues1.FirstOrDefault(q => q.Key.Equals("CHILD001.VALUE001"));
@@ -524,7 +524,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(FacetType.Field, granchild2_1.FacetType);
             Assert.Equal("field3", granchild2_1.Name);
             Assert.NotEmpty(granchild2_1.Values);
-            Assert.Equal(1, granchild2_1.Values.Count());
+            Assert.Single(granchild2_1.Values);
             Assert.Equal("GRANCHILD002.VALUE001", granchild2_1.Values.ToList()[0].Key);
             Assert.Equal(15, granchild2_1.Values.ToList()[0].Quantity);
         }
@@ -618,7 +618,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.NotNull(((FacetItemQuery)data[0]).Facets);
             Assert.NotNull(((FacetItemQuery)data[1]).Facets);
             Assert.Equal(2, ((FacetItemQuery)data[0]).Facets.Count());
-            Assert.Equal(1, ((FacetItemQuery)data[1]).Facets.Count());
+            Assert.Single(((FacetItemQuery)data[1]).Facets);
 
             var child1_1 = (FacetItemQuery)((FacetItemQuery)data[0]).Facets.ToList()[0];
             Assert.Equal("queryA1", child1_1.Name);
@@ -630,7 +630,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(FacetType.Query, child1_2.FacetType);
             Assert.Equal(10, child1_2.Quantity);
             Assert.NotNull(child1_2.Facets);
-            Assert.Equal(1, child1_2.Facets.Count());
+            Assert.Single(child1_2.Facets);
 
             var granchild1_2_2 = (FacetItemQuery)child1_2.Facets.ToList()[0];
             Assert.Equal("queryA21", granchild1_2_2.Name);
@@ -843,7 +843,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(600, ((FacetItemRangeValue<int>)child1_2Values[1]).MaximumValue);
             Assert.Equal(3, ((FacetItemRangeValue<int>)child1_2Values[1]).Quantity);
 
-            Assert.Equal(1, ((FacetItemRange)child1_2).Values.ToList()[0].Facets.Count());
+            Assert.Single(((FacetItemRange)child1_2).Values.ToList()[0].Facets);
 
             var granchild1_2_1 = ((FacetItemRange)child1_2).Values.ToList()[0].Facets.ToList()[0];
             Assert.Equal(FacetType.Range, granchild1_2_1.FacetType);
@@ -863,7 +863,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
             Assert.Equal(600, ((FacetItemRangeValue<int>)root2Values[1]).MaximumValue);
             Assert.Equal(3, ((FacetItemRangeValue<int>)root2Values[1]).Quantity);
 
-            Assert.Equal(1, ((FacetItemRangeValue<int>)root2Values[0]).Facets.Count());
+            Assert.Single(((FacetItemRangeValue<int>)root2Values[0]).Facets);
 
             var child2_1 = ((FacetItemRangeValue<int>)root2Values[0]).Facets.ToList()[0];
             Assert.Equal(FacetType.Range, child2_1.FacetType);
@@ -915,7 +915,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 		            }
 	            }
             }";
-            
+
             var result = (IFacetsResult<TestFacetDocument>)new FacetsResult<TestFacetDocument>();
 
             var solrExpressOptions = new SolrExpressOptions();
@@ -945,7 +945,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             // Assert
             var data = result.Data.ToList();
-            Assert.Equal(1, data.Count);
+            Assert.Single(data);
             Assert.Equal("range1", data[0].Name);
 
             Assert.Equal(FacetType.Range, data[0].FacetType);

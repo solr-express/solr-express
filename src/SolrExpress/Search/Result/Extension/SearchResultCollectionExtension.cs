@@ -12,9 +12,9 @@ namespace SolrExpress.Search.Result.Extension
         public static IList<ISearchResult<TDocument>> Document<TDocument>(this IList<ISearchResult<TDocument>> searchResults, out IEnumerable<TDocument> data)
             where TDocument : Document
         {
-            var result = searchResults.First(q => q is IDocumentResult<TDocument>);
+            var result = searchResults.FirstOrDefault(q => q is IDocumentResult<TDocument>);
 
-            data = ((IDocumentResult<TDocument>)result).Data;
+            data = ((IDocumentResult<TDocument>)result)?.Data ?? null;
 
             return searchResults;
         }
@@ -26,9 +26,9 @@ namespace SolrExpress.Search.Result.Extension
         public static IList<ISearchResult<TDocument>> Facets<TDocument>(this IList<ISearchResult<TDocument>> searchResults, out IEnumerable<IFacetItem> data)
             where TDocument : Document
         {
-            var result = searchResults.First(q => q is IFacetsResult<TDocument>);
+            var result = searchResults.FirstOrDefault(q => q is IFacetsResult<TDocument>);
 
-            data = ((IFacetsResult<TDocument>)result).Data;
+            data = ((IFacetsResult<TDocument>)result)?.Data ?? null;
 
             return searchResults;
         }
@@ -40,9 +40,9 @@ namespace SolrExpress.Search.Result.Extension
         public static IList<ISearchResult<TDocument>> Information<TDocument>(this IList<ISearchResult<TDocument>> searchResults, out Information data)
             where TDocument : Document
         {
-            var result = searchResults.First(q => q is IInformationResult<TDocument>);
+            var result = searchResults.FirstOrDefault(q => q is IInformationResult<TDocument>);
 
-            data = ((IInformationResult<TDocument>)result).Data;
+            data = ((IInformationResult<TDocument>)result)?.Data ?? null;
 
             return searchResults;
         }

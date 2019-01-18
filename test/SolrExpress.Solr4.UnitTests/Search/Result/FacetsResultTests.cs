@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Builder;
+using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Solr4.Search.Parameter;
@@ -9,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Result
@@ -68,20 +68,20 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 
             var facetValues1 = ((FacetItemField)data[0]).Values;
             Assert.Equal(2, facetValues1.Count());
-            Assert.True(facetValues1.Any(q => q.Key.Equals("VALUE001")));
+            Assert.Contains(facetValues1, q => q.Key.Equals("VALUE001"));
             Assert.Equal(10, facetValues1.First(q => q.Key.Equals("VALUE001")).Quantity);
-            Assert.True(facetValues1.Any(q => q.Key.Equals("VALUE002")));
+            Assert.Contains(facetValues1, q => q.Key.Equals("VALUE002"));
             Assert.Equal(20, facetValues1.First(q => q.Key.Equals("VALUE002")).Quantity);
 
             var facetValues2 = ((FacetItemField)data[1]).Values;
             Assert.Equal(2, facetValues2.Count());
-            Assert.True(facetValues2.Any(q => q.Key.Equals("VALUE001")));
+            Assert.Contains(facetValues2, q => q.Key.Equals("VALUE001"));
             Assert.Equal(10, facetValues2.First(q => q.Key.Equals("VALUE001")).Quantity);
-            Assert.True(facetValues2.Any(q => q.Key.Equals("VALUE002")));
+            Assert.Contains(facetValues2, q => q.Key.Equals("VALUE002"));
             Assert.Equal(20, facetValues2.First(q => q.Key.Equals("VALUE002")).Quantity);
 
             var facetValues3 = ((FacetItemField)data[2]).Values;
-            Assert.Equal(0, facetValues3.Count());
+            Assert.Empty(facetValues3);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 
             // Assert
             var data = result.Data.ToList();
-            Assert.Equal(1, data.Count);
+            Assert.Single(data);
             Assert.Equal("range1", data[0].Name);
 
             Assert.Equal(FacetType.Range, data[0].FacetType);

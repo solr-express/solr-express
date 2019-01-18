@@ -71,7 +71,7 @@ namespace SolrExpress.UnitTests.Search.Query.Extension
             var result = searchQuery.StartsWith("xpto").Execute();
 
             // Assert
-            Assert.Equal("\"/xpto.*/\"", result);
+            Assert.Equal("/xpto.*/", result);
         }
 
         /// <summary>

@@ -38,5 +38,32 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             // Assert
             Assert.Equal(expected.ToString(), container.ToString());
         }
+
+        /// <summary>
+        /// Where   Using a QueryParameter instance
+        /// When    Invoking method "Execute"
+        /// What    Create a valid string
+        /// </summary>
+        [Fact]
+        public void QueryParameter002()
+        {
+            // Arrange
+            var expected = JObject.Parse("{\"query\": \"\\\"ITEM01\\\"\"}");
+            var container = new JObject();
+            var parameter = (IQueryParameter<TestDocument>)new QueryParameter<TestDocument>();
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
+            parameter.Value = searchQuery.EqualsTo("ITEM01");
+
+            // Act
+            ((ISearchItemExecution<JObject>)parameter).Execute();
+            ((ISearchItemExecution<JObject>)parameter).AddResultInContainer(container);
+
+            // Assert
+            Assert.Equal(expected.ToString(), container.ToString());
+        }
     }
 }

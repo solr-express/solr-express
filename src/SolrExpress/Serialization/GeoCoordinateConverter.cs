@@ -8,12 +8,25 @@ namespace SolrExpress.Serialization
     {
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(GeoCoordinate);
+            return
+                (objectType == typeof(GeoCoordinate)) ||
+                (objectType == typeof(GeoCoordinate?));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue(((GeoCoordinate)value).ToString());
+            if (value is GeoCoordinate geoCoordinate)
+            {
+                writer.WriteValue(geoCoordinate.ToString());
+            }
+            else
+            {
+                var nullableGeoCoordinate = (GeoCoordinate?)value;
+                if (nullableGeoCoordinate.HasValue)
+                {
+                    writer.WriteValue(nullableGeoCoordinate.ToString());
+                }
+            }
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
