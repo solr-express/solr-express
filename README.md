@@ -6,6 +6,7 @@ Tutorials is available at <http://solr-express.readthedocs.io/en/stable/tutorial
 
 And release notes is available at <http://solr-express.readthedocs.io/en/stable/about/release-notes>.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b7831786d85b4d78ab4e81ae976de0f4)](https://app.codacy.com/app/diego-l-brum/solr-express?utm_source=github.com&utm_medium=referral&utm_content=solr-express/solr-express&utm_campaign=Badge_Grade_Settings)
 [![Travis build status](https://img.shields.io/travis/solr-express/solr-express.svg?label=travis-ci&branch=dev&style=flat-square)](https://travis-ci.org/solr-express/solr-express.svg/branches)
 
 ![.Net 4.0](https://img.shields.io/badge/.Net_4.0-Full_Compatibility-green.svg?style=flat-square)
