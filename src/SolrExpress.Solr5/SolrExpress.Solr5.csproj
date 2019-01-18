@@ -24,7 +24,7 @@ Implementation using default query handler and mechanism provided by JSON Reques
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jil" Version="2.15.4" />
+    <PackageReference Include="Jil" Version="2.16.0" />
   </ItemGroup>
 
   <ItemGroup>
