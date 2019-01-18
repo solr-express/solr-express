@@ -12,6 +12,14 @@ namespace SolrExpress.Search.Parameter.Validation
         public bool IsValid<TDocument>(ISearchParameter searchParameter, out string errorMessage)
             where TDocument : Document
         {
+            var anyParameter = searchParameter as IAnyParameter;
+            
+            if (anyParameter == null)
+            {
+                errorMessage = null;
+                return true;
+            }
+
             var specificParameters = new List<string> {
                 "facet.field",
                 "facet.limit",
@@ -27,9 +35,9 @@ namespace SolrExpress.Search.Parameter.Validation
                 "start"
             };
 
-            errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, ((IAnyParameter)searchParameter).Name);
+            errorMessage = string.Format(Resource.UseSpecificParameterRatherThanAnyException, anyParameter.Name);
 
-            return !specificParameters.Contains(((IAnyParameter)searchParameter).Name.ToLowerInvariant());
+            return !specificParameters.Contains(anyParameter.Name.ToLowerInvariant());
         }
     }
 }
