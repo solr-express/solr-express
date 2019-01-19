@@ -22,8 +22,8 @@ namespace SolrExpress.Benchmarks.Exporter
         private Summary GetSummary(Summary summary)
         {
             var assemblyFullName = summary
-                .Benchmarks
-                .Select(b => b.Target.Type.Namespace)
+                .BenchmarksCases
+                .Select(b => b.DisplayInfo)
                 .Distinct()
                 .First();
 

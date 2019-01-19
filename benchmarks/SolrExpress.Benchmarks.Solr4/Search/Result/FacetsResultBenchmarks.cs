@@ -26,11 +26,7 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
 
-#if CORE
         [GlobalSetup]
-#else
-        [Setup]
-#endif
         public void Setup()
         {
             var solrExpressOptions = new SolrExpressOptions();

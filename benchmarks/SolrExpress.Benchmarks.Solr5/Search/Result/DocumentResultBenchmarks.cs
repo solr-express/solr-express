@@ -19,11 +19,7 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
 
-#if CORE
         [GlobalSetup]
-#else
-        [Setup]
-#endif
         public void Setup()
         {
             this._searchParameters = new List<ISearchParameter>();

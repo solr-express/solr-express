@@ -12,11 +12,7 @@ namespace SolrExpress.Benchmarks.Core
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
 
-#if CORE
         [GlobalSetup]
-#else
-        [Setup]
-#endif
         public void Setup()
         {
             var container = new Container();
