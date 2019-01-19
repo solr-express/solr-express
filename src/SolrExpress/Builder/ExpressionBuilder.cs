@@ -113,6 +113,8 @@ namespace SolrExpress.Builder
                     Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
 
                     break;
+                default:
+                    throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
             }
 
             if (propertyInfo == null)
