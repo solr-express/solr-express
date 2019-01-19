@@ -19,5 +19,5 @@
     java -jar post.jar *.xml
     ```
 
-4. Test Solr collection accessing http://localhost:8983/solr/#/collection1
+4. Test Solr collection accessing <http://localhost:8983/solr/#/collection1>
 5. Start unit tests in this project

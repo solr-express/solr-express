@@ -12,5 +12,5 @@
     solr start -e techproducts -noprompt
     ```
 
-3.  Test Solr collection accessing http://localhost:8983/solr/#/techproducts
+3.  Test Solr collection accessing <http://localhost:8983/solr/#/techproducts>
 4.  Start unit tests in this project
