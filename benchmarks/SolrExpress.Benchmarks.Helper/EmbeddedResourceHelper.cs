@@ -16,7 +16,7 @@ namespace SolrExpress.Benchmarks.Helper
 
             if (resourceStream == null)
             {
-                throw new Exception($"Resource {resourceName} not found");
+                throw new EntryPointNotFoundException($"Resource {resourceName} not found");
             }
 
             using (var reader = new StreamReader(resourceStream, Encoding.UTF8))
