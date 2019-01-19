@@ -86,6 +86,8 @@ namespace SolrExpress.Solr5.Search.Parameter
                     case FacetMethodType.Stream:
                         methodName = "method:stream";
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(this.MethodType));
                 }
 
                 var method = new JProperty("method", methodName);
