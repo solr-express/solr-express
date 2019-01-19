@@ -11,11 +11,13 @@
     
     java -jar start.jar
     ```
+
 3.  Populate Solr collection executing (in other command prompt) 
     ```powershell
     cd C:\Temp\solr-4.9.0\example\exampledocs
     
     java -jar post.jar *.xml
     ```
+
 4. Test Solr collection accessing http://localhost:8983/solr/#/collection1
 5. Start unit tests in this project
