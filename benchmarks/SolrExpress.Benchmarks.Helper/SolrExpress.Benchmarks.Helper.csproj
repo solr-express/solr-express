@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SolrExpress\SolrExpress.csproj" />
+    <ProjectReference Include="..\..\src\SolrExpress.DI.CoreClr\SolrExpress.DI.CoreClr.csproj" />
   </ItemGroup>
 
 </Project>
