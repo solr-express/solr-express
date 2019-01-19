@@ -27,10 +27,6 @@ namespace SolrExpress.Benchmarks
                 .With(Job.Default.With(Runtime.Core))
                 .With(Job.Default.With(Runtime.Clr));
 
-            Console.WriteLine("Press any button to start");
-
-            Console.Read();
-
             BenchmarkRunner.Run<Core.DocumentSearchBenchmarks>(config);
 
             BenchmarkRunner.Run<Solr4.Search.Result.DocumentResultBenchmarks>(config);
@@ -38,10 +34,6 @@ namespace SolrExpress.Benchmarks
 
             BenchmarkRunner.Run<Solr5.Search.Result.DocumentResultBenchmarks>(config);
             BenchmarkRunner.Run<Solr5.Search.Result.FacetsResultBenchmarks>(config);
-
-            Console.WriteLine(new string('-', 50));
-
-            Console.WriteLine("Press any button to exit");
 
             Console.Read();
         }
