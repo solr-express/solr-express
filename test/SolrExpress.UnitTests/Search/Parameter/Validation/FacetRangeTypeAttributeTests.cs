@@ -35,10 +35,12 @@ namespace SolrExpress.UnitTests.Search.Parameter.Validation
 
         public void AddResultInContainer(List<string> container)
         {
+            // Test purpose only
         }
 
         public void Execute()
         {
+            // Test purpose only
         }
     }
 
