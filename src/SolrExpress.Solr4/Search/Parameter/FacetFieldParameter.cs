@@ -89,6 +89,8 @@ namespace SolrExpress.Solr4.Search.Parameter
                     case FacetMethodType.Stream:
                         methodName = "fcs";
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(this.MethodType));
                 }
 
                 this._result.Add($"f.{fieldName}.facet.method={methodName}");
