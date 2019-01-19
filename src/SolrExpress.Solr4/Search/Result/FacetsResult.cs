@@ -1,5 +1,4 @@
-﻿using DaleNewman;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using System;
@@ -9,7 +8,7 @@ using System.Linq;
 
 namespace SolrExpress.Solr4.Search.Result
 {
-    public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
+    public sealed class FacetsResult<TDocument> : BaseFacetsResult, IFacetsResult<TDocument>
         where TDocument : Document
     {
         public IEnumerable<IFacetItem> Data { get; private set; }
@@ -84,50 +83,6 @@ namespace SolrExpress.Solr4.Search.Result
                          facetName.Equals(facetRangeParameter.AliasName) ||
                          facetName.Equals(fieldName);
                  });
-        }
-
-        private static object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
-        {
-            if (string.IsNullOrWhiteSpace(facetGap))
-            {
-                return null;
-            }
-
-            if (typeof(DateTime) == fieldType)
-            {
-                // Prepare to DateMath
-                facetGap = facetGap
-                    .Replace("YEARS", "y")
-                    .Replace("YEAR", "y")
-                    .Replace("MONTHS", "M")
-                    .Replace("MONTH", "M")
-                    .Replace("DAYS", "d")
-                    .Replace("DAY", "d")
-                    .Replace("WEEKS", "w")
-                    .Replace("WEEK", "w")
-                    .Replace("HOURS", "h")
-                    .Replace("HOUR", "h")
-                    .Replace("MINUTES", "m")
-                    .Replace("MINUTE", "m")
-                    .Replace("SECONDS", "s")
-                    .Replace("SECOND", "s");
-
-                var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
-            }
-
-            if (typeof(decimal) == fieldType
-               || typeof(float) == fieldType
-               || typeof(double) == fieldType)
-            {
-                var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
-            }
-
-            {
-                var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
-            }
         }
 
         private static bool FirstGreaterThanSecond(Type fieldType, object value1, object value2)
