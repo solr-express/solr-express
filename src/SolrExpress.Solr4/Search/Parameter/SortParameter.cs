@@ -2,16 +2,14 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
-    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
@@ -21,10 +19,6 @@ namespace SolrExpress.Solr4.Search.Parameter
             this.ExpressionBuilder = expressionBuilder;
             this.Ascendent = true;
         }
-
-        public bool Ascendent { get; set; }
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {

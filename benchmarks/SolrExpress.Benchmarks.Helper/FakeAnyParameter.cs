@@ -6,5 +6,10 @@ namespace SolrExpress.Benchmarks.Helper
     {
         public string Name { get; set; }
         public string Value { get; set; }
+
+        public bool Equals(ISearchParameter other)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

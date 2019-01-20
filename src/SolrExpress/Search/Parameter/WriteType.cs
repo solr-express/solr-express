@@ -8,6 +8,11 @@
         /// <summary>
         /// Writes SOLR's result in JSON format
         /// </summary>
-        Json
+        Json,
+
+        /// <summary>
+        /// Writes SOLR's result in Smile format
+        /// </summary>
+        Smile
     }
 }

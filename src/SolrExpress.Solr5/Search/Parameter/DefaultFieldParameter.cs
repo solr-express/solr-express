@@ -2,12 +2,10 @@
 using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class DefaultFieldParameter<TDocument> : IDefaultFieldParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class DefaultFieldParameter<TDocument> : BaseDefaultFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
@@ -16,9 +14,6 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             this.ExpressionBuilder = expressionBuilder;
         }
-
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

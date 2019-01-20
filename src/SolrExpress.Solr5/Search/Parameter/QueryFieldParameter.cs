@@ -4,12 +4,10 @@ using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class QueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class QueryFieldParameter<TDocument> : BaseQueryFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
-
-        public string Expression { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

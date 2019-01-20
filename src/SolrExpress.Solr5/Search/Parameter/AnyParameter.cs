@@ -7,12 +7,9 @@ namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
     [UseAnyThanSpecificParameterRather]
-    public sealed class AnyParameter : IAnyParameter, ISearchItemExecution<JObject>
+    public sealed class AnyParameter : BaseAnyParameter, ISearchItemExecution<JObject>
     {
         private JProperty _result;
-
-        public string Name { get; set; }
-        public string Value { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

@@ -2,19 +2,15 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
-    public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JToken _result;
-
-        public SearchQuery<TDocument> Query { get; set; }
-        public string TagName { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

@@ -1,13 +1,11 @@
 ﻿using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class DefaultFieldParameter<TDocument> : IDefaultFieldParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class DefaultFieldParameter<TDocument> : BaseDefaultFieldParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
@@ -16,9 +14,6 @@ namespace SolrExpress.Solr4.Search.Parameter
         {
             this.ExpressionBuilder = expressionBuilder;
         }
-
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get;set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get;set; }
 
         public void AddResultInContainer(List<string> container)
         {

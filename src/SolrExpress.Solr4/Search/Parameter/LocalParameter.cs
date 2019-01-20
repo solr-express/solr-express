@@ -1,7 +1,6 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
@@ -9,14 +8,10 @@ using System.Collections.Generic;
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
-    public sealed class LocalParameter<TDocument> : ILocalParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class LocalParameter<TDocument> : BaseLocalParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public string Name { get; set; }
-        public SearchQuery<TDocument> Query { get; set; }
-        public string Value { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {

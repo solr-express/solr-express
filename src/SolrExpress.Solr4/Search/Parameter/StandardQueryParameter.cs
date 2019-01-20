@@ -1,16 +1,13 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class StandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class StandardQueryParameter<TDocument> : BaseStandardQueryParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public SearchQuery<TDocument> Value { get;set; }
 
         public void AddResultInContainer(List<string> container)
         {

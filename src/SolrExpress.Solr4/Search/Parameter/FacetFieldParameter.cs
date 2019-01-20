@@ -2,17 +2,15 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
-    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private readonly List<string> _result = new List<string>();
@@ -22,18 +20,6 @@ namespace SolrExpress.Solr4.Search.Parameter
             this.ExpressionBuilder = expressionBuilder;
             this.ServiceProvider = serviceProvider;
         }
-
-        public string[] Excludes { get; set; }
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
-        public int? Limit { get; set; }
-        public int? Minimum { get; set; }
-        public FacetSortType? SortType { get; set; }
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
-        public IList<IFacetParameter<TDocument>> Facets { get; set; }
-        public SearchQuery<TDocument> Filter { get; set; }
-        public FacetMethodType? MethodType { get; set; }
-        public string Prefix { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
