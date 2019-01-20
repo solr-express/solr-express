@@ -9,10 +9,19 @@ namespace SolrExpress.UnitTests.Search.Parameter.Validation
     {
         public string Name { get; set; }
         public string Value { get; set; }
+
+        public bool Equals(ISearchParameter other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public sealed class IsNotAnyParameter : ISearchParameter
     {
+        public bool Equals(ISearchParameter other)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class UseAnyThanSpecificParameterRatherAttributeTests

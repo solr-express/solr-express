@@ -38,6 +38,11 @@ namespace SolrExpress.UnitTests.Search.Parameter.Validation
             // Test purpose only
         }
 
+        public bool Equals(ISearchParameter other)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Execute()
         {
             // Test purpose only
