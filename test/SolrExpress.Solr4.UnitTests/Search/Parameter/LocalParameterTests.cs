@@ -31,8 +31,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             parameter.Query = searchQuery.Field(q => q.Id).EqualsTo("ITEM01");
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);
@@ -54,8 +54,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             parameter.Value = "some value";
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);

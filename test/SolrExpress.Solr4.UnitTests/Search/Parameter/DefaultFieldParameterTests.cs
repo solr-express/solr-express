@@ -1,10 +1,8 @@
 ﻿using SolrExpress.Builder;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+using SolrExpress.Options;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System.Collections.Generic;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -25,12 +23,14 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IDefaultFieldParameter<TestDocument>)new DefaultFieldParameter<TestDocument>(expressionBuilder);
-            parameter.FieldExpression = q => q.Id;
+            var parameter = new DefaultFieldParameter<TestDocument>(expressionBuilder)
+            {
+                FieldExpression = q => q.Id
+            };
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);
