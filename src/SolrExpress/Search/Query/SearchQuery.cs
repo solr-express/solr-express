@@ -230,6 +230,26 @@ namespace SolrExpress.Search.Query
         }
 
         /// <summary>
+        /// Create a search query to find something starts with informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> EndsWith(string value)
+        {
+            return this.AddValue($"/*.{value}/", false);
+        }
+        
+        /// <summary>
+        /// Create a search query to find exact informed value
+        /// </summary>
+        /// <param name="value">Value used in search</param>
+        /// <returns>Search query configured</returns>
+        public SearchQuery<TDocument> Contains<TValue>(TValue value)
+        {
+            return this.AddValue($"/*.{value}.*/", false);
+        }
+
+        /// <summary>
         /// Create a search query to find exact informed value
         /// </summary>
         /// <param name="value">Value used in search</param>
