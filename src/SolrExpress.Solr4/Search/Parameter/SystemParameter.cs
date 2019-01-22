@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    internal class SystemParameter<TDocument> : BaseSystemParameter<TDocument>, ISearchItemExecution<List<string>>
+    internal class SystemParameter<TDocument> : ISystemParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private readonly List<string> _result = new List<string>();

@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Utility;
 using System;
 using System.Linq.Expressions;
 
@@ -20,7 +21,19 @@ namespace SolrExpress.Search.Parameter
         /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
-            throw new System.NotImplementedException();
+            if (obj is ISpatialFilterParameter<TDocument> parameter)
+            {
+                var thisFieldExpression = this.ExpressionBuilder.GetFieldName(this.FieldExpression) ?? string.Empty;
+                var thatFieldExpression = parameter.ExpressionBuilder.GetFieldName(parameter.FieldExpression) ?? string.Empty;
+
+                return
+                    this.CenterPoint.IsEquals(parameter.CenterPoint) &&
+                    this.Distance.IsEquals(parameter.Distance) &&
+                    thisFieldExpression.IsEquals(thatFieldExpression) &&
+                    this.FunctionType.IsEquals(parameter.FunctionType);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -29,7 +42,17 @@ namespace SolrExpress.Search.Parameter
         /// <returns>A hash code for the current object</returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            var thisFieldExpression = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+
+            return Tuple
+                .Create
+                (
+                    this.CenterPoint,
+                    this.Distance,
+                    thisFieldExpression,
+                    this.FunctionType
+                )
+                .GetHashCode();
         }
     }
 }

@@ -4,7 +4,7 @@ using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    internal class SystemParameter<TDocument> : BaseSystemParameter<TDocument>, ISearchItemExecution<JObject>
+    internal class SystemParameter<TDocument> : ISystemParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _parameter1;

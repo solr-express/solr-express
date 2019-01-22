@@ -1,11 +1,12 @@
 ﻿using SolrExpress.Search.Query;
+using SolrExpress.Utility;
 
 namespace SolrExpress.Search.Parameter
 {
     public abstract class BaseStandardQueryParameter<TDocument> : IStandardQueryParameter<TDocument>
         where TDocument : Document
     {
-        public SearchQuery<TDocument> Value { get;set; }
+        public SearchQuery<TDocument> Value { get; set; }
 
         /// <summary>
         /// Determines whether the specified object is equal to the current object
@@ -14,7 +15,15 @@ namespace SolrExpress.Search.Parameter
         /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
-            throw new System.NotImplementedException();
+            if (obj is IStandardQueryParameter<TDocument> parameter)
+            {
+                var thisValue = this.Value?.Execute() ?? string.Empty;
+                var thatValue = parameter.Value?.Execute() ?? string.Empty;
+
+                return thisValue.IsEquals(thatValue);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -23,7 +32,9 @@ namespace SolrExpress.Search.Parameter
         /// <returns>A hash code for the current object</returns>
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            var thisValue = this.Value?.Execute() ?? string.Empty;
+
+            return thisValue.GetHashCode();
         }
     }
 }
