@@ -161,7 +161,7 @@ namespace SolrExpress.UnitTests.Search.Query
             var result = searchQuery.StartsWith("some value").Execute();
 
             // Assert
-            Assert.Equal("some value.*", result);
+            Assert.Equal(@"/some value.*/", result);
         }
 
         /// <summary>
@@ -183,12 +183,12 @@ namespace SolrExpress.UnitTests.Search.Query
             var result = searchQuery.EndsWith("some value").Execute();
 
             // Assert
-            Assert.Equal("some value.*", result);
+            Assert.Equal(@"/*.some value/", result);
         }
 
         /// <summary>
         /// Where   Using a SearchQuery instance
-        /// When    Invoking method "EndsWith" using a string value
+        /// When    Invoking method "Contains" using a string value
         /// What    Create query with correct value
         /// </summary>
         [Fact]
@@ -202,10 +202,10 @@ namespace SolrExpress.UnitTests.Search.Query
             var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
 
             // Act
-            var result = searchQuery.EndsWith("some value").Execute();
+            var result = searchQuery.Contains("some value").Execute();
 
             // Assert
-            Assert.Equal("*.some value.*", result);
+            Assert.Equal(@"/*.some value.*/", result);
         }
     }
 }
