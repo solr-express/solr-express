@@ -2,7 +2,6 @@
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace SolrExpress.Solr5.Search.Parameter
     [AllowMultipleInstances]
     // TODO: Think about this, no implements ISearchItemFieldExpressions<> or ISearchItemFieldExpression<>
     //[FieldMustBeIndexedTrue]
-    public sealed class FacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetQueryParameter<TDocument> : BaseFacetQueryParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
@@ -22,16 +21,6 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             this.ServiceProvider = serviceProvider;
         }
-
-        public string AliasName { get; set; }
-        public string[] Excludes { get; set; }
-        public int? Limit { get; set; }
-        public int? Minimum { get; set; }
-        public SearchQuery<TDocument> Query { get; set; }
-        public FacetSortType? SortType { get; set; }
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
-        public IList<IFacetParameter<TDocument>> Facets { get; set; }
-        public SearchQuery<TDocument> Filter { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

@@ -26,16 +26,16 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter1 = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            var parameter1 = new FilterParameter<TestDocument>();
             parameter1.Query = new SearchQuery<TestDocument>(expressionBuilder).Field(q => q.Id).AddValue("X");
-            var parameter2 = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            var parameter2 = new FilterParameter<TestDocument>();
             parameter2.Query = new SearchQuery<TestDocument>(expressionBuilder).Field(q => q.Score).AddValue("Y");
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter1).Execute();
-            ((ISearchItemExecution<List<string>>)parameter1).AddResultInContainer(container);
-            ((ISearchItemExecution<List<string>>)parameter2).Execute();
-            ((ISearchItemExecution<List<string>>)parameter2).AddResultInContainer(container);
+            parameter1.Execute();
+            parameter1.AddResultInContainer(container);
+            parameter2.Execute();
+            parameter2.AddResultInContainer(container);
 
             // Assert
             Assert.Equal(2, container.Count);
@@ -58,13 +58,13 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
-            var parameter = (IFilterParameter<TestDocument>)new FilterParameter<TestDocument>();
+            var parameter = new FilterParameter<TestDocument>();
             parameter.Query = searchQuery.Field(q => q.Id).AddValue("X");
             parameter.TagName = "tag1";
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);

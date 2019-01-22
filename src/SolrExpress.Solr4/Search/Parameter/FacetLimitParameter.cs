@@ -4,13 +4,11 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FacetLimitParameter<TDocument> : IFacetLimitParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class FacetLimitParameter<TDocument> : BaseFacetLimitParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
         
-        public long Value { get; set; }
-
         public void AddResultInContainer(List<string> container)
         {
             container.Add(this._result);

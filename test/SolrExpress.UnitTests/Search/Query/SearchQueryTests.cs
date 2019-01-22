@@ -140,5 +140,72 @@ namespace SolrExpress.UnitTests.Search.Query
             // Assert
             Assert.Equal("1984-09-05T10:20:30Z", result);
         }
+        
+        
+        /// <summary>
+        /// Where   Using a SearchQuery instance
+        /// When    Invoking method "StartsWith" using a string value
+        /// What    Create query with correct value
+        /// </summary>
+        [Fact]
+        public void SearchQueryFact007()
+        {
+            // Arrange
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
+
+            // Act
+            var result = searchQuery.StartsWith("some value").Execute();
+
+            // Assert
+            Assert.Equal(@"/some value.*/", result);
+        }
+
+        /// <summary>
+        /// Where   Using a SearchQuery instance
+        /// When    Invoking method "EndsWith" using a string value
+        /// What    Create query with correct value
+        /// </summary>
+        [Fact]
+        public void SearchQueryFact008()
+        {
+            // Arrange
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
+
+            // Act
+            var result = searchQuery.EndsWith("some value").Execute();
+
+            // Assert
+            Assert.Equal(@"/*.some value/", result);
+        }
+
+        /// <summary>
+        /// Where   Using a SearchQuery instance
+        /// When    Invoking method "Contains" using a string value
+        /// What    Create query with correct value
+        /// </summary>
+        [Fact]
+        public void SearchQueryFact009()
+        {
+            // Arrange
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TechProductDocument>();
+            var expressionBuilder = new ExpressionBuilder<TechProductDocument>(solrOptions, solrConnection);
+            expressionBuilder.LoadDocument();
+            var searchQuery = new SearchQuery<TechProductDocument>(expressionBuilder);
+
+            // Act
+            var result = searchQuery.Contains("some value").Execute();
+
+            // Assert
+            Assert.Equal(@"/*.some value.*/", result);
+        }
     }
 }

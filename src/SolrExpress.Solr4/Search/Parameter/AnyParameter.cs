@@ -7,12 +7,9 @@ namespace SolrExpress.Solr4.Search.Parameter
 {
     [AllowMultipleInstances]
     [UseAnyThanSpecificParameterRather]
-    public sealed class AnyParameter : IAnyParameter, ISearchItemExecution<List<string>>
+    public sealed class AnyParameter : BaseAnyParameter, ISearchItemExecution<List<string>>
     {
         private string _result;
-
-        public string Name { get; set; }
-        public string Value { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {

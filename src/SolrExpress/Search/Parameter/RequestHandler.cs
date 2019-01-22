@@ -5,14 +5,29 @@
     /// </summary>
     public static class RequestHandler
     {
-        public const string Select = "select";
+        public static string Select
+        {
+            get { return "select"; }
+        }
 
-        public const string Get = "get";
+        public static string Get
+        {
+            get { return "get"; }
+        }
 
-        public const string Query = "query";
+        public static string Query
+        {
+            get { return "query"; }
+        }
 
-        public const string Update = "update";
+        public static string Update
+        {
+            get { return "update"; }
+        }
 
-        public const string Stream = "stream";
+        public static string Stream
+        {
+            get { return "stream"; }
+        }
     }
 }

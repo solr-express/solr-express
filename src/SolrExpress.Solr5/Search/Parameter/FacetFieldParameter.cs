@@ -3,19 +3,17 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
-    public sealed class FacetFieldParameter<TDocument> : IFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetFieldParameter<TDocument> : BaseFacetFieldParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
@@ -25,18 +23,6 @@ namespace SolrExpress.Solr5.Search.Parameter
             this.ExpressionBuilder = expressionBuilder;
             this.ServiceProvider = serviceProvider;
         }
-
-        public string[] Excludes { get; set; }
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
-        public int? Limit { get; set; }
-        public int? Minimum { get; set; }
-        public FacetSortType? SortType { get; set; }
-        public IList<IFacetParameter<TDocument>> Facets { get; set; }
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
-        public SearchQuery<TDocument> Filter { get; set; }
-        public FacetMethodType? MethodType { get; set; }
-        public string Prefix { get; set; }
 
         public void AddResultInContainer(JObject container)
         {
@@ -86,6 +72,8 @@ namespace SolrExpress.Solr5.Search.Parameter
                     case FacetMethodType.Stream:
                         methodName = "method:stream";
                         break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(this.MethodType));
                 }
 
                 var method = new JProperty("method", methodName);

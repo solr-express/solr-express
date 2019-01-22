@@ -7,6 +7,7 @@ using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using SolrExpress.Solr5.Search.Parameter;
 using SolrExpress.Solr5.Search.Result;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -14,7 +15,7 @@ using System.Text;
 
 namespace SolrExpress.Benchmarks.Solr5.Search.Result
 {
-    public class FacetsResultBenchmarks
+    public class FacetsResultBenchmarks : IDisposable
     {
         private List<ISearchParameter> _searchParameters;
         private Stream _jsonStream;
@@ -26,11 +27,7 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }
 
-#if CORE
         [GlobalSetup]
-#else
-        [Setup]
-#endif
         public void Setup()
         {
             var solrExpressOptions = new SolrExpressOptions();
@@ -106,7 +103,7 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
 
                 _searchParameters.Add(facetQuery);
             }
-            
+
             this._result = new FacetsResult<TestDocument>();
 
             // Data using http://www.json-generator.com/
@@ -133,6 +130,11 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
                     jsonReader.Path,
                     jsonReader);
             }
+        }
+
+        public void Dispose()
+        {
+            this._jsonStream.Dispose();
         }
     }
 }

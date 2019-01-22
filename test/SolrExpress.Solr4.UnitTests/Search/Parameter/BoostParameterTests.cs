@@ -1,6 +1,5 @@
 ﻿using SolrExpress.Builder;
 using SolrExpress.Options;
-using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
 using SolrExpress.Solr4.Search.Parameter;
@@ -29,13 +28,15 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
-            var parameter = (IBoostParameter<TestDocument>)new BoostParameter<TestDocument>();
-            parameter.BoostFunctionType = boostFunctionType;
-            parameter.Query = searchQuery.Field(q => q.Id);
+            var parameter = new BoostParameter<TestDocument>
+            {
+                BoostFunctionType = boostFunctionType,
+                Query = searchQuery.Field(q => q.Id)
+            };
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);

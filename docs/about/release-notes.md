@@ -2,6 +2,35 @@
 
 Notes about releases
 
+## [5.4.0] - 2019-01-22
+
+### Bug fix
+* Filter with Wildcard Searches [#245](https://github.com/solr-express/solr-express/issues/245)
+* Wrong use of "CheckAnyParameter" option [#247](https://github.com/solr-express/solr-express/issues/247)
+
+### New features
+* Implements Parameter.Equals [#145](https://github.com/solr-express/solr-express/issues/145)
+
+### Quality effort
+* Refactor file SolrExpressServiceProvider.cs [#266](https://github.com/solr-express/solr-express/issues/266) (tks [BetterCodeHub](https://bettercodehub.com/))
+* Refactor file FacetsResult.cs [#268](https://github.com/solr-express/solr-express/issues/268)(tks [BetterCodeHub](https://bettercodehub.com/))
+* 'System.Exception' using user code [#281](https://github.com/solr-express/solr-express/issues/281)(tks [Codacy](https://codacy.com/))
+* Remove log statement [#282](https://github.com/solr-express/solr-express/issues/282)(tks [Codacy](https://codacy.com/))
+* Add a 'default' clause in some 'switch' statement [#283](https://github.com/solr-express/solr-express/issues/283) [#284](https://github.com/solr-express/solr-express/issues/284) [#285](https://github.com/solr-express/solr-express/issues/285) [#286](https://github.com/solr-express/solr-express/issues/286) (tks [Codacy](https://codacy.com))
+* Implement 'IEquatable<T>' 'GeoCoordinate' [#287](https://github.com/solr-express/solr-express/issues/287) (tks [Codacy](https://codacy.com))
+* Static field generic type [#306](https://github.com/solr-express/solr-express/issues/306) (tks [Codacy](https://codacy.com))
+* Implement 'IDisposable' [#310](https://github.com/solr-express/solr-express/issues/310) [#311](https://github.com/solr-express/solr-express/issues/311) (tks [Codacy](https://codacy.com))
+* Change constant to a 'static' read-only property [#312](https://github.com/solr-express/solr-express/issues/312) (tks [Codacy](https://codacy.com))
+
+### Docs effort
+* A lot of small style fixes [#288](https://github.com/solr-express/solr-express/issues/288) [#289](https://github.com/solr-express/solr-express/issues/289) [#290](https://github.com/solr-express/solr-express/issues/290) [#292](https://github.com/solr-express/solr-express/issues/292) [#293](https://github.com/solr-express/solr-express/issues/293) [#295](https://github.com/solr-express/solr-express/issues/295) [#296](https://github.com/solr-express/solr-express/issues/296) [#297](https://github.com/solr-express/solr-express/issues/297) [#298](https://github.com/solr-express/solr-express/issues/298) [#299](https://github.com/solr-express/solr-express/issues/299) [#300](https://github.com/solr-express/solr-express/issues/300) [#301](https://github.com/solr-express/solr-express/issues/301) [#302](https://github.com/solr-express/solr-express/issues/302) [#303](https://github.com/solr-express/solr-express/issues/303) [#304](https://github.com/solr-express/solr-express/issues/304) (tks [Codacy](https://codacy.com))
+* Comment explaining why this method is empty [#308](https://github.com/solr-express/solr-express/issues/308) [#309](https://github.com/solr-express/solr-express/issues/309) [#313](https://github.com/solr-express/solr-express/issues/313) [#314](https://github.com/solr-express/solr-express/issues/314) (tks [Codacy](https://codacy.com))
+
+### And...
+* Some code style
+* Some style fix
+* Update dependencies versions
+
 ## [5.3.1] - 2018-07-04
 
 ### Bug fix

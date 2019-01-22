@@ -17,7 +17,7 @@ And release notes is available at <http://solr-express.readthedocs.io/en/stable/
 ![Solr 5.3+](https://img.shields.io/badge/Solr_5.3+-Full_Compatibility-green.svg?style=flat-square)
 ![Solr 6+](https://img.shields.io/badge/Solr_6.+-Features_created_in_Solr_5.3_works_well-orange.svg?style=flat-square)
 
-## What is?
+## Overview
 
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
@@ -25,18 +25,18 @@ A simple and lightweight query .NET library for Solr, in a controlled, buildable
 
 The source for Solr4 and Solr5 providers are included in this project.
 
-Provider  | Package name        | Stable (`master` branch)
-----------|---------------------|-----------------------------
-Solr4     | `SolrExpress.Solr4` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr4.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr4/)
-Solr5     | `SolrExpress.Solr5` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr5.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr5/)
+| Provider  | Package name        | Stable (`master` branch)    |
+|-----------|---------------------|-----------------------------|
+| Solr4     | `SolrExpress.Solr4` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr4.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr4/) |
+| Solr5     | `SolrExpress.Solr5` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.Solr5.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.Solr5/)	|
 
 ## Dependency Injectors Containers
 
 The source for Autofac, CoreClr, Ninject and Simple Injector containers are included in this project.
 
-Provider         | Package name                    | Stable (`master` branch)
------------------|---------------------------------|-----------------------------
-Autofac          | `SolrExpress.DI.Autofac`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Autofac.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Autofac/)
-Native .Net Core | `SolrExpress.DI.CoreClr`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.CoreClr.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.CoreClr/)
-Ninject          | `SolrExpress.DI.Ninject`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Ninject.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Ninject/)
-Simple Injector  | `SolrExpress.DI.SimpleInjector` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.SimpleInjector.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.SimpleInjector/)
+| Provider         | Package name                    | Stable (`master` branch)    |
+|------------------|---------------------------------|-----------------------------|
+| Autofac          | `SolrExpress.DI.Autofac`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Autofac.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Autofac/) |
+| Native .Net Core | `SolrExpress.DI.CoreClr`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.CoreClr.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.CoreClr/) |
+| Ninject          | `SolrExpress.DI.Ninject`        | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.Ninject.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.Ninject/) |
+| Simple Injector  | `SolrExpress.DI.SimpleInjector` | [![NuGet](https://img.shields.io/nuget/v/SolrExpress.DI.SimpleInjector.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/SolrExpress.DI.SimpleInjector/) |

@@ -4,12 +4,10 @@ using SolrExpress.Search.Parameter;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
-    public sealed class FacetLimitParameter<TDocument> : IFacetLimitParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetLimitParameter<TDocument> : BaseFacetLimitParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
-
-        public long Value { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

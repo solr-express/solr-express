@@ -3,13 +3,11 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [FieldMustBeStoredTrue]
-    public sealed class FieldsParameter<TDocument> : IFieldsParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FieldsParameter<TDocument> : BaseFieldsParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
@@ -18,9 +16,6 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             this.ExpressionBuilder = expressionBuilder;
         }
-
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>>[] FieldExpressions { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

@@ -3,14 +3,12 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using System;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
     [FieldMustBeIndexedTrue]
-    public sealed class SortParameter<TDocument> : ISortParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class SortParameter<TDocument> : BaseSortParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private string _result;
@@ -19,10 +17,6 @@ namespace SolrExpress.Solr5.Search.Parameter
         {
             this.ExpressionBuilder = expressionBuilder;
         }
-
-        public bool Ascendent { get; set; }
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

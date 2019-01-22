@@ -43,5 +43,12 @@ namespace SolrExpress.Search.Parameter
         /// List of tags to exclude in facet calculation
         /// </summary>
         string[] Excludes { get; set; }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object</param>
+        /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
+        bool Equals(object obj);
     }
 }

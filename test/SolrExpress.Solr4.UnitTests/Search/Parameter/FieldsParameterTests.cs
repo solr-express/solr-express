@@ -30,15 +30,15 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter = (IFieldsParameter<TestDocument>)new FieldsParameter<TestDocument>(expressionBuilder);
+            var parameter = new FieldsParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpressions = new Expression<Func<TestDocument, object>>[] {
                 q => q.Id,
                 q => q.Score
             };
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);

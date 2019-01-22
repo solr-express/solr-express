@@ -1,5 +1,4 @@
-﻿using DaleNewman;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
@@ -10,11 +9,9 @@ using System.Linq;
 
 namespace SolrExpress.Solr5.Search.Result
 {
-    public sealed class FacetsResult<TDocument> : IFacetsResult<TDocument>
+    public sealed class FacetsResult<TDocument> : BaseFacetsResult, IFacetsResult<TDocument>
         where TDocument : Document
     {
-        private static Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
-        private static Type[] _notIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
         private JsonReader _jsonReader;
         
         private static IFacetParameter<TDocument> GetFacetParameter(IEnumerable<IFacetParameter<TDocument>> searchParameters, string facetName)
@@ -44,7 +41,7 @@ namespace SolrExpress.Solr5.Search.Result
 
         private static object GetParsedRangeValue(Type fieldType, string value = null)
         {
-            if (_dateTypes.Contains(fieldType))
+            if (DateTypes.Contains(fieldType))
             {
                 if (!string.IsNullOrWhiteSpace(value) && DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var typedValue))
                 {
@@ -53,7 +50,7 @@ namespace SolrExpress.Solr5.Search.Result
 
                 return null;
             }
-            if (_notIntTypes.Contains(fieldType))
+            if (NotIntTypes.Contains(fieldType))
             {
                 return string.IsNullOrWhiteSpace(value) ? (decimal?)null : decimal.Parse(value, CultureInfo.InvariantCulture);
             }
@@ -63,14 +60,14 @@ namespace SolrExpress.Solr5.Search.Result
 
         private static IFacetItemRangeValue GetFacetItemRangeValue(Type fieldType, string rawMinimumValue = null, string rawMaximumValue = null)
         {
-            if (_dateTypes.Contains(fieldType))
+            if (DateTypes.Contains(fieldType))
             {
                 var minimumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMinimumValue);
                 var maximumValue = (DateTime?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<DateTime>(minimumValue, maximumValue);
             }
-            if (_notIntTypes.Contains(fieldType))
+            if (NotIntTypes.Contains(fieldType))
             {
                 var minimumValue = (decimal?)GetParsedRangeValue(fieldType, rawMinimumValue);
                 var maximumValue = (decimal?)GetParsedRangeValue(fieldType, rawMaximumValue);
@@ -83,48 +80,6 @@ namespace SolrExpress.Solr5.Search.Result
                 var maximumValue = (int?)GetParsedRangeValue(fieldType, rawMaximumValue);
 
                 return new FacetItemRangeValue<int>(minimumValue, maximumValue);
-            }
-        }
-
-        private static object GetMaximumValue(Type fieldType, IFacetItemRangeValue item, string facetGap)
-        {
-            if (string.IsNullOrWhiteSpace(facetGap))
-            {
-                return null;
-            }
-
-            if (_dateTypes.Contains(fieldType))
-            {
-                // Prepare to DateMath
-                facetGap = facetGap
-                    .Replace("YEARS", "y")
-                    .Replace("YEAR", "y")
-                    .Replace("MONTHS", "M")
-                    .Replace("MONTH", "M")
-                    .Replace("DAYS", "d")
-                    .Replace("DAY", "d")
-                    .Replace("WEEKS", "w")
-                    .Replace("WEEK", "w")
-                    .Replace("HOURS", "h")
-                    .Replace("HOUR", "h")
-                    .Replace("MINUTES", "m")
-                    .Replace("MINUTE", "m")
-                    .Replace("SECONDS", "s")
-                    .Replace("SECOND", "s");
-
-                var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
-            }
-
-            if (_notIntTypes.Contains(fieldType))
-            {
-                var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
-            }
-
-            {
-                var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
             }
         }
 

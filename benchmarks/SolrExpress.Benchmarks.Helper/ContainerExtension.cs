@@ -1,5 +1,6 @@
 ﻿using SimpleInjector;
 using SolrExpress.Builder;
+using SolrExpress.DI.CoreClr;
 using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
 using SolrExpress.Search.Query;

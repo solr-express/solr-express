@@ -41,9 +41,10 @@ namespace SolrExpress.Search
         /// Execute search item validation
         /// </summary>
         /// <param name="item">Search item to validate</param>
-        private void ValidateSearchItem(ISearchItem item)
+        internal void ValidateSearchItem(ISearchItem item)
         {
             var searchParameter = item as ISearchParameter;
+            var errorMessage = string.Empty;
 
             if (!this._solrExpressOptions.FailFast || searchParameter == null)
             {
@@ -65,13 +66,24 @@ namespace SolrExpress.Search
                 ?.Count(q => q.GetType() == searchParameter.GetType()) > 1;
 
             var allowMultipleInstances = !attributes.Any(q => q is AllowMultipleInstancesAttribute);
-
             Checker.IsTrue<AllowMultipleInstancesException>(hasMultipleInstances && !allowMultipleInstances, searchParameter.GetType().FullName);
 
-            foreach (var attribute in attributes)
+            if (this._solrExpressOptions.CheckAnyParameter)
             {
-                var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out string errorMessage);
+                var useAnyThanSpecificParameterRather = attributes.FirstOrDefault(q => q is UseAnyThanSpecificParameterRatherAttribute);
+                var isValid = ((IValidationAttribute)useAnyThanSpecificParameterRather).IsValid<TDocument>(searchParameter, out errorMessage);
+                Checker.IsFalse<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
+            }
 
+            var filteredAttributes = attributes
+                .Where(q =>
+                    !(q is UseAnyThanSpecificParameterRatherAttribute) &&
+                    !(q is AllowMultipleInstancesAttribute))
+                .ToList();
+
+            foreach (var attribute in filteredAttributes)
+            {
+                var isValid = ((IValidationAttribute)attribute).IsValid<TDocument>(searchParameter, out errorMessage);
                 Checker.IsFalse<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
             }
         }

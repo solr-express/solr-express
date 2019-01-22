@@ -18,12 +18,12 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
         {
             // Arrange
             var container = new List<string>();
-            var parameter = (ILimitParameter<TestDocument>)new LimitParameter<TestDocument>();
+            var parameter = new LimitParameter<TestDocument>();
             parameter.Value = 10;
 
             // Act
-            ((ISearchItemExecution<List<string>>)parameter).Execute();
-            ((ISearchItemExecution<List<string>>)parameter).AddResultInContainer(container);
+            parameter.Execute();
+            parameter.AddResultInContainer(container);
 
             // Assert
             Assert.Single(container);

@@ -3,19 +3,16 @@ using SolrExpress.Builder;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace SolrExpress.Solr5.Search.Parameter
 {
     [AllowMultipleInstances]
     [FacetRangeType]
     [FieldMustBeIndexedTrue]
-    public sealed class FacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
+    public sealed class FacetRangeParameter<TDocument> : BaseFacetRangeParameter<TDocument>, ISearchItemExecution<JObject>
         where TDocument : Document
     {
         private JProperty _result;
@@ -25,23 +22,6 @@ namespace SolrExpress.Solr5.Search.Parameter
             this.ExpressionBuilder = expressionBuilder;
             this.ServiceProvider = serviceProvider;
         }
-
-        public string AliasName { get; set; }
-        public bool CountAfter { get; set; }
-        public bool CountBefore { get; set; }
-        public string End { get; set; }
-        public string[] Excludes { get; set; }
-        public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
-        public Expression<Func<TDocument, object>> FieldExpression { get; set; }
-        public string Gap { get; set; }
-        public int? Limit { get; set; }
-        public int? Minimum { get; set; }
-        public FacetSortType? SortType { get; set; }
-        public string Start { get; set; }
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
-        public IList<IFacetParameter<TDocument>> Facets { get; set; }
-        public SearchQuery<TDocument> Filter { get; set; }
-        public bool HardEnd { get; set; }
 
         public void AddResultInContainer(JObject container)
         {

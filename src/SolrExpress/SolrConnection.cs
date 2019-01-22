@@ -33,10 +33,9 @@ namespace SolrExpress
         private IFlurlClient SetAuthentication(Url url)
 #endif
         {
-            switch (this._options.Security.AuthenticationType)
+            if (this._options.Security.AuthenticationType == AuthenticationType.Basic)
             {
-                case AuthenticationType.Basic:
-                    return url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
+                return url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
             }
 
 #if NETCOREAPP2_1

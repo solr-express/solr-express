@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class QueryParserParameter<TDocument> : IQueryParserParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class QueryParserParameter<TDocument> : BaseQueryParserParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public QueryParserType Value { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {

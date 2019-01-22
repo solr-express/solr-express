@@ -4,12 +4,10 @@ using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class WriteTypeParameter<TDocument> : IWriteTypeParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class WriteTypeParameter<TDocument> : BaseWriteTypeParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public WriteType Value { get;set; }
 
         public void AddResultInContainer(List<string> container)
         {

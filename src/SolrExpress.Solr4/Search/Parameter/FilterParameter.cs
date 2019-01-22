@@ -1,18 +1,14 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class FilterParameter<TDocument> : IFilterParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class FilterParameter<TDocument> : BaseFilterParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public SearchQuery<TDocument> Query { get; set; }
-        public string TagName { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {

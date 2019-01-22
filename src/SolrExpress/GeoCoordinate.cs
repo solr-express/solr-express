@@ -1,9 +1,10 @@
 ﻿using SolrExpress.Utility;
+using System;
 using System.Globalization;
 
 namespace SolrExpress
 {
-    public struct GeoCoordinate
+    public struct GeoCoordinate : IEquatable<GeoCoordinate>
     {
         /// <summary>
         /// Default constructor
@@ -28,6 +29,18 @@ namespace SolrExpress
         /// The longitude of the location. May range from -180.0 to 180.0.
         /// </summary>
         public decimal Longitude { get; set; }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type
+        /// </summary>
+        /// <param name="other">An object to compare with this object</param>
+        /// <returns>True if the current object is equal to the other parameter; otherwise, false.</returns>
+        public bool Equals(GeoCoordinate other)
+        {
+            return
+                this.Latitude.Equals(other.Latitude) &&
+                this.Longitude.Equals(other.Longitude);
+        }
 
         /// <summary>
         /// Returns the fully qualified type name of this instance

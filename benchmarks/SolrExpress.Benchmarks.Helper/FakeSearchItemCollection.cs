@@ -12,10 +12,12 @@ namespace SolrExpress.Benchmarks.Helper
     {
         public void Add(ISearchItem item)
         {
+            // Test purpose only
         }
 
         public void AddRange(IEnumerable<ISearchItem> items)
         {
+            // Test purpose only
         }
 
         public bool Contains<TSearchItem>() where TSearchItem : ISearchItem

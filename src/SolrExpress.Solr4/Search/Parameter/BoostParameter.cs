@@ -1,17 +1,13 @@
 ﻿using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Query;
 using System.Collections.Generic;
 
 namespace SolrExpress.Solr4.Search.Parameter
 {
-    public sealed class BoostParameter<TDocument> : IBoostParameter<TDocument>, ISearchItemExecution<List<string>>
+    public sealed class BoostParameter<TDocument> : BaseBoostParameter<TDocument>, ISearchItemExecution<List<string>>
         where TDocument : Document
     {
         private string _result;
-
-        public BoostFunctionType BoostFunctionType { get; set; }
-        public SearchQuery<TDocument> Query { get; set; }
 
         public void AddResultInContainer(List<string> container)
         {
