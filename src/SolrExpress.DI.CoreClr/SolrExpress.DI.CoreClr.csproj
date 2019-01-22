@@ -19,7 +19,7 @@ Provider for native .Net Core Dependency Injection.</Description>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.3.1</Version>
+    <Version>5.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
