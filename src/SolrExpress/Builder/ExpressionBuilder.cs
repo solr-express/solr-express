@@ -60,14 +60,15 @@ namespace SolrExpress.Builder
 
         private Expression RemoveConvert(Expression expression)
         {
-            while (expression != null
-                   && (expression.NodeType == ExpressionType.Convert
-                       || expression.NodeType == ExpressionType.ConvertChecked))
+            var appliedExpression = expression;
+            var expectedNodeTypes = new[] { ExpressionType.Convert, ExpressionType.ConvertChecked };
+
+            while (expectedNodeTypes.Contains(appliedExpression.NodeType))
             {
-                expression = RemoveConvert(((UnaryExpression)expression).Operand);
+                appliedExpression = RemoveConvert(((UnaryExpression)appliedExpression).Operand);
             }
 
-            return expression;
+            return appliedExpression;
         }
 
         public Expression GetRootExpression(Expression expression)
