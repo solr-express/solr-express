@@ -41,24 +41,24 @@ namespace SolrExpress.Search.Result
                 return null;
             }
 
+            var appliedFacetGap = facetGap;
+
             if (DateTypes.Contains(fieldType))
             {
-                facetGap = GetDateTimeFacetGap(facetGap);
+                appliedFacetGap = GetDateTimeFacetGap(appliedFacetGap);
 
                 var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
+                return DateMath.Apply(minimumValue ?? DateTime.MinValue, appliedFacetGap);
             }
 
             if (NotIntTypes.Contains(fieldType))
             {
-                var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
+                var minimumValueDecimal = ((FacetItemRangeValue<decimal>)item).MinimumValue;
+                return (minimumValueDecimal ?? decimal.MinValue) + decimal.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
             }
 
-            {
-                var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
-            }
+            var minimumValueINt = ((FacetItemRangeValue<int>)item).MinimumValue;
+            return (minimumValueINt ?? int.MinValue) + int.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
         }
     }
 }
