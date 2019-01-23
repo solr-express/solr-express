@@ -26,11 +26,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure sort type of result of facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="sortType">Sort type of result of facet</param>
-        public static IFacetFieldParameter<TDocument> SortType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetSortType sortType)
+        /// <param name="value">Sort type of result of facet</param>
+        public static IFacetFieldParameter<TDocument> SortType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetSortType value)
             where TDocument : Document
         {
-            parameter.SortType = sortType;
+            parameter.SortType = value;
 
             return parameter;
         }
