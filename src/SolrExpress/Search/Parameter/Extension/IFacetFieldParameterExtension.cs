@@ -52,11 +52,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure limit of itens in facet's result
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="limit">Limit of itens in facet's result</param>
-        public static IFacetFieldParameter<TDocument> Limit<TDocument>(this IFacetFieldParameter<TDocument> parameter, int limit)
+        /// <param name="value">Limit of itens in facet's result</param>
+        public static IFacetFieldParameter<TDocument> Limit<TDocument>(this IFacetFieldParameter<TDocument> parameter, int value)
             where TDocument : Document
         {
-            parameter.Limit = limit;
+            parameter.Limit = value;
 
             return parameter;
         }
