@@ -66,11 +66,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure distance from center point
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="distance">Distance from center point</param>
-        public static IFacetSpatialParameter<TDocument> Distance<TDocument>(this IFacetSpatialParameter<TDocument> parameter, decimal distance)
+        /// <param name="value">Distance from center point</param>
+        public static IFacetSpatialParameter<TDocument> Distance<TDocument>(this IFacetSpatialParameter<TDocument> parameter, decimal value)
             where TDocument : Document
         {
-            parameter.Distance = distance;
+            parameter.Distance = value;
 
             return parameter;
         }
