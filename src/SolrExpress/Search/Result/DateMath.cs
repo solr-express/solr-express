@@ -165,18 +165,19 @@ namespace DaleNewman
 
         public static DateTime Apply(DateTime input, string math)
         {
-            // ReSharper disable once LoopCanBeConvertedToQuery
+            var appliedInput = input;
+
             foreach (Match match in Operator.Matches(math))
             {
-                input = ApplyOperator(input, match.Value);
+                appliedInput = ApplyOperator(appliedInput, match.Value);
             }
 
             var matchRounder = Rounding.Match(math);
             if (matchRounder.Success)
             {
-                input = ApplyRounding(input, matchRounder.Value[1]);
+                appliedInput = ApplyRounding(appliedInput, matchRounder.Value[1]);
             }
-            return input;
+            return appliedInput;
         }
     }
 }
