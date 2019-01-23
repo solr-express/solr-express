@@ -11,11 +11,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure name of parameter added in query
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="name">Name of parameter added in query</param>
-        public static ILocalParameter<TDocument> Name<TDocument>(this ILocalParameter<TDocument> parameter, string name)
+        /// <param name="value">Name of parameter added in query</param>
+        public static ILocalParameter<TDocument> Name<TDocument>(this ILocalParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.Name = name;
+            parameter.Name = value;
 
             return parameter;
         }
