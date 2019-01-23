@@ -24,11 +24,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure tag name to use in facet excluding list
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="tagName">Tag name to use in facet excluding list</param>
-        public static IFilterParameter<TDocument> TagName<TDocument>(this IFilterParameter<TDocument> parameter, string tagName)
+        /// <param name="value">Tag name to use in facet excluding list</param>
+        public static IFilterParameter<TDocument> TagName<TDocument>(this IFilterParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.TagName = tagName;
+            parameter.TagName = value;
 
             return parameter;
         }
