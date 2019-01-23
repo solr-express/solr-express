@@ -11,11 +11,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure query used to make boost
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="query">Query used to make boost</param>
-        public static IBoostParameter<TDocument> Query<TDocument>(this IBoostParameter<TDocument> parameter, SearchQuery<TDocument> query)
+        /// <param name="value">Query used to make boost</param>
+        public static IBoostParameter<TDocument> Query<TDocument>(this IBoostParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Query = query;
+            parameter.Query = value;
 
             return parameter;
         }
