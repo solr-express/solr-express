@@ -26,11 +26,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure query used to make facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="query">Query used to make facet</param>
-        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery<TDocument> query)
+        /// <param name="value">Query used to make facet</param>
+        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Query = query;
+            parameter.Query = value;
 
             return parameter;
         }
@@ -52,11 +52,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure list of tags to exclude in facet calculation
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public static IFacetQueryParameter<TDocument> Excludes<TDocument>(this IFacetQueryParameter<TDocument> parameter, params string[] excludes)
+        /// <param name="values">List of tags to exclude in facet calculation</param>
+        public static IFacetQueryParameter<TDocument> Excludes<TDocument>(this IFacetQueryParameter<TDocument> parameter, params string[] values)
             where TDocument : Document
         {
-            parameter.Excludes = excludes;
+            parameter.Excludes = values;
 
             return parameter;
         }
