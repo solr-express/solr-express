@@ -36,6 +36,8 @@ namespace SolrExpress.Utility
                     propertyInfo = memberExpression.Member as PropertyInfo;
 
                     break;
+                default:
+                    throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
             }
 
             if (propertyInfo == null)
