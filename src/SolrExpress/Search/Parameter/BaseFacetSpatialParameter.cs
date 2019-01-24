@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseFacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>
+    public abstract class BaseFacetSpatialParameter<TDocument> : IFacetSpatialParameter<TDocument>, IEquatable<BaseFacetSpatialParameter<TDocument>>
         where TDocument : Document
     {
         public string AliasName { get; set; }
@@ -31,6 +31,11 @@ namespace SolrExpress.Search.Parameter
         public override bool Equals(object obj)
         {
             throw new System.NotImplementedException();
+        }
+
+        public bool Equals(BaseFacetSpatialParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
