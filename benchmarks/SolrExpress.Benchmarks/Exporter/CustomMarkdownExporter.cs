@@ -9,14 +9,11 @@ namespace SolrExpress.Benchmarks.Exporter
 {
     public class CustomMarkdownExporter : IExporter
     {
-        private readonly IExporter _exporter;
-
         public string Name { get; set; }
 
         public CustomMarkdownExporter()
         {
-            this._exporter = MarkdownExporter.GitHub;
-            this.Name = this._exporter.Name;
+            this.Name = MarkdownExporter.GitHub.Name;
         }
 
         private Summary GetSummary(Summary summary)
