@@ -26,11 +26,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure function used in spatial filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="functionType">Function used in spatial filter</param>
-        public static ISpatialFilterParameter<TDocument> FunctionType<TDocument>(this ISpatialFilterParameter<TDocument> parameter, SpatialFunctionType functionType)
+        /// <param name="value">Function used in spatial filter</param>
+        public static ISpatialFilterParameter<TDocument> FunctionType<TDocument>(this ISpatialFilterParameter<TDocument> parameter, SpatialFunctionType value)
             where TDocument : Document
         {
-            parameter.FunctionType = functionType;
+            parameter.FunctionType = value;
 
             return parameter;
         }
