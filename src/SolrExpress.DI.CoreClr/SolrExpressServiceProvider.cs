@@ -54,7 +54,7 @@ namespace SolrExpress.DI.CoreClr
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddTransient<TService, UImplementation>(UImplementation implementationInstance)
         {
-            if (implementationInstance == default(UImplementation))
+            if (object.Equals(implementationInstance, default(UImplementation)))
             {
                 this._serviceCollection.AddTransient<TService, UImplementation>();
             }
