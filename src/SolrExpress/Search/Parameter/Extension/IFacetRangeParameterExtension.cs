@@ -53,11 +53,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure lower bound to make facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="start">Lower bound to make facet</param>
-        public static IFacetRangeParameter<TDocument> Start<TDocument>(this IFacetRangeParameter<TDocument> parameter, string start)
+        /// <param name="value">Lower bound to make facet</param>
+        public static IFacetRangeParameter<TDocument> Start<TDocument>(this IFacetRangeParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.Start = start;
+            parameter.Start = value;
 
             return parameter;
         }
