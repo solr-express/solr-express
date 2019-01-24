@@ -4,7 +4,7 @@ using System;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseFilterParameter<TDocument> : IFilterParameter<TDocument>
+    public abstract class BaseFilterParameter<TDocument> : IFilterParameter<TDocument>, IEquatable<BaseFilterParameter<TDocument>>
         where TDocument : Document
     {
         public SearchQuery<TDocument> Query { get; set; }
@@ -28,6 +28,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseFilterParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
