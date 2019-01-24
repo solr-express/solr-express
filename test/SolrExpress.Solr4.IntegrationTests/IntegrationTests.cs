@@ -145,9 +145,6 @@ namespace SolrExpress.Solr4.IntegrationTests
 
             // Assert
             Assert.Equal(2, data.Count());
-            //data.First(q => q.Name.Equals("Facet1"))
-            //Assert.True(data["Facet1"] > 0);
-            //Assert.True(data["Facet2"] > 0);
         }
 
         /// <summary>
@@ -254,7 +251,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Filter(q => q.Id, documentId)
                 .Execute()
                 .Document(out var data);
-            
+
             Assert.Single(data);
             Assert.Equal(documentId, data.ToList()[0].Id);
             Assert.Equal("IntegrationTest009", data.ToList()[0].Name);
@@ -305,7 +302,7 @@ namespace SolrExpress.Solr4.IntegrationTests
                 .Query(q => q.Id, q => q.Any(documentId1, documentId2))
                 .Execute()
                 .Document(out var fetchedDocuments);
-            
+
             Assert.Single(fetchedDocuments);
         }
 
