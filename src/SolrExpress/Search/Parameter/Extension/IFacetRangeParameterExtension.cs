@@ -177,10 +177,10 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
         /// <param name="minimum">True to last bucket will end at “end” even if it is less than “gap” wide</param>
-        public static IFacetRangeParameter<TDocument> HardEnd<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool hardEnd)
+        public static IFacetRangeParameter<TDocument> HardEnd<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool value)
             where TDocument : Document
         {
-            parameter.HardEnd = hardEnd;
+            parameter.HardEnd = value;
 
             return parameter;
         }
