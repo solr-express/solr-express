@@ -39,11 +39,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure center point to spatial filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        public static ISpatialFilterParameter<TDocument> CenterPoint<TDocument>(this ISpatialFilterParameter<TDocument> parameter, GeoCoordinate centerPoint)
+        /// <param name="value">Center point to spatial filter</param>
+        public static ISpatialFilterParameter<TDocument> CenterPoint<TDocument>(this ISpatialFilterParameter<TDocument> parameter, GeoCoordinate value)
             where TDocument : Document
         {
-            parameter.CenterPoint = centerPoint;
+            parameter.CenterPoint = value;
 
             return parameter;
         }
