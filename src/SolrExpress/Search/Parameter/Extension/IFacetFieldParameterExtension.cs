@@ -39,11 +39,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure minimum count of itens in facet's result
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="minimum">Minimum count of itens in facet's result</param>
-        public static IFacetFieldParameter<TDocument> Minimum<TDocument>(this IFacetFieldParameter<TDocument> parameter, int minimum)
+        /// <param name="value">Minimum count of itens in facet's result</param>
+        public static IFacetFieldParameter<TDocument> Minimum<TDocument>(this IFacetFieldParameter<TDocument> parameter, int value)
             where TDocument : Document
         {
-            parameter.Minimum = minimum;
+            parameter.Minimum = value;
 
             return parameter;
         }
@@ -65,11 +65,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure list of tags to exclude in facet calculation
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public static IFacetFieldParameter<TDocument> Excludes<TDocument>(this IFacetFieldParameter<TDocument> parameter, params string[] excludes)
+        /// <param name="values">List of tags to exclude in facet calculation</param>
+        public static IFacetFieldParameter<TDocument> Excludes<TDocument>(this IFacetFieldParameter<TDocument> parameter, params string[] values)
             where TDocument : Document
         {
-            parameter.Excludes = excludes;
+            parameter.Excludes = values;
 
             return parameter;
         }
@@ -97,11 +97,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure method type to how to facet the field
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="methodType">Method type to how to facet the field</param>
-        public static IFacetFieldParameter<TDocument> MethodType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetMethodType methodType)
+        /// <param name="value">Method type to how to facet the field</param>
+        public static IFacetFieldParameter<TDocument> MethodType<TDocument>(this IFacetFieldParameter<TDocument> parameter, FacetMethodType value)
             where TDocument : Document
         {
-            parameter.MethodType = methodType;
+            parameter.MethodType = value;
 
             return parameter;
         }
@@ -110,11 +110,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure prefix to only produce buckets for terms starting with the specified value
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="prefix">Prefix to only produce buckets for terms starting with the specified value</param>
-        public static IFacetFieldParameter<TDocument> Prefix<TDocument>(this IFacetFieldParameter<TDocument> parameter, string prefix)
+        /// <param name="value">Prefix to only produce buckets for terms starting with the specified value</param>
+        public static IFacetFieldParameter<TDocument> Prefix<TDocument>(this IFacetFieldParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.Prefix = prefix;
+            parameter.Prefix = value;
 
             return parameter;
         }

@@ -13,7 +13,7 @@
         /// <returns>True if values is equal, false otherwise</returns>
         internal static bool IsEquals<T>(this T value1, T value2)
         {
-            if (value1 == null && value2 == null)
+            if (object.Equals(value1, default(T)) && object.Equals(value2, default(T)))
             {
                 return true;
             }

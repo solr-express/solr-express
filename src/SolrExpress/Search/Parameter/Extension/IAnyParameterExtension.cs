@@ -9,10 +9,10 @@
         /// Configure name of parameter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="name">Name of parameter</param>
-        public static IAnyParameter Name(this IAnyParameter parameter, string name)
+        /// <param name="value">Name of parameter</param>
+        public static IAnyParameter Name(this IAnyParameter parameter, string value)
         {
-            parameter.Name = name;
+            parameter.Name = value;
 
             return parameter;
         }

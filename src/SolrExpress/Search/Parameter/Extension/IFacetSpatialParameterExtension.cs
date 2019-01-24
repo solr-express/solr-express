@@ -27,11 +27,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure function used in spatial filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="functionType">Function used in spatial filter</param>
-        public static IFacetSpatialParameter<TDocument> FunctionType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SpatialFunctionType functionType)
+        /// <param name="value">Function used in spatial filter</param>
+        public static IFacetSpatialParameter<TDocument> FunctionType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SpatialFunctionType value)
             where TDocument : Document
         {
-            parameter.FunctionType = functionType;
+            parameter.FunctionType = value;
 
             return parameter;
         }
@@ -40,11 +40,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure expression used to find field name
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="fieldExpression">Expression used to find field name</param>
-        public static IFacetSpatialParameter<TDocument> FieldExpression<TDocument>(this IFacetSpatialParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
+        /// <param name="value">Expression used to find field name</param>
+        public static IFacetSpatialParameter<TDocument> FieldExpression<TDocument>(this IFacetSpatialParameter<TDocument> parameter, Expression<Func<TDocument, object>> value)
             where TDocument : Document
         {
-            parameter.FieldExpression = fieldExpression;
+            parameter.FieldExpression = value;
 
             return parameter;
         }
@@ -79,11 +79,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure sort type of result of facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="sortType">Sort type of result of facet</param>
-        public static IFacetSpatialParameter<TDocument> SortType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, FacetSortType sortType)
+        /// <param name="value">Sort type of result of facet</param>
+        public static IFacetSpatialParameter<TDocument> SortType<TDocument>(this IFacetSpatialParameter<TDocument> parameter, FacetSortType value)
             where TDocument : Document
         {
-            parameter.SortType = sortType;
+            parameter.SortType = value;
 
             return parameter;
         }
@@ -92,11 +92,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure list of tags to exclude in facet calculation
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public static IFacetSpatialParameter<TDocument> Excludes<TDocument>(this IFacetSpatialParameter<TDocument> parameter, params string[] excludes)
+        /// <param name="values">List of tags to exclude in facet calculation</param>
+        public static IFacetSpatialParameter<TDocument> Excludes<TDocument>(this IFacetSpatialParameter<TDocument> parameter, params string[] values)
             where TDocument : Document
         {
-            parameter.Excludes = excludes;
+            parameter.Excludes = values;
 
             return parameter;
         }
@@ -106,12 +106,12 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <typeparam name="TDocument"></typeparam>
         /// <param name="parameter"></param>
-        /// <param name="filter"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static IFacetSpatialParameter<TDocument> Filter<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SearchQuery<TDocument> filter)
+        public static IFacetSpatialParameter<TDocument> Filter<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Filter = filter;
+            parameter.Filter = value;
 
             return parameter;
         }

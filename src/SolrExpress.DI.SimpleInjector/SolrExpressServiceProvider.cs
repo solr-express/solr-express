@@ -51,7 +51,7 @@ namespace SolrExpress.DI.SimpleInjector
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddTransient<TService, UImplementation>(UImplementation implementationInstance)
         {
-            if (implementationInstance == null)
+            if (object.Equals(implementationInstance, default(UImplementation)))
             {
                 this._container.Register<TService, UImplementation>(Lifestyle.Transient);
             }

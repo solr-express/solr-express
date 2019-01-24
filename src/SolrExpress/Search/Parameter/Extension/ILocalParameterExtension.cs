@@ -24,11 +24,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure value to include in query
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="query">Value to include in query</param>
-        public static ILocalParameter<TDocument> Query<TDocument>(this ILocalParameter<TDocument> parameter, SearchQuery<TDocument> query)
+        /// <param name="value">Value to include in query</param>
+        public static ILocalParameter<TDocument> Query<TDocument>(this ILocalParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Query = query;
+            parameter.Query = value;
 
             return parameter;
         }
