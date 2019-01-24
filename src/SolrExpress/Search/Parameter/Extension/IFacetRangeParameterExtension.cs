@@ -105,11 +105,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure counts should also be computed for all records with field values lower then lower bound of the first range
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="countBefore">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
-        public static IFacetRangeParameter<TDocument> CountBefore<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool countBefore)
+        /// <param name="value">Counts should also be computed for all records with field values lower then lower bound of the first range</param>
+        public static IFacetRangeParameter<TDocument> CountBefore<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool value)
             where TDocument : Document
         {
-            parameter.CountBefore = countBefore;
+            parameter.CountBefore = value;
 
             return parameter;
         }
