@@ -222,7 +222,6 @@ namespace SolrExpress.Solr4.IntegrationTests
             // Assert
             Assert.Single(data);
             Assert.Equal("ManufacturerId", data.ToList()[0].Name);
-            //Assert.Equal(1, data.ToList()[0].Data.Count());
         }
 
         /// <summary>
