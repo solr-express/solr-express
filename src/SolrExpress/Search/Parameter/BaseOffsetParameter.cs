@@ -1,6 +1,8 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using System;
+
+namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseOffsetParameter<TDocument> : IOffsetParameter<TDocument>
+    public abstract class BaseOffsetParameter<TDocument> : IOffsetParameter<TDocument>, IEquatable<BaseOffsetParameter<TDocument>>
         where TDocument : Document
     {
         public long Value { get; set; }
@@ -18,6 +20,11 @@
             }
 
             return false;
+        }
+
+        public bool Equals(BaseOffsetParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
