@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseSpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>
+    public abstract class BaseSpatialFilterParameter<TDocument> : ISpatialFilterParameter<TDocument>, IEquatable<BaseSpatialFilterParameter<TDocument>>
         where TDocument : Document
     {
         public GeoCoordinate CenterPoint { get; set; }
@@ -34,6 +34,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseSpatialFilterParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
