@@ -26,10 +26,6 @@ namespace SolrExpress.Search.Parameter
         /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
-            //public FacetSortType? SortType { get; set; }
-            //public IList<IFacetParameter<TDocument>> Facets { get; set; }
-            //public SearchQuery<TDocument> Filter { get; set; }
-
             if (obj is IFacetQueryParameter<TDocument> parameter)
             {
                 var thisFacets = string.Concat(this.Facets?.Select(q => q.GetHashCode()) ?? Enumerable.Empty<int>());
@@ -70,7 +66,7 @@ namespace SolrExpress.Search.Parameter
                 .Create(
                     this.AliasName?.GetHashCode(),
                     string.Concat(this.Excludes).GetHashCode(),
-                    this.Query?.Execute(),        
+                    this.Query?.Execute(),
                     this.Limit?.GetHashCode(),
                     this.Minimum?.GetHashCode(),
                     this.SortType?.GetHashCode(),
