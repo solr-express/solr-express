@@ -1,6 +1,8 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using System;
+
+namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseSortRandomlyParameter<TDocument> : ISortRandomlyParameter<TDocument>
+    public abstract class BaseSortRandomlyParameter<TDocument> : ISortRandomlyParameter<TDocument>, IEquatable<BaseSortRandomlyParameter<TDocument>>
         where TDocument : Document
     {
         /// <summary>
@@ -10,7 +12,12 @@
         /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
-            throw new System.NotImplementedException();
+            return obj is ISortRandomlyParameter<TDocument>;
+        }
+
+        public bool Equals(BaseSortRandomlyParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
