@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseFacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>
+    public abstract class BaseFacetQueryParameter<TDocument> : IFacetQueryParameter<TDocument>, IEquatable<BaseFacetQueryParameter<TDocument>>
         where TDocument : Document
     {
         public string AliasName { get; set; }
@@ -53,6 +53,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseFacetQueryParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
