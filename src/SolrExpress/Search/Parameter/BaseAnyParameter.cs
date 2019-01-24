@@ -2,7 +2,7 @@
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseAnyParameter : IAnyParameter
+    public abstract class BaseAnyParameter : IAnyParameter, IEquatable<BaseAnyParameter>
     {
         public string Name { get; set; }
         public string Value { get; set; }
@@ -22,6 +22,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseAnyParameter other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
