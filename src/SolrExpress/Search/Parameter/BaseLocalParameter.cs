@@ -4,7 +4,7 @@ using System;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseLocalParameter<TDocument> : ILocalParameter<TDocument>
+    public abstract class BaseLocalParameter<TDocument> : ILocalParameter<TDocument>, IEquatable<BaseLocalParameter<TDocument>>
         where TDocument : Document
     {
         public string Name { get; set; }
@@ -30,6 +30,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseLocalParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
