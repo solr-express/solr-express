@@ -25,11 +25,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure true to ascendent order, otherwise false
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="ascendent">True to ascendent order, otherwise false</param>
-        public static ISortParameter<TDocument> Ascendent<TDocument>(this ISortParameter<TDocument> parameter, bool ascendent)
+        /// <param name="value">True to ascendent order, otherwise false</param>
+        public static ISortParameter<TDocument> Ascendent<TDocument>(this ISortParameter<TDocument> parameter, bool value)
             where TDocument : Document
         {
-            parameter.Ascendent = ascendent;
+            parameter.Ascendent = value;
 
             return parameter;
         }
