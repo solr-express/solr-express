@@ -39,11 +39,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure minimum count of itens in facet's result
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="minimum">Minimum count of itens in facet's result</param>
-        public static IFacetFieldParameter<TDocument> Minimum<TDocument>(this IFacetFieldParameter<TDocument> parameter, int minimum)
+        /// <param name="value">Minimum count of itens in facet's result</param>
+        public static IFacetFieldParameter<TDocument> Minimum<TDocument>(this IFacetFieldParameter<TDocument> parameter, int value)
             where TDocument : Document
         {
-            parameter.Minimum = minimum;
+            parameter.Minimum = value;
 
             return parameter;
         }
