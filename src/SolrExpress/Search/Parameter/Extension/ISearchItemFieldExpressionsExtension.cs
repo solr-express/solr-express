@@ -13,11 +13,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure expressions used to find fields name
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="fieldExpressions">Expressions used to find fields name</param>
-        public static ISearchItemFieldExpressions<TDocument> FieldExpressions<TDocument>(this ISearchItemFieldExpressions<TDocument> parameter, params Expression<Func<TDocument, object>>[] fieldExpressions)
+        /// <param name="value">Expressions used to find fields name</param>
+        public static ISearchItemFieldExpressions<TDocument> FieldExpressions<TDocument>(this ISearchItemFieldExpressions<TDocument> parameter, params Expression<Func<TDocument, object>>[] value)
             where TDocument : Document
         {
-            parameter.FieldExpressions = fieldExpressions;
+            parameter.FieldExpressions = value;
 
             return parameter;
         }
