@@ -66,11 +66,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure upper bound to make facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="end">Upper bound to make facet</param>
-        public static IFacetRangeParameter<TDocument> End<TDocument>(this IFacetRangeParameter<TDocument> parameter, string end)
+        /// <param name="value">Upper bound to make facet</param>
+        public static IFacetRangeParameter<TDocument> End<TDocument>(this IFacetRangeParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.End = end;
+            parameter.End = value;
 
             return parameter;
         }
