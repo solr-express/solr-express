@@ -118,11 +118,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure counts should also be computed for all records with field values greater then the upper bound of the last range
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="countAfter">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
-        public static IFacetRangeParameter<TDocument> CountAfter<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool countAfter)
+        /// <param name="value">Counts should also be computed for all records with field values greater then the upper bound of the last range</param>
+        public static IFacetRangeParameter<TDocument> CountAfter<TDocument>(this IFacetRangeParameter<TDocument> parameter, bool value)
             where TDocument : Document
         {
-            parameter.CountAfter = countAfter;
+            parameter.CountAfter = value;
 
             return parameter;
         }
