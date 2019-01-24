@@ -106,12 +106,12 @@ namespace SolrExpress.Search.Parameter.Extension
         /// </summary>
         /// <typeparam name="TDocument"></typeparam>
         /// <param name="parameter"></param>
-        /// <param name="filter"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
-        public static IFacetSpatialParameter<TDocument> Filter<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SearchQuery<TDocument> filter)
+        public static IFacetSpatialParameter<TDocument> Filter<TDocument>(this IFacetSpatialParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Filter = filter;
+            parameter.Filter = value;
 
             return parameter;
         }
