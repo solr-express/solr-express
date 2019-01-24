@@ -40,11 +40,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure size of each range bucket to make facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="gap">Size of each range bucket to make facet</param>
-        public static IFacetRangeParameter<TDocument> Gap<TDocument>(this IFacetRangeParameter<TDocument> parameter, string gap)
+        /// <param name="value">Size of each range bucket to make facet</param>
+        public static IFacetRangeParameter<TDocument> Gap<TDocument>(this IFacetRangeParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.Gap = gap;
+            parameter.Gap = value;
 
             return parameter;
         }
