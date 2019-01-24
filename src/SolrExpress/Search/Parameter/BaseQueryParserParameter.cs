@@ -1,6 +1,8 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using System;
+
+namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseQueryParserParameter<TDocument> : IQueryParserParameter<TDocument>
+    public abstract class BaseQueryParserParameter<TDocument> : IQueryParserParameter<TDocument>, IEquatable<BaseQueryParserParameter<TDocument>>
         where TDocument : Document
     {
         public QueryParserType Value { get; set; }
@@ -18,6 +20,11 @@
             }
 
             return false;
+        }
+
+        public bool Equals(BaseQueryParserParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>
