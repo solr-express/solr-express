@@ -110,11 +110,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure prefix to only produce buckets for terms starting with the specified value
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="prefix">Prefix to only produce buckets for terms starting with the specified value</param>
-        public static IFacetFieldParameter<TDocument> Prefix<TDocument>(this IFacetFieldParameter<TDocument> parameter, string prefix)
+        /// <param name="value">Prefix to only produce buckets for terms starting with the specified value</param>
+        public static IFacetFieldParameter<TDocument> Prefix<TDocument>(this IFacetFieldParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.Prefix = prefix;
+            parameter.Prefix = value;
 
             return parameter;
         }
