@@ -2,7 +2,6 @@
 using SolrExpress.Builder;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
-using SolrExpress.Search.Query;
 using SolrExpress.Utility;
 using Xunit;
 
@@ -51,7 +50,6 @@ namespace SolrExpress.UnitTests.Search.Parameter
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
 
             var parameter1 = new Mock<BaseSpatialFilterParameter<TestDocument>>
             {
