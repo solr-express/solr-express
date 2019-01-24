@@ -1,7 +1,9 @@
 ﻿using SolrExpress.Builder;
 using SolrExpress.Search.Query;
+using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
@@ -30,7 +32,32 @@ namespace SolrExpress.Search.Parameter
         /// <returns>True if the specified object is equal to the current object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
-            throw new System.NotImplementedException();
+            if (obj is IFacetSpatialParameter<TDocument> parameter)
+            {
+                var thisFieldExpression = this.ExpressionBuilder.GetFieldName(this.FieldExpression);
+                var thatFieldExpression = parameter.ExpressionBuilder.GetFieldName(parameter.FieldExpression);
+
+                var thisFilter = this.Filter?.Execute() ?? string.Empty;
+                var thatFilter = parameter.Filter?.Execute() ?? string.Empty;
+
+                var thisFacets = string.Concat(this.Facets?.Select(q => q.GetHashCode()) ?? Enumerable.Empty<int>());
+                var thatFacets = string.Concat(parameter.Facets?.Select(q => q.GetHashCode()) ?? Enumerable.Empty<int>());
+
+                return
+                    this.AliasName.IsEquals(parameter.AliasName) &&
+                    this.CenterPoint.IsEquals(parameter.CenterPoint) &&
+                    this.Distance.IsEquals(parameter.Distance) &&
+                    Array.Equals(this.Excludes, parameter.Excludes) &&
+                    thisFieldExpression.IsEquals(thatFieldExpression) &&
+                    this.FunctionType.IsEquals(parameter.FunctionType) &&
+                    this.Limit.IsEquals(parameter.Limit) &&
+                    this.Minimum.IsEquals(parameter.Minimum) &&
+                    this.SortType.IsEquals(parameter.SortType) &&
+                    thisFacets.IsEquals(thatFacets) &&
+                    thisFilter.IsEquals(thatFilter);
+            }
+
+            return false;
         }
 
         public bool Equals(BaseFacetSpatialParameter<TDocument> other)
