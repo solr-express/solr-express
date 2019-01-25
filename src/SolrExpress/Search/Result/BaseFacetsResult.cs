@@ -7,8 +7,12 @@ namespace SolrExpress.Search.Result
 {
     public abstract class BaseFacetsResult
     {
-        protected static Type[] DateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
-        protected static Type[] NotIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+        private static Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+        private static Type[] _notIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+
+        protected BaseFacetsResult()
+        {
+        }
 
         /// <summary>
         /// Get prepared facet gap to use in DateMath library
@@ -43,7 +47,7 @@ namespace SolrExpress.Search.Result
 
             var appliedFacetGap = facetGap;
 
-            if (DateTypes.Contains(fieldType))
+            if (_dateTypes.Contains(fieldType))
             {
                 appliedFacetGap = GetDateTimeFacetGap(appliedFacetGap);
 
@@ -51,7 +55,7 @@ namespace SolrExpress.Search.Result
                 return DateMath.Apply(minimumValue ?? DateTime.MinValue, appliedFacetGap);
             }
 
-            if (NotIntTypes.Contains(fieldType))
+            if (_notIntTypes.Contains(fieldType))
             {
                 var minimumValueDecimal = ((FacetItemRangeValue<decimal>)item).MinimumValue;
                 return (minimumValueDecimal ?? decimal.MinValue) + decimal.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
