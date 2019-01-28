@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseSortParameter<TDocument> : ISortParameter<TDocument>
+    public abstract class BaseSortParameter<TDocument> : ISortParameter<TDocument>, IEquatable<BaseSortParameter<TDocument>>
         where TDocument : Document
     {
         public bool Ascendent { get; set; }
@@ -30,6 +30,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseSortParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

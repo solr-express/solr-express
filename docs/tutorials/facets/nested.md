@@ -6,7 +6,7 @@ Create a nested facet
 
 ## How to
 
-1. Configure facet (field, range, query or spatial)
+1.  Configure facet (field, range, query or spatial)
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -17,7 +17,7 @@ Create a nested facet
 		.Execute();
 ```
 
-2. Configure nested facet (field, range, query or spatial)
+2.  Configure nested facet (field, range, query or spatial)
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -30,4 +30,4 @@ Create a nested facet
         .Facets(out var data);
 ```
 
-3. Follow instructions to read data of a facet [field](http://solr-express.readthedocs.io/en/stable/tutorials/facets/field), [range](http://solr-express.readthedocs.io/en/stable/tutorials/facets/range), [query](http://solr-express.readthedocs.io/en/stable/tutorials/facets/query) or [spatial](http://solr-express.readthedocs.io/en/stable/tutorials/facets/spatial)
+3.  Follow instructions to read data of a facet [field](http://solr-express.readthedocs.io/en/stable/tutorials/facets/field), [range](http://solr-express.readthedocs.io/en/stable/tutorials/facets/range), [query](http://solr-express.readthedocs.io/en/stable/tutorials/facets/query) or [spatial](http://solr-express.readthedocs.io/en/stable/tutorials/facets/spatial)

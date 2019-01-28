@@ -3,7 +3,7 @@ using System;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseBoostParameter<TDocument> : IBoostParameter<TDocument>
+    public abstract class BaseBoostParameter<TDocument> : IBoostParameter<TDocument>, IEquatable<BaseBoostParameter<TDocument>>
         where TDocument : Document
     {
         public BoostFunctionType BoostFunctionType { get; set; }
@@ -24,6 +24,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseBoostParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

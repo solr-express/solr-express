@@ -1,6 +1,8 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using System;
+
+namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseLimitParameter<TDocument> : ILimitParameter<TDocument>
+    public abstract class BaseLimitParameter<TDocument> : ILimitParameter<TDocument>, IEquatable<BaseLimitParameter<TDocument>>
         where TDocument : Document
     {
         public long Value { get; set; }
@@ -18,6 +20,11 @@
             }
 
             return false;
+        }
+
+        public bool Equals(BaseLimitParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

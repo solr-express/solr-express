@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseFieldsParameter<TDocument> : IFieldsParameter<TDocument>
+    public abstract class BaseFieldsParameter<TDocument> : IFieldsParameter<TDocument>, IEquatable<BaseFieldsParameter<TDocument>>
         where TDocument : Document
     {
         public ExpressionBuilder<TDocument> ExpressionBuilder { get; set; }
@@ -37,6 +37,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseFieldsParameter<TDocument> other)
+        {
+            return this.Equals((object)other); ;
         }
 
         /// <summary>

@@ -7,8 +7,12 @@ namespace SolrExpress.Search.Result
 {
     public abstract class BaseFacetsResult
     {
-        protected static Type[] DateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
-        protected static Type[] NotIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+        private static Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+        private static Type[] _notIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+
+        protected BaseFacetsResult()
+        {
+        }
 
         /// <summary>
         /// Get prepared facet gap to use in DateMath library
@@ -41,24 +45,24 @@ namespace SolrExpress.Search.Result
                 return null;
             }
 
-            if (DateTypes.Contains(fieldType))
+            var appliedFacetGap = facetGap;
+
+            if (_dateTypes.Contains(fieldType))
             {
-                facetGap = GetDateTimeFacetGap(facetGap);
+                appliedFacetGap = GetDateTimeFacetGap(appliedFacetGap);
 
                 var minimumValue = ((FacetItemRangeValue<DateTime>)item).MinimumValue;
-                return DateMath.Apply(minimumValue ?? DateTime.MinValue, facetGap);
+                return DateMath.Apply(minimumValue ?? DateTime.MinValue, appliedFacetGap);
             }
 
-            if (NotIntTypes.Contains(fieldType))
+            if (_notIntTypes.Contains(fieldType))
             {
-                var minimumValue = ((FacetItemRangeValue<decimal>)item).MinimumValue;
-                return (minimumValue ?? decimal.MinValue) + decimal.Parse(facetGap, CultureInfo.InvariantCulture);
+                var minimumValueDecimal = ((FacetItemRangeValue<decimal>)item).MinimumValue;
+                return (minimumValueDecimal ?? decimal.MinValue) + decimal.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
             }
 
-            {
-                var minimumValue = ((FacetItemRangeValue<int>)item).MinimumValue;
-                return (minimumValue ?? int.MinValue) + int.Parse(facetGap, CultureInfo.InvariantCulture);
-            }
+            var minimumValueINt = ((FacetItemRangeValue<int>)item).MinimumValue;
+            return (minimumValueINt ?? int.MinValue) + int.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
         }
     }
 }

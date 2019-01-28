@@ -1,8 +1,9 @@
 ﻿using SolrExpress.Utility;
+using System;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseMinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>
+    public abstract class BaseMinimumShouldMatchParameter<TDocument> : IMinimumShouldMatchParameter<TDocument>, IEquatable<BaseMinimumShouldMatchParameter<TDocument>>
         where TDocument : Document
     {
         public string Value { get; set; }
@@ -20,6 +21,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseMinimumShouldMatchParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

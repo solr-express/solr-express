@@ -1,8 +1,9 @@
 ﻿using SolrExpress.Utility;
+using System;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseQueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>
+    public abstract class BaseQueryFieldParameter<TDocument> : IQueryFieldParameter<TDocument>, IEquatable<BaseQueryFieldParameter<TDocument>>
         where TDocument : Document
     {
         public string Expression { get; set; }
@@ -20,6 +21,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseQueryFieldParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

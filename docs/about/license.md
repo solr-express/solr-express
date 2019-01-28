@@ -2,7 +2,7 @@
 
 Legal stuffs
 
----
+* * *
 
 The MIT License (MIT)
 

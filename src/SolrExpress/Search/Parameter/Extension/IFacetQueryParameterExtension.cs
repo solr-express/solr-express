@@ -13,11 +13,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure name of alias added in query
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="aliasName">Name of alias added in query</param>
-        public static IFacetQueryParameter<TDocument> AliasName<TDocument>(this IFacetQueryParameter<TDocument> parameter, string aliasName)
+        /// <param name="value">Name of alias added in query</param>
+        public static IFacetQueryParameter<TDocument> AliasName<TDocument>(this IFacetQueryParameter<TDocument> parameter, string value)
             where TDocument : Document
         {
-            parameter.AliasName = aliasName;
+            parameter.AliasName = value;
 
             return parameter;
         }
@@ -26,11 +26,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure query used to make facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="query">Query used to make facet</param>
-        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery<TDocument> query)
+        /// <param name="value">Query used to make facet</param>
+        public static IFacetQueryParameter<TDocument> Query<TDocument>(this IFacetQueryParameter<TDocument> parameter, SearchQuery<TDocument> value)
             where TDocument : Document
         {
-            parameter.Query = query;
+            parameter.Query = value;
 
             return parameter;
         }
@@ -39,11 +39,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure sort type of result of facet
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="sortType">Sort type of result of facet</param>
-        public static IFacetQueryParameter<TDocument> SortType<TDocument>(this IFacetQueryParameter<TDocument> parameter, FacetSortType sortType)
+        /// <param name="value">Sort type of result of facet</param>
+        public static IFacetQueryParameter<TDocument> SortType<TDocument>(this IFacetQueryParameter<TDocument> parameter, FacetSortType value)
             where TDocument : Document
         {
-            parameter.SortType = sortType;
+            parameter.SortType = value;
 
             return parameter;
         }
@@ -52,11 +52,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure list of tags to exclude in facet calculation
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="excludes">List of tags to exclude in facet calculation</param>
-        public static IFacetQueryParameter<TDocument> Excludes<TDocument>(this IFacetQueryParameter<TDocument> parameter, params string[] excludes)
+        /// <param name="values">List of tags to exclude in facet calculation</param>
+        public static IFacetQueryParameter<TDocument> Excludes<TDocument>(this IFacetQueryParameter<TDocument> parameter, params string[] values)
             where TDocument : Document
         {
-            parameter.Excludes = excludes;
+            parameter.Excludes = values;
 
             return parameter;
         }
@@ -65,11 +65,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure minimum count of itens in facet's result
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="minimum">Minimum count of itens in facet's result</param>
-        public static IFacetQueryParameter<TDocument> Minimum<TDocument>(this IFacetQueryParameter<TDocument> parameter, int minimum)
+        /// <param name="value">Minimum count of itens in facet's result</param>
+        public static IFacetQueryParameter<TDocument> Minimum<TDocument>(this IFacetQueryParameter<TDocument> parameter, int value)
             where TDocument : Document
         {
-            parameter.Minimum = minimum;
+            parameter.Minimum = value;
 
             return parameter;
         }
@@ -78,11 +78,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure limit of itens in facet's result
         /// </summary>
         /// <param name="parameter">Parameter to configure</param>
-        /// <param name="limit">Limit of itens in facet's result</param>
-        public static IFacetQueryParameter<TDocument> Limit<TDocument>(this IFacetQueryParameter<TDocument> parameter, int limit)
+        /// <param name="value">Limit of itens in facet's result</param>
+        public static IFacetQueryParameter<TDocument> Limit<TDocument>(this IFacetQueryParameter<TDocument> parameter, int value)
             where TDocument : Document
         {
-            parameter.Limit = limit;
+            parameter.Limit = value;
 
             return parameter;
         }

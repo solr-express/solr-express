@@ -6,15 +6,15 @@ Throw **SearchParameterIsInvalidException** when developer use a field in wrong 
 
 Using a collection with 2 fields with follow settings:
 
-| Field  |Indexed |Stored |
-|--------|--------|-------|
-| Field1 | False  | True  |
-| Field2 | True   | False |
+| Field  | Indexed | Stored |
+| ------ | ------- | ------ |
+| Field1 | False   | True   |
+| Field2 | True    | False  |
 
 Use cases:
 
 | Use case     | Using method | Field1           | Field2           |
-|--------------|--------------|------------------|------------------|
+| ------------ | ------------ | ---------------- | ---------------- |
 | Faceting     | FacetField   | Throws exception | Works well       |
 | Faceting     | FacetQuery   | Throws exception | Works well       |
 | Faceting     | FacetRange   | Throws exception | Works well       |

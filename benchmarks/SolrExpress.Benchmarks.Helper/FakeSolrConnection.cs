@@ -36,6 +36,8 @@ namespace SolrExpress.Benchmarks.Helper
                     propertyInfo = memberExpression.Member as PropertyInfo;
 
                     break;
+                default:
+                    throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
             }
 
             if (propertyInfo == null)

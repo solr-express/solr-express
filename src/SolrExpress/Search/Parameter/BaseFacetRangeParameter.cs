@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseFacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>
+    public abstract class BaseFacetRangeParameter<TDocument> : IFacetRangeParameter<TDocument>, IEquatable<BaseFacetRangeParameter<TDocument>>
         where TDocument : Document
     {
         public string AliasName { get; set; }
@@ -61,6 +61,11 @@ namespace SolrExpress.Search.Parameter
             }
 
             return false;
+        }
+
+        public bool Equals(BaseFacetRangeParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

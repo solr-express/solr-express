@@ -1,6 +1,8 @@
-﻿namespace SolrExpress.Search.Parameter
+﻿using System;
+
+namespace SolrExpress.Search.Parameter
 {
-    public abstract class BaseWriteTypeParameter<TDocument> : IWriteTypeParameter<TDocument>
+    public abstract class BaseWriteTypeParameter<TDocument> : IWriteTypeParameter<TDocument>, IEquatable<BaseWriteTypeParameter<TDocument>>
         where TDocument : Document
     {
         public WriteType Value { get; set; }
@@ -18,6 +20,11 @@
             }
 
             return false;
+        }
+
+        public bool Equals(BaseWriteTypeParameter<TDocument> other)
+        {
+            return this.Equals((object)other);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace SolrExpress.Options
         /// <summary>
         /// If true, check Solr connection and load informations about document, otherwise false. Default is false
         /// </summary>
-        public bool LazyInfraValidation { get; set; } = false;
+        public bool LazyInfraValidation { get; set; }
 
         /// <summary>
         /// If true, check for possibles fails in the use of the Solr Queriable (using SolrFieldAttribute), otherwise false. Default is true

@@ -10,19 +10,19 @@ namespace SolrExpress.UnitTests.Search.Parameter
     public class BaseFacetFieldParameterTests
     {
         /// <summary>
-        /// Where   Using a BaseDefaultFieldParameter instance
+        /// Where   Using a BaseFacetFieldParameter instance
         /// When    Invoking method "Equals" using same instance
         /// What    Returns true
         /// </summary>
         [Fact]
-        public void BaseDefaultFieldParameter001()
+        public void BaseFacetFieldParameter001()
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter1 = new Mock<BaseDefaultFieldParameter<TestDocument>>
+            var parameter1 = new Mock<BaseFacetFieldParameter<TestDocument>>
             {
                 CallBase = true
             }.Object;
@@ -37,26 +37,26 @@ namespace SolrExpress.UnitTests.Search.Parameter
         }
 
         /// <summary>
-        /// Where   Using a BaseDefaultFieldParameter instance
+        /// Where   Using a BaseFacetFieldParameter instance
         /// When    Invoking method "Equals" using an instance with different values
         /// What    Returns false
         /// </summary>
         [Fact]
-        public void BaseDefaultFieldParameter002()
+        public void BaseFacetFieldParameter002()
         {
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
             var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
             expressionBuilder.LoadDocument();
-            var parameter1 = new Mock<BaseDefaultFieldParameter<TestDocument>>
+            var parameter1 = new Mock<BaseFacetFieldParameter<TestDocument>>
             {
                 CallBase = true
             }.Object;
             parameter1.ExpressionBuilder = expressionBuilder;
             parameter1.FieldExpression = q => q.Id;
 
-            var parameter2 = new Mock<BaseDefaultFieldParameter<TestDocument>>
+            var parameter2 = new Mock<BaseFacetFieldParameter<TestDocument>>
             {
                 CallBase = true
             }.Object;
@@ -71,15 +71,15 @@ namespace SolrExpress.UnitTests.Search.Parameter
         }
 
         /// <summary>
-        /// Where   Using a BaseDefaultFieldParameter instance
+        /// Where   Using a BaseFacetFieldParameter instance
         /// When    Invoking method "Equals" using an instance with different type
         /// What    Returns false
         /// </summary>
         [Fact]
-        public void BaseDefaultFieldParameter003()
+        public void BaseFacetFieldParameter003()
         {
             // Arrange
-            var parameter1 = new Mock<BaseDefaultFieldParameter<TestDocument>>
+            var parameter1 = new Mock<BaseFacetFieldParameter<TestDocument>>
             {
                 CallBase = true
             }.Object;

@@ -6,7 +6,7 @@ Intercept results of SOLR before parse in POCO
 
 ## How to
 
-1. Create a class that implements **IResultInterceptor**
+1.  Create a class that implements **IResultInterceptor**
 
 ```csharp
 	public class MyInterceptor : IResultInterceptor
@@ -18,7 +18,7 @@ Intercept results of SOLR before parse in POCO
 	}
 ```
 
-2. Add instance using method **Add** in **DocumentCollection<>**
+2.  Add instance using method **Add** in **DocumentCollection&lt;>**
 
 ```csharp
 	var myInterceptor = new MyInterceptor();

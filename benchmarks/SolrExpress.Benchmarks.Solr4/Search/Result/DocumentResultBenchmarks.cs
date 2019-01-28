@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace SolrExpress.Benchmarks.Solr4.Search.Result
 {
-    public class DocumentResultBenchmarks
+    public class DocumentResultBenchmarks : IDisposable
     {
         private List<ISearchParameter> _searchParameters;
         private Stream _jsonStream;
@@ -45,6 +46,11 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
                     jsonReader.Path,
                     jsonReader);
             }
+        }
+
+        public void Dispose()
+        {
+            this._jsonStream.Dispose();
         }
     }
 }

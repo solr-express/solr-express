@@ -1053,14 +1053,14 @@ namespace SolrExpress.Search.Extension
         /// Create a cursor mark parameter
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
-        /// <param name="cursorMark">Mark used to paging through the results</param>
+        /// <param name="value">Mark used to paging through the results</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> CursorMark<TDocument>(this DocumentSearch<TDocument> documentSearch, string cursorMark)
+        public static DocumentSearch<TDocument> CursorMark<TDocument>(this DocumentSearch<TDocument> documentSearch, string value)
             where TDocument : Document
         {
             var parameter = documentSearch.ServiceProvider.GetService<ICursorMarkParameter>();
 
-            parameter.CursorMark(cursorMark);
+            parameter.CursorMark(value);
 
             documentSearch.Add(parameter);
 

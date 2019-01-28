@@ -13,11 +13,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure expression used to find field name
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="fieldExpression">Expression used to find field name</param>
-        public static ISpatialFilterParameter<TDocument> FieldExpression<TDocument>(this ISpatialFilterParameter<TDocument> parameter, Expression<Func<TDocument, object>> fieldExpression)
+        /// <param name="value">Expression used to find field name</param>
+        public static ISpatialFilterParameter<TDocument> FieldExpression<TDocument>(this ISpatialFilterParameter<TDocument> parameter, Expression<Func<TDocument, object>> value)
             where TDocument : Document
         {
-            parameter.FieldExpression = fieldExpression;
+            parameter.FieldExpression = value;
 
             return parameter;
         }
@@ -26,11 +26,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure function used in spatial filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="functionType">Function used in spatial filter</param>
-        public static ISpatialFilterParameter<TDocument> FunctionType<TDocument>(this ISpatialFilterParameter<TDocument> parameter, SpatialFunctionType functionType)
+        /// <param name="value">Function used in spatial filter</param>
+        public static ISpatialFilterParameter<TDocument> FunctionType<TDocument>(this ISpatialFilterParameter<TDocument> parameter, SpatialFunctionType value)
             where TDocument : Document
         {
-            parameter.FunctionType = functionType;
+            parameter.FunctionType = value;
 
             return parameter;
         }
@@ -39,11 +39,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure center point to spatial filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="centerPoint">Center point to spatial filter</param>
-        public static ISpatialFilterParameter<TDocument> CenterPoint<TDocument>(this ISpatialFilterParameter<TDocument> parameter, GeoCoordinate centerPoint)
+        /// <param name="value">Center point to spatial filter</param>
+        public static ISpatialFilterParameter<TDocument> CenterPoint<TDocument>(this ISpatialFilterParameter<TDocument> parameter, GeoCoordinate value)
             where TDocument : Document
         {
-            parameter.CenterPoint = centerPoint;
+            parameter.CenterPoint = value;
 
             return parameter;
         }
@@ -52,11 +52,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure distance from center point
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="distance">Distance from center point</param>
-        public static ISpatialFilterParameter<TDocument> Distance<TDocument>(this ISpatialFilterParameter<TDocument> parameter, decimal distance)
+        /// <param name="value">Distance from center point</param>
+        public static ISpatialFilterParameter<TDocument> Distance<TDocument>(this ISpatialFilterParameter<TDocument> parameter, decimal value)
             where TDocument : Document
         {
-            parameter.Distance = distance;
+            parameter.Distance = value;
 
             return parameter;
         }
