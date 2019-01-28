@@ -1,0 +1,15 @@
+# Configuration for todo - https://github.com/probot/probot
+todo:
+  autoAssign: "diegobrum"
+  keyword: "TODO"
+
+
+
+# Configuration for request-info - https://github.com/behaviorbot/request-info
+
+# *Required* Comment to reply with
+requestInfoReplyComment: >
+  We would appreciate it if you could provide us with more info about this issue/pr!
+
+# *OPTIONAL* Label to be added to Issues and Pull Requests with insufficient information given
+requestInfoLabelToAdd: origin:probot:needs-more-info
