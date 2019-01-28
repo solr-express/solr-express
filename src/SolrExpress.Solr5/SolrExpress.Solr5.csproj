@@ -20,7 +20,7 @@ Implementation using default query handler and mechanism provided by JSON Reques
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.4.0</Version>
+    <Version>5.4.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

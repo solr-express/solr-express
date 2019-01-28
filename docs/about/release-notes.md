@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## [5.4.1] - 2019-01-28
+
+### Quality effort
+
+-   A lot of code style
+-   A lot of style fix
+
 ## [5.4.0] - 2019-01-22
 
 ### Bug fix
