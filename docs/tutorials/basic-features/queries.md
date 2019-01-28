@@ -6,9 +6,9 @@ Create a query to filter or to use in filter query
 
 ## How to
 
-1. Use some feature that allow use **SearchQuery<>** (i.e. *Filter* or *FacetQuery*)
+1.  Use some feature that allow use **SearchQuery&lt;>** (i.e. _Filter_ or _FacetQuery_)
 
-2. Configure query
+2.  Configure query
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -20,7 +20,7 @@ Create a query to filter or to use in filter query
         .Execute();
 ```
 
-3. Optionally use a chain of methods
+3.  Optionally use a chain of methods
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -39,10 +39,10 @@ Create a query to filter or to use in filter query
 ## Simple cases
 
 | Use case                                               | How to                                                       | Query generated                   |
-|--------------------------------------------------------|--------------------------------------------------------------|-----------------------------------|
+| ------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------- |
 | Query to find all informed values (conditional AND)    | query.Field(f => f.Categories).All("category1", "category2") | cat:("category1" AND "category2") |
 | Query to find some of informed values (conditional OR) | query.Field(f => f.Categories).Any("category1", "category2") | cat:("category1" OR "category2")  |
-| Query to find something starts with informed value     | query.Field(f => f.Categories).StartsWith("c")               | cat:"c*"                          |
+| Query to find something starts with informed value     | query.Field(f => f.Categories).StartsWith("c")               | cat:"c\*"                         |
 | Query to find exact informed value                     | query.Field(f => f.Categories).EqualsTo("category1")         | cat:"category1"                   |
 | Query to find negate informed value                    | query.Field(f => f.Categories).NotEqualsTo("category1")      | NOT(cat:"category1")              |
 | Query to find someting in informed range               | query.Field(f => f.Price).InRange(1, 10)                     | price:[1 TO 10]                   |
@@ -52,5 +52,5 @@ Create a query to filter or to use in filter query
 # Complex queries
 
 | Use case                              | How to                                                                                                                             | Query generated                           |
-|---------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | Query expression isolating in a group | query.Group(price=> price.Filed(f => f.Price).InRange(1, 10).Or(popularity => popularity.Field(f => f.Popularity).GreaterThan(5))) | (price:[1 TO 10] OR  popularity:[5 TO *]) |

@@ -6,7 +6,7 @@ Create a facet spatial
 
 ## How to
 
-1. Configure facet
+1.  Configure facet
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -17,7 +17,7 @@ Create a facet spatial
 		.Execute();
 ```
 
-2. Optionally, change one or more settings
+2.  Optionally, change one or more settings
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI
@@ -32,7 +32,7 @@ Create a facet spatial
 		.Execute();
 ```
 
-3. Read data
+3.  Read data
 
 ```csharp
 	rersult
@@ -62,11 +62,11 @@ Create a facet spatial
 ## Settings
 
 | Use case                                                                                       | How to                                                                                                                                |
-|------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Sort type of result of facet                                                                   | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.SortType(FacetSortType.CountAsc))             |
 | Minimum count of itens in facet's result                                                       | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Minimum(2))                                   |
 | Limit of itens in facet's result                                                               | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Limit(10))                                    |
-| List of tags to exclude in facet calculation                                                   | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Excludes(new[] { "tag1", "tag2" }))           |
+| List of tags to exclude in facet calculation                                                   | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Excludes(new\[] { "tag1", "tag2" }))          |
 | Function used in spatial filter                                                                | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.FunctionType(SpatialFunctionType.Bbox))       |
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
 
