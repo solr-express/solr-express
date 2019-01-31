@@ -7,8 +7,8 @@ namespace SolrExpress.Search.Result
 {
     public abstract class BaseFacetsResult
     {
-        private static Type[] _dateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
-        private static Type[] _notIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+        protected static Type[] DateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+        protected static Type[] NotIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
 
         protected BaseFacetsResult()
         {
@@ -47,7 +47,7 @@ namespace SolrExpress.Search.Result
 
             var appliedFacetGap = facetGap;
 
-            if (_dateTypes.Contains(fieldType))
+            if (DateTypes.Contains(fieldType))
             {
                 appliedFacetGap = GetDateTimeFacetGap(appliedFacetGap);
 
@@ -55,7 +55,7 @@ namespace SolrExpress.Search.Result
                 return DateMath.Apply(minimumValue ?? DateTime.MinValue, appliedFacetGap);
             }
 
-            if (_notIntTypes.Contains(fieldType))
+            if (NotIntTypes.Contains(fieldType))
             {
                 var minimumValueDecimal = ((FacetItemRangeValue<decimal>)item).MinimumValue;
                 return (minimumValueDecimal ?? decimal.MinValue) + decimal.Parse(appliedFacetGap, CultureInfo.InvariantCulture);
