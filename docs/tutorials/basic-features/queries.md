@@ -49,7 +49,7 @@ Create a query to filter or to use in filter query
 | Query to find someting greater than informed value     | query.Field(f => f.Price).GreaterThan(1)                     | price:[1 TO *]                    |
 | Query to find someting less than informed value        | query.Field(f => f.Price).LessThan(1)                        | price:[* TO 10]                   |
 
-# Complex queries
+## Complex queries
 
 | Use case                              | How to                                                                                                                             | Query generated                           |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
