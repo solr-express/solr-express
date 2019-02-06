@@ -11,11 +11,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure value of filter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="query">Value of filter</param>
-        public static IFilterParameter<TDocument> Query<TDocument>(this IFilterParameter<TDocument> parameter, SearchQuery<TDocument> query)
+        /// <param name="searchQuery">Value of filter</param>
+        public static IFilterParameter<TDocument> Query<TDocument>(this IFilterParameter<TDocument> parameter, SearchQuery<TDocument> searchQuery)
             where TDocument : Document
         {
-            parameter.Query = query;
+            parameter.Query = searchQuery;
 
             return parameter;
         }
