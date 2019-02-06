@@ -48,7 +48,7 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 -   ISolrSearch (use concret class **DocumentSearch** instead) _(change in your project)_
 -   IValidation
 
-### Follow classes was removed:
+### Classes removed
 
 -   InformationBuilder
 -   InvalidParameterTypeException
