@@ -69,7 +69,7 @@ Create a facet field
 | Method type to how to facet the field                                                          | .FacetField(q => q.InStock, facet => facet.MethodType(FacetSortType.UninvertedField))                     |
 | Prefix to only produce buckets for terms starting with the specified value                     | .FacetField(q => q.Features, facet => facet.Prefix("some value"))                                         |
 
-** NOTE **
+### NOTE
 
 Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
 Learn more about [facets](http://yonik.com/json-facet-api/#Terms_Facet)
