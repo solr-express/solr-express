@@ -55,7 +55,7 @@ Notes about releases
 
 -   Support to .Net Core 2.1 ([#261](https://github.com/solr-express/solr-express/issues/261))
 
-## [5.2.0] - 2018-06-13
+## 5.2.0 - 2018-06-13
 
 ### Bug fix
 
