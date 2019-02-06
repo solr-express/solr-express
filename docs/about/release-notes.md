@@ -142,7 +142,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.4] - 2017-03-19
+## 4.2.4 - 2017-03-19
 
 ### Enhancement
 
