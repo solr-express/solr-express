@@ -128,7 +128,7 @@ Thanks people for ideas and contributions:
 -   [stanuku](https://github.com/stanuku)
 -   [UncleZen](https://github.com/UncleZen)
 
-## [4.2.6] - 2017-07-13
+## 4.2.6 - 2017-07-13
 
 ### Enhancement
 
