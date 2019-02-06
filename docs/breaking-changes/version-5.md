@@ -55,7 +55,7 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 -   UnexpectedJsonFormatException
 -   UnknownResolveResultBuilderException
 
-### Class **SolrFieldAttribute** lost properties:
+### Class **SolrFieldAttribute** lost properties
 
 -   Indexed
 -   Stored
