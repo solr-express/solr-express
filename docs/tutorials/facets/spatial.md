@@ -70,6 +70,6 @@ Create a facet spatial
 | Function used in spatial filter                                                                | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.FunctionType(SpatialFunctionType.Bbox))       |
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting | .FacetSpatial("AliasName", q => q.StoredAt, new GeoCoordinate(1, 1), 10, facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
 
-** NOTE **
+### NOTE
 
 Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
