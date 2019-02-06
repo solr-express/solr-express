@@ -82,7 +82,7 @@ Notes about releases
 
 -   Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access _DocumentSearch<TDocument>_ extensions
 
-## [5.1.2] - 2017-11-17
+## 5.1.2 - 2017-11-17
 
 ### Bug fix
 
@@ -150,7 +150,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.3] - 2017-03-19
+## 4.2.3 - 2017-03-19
 
 ### Enhancement
 
@@ -158,7 +158,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.2] - 2017-03-19
+## 4.2.2 - 2017-03-19
 
 ### Bug fix
 
@@ -174,7 +174,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.0] - 2017-01-20
+## 4.2.0 - 2017-01-20
 
 ### Enhancement
 
@@ -200,7 +200,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.0] - 2017-01-13
+## 4.1.0 - 2017-01-13
 
 ### Enhancement
 
@@ -230,7 +230,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.5] - 2016-12-13
+## 4.0.5 - 2016-12-13
 
 ### Bug fix
 
@@ -238,7 +238,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.4] - 2016-12-02
+## 4.0.4 - 2016-12-02
 
 ### Enhancement
 
@@ -246,7 +246,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.3] - 2016-12-01
+## 4.0.3 - 2016-12-01
 
 ### Enhancement
 
@@ -254,7 +254,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.2] - 2016-09-26
+## 4.0.2 - 2016-09-26
 
 ### Bug fix
 
@@ -266,7 +266,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.1] - 2016-09-14
+## 4.0.1 - 2016-09-14
 
 ### Bug fix
 
@@ -280,7 +280,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.0] - 2016-09-14
+## 4.0.0 - 2016-09-14
 
 ### Bug fix
 
@@ -354,7 +354,7 @@ After
 
 * * *
 
-## [3.1.2] - 2016-07-30
+## 3.1.2 - 2016-07-30
 
 ### Enhancement
 
@@ -365,7 +365,7 @@ After
 
 * * *
 
-## [3.1.1] - 2016-07-19
+## 3.1.1 - 2016-07-19
 
 ### Bug fix
 
@@ -382,7 +382,7 @@ After
 
 * * *
 
-## [3.1.0] - 2016-07-12
+## 3.1.0 - 2016-07-12
 
 ### Bug fix
 
@@ -398,7 +398,7 @@ After
 
 * * *
 
-## [3.0.0] - 2016-07-07
+## 3.0.0 - 2016-07-07
 
 ### Enhancement
 
@@ -411,7 +411,7 @@ After
 
 * * *
 
-## [2.1.0] - 2016-05-13
+## 2.1.0 - 2016-05-13
 
 ### Bug fix
 
@@ -428,7 +428,7 @@ After
 
 * * *
 
-## [2.0.0] - 2016-05-05
+## 2.0.0 - 2016-05-05
 
 ### Bug fix
 
@@ -442,7 +442,7 @@ After
 
 * * *
 
-## [1.2.0.1] - 2016-01-06
+## 1.2.0.1 - 2016-01-06
 
 ### Bug fix
 
@@ -462,19 +462,19 @@ After
 
 * * *
 
-## [1.1.0.2] - 2015-12-15
+## 1.1.0.2 - 2015-12-15
 
 -   NuGet mistakes
 
 * * *
 
-## [1.1.0.1] - 2015-12-10
+## 1.1.0.1 - 2015-12-10
 
 -   NuGet mistakes
 
 * * *
 
-## [1.1.0] - 2015-12-10
+## 1.1.0 - 2015-12-10
 
 ### Bug fix
 
@@ -494,7 +494,7 @@ After
 
 * * *
 
-## [1.0.01] - 2015-08-27
+## 1.0.01 - 2015-08-27
 
 All Is Said And Done :)
 
