@@ -43,7 +43,7 @@ Notes about releases
 -   Some style fix
 -   Update dependencies versions
 
-## [5.3.1] - 2018-07-04
+## 5.3.1 - 2018-07-04
 
 ### Bug fix
 
