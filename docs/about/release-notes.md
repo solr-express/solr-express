@@ -184,7 +184,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.2] - 2017-01-19
+## 4.1.2 - 2017-01-19
 
 ### Bug fix
 
