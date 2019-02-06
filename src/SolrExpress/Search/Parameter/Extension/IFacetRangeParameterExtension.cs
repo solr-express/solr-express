@@ -14,11 +14,11 @@ namespace SolrExpress.Search.Parameter.Extension
         /// Configure name of alias added in query
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="aliasName">Name of alias added in query></param>
-        public static IFacetRangeParameter<TDocument> AliasName<TDocument>(this IFacetRangeParameter<TDocument> parameter, string aliasName)
+        /// <param name="str">Name of alias added in query></param>
+        public static IFacetRangeParameter<TDocument> AliasName<TDocument>(this IFacetRangeParameter<TDocument> parameter, string str)
             where TDocument : Document
         {
-            parameter.AliasName = aliasName;
+            parameter.AliasName = str;
 
             return parameter;
         }

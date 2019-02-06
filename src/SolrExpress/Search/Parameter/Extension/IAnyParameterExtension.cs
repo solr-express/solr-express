@@ -21,10 +21,10 @@
         /// Configure value of parameter
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="value">Value of parameter</param>
-        public static IAnyParameter Value(this IAnyParameter parameter, string value)
+        /// <param name="str">Value of parameter</param>
+        public static IAnyParameter Value(this IAnyParameter parameter, string str)
         {
-            parameter.Value = value;
+            parameter.Value = str;
 
             return parameter;
         }

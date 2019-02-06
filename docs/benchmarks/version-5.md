@@ -2,7 +2,7 @@
 
 Benchmarks using version 5.0.0
 
-# SolrExpress.Benchmarks.Solr4.Search.Result.DocumentResultBenchmarks
+## SolrExpress.Benchmarks.Solr4.Search.Result.DocumentResultBenchmarks
 
 ```ini
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
@@ -33,7 +33,7 @@ d=Day
 | **Solr4.Search.Result.DocumentResult** | **Clr** | **1000**      | **366.0 ns** | **2.3216 ns** | **1.9386 ns** | **369.9 ns** | **363.7 ns** | **365.6 ns** | **2,731,952.2** | **1.7772** | **5.46 KB** |
 | Solr4.Search.Result.DocumentResult     | Core    | 1000          |     329.1 ns |     2.9435 ns |     2.7533 ns |     332.7 ns |     323.5 ns |     330.1 ns |     3,038,633.9 |     1.7667 |     5.43 KB |
 
-# SolrExpress.Benchmarks.Solr4.Search.Result.DocumentResultBenchmarks
+## SolrExpress.Benchmarks.Solr4.Search.Result.DocumentResultBenchmarks
 
 ```ini
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
@@ -64,7 +64,7 @@ d=Day
 | **Solr4.Search.Result.DocumentResult** | **Clr** | **1000**      | **366.0 ns** | **2.3216 ns** | **1.9386 ns** | **369.9 ns** | **363.7 ns** | **365.6 ns** | **2,731,952.2** | **1.7772** | **5.46 KB** |
 | Solr4.Search.Result.DocumentResult     | Core    | 1000          |     329.1 ns |     2.9435 ns |     2.7533 ns |     332.7 ns |     323.5 ns |     330.1 ns |     3,038,633.9 |     1.7667 |     5.43 KB |
 
-# SolrExpress.Benchmarks.Solr4.Search.Result.FacetsResultBenchmarks
+## SolrExpress.Benchmarks.Solr4.Search.Result.FacetsResultBenchmarks
 
 ```ini
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
@@ -111,7 +111,7 @@ d=Day
 | **Solr4.Search.Result.FacetsResult** | **Clr** | **Range**  | **1000**      | **370.9 ns** | **0.9461 ns** | **0.8850 ns** | **372.2 ns** | **369.6 ns** | **371.0 ns** | **2,695,921.7** | **1.7772** | **5.46 KB** |
 | Solr4.Search.Result.FacetsResult     | Core    | Range      | 1000          |     339.2 ns |     1.7856 ns |     1.4911 ns |     341.4 ns |     335.5 ns |     339.6 ns |     2,948,251.2 |     1.7667 |     5.43 KB |
 
-# SolrExpress.Benchmarks.Solr5.Search.Result.DocumentResultBenchmarks
+## SolrExpress.Benchmarks.Solr5.Search.Result.DocumentResultBenchmarks
 
 ```ini
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)
@@ -142,7 +142,7 @@ d=Day
 | **Solr5.Search.Result.DocumentResult** | **Clr** | **1000**      | **371.9 ns** | **1.1249 ns** | **0.9394 ns** | **373.5 ns** | **370.1 ns** | **371.9 ns** | **2,689,039.7** | **1.7772** | **5.46 KB** |
 | Solr5.Search.Result.DocumentResult     | Core    | 1000          |     332.7 ns |     0.4046 ns |     0.3159 ns |     333.1 ns |     332.0 ns |     332.8 ns |     3,005,463.0 |     1.7667 |     5.43 KB |
 
-# SolrExpress.Benchmarks.Solr5.Search.Result.FacetsResultBenchmarks
+## SolrExpress.Benchmarks.Solr5.Search.Result.FacetsResultBenchmarks
 
 ```ini
 BenchmarkDotNet=v0.10.9, OS=Windows 10 Redstone 2 (10.0.15063)

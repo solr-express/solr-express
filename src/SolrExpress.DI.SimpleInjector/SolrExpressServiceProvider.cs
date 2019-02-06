@@ -9,7 +9,7 @@ namespace SolrExpress.DI.SimpleInjector
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService>(TService implementationInstance)
         {
-            if (implementationInstance == null)
+            if (object.Equals(implementationInstance, default(TService)))
             {
                 this._container.Register<TService>(Lifestyle.Singleton);
             }
@@ -23,7 +23,7 @@ namespace SolrExpress.DI.SimpleInjector
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddSingleton<TService, UImplementation>(UImplementation implementationInstance)
         {
-            if (implementationInstance == null)
+            if (object.Equals(implementationInstance, default(UImplementation)))
             {
                 this._container.Register<TService, UImplementation>(Lifestyle.Singleton);
             }
@@ -37,7 +37,7 @@ namespace SolrExpress.DI.SimpleInjector
 
         ISolrExpressServiceProvider<TDocument> ISolrExpressServiceProvider<TDocument>.AddTransient<TService>(TService implementationInstance)
         {
-            if (implementationInstance == null)
+            if (object.Equals(implementationInstance, default(TService)))
             {
                 this._container.Register<TService>(Lifestyle.Transient);
             }

@@ -41,7 +41,7 @@ namespace SolrExpress.Search.Parameter
 
         public bool Equals(BaseFieldsParameter<TDocument> other)
         {
-            return this.Equals((object)other); ;
+            return this.Equals((object)other);
         }
 
         /// <summary>

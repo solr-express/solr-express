@@ -73,6 +73,6 @@ Create a facet range
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting                  | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
 | Specify if last bucket will end at �end� even if it is less than �gap� wide                                     | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.HardEnd(true))                                |
 
-** NOTE **
+### ** NOTE **
 
 Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)

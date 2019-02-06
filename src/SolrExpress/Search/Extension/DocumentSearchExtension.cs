@@ -759,13 +759,13 @@ namespace SolrExpress.Search.Extension
         /// </summary>
         /// <param name="documentSearch">Document search engine</param>
         /// <param name="fieldExpression">Expression used to find field name</param>
-        /// <param name="query">Query used to make filter</param>
+        /// <param name="searchQuery">Query used to make filter</param>
         /// <param name="instance">Instance of parameter ready to configure</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> query, Action<IQueryParameter<TDocument>> instance = null)
+        public static DocumentSearch<TDocument> Query<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, Action<SearchQuery<TDocument>> searchQuery, Action<IQueryParameter<TDocument>> instance = null)
             where TDocument : Document
         {
-            Checker.IsNull(query);
+            Checker.IsNull(searchQuery);
 
             var parameter = documentSearch.ServiceProvider.GetService<IQueryParameter<TDocument>>();
             var search = documentSearch.ServiceProvider.GetService<SearchQuery<TDocument>>();
@@ -773,7 +773,7 @@ namespace SolrExpress.Search.Extension
             search.AddField(fieldExpression);
             parameter.Value(search);
 
-            query.Invoke(search);
+            searchQuery.Invoke(search);
             instance?.Invoke(parameter);
 
             documentSearch.Add(parameter);

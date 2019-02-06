@@ -86,6 +86,6 @@ Useful when use a unified collection and isolate your tenant by a prefix/suffix 
     	}
     ```
 
-** NOTE **
+### NOTE
 
 See another example in issue **[206](https://github.com/solr-express/solr-express/issues/206#issuecomment-294005085)**;

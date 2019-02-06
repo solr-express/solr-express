@@ -2,14 +2,21 @@
 
 Notes about releases
 
-## [5.4.1] - 2019-01-28
+## 5.4.2 - 2019-02-06
 
 ### Quality effort
 
 -   A lot of code style
 -   A lot of style fix
 
-## [5.4.0] - 2019-01-22
+## 5.4.1 - 2019-01-28
+
+### Quality effort
+
+-   A lot of code style
+-   A lot of style fix
+
+## 5.4.0 - 2019-01-22
 
 ### Bug fix
 
@@ -37,25 +44,25 @@ Notes about releases
 -   A lot of small style fixes [#288](https://github.com/solr-express/solr-express/issues/288) [#289](https://github.com/solr-express/solr-express/issues/289) [#290](https://github.com/solr-express/solr-express/issues/290) [#292](https://github.com/solr-express/solr-express/issues/292) [#293](https://github.com/solr-express/solr-express/issues/293) [#295](https://github.com/solr-express/solr-express/issues/295) [#296](https://github.com/solr-express/solr-express/issues/296) [#297](https://github.com/solr-express/solr-express/issues/297) [#298](https://github.com/solr-express/solr-express/issues/298) [#299](https://github.com/solr-express/solr-express/issues/299) [#300](https://github.com/solr-express/solr-express/issues/300) [#301](https://github.com/solr-express/solr-express/issues/301) [#302](https://github.com/solr-express/solr-express/issues/302) [#303](https://github.com/solr-express/solr-express/issues/303) [#304](https://github.com/solr-express/solr-express/issues/304) (tks [Codacy](https://codacy.com))
 -   Comment explaining why this method is empty [#308](https://github.com/solr-express/solr-express/issues/308) [#309](https://github.com/solr-express/solr-express/issues/309) [#313](https://github.com/solr-express/solr-express/issues/313) [#314](https://github.com/solr-express/solr-express/issues/314) (tks [Codacy](https://codacy.com))
 
-### And...
+### And
 
 -   Some code style
 -   Some style fix
 -   Update dependencies versions
 
-## [5.3.1] - 2018-07-04
+## 5.3.1 - 2018-07-04
 
 ### Bug fix
 
 -   Fix DI exceptions in .Net Core 2.1 ([#262](https://github.com/solr-express/solr-express/issues/262))
 
-## [5.3.0] - 2018-07-04
+## 5.3.0 - 2018-07-04
 
 ### Enhancement
 
 -   Support to .Net Core 2.1 ([#261](https://github.com/solr-express/solr-express/issues/261))
 
-## [5.2.0] - 2018-06-13
+## 5.2.0 - 2018-06-13
 
 ### Bug fix
 
@@ -82,7 +89,7 @@ Notes about releases
 
 -   Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access _DocumentSearch<TDocument>_ extensions
 
-## [5.1.2] - 2017-11-17
+## 5.1.2 - 2017-11-17
 
 ### Bug fix
 
@@ -90,13 +97,13 @@ Notes about releases
 -   FieldExpression parameter is not being used in some extension methods ([#239](https://github.com/solr-express/solr-express/issues/239))
 -   Wrong quotation marks addition in _StartsWith_ method ([#240](https://github.com/solr-express/solr-express/issues/240))
 
-## [5.1.1] - 2017-09-10
+## 5.1.1 - 2017-09-10
 
 ### Bug fix
 
 -   Bug when use local parameters ([#234](https://github.com/solr-express/solr-express/issues/234))
 
-## [5.0.1] - 2017-09-05
+## 5.0.1 - 2017-09-05
 
 ### Enhancement
 
@@ -107,15 +114,15 @@ Notes about releases
 -   Facet hardend ([#229](https://github.com/solr-express/solr-express/issues/229))
 -   Facet prefix and method ([#227](https://github.com/solr-express/solr-express/issues/227) and [#228](https://github.com/solr-express/solr-express/issues/228))
 
-## [5.0.0] - 2017-08-28
+## 5.0.0 - 2017-08-28
 
 -   Minor bug fixes and docs updates, closes ([#218](https://github.com/solr-express/solr-express/issues/218)) and ([#221](https://github.com/solr-express/solr-express/issues/221))
 
-## [5.0.0-BETA2] - 2017-08-28
+## 5.0.0-BETA2 - 2017-08-28
 
 -   Minor bug fixes and docs updates
 
-## [5.0.0-BETA1] - 2017-08-25
+## 5.0.0-BETA1 - 2017-08-25
 
 ### **BREAKING CHANGES**
 
@@ -128,13 +135,13 @@ Thanks people for ideas and contributions:
 -   [stanuku](https://github.com/stanuku)
 -   [UncleZen](https://github.com/UncleZen)
 
-## [4.2.6] - 2017-07-13
+## 4.2.6 - 2017-07-13
 
 ### Enhancement
 
 -   Updated NewtonSoft.Json and Flurl (tks [@Baklap4](https://github.com/baklap4))
 
-## [4.2.5] - 2017-04-25
+## 4.2.5 - 2017-04-25
 
 ### Bug fix
 
@@ -142,7 +149,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.4] - 2017-03-19
+## 4.2.4 - 2017-03-19
 
 ### Enhancement
 
@@ -150,7 +157,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.3] - 2017-03-19
+## 4.2.3 - 2017-03-19
 
 ### Enhancement
 
@@ -158,7 +165,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.2] - 2017-03-19
+## 4.2.2 - 2017-03-19
 
 ### Bug fix
 
@@ -166,7 +173,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.1] - 2017-01-31
+## 4.2.1 - 2017-01-31
 
 ### Bug fix
 
@@ -174,7 +181,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.2.0] - 2017-01-20
+## 4.2.0 - 2017-01-20
 
 ### Enhancement
 
@@ -184,7 +191,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.2] - 2017-01-19
+## 4.1.2 - 2017-01-19
 
 ### Bug fix
 
@@ -192,7 +199,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.1] - 2017-01-16
+## 4.1.1 - 2017-01-16
 
 ### Bug fix
 
@@ -200,7 +207,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.0] - 2017-01-13
+## 4.1.0 - 2017-01-13
 
 ### Enhancement
 
@@ -214,7 +221,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.7] - 2016-12-14
+## 4.0.7 - 2016-12-14
 
 ### Bug fix
 
@@ -222,7 +229,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.6] - 2016-12-13
+## 4.0.6 - 2016-12-13
 
 ### Bug fix
 
@@ -230,7 +237,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.5] - 2016-12-13
+## 4.0.5 - 2016-12-13
 
 ### Bug fix
 
@@ -238,7 +245,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.4] - 2016-12-02
+## 4.0.4 - 2016-12-02
 
 ### Enhancement
 
@@ -246,7 +253,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.3] - 2016-12-01
+## 4.0.3 - 2016-12-01
 
 ### Enhancement
 
@@ -254,7 +261,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.2] - 2016-09-26
+## 4.0.2 - 2016-09-26
 
 ### Bug fix
 
@@ -266,7 +273,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.1] - 2016-09-14
+## 4.0.1 - 2016-09-14
 
 ### Bug fix
 
@@ -280,7 +287,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.0] - 2016-09-14
+## 4.0.0 - 2016-09-14
 
 ### Bug fix
 
@@ -354,7 +361,7 @@ After
 
 * * *
 
-## [3.1.2] - 2016-07-30
+## 3.1.2 - 2016-07-30
 
 ### Enhancement
 
@@ -365,7 +372,7 @@ After
 
 * * *
 
-## [3.1.1] - 2016-07-19
+## 3.1.1 - 2016-07-19
 
 ### Bug fix
 
@@ -382,7 +389,7 @@ After
 
 * * *
 
-## [3.1.0] - 2016-07-12
+## 3.1.0 - 2016-07-12
 
 ### Bug fix
 
@@ -398,7 +405,7 @@ After
 
 * * *
 
-## [3.0.0] - 2016-07-07
+## 3.0.0 - 2016-07-07
 
 ### Enhancement
 
@@ -411,7 +418,7 @@ After
 
 * * *
 
-## [2.1.0] - 2016-05-13
+## 2.1.0 - 2016-05-13
 
 ### Bug fix
 
@@ -428,7 +435,7 @@ After
 
 * * *
 
-## [2.0.0] - 2016-05-05
+## 2.0.0 - 2016-05-05
 
 ### Bug fix
 
@@ -442,7 +449,7 @@ After
 
 * * *
 
-## [1.2.0.1] - 2016-01-06
+## 1.2.0.1 - 2016-01-06
 
 ### Bug fix
 
@@ -462,19 +469,19 @@ After
 
 * * *
 
-## [1.1.0.2] - 2015-12-15
+## 1.1.0.2 - 2015-12-15
 
 -   NuGet mistakes
 
 * * *
 
-## [1.1.0.1] - 2015-12-10
+## 1.1.0.1 - 2015-12-10
 
 -   NuGet mistakes
 
 * * *
 
-## [1.1.0] - 2015-12-10
+## 1.1.0 - 2015-12-10
 
 ### Bug fix
 
@@ -494,7 +501,7 @@ After
 
 * * *
 
-## [1.0.01] - 2015-08-27
+## 1.0.01 - 2015-08-27
 
 All Is Said And Done :)
 

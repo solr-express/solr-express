@@ -29,7 +29,7 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 
 ## Removes
 
-### Follow interfaces was removed:
+### Interfaces removed
 
 -   IAtomicInstruction
 -   IConvertJsonObject
@@ -48,14 +48,14 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 -   ISolrSearch (use concret class **DocumentSearch** instead) _(change in your project)_
 -   IValidation
 
-### Follow classes was removed:
+### Classes removed
 
 -   InformationBuilder
 -   InvalidParameterTypeException
 -   UnexpectedJsonFormatException
 -   UnknownResolveResultBuilderException
 
-### Class **SolrFieldAttribute** lost properties:
+### Class **SolrFieldAttribute** lost properties
 
 -   Indexed
 -   Stored

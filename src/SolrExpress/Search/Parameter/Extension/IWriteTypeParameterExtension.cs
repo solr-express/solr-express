@@ -9,11 +9,11 @@
         /// Configure write type used in SOLR's result
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="value">Write type used in SOLR's result</param>
-        public static IWriteTypeParameter<TDocument> Value<TDocument>(this IWriteTypeParameter<TDocument> parameter, WriteType value)
+        /// <param name="writeType">Write type used in SOLR's result</param>
+        public static IWriteTypeParameter<TDocument> Value<TDocument>(this IWriteTypeParameter<TDocument> parameter, WriteType writeType)
             where TDocument : Document
         {
-            parameter.Value = value;
+            parameter.Value = writeType;
 
             return parameter;
         }

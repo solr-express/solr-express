@@ -17,7 +17,7 @@ And release notes is available at [release notes](http://solr-express.readthedoc
 ![Solr 5.3+](https://img.shields.io/badge/Solr_5.3+-Full_Compatibility-green.svg?style=flat-square)
 ![Solr 6+](https://img.shields.io/badge/Solr_6.+-Features_created_in_Solr_5.3_works_well-orange.svg?style=flat-square)
 
-## What is?
+## Overview
 
 A simple and lightweight query .NET library for Solr, in a controlled, buildable and fail fast way.
 
