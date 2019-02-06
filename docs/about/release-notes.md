@@ -90,13 +90,13 @@ Notes about releases
 -   FieldExpression parameter is not being used in some extension methods ([#239](https://github.com/solr-express/solr-express/issues/239))
 -   Wrong quotation marks addition in _StartsWith_ method ([#240](https://github.com/solr-express/solr-express/issues/240))
 
-## [5.1.1] - 2017-09-10
+## 5.1.1 - 2017-09-10
 
 ### Bug fix
 
 -   Bug when use local parameters ([#234](https://github.com/solr-express/solr-express/issues/234))
 
-## [5.0.1] - 2017-09-05
+## 5.0.1 - 2017-09-05
 
 ### Enhancement
 
@@ -107,7 +107,7 @@ Notes about releases
 -   Facet hardend ([#229](https://github.com/solr-express/solr-express/issues/229))
 -   Facet prefix and method ([#227](https://github.com/solr-express/solr-express/issues/227) and [#228](https://github.com/solr-express/solr-express/issues/228))
 
-## [5.0.0] - 2017-08-28
+## 5.0.0 - 2017-08-28
 
 -   Minor bug fixes and docs updates, closes ([#218](https://github.com/solr-express/solr-express/issues/218)) and ([#221](https://github.com/solr-express/solr-express/issues/221))
 
@@ -192,7 +192,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.1.1] - 2017-01-16
+## 4.1.1 - 2017-01-16
 
 ### Bug fix
 
@@ -222,7 +222,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.6] - 2016-12-13
+## 4.0.6 - 2016-12-13
 
 ### Bug fix
 
