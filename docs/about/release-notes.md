@@ -49,7 +49,7 @@ Notes about releases
 
 -   Fix DI exceptions in .Net Core 2.1 ([#262](https://github.com/solr-express/solr-express/issues/262))
 
-## [5.3.0] - 2018-07-04
+## 5.3.0 - 2018-07-04
 
 ### Enhancement
 
