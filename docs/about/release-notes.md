@@ -214,7 +214,7 @@ Thanks people for ideas and contributions:
 
 * * *
 
-## [4.0.7] - 2016-12-14
+## 4.0.7 - 2016-12-14
 
 ### Bug fix
 
