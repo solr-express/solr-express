@@ -73,12 +73,14 @@ namespace SolrExpress.Builder
 
         public Expression GetRootExpression(Expression expression)
         {
-            while (expression is MemberExpression memberExpression)
+            var rootExpression = expression;
+
+            while (rootExpression is MemberExpression memberExpression)
             {
-                expression = memberExpression.Expression;
+                rootExpression = memberExpression.Expression;
             }
 
-            return expression;
+            return rootExpression;
         }
 
         /// <summary>
