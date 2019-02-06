@@ -9,11 +9,11 @@
         /// Configure value of limit
         /// </summary>
 		/// <param name="parameter">Parameter to configure</param>
-        /// <param name="value">Value of limit</param>
-        public static IFacetLimitParameter<TDocument> Value<TDocument>(this IFacetLimitParameter<TDocument> parameter, long value)
+        /// <param name="val">Value of limit</param>
+        public static IFacetLimitParameter<TDocument> Value<TDocument>(this IFacetLimitParameter<TDocument> parameter, long val)
             where TDocument : Document
         {
-            parameter.Value = value;
+            parameter.Value = val;
 
             return parameter;
         }
