@@ -2,14 +2,14 @@
 
 Notes about releases
 
-## [5.4.1] - 2019-01-28
+## 5.4.1 - 2019-01-28
 
 ### Quality effort
 
 -   A lot of code style
 -   A lot of style fix
 
-## [5.4.0] - 2019-01-22
+## 5.4.0 - 2019-01-22
 
 ### Bug fix
 
@@ -111,11 +111,11 @@ Notes about releases
 
 -   Minor bug fixes and docs updates, closes ([#218](https://github.com/solr-express/solr-express/issues/218)) and ([#221](https://github.com/solr-express/solr-express/issues/221))
 
-## [5.0.0-BETA2] - 2017-08-28
+## 5.0.0-BETA2 - 2017-08-28
 
 -   Minor bug fixes and docs updates
 
-## [5.0.0-BETA1] - 2017-08-25
+## 5.0.0-BETA1 - 2017-08-25
 
 ### **BREAKING CHANGES**
 
