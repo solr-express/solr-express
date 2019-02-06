@@ -7,7 +7,6 @@ Create a query to filter or to use in filter query
 ## How to
 
 1.  Use some feature that allow use **SearchQuery&lt;>** (i.e. _Filter_ or _FacetQuery_)
-
 2.  Configure query
 
 ```csharp
