@@ -29,7 +29,7 @@ To full details of changes (why?, how? and for?), see [issue](https://github.com
 
 ## Removes
 
-### Follow interfaces was removed:
+### Interfaces removed
 
 -   IAtomicInstruction
 -   IConvertJsonObject
