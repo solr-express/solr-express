@@ -134,7 +134,7 @@ Thanks people for ideas and contributions:
 
 -   Updated NewtonSoft.Json and Flurl (tks [@Baklap4](https://github.com/baklap4))
 
-## [4.2.5] - 2017-04-25
+## 4.2.5 - 2017-04-25
 
 ### Bug fix
 
