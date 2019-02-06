@@ -69,6 +69,6 @@ Create a facet query
 | List of tags to exclude in facet calculation                                                   | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.Excludes(new\[] { "tag1", "tag2" }))          |
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting | .FacetQuery("AliasName", q => q.Field(f => f.Features), facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
 
-** NOTE **
+### NOTE
 
 Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
