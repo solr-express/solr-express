@@ -2,6 +2,13 @@
 
 Notes about releases
 
+## 5.5.0 - 2019-XX-YY
+
+### New features
+
+-   Implements more options to set authentication [#243](https://github.com/solr-express/solr-express/issues/243)
+
+
 ## 5.4.2 - 2019-02-06
 
 ### Quality effort

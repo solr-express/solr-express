@@ -1,5 +1,6 @@
-﻿using System;
+﻿using SolrExpress.Connection;
 using SolrExpress.Options;
+using System;
 
 namespace SolrExpress
 {
@@ -22,6 +23,18 @@ namespace SolrExpress
         public SolrExpressBuilder<TDocument> UseOptions(Action<SolrExpressOptions> configureOptions)
         {
             configureOptions.Invoke(this.Options);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Use indicated custom SOLR connection authentication
+        /// </summary>
+        /// <returns>Itself</returns>
+        public SolrExpressBuilder<TDocument> UseCustomConnectionAuthentication<TCustomSolrConnectionAuthenticationSettings>()
+            where TCustomSolrConnectionAuthenticationSettings : class, ICustomSolrConnectionAuthenticationSettings
+        {
+            this.ServiceProvider.AddSingleton<ICustomSolrConnectionAuthenticationSettings, TCustomSolrConnectionAuthenticationSettings>();
 
             return this;
         }

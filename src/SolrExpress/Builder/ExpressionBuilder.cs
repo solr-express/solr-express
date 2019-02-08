@@ -17,13 +17,13 @@ namespace SolrExpress.Builder
         where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
-        private readonly ISolrConnection _solrConnection;
+        private readonly ISolrConnection<TDocument> _solrConnection;
         private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
         private bool _isDocumentLoaded;
         internal Dictionary<string, FieldSchema> FieldSchemas;
         internal Dictionary<Regex, FieldSchema> DynamicFieldSchemas;
 
-        public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection solrConnection)
+        public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection<TDocument> solrConnection)
         {
             this._solrExpressOptions = solrExpressOptions;
             this._solrConnection = solrConnection;

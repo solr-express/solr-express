@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Connection;
 using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
@@ -25,7 +26,7 @@ namespace SolrExpress.Utility
                 .AddSingleton(options)
                 .AddTransient(serviceProvider);
 
-            var solrConnection = new SolrConnection(options);
+            var solrConnection = new SolrConnection<TDocument>(options, serviceProvider);
             var expressionBuilder = new ExpressionBuilder<TDocument>(options, solrConnection);
             if (!options.LazyInfraValidation)
             {
@@ -38,7 +39,7 @@ namespace SolrExpress.Utility
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<SearchQuery<TDocument>>()
-                .AddTransient<ISolrConnection>(solrConnection)
+                .AddTransient<ISolrConnection<TDocument>>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();
         }

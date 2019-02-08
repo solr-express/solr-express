@@ -40,7 +40,7 @@ namespace SolrExpress.Benchmarks.Helper
                 .AddTransient<DocumentUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<SearchQuery<TDocument>>()
-                .AddTransient<ISolrConnection>(solrConnection)
+                .AddTransient<ISolrConnection<TDocument>>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();
 

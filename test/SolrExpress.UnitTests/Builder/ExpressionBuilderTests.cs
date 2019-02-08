@@ -18,7 +18,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -67,7 +67,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -116,7 +116,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -165,7 +165,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -214,7 +214,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -265,7 +265,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"

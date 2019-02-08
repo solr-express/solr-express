@@ -8,7 +8,7 @@ namespace SolrExpress.Update
     public class DocumentUpdate<TDocument>
         where TDocument : Document
     {
-        private readonly ISolrConnection _solrConnection;
+        private readonly ISolrConnection<TDocument> _solrConnection;
         private readonly List<TDocument> _documentsToAdd = new List<TDocument>();
         private readonly List<string> _documentsToDelete = new List<string>();
 
@@ -16,7 +16,7 @@ namespace SolrExpress.Update
         /// Default constructor of class
         /// </summary>
         public DocumentUpdate(
-            ISolrConnection solrConnection,
+            ISolrConnection<TDocument> solrConnection,
             ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             Checker.IsNull(solrConnection);

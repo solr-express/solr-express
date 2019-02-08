@@ -1,4 +1,6 @@
-﻿namespace SolrExpress.Options
+﻿using System;
+
+namespace SolrExpress.Options
 {
     /// <summary>
     /// Security access options
@@ -13,11 +15,43 @@
         /// <summary>
         /// User name used in authentication process
         /// </summary>
-        public string UserName { get; set; }
+        [Obsolete("Use BasicAuthentication.UserName", false)]
+        public string UserName
+        {
+            get
+            {
+                return this.BasicAuthentication.UserName;
+            }
+            set
+            {
+                this.BasicAuthentication.UserName = value;
+            }
+        }
 
         /// <summary>
         /// Password used in authentication process
         /// </summary>
-        public string Password { get; set; }
+        [Obsolete("Use BasicAuthentication.Password", false)]
+        public string Password
+        {
+            get
+            {
+                return this.BasicAuthentication.Password;
+            }
+            set
+            {
+                this.BasicAuthentication.Password = value;
+            }
+        }
+
+        /// <summary>
+        /// Options used in basic authentication process
+        /// </summary>
+        public BasicAuthenticationOptions BasicAuthentication { get; set; } = new BasicAuthenticationOptions();
+
+        /// <summary>
+        /// Options used in basic authentication process
+        /// </summary>
+        public BearerTokenAuthenticationOptions BearerToken { get; set; } = new BearerTokenAuthenticationOptions();
     }
 }

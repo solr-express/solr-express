@@ -120,6 +120,9 @@
   <data name="AllowMultipleInstancesException" xml:space="preserve">
     <value>Parâmetro "{0}" não pode ser adicionado por já existir uma outra instância com o mesmo tipo</value>
   </data>
+  <data name="CustomSolrConnectionAuthenticationNotFoundException" xml:space="preserve">
+    <value>Não foi encontrado uma instância que implemente ICustomSolrConnectionAuthenticationSettings</value>
+  </data>
   <data name="ExpressionMustBePropertyException" xml:space="preserve">
     <value>Expressão deve referenciar uma propriedade</value>
   </data>
