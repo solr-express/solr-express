@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Options;
 using SolrExpress.Search.Extension;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Parameter.Extension;
@@ -22,7 +23,7 @@ namespace SolrExpress.Solr4.IntegrationTests
         {
             var services = new ServiceCollection()
                 .AddSolrExpress<TechProductDocument>(builder => builder
-                    .UseHostAddress("http://localhost:8983/solr/collection1")
+                    .UseOptions(q => q.HasHostAddress("http://localhost:8983/solr/collection1"))
                     .UseSolr4());
 
             this._serviceProvider = services.BuildServiceProvider();

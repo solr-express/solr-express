@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using SolrExpress.Benchmarks.Helper;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
@@ -32,7 +33,8 @@ namespace SolrExpress.Benchmarks.Solr5.Search.Result
         {
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facetField1 = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);

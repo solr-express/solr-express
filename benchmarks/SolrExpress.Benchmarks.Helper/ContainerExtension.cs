@@ -1,5 +1,6 @@
 ﻿using SimpleInjector;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.DI.CoreClr;
 using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
@@ -31,7 +32,8 @@ namespace SolrExpress.Benchmarks.Helper
                 .AddTransient(solrExpressServiceProvider);
 
             var solrConnection = new FakeSolrConnection<TDocument>();
-            var expressionBuilder = new ExpressionBuilder<TDocument>(solrExpressBuilder.Options, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TDocument>();
+            var expressionBuilder = new ExpressionBuilder<TDocument>(solrExpressBuilder.Options, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             solrExpressServiceProvider

@@ -5,10 +5,10 @@
     /// </summary>
     public abstract class Document
     {
-        [SolrField("id")]
+        //[SolrField("id")]
         public string Id { get; set; }
 
-        [SolrField("score", IsMagicField = true)]
+        //[SolrField("score", IsMagicField = true)]
         public string Score { get; set; }
     }
 }

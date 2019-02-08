@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
@@ -223,7 +224,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestRangeDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestRangeDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);
@@ -410,7 +412,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestRangeDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestRangeDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestRangeDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facetRange1 = (IFacetRangeParameter<TestRangeDocument>)new FacetRangeParameter<TestRangeDocument>(expressionBuilder, null);

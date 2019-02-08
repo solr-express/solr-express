@@ -1,15 +1,13 @@
 ﻿using SolrExpress.Builder;
-using SolrExpress.Search;
-using SolrExpress.Search.Parameter;
+using SolrExpress.Configuration;
+using SolrExpress.Options;
 using SolrExpress.Search.Parameter.Validation;
-using SolrExpress.Search.Query;
 using SolrExpress.Solr4.Search.Parameter;
 using SolrExpress.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using SolrExpress.Options;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Search.Parameter
@@ -28,7 +26,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter = new FieldsParameter<TestDocument>(expressionBuilder);
             parameter.FieldExpressions = new Expression<Func<TestDocument, object>>[] {

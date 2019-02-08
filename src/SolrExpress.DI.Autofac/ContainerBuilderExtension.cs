@@ -25,7 +25,7 @@ namespace SolrExpress.DI.Autofac
             container.Register<ISolrExpressServiceProvider<TDocument>>(q => solrExpressServiceProvider).SingleInstance();
             container.RegisterType<DocumentCollection<TDocument>>().SingleInstance();
 
-            CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);
+            CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options, solrExpressBuilder.DocumentConfiguration);
 
             return container;
         }

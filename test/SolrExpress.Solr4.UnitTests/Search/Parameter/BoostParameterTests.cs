@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
@@ -25,7 +26,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var searchQuery = new SearchQuery<TestDocument>(expressionBuilder);
             var parameter = new BoostParameter<TestDocument>

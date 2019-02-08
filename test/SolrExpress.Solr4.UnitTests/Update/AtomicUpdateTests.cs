@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using SolrExpress.Solr4.Update;
-using SolrExpress.Update;
 using Xunit;
 
 namespace SolrExpress.Solr4.UnitTests.Update
@@ -32,7 +31,7 @@ namespace SolrExpress.Solr4.UnitTests.Update
                 Id = "123456",
                 Dummy = "ymmud"
             };
-            var atomic = (IAtomicUpdate<SimpleTestDocument>)new AtomicUpdate<SimpleTestDocument>();
+            var atomic = new AtomicUpdate<SimpleTestDocument>();
 
             // Act
             var actual = atomic.Execute(document);
@@ -50,7 +49,7 @@ namespace SolrExpress.Solr4.UnitTests.Update
         public void AtomicUpdate002()
         {
             // Arrange
-            var atomic = (IAtomicUpdate<SimpleTestDocument>)new AtomicUpdate<SimpleTestDocument>();
+            var atomic = new AtomicUpdate<SimpleTestDocument>();
 
             // Act
             var actual = atomic.Execute();

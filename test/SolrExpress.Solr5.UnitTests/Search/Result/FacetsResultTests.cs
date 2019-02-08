@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
@@ -61,7 +62,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facet1 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
@@ -269,7 +271,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
@@ -451,7 +454,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facet3 = (IFacetFieldParameter<TestFacetDocument>)new FacetFieldParameter<TestFacetDocument>(expressionBuilder, null);
@@ -567,7 +571,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facetA1 = (IFacetQueryParameter<TestFacetDocument>)new FacetQueryParameter<TestFacetDocument>(null);
@@ -735,7 +740,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facet2 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);
@@ -920,7 +926,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Result
 
             var solrExpressOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestFacetDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestFacetDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestFacetDocument>(solrExpressOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var facet1 = (IFacetRangeParameter<TestFacetDocument>)new FacetRangeParameter<TestFacetDocument>(expressionBuilder, null);

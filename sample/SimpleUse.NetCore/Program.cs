@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SolrExpress;
+using SolrExpress.Configuration;
 using SolrExpress.DI.CoreClr;
+using SolrExpress.Options;
 using SolrExpress.Search.Extension;
 using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result.Extension;
@@ -16,7 +18,20 @@ namespace SimpleUse.NetCore
         {
             var services = new ServiceCollection()
                 .AddSolrExpress<TechProduct>(builder => builder
-                    .UseHostAddress("http://localhost:8983/solr/techproducts")
+                    .ConfigureDocument(q =>
+                    {
+                        q.Field(t => t.Name).HasName("name");
+                        q.Field(t => t.Manufacturer).HasName("manu");
+                        q.Field(t => t.ManufacturerId).HasName("manu_id_s");
+                        q.Field(t => t.Categories).HasName("cat");
+                        q.Field(t => t.Features).HasName("features");
+                        q.Field(t => t.Price).HasName("price");
+                        q.Field(t => t.Popularity).HasName("popularity");
+                        q.Field(t => t.InStock).HasName("inStock");
+                        q.Field(t => t.ManufacturedateIn).HasName("manufacturedate_dt");
+                        q.Field(t => t.StoredAt).HasName("store");
+                    })
+                    .UseOptions(q => q.HasHostAddress("http://localhost:8983/solr/techproducts"))
                     .UseSolr5());
 
             var serviceProvider = services.BuildServiceProvider();

@@ -1,4 +1,5 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
@@ -128,7 +129,8 @@ namespace SolrExpress.UnitTests.Search.Parameter.Validation
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocumentFieldAllowToFacet>();
-            var expressionBuilder = new ExpressionBuilder<TestDocumentFieldAllowToFacet>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentFieldAllowToFacet>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentFieldAllowToFacet>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter = new FakeFacetRangeParameter<TestDocumentFieldAllowToFacet>
             {

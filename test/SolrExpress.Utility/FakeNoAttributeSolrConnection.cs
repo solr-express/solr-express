@@ -9,9 +9,16 @@ using System.Reflection;
 
 namespace SolrExpress.Utility
 {
-    public class FakeSolrConnection<TDocument> : ISolrConnection<TDocument>
+    public class FakeNoAttributeSolrConnection<TDocument> : ISolrConnection<TDocument>
         where TDocument : Document
     {
+        private readonly IList<string> _fieldNames;
+
+        public FakeNoAttributeSolrConnection(IList<string> fieldNames)
+        {
+            this._fieldNames = fieldNames;
+        }
+
         private static PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
         {
             PropertyInfo propertyInfo = null;
@@ -58,25 +65,12 @@ namespace SolrExpress.Utility
         {
             if (handler.Equals("schema/fields"))
             {
-                var properties = typeof(TDocument)
-#if NETCORE
-                .GetTypeInfo()
-#endif
-                    .GetProperties();
-
-                var documentParameter = Expression.Parameter(typeof(TDocument), "document");
-
-                var fields = properties
-                    .Select(property =>
+                var fields = this._fieldNames
+                    .Select(fieldName =>
                     {
-                        var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
-                        var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
-                        var propertyInfo = GetPropertyInfoFromExpression(expression);
-                        var solrFieldAttribute = GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
-
                         return new
                         {
-                            name = solrFieldAttribute?.Name ?? property.Name.ToLowerInvariant(),
+                            name = fieldName,
                             indexed = true,
                             stored = true
                         };
