@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SolrExpress.Configuration;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Serialization;
 using System.Collections.Generic;
@@ -14,6 +15,12 @@ namespace SolrExpress.Search.Result
         where TDocument : Document
     {
         private bool _executed;
+        private readonly SolrDocumentConfiguration<TDocument> _configuration;
+
+        public DocumentResult(SolrDocumentConfiguration<TDocument> configuration)
+        {
+            this._configuration = configuration;
+        }
 
         public IEnumerable<TDocument> Data { get; private set; }
 
@@ -27,7 +34,7 @@ namespace SolrExpress.Search.Result
             var jsonSerializer = new JsonSerializer();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
             jsonSerializer.Converters.Add(new DateTimeConverter());
-            jsonSerializer.ContractResolver = new CustomContractResolver();
+            jsonSerializer.ContractResolver = new CustomContractResolver<TDocument>(this._configuration);
 
             this.Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
 

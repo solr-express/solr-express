@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Configuration;
 using SolrExpress.Solr5.Update;
 using System;
 using Xunit;
@@ -32,7 +33,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
                 Id = "123456",
                 Dummy = "ymmud"
             };
-            var atomic = new AtomicUpdate<SimpleTestDocument>();
+            var configuration = new SolrDocumentConfiguration<SimpleTestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+            configuration.Field(q => q.Dummy).HasName("dummy");
+            var atomic = new AtomicUpdate<SimpleTestDocument>(configuration);
 
             // Act
             var actual = atomic.Execute(document);
@@ -73,7 +77,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
                 Id = "654321",
                 Dummy = "ymmud2"
             };
-            var atomic = new AtomicUpdate<SimpleTestDocument>();
+            var configuration = new SolrDocumentConfiguration<SimpleTestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+            configuration.Field(q => q.Dummy).HasName("dummy");
+            var atomic = new AtomicUpdate<SimpleTestDocument>(configuration);
 
             // Act
             var actual = atomic.Execute(document1, document2);
@@ -91,7 +98,10 @@ namespace SolrExpress.Solr5.UnitTests.Update
         public void AtomicUpdate003()
         {
             // Arrange
-            var atomic = new AtomicUpdate<SimpleTestDocument>();
+            var configuration = new SolrDocumentConfiguration<SimpleTestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+            configuration.Field(q => q.Dummy).HasName("dummy");
+            var atomic = new AtomicUpdate<SimpleTestDocument>(configuration);
 
             // Act
             var actual = atomic.Execute();
@@ -129,7 +139,9 @@ namespace SolrExpress.Solr5.UnitTests.Update
                 GeoCoordinate = new GeoCoordinate(1.2M, 2.3M),
                 GeoCoordinateNullable = new GeoCoordinate(1.2M, 2.3M),
             };
-            var atomic = new AtomicUpdate<SimpleNullableTestDocument>();
+            var configuration = new SolrDocumentConfiguration<SimpleNullableTestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+            var atomic = new AtomicUpdate<SimpleNullableTestDocument>(configuration);
 
             // Act
             var actual = atomic.Execute(document);
@@ -165,7 +177,9 @@ namespace SolrExpress.Solr5.UnitTests.Update
                 GeoCoordinate = new GeoCoordinate(1.2M, 2.3M),
                 GeoCoordinateNullable = null,
             };
-            var atomic = new AtomicUpdate<SimpleNullableTestDocument>();
+            var configuration = new SolrDocumentConfiguration<SimpleNullableTestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+            var atomic = new AtomicUpdate<SimpleNullableTestDocument>(configuration);
 
             // Act
             var actual = atomic.Execute(document);

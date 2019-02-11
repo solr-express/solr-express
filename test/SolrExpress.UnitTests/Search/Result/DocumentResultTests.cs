@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using SolrExpress.Configuration;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using System.Collections.Generic;
@@ -88,7 +89,8 @@ namespace SolrExpress.UnitTests.Search.Result
 
             var searchParameters = new List<ISearchParameter>();
 
-            var result = (IDocumentResult<TechProductDocument>)new DocumentResult<TechProductDocument>();
+            var configuration = new SolrDocumentConfiguration<TechProductDocument>();
+            var result = new DocumentResult<TechProductDocument>(configuration);
 
             // Act
             while (jsonReader.Read())

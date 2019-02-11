@@ -45,7 +45,7 @@ namespace SolrExpress
         /// </summary>
         /// <param name="hostAddress">Host address to be used</param>
         /// <returns>Itself</returns>
-        [Obsolete("Use UseOptions(q => q.HostAddress = XXX) or UseOptions(q => q.UseHostAddress(XXX))")]
+        [Obsolete("Use UseOptions(q => q.HostAddress = XXX) or UseOptions(q => q.UseHostAddress(XXX))", false)]
         public SolrExpressBuilder<TDocument> UseHostAddress(string hostAddress)
         {
             this.Options.HostAddress = hostAddress;

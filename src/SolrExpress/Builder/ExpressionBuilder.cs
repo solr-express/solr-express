@@ -101,7 +101,7 @@ namespace SolrExpress.Builder
             {
                 var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
                 var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
-                var propertyInfo = this.GetPropertyInfoFromExpression(expression);
+                var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(expression);
                 var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
 
                 if (solrFieldAttribute == null)
@@ -142,7 +142,7 @@ namespace SolrExpress.Builder
 
             foreach (var solrFieldConfiguration in solrFieldConfigurationList)
             {
-                var propertyInfo = this.GetPropertyInfoFromExpression(solrFieldConfiguration.FieldExpression);
+                var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(solrFieldConfiguration.FieldExpression);
 
                 var data = new FieldData
                 {
@@ -170,19 +170,7 @@ namespace SolrExpress.Builder
                 this._fieldsData.Add(propertyInfo.Name, data);
             }
         }
-
-        internal Expression GetRootExpression(Expression expression)
-        {
-            var rootExpression = expression;
-
-            while (rootExpression is MemberExpression memberExpression)
-            {
-                rootExpression = memberExpression.Expression;
-            }
-
-            return rootExpression;
-        }
-
+        
         /// <summary>
         /// Load schema of all fields in SOLR server
         /// </summary>
@@ -210,51 +198,6 @@ namespace SolrExpress.Builder
                         IsIndexed = v["indexed"]?.Value<bool>() ?? true,
                         IsStored = v["stored"]?.Value<bool>() ?? true
                     });
-        }
-
-        /// <summary>
-        /// Get property referenced into indicated expression 
-        /// </summary>
-        /// <param name="expression">Expression used to find property info</param>
-        /// <returns>Property referenced into indicated expression</returns>
-        internal PropertyInfo GetPropertyInfoFromExpression(Expression expression)
-        {
-            PropertyInfo propertyInfo = null;
-            var lambda = (LambdaExpression)this.GetRootExpression(expression);
-
-            MemberExpression memberExpression;
-
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (lambda.Body.NodeType)
-            {
-                case ExpressionType.Convert:
-                    var unaryExpression = (UnaryExpression)lambda.Body;
-
-                    memberExpression = (MemberExpression)unaryExpression.Operand;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
-
-                    break;
-                case ExpressionType.MemberAccess:
-                    memberExpression = (MemberExpression)lambda.Body;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
-
-                    break;
-                default:
-                    throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
-            }
-
-            if (propertyInfo == null)
-            {
-                throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
-            }
-
-            return propertyInfo;
         }
 
         /// <summary>
@@ -308,7 +251,7 @@ namespace SolrExpress.Builder
                 this.LoadDocument();
             }
 
-            var propertyInfo = this.GetPropertyInfoFromExpression(expression);
+            var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(expression);
 
             return this._fieldsData[propertyInfo.Name];
         }
