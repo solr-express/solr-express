@@ -34,7 +34,7 @@ namespace SolrExpress.Search.Result
             var jsonSerializer = new JsonSerializer();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
             jsonSerializer.Converters.Add(new DateTimeConverter());
-            jsonSerializer.ContractResolver = new CustomContractResolver<TDocument>(this._configuration);
+            jsonSerializer.ContractResolver = new DocumentContractResolver<TDocument>(this._configuration);
 
             this.Data = JArray.Load(jsonReader).ToObject<List<TDocument>>(jsonSerializer);
 

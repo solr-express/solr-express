@@ -22,11 +22,11 @@ namespace SolrExpress
         /// <summary>
         /// Document search provider
         /// </summary>
-        public DocumentSearch<TDocument> Select() => this._serviceProvider.GetService<DocumentSearch<TDocument>>();
+        public DocumentCollectionSearch<TDocument> Select() => this._serviceProvider.GetService<DocumentCollectionSearch<TDocument>>();
 
         /// <summary>
         /// Document update provider
         /// </summary>
-        public DocumentUpdate<TDocument> Update() => this._serviceProvider.GetService<DocumentUpdate<TDocument>>();
+        public DocumentCollectionUpdate<TDocument> Update() => this._serviceProvider.GetService<DocumentCollectionUpdate<TDocument>>();
     }
 }

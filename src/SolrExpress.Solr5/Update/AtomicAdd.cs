@@ -7,17 +7,17 @@ using SolrExpress.Utility;
 
 namespace SolrExpress.Solr5.Update
 {
-    public sealed class AtomicUpdate<TDocument> : IAtomicUpdate<TDocument>
+    public sealed class AtomicAdd<TDocument> : IAtomicAdd<TDocument>
         where TDocument : Document
     {
         private readonly SolrDocumentConfiguration<TDocument> _configuration;
 
-        public AtomicUpdate(SolrDocumentConfiguration<TDocument> configuration)
+        public AtomicAdd(SolrDocumentConfiguration<TDocument> configuration)
         {
             this._configuration = configuration;
         }
 
-        public JObject Execute(params DocumentUpdate<TDocument>[] documents)
+        public JObject Execute(params TDocument[] documents)
         {
             Checker.IsNull(documents);
 
@@ -29,12 +29,12 @@ namespace SolrExpress.Solr5.Update
             var jsonSerializer = JsonSerializer.Create();
             jsonSerializer.Converters.Add(new GeoCoordinateConverter());
             jsonSerializer.Converters.Add(new DateTimeConverter());
-            jsonSerializer.Converters.Add(new DocumentUpdateConverter<TDocument>(this._configuration));
+            jsonSerializer.ContractResolver = new DocumentContractResolver<TDocument>(this._configuration);
             jsonSerializer.NullValueHandling = NullValueHandling.Ignore;
 
             var wrapper = new
             {
-                update = documents,
+                add = documents,
                 commit = new { }
             };
 

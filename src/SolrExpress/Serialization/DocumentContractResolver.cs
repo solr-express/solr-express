@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace SolrExpress.Serialization
 {
-    public class CustomContractResolver<TDocument> : DefaultContractResolver
+    public class DocumentContractResolver<TDocument> : DefaultContractResolver
         where TDocument : Document
     {
         private readonly SolrDocumentConfiguration<TDocument> _configuration;
 
-        public CustomContractResolver(SolrDocumentConfiguration<TDocument> configuration)
+        public DocumentContractResolver(SolrDocumentConfiguration<TDocument> configuration)
         {
             this._configuration = configuration;
         }

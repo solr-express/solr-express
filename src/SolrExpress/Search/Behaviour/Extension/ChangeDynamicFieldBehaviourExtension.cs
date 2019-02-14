@@ -17,7 +17,7 @@ namespace SolrExpress.Search.Behaviour.Extension
         /// <param name="prefixName">Indicates prefix name in dynamic field configurations</param>
         /// <param name="suffixName">Indicates suffix name in dynamic field configurations</param>
         /// <returns>Document search engine</returns>
-        public static DocumentSearch<TDocument> ChangeDynamicFieldBehaviour<TDocument>(this DocumentSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, string prefixName = null, string suffixName = null)
+        public static DocumentCollectionSearch<TDocument> ChangeDynamicFieldBehaviour<TDocument>(this DocumentCollectionSearch<TDocument> documentSearch, Expression<Func<TDocument, object>> fieldExpression, string prefixName = null, string suffixName = null)
             where TDocument : Document
         {
             Checker.IsNull(fieldExpression);

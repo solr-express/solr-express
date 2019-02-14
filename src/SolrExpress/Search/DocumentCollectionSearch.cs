@@ -15,7 +15,7 @@ namespace SolrExpress.Search
     /// <summary>
     /// Document search engine
     /// </summary>
-    public class DocumentSearch<TDocument>
+    public class DocumentCollectionSearch<TDocument>
         where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
@@ -23,7 +23,7 @@ namespace SolrExpress.Search
         private string _requestHandler = RequestHandler.Select;
         internal ISolrExpressServiceProvider<TDocument> ServiceProvider;
 
-        public DocumentSearch(
+        public DocumentCollectionSearch(
             SolrExpressOptions solrExpressOptions,
             ISolrExpressServiceProvider<TDocument> serviceProvider,
             ISearchItemCollection<TDocument> searchItemCollection)
@@ -183,7 +183,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="item">Parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> Add(ISearchItem item)
+        public DocumentCollectionSearch<TDocument> Add(ISearchItem item)
         {
             Checker.IsNull(item);
 
@@ -199,7 +199,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="items">Parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> AddRange(IEnumerable<ISearchItem> items)
+        public DocumentCollectionSearch<TDocument> AddRange(IEnumerable<ISearchItem> items)
         {
             Checker.IsNull(items);
 
@@ -222,7 +222,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="name">Name to be used</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> Handler(string name)
+        public DocumentCollectionSearch<TDocument> Handler(string name)
         {
             this._requestHandler = name;
 

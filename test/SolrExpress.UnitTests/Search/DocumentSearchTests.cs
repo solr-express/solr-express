@@ -32,7 +32,7 @@ namespace SolrExpress.UnitTests.Search
             var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
             var searchItemCollection = new Mock<ISearchItemCollection<TestDocument>>();
 
-            var documentSearch = new DocumentSearch<TestDocument>(
+            var documentSearch = new DocumentCollectionSearch<TestDocument>(
                 solrExpressOptions,
                 serviceProvider.Object,
                 searchItemCollection.Object);
@@ -62,7 +62,7 @@ namespace SolrExpress.UnitTests.Search
             var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
             var searchItemCollection = new Mock<ISearchItemCollection<TestDocument>>();
 
-            var documentSearch = new DocumentSearch<TestDocument>(
+            var documentSearch = new DocumentCollectionSearch<TestDocument>(
                 solrExpressOptions,
                 serviceProvider.Object,
                 searchItemCollection.Object);

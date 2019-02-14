@@ -7,7 +7,7 @@ namespace SolrExpress.Benchmarks.Core
 {
     public class DocumentSearchBenchmarks
     {
-        private DocumentSearch<TestDocument> _documentSearch;
+        private DocumentCollectionSearch<TestDocument> _documentSearch;
 
         [Params(10, 100, 500, 1000)]
         public int ElementsCount { get; set; }

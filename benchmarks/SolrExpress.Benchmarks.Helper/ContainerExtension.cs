@@ -38,8 +38,8 @@ namespace SolrExpress.Benchmarks.Helper
 
             solrExpressServiceProvider
                 .AddTransient(expressionBuilder)
-                .AddTransient<DocumentSearch<TDocument>>()
-                .AddTransient<DocumentUpdate<TDocument>>()
+                .AddTransient<DocumentCollectionSearch<TDocument>>()
+                .AddTransient<DocumentCollectionUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<SearchQuery<TDocument>>()
                 .AddTransient<ISolrConnection<TDocument>>(solrConnection)
