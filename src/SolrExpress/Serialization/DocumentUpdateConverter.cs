@@ -70,7 +70,7 @@ namespace SolrExpress.Serialization
 
             var obj = new Dictionary<string, object>
             {
-                { nameof(documentUpdate.Id).ToLowerInvariant(), documentUpdate.Id }
+                { "id", documentUpdate.GetId() }
             };
 
             foreach (var item in jornal)

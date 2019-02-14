@@ -7,6 +7,7 @@ using SolrExpress.Search.Parameter.Extension;
 using SolrExpress.Search.Result;
 using SolrExpress.Search.Result.Extension;
 using SolrExpress.Solr5.Extension;
+using SolrExpress.Update;
 using System;
 using System.Linq;
 using Xunit;
@@ -353,20 +354,33 @@ namespace SolrExpress.Solr5.IntegrationTests
 
             var documentId1 = Guid.NewGuid().ToString("N");
             var documentId2 = Guid.NewGuid().ToString("N");
+
+            var documentName1 = $"IntegrationTest013_{documentId1}";
+
             var documentToAdd1 = new TechProductDocument
             {
                 Id = documentId1,
-                Name = "IntegrationTest013"
+                Name = "IntegrationTest013",
+                Price = 10,
+                Popularity = 10
             };
             var documentToAdd2 = new TechProductDocument
             {
                 Id = documentId2,
                 Name = "IntegrationTest013"
             };
+            var documentToUpdate1 = new DocumentUpdate<TechProductDocument>(documentId1)
+                .Set(q => q.Name, documentName1)
+                .Add(q => q.Categories, "aaa")
+                .Increment(q => q.Price, 10.5M)
+                .Decrement(q => q.Popularity, 5.5M);
+
             var update = documentCollection.Update();
 
             // Act
             update.Add(documentToAdd1, documentToAdd2);
+            update.Execute();
+            update.Update(documentToUpdate1);
             update.Execute();
 
             // Assert
@@ -377,10 +391,18 @@ namespace SolrExpress.Solr5.IntegrationTests
                 .Document(out var fetchedDocuments);
 
             Assert.Equal(2, fetchedDocuments.Count());
-            Assert.Contains(fetchedDocuments, q => q.Id.Equals(documentId1));
-            Assert.Contains(fetchedDocuments, q => q.Id.Equals(documentId2));
-            Assert.Contains(fetchedDocuments, q => q.Name.Equals("IntegrationTest013"));
-            Assert.Contains(fetchedDocuments, q => q.Name.Equals("IntegrationTest013"));
+
+            var fetchedDocument1 = fetchedDocuments.FirstOrDefault(q => q.Id.Equals(documentId1));
+            var fetchedDocument2 = fetchedDocuments.FirstOrDefault(q => q.Id.Equals(documentId2));
+
+            Assert.NotNull(fetchedDocument1);
+            Assert.Equal(documentName1, fetchedDocument1.Name);
+            Assert.Equal("aaa", fetchedDocument1.Categories[0]);
+            Assert.Equal(20.5M, fetchedDocument1.Price);
+            Assert.Equal(4.5M, fetchedDocument1.Popularity);
+
+            Assert.NotNull(fetchedDocument2);
+            Assert.Equal("IntegrationTest013", fetchedDocument2.Name);
         }
 
         /// <summary>

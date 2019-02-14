@@ -8,6 +8,21 @@ namespace SolrExpress.Update
         where TDocument : Document
     {
         private readonly Dictionary<Expression, object> _jornal = new Dictionary<Expression, object>();
+        private readonly string _id;
+
+        public DocumentUpdate(string id)
+        {
+            this._id = id;
+        }
+
+        /// <summary>
+        /// Returns document id
+        /// </summary>
+        /// <returns></returns>
+        internal string GetId()
+        {
+            return this._id;
+        }
 
         /// <summary>
         /// Returns current jornal to update document
@@ -139,7 +154,5 @@ namespace SolrExpress.Update
 
             return this;
         }
-
-        public string Id { get; set; }
     }
 }

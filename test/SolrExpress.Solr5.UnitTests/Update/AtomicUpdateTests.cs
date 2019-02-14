@@ -31,17 +31,14 @@ namespace SolrExpress.Solr5.UnitTests.Update
                 }],
                  ""commit"": {}
                 }");
-            var document = new DocumentUpdate<TestUpdateDocument>
-            {
-                Id = "123456"
-            };
-            document.Set(q => q.Dummy, "aaaa");
-            document.Set(q => q.Dummy2, "bbbb");
-            document.Increment(q => q.NumberValue, 10);
-            document.Decrement(q => q.NumberValue2, 20);
-            document.Add(q => q.ArrayValue, 1);
-            document.Remove(q => q.ArrayValue2, 2);
-            document.RemoveRegex(q => q.Dummy3, "/a/");
+            var document = new DocumentUpdate<TestUpdateDocument>("123456")
+                .Set(q => q.Dummy, "aaaa")
+                .Set(q => q.Dummy2, "bbbb")
+                .Increment(q => q.NumberValue, 10)
+                .Decrement(q => q.NumberValue2, 20)
+                .Add(q => q.ArrayValue, 1)
+                .Remove(q => q.ArrayValue2, 2)
+                .RemoveRegex(q => q.Dummy3, "/a/");
 
             var configuration = new SolrDocumentConfiguration<TestUpdateDocument>();
             configuration.Field(q => q.Id).HasName("id");
@@ -89,18 +86,12 @@ namespace SolrExpress.Solr5.UnitTests.Update
 	            ],
 	            ""commit"": {}
             }");
-            var document1 = new DocumentUpdate<TestUpdateDocument>
-            {
-                Id = "123456"
-            };
-            document1.Set(q => q.Dummy, "aaaa");
-            document1.Set(q => q.Dummy2, "bbbb");
-            var document2 = new DocumentUpdate<TestUpdateDocument>
-            {
-                Id = "654321",
-            };
-            document2.Set(q => q.Dummy, "cccc");
-            document2.Set(q => q.Dummy2, "dddd");
+            var document1 = new DocumentUpdate<TestUpdateDocument>("123456")
+                .Set(q => q.Dummy, "aaaa")
+                .Set(q => q.Dummy2, "bbbb");
+            var document2 = new DocumentUpdate<TestUpdateDocument>("654321")
+                .Set(q => q.Dummy, "cccc")
+                .Set(q => q.Dummy2, "dddd");
 
             var configuration = new SolrDocumentConfiguration<TestUpdateDocument>();
             configuration.Field(q => q.Id).HasName("id");
@@ -164,15 +155,12 @@ namespace SolrExpress.Solr5.UnitTests.Update
 	            ],
 	            ""commit"": {}
             }");
-            var document = new DocumentUpdate<SimpleNullableTestDocument>
-            {
-                Id = "123456"
-            };
+            var document = new DocumentUpdate<SimpleNullableTestDocument>("123456")
+                .Set(q => q.Date, new DateTime(2018, 06, 08))
+                .Set(q => q.DateNullable, new DateTime(2018, 06, 08))
+                .Set(q => q.GeoCoordinate, new GeoCoordinate(1.2M, 2.3M))
+                .Set(q => q.GeoCoordinateNullable, new GeoCoordinate(1.2M, 2.3M));
 
-            document.Set(q => q.Date, new DateTime(2018, 06, 08));
-            document.Set(q => q.DateNullable, new DateTime(2018, 06, 08));
-            document.Set(q => q.GeoCoordinate, new GeoCoordinate(1.2M, 2.3M));
-            document.Set(q => q.GeoCoordinateNullable, new GeoCoordinate(1.2M, 2.3M));
             var configuration = new SolrDocumentConfiguration<SimpleNullableTestDocument>();
             configuration.Field(q => q.Id).HasName("id");
             var atomic = new AtomicUpdate<SimpleNullableTestDocument>(configuration);
