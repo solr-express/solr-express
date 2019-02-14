@@ -10,6 +10,10 @@ Notes about releases
 -   Atomic update using partial updates [#231](https://github.com/solr-express/solr-express/issues/231)
 -   Implements more options to set authentication [#243](https://github.com/solr-express/solr-express/issues/243)
 
+### Quality effort
+
+-   Some code style
+
 ## 5.4.2 - 2019-02-06
 
 ### Quality effort
