@@ -20,7 +20,7 @@ Implementation using default query handler and mechanism provided by request par
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
-    <Version>5.4.2</Version>
+    <Version>5.5.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
