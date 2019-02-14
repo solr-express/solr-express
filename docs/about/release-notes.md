@@ -97,7 +97,7 @@ Notes about releases
 
 -   Make possible start SolrExpress without Solr ([#259](https://github.com/solr-express/solr-express/issues/259))
 
-### **BREAKING CHANGES**
+### BREAKING CHANGES
 
 -   Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access _DocumentSearch<TDocument>_ extensions
 
@@ -136,7 +136,7 @@ Notes about releases
 
 ## 5.0.0-BETA1 - 2017-08-25
 
-### **BREAKING CHANGES**
+### BREAKING CHANGES
 
 -   See [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for informations about migrations
 -   See [issue](https://github.com/solr-express/solr-express/issues/187) for informations about what, why, how
@@ -320,7 +320,7 @@ Thanks people for ideas and contributions:
 
 -   Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
 
-### **BREAKING CHANGES**
+### BREAKING CHANGES
 
 -   To use DocumentCollection
 
