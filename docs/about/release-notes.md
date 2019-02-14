@@ -316,9 +316,9 @@ Thanks people for ideas and contributions:
 -   DI review ([#141](https://github.com/solr-express/solr-express/issues/141))
 -   Code review ([#147](https://github.com/solr-express/solr-express/issues/147))
 
-> **PAY ATTENTION**
->
-> Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
+#### PAY ATTENTION
+
+-   Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
 
 ### **BREAKING CHANGES**
 
