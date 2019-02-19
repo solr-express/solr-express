@@ -71,7 +71,7 @@ Create a facet range
 | Counts should also be computed for all records with field values lower then lower bound of the first range      | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountBefore(true))                            |
 | Counts should also be computed for all records with field values greater then the upper bound of the last range | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.CountAfter(true))                             |
 | Specify a filter or list of filters to be intersected with the incoming domain before faceting                  | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.Filter(f => f.Field(q => q.Id).EqualsTo(10))) |
-| Specify if last bucket will end at �end� even if it is less than �gap� wide                                     | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.HardEnd(true))                                |
+| Specify if last bucket will end at end even if it is less than gap wide                                     | .FacetRange("AliasName", q => q.Price, "1", "10", "100", facet => facet.HardEnd(true))                                |
 
 ### ** NOTE **
 
