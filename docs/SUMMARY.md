@@ -2,7 +2,7 @@
 
 ## About SOLR Express
 
-* [Release notes](about/release-notes)
+* [Release notes](about/release-notes.md)
 
 * About
 
@@ -20,7 +20,7 @@
 
     * [Version 5.0.0](breaking-changes/version-5.md)
 
-## Tutotials
+## Tutorials
 
 * [Getting started](tutorials/getting-started.md)
 
