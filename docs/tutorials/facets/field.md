@@ -71,5 +71,5 @@ Create a facet field
 
 ### NOTE
 
-Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
+Learn more about [queries](https://solr-express.gitbook.io/solr-express/tutorials/basic-features/queries)
 Learn more about [facets](http://yonik.com/json-facet-api/#Terms_Facet)

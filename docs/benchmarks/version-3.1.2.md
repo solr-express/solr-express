@@ -1,4 +1,4 @@
-# Benchmarks
+# Benchmarks v3.1.2
 
 Benchmarks using version 3.1.2
 

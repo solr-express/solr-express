@@ -1,4 +1,4 @@
-# Facet field
+# Facet query
 
 ## Feature
 
@@ -71,4 +71,4 @@ Create a facet query
 
 ### NOTE
 
-Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
+Learn more about [queries](https://solr-express.gitbook.io/solr-express/tutorials/basic-features/queries)

@@ -1,4 +1,4 @@
-# Facet field
+# Facet range
 
 ## Feature
 
@@ -75,4 +75,4 @@ Create a facet range
 
 ### ** NOTE **
 
-Learn more about [queries](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries)
+Learn more about [queries](https://solr-express.gitbook.io/solr-express/tutorials/basic-features/queries)

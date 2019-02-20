@@ -1,4 +1,4 @@
-# Facet field
+# Nested facet
 
 ## Feature
 
@@ -30,4 +30,4 @@ Create a nested facet
         .Facets(out var data);
 ```
 
-3.  Follow instructions to read data of a facet [field](http://solr-express.readthedocs.io/en/stable/tutorials/facets/field), [range](http://solr-express.readthedocs.io/en/stable/tutorials/facets/range), [query](http://solr-express.readthedocs.io/en/stable/tutorials/facets/query) or [spatial](http://solr-express.readthedocs.io/en/stable/tutorials/facets/spatial)
+3.  Follow instructions to read data of a facet [field](https://solr-express.gitbook.io/solr-express/tutorials/facets/field), [range](https://solr-express.gitbook.io/solr-express/tutorials/facets/range), [query](https://solr-express.gitbook.io/solr-express/tutorials/facets/query) or [spatial](https://solr-express.gitbook.io/solr-express/tutorials/facets/spatial)

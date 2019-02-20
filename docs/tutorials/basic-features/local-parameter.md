@@ -8,7 +8,7 @@ Create a local parameter
 
 ### Option 1
 
-Using query (see how create queries in [tutorial](http://solr-express.readthedocs.io/en/stable/tutorials/basic-features/queries))
+Using query (see how create queries in [tutorial](https://solr-express.gitbook.io/solr-express/tutorials/basic-features/queries))
 
 ```csharp
 	DocumentCollection<TechProductDocument> documentCollection; // from DI

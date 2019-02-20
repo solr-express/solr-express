@@ -126,7 +126,7 @@ Notes about releases
 
 ### **BREAKING CHANGES**
 
--   See [migration guide](http://solr-express.readthedocs.io/en/stable/breaking-changes/version5.md) for informations about migrations
+-   See [migration guide](https://solr-express.gitbook.io/solr-express/breaking-changes/version5.md) for informations about migrations
 -   See [issue](https://github.com/solr-express/solr-express/issues/187) for informations about what, why, how
 
 Thanks people for ideas and contributions:
