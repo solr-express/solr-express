@@ -1,4 +1,4 @@
-# Queries
+# Local parameter
 
 ## Feature
 

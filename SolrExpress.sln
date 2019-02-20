@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{622830E6-DFA3-41A7-8D6C-68EA4254E7E4}"
 	ProjectSection(SolutionItems) = preProject
 		docs\README.md = docs\README.md
+		docs\SUMMARY.md = docs\SUMMARY.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{97836803-3E29-4119-ACE3-57B3D068214F}"
@@ -28,14 +29,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{D5B8D271
 	ProjectSection(SolutionItems) = preProject
 		docs\about\license.md = docs\about\license.md
 		docs\about\packages.md = docs\about\packages.md
-		docs\about\README.md = docs\about\README.md
 		docs\about\release-notes.md = docs\about\release-notes.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tutorials", "tutorials", "{0E6FFAE4-0304-4453-A61D-52D24802E0CF}"
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\getting-started.md = docs\tutorials\getting-started.md
-		docs\tutorials\README.md = docs\tutorials\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Solr4", "src\SolrExpress.Solr4\SolrExpress.Solr4.csproj", "{65A451B2-14C5-489B-B26B-7AB5CD1D24E0}"
@@ -66,7 +65,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrExpress.Utility", "test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{2721BA1B-1DF8-4101-82EE-ECF2DEAE81DA}"
 	ProjectSection(SolutionItems) = preProject
-		docs\benchmarks\README.md = docs\benchmarks\README.md
 		docs\benchmarks\version-3.1.2.md = docs\benchmarks\version-3.1.2.md
 		docs\benchmarks\version-5.md = docs\benchmarks\version-5.md
 	EndProjectSection
@@ -81,13 +79,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facets", "facets", "{B51E48
 		docs\tutorials\facets\nested.md = docs\tutorials\facets\nested.md
 		docs\tutorials\facets\query.md = docs\tutorials\facets\query.md
 		docs\tutorials\facets\range.md = docs\tutorials\facets\range.md
-		docs\tutorials\facets\README.md = docs\tutorials\facets\README.md
 		docs\tutorials\facets\spatial.md = docs\tutorials\facets\spatial.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "breaking-changes", "breaking-changes", "{A69F328C-DC28-473D-8869-76D67A4C4D9A}"
 	ProjectSection(SolutionItems) = preProject
-		docs\breaking-changes\README.md = docs\breaking-changes\README.md
 		docs\breaking-changes\version-5.md = docs\breaking-changes\version-5.md
 	EndProjectSection
 EndProject
@@ -107,7 +103,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "advanced-features", "advanc
 	ProjectSection(SolutionItems) = preProject
 		docs\tutorials\advanced-features\authentication-and-authorization.md = docs\tutorials\advanced-features\authentication-and-authorization.md
 		docs\tutorials\advanced-features\dynamic-field-behaviours.md = docs\tutorials\advanced-features\dynamic-field-behaviours.md
-		docs\tutorials\advanced-features\README.md = docs\tutorials\advanced-features\README.md
 		docs\tutorials\advanced-features\result-interceptors.md = docs\tutorials\advanced-features\result-interceptors.md
 	EndProjectSection
 EndProject
@@ -117,7 +112,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "basic-features", "basic-fea
 		docs\tutorials\basic-features\global-settings.md = docs\tutorials\basic-features\global-settings.md
 		docs\tutorials\basic-features\local-parameter.md = docs\tutorials\basic-features\local-parameter.md
 		docs\tutorials\basic-features\queries.md = docs\tutorials\basic-features\queries.md
-		docs\tutorials\basic-features\README.md = docs\tutorials\basic-features\README.md
 	EndProjectSection
 EndProject
 Global
