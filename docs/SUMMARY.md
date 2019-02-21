@@ -36,20 +36,20 @@
 
 * Facets
 
-    * [Facet field](facets/field.md)
+    * [Facet field](tutorials/facets/field.md)
 
-	* [Facet query](facets/query.md)
+	* [Facet query](tutorials/facets/query.md)
 
-	* [Facet range](facets/range.md)
+	* [Facet range](tutorials/facets/range.md)
 
-	* [Facet spatial](facets/spatial.md)
+	* [Facet spatial](tutorials/facets/spatial.md)
 
-	* [Nested facet](facets/nested.md)
+	* [Nested facet](tutorials/facets/nested.md)
 
 * Advanced Features
 
-    * [Authentication and Authorization](advanced-features/authentication-and-authorization.md)
+    * [Authentication and Authorization](tutorials/advanced-features/authentication-and-authorization.md)
 
-	* [Dynamic field behaviour](advanced-features/dynamic-field-behaviours.md)
+	* [Dynamic field behaviour](tutorials/advanced-features/dynamic-field-behaviours.md)
 
-	* [Result interceptors](advanced-features/result-interceptors.md)
+	* [Result interceptors](tutorials/advanced-features/result-interceptors.md)
