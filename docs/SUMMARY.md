@@ -26,13 +26,13 @@
 
 * Basic Features
 
-    * [Queries](benchmarks/queries.md)
+    * [Queries](tutorials/basic-features/queries.md)
 
-    * [Fail fast](benchmarks/fail-fast.md)
+    * [Fail fast](tutorials/basic-features/fail-fast.md)
 
-    * [Global settings](benchmarks/global-settings.md)
+    * [Global settings](tutorials/basic-features/global-settings.md)
 
-    * [Local parameter](benchmarks/local-parameter.md)
+    * [Local parameter](tutorials/basic-features/local-parameter.md)
 
 * Facets
 
