@@ -1,6 +1,6 @@
 # Solr Express
 
-Documentation on getting started with SolrExpress is available at <https://solr-express.gitbook.io/solr-express/tutorials/getting-started>.
+Documentation on getting started with SolrExpress is available at <https://solr-express.gitbook.io/docs/tutorials/getting-started>.
 
 Tutorials is available at <https://solr-express.gitbook.io/solr-express/tutorials/getting-started>.
 
