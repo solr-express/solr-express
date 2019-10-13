@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SolrExpress.Configuration;
+using SolrExpress.Connection;
 using SolrExpress.Options;
+using System;
 
 namespace SolrExpress
 {
@@ -27,13 +29,37 @@ namespace SolrExpress
         }
 
         /// <summary>
+        /// Use indicated custom SOLR connection authentication
+        /// </summary>
+        /// <returns>Itself</returns>
+        public SolrExpressBuilder<TDocument> UseCustomConnectionAuthentication<TCustomSolrConnectionAuthenticationSettings>()
+            where TCustomSolrConnectionAuthenticationSettings : class, ICustomSolrConnectionAuthenticationSettings
+        {
+            this.ServiceProvider.AddSingleton<ICustomSolrConnectionAuthenticationSettings, TCustomSolrConnectionAuthenticationSettings>();
+
+            return this;
+        }
+
+        /// <summary>
         /// Use indicated host address
         /// </summary>
         /// <param name="hostAddress">Host address to be used</param>
         /// <returns>Itself</returns>
+        [Obsolete("Use UseOptions(q => q.HostAddress = XXX) or UseOptions(q => q.UseHostAddress(XXX))", false)]
         public SolrExpressBuilder<TDocument> UseHostAddress(string hostAddress)
         {
             this.Options.HostAddress = hostAddress;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Configure document fields
+        /// </summary>
+        /// <returns>Itself</returns>
+        public SolrExpressBuilder<TDocument> ConfigureDocument(Action<SolrDocumentConfiguration<TDocument>> configureDocument)
+        {
+            configureDocument.Invoke(this.DocumentConfiguration);
 
             return this;
         }
@@ -47,5 +73,10 @@ namespace SolrExpress
         /// Services provider
         /// </summary>
         internal ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+
+        /// <summary>
+        /// Solr document configurations
+        /// </summary>
+        internal SolrDocumentConfiguration<TDocument> DocumentConfiguration { get; } = new SolrDocumentConfiguration<TDocument>();
     }
 }

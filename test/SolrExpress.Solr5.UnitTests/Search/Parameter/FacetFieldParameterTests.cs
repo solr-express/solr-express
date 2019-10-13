@@ -1,6 +1,7 @@
 ﻿using Moq;
 using Newtonsoft.Json.Linq;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
@@ -24,7 +25,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             {
                 var solrOptions = new SolrExpressOptions();
                 var solrConnection = new FakeSolrConnection<TestDocument>();
-                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+                var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
                 expressionBuilder.LoadDocument();
 
                 Action<IFacetFieldParameter<TestDocument>> config1 = facet =>
@@ -34,7 +36,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected1 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id""
                       }
@@ -49,7 +51,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected2 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""mincount"": 1
@@ -65,7 +67,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected3 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""mincount"": 1,
@@ -84,7 +86,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected4 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""mincount"": 1,
@@ -104,7 +106,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected5 = JObject.Parse(@"
                 {
                     ""facet"": {
-                        ""Id"": {
+                        ""id"": {
                             ""terms"": {
                             ""field"": ""id"",
                             ""mincount"": 1,
@@ -132,11 +134,11 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected6 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                           ""facet"": {
-                            ""Id"": {
+                            ""id"": {
                               ""terms"": {
                                 ""field"": ""id""
                               }
@@ -155,7 +157,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected7 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""domain"": {
@@ -174,7 +176,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected8 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""domain"": {
@@ -193,7 +195,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected9 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""domain"": {
@@ -212,7 +214,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected10 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""domain"": {
@@ -231,7 +233,7 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
                 var expected11 = JObject.Parse(@"
                 {
                   ""facet"": {
-                    ""Id"": {
+                    ""id"": {
                       ""terms"": {
                         ""field"": ""id"",
                         ""domain"": {
@@ -272,7 +274,8 @@ namespace SolrExpress.Solr5.UnitTests.Search.Parameter
             var container = new JObject();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
             serviceProvider

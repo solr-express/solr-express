@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace SolrExpress.Utility
 {
-    public class FakeSolrConnection<TDocument> : ISolrConnection
+    public class FakeSolrConnection<TDocument> : ISolrConnection<TDocument>
         where TDocument : Document
     {
         private static PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)
@@ -76,7 +76,7 @@ namespace SolrExpress.Utility
 
                         return new
                         {
-                            name = solrFieldAttribute.Name,
+                            name = solrFieldAttribute?.Name ?? property.Name.ToLowerInvariant(),
                             indexed = true,
                             stored = true
                         };

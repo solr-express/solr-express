@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Utility;
 using System;
@@ -17,18 +18,159 @@ namespace SolrExpress.Builder
         where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
-        private readonly ISolrConnection _solrConnection;
+        private readonly SolrDocumentConfiguration<TDocument> _solrDocumentConfiguration;
+        private readonly ISolrConnection<TDocument> _solrConnection;
         private readonly Dictionary<string, FieldData> _fieldsData = new Dictionary<string, FieldData>();
         private bool _isDocumentLoaded;
         internal Dictionary<string, FieldSchema> FieldSchemas;
         internal Dictionary<Regex, FieldSchema> DynamicFieldSchemas;
 
-        public ExpressionBuilder(SolrExpressOptions solrExpressOptions, ISolrConnection solrConnection)
+        public ExpressionBuilder(SolrExpressOptions solrExpressOptions, SolrDocumentConfiguration<TDocument> solrDocumentConfiguration, ISolrConnection<TDocument> solrConnection)
         {
             this._solrExpressOptions = solrExpressOptions;
+            this._solrDocumentConfiguration = solrDocumentConfiguration;
             this._solrConnection = solrConnection;
         }
 
+        private Expression RemoveConvert(Expression expression)
+        {
+            var appliedExpression = expression;
+            var expectedNodeTypes = new[] { ExpressionType.Convert, ExpressionType.ConvertChecked };
+
+            while (expectedNodeTypes.Contains(appliedExpression.NodeType))
+            {
+                appliedExpression = RemoveConvert(((UnaryExpression)appliedExpression).Operand);
+            }
+
+            return appliedExpression;
+        }
+
+        private void LoadFieldDataFromBaseDocument()
+        {
+            const string idFieldName = "Id";
+            const string idFieldAlias = "id";
+            const string scoreFieldName = "Score";
+            const string scoreFieldAlias = "score";
+
+            if (!this._fieldsData.ContainsKey(idFieldName))
+            {
+                var dataField = new FieldData
+                {
+                    AliasName = idFieldAlias,
+                    DynamicFieldPrefixName = this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = this._solrExpressOptions.GlobalDynamicFieldSuffix,
+                    IsDynamicField = false,
+                    PropertyType = typeof(string),
+                    FieldSchema = this.GetFieldSchema(idFieldAlias)
+                };
+
+                this._fieldsData.Add(idFieldName, dataField);
+            }
+
+            if (!this._fieldsData.ContainsKey(scoreFieldName))
+            {
+                var dataField = new FieldData
+                {
+                    AliasName = scoreFieldAlias,
+                    DynamicFieldPrefixName = this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = this._solrExpressOptions.GlobalDynamicFieldSuffix,
+                    IsDynamicField = false,
+                    PropertyType = typeof(string),
+                    FieldSchema = new FieldSchema
+                    {
+                        IsIndexed = true,
+                        IsStored = true,
+                        FieldName = scoreFieldAlias
+                    }
+                };
+
+                this._fieldsData.Add(scoreFieldName, dataField);
+            }
+        }
+
+        private void LoadFieldDataFromAttributes()
+        {
+            var documentParameter = Expression.Parameter(typeof(TDocument), "document");
+            var properties = typeof(TDocument)
+#if NETCORE
+                .GetTypeInfo()
+#endif
+                .GetProperties();
+
+            foreach (var property in properties)
+            {
+                var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
+                var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
+                var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(expression);
+                var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
+
+                if (solrFieldAttribute == null)
+                {
+                    continue;
+                }
+
+                var data = new FieldData
+                {
+                    AliasName = propertyInfo.Name,
+                    DynamicFieldPrefixName = solrFieldAttribute.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = solrFieldAttribute.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
+                    IsDynamicField = solrFieldAttribute.IsDynamicField,
+                    PropertyType = propertyInfo.PropertyType
+                };
+
+                if (solrFieldAttribute.IsMagicField)
+                {
+                    data.FieldSchema = new FieldSchema
+                    {
+                        IsIndexed = true,
+                        IsStored = true,
+                        FieldName = solrFieldAttribute.Name
+                    };
+                }
+                else
+                {
+                    data.FieldSchema = this.GetFieldSchema(solrFieldAttribute.Name);
+                }
+
+                this._fieldsData.Add(propertyInfo.Name, data);
+            }
+        }
+
+        private void LoadFieldDataFromFluentApi()
+        {
+            var solrFieldConfigurationList = this._solrDocumentConfiguration.GetSolrFieldConfigurationList();
+
+            foreach (var solrFieldConfiguration in solrFieldConfigurationList)
+            {
+                var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(solrFieldConfiguration.FieldExpression);
+
+                var data = new FieldData
+                {
+                    AliasName = propertyInfo.Name,
+                    DynamicFieldPrefixName = solrFieldConfiguration.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
+                    DynamicFieldSuffixName = solrFieldConfiguration.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
+                    IsDynamicField = solrFieldConfiguration.IsDynamicField,
+                    PropertyType = propertyInfo.PropertyType
+                };
+
+                if (solrFieldConfiguration.IsMagicField)
+                {
+                    data.FieldSchema = new FieldSchema
+                    {
+                        IsIndexed = true,
+                        IsStored = true,
+                        FieldName = solrFieldConfiguration.Name
+                    };
+                }
+                else
+                {
+                    data.FieldSchema = this.GetFieldSchema(solrFieldConfiguration.Name);
+                }
+
+                this._fieldsData.Add(propertyInfo.Name, data);
+            }
+        }
+        
         /// <summary>
         /// Load schema of all fields in SOLR server
         /// </summary>
@@ -56,76 +198,6 @@ namespace SolrExpress.Builder
                         IsIndexed = v["indexed"]?.Value<bool>() ?? true,
                         IsStored = v["stored"]?.Value<bool>() ?? true
                     });
-        }
-
-        private Expression RemoveConvert(Expression expression)
-        {
-            var appliedExpression = expression;
-            var expectedNodeTypes = new[] { ExpressionType.Convert, ExpressionType.ConvertChecked };
-
-            while (expectedNodeTypes.Contains(appliedExpression.NodeType))
-            {
-                appliedExpression = RemoveConvert(((UnaryExpression)appliedExpression).Operand);
-            }
-
-            return appliedExpression;
-        }
-
-        public Expression GetRootExpression(Expression expression)
-        {
-            var rootExpression = expression;
-
-            while (rootExpression is MemberExpression memberExpression)
-            {
-                rootExpression = memberExpression.Expression;
-            }
-
-            return rootExpression;
-        }
-
-        /// <summary>
-        /// Get property referenced into indicated expression 
-        /// </summary>
-        /// <param name="expression">Expression used to find property info</param>
-        /// <returns>Property referenced into indicated expression</returns>
-        internal PropertyInfo GetPropertyInfoFromExpression(Expression expression)
-        {
-            PropertyInfo propertyInfo = null;
-            var lambda = (LambdaExpression)this.GetRootExpression(expression);
-
-            MemberExpression memberExpression;
-
-            // ReSharper disable once SwitchStatementMissingSomeCases
-            switch (lambda.Body.NodeType)
-            {
-                case ExpressionType.Convert:
-                    var unaryExpression = (UnaryExpression)lambda.Body;
-
-                    memberExpression = (MemberExpression)unaryExpression.Operand;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
-
-                    break;
-                case ExpressionType.MemberAccess:
-                    memberExpression = (MemberExpression)lambda.Body;
-
-                    propertyInfo = memberExpression.Member as PropertyInfo;
-
-                    Checker.IsNull(propertyInfo, Resource.ExpressionMustBePropertyException);
-
-                    break;
-                default:
-                    throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
-            }
-
-            if (propertyInfo == null)
-            {
-                throw new InvalidOperationException(Resource.UnknownToResolveExpressionException);
-            }
-
-            return propertyInfo;
         }
 
         /// <summary>
@@ -179,7 +251,7 @@ namespace SolrExpress.Builder
                 this.LoadDocument();
             }
 
-            var propertyInfo = this.GetPropertyInfoFromExpression(expression);
+            var propertyInfo = ExpressionUtil.GetPropertyInfoFromExpression(expression);
 
             return this._fieldsData[propertyInfo.Name];
         }
@@ -189,52 +261,13 @@ namespace SolrExpress.Builder
         /// </summary>
         internal void LoadDocument()
         {
-            var documentParameter = Expression.Parameter(typeof(TDocument), "document");
-            var properties = typeof(TDocument)
-#if NETCORE
-                .GetTypeInfo()
-#endif
-                .GetProperties();
-
             this.LoadSolrSchemaFields();
 
-            foreach (var property in properties)
-            {
-                var nameProperty = Expression.Convert(Expression.Property(documentParameter, property.Name), typeof(object));
-                var expression = Expression.Lambda<Func<TDocument, object>>(nameProperty, documentParameter);
-                var propertyInfo = this.GetPropertyInfoFromExpression(expression);
-                var solrFieldAttribute = this.GetSolrFieldAttributeFromPropertyInfo(propertyInfo);
+            this.LoadFieldDataFromAttributes();
 
-                if (solrFieldAttribute == null)
-                {
-                    continue;
-                }
+            this.LoadFieldDataFromFluentApi();
 
-                var data = new FieldData
-                {
-                    AliasName = propertyInfo.Name,
-                    DynamicFieldPrefixName = solrFieldAttribute.DynamicFieldPrefixName ?? this._solrExpressOptions.GlobalDynamicFieldPrefix,
-                    DynamicFieldSuffixName = solrFieldAttribute.DynamicFieldSuffixName ?? this._solrExpressOptions.GlobalDynamicFieldSuffix,
-                    IsDynamicField = solrFieldAttribute.IsDynamicField,
-                    PropertyType = propertyInfo.PropertyType
-                };
-
-                if (solrFieldAttribute.IsMagicField)
-                {
-                    data.FieldSchema = new FieldSchema
-                    {
-                        IsIndexed = true,
-                        IsStored = true,
-                        FieldName = solrFieldAttribute.Name
-                    };
-                }
-                else
-                {
-                    data.FieldSchema = this.GetFieldSchema(solrFieldAttribute.Name);
-                }
-
-                this._fieldsData.Add(propertyInfo.Name, data);
-            }
+            this.LoadFieldDataFromBaseDocument();
 
             this._isDocumentLoaded = true;
         }
@@ -244,7 +277,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <param name="value">Prefix name in dynamic field</param>
-        public void SetDynamicFieldPrefixName(Expression<Func<TDocument, object>> expression, string value)
+        internal void SetDynamicFieldPrefixName(Expression<Func<TDocument, object>> expression, string value)
         {
             var data = this.GetData(expression);
             data.DynamicFieldPrefixName = value;
@@ -255,7 +288,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <param name="value">Suffix name in dynamic field</param>
-        public void SetDynamicFieldSuffixName(Expression<Func<TDocument, object>> expression, string value)
+        internal void SetDynamicFieldSuffixName(Expression<Func<TDocument, object>> expression, string value)
         {
             var data = this.GetData(expression);
             data.DynamicFieldSuffixName = value;
@@ -266,7 +299,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>Type of POCO property from indicated expression</returns>
-        public Type GetPropertyType(Expression<Func<TDocument, object>> expression)
+        internal Type GetPropertyType(Expression<Func<TDocument, object>> expression)
         {
             return this.GetData(expression).PropertyType;
         }
@@ -276,7 +309,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>Name of alias of field in queries</returns>
-        public string GetAliasName(Expression<Func<TDocument, object>> expression)
+        internal string GetAliasName(Expression<Func<TDocument, object>> expression)
         {
             return this.GetData(expression).AliasName;
         }
@@ -286,7 +319,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>Name of field in the SOLR schema</returns>
-        public string GetFieldName(Expression<Func<TDocument, object>> expression)
+        internal string GetFieldName(Expression<Func<TDocument, object>> expression)
         {
             var data = this.GetData(expression);
             var fieldName = data.FieldSchema.FieldName;
@@ -313,7 +346,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>If true, value of the field can be used in queries to retrieve matching documents</returns>
-        public bool GetIsIndexed(Expression<Func<TDocument, object>> expression)
+        internal bool GetIsIndexed(Expression<Func<TDocument, object>> expression)
         {
             return this.GetData(expression).FieldSchema.IsIndexed;
         }
@@ -323,7 +356,7 @@ namespace SolrExpress.Builder
         /// </summary>
         /// <param name="expression">Expression used to find property features</param>
         /// <returns>If true, actual value of the field can be retrieved by queries</returns>
-        public bool GetIsStored(Expression<Func<TDocument, object>> expression)
+        internal bool GetIsStored(Expression<Func<TDocument, object>> expression)
         {
             return this.GetData(expression).FieldSchema.IsStored;
         }

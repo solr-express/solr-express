@@ -3,9 +3,9 @@
 namespace SolrExpress.Update
 {
     /// <summary>
-    /// Atomic add informed documents in SOLR collection
+    /// Atomic update informed documents in SOLR collection
     /// </summary>
-    public interface IAtomicUpdate<in TDocument>
+    public interface IAtomicUpdate<TDocument>
         where TDocument : Document
     {
         /// <summary>
@@ -13,6 +13,6 @@ namespace SolrExpress.Update
         /// If a doc with same id exists in collection, the document is updated
         /// </summary>
         /// <param name="documents">Documents to add</param>
-        JObject Execute(params TDocument[] documents);
+        JObject Execute(params DocumentUpdate<TDocument>[] documents);
     }
 }

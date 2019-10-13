@@ -15,7 +15,7 @@ namespace SolrExpress.Search
     /// <summary>
     /// Document search engine
     /// </summary>
-    public class DocumentSearch<TDocument>
+    public class DocumentCollectionSearch<TDocument>
         where TDocument : Document
     {
         private readonly SolrExpressOptions _solrExpressOptions;
@@ -23,7 +23,7 @@ namespace SolrExpress.Search
         private string _requestHandler = RequestHandler.Select;
         internal ISolrExpressServiceProvider<TDocument> ServiceProvider;
 
-        public DocumentSearch(
+        public DocumentCollectionSearch(
             SolrExpressOptions solrExpressOptions,
             ISolrExpressServiceProvider<TDocument> serviceProvider,
             ISearchItemCollection<TDocument> searchItemCollection)
@@ -125,14 +125,14 @@ namespace SolrExpress.Search
                 this._searchItemCollection.Add(writeTypeParameter);
             }
 
-            if (this._solrExpressOptions.SetQueryParser && !this._searchItemCollection.Contains<IQueryParserParameter<TDocument>>())
+            if (this._solrExpressOptions.EdismaxQueryParser && !this._searchItemCollection.Contains<IQueryParserParameter<TDocument>>())
             {
                 var queryParserParameter = this.ServiceProvider.GetService<IQueryParserParameter<TDocument>>();
                 queryParserParameter.Value(QueryParserType.Edismax);
                 this._searchItemCollection.Add(queryParserParameter);
             }
 
-            if (this._solrExpressOptions.SetStandardQuery && !this._searchItemCollection.Contains<IStandardQueryParameter<TDocument>>())
+            if (this._solrExpressOptions.StandardQuery && !this._searchItemCollection.Contains<IStandardQueryParameter<TDocument>>())
             {
                 var standardQueryParameter = this.ServiceProvider.GetService<IStandardQueryParameter<TDocument>>();
                 var searchQuery = this.ServiceProvider.GetService<SearchQuery<TDocument>>();
@@ -141,7 +141,7 @@ namespace SolrExpress.Search
             }
 
             // ReSharper disable once InvertIf
-            if (this._solrExpressOptions.SetDefaultField && !this._searchItemCollection.Contains<IDefaultFieldParameter<TDocument>>())
+            if (this._solrExpressOptions.DefaultField && !this._searchItemCollection.Contains<IDefaultFieldParameter<TDocument>>())
             {
                 var defaultFieldParameter = this.ServiceProvider.GetService<IDefaultFieldParameter<TDocument>>();
                 defaultFieldParameter.FieldExpression = q => q.Id;
@@ -183,7 +183,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="item">Parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> Add(ISearchItem item)
+        public DocumentCollectionSearch<TDocument> Add(ISearchItem item)
         {
             Checker.IsNull(item);
 
@@ -199,7 +199,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="items">Parameter to add in the query</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> AddRange(IEnumerable<ISearchItem> items)
+        public DocumentCollectionSearch<TDocument> AddRange(IEnumerable<ISearchItem> items)
         {
             Checker.IsNull(items);
 
@@ -222,7 +222,7 @@ namespace SolrExpress.Search
         /// </summary>
         /// <param name="name">Name to be used</param>
         /// <returns>Itself</returns>
-        public DocumentSearch<TDocument> Handler(string name)
+        public DocumentCollectionSearch<TDocument> Handler(string name)
         {
             this._requestHandler = name;
 

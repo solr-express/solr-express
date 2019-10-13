@@ -50,6 +50,20 @@ namespace SolrExpress.Utility
         }
 
         /// <summary>
+        /// Throws ArgumentNullException if specified object is null
+        /// </summary>
+        /// <param name="condition">Condition to throws exception</param>
+        /// <param name="args">Message in the excpetion</param>
+        internal static void IsNull<TException>(object value, params object[] args)
+            where TException : Exception
+        {
+            if (value == null)
+            {
+                throw (TException)Activator.CreateInstance(typeof(TException), args);
+            }
+        }
+
+        /// <summary>
         /// Throws ArgumentNullException if specified string is null, empty, or consists only of white-space characters
         /// </summary>
         /// <param name="value">Value to check</param>

@@ -25,7 +25,7 @@ namespace SolrExpress.DI.Ninject
             container.Bind<ISolrExpressServiceProvider<TDocument>>().ToMethod(context => solrExpressServiceProvider).InSingletonScope();
             container.Bind<DocumentCollection<TDocument>>().To<DocumentCollection<TDocument>>().InSingletonScope();
 
-            CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options);
+            CoreDependecyInjection.Configure(solrExpressServiceProvider, solrExpressBuilder.Options, solrExpressBuilder.DocumentConfiguration);
 
             return container;
         }

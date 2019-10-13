@@ -1,5 +1,6 @@
 ﻿using Moq;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Parameter;
@@ -25,55 +26,55 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
                 {
                     facet.FieldExpression(q => q.Id);
                 };
-                const string expected1 = "facet=true&facet.field={!key=Id}id";
+                const string expected1 = "facet=true&facet.field={!key=id}id";
 
                 Action<IFacetFieldParameter<TestDocument>> config2 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1);
                 };
-                const string expected2 = "facet=true&facet.field={!key=Id}id&f.id.facet.mincount=1";
+                const string expected2 = "facet=true&facet.field={!key=id}id&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config3 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc);
                 };
-                const string expected3 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1";
+                const string expected3 = "facet=true&facet.field={!key=id}id&f.id.facet.sort=count&f.id.facet.mincount=1";
 
                 Action<IFacetFieldParameter<TestDocument>> config4 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10);
                 };
-                const string expected4 = "facet=true&facet.field={!key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
+                const string expected4 = "facet=true&facet.field={!key=id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 Action<IFacetFieldParameter<TestDocument>> config5 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Minimum(1).SortType(FacetSortType.CountAsc).Limit(10).Excludes("tag1", "tag2");
                 };
-                const string expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=Id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
+                const string expected5 = "facet=true&facet.field={!ex=tag1,tag2 key=id}id&f.id.facet.sort=count&f.id.facet.mincount=1&f.id.facet.limit=10";
 
                 Action<IFacetFieldParameter<TestDocument>> config6 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.DocValues);
                 };
-                const string expected6 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=enum";
+                const string expected6 = "facet=true&facet.field={!key=id}id&f.id.facet.method=enum";
 
                 Action<IFacetFieldParameter<TestDocument>> config7 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.UninvertedField);
                 };
-                const string expected7 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fc";
+                const string expected7 = "facet=true&facet.field={!key=id}id&f.id.facet.method=fc";
 
                 Action<IFacetFieldParameter<TestDocument>> config8 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).MethodType(FacetMethodType.Stream);
                 };
-                const string expected8 = "facet=true&facet.field={!key=Id}id&f.id.facet.method=fcs";
+                const string expected8 = "facet=true&facet.field={!key=id}id&f.id.facet.method=fcs";
 
                 Action<IFacetFieldParameter<TestDocument>> config9 = facet =>
                 {
                     facet.FieldExpression(q => q.Id).Prefix("xpto");
                 };
-                const string expected9 = "facet=true&facet.field={!key=Id}id&f.id.facet.prefix=xpto";
+                const string expected9 = "facet=true&facet.field={!key=id}id&f.id.facet.prefix=xpto";
 
                 return new[]
                 {
@@ -103,7 +104,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             var container = new List<string>();
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var parameter = (IFacetFieldParameter<TestDocument>)new FacetFieldParameter<TestDocument>(expressionBuilder, null);
             config.Invoke(parameter);
@@ -124,7 +126,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             {
                 var solrOptions = new SolrExpressOptions();
                 var solrConnection = new FakeSolrConnection<TestDocument>();
-                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+                var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+                var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
                 expressionBuilder.LoadDocument();
 
                 Action<IFacetFieldParameter<TestDocument>> config1 = facet =>
@@ -166,7 +169,8 @@ namespace SolrExpress.Solr4.UnitTests.Search.Parameter
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             var serviceProvider = new Mock<ISolrExpressServiceProvider<TestDocument>>();
             serviceProvider

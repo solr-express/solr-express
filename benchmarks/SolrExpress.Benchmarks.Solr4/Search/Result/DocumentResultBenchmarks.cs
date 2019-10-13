@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using Newtonsoft.Json;
 using SolrExpress.Benchmarks.Helper;
+using SolrExpress.Configuration;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Result;
 using System;
@@ -23,9 +24,12 @@ namespace SolrExpress.Benchmarks.Solr4.Search.Result
         [GlobalSetup]
         public void Setup()
         {
+            var configuration = new SolrDocumentConfiguration<TestDocument>();
+            configuration.Field(q => q.Id).HasName("id");
+
             this._searchParameters = new List<ISearchParameter>();
 
-            this._result = new DocumentResult<TestDocument>();
+            this._result = new DocumentResult<TestDocument>(configuration);
 
             // Data using http://www.json-generator.com/
             var assembly = typeof(DocumentResultBenchmarks).GetTypeInfo().Assembly;

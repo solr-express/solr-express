@@ -13,6 +13,16 @@
         /// <summary>
         /// Use basic authentication mechanism
         /// </summary>
-        Basic
+        Basic,
+
+        /// <summary>
+        /// Use OAuth authentication mechanism
+        /// </summary>
+        BearerToken,
+
+        /// <summary>
+        /// Custom authentication mechanism
+        /// </summary>
+        Custom
     }
 }

@@ -13,7 +13,7 @@ namespace SolrExpress.Options
         /// <summary>
         /// If true, check Solr connection and load informations about document, otherwise false. Default is false
         /// </summary>
-        public bool LazyInfraValidation { get; set; }
+        public bool IsLazyInfraValidation { get; set; }
 
         /// <summary>
         /// If true, check for possibles fails in the use of the Solr Queriable (using SolrFieldAttribute), otherwise false. Default is true
@@ -23,17 +23,17 @@ namespace SolrExpress.Options
         /// <summary>
         /// If true, add default query parser (Edismax) in all searchs
         /// </summary>
-        public bool SetQueryParser { get; set; } = true;
+        public bool EdismaxQueryParser { get; set; } = true;
 
         /// <summary>
         /// If true, add default standard query (q.alt) in all searchs
         /// </summary>
-        public bool SetStandardQuery { get; set; } = true;
+        public bool StandardQuery { get; set; } = true;
 
         /// <summary>
         /// If true, add default field (df) in all searchs
         /// </summary>
-        public bool SetDefaultField { get; set; } = true;
+        public bool DefaultField { get; set; } = true;
 
         /// <summary>
         /// If true, check for possibles mistakes in use of IAnyParameter. Default is true

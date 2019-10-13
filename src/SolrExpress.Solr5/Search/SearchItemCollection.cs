@@ -16,9 +16,9 @@ namespace SolrExpress.Solr5.Search
     public sealed class SearchItemCollection<TDocument> : BaseSearchItemCollection<TDocument>
         where TDocument : Document
     {
-        private readonly ISolrConnection _solrConnection;
+        private readonly ISolrConnection<TDocument> _solrConnection;
 
-        public SearchItemCollection(ISolrConnection solrConnection)
+        public SearchItemCollection(ISolrConnection<TDocument> solrConnection)
         {
             this._solrConnection = solrConnection;
         }

@@ -7,20 +7,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace SolrExpress
+namespace SolrExpress.Connection
 {
     /// <summary>
     /// SOLR connection
     /// </summary>
-    public class SolrConnection : ISolrConnection
+    public class SolrConnection<TDocument> : ISolrConnection<TDocument>
+        where TDocument : Document
     {
         private readonly SolrExpressOptions _options;
+        private readonly ISolrExpressServiceProvider<TDocument> _serviceProvider;
 
-        public SolrConnection(SolrExpressOptions options)
+        public SolrConnection(SolrExpressOptions options, ISolrExpressServiceProvider<TDocument> serviceProvider)
         {
             Checker.IsNull(options);
+            Checker.IsNull(serviceProvider);
 
             this._options = options;
+            this._serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -33,16 +37,33 @@ namespace SolrExpress
         private IFlurlClient SetAuthentication(Url url)
 #endif
         {
-            if (this._options.Security.AuthenticationType == AuthenticationType.Basic)
+            switch (this._options.Security.AuthenticationType)
             {
-                return url.WithBasicAuth(this._options.Security.UserName, this._options.Security.Password);
-            }
-
+                case AuthenticationType.None:
 #if NETCOREAPP2_1
-            return new FlurlRequest(url);
+                    return new FlurlRequest(url);
 #else
-            return new FlurlClient(url, true);
+                    return new FlurlClient(url, true);
 #endif
+                case AuthenticationType.Basic:
+                    return url.WithBasicAuth(this._options.Security.BasicAuthentication.UserName, this._options.Security.BasicAuthentication.Password);
+                case AuthenticationType.BearerToken:
+                    return url.WithOAuthBearerToken(this._options.Security.BearerToken.Token);
+                case AuthenticationType.Custom:
+#if NETCOREAPP2_1
+                    var flurlClient = new FlurlRequest(url);
+#else
+                    var flurlClient = new FlurlClient(url, true);
+#endif
+                    var service = this._serviceProvider.GetService<ICustomSolrConnectionAuthenticationSettings>();
+                    Checker.IsNull<CustomSolrConnectionAuthenticationNotFoundException>(service);
+
+                    service.Configure(flurlClient);
+
+                    return flurlClient;
+                default:
+                    throw new System.ArgumentOutOfRangeException(nameof(this._options.Security.AuthenticationType));
+            }
         }
 
         public string Get(string handler, List<string> data)

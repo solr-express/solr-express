@@ -1,92 +1,158 @@
-﻿using SolrExpress.Search.Parameter;
-using SolrExpress.Utility;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq.Expressions;
 
 namespace SolrExpress.Update
 {
-    public class DocumentUpdate<TDocument>
+    public sealed class DocumentUpdate<TDocument>
         where TDocument : Document
     {
-        private readonly ISolrConnection _solrConnection;
-        private readonly List<TDocument> _documentsToAdd = new List<TDocument>();
-        private readonly List<string> _documentsToDelete = new List<string>();
+        private readonly Dictionary<Expression, object> _jornal = new Dictionary<Expression, object>();
+        private readonly string _id;
 
-        /// <summary>
-        /// Default constructor of class
-        /// </summary>
-        public DocumentUpdate(
-            ISolrConnection solrConnection,
-            ISolrExpressServiceProvider<TDocument> serviceProvider)
+        public DocumentUpdate(string id)
         {
-            Checker.IsNull(solrConnection);
-            Checker.IsNull(serviceProvider);
-
-            this._solrConnection = solrConnection;
-            this.ServiceProvider = serviceProvider;
+            this._id = id;
         }
 
         /// <summary>
-        /// Add informed documents in SOLR collection
-        /// If a doc with same id exists in collection, the document is rewrite
+        /// Returns document id
         /// </summary>
-        /// <param name="documents">Documents to add</param>
-        public DocumentUpdate<TDocument> Add(params TDocument[] documents)
+        /// <returns></returns>
+        internal string GetId()
         {
-            Checker.IsNull(documents);
-            Checker.IsEmpty(documents);
-            
-            this._documentsToAdd.AddRange(documents);
+            return this._id;
+        }
+
+        /// <summary>
+        /// Returns current jornal to update document
+        /// </summary>
+        /// <returns>Current jornal</returns>
+        internal Dictionary<Expression, object> GetJornal()
+        {
+            return this._jornal;
+        }
+
+        /// <summary>
+        /// Set or replace a particular value, or remove the value if null is specified as the new value
+        /// </summary>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="value">Value to set</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> Set<UValue>(Expression<Func<TDocument, UValue>> fieldExpression, UValue value)
+        {
+            var itemToJornal = new
+            {
+                set = value
+            };
+
+            this._jornal.Add(fieldExpression, itemToJornal);
 
             return this;
         }
 
         /// <summary>
-        /// Remove informed documents from SOLR collection
+        /// Adds an additional value to a list
         /// </summary>
-        /// <param name="documentIds">Document IDs to remove</param>
-        public DocumentUpdate<TDocument> Delete(params string[] documentIds)
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Value to add</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> Add<UArrayValue, UValue>(Expression<Func<TDocument, UArrayValue>> fieldExpression, params UValue[] values)
+            where UArrayValue : IEnumerable<UValue>
         {
-            Checker.IsNull(documentIds);
-            Checker.IsEmpty(documentIds);
+            var itemToJornal = new
+            {
+                add = values
+            };
 
-            this._documentsToDelete.AddRange(documentIds);
+            this._jornal.Add(fieldExpression, itemToJornal);
 
             return this;
         }
 
         /// <summary>
-        /// Execute adds and removes in SOLR collection
+        /// Removes a value (or a list of values) from a list
         /// </summary>
-        public void Execute()
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="values">Value to remove</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> Remove<UArrayValue, UValue>(Expression<Func<TDocument, UArrayValue>> fieldExpression, params UValue[] values)
+            where UArrayValue : IEnumerable<UValue>
         {
-            if (this._documentsToAdd.Any())
+            var itemToJornal = new
             {
-                var atomicUpdate = this.ServiceProvider.GetService<IAtomicUpdate<TDocument>>();
-                var data = atomicUpdate.Execute(this._documentsToAdd.ToArray());
-                if (data != null)
-                {
-                    this._solrConnection.Post(RequestHandler.Update, data);
-                }
-            }
+                remove = values
+            };
 
-            if (this._documentsToDelete.Any())
-            {
-                var atomicDelete = this.ServiceProvider.GetService<IAtomicDelete>();
-                var data = atomicDelete.Execute(this._documentsToDelete.ToArray());
-                if (data != null)
-                {
-                    this._solrConnection.Post(RequestHandler.Update, data);
-                }
-            }
+            this._jornal.Add(fieldExpression, itemToJornal);
 
-            this._documentsToAdd.Clear();
-            this._documentsToDelete.Clear();
+            return this;
         }
 
         /// <summary>
-        /// Services provider
+        /// Removes from a list that match the given Java regular expression
         /// </summary>
-        public ISolrExpressServiceProvider<TDocument> ServiceProvider { get; set; }
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="regexPattern">Regex used to remove values</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> RemoveRegex(Expression<Func<TDocument, object>> fieldExpression, string regexPattern)
+        {
+            var itemToJornal = new
+            {
+                removeregex = regexPattern
+            };
+
+            this._jornal.Add(fieldExpression, itemToJornal);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Increments a numeric value by a specific amount(use a negative value to decrement)
+        /// </summary>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="value">Value to increment</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> Increment<UValue>(Expression<Func<TDocument, UValue>> fieldExpression, UValue value)
+            where UValue : struct,
+                  IComparable,
+                  IComparable<UValue>,
+                  IConvertible,
+                  IEquatable<UValue>,
+                  IFormattable
+        {
+            var itemToJornal = new
+            {
+                inc = value
+            };
+
+            this._jornal.Add(fieldExpression, itemToJornal);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Decrements a numeric value by a specific amount(use a negative value to decrement)
+        /// </summary>
+        /// <param name="fieldExpression">Expression used to find field name</param>
+        /// <param name="value">Value to increment</param>
+        /// <returns>It self</returns>
+        public DocumentUpdate<TDocument> Decrement<UValue>(Expression<Func<TDocument, UValue>> fieldExpression, UValue value)
+            where UValue : struct,
+                  IComparable,
+                  IComparable<UValue>,
+                  IConvertible,
+                  IEquatable<UValue>,
+                  IFormattable
+        {
+            var itemToJornal = new
+            {
+                dec = value
+            };
+
+            this._jornal.Add(fieldExpression, itemToJornal);
+
+            return this;
+        }
     }
 }

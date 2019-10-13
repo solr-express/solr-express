@@ -7,17 +7,15 @@ To start to use SolrExpress, just follow follow steps:
 ```csharp
 	public class TechProductDocument : Document
 	{
-		[SolrField("manu")]
 		public string Manufacturer { get; set; }
 
-		[SolrField("store")]
 		public GeoCoordinate StoredAt { get; set; }
 	}
 ```
 
-3.  Choose your favorite Dependency Injection provider (SolrExpress.DI.Autofac, SolrExpress.DI.CoreClr, SolrExpress.DI.Ninject or SolrExpress.DI.SimpleInject) and add reference to package
-4.  Add reference to correct Solr provider (SolrExpress.Solr4 or SolrExpress.Solr5)
-5.  Configure SolrExpress setting Solr host address for **each** collection
+2.  Choose your favorite Dependency Injection provider (SolrExpress.DI.Autofac, SolrExpress.DI.CoreClr, SolrExpress.DI.Ninject or SolrExpress.DI.SimpleInject) and add reference to package
+3.  Add reference to correct Solr provider (SolrExpress.Solr4 or SolrExpress.Solr5)
+4.  Configure SolrExpress setting Solr host address for **each** collection
 
 ```csharp
 	public void ConfigureServices(SomeDIContainer services)
@@ -25,13 +23,18 @@ To start to use SolrExpress, just follow follow steps:
 		services
 			// This extension is from SolrExpress.DI.<Your favorite DI provider>
 			.AddSolrExpress<TechProduct>(builder => builder
-				.UseHostAddress("http://localhost:8983/solr/techproducts")
+				.UseOptions(q => q.HasHostAddress("http://localhost:8983/solr/techproducts"))
+				.ConfigureDocument(document =>
+				{
+					document.Field(f => f.Manufacturer).HasName("manu");
+					document.Field(f => f.StoredAt).HasName("store");
+				})
 				// This extension is from SolrExpress.Solr5
 				.UseSolr5()); // Or UseSolr4 from SolrExpress.Solr4
 	}
 ```
 
-6.  Configue search parameters, execute, read results and enjoy :)
+5.  Configue search parameters, execute, read results and enjoy :)
 
 ```csharp
 	using SolrExpress.Search.Parameter.Extension;

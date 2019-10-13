@@ -1,5 +1,6 @@
 ﻿using Moq;
 using SolrExpress.Builder;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
 using SolrExpress.Search.Parameter;
 using SolrExpress.Search.Query;
@@ -21,7 +22,8 @@ namespace SolrExpress.UnitTests.Search.Parameter
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
             
             var parameter1 = new Mock<BaseStandardQueryParameter<TestDocument>>
@@ -48,7 +50,8 @@ namespace SolrExpress.UnitTests.Search.Parameter
             // Arrange
             var solrOptions = new SolrExpressOptions();
             var solrConnection = new FakeSolrConnection<TestDocument>();
-            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrConnection);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocument>();
+            var expressionBuilder = new ExpressionBuilder<TestDocument>(solrOptions, solrDocumentConfiguration, solrConnection);
             expressionBuilder.LoadDocument();
 
             var parameter1 = new Mock<BaseStandardQueryParameter<TestDocument>>

@@ -7,8 +7,8 @@ namespace SolrExpress.Search.Result
 {
     public abstract class BaseFacetsResult
     {
-        protected static Type[] DateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
-        protected static Type[] NotIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
+        protected readonly static Type[] DateTypes = new[] { typeof(DateTime), typeof(DateTime?) };
+        protected readonly static Type[] NotIntTypes = new[] { typeof(decimal), typeof(float), typeof(double), typeof(decimal?), typeof(float?), typeof(double?) };
 
         protected BaseFacetsResult()
         {

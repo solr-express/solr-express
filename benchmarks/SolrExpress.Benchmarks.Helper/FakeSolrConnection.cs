@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace SolrExpress.Benchmarks.Helper
 {
-    public class FakeSolrConnection<TDocument> : ISolrConnection
+    public class FakeSolrConnection<TDocument> : ISolrConnection<TDocument>
         where TDocument : Document
     {
         private static PropertyInfo GetPropertyInfoFromExpression(Expression<Func<TDocument, object>> expression)

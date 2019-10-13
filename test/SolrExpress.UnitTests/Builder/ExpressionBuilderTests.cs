@@ -1,7 +1,10 @@
 ﻿using Moq;
 using SolrExpress.Builder;
-using System.Collections.Generic;
+using SolrExpress.Configuration;
 using SolrExpress.Options;
+using SolrExpress.Utility;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace SolrExpress.UnitTests.Builder
@@ -18,7 +21,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -47,7 +50,8 @@ namespace SolrExpress.UnitTests.Builder
                 {
 	                ""dynamicFields"": []
                 }");
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -67,7 +71,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -96,7 +100,8 @@ namespace SolrExpress.UnitTests.Builder
                 {
 	                ""dynamicFields"": []
                 }");
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -116,7 +121,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -145,7 +150,8 @@ namespace SolrExpress.UnitTests.Builder
                 {
 	                ""dynamicFields"": []
                 }");
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -165,7 +171,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -194,7 +200,8 @@ namespace SolrExpress.UnitTests.Builder
                 {
 	                ""dynamicFields"": []
                 }");
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadDocument();
 
             // Act
@@ -214,7 +221,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -244,7 +251,8 @@ namespace SolrExpress.UnitTests.Builder
 	                ""dynamicFields"": []
                 }");
 
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadSolrSchemaFields();
 
             // Act
@@ -265,7 +273,7 @@ namespace SolrExpress.UnitTests.Builder
         {
             // Arrange
             var solrExpressOptions = new SolrExpressOptions();
-            var solrConnection = new Mock<ISolrConnection>();
+            var solrConnection = new Mock<ISolrConnection<TestDocumentDynamic>>();
             solrConnection
                 .Setup(q => q.Get(It.Is<string>(s => s.EndsWith("schema/fields")), It.IsAny<List<string>>()))
                 .Returns(@"
@@ -301,7 +309,8 @@ namespace SolrExpress.UnitTests.Builder
                     }]
                 }");
 
-            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrConnection.Object);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentDynamic>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentDynamic>(solrExpressOptions, solrDocumentConfiguration, solrConnection.Object);
             expressionBuilder.LoadSolrSchemaFields();
 
             // Act
@@ -310,6 +319,108 @@ namespace SolrExpress.UnitTests.Builder
             // Assert
             Assert.True(fieldData.IsIndexed);
             Assert.True(fieldData.IsStored);
+        }
+
+        /// <summary>
+        /// Where   Using a ExpressionBuilder class using a document with SolrFieldAttribute
+        /// When    Invoke GetFieldSchema using all fields in Document
+        /// What    Get field settings using SOLR field API
+        /// </summary>
+        [Fact]
+        public void ExpressionBuilder007()
+        {
+            // Arrange
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeSolrConnection<TestDocumentAttributes>();
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentAttributes>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentAttributes>(solrOptions, solrDocumentConfiguration, solrConnection);
+
+            expressionBuilder.LoadDocument();
+
+            // Act
+            var fielDataCreateAt = expressionBuilder.GetData(q => q.CreatedAt);
+            var fielDataDummy = expressionBuilder.GetData(q => q.Dummy);
+            var fielDataId = expressionBuilder.GetData(q => q.Id);
+            var fielDataScore = expressionBuilder.GetData(q => q.Score);
+            var fielDataSpatial = expressionBuilder.GetData(q => q.Spatial);
+
+            // Assert
+            Assert.NotNull(fielDataCreateAt);
+            Assert.Equal("_created_at_", fielDataCreateAt.FieldSchema.FieldName);
+            Assert.Equal(typeof(DateTime).Name, fielDataCreateAt.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataDummy);
+            Assert.Equal("_dummy_", fielDataDummy.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataDummy.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataId);
+            Assert.Equal("id", fielDataId.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataId.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataScore);
+            Assert.Equal("score", fielDataScore.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataScore.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataSpatial);
+            Assert.Equal("_spatial_", fielDataSpatial.FieldSchema.FieldName);
+            Assert.Equal(typeof(GeoCoordinate).Name, fielDataSpatial.PropertyType.UnderlyingSystemType.Name);
+        }
+
+        /// <summary>
+        /// Where   Using a ExpressionBuilder class using a document without SolrFieldAttribute
+        /// When    Invoke GetFieldSchema using all fields in Document
+        /// What    Get field settings using SOLR field API
+        /// </summary>
+        [Fact]
+        public void ExpressionBuilder008()
+        {
+            // Arrange
+            var fieldNames = new List<string>
+            {
+                "id",
+                "_created_at_",
+                "_dummy_",
+                "_spatial_"
+            };
+
+            var solrOptions = new SolrExpressOptions();
+            var solrConnection = new FakeNoAttributeSolrConnection<TestDocumentNoAttributes>(fieldNames);
+            var solrDocumentConfiguration = new SolrDocumentConfiguration<TestDocumentNoAttributes>();
+            var expressionBuilder = new ExpressionBuilder<TestDocumentNoAttributes>(solrOptions, solrDocumentConfiguration, solrConnection);
+
+            solrDocumentConfiguration.Field(t => t.CreatedAt).HasName("_created_at_");
+            solrDocumentConfiguration.Field(t => t.Dummy).HasName("_dummy_");
+            solrDocumentConfiguration.Field(t => t.Spatial).HasName("_spatial_");
+
+            expressionBuilder.LoadDocument();
+
+            // Act
+            var fielDataCreateAt = expressionBuilder.GetData(q => q.CreatedAt);
+            var fielDataDummy = expressionBuilder.GetData(q => q.Dummy);
+            var fielDataId = expressionBuilder.GetData(q => q.Id);
+            var fielDataScore = expressionBuilder.GetData(q => q.Score);
+            var fielDataSpatial = expressionBuilder.GetData(q => q.Spatial);
+
+            // Assert
+            Assert.NotNull(fielDataCreateAt);
+            Assert.Equal("_created_at_", fielDataCreateAt.FieldSchema.FieldName);
+            Assert.Equal(typeof(DateTime).Name, fielDataCreateAt.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataDummy);
+            Assert.Equal("_dummy_", fielDataDummy.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataDummy.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataId);
+            Assert.Equal("id", fielDataId.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataId.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataScore);
+            Assert.Equal("score", fielDataScore.FieldSchema.FieldName);
+            Assert.Equal(typeof(string).Name, fielDataScore.PropertyType.UnderlyingSystemType.Name);
+
+            Assert.NotNull(fielDataSpatial);
+            Assert.Equal("_spatial_", fielDataSpatial.FieldSchema.FieldName);
+            Assert.Equal(typeof(GeoCoordinate).Name, fielDataSpatial.PropertyType.UnderlyingSystemType.Name);
         }
     }
 }

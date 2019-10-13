@@ -2,6 +2,18 @@
 
 Notes about releases
 
+## 5.5.0 - 2019-02-XX
+
+### New features
+
+-   Option to configure documents using **Fluent APIs** [#232](https://github.com/solr-express/solr-express/issues/232)
+-   Atomic update using partial updates [#231](https://github.com/solr-express/solr-express/issues/231)
+-   Implements more options to set authentication [#243](https://github.com/solr-express/solr-express/issues/243)
+
+### Quality effort
+
+-   Some code style
+
 ## 5.4.2 - 2019-02-06
 
 ### Quality effort
@@ -85,7 +97,7 @@ Notes about releases
 
 -   Make possible start SolrExpress without Solr ([#259](https://github.com/solr-express/solr-express/issues/259))
 
-### **BREAKING CHANGES**
+### BREAKING CHANGES
 
 -   Use **SolrExpress.Search.Extension** namespace instead **SolrExpress.Search.Parameter.Extension** to access _DocumentSearch<TDocument>_ extensions
 
@@ -124,7 +136,7 @@ Notes about releases
 
 ## 5.0.0-BETA1 - 2017-08-25
 
-### **BREAKING CHANGES**
+### BREAKING CHANGES
 
 -   See [migration guide](https://solr-express.gitbook.io/solr-express/breaking-changes/version5.md) for informations about migrations
 -   See [issue](https://github.com/solr-express/solr-express/issues/187) for informations about what, why, how
@@ -304,11 +316,11 @@ Thanks people for ideas and contributions:
 -   DI review ([#141](https://github.com/solr-express/solr-express/issues/141))
 -   Code review ([#147](https://github.com/solr-express/solr-express/issues/147))
 
-> **PAY ATTENTION**
->
-> Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
+#### PAY ATTENTION
 
-### **BREAKING CHANGES**
+-   Issues ([#141](https://github.com/solr-express/solr-express/issues/141)) and ([#147](https://github.com/solr-express/solr-express/issues/147)) causes BREAKING CHANGES 
+
+### BREAKING CHANGES
 
 -   To use DocumentCollection
 

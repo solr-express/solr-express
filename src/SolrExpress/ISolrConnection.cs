@@ -7,7 +7,8 @@ namespace SolrExpress
     /// <summary>
     /// Signauters to SOLR connection
     /// </summary>
-    public interface ISolrConnection
+    public interface ISolrConnection<TDocument>
+        where TDocument : Document
     {
         /// <summary>
         /// Execute a request to informed handler

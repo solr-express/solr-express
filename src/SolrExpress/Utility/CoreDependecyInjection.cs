@@ -1,4 +1,6 @@
 ﻿using SolrExpress.Builder;
+using SolrExpress.Configuration;
+using SolrExpress.Connection;
 using SolrExpress.Options;
 using SolrExpress.Search;
 using SolrExpress.Search.Behaviour;
@@ -18,27 +20,29 @@ namespace SolrExpress.Utility
         /// </summary>
         /// <param name="serviceProvider">DI engine to be configured</param>
         /// <param name="options">Options to control SolrExpress behavior</param>
-        internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options)
+        /// <param name="configuration">Solr document configurations</param>
+        internal static void Configure<TDocument>(ISolrExpressServiceProvider<TDocument> serviceProvider, SolrExpressOptions options, SolrDocumentConfiguration<TDocument> configuration)
             where TDocument : Document
         {
             serviceProvider
                 .AddSingleton(options)
+                .AddSingleton(configuration)
                 .AddTransient(serviceProvider);
 
-            var solrConnection = new SolrConnection(options);
-            var expressionBuilder = new ExpressionBuilder<TDocument>(options, solrConnection);
-            if (!options.LazyInfraValidation)
+            var solrConnection = new SolrConnection<TDocument>(options, serviceProvider);
+            var expressionBuilder = new ExpressionBuilder<TDocument>(options, configuration, solrConnection);
+            if (!options.IsLazyInfraValidation)
             {
                 expressionBuilder.LoadDocument();
             }
 
             serviceProvider
                 .AddTransient(expressionBuilder)
-                .AddTransient<DocumentSearch<TDocument>>()
-                .AddTransient<DocumentUpdate<TDocument>>()
+                .AddTransient<DocumentCollectionSearch<TDocument>>()
+                .AddTransient<DocumentCollectionUpdate<TDocument>>()
                 .AddTransient<SearchResultBuilder<TDocument>>()
                 .AddTransient<SearchQuery<TDocument>>()
-                .AddTransient<ISolrConnection>(solrConnection)
+                .AddTransient<ISolrConnection<TDocument>>(solrConnection)
                 .AddTransient<IDocumentResult<TDocument>, DocumentResult<TDocument>>()
                 .AddTransient<IChangeDynamicFieldBehaviour<TDocument>, ChangeDynamicFieldBehaviour<TDocument>>();
         }
