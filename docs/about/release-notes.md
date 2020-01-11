@@ -2,13 +2,17 @@
 
 Notes about releases
 
-## 5.5.0 - 2019-02-XX
+## 5.5.0 - 2020-01-11
 
 ### New features
 
 -   Option to configure documents using **Fluent APIs** [#232](https://github.com/solr-express/solr-express/issues/232)
 -   Atomic update using partial updates [#231](https://github.com/solr-express/solr-express/issues/231)
 -   Implements more options to set authentication [#243](https://github.com/solr-express/solr-express/issues/243)
+
+### Bug fix
+
+-   NullReferenceException in ValidateSearchItem() > CheckAnyParameter [#564](https://github.com/solr-express/solr-express/issues/564)
 
 ### Quality effort
 
