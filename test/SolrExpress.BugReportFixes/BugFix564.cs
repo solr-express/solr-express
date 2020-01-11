@@ -35,7 +35,7 @@ namespace SolrExpress.BugReportFixes
                 .Information(out Information information);
 
             // Assert
-            Assert.Equal(0, information.DocumentCount);
+            Assert.True(information.DocumentCount > 0);
         }
     }
 }

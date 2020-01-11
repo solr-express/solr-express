@@ -70,8 +70,9 @@ namespace SolrExpress.Search
 
             if (this._solrExpressOptions.CheckAnyParameter)
             {
-                var useAnyThanSpecificParameterRather = attributes.FirstOrDefault(q => q is UseAnyThanSpecificParameterRatherAttribute);
-                var isValid = ((IValidationAttribute)useAnyThanSpecificParameterRather).IsValid<TDocument>(searchParameter, out errorMessage);
+                // TODO: Need refactor
+                var useAnyThanSpecificParameterRather = new UseAnyThanSpecificParameterRatherAttribute();
+                var isValid = useAnyThanSpecificParameterRather.IsValid<TDocument>(searchParameter, out errorMessage);
                 Checker.IsFalse<SearchParameterIsInvalidException>(isValid, searchParameter.GetType().FullName, errorMessage);
             }
 
